@@ -1,0 +1,124 @@
+﻿<projectDescription>
+	<id>1238637846607</id>
+	<name>~LR Beta 2 V3.4.X</name>
+	<asVersion>0</asVersion>
+	<boundTemplate>file:///C|/Users/Evans2/AppData/Local/Adobe/Flash CS4/en/Configuration/Project/templates/boundClass_as3.as</boundTemplate>
+	<classTemplate>file:///C|/Users/Evans2/AppData/Local/Adobe/Flash CS4/en/Configuration/Project/templates/standardClass_as3.as</classTemplate>
+	<classPath>.</classPath>
+	<rootURI>C:\Users\Evans2\AppData\Local\Temp\4</rootURI>
+	<flexSDK/>
+	<sources editable="false"/>
+	<libraries editable="false"/>
+	<externalLibraries editable="false"/>
+	<compileList editable="false">
+		<uri label="~LR Beta 2 V3.4.X.fla">file:///C|/Users/Evans2/AppData/Local/Temp/4/~LR Beta 2 V3.4.X.fla</uri>
+	</compileList>
+	<defaultApp>file:///C|/Users/Evans2/AppData/Local/Temp/4/~LR Beta 2 V3.4.X.fla</defaultApp>
+	<recentFiles editable="false">
+		<uri label="ColoredSkinElement.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/ColoredSkinElement.as</uri>
+		<uri label="UIObject.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/core/UIObject.as</uri>
+		<uri label="SkinElement.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/SkinElement.as</uri>
+		<uri label="CSSTextStyles.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/styles/CSSTextStyles.as</uri>
+		<uri label="CSSStyleDeclaration.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/styles/CSSStyleDeclaration.as</uri>
+		<uri label="StyleManager.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/styles/StyleManager.as</uri>
+		<uri label="EventDispatcher.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/events/EventDispatcher.as</uri>
+		<uri label="UIEventDispatcher.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/events/UIEventDispatcher.as</uri>
+		<uri label="UIObjectExtensions.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/core/ext/UIObjectExtensions.as</uri>
+		<uri label="UIComponent.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/core/UIComponent.as</uri>
+		<uri label="View.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/core/View.as</uri>
+		<uri label="Border.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/Border.as</uri>
+		<uri label="RectBorder.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/RectBorder.as</uri>
+		<uri label="DepthManager.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/managers/DepthManager.as</uri>
+		<uri label="ExternalContent.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/core/ExternalContent.as</uri>
+		<uri label="ScrollView.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/core/ScrollView.as</uri>
+		<uri label="ScrollBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/scrollClasses/ScrollBar.as</uri>
+		<uri label="CustomBorder.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/CustomBorder.as</uri>
+		<uri label="ScrollThumb.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/scrollClasses/ScrollThumb.as</uri>
+		<uri label="SimpleButton.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/SimpleButton.as</uri>
+		<uri label="DataSelector.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/listclasses/DataSelector.as</uri>
+		<uri label="DataProvider.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/listclasses/DataProvider.as</uri>
+		<uri label="ScrollSelectList.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/listclasses/ScrollSelectList.as</uri>
+		<uri label="Defaults.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/halo/Defaults.as</uri>
+		<uri label="FocusRect.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/halo/FocusRect.as</uri>
+		<uri label="FocusManager.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/managers/FocusManager.as</uri>
+		<uri label="SystemManager.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/managers/SystemManager.as</uri>
+		<uri label="OverlappedWindows.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/managers/OverlappedWindows.as</uri>
+		<uri label="UIComponentExtensions.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/core/ext/UIComponentExtensions.as</uri>
+		<uri label="CSSSetStyle.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/styles/CSSSetStyle.as</uri>
+		<uri label="SelectableRow.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/listclasses/SelectableRow.as</uri>
+		<uri label="Tween.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/effects/Tween.as</uri>
+		<uri label="ButtonSkin.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/halo/ButtonSkin.as</uri>
+		<uri label="Button.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/Button.as</uri>
+		<uri label="RadioButton.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/RadioButton.as</uri>
+		<uri label="RadioButtonGroup.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/RadioButtonGroup.as</uri>
+		<uri label="HScrollBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/HScrollBar.as</uri>
+		<uri label="VScrollBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/VScrollBar.as</uri>
+		<uri label="ScrollPane.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/containers/ScrollPane.as</uri>
+		<uri label="UIScrollBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/UIScrollBar.as</uri>
+		<uri label="Label.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/Label.as</uri>
+		<uri label="MenuRow.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/menuclasses/MenuRow.as</uri>
+		<uri label="TreeDataProvider.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/treeclasses/TreeDataProvider.as</uri>
+		<uri label="MenuDataProvider.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/menuclasses/MenuDataProvider.as</uri>
+		<uri label="Menu.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/Menu.as</uri>
+		<uri label="PopUpManager.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/managers/PopUpManager.as</uri>
+		<uri label="Window.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/containers/Window.as</uri>
+		<uri label="MenuBarItem.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/menuclasses/MenuBarItem.as</uri>
+		<uri label="ActivatorSkin.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/halo/ActivatorSkin.as</uri>
+		<uri label="MenuBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/MenuBar.as</uri>
+		<uri label="List.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/List.as</uri>
+		<uri label="ComboBase.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/ComboBase.as</uri>
+		<uri label="TextInput.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/TextInput.as</uri>
+		<uri label="ComboBox.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/ComboBox.as</uri>
+		<uri label="RectBorder.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/skins/halo/RectBorder.as</uri>
+		<uri label="Stick.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/Stick.as</uri>
+		<uri label="Shal.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/Shal.as</uri>
+		<uri label="Point.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/Point.as</uri>
+		<uri label="FloorBase.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/FloorBase.as</uri>
+		<uri label="Floor.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/Floor.as</uri>
+		<uri label="BreakableStick.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/BreakableStick.as</uri>
+		<uri label="BindStick.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/BindStick.as</uri>
+		<uri label="lineDraw.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/lineDraw.as</uri>
+		<uri label="PointAirFri.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/PointAirFri.as</uri>
+		<uri label="RepellStick.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/RepellStick.as</uri>
+		<uri label="FloorScenery.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/FloorScenery.as</uri>
+		<uri label="FloorAcc.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/FloorAcc.as</uri>
+		<uri label="MediaController.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/MediaController.as</uri>
+		<uri label="LoadBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/LoadBar.as</uri>
+		<uri label="PlayBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/PlayBar.as</uri>
+		<uri label="StreamingMediaConstants.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/StreamingMediaConstants.as</uri>
+		<uri label="PlayBarThumb.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/PlayBarThumb.as</uri>
+		<uri label="MiniPlayBar.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/MiniPlayBar.as</uri>
+		<uri label="VolumeControl.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/VolumeControl.as</uri>
+		<uri label="VolumeControlHandle.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/VolumeControlHandle.as</uri>
+		<uri label="MuteButton.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/MuteButton.as</uri>
+		<uri label="LoudButton.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/LoudButton.as</uri>
+		<uri label="MediaPlayback.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/MediaPlayback.as</uri>
+		<uri label="ICuePointHolder.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/ICuePointHolder.as</uri>
+		<uri label="FullScreenToggle.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/FullScreenToggle.as</uri>
+		<uri label="CuePoint.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/CuePoint.as</uri>
+		<uri label="IPlayer.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/IPlayer.as</uri>
+		<uri label="Loader.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/Loader.as</uri>
+		<uri label="LowLevelEvents.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/events/LowLevelEvents.as</uri>
+		<uri label="Screen.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/screens/Screen.as</uri>
+		<uri label="Tracer.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/Tracer.as</uri>
+		<uri label="ScreenAccommodator.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/ScreenAccommodator.as</uri>
+		<uri label="AbstractPlayer.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/AbstractPlayer.as</uri>
+		<uri label="RTMPPlayer.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/RTMPPlayer.as</uri>
+		<uri label="RTMPConnection.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/RTMPConnection.as</uri>
+		<uri label="PlayerNetStream.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/PlayerNetStream.as</uri>
+		<uri label="FLVPlayer.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/FLVPlayer.as</uri>
+		<uri label="MP3Player.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/MP3Player.as</uri>
+		<uri label="MediaDisplay.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/MediaDisplay.as</uri>
+		<uri label="Chrome.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/Chrome.as</uri>
+		<uri label="FullScreenToggleControl.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/FullScreenToggleControl.as</uri>
+		<uri label="ToEndButton.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/ToEndButton.as</uri>
+		<uri label="ToStartButton.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/ToStartButton.as</uri>
+		<uri label="PlayPauseButton.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/PlayPauseButton.as</uri>
+		<uri label="HMiniPlayBarTray.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/HMiniPlayBarTray.as</uri>
+		<uri label="HPlayBarTray.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/HPlayBarTray.as</uri>
+		<uri label="VMiniPlayBarTray.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/VMiniPlayBarTray.as</uri>
+		<uri label="VPlayBarTray.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/streamingmedia/VPlayBarTray.as</uri>
+		<uri label="CheckBox.as">file:///C|/Users/Evans2/AppData/Local/Temp/4/mx/controls/CheckBox.as</uri>
+	</recentFiles>
+	<locations editable="false"/>
+</projectDescription>
