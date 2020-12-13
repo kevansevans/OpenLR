@@ -1,21 +1,24 @@
 package components.lines;
 
-import enums.LineDrawMode;
 import h2d.col.Point;
-import typedefs.LineProperties;
+
+import enums.LineDrawMode;
+
 import components.tool.ToolBehavior.LineColor;
 
 /**
  * ...
  * @author Kaelan
  */
-class Floor extends LineBase 
+class Accel extends LineBase 
 {
+
 	public function new(_start:Point, _end:Point, _shift:Bool) 
 	{
 		super(_start, _end, _shift);
 		
-		type = FLOOR;
+		type = ACCEL;
+		
 	}
 	
 	override public function render():Void 
@@ -29,9 +32,11 @@ class Floor extends LineBase
 		var x_offset:Float = nx > 0 ? Math.ceil(nx) : Math.floor(nx);
 		var y_offset:Float = ny > 0 ? Math.ceil(ny) : Math.floor(ny);
 		
-		colorLayer.lineStyle(2, 0x0066FF, 0.75);
+		colorLayer.lineStyle(2, 0xCC0000, 0.75);
 		colorLayer.moveTo(0 + x_offset, 0 + y_offset);
 		colorLayer.lineTo(gfxEnd.x + x_offset, gfxEnd.y + y_offset);
+		colorLayer.lineTo(gfxEnd.x + (nx * 4 - dx * invDistance * 5), gfxEnd.y + (ny * 4 - dy * invDistance * 5));
+		colorLayer.lineTo(gfxEnd.x - dx * invDistance * 5, gfxEnd.y - dy * invDistance * 5);
 		
 		rideLayer.lineStyle(2, 0);
 		rideLayer.moveTo(0, 0);

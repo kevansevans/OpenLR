@@ -1,5 +1,7 @@
 package;
 
+import components.managers.Grid;
+import components.stage.LRConsole;
 import components.tool.ToolBehavior;
 import enums.Commands;
 import h2d.col.Point;
@@ -27,18 +29,20 @@ import h2d.Scene;
  */
 class Main extends App
 {
-	var grid:Graphics;
+	var ruler:Graphics;
 	var canvas:Canvas;
 	
 	var viewGridSize:Int = 64;
 	
 	var canvas_interaction:Interactive;
 	
-	public static var console:Console;
+	public static var console:LRConsole;
 	
 	var toolControl:ToolBehavior;
 	
 	public static var build:String;
+	
+	public static var grid:Grid;
 	
 	@:macro public static function getBuildDate() {
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -72,8 +76,12 @@ class Main extends App
 		
 		engine.backgroundColor = 0xFFCCCCCC;
 		
-		grid = new Graphics();
-		s2d.addChild(grid);
+		s2d.defaultSmooth = true;
+		
+		grid = new Grid();
+		
+		ruler = new Graphics();
+		s2d.addChild(ruler);
 		
 		canvas = new Canvas();
 		s2d.addChild(canvas);
@@ -87,24 +95,25 @@ class Main extends App
 		
 		toolControl = new ToolBehavior(s2d, canvas_interaction, canvas);
 		
-		console = new Console(DefaultFont.get(), s2d);
+		console = new LRConsole(DefaultFont.get(), s2d);
 		setConsoleActions();
 		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
 		console.log("Press / to toggle console...", 0x333333);
 		console.log("https://github.com/kevansevans/OpenLR", 0x333333);
 	}
 	
+	//EVERYTHING is a console command if and when possible.
 	function setConsoleActions():Void 
 	{
 		var arg1:ConsoleArgDesc = {t: AFloat, opt: false, name : "x value"};
 		var arg2:ConsoleArgDesc = {t: AFloat, opt: false, name : "y value"};
-		console.addCommand("setPosition", "Sets the position of the canvas", [arg1, arg2], setCanvasPosition);
-		console.addCommand("version", "show current build version", [], function() { console.log(Main.build, 0x0000BB); });
+		console.addCommand(Commands.setPosition, "Sets the position of the canvas", [arg1, arg2], setCanvasPosition);
+		console.addCommand(Commands.version, "show current build version", [], function() { console.log(Main.build, 0x0000BB); });
 		var arg3:ConsoleArgDesc = {t: AInt, opt: true, name : "size"};
-		console.addCommand("setGridSize", "Change editor grid size", [arg3], function(?_value:Int = 64) { viewGridSize = _value; console.log("Set grid size to: " + _value, 0x0000BB);});
+		console.addCommand(Commands.setGridSize, "Change editor grid size", [arg3], function(?_value:Int = 64) { viewGridSize = _value; console.log("Set grid size to: " + _value, 0x0000BB);});
 		console.addCommand(Commands.gridSizeInc, "Increase grid size by 1", [], function() { viewGridSize += 1;});
 		console.addCommand(Commands.gridSizeDec, "Decrease grid size by 1", [], function() { viewGridSize -= 1; viewGridSize = Std.int(Math.max(viewGridSize, 1));});
-		console.addCommand("setScale", "Change editor grid size", [arg3], function(?_value:Int = 2) { viewGridSize = _value; console.log("Set canvas scale to: " + _value, 0x0000BB);});
+		console.addCommand(Commands.setScale, "Change editor grid size", [arg3], function(?_value:Int = 2) { viewGridSize = _value; console.log("Set canvas scale to: " + _value, 0x0000BB);});
 		var arg5:ConsoleArgDesc = {t: AInt, opt: false, name : "type"};
 		var arg6:ConsoleArgDesc = {t: AFloat, opt: false, name : "x1"};
 		var arg7:ConsoleArgDesc = {t: AFloat, opt: false, name : "y1"};
@@ -123,11 +132,24 @@ class Main extends App
 				case "ERASER":
 					toolControl.tool = ToolMode.ERASER;
 				default :
-					console.log('${_tool} is not a recognized tool name');
+					console.log('${_tool} is not a recognized tool name', 0xFF0000);
 			}
 		});
 		var arg11:ConsoleArgDesc = {t: AString, opt: true, name : "Line Color"};
-		
+		console.addCommand(Commands.setLineColor, "Change line color mode", [arg11], function(_color:String) {
+			switch (_color.toUpperCase()) {
+				case "FLOOR" | "NORMAL" | "BLUE" | "1" :
+					toolControl.color = 0;
+				case "ACC" | "ACCEL" | "ACCELERATE" | "SPEED" | "FAST" | "RED" | "2" :
+					toolControl.color = 1;
+				case "SCENE" | "SCENERY" | "GREEN" | "3" :
+					toolControl.color = 2;
+				case "ANY" | "NONE" | "0" :
+					toolControl.color = -1;
+				default:
+					console.log('${_color} is not a recognized line type', 0xFF0000);
+			}
+		});
 		var arg12:ConsoleArgDesc = {t: AFloat, opt: false, name : "x"};
 		var arg13:ConsoleArgDesc = {t: AFloat, opt: false, name : "y"};
 		console.addCommand(Commands.zoomIn, "Increase zoom by 1", [], function() {zoomCanvas(1); });
@@ -136,62 +158,29 @@ class Main extends App
 			canvas.x += _x;
 			canvas.y += _y;
 		});
+		var arg14:ConsoleArgDesc = {t: ABool, opt: false, name : "true/false"};
+		console.addCommand(Commands.showGrid, "Toggle grid visibility", [arg14], function(_visible:Bool) { ruler.visible = _visible; });
 	}
+	
+	var mousePosX:Float;
+	var mousePosY:Float;
 	
 	function setCanvasPosition(_x:Float, _y:Float, ?_log:Bool = true) {
 		canvas.setPosition(_x + engine.width / 2, _y + engine.height / 2);
 		if (_log) console.log("Set canvas position to: " + _x + " " + _y, 0x0000BB);
 	}
 	
-	function keyInputDown(event:Event):Void 
-	{
-		switch (event.kind) {
-			case EKeyDown :
-				switch (event.keyCode) {
-					case Key.QWERTY_EQUALS :
-						viewGridSize += 1;
-						console.log("Grid set to size: " + viewGridSize, 0x0000BB);
-					case Key.QWERTY_MINUS :
-						viewGridSize -= 1;
-						viewGridSize = Std.int(Math.max(viewGridSize, 1));
-						console.log("Grid set to size: " + viewGridSize, 0x0000BB);
-				}
-			default:
-		}
-	}
-	
+	//this function needs to be improved
 	function zoomCanvas(wheelDelta:Int):Void 
 	{
 		var oldScale = canvas.scaleX;
 		var oldMouseX = canvas.mouseX;
 		var oldMouseY = canvas.mouseY;
-		var delta = canvas.scaleX < 1 ? wheelDelta * 0.01 : wheelDelta * 0.25;
-		canvas.setScale(Math.min(Math.max(canvas.scaleX - delta, 0.01), 100));
+		var delta = Math.min(Math.max((canvas.scaleX) * (wheelDelta > 0 ? 0.825 : 1.125), 0.01), 100);
+		canvas.setScale(delta);
 		var newScale = canvas.scaleX;
 		canvas.x += -(oldMouseX * (newScale - oldScale));
 		canvas.y += -(oldMouseY * (newScale - oldScale));
-	}
-	
-	var mousePosX:Float;
-	var mousePosY:Float;
-	
-	var lineStart:Point;
-	var lineEnd:Point;
-
-	function canvasClickDown(event:Event):Void 
-	{
-		mousePosX = s2d.mouseX;
-		mousePosY = s2d.mouseY;
-	}
-	
-	function canvasClickUp(event:Event):Void 
-	{
-		switch (event.button) {
-			case 2:
-				canvas.stopDrag();
-			default:
-				
-		}
 	}
 	
 	override function update(dt:Float):Void 
@@ -209,6 +198,7 @@ class Main extends App
 		canvas_interaction.height = engine.height;
 	}
 	
+	//this function needs to be improved
 	function updateGridLines() {
 		
 		var ratio = Math.round(viewGridSize * canvas.scaleX);
@@ -219,40 +209,40 @@ class Main extends App
 		var x_originValue:Null<Float> = null;
 		var y_originValue:Null<Float> = null;
 		
-		grid.clear();
+		ruler.clear();
 		
 		for (x in 0...(engine.width * 10)) {
-			grid.lineStyle(2, 0xBBBBBB);
+			ruler.lineStyle(2, 0xBBBBBB);
 			if (x % ratio == 0) {
 				if (x + x_offset - canvas.x == 0) {
 					x_originValue = x;
 					continue;
 				}
 				if (ratio <= 3) continue;
-				grid.moveTo(x + x_offset, 0);
-				grid.lineTo(x + x_offset, engine.height);
+				ruler.moveTo(x + x_offset, 0);
+				ruler.lineTo(x + x_offset, engine.height);
 			}
 		}
 		for (y in 0...(engine.height * 10)) {
-			grid.lineStyle(2, 0xBBBBBB);
+			ruler.lineStyle(2, 0xBBBBBB);
 			if (y % ratio == 0) {
 				if (y + y_offset - canvas.y == 0) {
 					y_originValue = y; 
 					continue;
 				}
 				if (ratio <= 3) continue;
-				grid.moveTo(0, y + y_offset);
-				grid.lineTo(engine.width, y + y_offset);
+				ruler.moveTo(0, y + y_offset);
+				ruler.lineTo(engine.width, y + y_offset);
 			}
 		}
-		grid.lineStyle(2, 0xBB0000);
+		ruler.lineStyle(2, 0xFF, 0.25);
 		if (x_originValue != null) {
-			grid.moveTo(x_originValue + x_offset, 0);
-			grid.lineTo(x_originValue + x_offset, engine.height);
+			ruler.moveTo(x_originValue + x_offset, 0);
+			ruler.lineTo(x_originValue + x_offset, engine.height);
 		}
 		if (y_originValue != null) {
-			grid.moveTo(0, y_originValue + y_offset);
-			grid.lineTo(engine.width, y_originValue + y_offset);
+			ruler.moveTo(0, y_originValue + y_offset);
+			ruler.lineTo(engine.width, y_originValue + y_offset);
 		}
 	}
 }

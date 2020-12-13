@@ -1,4 +1,5 @@
 package components.lines;
+import components.tool.ToolBehavior.LineColor;
 import enums.LineDrawMode;
 import h2d.Graphics;
 import h2d.Object;
@@ -20,18 +21,20 @@ class LineBase
 	public var start:Point;
 	public var end:Point;
 	
+	public var type:LineColor;
+	
 	var gfxEnd:Point;
 	
 	public var shifted:Bool;
 		
-	var dx:Float;
-	var dy:Float;
-	var C:Float;
-	var distance:Float;
-	var invSqrDistance:Float;
-	var invDistance:Float;
-	var nx:Float;
-	var ny:Float;
+	public var dx:Float;
+	public var dy:Float;
+	public var C:Float;
+	public var distance:Float;
+	public var invSqrDistance:Float;
+	public var invDistance:Float;
+	public var nx:Float;
+	public var ny:Float;
 	
 	public var properties:LineProperties;
 	
@@ -63,11 +66,22 @@ class LineBase
 		ny = dx * invDistance * (shifted ? -1 : 1);
 	}
 	
-	public function render(_mode:LineDrawMode) {
+	public function render() {
 		colorLayer.clear();
 		colorLayer.lineStyle(1, 0xFF0000);
 		colorLayer.moveTo(0, 0);
 		colorLayer.lineTo(gfxEnd.x, gfxEnd.y);
+	}
+	
+	public function visMode(_mode:LineDrawMode) {
+		switch (_mode) {
+			case EDIT :
+				rideLayer.visible = true;
+				colorLayer.visible = true;
+			case PLAYBACK :
+				rideLayer.visible = true;
+				colorLayer.visible = false;
+		}
 	}
 	
 }

@@ -6,6 +6,6 @@ import enums.LinePhysicsMode;
  */
 enum LineDrawMode 
 {
-	edit;
-	playback;
+	EDIT;
+	PLAYBACK;
 }
