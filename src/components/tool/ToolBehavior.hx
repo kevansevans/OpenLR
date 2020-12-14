@@ -61,6 +61,12 @@ class ToolBehavior
 			case 0:
 				leftIsDown = true;
 				mouseStart = new Point(s2d.mouseX, s2d.mouseY);
+				
+				switch (tool) {
+					case ERASER :
+						canvas.erase();
+					default :
+				}
 			case 2 :
 				middleIsDown = true;
 				mouseStart = new Point(s2d.mouseX, s2d.mouseY);
@@ -98,7 +104,7 @@ class ToolBehavior
 					
 				case ERASER :
 					
-					canvas.removeLine();
+					canvas.erase();
 					
 				default :
 					

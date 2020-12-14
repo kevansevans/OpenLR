@@ -1,6 +1,8 @@
 package;
 
 import components.managers.Grid;
+import components.managers.Riders;
+import components.managers.Simulation;
 import components.stage.LRConsole;
 import components.tool.ToolBehavior;
 import enums.Commands;
@@ -30,9 +32,10 @@ import h2d.Scene;
 class Main extends App
 {
 	var ruler:Graphics;
-	var canvas:Canvas;
 	
-	var viewGridSize:Int = 64;
+	public static var canvas:Canvas;
+	
+	var viewGridSize:Int = 14;
 	
 	var canvas_interaction:Interactive;
 	
@@ -43,6 +46,10 @@ class Main extends App
 	public static var build:String;
 	
 	public static var grid:Grid;
+	
+	public static var riders:Riders;
+	
+	public static var simulation:Simulation;
 	
 	@:macro public static function getBuildDate() {
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -78,8 +85,6 @@ class Main extends App
 		
 		s2d.defaultSmooth = true;
 		
-		grid = new Grid();
-		
 		ruler = new Graphics();
 		s2d.addChild(ruler);
 		
@@ -100,6 +105,12 @@ class Main extends App
 		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
 		console.log("Press / to toggle console...", 0x333333);
 		console.log("https://github.com/kevansevans/OpenLR", 0x333333);
+		
+		grid = new Grid();
+		
+		riders = new Riders();
+		
+		simulation = new Simulation();
 	}
 	
 	//EVERYTHING is a console command if and when possible.
@@ -107,7 +118,7 @@ class Main extends App
 	{
 		var arg1:ConsoleArgDesc = {t: AFloat, opt: false, name : "x value"};
 		var arg2:ConsoleArgDesc = {t: AFloat, opt: false, name : "y value"};
-		console.addCommand(Commands.setPosition, "Sets the position of the canvas", [arg1, arg2], setCanvasPosition);
+		console.addCommand(Commands.setCanvasPosition, "Sets the position of the canvas", [arg1, arg2], setCanvasPosition);
 		console.addCommand(Commands.version, "show current build version", [], function() { console.log(Main.build, 0x0000BB); });
 		var arg3:ConsoleArgDesc = {t: AInt, opt: true, name : "size"};
 		console.addCommand(Commands.setGridSize, "Change editor grid size", [arg3], function(?_value:Int = 64) { viewGridSize = _value; console.log("Set grid size to: " + _value, 0x0000BB);});
@@ -160,6 +171,19 @@ class Main extends App
 		});
 		var arg14:ConsoleArgDesc = {t: ABool, opt: false, name : "true/false"};
 		console.addCommand(Commands.showGrid, "Toggle grid visibility", [arg14], function(_visible:Bool) { ruler.visible = _visible; });
+		console.addCommand(Commands.trackInfo, "Print track info", [], function() {
+			console.log("===");
+			console.log("Lines " + grid.lineCount);
+			console.log("Floor " + grid.floorCount);
+			console.log("Accel " + grid.accelCount);
+			console.log("Scene " + grid.sceneCount);
+			console.log("===");
+		});
+		console.addCommand(Commands.playTrack, "Start simulation", [], function() {simulation.startSim(); });
+		console.addCommand(Commands.stopTrack, "End simulation", [], function() {simulation.endSim(); });
+		console.addCommand(Commands.stepSimBackward, "Step sim back by one frame", [], function() {simulation.backSim(); });
+		console.addCommand(Commands.stepSimForward, "Step sim forward by one frame", [], function() {simulation.stepSim(); });
+		console.addCommand(Commands.rewindSimulation, "Set simulation to rewind", [arg14], function(_rewinding:Bool) {simulation.rewinding = _rewinding; });
 	}
 	
 	var mousePosX:Float;
@@ -183,11 +207,21 @@ class Main extends App
 		canvas.y += -(oldMouseY * (newScale - oldScale));
 	}
 	
+	var riderPhysDelta:Float = 0.0;
+	var playing:Bool = false;
 	override function update(dt:Float):Void 
 	{
 		super.update(dt);
 		
 		updateGridLines();
+		
+		canvas.drawRiders();
+		
+		if (simulation.playing && !simulation.rewinding) {
+			simulation.playSim(dt);
+		} else if (simulation.playing && simulation.rewinding) {
+			simulation.rewindSim(dt);
+		}
 	}
 	
 	override function onResize():Void 

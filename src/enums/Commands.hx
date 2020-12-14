@@ -15,13 +15,21 @@ enum abstract Commands(String) from String
 	var pauseTrack:String;
 	var playTrack:String;
 	
+	var recordFlagPoint:String;
+	var recordSimState:String;
+	var rewindSimulation:String;
+	
+	var setCanvasPosition:String;
 	var setGridSize:String;
 	var setLineColor:String;
-	var setPosition:String;
 	var setScale:String;
 	var setTool:String;
 	var showGrid:String;
+	var stepSimForward:String;
+	var stepSimBackward:String;
 	var stopTrack:String;
+	
+	var trackInfo:String;
 	
 	var version:String;
 	

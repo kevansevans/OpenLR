@@ -30,14 +30,14 @@ class Scenery extends LineBase
 		colorLayer.lineStyle(2, 0x00CC00);
 		colorLayer.moveTo(0, 0 );
 		colorLayer.lineTo(gfxEnd.x, gfxEnd.y);
-		colorLayer.drawCircle(0, 0, 0.02, 10);
-		colorLayer.drawCircle(gfxEnd.x, gfxEnd.y, 0.02, 10);
+		colorLayer.drawCircle(0, 0, lineCapRadius, lineCapSegment);
+		colorLayer.drawCircle(gfxEnd.x, gfxEnd.y, lineCapRadius, lineCapSegment);
 		
 		rideLayer.lineStyle(2, 0);
 		rideLayer.moveTo(0, 0);
 		rideLayer.lineTo(gfxEnd.x, gfxEnd.y);
-		rideLayer.drawCircle(0, 0, 0.02, 10);
-		rideLayer.drawCircle(gfxEnd.x, gfxEnd.y, 0.02, 10);
+		rideLayer.drawCircle(0, 0, lineCapRadius, lineCapSegment);
+		rideLayer.drawCircle(gfxEnd.x, gfxEnd.y, lineCapRadius, lineCapSegment);
 	}
 	
 	override public function visMode(_mode:LineDrawMode):Void 

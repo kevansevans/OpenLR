@@ -2677,7 +2677,7 @@ function moveToStartPos()
     {
         scarfAnchors[_loc1].x = scarfAnchors[_loc1].x + tla.startPoint._x;
         scarfAnchors[_loc1].y = scarfAnchors[_loc1].y + tla.startPoint._y;
-        scarfAnchors[_loc1].vx = scarfAnchors[_loc1].x - vOffSet * Math.sqrt(SCALEDOWN * SCALEDOWN);
+        scarfAnchors[_loc1].vx = scarfAnchors[_loc1].x - vOffpSet * Math.sqrt(SCALEDOWN * SCALEDOWN);
         scarfAnchors[_loc1].vy = scarfAnchors[_loc1].y;
     } // end of for
 } // End of the function
@@ -2805,10 +2805,12 @@ function switchToVersion(ver)
             {
                 var _loc1 = gridPos(line.x1, line.y1);
                 var _loc10 = gridPos(line.x2, line.y2);
+				
                 var _loc13 = line.dx > 0 ? (_loc10.x) : (_loc1.x);
                 var _loc11 = line.dx > 0 ? (_loc1.x) : (_loc10.x);
                 var _loc7 = line.dy > 0 ? (_loc10.y) : (_loc1.y);
                 var _loc12 = line.dy > 0 ? (_loc1.y) : (_loc10.y);
+				
                 if (line.dx == 0 && line.dy == 0 || _loc1.x == _loc10.x && _loc1.y == _loc10.y)
                 {
                     register(line, _loc1.x, _loc1.y);

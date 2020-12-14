@@ -11,18 +11,25 @@ import components.tool.ToolBehavior.LineColor;
  */
 class Grid 
 {
-	var registry:Map<String, LineContainer>;
+	public var registry:Map<String, LineContainer>;
+	
+	public var lines:Array<LineBase>;
+	
+	public var lineCount:Int = 0;
+	public var floorCount:Int = 0;
+	public var accelCount:Int = 0;
+	public var sceneCount:Int = 0;
+	
 	public function new() 
 	{
 		registry = new Map();
+		lines = new Array();
 	}
 	
-	public function preRegister(_line:LineBase)
+	public function register(_line:LineBase)
 	{
-		if (_line == null) {
-			trace("AAAAAHHHHH");
-			return ;
-		}
+		addLine(_line);
+		
 		var start = registryPosition(_line.start.x, _line.start.y);
 		var end = registryPosition(_line.end.x, _line.end.y);
 		
@@ -31,7 +38,7 @@ class Grid
 		var bottom = _line.dy > 0 ? end.y : start.y;
 		var top = _line.dy > 0 ? start.y : end.y;
 		
-		register(_line, start.x, start.y);
+		storeLine(_line, start.x, start.y);
 		
 		if (_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) return;
 		
@@ -76,15 +83,29 @@ class Grid
 			}
 			var pos = registryPosition(x, y);
 			if (pos.x >= left && pos.x <= right && pos.y >= top && pos.y <= bottom) {
-				register(_line, pos.x, pos.y);
+				storeLine(_line, pos.x, pos.y);
 				continue;
 			}
 			break;
 		}
-		
 	}
 	
-	function register(_line:LineBase, _x:Int, _y:Int)
+	public function addLine(_line:LineBase):Void 
+	{
+		lines.push(_line);
+		++lineCount;
+		switch (_line.type) {
+			case FLOOR :
+				++floorCount;
+			case ACCEL :
+				++accelCount;
+			case SCENE :
+				++sceneCount;
+			default :
+		}
+	}
+	
+	function storeLine(_line:LineBase, _x:Int, _y:Int)
 	{
 		var key = 'x${_x}y${_y}';
 		if (registry[key] == null) {
@@ -96,13 +117,38 @@ class Grid
 			registry[key] = reg;
 		}
 		switch (_line.type) {
-			case FLOOR | ACCEL :
+			case FLOOR :
+				registry[key].colliders.push(_line);
+			case ACCEL :
 				registry[key].colliders.push(_line);
 			case SCENE :
 				registry[key].nonColliders.push(_line);
 			default :
 				Main.console.log("Error registering line", 0xFF0000);
 		}
+		_line.keyList.push(key);
+	}
+	
+	public function unregister(_line:LineBase) {
+		for (key in _line.keyList) {
+			switch (_line.type) {
+				case FLOOR | ACCEL :
+					registry[key].colliders.remove(_line);
+				case SCENE :
+					registry[key].nonColliders.remove(_line);
+				default :
+			}
+		}
+		switch (_line.type) {
+			case FLOOR :
+				--floorCount;
+			case ACCEL :
+				--accelCount;
+			case SCENE :
+				--sceneCount;
+			default :
+		}
+		--lineCount;
 	}
 	
 	static inline var GRIDSIZE:Int = 14;
