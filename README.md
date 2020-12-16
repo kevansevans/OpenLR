@@ -1,4 +1,4 @@
-OpenLR - Using Heaps.io
+OpenLR - Using Heaps.io under the MIT license
 
 ```===
 Building
