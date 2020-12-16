@@ -33,8 +33,8 @@ class Grid
 		var start = registryPosition(_line.start.x, _line.start.y);
 		var end = registryPosition(_line.end.x, _line.end.y);
 		
-		var left = _line.dx > 0 ? end.x : start.x;
-		var right = _line.dx > 0 ? start.x : end.x;
+		var right = _line.dx > 0 ? end.x : start.x;
+		var left = _line.dx > 0 ? start.x : end.x;
 		var bottom = _line.dy > 0 ? end.y : start.y;
 		var top = _line.dy > 0 ? start.y : end.y;
 		
@@ -71,7 +71,7 @@ class Grid
 				
 				var step = y + _line.dy * difX * invDx;
 				if (Math.abs(step - y) < Math.abs(difY)) {
-					x += difY;
+					x += difX;
 					y = step;
 				} else if (Math.abs(step - y) == Math.abs(difY)) {
 					x += difX;
@@ -86,7 +86,7 @@ class Grid
 				storeLine(_line, pos.x, pos.y);
 				continue;
 			}
-			break;
+			return;
 		}
 	}
 	
@@ -127,6 +127,7 @@ class Grid
 				Main.console.log("Error registering line", 0xFF0000);
 		}
 		_line.keyList.push(key);
+		if (registry[key].lowFrame != null) Main.simulation.updateSimHistory(registry[key].lowFrame);
 	}
 	
 	public function unregister(_line:LineBase) {
@@ -138,6 +139,7 @@ class Grid
 					registry[key].nonColliders.remove(_line);
 				default :
 			}
+			if (registry[key].lowFrame != null) Main.simulation.updateSimHistory(registry[key].lowFrame);
 		}
 		switch (_line.type) {
 			case FLOOR :
@@ -175,4 +177,5 @@ typedef LineContainer = {
 	var position:Point;
 	var colliders:Array<LineBase>;
 	var nonColliders:Array<LineBase>;
+	@:optional var lowFrame:Int;
 }

@@ -88,3 +88,17 @@ function erase(x, y)
         } // end of for
     } // end of for
 } // End of the function
+
+
+//////////////////////////
+
+sol reader
+
+var sol = new Reader(File.read("./sleepyhead.sol"));
+var thing:Value = sol.readWithCode(0x03);
+var object:Dynamic = null;
+switch (thing) {
+	case AObject(fields, size):
+		object = fields;
+	default :
+}

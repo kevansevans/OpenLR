@@ -10,12 +10,13 @@ import h2d.col.Point;
  */
 class Riders 
 {
-	public var riders:Array<RiderBase>;
+	public var riders:Map<String, RiderBase>;
 	public function new() 
 	{
-		riders = new Array();
+		riders = new Map();
 		
-		riders.push(new Bosh());
+		var defaultRider:RiderBase = new Bosh();
+		riders[defaultRider.name] = defaultRider;
 	}
 	
 	public function stepRiders() {

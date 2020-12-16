@@ -13,13 +13,11 @@ import components.sledder.RiderBase;
 class Bosh extends RiderBase 
 {
 
-	public function new() 
+	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh") 
 	{
-		super();
+		super(_x, _y, _name);
 		
 		init();
-		
-		
 	}
 	
 	override public function reset() { init(); };
@@ -43,6 +41,8 @@ class Bosh extends RiderBase
 		for (point in ridePoints) {
 			point.pos.x *= 0.5;
 			point.pos.y *= 0.5;
+			point.pos.x += startPos.x;
+			point.pos.y += startPos.y;
 			point.vel.x = point.pos.x - 0.8 * 0.5;
 			point.vel.y = point.pos.y;
 		}

@@ -109,17 +109,6 @@ class LineBase
 		colorLayer.lineTo(gfxEnd.x, gfxEnd.y);
 	}
 	
-	public function visMode(_mode:LineDrawMode) {
-		switch (_mode) {
-			case EDIT :
-				rideLayer.visible = true;
-				colorLayer.visible = true;
-			case PLAYBACK :
-				rideLayer.visible = true;
-				colorLayer.visible = false;
-		}
-	}
-	
 	public function collide(_point:RidePoint) {
 		
 	}

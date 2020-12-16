@@ -14,6 +14,9 @@ class Simulation
 	
 	public var playing:Bool = false;
 	public var rewinding:Bool = false;
+	public var updating:Bool = false;
+	
+	public var bgFrames:Int = 0;
 	
 	@:isVar public var desiredSimSpeed(get, set):Float;
 	public var fastForward:Int = 1;
@@ -24,7 +27,7 @@ class Simulation
 		
 		desiredSimSpeed = 40;
 		
-		record();
+		recordGlobalSimState();
 	}
 	
 	var timeDelta:Float = 0.0;
@@ -42,66 +45,88 @@ class Simulation
 		while (timeDelta >= desiredSimSpeed) {
 			stepSim();
 			timeDelta -= desiredSimSpeed;
+			++frames;
 		}
 	}
 	public function rewindSim(_delta:Float) {
-		if (frames <= 0) {
-			frames = 0;
-			return;
-		}
 		timeDelta += _delta;
 		while (timeDelta >= desiredSimSpeed) {
-			restoreState();
+			restoreState(frames -= 1);
 			timeDelta -= desiredSimSpeed;
 		}
 	}
 	
 	public function stepSim() {
 		Main.riders.stepRiders();
-		record();
-		++frames;
+		recordGlobalSimState();
 	}
 	
 	public function backSim() {
-		restoreState();
+		restoreState(frames -= 1);
 	}
 	
-	public function restoreState(?_frame:Int) {
-		var locframe:Int = 0;
-		if (_frame == null) {
-			frames -= 1;
-			locframe = frames;
-		} else  {
-			locframe = _frame;
-		}
-		frames = locframe;
+	public function quickUpdate() {
+		backSim();
+		stepSim();
+	}
+	
+	public function restoreState(_frame:Int) {
+		var locframe = Std.int(Math.max(_frame, 0));
 		for (rider in Main.riders.riders) {
 			var state = frameStates[rider][locframe];
-			trace(state);
+			if (state == null) {
+				recordRiderState(rider);
+			}
 			rider.crashed = state.crashed;
 			for (point in 0...rider.ridePoints.length) {
 				rider.ridePoints[point].restoreState(state.points[point]);
 			}
-			rider.drawContactPoints();
 		}
 	}
 	
-	public function record() {
+	public function recordGlobalSimState() {
 		for (rider in Main.riders.riders) {
-			if (frameStates[rider] == null) frameStates[rider] = new Array();
-			if (frameStates[rider][frames] == null) {
+			recordRiderState(rider);
+		}
+	}
+	
+	public function recordRiderState(_rider:RiderBase) {
+		if (frameStates[_rider] == null) frameStates[_rider] = new Array();
+			if (frameStates[_rider][frames] == null) {
 				var stat:RiderState = {
-					crashed : rider.crashed,
+					crashed : _rider.crashed,
 					points : new Array()
 				}
-				frameStates[rider][frames] = stat;
+				frameStates[_rider][frames] = stat;
 			}
-			frameStates[rider][frames].crashed = rider.crashed;
+			frameStates[_rider][frames].crashed = _rider.crashed;
 			var _points:Array<PointState> = new Array();
-			for (point in rider.ridePoints) {
+			for (point in _rider.ridePoints) {
 				_points.push(point.saveState());
 			}
-			frameStates[rider][frames].points = _points;
+			frameStates[_rider][frames].points = _points;
+	}
+	
+	var restorePoint:Int = 0;
+	var maxPoint:Int = 0;
+	var returnPoint:Int = 0;
+	
+	public function updateSimHistory(_minFrame:Int) {
+		updating = true;
+		var restorePoint = Std.int(Math.max(0, _minFrame - 10));
+		var maxPoint = _minFrame + 40;
+		returnPoint = frames;
+		restoreState(restorePoint);
+	}
+	public function updateSim() {
+		
+		for (step in 0...40) {
+			stepSim();
+		}
+		restorePoint += 40;
+		if (restorePoint >= maxPoint) {
+			restoreState(returnPoint);
+			updating = false;
 		}
 	}
 	
@@ -114,7 +139,6 @@ class Simulation
 	{
 		return desiredSimSpeed = 1 / value;
 	}
-	
 	
 }
 

@@ -3,16 +3,19 @@ package;
 import components.managers.Grid;
 import components.managers.Riders;
 import components.managers.Simulation;
-import components.stage.LRConsole;
+import components.sledder.Bosh;
 import components.tool.ToolBehavior;
 import enums.Commands;
+import format.amf.Reader;
 import h2d.col.Point;
+import haxe.ds.Map;
 import haxe.http.HttpBase;
 import haxe.macro.Context;
 import components.stage.Canvas;
 import hl.UI;
 import hxd.res.DefaultFont;
 import h2d.Bitmap;
+import components.stage.LRConsole;
 import h2d.Console;
 import h2d.Graphics;
 import h2d.Interactive;
@@ -23,6 +26,9 @@ import hxd.Event;
 import hxd.Key;
 import hxd.Window;
 import h2d.Scene;
+import sys.io.FileInput;
+import sys.io.File;
+import format.amf.Value;
 
 
 /**
@@ -35,13 +41,13 @@ class Main extends App
 	
 	public static var canvas:Canvas;
 	
-	var viewGridSize:Int = 14;
+	public static var viewGridSize:Int = 14;
 	
-	var canvas_interaction:Interactive;
+	public static var canvas_interaction:Interactive;
 	
 	public static var console:LRConsole;
 	
-	var toolControl:ToolBehavior;
+	public static var toolControl:ToolBehavior;
 	
 	public static var build:String;
 	
@@ -163,12 +169,9 @@ class Main extends App
 		});
 		var arg12:ConsoleArgDesc = {t: AFloat, opt: false, name : "x"};
 		var arg13:ConsoleArgDesc = {t: AFloat, opt: false, name : "y"};
-		console.addCommand(Commands.zoomIn, "Increase zoom by 1", [], function() {zoomCanvas(1); });
-		console.addCommand(Commands.zoomOut, "Decrease zoom by 1", [], function() {zoomCanvas( -1); });
-		console.addCommand(Commands.addCanvasPosition, "Add values to existing canvas position", [arg12, arg13], function(_x:Float, _y:Float) {
-			canvas.x += _x;
-			canvas.y += _y;
-		});
+		console.addCommand(Commands.zoomIn, "Increase zoom by 1", [], function() {canvas.zoomCanvas(1); });
+		console.addCommand(Commands.zoomOut, "Decrease zoom by 1", [], function() {canvas.zoomCanvas( -1); });
+		console.addCommand(Commands.addCanvasPosition, "Add values to existing canvas position", [arg12, arg13], function(_x:Float, _y:Float) { canvas.addCanvasPosition(_x, _y); });
 		var arg14:ConsoleArgDesc = {t: ABool, opt: false, name : "true/false"};
 		console.addCommand(Commands.showGrid, "Toggle grid visibility", [arg14], function(_visible:Bool) { ruler.visible = _visible; });
 		console.addCommand(Commands.trackInfo, "Print track info", [], function() {
@@ -184,28 +187,36 @@ class Main extends App
 		console.addCommand(Commands.stepSimBackward, "Step sim back by one frame", [], function() {simulation.backSim(); });
 		console.addCommand(Commands.stepSimForward, "Step sim forward by one frame", [], function() {simulation.stepSim(); });
 		console.addCommand(Commands.rewindSimulation, "Set simulation to rewind", [arg14], function(_rewinding:Bool) {simulation.rewinding = _rewinding; });
+		var arg15:ConsoleArgDesc = {t: AString, opt: false, name : "Rider name"};
+		var arg16:ConsoleArgDesc = {t: AFloat, opt: true, name : "x position"};
+		var arg17:ConsoleArgDesc = {t: AFloat, opt: true, name : "y position"};
+		console.addCommand(Commands.setRiderStart, "Set rider start position", [arg15, arg16, arg17], function(_name:String, _x:Float = 0.0, _y:Float = 0.0) {
+			var rider = riders.riders[_name];
+			if (rider == null) return;
+			rider.startPos = new Point(_x, _y);
+			rider.init();
+		});
+		console.addCommand(Commands.addNewRider, "Add new rider to sim", [arg15, arg16, arg17], function(_name:String, _x:Float = 0.0, _y:Float = 0.0) {
+			var rider = riders.riders[_name];
+			if (rider != null) return;
+			else riders.riders[_name] = new Bosh(_x, _y, _name);
+		});
+		console.addCommand(Commands.listRiderInfo, "Print all riders and info into console", [], function() {
+			console.log("===");
+			for (rider in riders.riders) {
+				console.log('${rider.name} ${rider.startPos.x} ${rider.startPos.y}');
+			}
+			console.log("===");
+		});
 	}
 	
 	var mousePosX:Float;
 	var mousePosY:Float;
 	
-	function setCanvasPosition(_x:Float, _y:Float, ?_log:Bool = true) {
-		canvas.setPosition(_x + engine.width / 2, _y + engine.height / 2);
-		if (_log) console.log("Set canvas position to: " + _x + " " + _y, 0x0000BB);
-	}
+	
 	
 	//this function needs to be improved
-	function zoomCanvas(wheelDelta:Int):Void 
-	{
-		var oldScale = canvas.scaleX;
-		var oldMouseX = canvas.mouseX;
-		var oldMouseY = canvas.mouseY;
-		var delta = Math.min(Math.max((canvas.scaleX) * (wheelDelta > 0 ? 0.825 : 1.125), 0.01), 100);
-		canvas.setScale(delta);
-		var newScale = canvas.scaleX;
-		canvas.x += -(oldMouseX * (newScale - oldScale));
-		canvas.y += -(oldMouseY * (newScale - oldScale));
-	}
+	
 	
 	var riderPhysDelta:Float = 0.0;
 	var playing:Bool = false;
@@ -217,11 +228,18 @@ class Main extends App
 		
 		canvas.drawRiders();
 		
+		if (simulation.updating) {
+			simulation.updateSim();
+			return;
+		}
+		
 		if (simulation.playing && !simulation.rewinding) {
 			simulation.playSim(dt);
-		} else if (simulation.playing && simulation.rewinding) {
+		} else if (simulation.rewinding) {
 			simulation.rewindSim(dt);
 		}
+		
+		canvas.drawRiders();
 	}
 	
 	override function onResize():Void 

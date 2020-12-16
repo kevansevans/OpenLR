@@ -6,11 +6,14 @@ package enums;
 enum abstract Commands(String) from String
 {
 	var addCanvasPosition:String;
+	var addNewRider:String;
 	
 	var drawLine:String;
 	
 	var gridSizeDec:String;
 	var gridSizeInc:String;
+	
+	var listRiderInfo:String;
 	
 	var pauseTrack:String;
 	var playTrack:String;
@@ -22,6 +25,7 @@ enum abstract Commands(String) from String
 	var setCanvasPosition:String;
 	var setGridSize:String;
 	var setLineColor:String;
+	var setRiderStart:String;
 	var setScale:String;
 	var setTool:String;
 	var showGrid:String;

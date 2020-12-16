@@ -24,8 +24,15 @@ class RiderBase
 	
 	public var crashed:Bool = false;
 	
-	public function new() 
+	public var startPos:Point = new Point();
+	
+	public var name:String;
+	
+	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh" ) 
 	{
+		name = _name;
+		startPos = new Point(_x, _y);
+		
 		gfx = new Graphics();
 		
 		ridePoints = new Array();
@@ -66,9 +73,11 @@ class RiderBase
 				var key = 'x${_x + gridPos.x}y${_y + gridPos.y}';
 				if (Main.grid.registry[key] == null) continue;
 				else {
-					for (line in Main.grid.registry[key].colliders) {
+					var register = Main.grid.registry[key];
+					for (line in register.colliders) {
 						line.collide(point);
 					}
+					if (register.lowFrame == null || Main.simulation.frames < register.lowFrame) register.lowFrame = Main.simulation.frames;
 				}
 			}
 		}

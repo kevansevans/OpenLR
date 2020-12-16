@@ -39,17 +39,4 @@ class Scenery extends LineBase
 		rideLayer.drawCircle(0, 0, lineCapRadius, lineCapSegment);
 		rideLayer.drawCircle(gfxEnd.x, gfxEnd.y, lineCapRadius, lineCapSegment);
 	}
-	
-	override public function visMode(_mode:LineDrawMode):Void 
-	{
-		switch (_mode) {
-			case EDIT :
-				rideLayer.visible = false;
-				colorLayer.visible = true;
-			case PLAYBACK :
-				rideLayer.visible = true;
-				colorLayer.visible = false;
-		}
-	}
-	
 }
