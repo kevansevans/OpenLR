@@ -2,7 +2,8 @@ OpenLR - Using Heaps.io
 
 ```===
 Building
-===```
+===
+```
 
 Install Haxe, preferably latest
 
@@ -53,3 +54,5 @@ Hashlink VM will be needed to run .hl files. To bundle it with an executable, re
 - sdl.hdll
 - SDL2.dll
 - ui.hdll
+
+The HashLink VM is open source. You can compile it to your platform if so desired.
