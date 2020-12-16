@@ -32,7 +32,7 @@ class Canvas extends Scene
 	var scenePlaybackLayer:Object;
 	var colorLayer:Object;
 	
-	var preview:Graphics;
+	public var preview:Object;
 	
 	var eraserSize:Int = 5;
 	
@@ -52,9 +52,7 @@ class Canvas extends Scene
 		
 		sledderLayer = new Object(this);
 		
-		preview = new Graphics(this);
-		
-		scenePlaybackLayer.addChild(new Bitmap(Tile.fromColor(0xCC00CC, 10, 10, 0.5)));
+		preview = new Object(this);
 	}
 	
 	public function drawRiders() {
@@ -132,19 +130,21 @@ class Canvas extends Scene
 		}
 	}
 	
-	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float) {
+	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
 		var line:LineBase = null;
 		switch (_type) {
 			case 0:
-				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), false);
+				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
+				if (_limMode != -1) line.setLim(_limMode);
 				colorLayer.addChild(line.colorLayer);
 				rideLayer.addChild(line.rideLayer);
 			case 1 :
-				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), false);
+				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
+				if (_limMode != -1) line.setLim(_limMode);
 				colorLayer.addChild(line.colorLayer);
 				rideLayer.addChild(line.rideLayer);
 			case 2 :
-				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), false);
+				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
 				sceneColorLayer.addChild(line.colorLayer);
 				scenePlaybackLayer.addChild(line.rideLayer);
 			default :

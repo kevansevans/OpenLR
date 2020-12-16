@@ -2,6 +2,7 @@ package components.stage;
 
 import h2d.Console;
 import haxe.PosInfos;
+import hxd.Key;
 
 /**
  * ...
@@ -26,7 +27,7 @@ class LRConsole extends Console
 	@:privateAccess override function onEvent( e : hxd.Event ) {
 		switch( e.kind ) {
 		case ETextInput:
-			if( e.charCode == shortKeyChar && !bg.visible )
+			if ( e.charCode == shortKeyChar && !bg.visible )
 				show();
 		default:
 		}

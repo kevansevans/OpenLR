@@ -2,6 +2,7 @@ package components.managers;
 
 import components.sledder.RiderBase;
 import components.physics.RidePoint.PointState;
+import haxe.PosInfos;
 
 /**
  * ...
@@ -10,13 +11,13 @@ import components.physics.RidePoint.PointState;
 class Simulation 
 {
 	public var frameStates:Map<RiderBase, Array<RiderState>>;
+	public var flagPoint:Map<RiderBase, RiderState>;
 	public var frames:Int = 0;
 	
 	public var playing:Bool = false;
+	public var paused:Bool = false;
 	public var rewinding:Bool = false;
 	public var updating:Bool = false;
-	
-	public var bgFrames:Int = 0;
 	
 	@:isVar public var desiredSimSpeed(get, set):Float;
 	public var fastForward:Int = 1;
@@ -28,16 +29,36 @@ class Simulation
 		desiredSimSpeed = 40;
 		
 		recordGlobalSimState();
+		
+		restoreState(0);
 	}
 	
 	var timeDelta:Float = 0.0;
 	public function startSim() {
 		playing = true;
 		timeDelta = 0;
+		if (flagPoint != null) restoreFlagPoint();
+		else restoreState(0);
 	}
+	
+	public function pauseSim() {
+		if (!playing && !paused) {
+			startSim();
+			return;
+		}
+		playing = false;
+		paused = true;
+	}
+	public function resumeSim() {
+		playing = true;
+		paused = false;
+	}
+	
 	public function endSim() {
 		playing = false;
 		timeDelta = 0;
+		if (flagPoint != null) restoreFlagPoint();
+		else restoreState(0);
 	}
 	public function playSim(_delta:Float) {
 		
@@ -45,7 +66,6 @@ class Simulation
 		while (timeDelta >= desiredSimSpeed) {
 			stepSim();
 			timeDelta -= desiredSimSpeed;
-			++frames;
 		}
 	}
 	public function rewindSim(_delta:Float) {
@@ -57,6 +77,7 @@ class Simulation
 	}
 	
 	public function stepSim() {
+		++frames;
 		Main.riders.stepRiders();
 		recordGlobalSimState();
 	}
@@ -72,6 +93,7 @@ class Simulation
 	
 	public function restoreState(_frame:Int) {
 		var locframe = Std.int(Math.max(_frame, 0));
+		frames = locframe;
 		for (rider in Main.riders.riders) {
 			var state = frameStates[rider][locframe];
 			if (state == null) {
@@ -84,6 +106,21 @@ class Simulation
 		}
 	}
 	
+	public function setFlagPoint() {
+		flagPoint = new Map();
+		for (rider in Main.riders.riders) {
+			flagPoint[rider] = frameStates[rider][frames];
+		}
+	}
+	
+	public function restoreFlagPoint() {
+		
+	}
+	
+	public function destroyFlagPoint() {
+		flagPoint = null;
+	}
+	
 	public function recordGlobalSimState() {
 		for (rider in Main.riders.riders) {
 			recordRiderState(rider);
@@ -92,41 +129,37 @@ class Simulation
 	
 	public function recordRiderState(_rider:RiderBase) {
 		if (frameStates[_rider] == null) frameStates[_rider] = new Array();
-			if (frameStates[_rider][frames] == null) {
-				var stat:RiderState = {
-					crashed : _rider.crashed,
-					points : new Array()
-				}
-				frameStates[_rider][frames] = stat;
-			}
-			frameStates[_rider][frames].crashed = _rider.crashed;
-			var _points:Array<PointState> = new Array();
-			for (point in _rider.ridePoints) {
-				_points.push(point.saveState());
-			}
-			frameStates[_rider][frames].points = _points;
+		var stat:RiderState = {
+			crashed : _rider.crashed,
+			points : new Array()
+		}
+		frameStates[_rider][frames] = stat;
+		var _points:Array<PointState> = new Array();
+		for (point in _rider.ridePoints) {
+			_points.push(point.saveState());
+		}
+		frameStates[_rider][frames].points = _points;
 	}
 	
-	var restorePoint:Int = 0;
-	var maxPoint:Int = 0;
+	var rewindPoint:Int = 0;
 	var returnPoint:Int = 0;
-	
 	public function updateSimHistory(_minFrame:Int) {
+		if (updating) return;
 		updating = true;
-		var restorePoint = Std.int(Math.max(0, _minFrame - 10));
-		var maxPoint = _minFrame + 40;
-		returnPoint = frames;
-		restoreState(restorePoint);
+		playing = false;
+		returnPoint = Std.int(Math.max(frames - 1, 0));
+		rewindPoint = Std.int(Math.max(_minFrame - 1, 0));
+		restoreState(rewindPoint);
 	}
 	public function updateSim() {
-		
-		for (step in 0...40) {
+		for (a in 0...40) {
 			stepSim();
-		}
-		restorePoint += 40;
-		if (restorePoint >= maxPoint) {
-			restoreState(returnPoint);
-			updating = false;
+			if (frames >= returnPoint) {
+				updating = false;
+				frames = rewindPoint;
+				restoreState(rewindPoint);
+				return ;
+			}
 		}
 	}
 	

@@ -83,7 +83,7 @@ class LineBase
 		limValue = Math.min(0.25, zone / distance);
 	}
 	
-	function setLim(_limMode:Int)
+	public function setLim(_limMode:Int)
 	{
 		switch (_limMode) {
 			case 0:
@@ -112,4 +112,23 @@ class LineBase
 	public function collide(_point:RidePoint) {
 		
 	}
+	
+	public function toSaveObject():LineSave {
+		var save:LineSave = {
+			linetype : type,
+			startPoint : start,
+			endPoint : end,
+			inverted : shifted,
+			limitMode : limType
+		}
+		return save;
+	}
+}
+
+typedef LineSave = {
+	var linetype:LineColor;
+	var startPoint:Point;
+	var endPoint:Point;
+	var inverted:Bool;
+	var limitMode:Int;
 }

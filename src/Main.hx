@@ -6,13 +6,12 @@ import components.managers.Simulation;
 import components.sledder.Bosh;
 import components.tool.ToolBehavior;
 import enums.Commands;
-import format.amf.Reader;
+import file.SaveLoad;
 import h2d.col.Point;
 import haxe.ds.Map;
 import haxe.http.HttpBase;
 import haxe.macro.Context;
 import components.stage.Canvas;
-import hl.UI;
 import hxd.res.DefaultFont;
 import h2d.Bitmap;
 import components.stage.LRConsole;
@@ -26,14 +25,30 @@ import hxd.Event;
 import hxd.Key;
 import hxd.Window;
 import h2d.Scene;
-import sys.io.FileInput;
-import sys.io.File;
-import format.amf.Value;
+import hxd.Save;
+import hxd.Res;
+
+#if hl
+import hl.UI;
+#end
 
 
 /**
  * ...
  * @author Kaelan
+ * ...
+ * 
+ * Hi, thanks for viewing my source.
+ * I'm not particularily concerned with making a build "for the community", I realized I had more fun worrying about what I wanted and building the engine to my needs.
+ * This isn't to say I'm refusing to take feedback, obviously I'm interested if someone else besides me can see this comment.
+ * 
+ * I'm just not going to be focused on making this anything other than a personal engine. So please taper your expectations.
+ * If you find use out of it, that's great, if not, well... you know where to find tools that you like better :P
+ * 
+ * This build is heavily focused on being minimalistic. If it's not an action that can be assigned a hotkey that feels comfortable,
+ * it's very likely a console command. You can open src/enums/Commands.hx for a full list. Also most key actions will also have a console command.
+ * 
+ * -Kevy
  */
 class Main extends App
 {
@@ -57,6 +72,11 @@ class Main extends App
 	
 	public static var simulation:Simulation;
 	
+	public static var saveload:SaveLoad;
+	
+	public var trackName:Null<String> = null;
+	public var authorName:Null<String> = null;
+	
 	@:macro public static function getBuildDate() {
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
 		var month:Int = Date.now().getMonth();
@@ -79,13 +99,19 @@ class Main extends App
 		
 		super();
 		
+		#if (hl && !debug)
+		UI.closeConsole();
+		#end
+		
 	}
 	
 	override function init():Void 
 	{
 		super.init();
 		
-		Window.getInstance().title = "OpenLR - " + Main.build;
+		Res.initEmbed();
+		
+		hxd.Window.getInstance().title = "OpenLR - " + Main.build;
 		
 		engine.backgroundColor = 0xFFCCCCCC;
 		
@@ -117,11 +143,15 @@ class Main extends App
 		riders = new Riders();
 		
 		simulation = new Simulation();
+		
+		saveload = new SaveLoad();
 	}
 	
 	//EVERYTHING is a console command if and when possible.
+	//You can gleam the order I added everything through this function, haha
 	function setConsoleActions():Void 
 	{
+		console.addCommand(Commands.github, "Link to github page", [], function() {console.log('https://github.com/kevansevans/OpenLR'); } );
 		var arg1:ConsoleArgDesc = {t: AFloat, opt: false, name : "x value"};
 		var arg2:ConsoleArgDesc = {t: AFloat, opt: false, name : "y value"};
 		console.addCommand(Commands.setCanvasPosition, "Sets the position of the canvas", [arg1, arg2], setCanvasPosition);
@@ -131,12 +161,23 @@ class Main extends App
 		console.addCommand(Commands.gridSizeInc, "Increase grid size by 1", [], function() { viewGridSize += 1;});
 		console.addCommand(Commands.gridSizeDec, "Decrease grid size by 1", [], function() { viewGridSize -= 1; viewGridSize = Std.int(Math.max(viewGridSize, 1));});
 		console.addCommand(Commands.setScale, "Change editor grid size", [arg3], function(?_value:Int = 2) { viewGridSize = _value; console.log("Set canvas scale to: " + _value, 0x0000BB);});
-		var arg5:ConsoleArgDesc = {t: AInt, opt: false, name : "type"};
-		var arg6:ConsoleArgDesc = {t: AFloat, opt: false, name : "x1"};
-		var arg7:ConsoleArgDesc = {t: AFloat, opt: false, name : "y1"};
-		var arg8:ConsoleArgDesc = {t: AFloat, opt: false, name : "x2"};
-		var arg9:ConsoleArgDesc = {t: AFloat, opt: false, name : "y2"};
-		console.addCommand(Commands.drawLine, "add line to track", [arg5, arg6, arg7, arg8, arg9], canvas.addLine);
+		var arg5:ConsoleArgDesc = {t: AInt, opt: true, name : "type"};
+		var arg6:ConsoleArgDesc = {t: AFloat, opt: true, name : "x1"};
+		var arg7:ConsoleArgDesc = {t: AFloat, opt: true, name : "y1"};
+		var arg8:ConsoleArgDesc = {t: AFloat, opt: true, name : "x2"};
+		var arg9:ConsoleArgDesc = {t: AFloat, opt: true, name : "y2"};
+		var arg21:ConsoleArgDesc = {t: ABool, opt: true, name : "inverted"};
+		var arg22:ConsoleArgDesc = {t: AInt, opt: true, name : "limit mode"};
+		console.addCommand(Commands.drawLine, "add line to track", [arg5, arg6, arg7, arg8, arg9, arg21, arg22], function(?_type:Int, ?_x1:Float, ?_y1:Float, ?_x2:Float, ?_y2:Float, ?_invert:Bool, ?_lim:Int) {
+			var type = _type == null ? toolControl.color : _type;
+			var x1 = _x1 == null ? canvas.mouseX : _x1;
+			var y1 = _y1 == null ? canvas.mouseY : _y1;
+			var x2 = _x2 == null ? x1 + 10 : _x2;
+			var y2 = _y2 == null ? y1 : _y2;
+			var shifted:Bool = _invert == null ? false : _invert;
+			var lim = _lim == null ? -1 : _lim;
+			canvas.addLine(type, x1, y1, x2, y2, shifted, lim);
+		});
 		var arg10:ConsoleArgDesc = {t: AString, opt: false, name : "Tool"};
 		console.addCommand(Commands.setTool, "Change current active tool", [arg10], function(_tool:String, _color:String) {
 			switch (_tool.toUpperCase()) {
@@ -208,15 +249,30 @@ class Main extends App
 			}
 			console.log("===");
 		});
+		var arg18:ConsoleArgDesc = {t: AString, opt: false, name : "Track name"};
+		var arg19:ConsoleArgDesc = {t: AInt, opt: true, name : "previous version offset"};
+		var arg20:ConsoleArgDesc = {t: AString, opt: true, name : "Track name"};
+		console.addCommand(Commands.setTrackName, "Set track name", [arg18], function(_name:String) {
+			trackName = _name; 
+			console.log('Track name set to ${trackName}');
+		});
+		console.addCommand(Commands.saveTrack, "Save current active track data", [arg20], function(?_name:String) {
+			if (_name == null && trackName == null) {
+				console.log('Trackname undefined, please use the command /setTrackName or provide name as argument when using /saveTrack', 0xFF0000);
+				return;
+			} else if (_name == null && trackName != null) {
+				saveload.saveTrack(trackName);
+				console.log('Saved current track as ${trackName}');
+			} else {
+				saveload.saveTrack(_name);
+				trackName = _name;
+				console.log('Saved new track as ${trackName}');
+			}
+			
+		});
+		console.addCommand(Commands.loadTrack, "Load track with specified name", [arg18, arg19], function(_name:String, ?_offset:Int = 0) {saveload.loadTrack(_name, _offset); });
+		console.addCommand(Commands.listSavedTracks, "Print any found tracks", [], function() {saveload.listTrackFiles(); });
 	}
-	
-	var mousePosX:Float;
-	var mousePosY:Float;
-	
-	
-	
-	//this function needs to be improved
-	
 	
 	var riderPhysDelta:Float = 0.0;
 	var playing:Bool = false;
@@ -225,8 +281,6 @@ class Main extends App
 		super.update(dt);
 		
 		updateGridLines();
-		
-		canvas.drawRiders();
 		
 		if (simulation.updating) {
 			simulation.updateSim();

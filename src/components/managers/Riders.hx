@@ -11,6 +11,7 @@ import h2d.col.Point;
 class Riders 
 {
 	public var riders:Map<String, RiderBase>;
+	
 	public function new() 
 	{
 		riders = new Map();

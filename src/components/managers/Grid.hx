@@ -28,6 +28,8 @@ class Grid
 	
 	public function register(_line:LineBase)
 	{
+		updateFrame = 0;
+		
 		addLine(_line);
 		
 		var start = registryPosition(_line.start.x, _line.start.y);
@@ -104,6 +106,8 @@ class Grid
 			default :
 		}
 	}
+	
+	var updateFrame:Int = 0;
 	
 	function storeLine(_line:LineBase, _x:Int, _y:Int)
 	{

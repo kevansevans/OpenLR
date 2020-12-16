@@ -1,0 +1,6 @@
+-cp src
+
+-dce full
+-main Main
+-lib heaps
+-js bin/js/openlr.js

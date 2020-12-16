@@ -4,6 +4,7 @@ import components.physics.RidePoint;
 import components.physics.Stick;
 import h2d.Graphics;
 import h2d.col.Point;
+import haxe.PosInfos;
 
 /**
  * ...
