@@ -3,8 +3,11 @@ import components.managers.Grid;
 import components.physics.RidePoint;
 import components.physics.Stick;
 import h2d.Graphics;
+import h2d.HtmlText;
 import h2d.col.Point;
+import h3d.Vector;
 import haxe.PosInfos;
+import hxd.res.DefaultFont;
 
 /**
  * ...
@@ -19,6 +22,8 @@ class RiderBase
 	
 	public var gfx:Graphics;
 	
+	public var nameField:HtmlText;
+	
 	public var gravity:Point = new Point(0, 0.175);
 	
 	public var ENDURANCE = 0.057;
@@ -27,26 +32,55 @@ class RiderBase
 	
 	public var startPos:Point = new Point();
 	
-	public var name:String;
+	@:isVar public var name(get, set):String;
+	
+	public var drawContactPoints:Bool = true;
+	
+	static public var WHITE:Vector = new Vector(1, 1, 1, 1);
+	static public var BLACK:Vector = new Vector(0, 0, 0, 1);
+	static public var RED:Vector = new Vector(1, 0, 0, 1);
 	
 	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh" ) 
 	{
-		name = _name;
 		startPos = new Point(_x, _y);
 		
 		gfx = new Graphics();
+		Main.canvas.sledderLayer.addChild(gfx);
+		nameField = new HtmlText(DefaultFont.get());
+		Main.canvas.sledderLayer.addChild(nameField);
+		
+		name = _name;
 		
 		ridePoints = new Array();
 		
 		bones = new Array();
-		
-		Main.canvas.sledderLayer.addChild(gfx);
 	}
 	
 	public function init() {}
 	public function reset() {}
 	
-	public function drawContactPoints() {
+	public function delete() {
+		Main.canvas.sledderLayer.removeChild(gfx);
+		Main.canvas.sledderLayer.removeChild(nameField);
+		Main.riders.riders.remove(name);
+		Main.riders.riderCount -= 1;
+	}
+	
+	public function renderRider() {
+		
+		nameField.scaleX = nameField.scaleY = 1 * (1 / Main.canvas.scaleX);
+		
+		nameField.x = ridePoints[5].pos.x;
+		nameField.y = ridePoints[5].pos.y;
+		
+		if (crashed) {
+			nameField.color = RED;
+		} else {
+			nameField.color = WHITE;
+		}
+		
+		if (!drawContactPoints) return;
+		
 		gfx.clear();
 		gfx.lineStyle(1, 0xCC00CC);
 		for (dot in ridePoints) {
@@ -83,4 +117,20 @@ class RiderBase
 			}
 		}
 	}
+	
+	function get_name():String 
+	{
+		return name;
+	}
+	
+	function set_name(value:String):String 
+	{
+		nameField.text = value;
+		return name = value;
+	}
+}
+
+typedef RiderSave = {
+	var name:String;
+	var startPoint:Point;
 }

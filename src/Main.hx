@@ -8,24 +8,14 @@ import components.tool.ToolBehavior;
 import enums.Commands;
 import file.SaveLoad;
 import h2d.col.Point;
-import haxe.ds.Map;
-import haxe.http.HttpBase;
 import haxe.macro.Context;
 import components.stage.Canvas;
 import hxd.res.DefaultFont;
-import h2d.Bitmap;
 import components.stage.LRConsole;
 import h2d.Console;
 import h2d.Graphics;
 import h2d.Interactive;
-import h2d.Tile;
 import hxd.App;
-import hxd.Cursor;
-import hxd.Event;
-import hxd.Key;
-import hxd.Window;
-import h2d.Scene;
-import hxd.Save;
 import hxd.Res;
 
 #if hl
@@ -74,8 +64,8 @@ class Main extends App
 	
 	public static var saveload:SaveLoad;
 	
-	public var trackName:Null<String> = null;
-	public var authorName:Null<String> = null;
+	public static var trackName:Null<String> = null;
+	public static var authorName:Null<String> = null;
 	
 	@:macro public static function getBuildDate() {
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -128,9 +118,8 @@ class Main extends App
 		canvas.y = engine.height / 2;
 		
 		canvas_interaction = new Interactive(engine.width, engine.height, s2d);
-		canvas_interaction.cursor = Cursor.Default;
 		
-		toolControl = new ToolBehavior(s2d, canvas_interaction, canvas);
+		toolControl = new ToolBehavior();
 		
 		console = new LRConsole(DefaultFont.get(), s2d);
 		setConsoleActions();
@@ -154,7 +143,9 @@ class Main extends App
 		console.addCommand(Commands.github, "Link to github page", [], function() {console.log('https://github.com/kevansevans/OpenLR'); } );
 		var arg1:ConsoleArgDesc = {t: AFloat, opt: false, name : "x value"};
 		var arg2:ConsoleArgDesc = {t: AFloat, opt: false, name : "y value"};
-		console.addCommand(Commands.setCanvasPosition, "Sets the position of the canvas", [arg1, arg2], setCanvasPosition);
+		console.addCommand(Commands.setCanvasPosition, "Sets the position of the canvas", [arg1, arg2], function(_x:Float, _y:Float){
+			canvas.setCanvasPosition(_x, _y);
+		});
 		console.addCommand(Commands.version, "show current build version", [], function() { console.log(Main.build, 0x0000BB); });
 		var arg3:ConsoleArgDesc = {t: AInt, opt: true, name : "size"};
 		console.addCommand(Commands.setGridSize, "Change editor grid size", [arg3], function(?_value:Int = 64) { viewGridSize = _value; console.log("Set grid size to: " + _value, 0x0000BB);});
@@ -237,10 +228,10 @@ class Main extends App
 			rider.startPos = new Point(_x, _y);
 			rider.init();
 		});
-		console.addCommand(Commands.addNewRider, "Add new rider to sim", [arg15, arg16, arg17], function(_name:String, _x:Float = 0.0, _y:Float = 0.0) {
-			var rider = riders.riders[_name];
-			if (rider != null) return;
-			else riders.riders[_name] = new Bosh(_x, _y, _name);
+		console.addCommand(Commands.addNewRider, "Add new rider to sim", [arg15, arg16, arg17], function(_name:String, ?_x:Float, ?_y:Float) {
+			var x = _x == null ? canvas.mouseX : _x;
+			var y = _y == null ? canvas.mouseY : _y;
+			riders.addNewRider(_name, new Point(x, y));
 		});
 		console.addCommand(Commands.listRiderInfo, "Print all riders and info into console", [], function() {
 			console.log("===");
@@ -249,6 +240,7 @@ class Main extends App
 			}
 			console.log("===");
 		});
+		console.addCommand(Commands.removeRider, "Remove specified rider", [arg15], function(_name:String) {riders.riders[_name].delete(); });
 		var arg18:ConsoleArgDesc = {t: AString, opt: false, name : "Track name"};
 		var arg19:ConsoleArgDesc = {t: AInt, opt: true, name : "previous version offset"};
 		var arg20:ConsoleArgDesc = {t: AString, opt: true, name : "Track name"};
@@ -270,8 +262,38 @@ class Main extends App
 			}
 			
 		});
-		console.addCommand(Commands.loadTrack, "Load track with specified name", [arg18, arg19], function(_name:String, ?_offset:Int = 0) {saveload.loadTrack(_name, _offset); });
+		console.addCommand(Commands.loadTrack, "Load track with specified name", [arg18, arg19], function(_name:String, ?_offset:Int = 0) {
+			canvas.clear();
+			riders.deleteAllRiders();
+			saveload.loadTrack(_name, _offset); 
+		});
 		console.addCommand(Commands.listSavedTracks, "Print any found tracks", [], function() {saveload.listTrackFiles(); });
+		var arg23:ConsoleArgDesc = {t: AFloat, opt: true, name : "Snap distance"};
+		console.addCommand(Commands.snapToGrid, "Enable grid snapping. Set to 0 to disable", [arg23], function(?_range:Float = 0) {
+			if (_range > viewGridSize) {
+				console.log('Snap distance ${_range} is larger than the ruler\'s dimensions of ${viewGridSize}', 0xFF0000);
+				return;
+			}
+			toolControl.gridSnapDistance = _range;
+			if (_range == 0) {
+				console.log('Grid snapping off...');
+			} else {
+				console.log('Grid snapping set to ${_range}');
+			}
+		});
+		console.addCommand(Commands.newTrack, "New track. Will save if track name has been set", [], function() {
+			if (trackName != null) console.runCommand("saveTrack");
+			canvas.clear();
+			riders.deleteAllRiders();
+			riders.addNewRider("Bosh", new Point(0, 0));
+			trackName = null;
+			authorName = null;
+		} );
+		var arg24:ConsoleArgDesc = {t: AString, opt: false, name : "Rider name"};
+		var arg25:ConsoleArgDesc = {t: AString, opt: false, name : "New name"};
+		console.addCommand(Commands.renameRider, "Rename and existing rider", [arg24, arg25], function(_old:String, _new:String){
+			riders.renameRider(_old, _new);
+		});
 	}
 	
 	var riderPhysDelta:Float = 0.0;

@@ -1,5 +1,4 @@
 -cp src
-
 -dce full
 -main Main
 -lib heaps

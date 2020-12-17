@@ -70,7 +70,7 @@ class Accel extends LineBase
 				_point.pos.x -= (_loc4 * nx);
 				_point.pos.y -= (_loc4 * ny);
 				_point.vel.x = _point.vel.x + ny * _point.friction * _loc4 * (_point.vel.x < _point.pos.x ? 1 : -1) + accx;
-				_point.vel.y = _point.vel.y + nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1) + accy;
+				_point.vel.y = _point.vel.y - nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1) + accy;
 			}
 		}
 	}

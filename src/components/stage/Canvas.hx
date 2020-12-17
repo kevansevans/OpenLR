@@ -57,7 +57,7 @@ class Canvas extends Scene
 	
 	public function drawRiders() {
 		for (rider in Main.riders.riders) {
-			rider.drawContactPoints();
+			rider.renderRider();
 		}
 	}
 	
@@ -153,6 +153,12 @@ class Canvas extends Scene
 		}
 		line.render();
 		Main.grid.register(line);
+	}
+	
+	public function clear() {
+		for (line in Main.grid.lines) {
+			removeLine(line);
+		}
 	}
 	
 	public function removeLine(_line:LineBase) {

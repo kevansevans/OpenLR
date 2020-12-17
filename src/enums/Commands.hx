@@ -27,6 +27,8 @@ enum abstract Commands(String) from String
 	
 	var recordFlagPoint:String; //Set flag at frame
 	var recordSimState:String; //Record state
+	var removeRider:String; //name, deletes specified rider
+	var renameRider:String; //name, new name, rename rider
 	var rewindSimulation:String; //true/false, toggle rewinding
 	
 	var saveTrack:String; //[name, will default to current track name] Save track. If track name is not provided and track name is unset, it will not save.
@@ -39,6 +41,7 @@ enum abstract Commands(String) from String
 	var setTrackName:String; //name, set track name
 	var setTool:String; //type, change tool type
 	var showGrid:String; //true/false bool, display grid
+	var snapToGrid:String; //[distance, 0.0], enable snapping to grid. Distance determines how close to snap to, 0 disables. 
 	var stepSimForward:String; //advance the sim forward by 1 frame
 	var stepSimBackward:String; //rewind the sim by 1 frame
 	var stopTrack:String; //stops playback

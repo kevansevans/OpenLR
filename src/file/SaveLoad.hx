@@ -1,12 +1,16 @@
 package file;
 
 import components.lines.LineBase.LineSave;
+import components.sledder.RiderBase;
+import format.abc.Data.Name;
 import haxe.macro.Expr.Var;
 
 import hxd.Save;
 
 #if sys
 import sys.FileSystem;
+#elseif js
+
 #end
 
 /**
@@ -24,11 +28,22 @@ class SaveLoad
 	public function saveTrack(_name:String) {
 		
 		var saveObject:SaveData = {
-			lines : new Array()
+			lines : new Array(),
+			riders : new Array(),
+			name : Main.trackName,
+			author : Main.authorName
 		}
 		
 		for (line in Main.grid.lines) {
 			saveObject.lines.push(line.toSaveObject());
+		}
+		
+		for (sledder in Main.riders.riders) {
+			var rider:RiderSave = {
+				name : sledder.name,
+				startPoint : sledder.startPos
+			}
+			saveObject.riders.push(rider);
 		}
 		
 		#if sys
@@ -55,7 +70,7 @@ class SaveLoad
 				Main.console.log("No saves found...", 0xFF0000);
 			}
 			for (item in list) {
-				var flavorText:String = '.sav';
+				var flavorText:String = '';
 				if (FileSystem.isDirectory('./saves/${item}')) {
 					var subList = FileSystem.readDirectory('./saves/${item}');
 					flavorText = ' :: Directory (${subList.length} files)';
@@ -66,6 +81,13 @@ class SaveLoad
 		} else {
 			Main.console.log("No saves found, there isn't even a save folder...", 0xFF0000);
 		}
+		#elseif js
+		var numItems = js.Browser.window.localStorage.length;
+		Main.console.log("===");
+		for (item in 0...numItems) {
+			Main.console.log('${js.Browser.window.localStorage.key(item)}');
+		}
+		Main.console.log("===");
 		#end
 	}
 	
@@ -107,8 +129,15 @@ class SaveLoad
 		
 		#end
 		
+		Main.trackName = loadObject.name;
+		Main.authorName = loadObject.author;
+		
 		for (line in loadObject.lines) {
 			Main.canvas.addLine(line.linetype, line.startPoint.x, line.startPoint.y, line.endPoint.x, line.endPoint.y, line.inverted);
+		}
+		
+		for (rider in loadObject.riders) {
+			Main.riders.addNewRider(rider.name, rider.startPoint);
 		}
 		
 	}
@@ -117,4 +146,7 @@ class SaveLoad
 
 typedef SaveData = {
 	var lines:Array<LineSave>;
+	var riders:Array<RiderSave>;
+	var name:String;
+	var author:String;
 }

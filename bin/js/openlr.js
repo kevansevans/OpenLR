@@ -212,7 +212,6 @@ hxd_App.prototype = {
 	,__class__: hxd_App
 };
 var Main = function() {
-	this.trackName = null;
 	hxd_App.call(this);
 };
 $hxClasses["Main"] = Main;
@@ -248,8 +247,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		_this.posChanged = true;
 		_this.y = this.engine.height / 2;
 		Main.canvas_interaction = new h2d_Interactive(this.engine.width,this.engine.height,this.s2d);
-		Main.canvas_interaction.set_cursor(hxd_Cursor.Default);
-		Main.toolControl = new components_tool_ToolBehavior(this.s2d,Main.canvas_interaction,Main.canvas);
+		Main.toolControl = new components_tool_ToolBehavior();
 		Main.console = new components_stage_LRConsole(hxd_res_DefaultFont.get(),this.s2d);
 		this.setConsoleActions();
 		Main.console.log("Welcome to OpenLR: " + Main.build,3355443);
@@ -267,7 +265,9 @@ Main.prototype = $extend(hxd_App.prototype,{
 		});
 		var arg1 = { t : h2d_ConsoleArg.AFloat, opt : false, name : "x value"};
 		var arg2 = { t : h2d_ConsoleArg.AFloat, opt : false, name : "y value"};
-		Main.console.addCommand("setCanvasPosition","Sets the position of the canvas",[arg1,arg2],"setCanvasPosition");
+		Main.console.addCommand("setCanvasPosition","Sets the position of the canvas",[arg1,arg2],function(_x,_y) {
+			Main.canvas.setCanvasPosition(_x,_y);
+		});
 		Main.console.addCommand("version","show current build version",[],function() {
 			Main.console.log(Main.build,187);
 		});
@@ -305,7 +305,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 			var x1 = _x1 == null ? Main.canvas.get_mouseX() : _x1;
 			var y1 = _y1 == null ? Main.canvas.get_mouseY() : _y1;
 			var x2 = _x2 == null ? x1 + 10 : _x2;
-			var y2 = _y2 == null ? y1 + 10 : _y2;
+			var y2 = _y2 == null ? y1 : _y2;
 			var shifted = _invert == null ? false : _invert;
 			var lim = _lim == null ? -1 : _lim;
 			Main.canvas.addLine(type,x1,y1,x2,y2,shifted,lim);
@@ -404,58 +404,83 @@ Main.prototype = $extend(hxd_App.prototype,{
 			rider.init();
 		});
 		Main.console.addCommand("addNewRider","Add new rider to sim",[arg15,arg16,arg17],function(_name,_x,_y) {
-			if(_y == null) {
-				_y = 0.0;
-			}
-			if(_x == null) {
-				_x = 0.0;
-			}
-			var rider = Main.riders.riders.h[_name];
-			if(rider != null) {
-				return;
-			} else {
-				var this1 = Main.riders.riders;
-				var v = new components_sledder_Bosh(_x,_y,_name);
-				this1.h[_name] = v;
-			}
+			var x = _x == null ? Main.canvas.get_mouseX() : _x;
+			var y = _y == null ? Main.canvas.get_mouseY() : _y;
+			Main.riders.addNewRider(_name,new h2d_col_Point(x,y));
 		});
 		Main.console.addCommand("listRiderInfo","Print all riders and info into console",[],function() {
 			Main.console.log("===");
 			var rider = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
 			while(rider.hasNext()) {
 				var rider1 = rider.next();
-				Main.console.log("" + rider1.name + " " + rider1.startPos.x + " " + rider1.startPos.y);
+				Main.console.log("" + rider1.get_name() + " " + rider1.startPos.x + " " + rider1.startPos.y);
 			}
 			Main.console.log("===");
+		});
+		Main.console.addCommand("removeRider","Remove specified rider",[arg15],function(_name) {
+			Main.riders.riders.h[_name].delete();
 		});
 		var arg18 = { t : h2d_ConsoleArg.AString, opt : false, name : "Track name"};
 		var arg19 = { t : h2d_ConsoleArg.AInt, opt : true, name : "previous version offset"};
 		var arg20 = { t : h2d_ConsoleArg.AString, opt : true, name : "Track name"};
 		Main.console.addCommand("setTrackName","Set track name",[arg18],function(_name) {
-			_gthis.trackName = _name;
-			Main.console.log("Track name set to " + _gthis.trackName);
+			Main.trackName = _name;
+			Main.console.log("Track name set to " + Main.trackName);
 		});
 		Main.console.addCommand("saveTrack","Save current active track data",[arg20],function(_name) {
-			if(_name == null && _gthis.trackName == null) {
+			if(_name == null && Main.trackName == null) {
 				Main.console.log("Trackname undefined, please use the command /setTrackName or provide name as argument when using /saveTrack",16711680);
 				return;
-			} else if(_name == null && _gthis.trackName != null) {
-				Main.saveload.saveTrack(_gthis.trackName);
-				Main.console.log("Saved current track as " + _gthis.trackName);
+			} else if(_name == null && Main.trackName != null) {
+				Main.saveload.saveTrack(Main.trackName);
+				Main.console.log("Saved current track as " + Main.trackName);
 			} else {
 				Main.saveload.saveTrack(_name);
-				_gthis.trackName = _name;
-				Main.console.log("Saved new track as " + _gthis.trackName);
+				Main.trackName = _name;
+				Main.console.log("Saved new track as " + Main.trackName);
 			}
 		});
 		Main.console.addCommand("loadTrack","Load track with specified name",[arg18,arg19],function(_name,_offset) {
 			if(_offset == null) {
 				_offset = 0;
 			}
+			Main.canvas.clear();
+			Main.riders.deleteAllRiders();
 			Main.saveload.loadTrack(_name,_offset);
 		});
 		Main.console.addCommand("listSavedTracks","Print any found tracks",[],function() {
 			Main.saveload.listTrackFiles();
+		});
+		var arg23 = { t : h2d_ConsoleArg.AFloat, opt : true, name : "Snap distance"};
+		Main.console.addCommand("snapToGrid","Enable grid snapping. Set to 0 to disable",[arg23],function(_range) {
+			if(_range == null) {
+				_range = 0;
+			}
+			if(_range > Main.viewGridSize) {
+				Main.console.log("Snap distance " + _range + " is larger than the ruler's dimensions of " + Main.viewGridSize,16711680);
+				return;
+			}
+			Main.toolControl.gridSnapDistance = _range;
+			if(_range == 0) {
+				Main.console.log("Grid snapping off...");
+			} else {
+				Main.console.log("Grid snapping set to " + _range);
+			}
+		});
+		Main.console.addCommand("newTrack","New track. Will save if track name has been set",[],function() {
+			if(Main.trackName != null) {
+				Main.console.runCommand("saveTrack");
+			}
+			Main.canvas.clear();
+			Main.riders.deleteAllRiders();
+			Main.riders.addNewRider("Bosh",new h2d_col_Point(0,0));
+			Main.trackName = null;
+			Main.authorName = null;
+		});
+		var arg24 = { t : h2d_ConsoleArg.AString, opt : false, name : "Rider name"};
+		var arg25 = { t : h2d_ConsoleArg.AString, opt : false, name : "New name"};
+		Main.console.addCommand("renameRider","Rename and existing rider",[arg24,arg25],function(_old,_new) {
+			Main.riders.renameRider(_old,_new);
 		});
 	}
 	,update: function(dt) {
@@ -1216,7 +1241,7 @@ components_lines_Accel.prototype = $extend(components_lines_LineBase.prototype,{
 				_point.pos.x -= _loc4 * this.nx;
 				_point.pos.y -= _loc4 * this.ny;
 				_point.vel.x = _point.vel.x + this.ny * _point.friction * _loc4 * (_point.vel.x < _point.pos.x ? 1 : -1) + this.accx;
-				_point.vel.y = _point.vel.y + this.nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1) + this.accy;
+				_point.vel.y = _point.vel.y - this.nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1) + this.accy;
 			}
 		}
 	}
@@ -1471,14 +1496,59 @@ components_managers_Grid.prototype = {
 	,__class__: components_managers_Grid
 };
 var components_managers_Riders = function() {
+	this.riderCount = 0;
 	this.riders = new haxe_ds_StringMap();
 	var defaultRider = new components_sledder_Bosh();
-	this.riders.h[defaultRider.name] = defaultRider;
+	var this1 = this.riders;
+	var k = defaultRider.get_name();
+	this1.h[k] = defaultRider;
+	++this.riderCount;
 };
 $hxClasses["components.managers.Riders"] = components_managers_Riders;
 components_managers_Riders.__name__ = "components.managers.Riders";
 components_managers_Riders.prototype = {
-	stepRiders: function() {
+	deleteAllRiders: function() {
+		var rider = haxe_ds_StringMap.valueIterator(this.riders.h);
+		while(rider.hasNext()) {
+			var rider1 = rider.next();
+			rider1.delete();
+		}
+	}
+	,addNewRider: function(_name,_start) {
+		var setName = _name;
+		if(this.riders.h[setName] != null) {
+			var occupiedSpace = 0;
+			while(this.riders.h[setName + occupiedSpace] != null) ++occupiedSpace;
+			Main.console.log("Rider name " + setName + " already occupied, renaming to " + (setName + occupiedSpace));
+			setName += "" + occupiedSpace;
+		}
+		var this1 = this.riders;
+		var v = new components_sledder_Bosh(_start.x,_start.y,setName);
+		this1.h[setName] = v;
+		++this.riderCount;
+		Main.simulation.recordGlobalSimState();
+	}
+	,renameRider: function(_old,_new) {
+		if(this.riders.h[_old] == null) {
+			Main.console.log("Rider " + _old + " does not exist",16711680);
+			return;
+		}
+		var setName = _new;
+		if(this.riders.h[setName] != null) {
+			var occupiedSpace = 0;
+			while(this.riders.h[setName + occupiedSpace] != null) ++occupiedSpace;
+			Main.console.log("Rider name " + setName + " already occupied, renaming to " + (setName + occupiedSpace));
+			setName += "" + occupiedSpace;
+		}
+		var rider = this.riders.h[_old];
+		var _this = this.riders;
+		if(Object.prototype.hasOwnProperty.call(_this.h,_old)) {
+			delete(_this.h[_old]);
+		}
+		rider.set_name(setName);
+		this.riders.h[setName] = rider;
+	}
+	,stepRiders: function() {
 		var rider = haxe_ds_StringMap.valueIterator(this.riders.h);
 		while(rider.hasNext()) {
 			var rider1 = rider.next();
@@ -1517,6 +1587,10 @@ $hxClasses["components.managers.Simulation"] = components_managers_Simulation;
 components_managers_Simulation.__name__ = "components.managers.Simulation";
 components_managers_Simulation.prototype = {
 	startSim: function() {
+		if(Main.riders.riderCount == 0) {
+			Main.console.log("No riders in current track",16711680);
+			return;
+		}
 		this.playing = true;
 		this.timeDelta = 0;
 		if(this.flagPoint != null) {
@@ -1579,6 +1653,7 @@ components_managers_Simulation.prototype = {
 			var state = this.frameStates.h[rider1.__id__][locframe];
 			if(state == null) {
 				this.recordRiderState(rider1);
+				continue;
 			}
 			rider1.crashed = state.crashed;
 			var _g = 0;
@@ -1617,14 +1692,7 @@ components_managers_Simulation.prototype = {
 		this.frameStates.h[_rider.__id__][this.frames].points = _points;
 	}
 	,updateSimHistory: function(_minFrame) {
-		if(this.updating) {
-			return;
-		}
-		this.updating = true;
-		this.playing = false;
-		this.returnPoint = Math.max(this.frames - 1,0) | 0;
-		this.rewindPoint = Math.max(_minFrame - 1,0) | 0;
-		this.restoreState(this.rewindPoint);
+		return;
 	}
 	,updateSim: function() {
 		var _g = 0;
@@ -1753,6 +1821,29 @@ components_physics_RidePoint.prototype = {
 	}
 	,__class__: components_physics_RidePoint
 };
+var h3d_Vector = function(x,y,z,w) {
+	if(w == null) {
+		w = 1.;
+	}
+	if(z == null) {
+		z = 0.;
+	}
+	if(y == null) {
+		y = 0.;
+	}
+	if(x == null) {
+		x = 0.;
+	}
+	this.x = x;
+	this.y = y;
+	this.z = z;
+	this.w = w;
+};
+$hxClasses["h3d.Vector"] = h3d_Vector;
+h3d_Vector.__name__ = "h3d.Vector";
+h3d_Vector.prototype = {
+	__class__: h3d_Vector
+};
 var components_sledder_RiderBase = function(_x,_y,_name) {
 	if(_name == null) {
 		_name = "Bosh";
@@ -1763,23 +1854,58 @@ var components_sledder_RiderBase = function(_x,_y,_name) {
 	if(_x == null) {
 		_x = 0.0;
 	}
+	this.drawContactPoints = true;
 	this.startPos = new h2d_col_Point();
 	this.crashed = false;
 	this.ENDURANCE = 0.057;
 	this.gravity = new h2d_col_Point(0,0.175);
-	this.name = _name;
 	this.startPos = new h2d_col_Point(_x,_y);
 	this.gfx = new h2d_Graphics();
+	Main.canvas.sledderLayer.addChild(this.gfx);
+	this.nameField = new h2d_HtmlText(hxd_res_DefaultFont.get());
+	Main.canvas.sledderLayer.addChild(this.nameField);
+	this.set_name(_name);
 	this.ridePoints = [];
 	this.bones = [];
-	Main.canvas.sledderLayer.addChild(this.gfx);
 };
 $hxClasses["components.sledder.RiderBase"] = components_sledder_RiderBase;
 components_sledder_RiderBase.__name__ = "components.sledder.RiderBase";
 components_sledder_RiderBase.prototype = {
 	init: function() {
 	}
-	,drawContactPoints: function() {
+	,'delete': function() {
+		Main.canvas.sledderLayer.removeChild(this.gfx);
+		Main.canvas.sledderLayer.removeChild(this.nameField);
+		var this1 = Main.riders.riders;
+		var key = this.get_name();
+		var _this = this1;
+		if(Object.prototype.hasOwnProperty.call(_this.h,key)) {
+			delete(_this.h[key]);
+		}
+		Main.riders.riderCount -= 1;
+	}
+	,renderRider: function() {
+		var _this = this.nameField;
+		var _this1 = this.nameField;
+		_this1.posChanged = true;
+		_this.posChanged = true;
+		_this.scaleX = _this1.scaleY = 1 / Main.canvas.scaleX;
+		var _this = this.nameField;
+		var v = this.ridePoints[5].pos.x;
+		_this.posChanged = true;
+		_this.x = v;
+		var _this = this.nameField;
+		var v = this.ridePoints[5].pos.y;
+		_this.posChanged = true;
+		_this.y = v;
+		if(this.crashed) {
+			this.nameField.color = components_sledder_RiderBase.RED;
+		} else {
+			this.nameField.color = components_sledder_RiderBase.WHITE;
+		}
+		if(!this.drawContactPoints) {
+			return;
+		}
 		this.gfx.clear();
 		this.gfx.lineStyle(1,13369548);
 		var _g = 0;
@@ -1840,6 +1966,13 @@ components_sledder_RiderBase.prototype = {
 				}
 			}
 		}
+	}
+	,get_name: function() {
+		return this.name;
+	}
+	,set_name: function(value) {
+		this.nameField.set_text(value);
+		return this.name = value;
 	}
 	,__class__: components_sledder_RiderBase
 };
@@ -3603,7 +3736,19 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 		var rider = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
 		while(rider.hasNext()) {
 			var rider1 = rider.next();
-			rider1.drawContactPoints();
+			rider1.renderRider();
+		}
+	}
+	,setCanvasPosition: function(_x,_y,_log) {
+		if(_log == null) {
+			_log = true;
+		}
+		this.posChanged = true;
+		this.x = _x;
+		this.posChanged = true;
+		this.y = _y;
+		if(_log) {
+			Main.console.log("Set canvas position to: " + _x + " " + _y,187);
 		}
 	}
 	,addCanvasPosition: function(_x,_y) {
@@ -3732,6 +3877,15 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 		line.render();
 		Main.grid.register(line);
 	}
+	,clear: function() {
+		var _g = 0;
+		var _g1 = Main.grid.lines;
+		while(_g < _g1.length) {
+			var line = _g1[_g];
+			++_g;
+			this.removeLine(line);
+		}
+	}
 	,removeLine: function(_line) {
 		Main.grid.unregister(_line);
 		this.colorLayer.removeChild(_line.colorLayer);
@@ -3848,6 +4002,9 @@ h2d_Console.prototype = $extend(h2d_Object.prototype,{
 	}
 	,addAlias: function(name,command) {
 		this.aliases.h[name] = command;
+	}
+	,runCommand: function(commandLine) {
+		this.handleCommand(commandLine);
 	}
 	,onAdd: function() {
 		h2d_Object.prototype.onAdd.call(this);
@@ -4257,22 +4414,20 @@ var components_tool_ToolMode = $hxEnums["components.tool.ToolMode"] = { __ename_
 	,ERASER: {_hx_index:3,__enum__:"components.tool.ToolMode",toString:$estr}
 };
 components_tool_ToolMode.__empty_constructs__ = [components_tool_ToolMode.NONE,components_tool_ToolMode.PENCIL,components_tool_ToolMode.LINE,components_tool_ToolMode.ERASER];
-var components_tool_ToolBehavior = function(_stage,_clicky,_canvas) {
+var components_tool_ToolBehavior = function() {
 	this.shifted = false;
 	this.middleIsDown = false;
 	this.leftIsDown = false;
-	this.s2d = _stage;
-	this.interactive = _clicky;
-	this.canvas = _canvas;
+	this.gridSnapDistance = 0;
 	this.tool = components_tool_ToolMode.PENCIL;
 	this.color = 0;
-	this.interactive.enableRightButton = true;
-	this.interactive.onKeyDown = $bind(this,this.keyInputDown);
-	this.interactive.onKeyUp = $bind(this,this.keyInputDown);
-	this.interactive.onPush = $bind(this,this.mouseDown);
-	this.interactive.onRelease = $bind(this,this.mouseUp);
-	this.interactive.onMove = $bind(this,this.mouseMove);
-	this.interactive.onWheel = $bind(this,this.mouseWheel);
+	Main.canvas_interaction.enableRightButton = true;
+	Main.canvas_interaction.onKeyDown = $bind(this,this.keyInputDown);
+	Main.canvas_interaction.onKeyUp = $bind(this,this.keyInputDown);
+	Main.canvas_interaction.onPush = $bind(this,this.mouseDown);
+	Main.canvas_interaction.onRelease = $bind(this,this.mouseUp);
+	Main.canvas_interaction.onMove = $bind(this,this.mouseMove);
+	Main.canvas_interaction.onWheel = $bind(this,this.mouseWheel);
 	var this1 = hxd_Res.get_loader();
 	this.bitmapPencilBlue = this1.loadCache("tool/pencilBlue.png",hxd_res_Image).toBitmap();
 	this.cursorPencilBlue = hxd_Cursor.Custom(new hxd_CustomCursor([this.bitmapPencilBlue],0,1,25));
@@ -4291,14 +4446,27 @@ components_tool_ToolBehavior.prototype = {
 		switch(event.button) {
 		case 0:
 			this.leftIsDown = true;
-			this.mouseStart = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
-			if(this.tool._hx_index == 3) {
-				this.canvas.erase();
+			this.mouseStart = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
+			switch(this.tool._hx_index) {
+			case 1:case 2:
+				if(this.gridSnapDistance > 0) {
+					var cornerX = Math.round(Main.canvas.get_mouseX() / Main.viewGridSize) * Main.viewGridSize;
+					var cornerY = Math.round(Main.canvas.get_mouseY() / Main.viewGridSize) * Main.viewGridSize;
+					var distance = Math.sqrt(Math.pow(cornerX - Main.canvas.get_mouseX(),2) + Math.pow(cornerY - Main.canvas.get_mouseY(),2));
+					if(distance <= this.gridSnapDistance) {
+						this.mouseStart = new h2d_col_Point(cornerX,cornerY);
+					}
+				}
+				break;
+			case 3:
+				Main.canvas.erase();
+				break;
+			default:
 			}
 			break;
 		case 2:
 			this.middleIsDown = true;
-			this.mouseStart = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
+			this.mouseStart = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
 			break;
 		case 3:
 			Main.simulation.backSim();
@@ -4307,7 +4475,7 @@ components_tool_ToolBehavior.prototype = {
 			Main.simulation.stepSim();
 			break;
 		default:
-			haxe_Log.trace(event.button,{ fileName : "src/components/tool/ToolBehavior.hx", lineNumber : 106, className : "components.tool.ToolBehavior", methodName : "mouseDown"});
+			haxe_Log.trace(event.button,{ fileName : "src/components/tool/ToolBehavior.hx", lineNumber : 112, className : "components.tool.ToolBehavior", methodName : "mouseDown"});
 		}
 	}
 	,mouseWheel: function(event) {
@@ -4323,55 +4491,39 @@ components_tool_ToolBehavior.prototype = {
 			case 0:
 				break;
 			case 1:
-				this.mouseEnd = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
-				if(Math.sqrt(Math.pow(this.mouseEnd.x - this.mouseStart.x,2) + Math.pow(this.mouseEnd.y - this.mouseStart.y,2)) > 10) {
+				this.mouseEnd = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
+				if(Math.sqrt(Math.pow(this.mouseEnd.x - this.mouseStart.x,2) + Math.pow(this.mouseEnd.y - this.mouseStart.y,2)) > 10 * (1 / Main.canvas.scaleX)) {
 					this.drawLine();
-					this.mouseStart = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
-					this.mouseEnd = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
+					this.mouseStart = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
+					this.mouseEnd = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
 				}
 				break;
 			case 2:
-				this.mouseEnd = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
+				this.mouseEnd = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
+				if(this.gridSnapDistance > 0) {
+					var cornerX = Math.round(Main.canvas.get_mouseX() / Main.viewGridSize) * Main.viewGridSize;
+					var cornerY = Math.round(Main.canvas.get_mouseY() / Main.viewGridSize) * Main.viewGridSize;
+					var distance = Math.sqrt(Math.pow(cornerX - Main.canvas.get_mouseX(),2) + Math.pow(cornerY - Main.canvas.get_mouseY(),2));
+					if(distance <= this.gridSnapDistance) {
+						this.mouseEnd = new h2d_col_Point(cornerX,cornerY);
+					}
+				}
 				this.updatePreview();
 				break;
 			case 3:
-				this.canvas.erase();
+				Main.canvas.erase();
 				break;
 			}
 		}
 		if(this.middleIsDown) {
-			this.mouseEnd = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
+			this.mouseEnd = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
 			var x = -(this.mouseStart.x - this.mouseEnd.x);
 			var y = -(this.mouseStart.y - this.mouseEnd.y);
 			Main.canvas.addCanvasPosition(x,y);
-			this.mouseStart = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
 		}
 	}
 	,updatePreview: function() {
-		if(this.previewLine != null) {
-			Main.grid.unregister(this.previewLine);
-			Main.canvas.preview.removeChild(this.previewLine.rideLayer);
-			Main.canvas.preview.removeChild(this.previewLine.colorLayer);
-		}
-		switch(this.color) {
-		case 0:
-			this.previewLine = new components_lines_Floor(new h2d_col_Point(this.mouseStart.x,this.mouseStart.x),new h2d_col_Point(this.mouseEnd.x,this.mouseEnd.y),false);
-			Main.canvas.preview.addChild(this.previewLine.colorLayer);
-			Main.canvas.preview.addChild(this.previewLine.rideLayer);
-			Main.grid.register(this.previewLine);
-			break;
-		case 1:
-			this.previewLine = new components_lines_Accel(new h2d_col_Point(this.mouseStart.x,this.mouseStart.x),new h2d_col_Point(this.mouseEnd.x,this.mouseEnd.y),false);
-			Main.canvas.preview.addChild(this.previewLine.colorLayer);
-			Main.canvas.preview.addChild(this.previewLine.rideLayer);
-			Main.grid.register(this.previewLine);
-			break;
-		case 2:
-			this.previewLine = new components_lines_Scenery(new h2d_col_Point(this.mouseStart.x,this.mouseStart.x),new h2d_col_Point(this.mouseEnd.x,this.mouseEnd.y),false);
-			Main.canvas.preview.addChild(this.previewLine.colorLayer);
-			break;
-		}
-		this.previewLine.render();
+		return;
 	}
 	,mouseUp: function(event) {
 		switch(event.button) {
@@ -4383,9 +4535,20 @@ components_tool_ToolBehavior.prototype = {
 			case 1:
 				break;
 			case 2:
-				this.mouseEnd = new h2d_col_Point(this.s2d.get_mouseX(),this.s2d.get_mouseY());
+				this.mouseEnd = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
 				if(Math.sqrt(Math.pow(this.mouseEnd.x - this.mouseStart.x,2) + Math.pow(this.mouseEnd.y - this.mouseStart.y,2)) < 10) {
-					return;
+					if(this.gridSnapDistance > 0) {
+						var cornerX = Math.round(Main.canvas.get_mouseX() / Main.viewGridSize) * Main.viewGridSize;
+						var cornerY = Math.round(Main.canvas.get_mouseY() / Main.viewGridSize) * Main.viewGridSize;
+						var distance = Math.sqrt(Math.pow(cornerX - Main.canvas.get_mouseX(),2) + Math.pow(cornerY - Main.canvas.get_mouseY(),2));
+						if(distance <= this.gridSnapDistance && distance != 0) {
+							this.mouseEnd = new h2d_col_Point(cornerX,cornerY);
+						} else {
+							return;
+						}
+					} else {
+						return;
+					}
 				}
 				this.drawLine();
 				if(this.previewLine != null) {
@@ -4406,9 +4569,7 @@ components_tool_ToolBehavior.prototype = {
 		}
 	}
 	,drawLine: function() {
-		var lineStart = this.canvas.globalToLocal(this.mouseStart);
-		var lineEnd = this.canvas.globalToLocal(this.mouseEnd);
-		Main.canvas.addLine(this.color,lineStart.x,lineStart.y,lineEnd.x,lineEnd.y,this.shifted);
+		Main.canvas.addLine(this.color,this.mouseStart.x,this.mouseStart.y,this.mouseEnd.x,this.mouseEnd.y,this.shifted);
 	}
 	,keyInputDown: function(event) {
 		switch(event.kind._hx_index) {
@@ -4542,7 +4703,7 @@ $hxClasses["file.SaveLoad"] = file_SaveLoad;
 file_SaveLoad.__name__ = "file.SaveLoad";
 file_SaveLoad.prototype = {
 	saveTrack: function(_name) {
-		var saveObject = { lines : []};
+		var saveObject = { lines : [], riders : [], name : Main.trackName, author : Main.authorName};
 		var _g = 0;
 		var _g1 = Main.grid.lines;
 		while(_g < _g1.length) {
@@ -4550,9 +4711,24 @@ file_SaveLoad.prototype = {
 			++_g;
 			saveObject.lines.push(line.toSaveObject());
 		}
+		var sledder = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
+		while(sledder.hasNext()) {
+			var sledder1 = sledder.next();
+			var rider = { name : sledder1.get_name(), startPoint : sledder1.startPos};
+			saveObject.riders.push(rider);
+		}
 		hxd_Save.save(saveObject,_name,true);
 	}
 	,listTrackFiles: function() {
+		var numItems = window.localStorage.length;
+		Main.console.log("===");
+		var _g = 0;
+		var _g1 = numItems;
+		while(_g < _g1) {
+			var item = _g++;
+			Main.console.log("" + window.localStorage.key(item));
+		}
+		Main.console.log("===");
 	}
 	,loadTrack: function(_name,_offset) {
 		if(_offset == null) {
@@ -4563,12 +4739,21 @@ file_SaveLoad.prototype = {
 			Main.console.log("Track load error, " + _name + ".sav not found...",16711680);
 			return;
 		}
+		Main.trackName = loadObject.name;
+		Main.authorName = loadObject.author;
 		var _g = 0;
 		var _g1 = loadObject.lines;
 		while(_g < _g1.length) {
 			var line = _g1[_g];
 			++_g;
 			Main.canvas.addLine(line.linetype,line.startPoint.x,line.startPoint.y,line.endPoint.x,line.endPoint.y,line.inverted);
+		}
+		var _g = 0;
+		var _g1 = loadObject.riders;
+		while(_g < _g1.length) {
+			var rider = _g1[_g];
+			++_g;
+			Main.riders.addNewRider(rider.name,rider.startPoint);
 		}
 	}
 	,__class__: file_SaveLoad
@@ -13622,29 +13807,6 @@ h3d_Quat.prototype = {
 		return m;
 	}
 	,__class__: h3d_Quat
-};
-var h3d_Vector = function(x,y,z,w) {
-	if(w == null) {
-		w = 1.;
-	}
-	if(z == null) {
-		z = 0.;
-	}
-	if(y == null) {
-		y = 0.;
-	}
-	if(x == null) {
-		x = 0.;
-	}
-	this.x = x;
-	this.y = y;
-	this.z = z;
-	this.w = w;
-};
-$hxClasses["h3d.Vector"] = h3d_Vector;
-h3d_Vector.__name__ = "h3d.Vector";
-h3d_Vector.prototype = {
-	__class__: h3d_Vector
 };
 var h3d_anim_AnimatedObject = function() { };
 $hxClasses["h3d.anim.AnimatedObject"] = h3d_anim_AnimatedObject;
@@ -31213,6 +31375,9 @@ hxd_res_Image.prototype = $extend(hxd_res_Resource.prototype,{
 			flags.push(h3d_mat_TextureFlags.MipMapped);
 			flags.push(h3d_mat_TextureFlags.ManualMipMapGen);
 		}
+		if(fmt == hxd_PixelFormat.R16U) {
+			throw haxe_Exception.thrown("Unsupported texture format " + Std.string(fmt) + " for " + this.entry.get_path());
+		}
 		this.tex = new h3d_mat_Texture(this.inf.width,this.inf.height,flags,fmt);
 		if(hxd_res_Image.DEFAULT_FILTER != h3d_mat_Filter.Linear) {
 			this.tex.set_filter(hxd_res_Image.DEFAULT_FILTER);
@@ -35608,6 +35773,46 @@ hxsl_Eval.prototype = {
 		}
 		return v2;
 	}
+	,checkSamplerRec: function(t) {
+		if(hxsl_Tools.isSampler(t)) {
+			return true;
+		}
+		switch(t._hx_index) {
+		case 13:
+			var vl = t.vl;
+			var _g = 0;
+			while(_g < vl.length) {
+				var v = vl[_g];
+				++_g;
+				if(this.checkSamplerRec(v.type)) {
+					return true;
+				}
+			}
+			return false;
+		case 15:
+			var _g = t.size;
+			var t1 = t.t;
+			return this.checkSamplerRec(t1);
+		case 16:
+			var _g = t.t;
+			var size = t.size;
+			return true;
+		default:
+		}
+		return false;
+	}
+	,needsInline: function(f) {
+		var _g = 0;
+		var _g1 = f.args;
+		while(_g < _g1.length) {
+			var a = _g1[_g];
+			++_g;
+			if(this.checkSamplerRec(a.type)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	,'eval': function(s) {
 		var funs = [];
 		var _g = 0;
@@ -35626,10 +35831,11 @@ hxsl_Eval.prototype = {
 				_g2.push(this.mapVar(a));
 			}
 			var f21 = { kind : f1, ref : f2, args : _g2, ret : f.ret, expr : f.expr};
-			if(!this.inlineCalls || f.kind != hxsl_FunctionKind.Helper) {
+			if(f.kind == hxsl_FunctionKind.Helper && this.inlineCalls || this.needsInline(f21)) {
+				this.funMap.set(f21.ref,f);
+			} else {
 				funs.push(f21);
 			}
-			this.funMap.set(f21.ref,f);
 		}
 		var _g = 0;
 		var _g1 = funs.length;
@@ -37065,25 +37271,43 @@ hxsl_Eval.prototype = {
 			var _g1 = c1.e;
 			switch(_g1._hx_index) {
 			case 1:
-				if(!this.inlineCalls) {
-					d = hxsl_TExprDef.TCall(c1,args);
-				} else {
-					var v = _g1.v;
-					if(this.funMap.h.__keys__[v.__id__] != null) {
-						var f = this.funMap.h[v.__id__];
-						var outExprs = [];
-						var undo = [];
-						var _g2 = 0;
-						var _g3 = f.args.length;
-						while(_g2 < _g3) {
-							var i = _g2++;
-							var v = [f.args[i]];
-							var e1 = args[i];
-							var _g4 = e1.e;
-							switch(_g4._hx_index) {
-							case 0:
-								var _g5 = _g4.c;
-								var old = [this.constants.h[v[0].id]];
+				var v = _g1.v;
+				if(this.funMap.h.__keys__[v.__id__] != null) {
+					var f = this.funMap.h[v.__id__];
+					var outExprs = [];
+					var undo = [];
+					var _g2 = 0;
+					var _g3 = f.args.length;
+					while(_g2 < _g3) {
+						var i = _g2++;
+						var v = [f.args[i]];
+						var e1 = args[i];
+						var _g4 = e1.e;
+						switch(_g4._hx_index) {
+						case 0:
+							var _g5 = _g4.c;
+							var old = [this.constants.h[v[0].id]];
+							undo.push((function(old,v) {
+								return function() {
+									if(old[0] == null) {
+										_gthis.constants.remove(v[0].id);
+									} else {
+										_gthis.constants.h[v[0].id] = old[0];
+									}
+								};
+							})(old,v));
+							this.constants.h[v[0].id] = e1.e;
+							break;
+						case 1:
+							var _g6 = _g4.v;
+							var _g7 = _g6.type;
+							var _g8 = _g6.qualifiers;
+							var _g9 = _g6.parent;
+							var _g10 = _g6.name;
+							var _g11 = _g6.id;
+							switch(_g6.kind._hx_index) {
+							case 0:case 1:case 2:
+								var old1 = [this.constants.h[v[0].id]];
 								undo.push((function(old,v) {
 									return function() {
 										if(old[0] == null) {
@@ -37092,53 +37316,12 @@ hxsl_Eval.prototype = {
 											_gthis.constants.h[v[0].id] = old[0];
 										}
 									};
-								})(old,v));
+								})(old1,v));
 								this.constants.h[v[0].id] = e1.e;
 								break;
-							case 1:
-								var _g6 = _g4.v;
-								var _g7 = _g6.type;
-								var _g8 = _g6.qualifiers;
-								var _g9 = _g6.parent;
-								var _g10 = _g6.name;
-								var _g11 = _g6.id;
-								switch(_g6.kind._hx_index) {
-								case 0:case 1:case 2:
-									var old1 = [this.constants.h[v[0].id]];
-									undo.push((function(old,v) {
-										return function() {
-											if(old[0] == null) {
-												_gthis.constants.remove(v[0].id);
-											} else {
-												_gthis.constants.h[v[0].id] = old[0];
-											}
-										};
-									})(old1,v));
-									this.constants.h[v[0].id] = e1.e;
-									break;
-								default:
-									var old2 = [this.varMap.h[v[0].__id__]];
-									if(old2[0] == null) {
-										undo.push((function(v) {
-											return function() {
-												_gthis.varMap.remove(v[0]);
-											};
-										})(v));
-									} else {
-										this.varMap.remove(v[0]);
-										undo.push((function(old,v) {
-											return function() {
-												_gthis.varMap.set(v[0],old[0]);
-											};
-										})(old2,v));
-									}
-									var v2 = this.mapVar(v[0]);
-									outExprs.push({ e : hxsl_TExprDef.TVarDecl(v2,e1), t : hxsl_Type.TVoid, p : e1.p});
-								}
-								break;
 							default:
-								var old3 = [this.varMap.h[v[0].__id__]];
-								if(old3[0] == null) {
+								var old2 = [this.varMap.h[v[0].__id__]];
+								if(old2[0] == null) {
 									undo.push((function(v) {
 										return function() {
 											_gthis.varMap.remove(v[0]);
@@ -37150,35 +37333,54 @@ hxsl_Eval.prototype = {
 										return function() {
 											_gthis.varMap.set(v[0],old[0]);
 										};
-									})(old3,v));
+									})(old2,v));
 								}
-								var v21 = this.mapVar(v[0]);
-								outExprs.push({ e : hxsl_TExprDef.TVarDecl(v21,e1), t : hxsl_Type.TVoid, p : e1.p});
+								var v2 = this.mapVar(v[0]);
+								outExprs.push({ e : hxsl_TExprDef.TVarDecl(v2,e1), t : hxsl_Type.TVoid, p : e1.p});
 							}
-						}
-						var e1 = this.handleReturn(this.evalExpr(f.expr,false),true);
-						var _g2 = 0;
-						while(_g2 < undo.length) {
-							var u = undo[_g2];
-							++_g2;
-							u();
-						}
-						var _g2 = e1.e;
-						if(_g2._hx_index == 4) {
-							var el = _g2.el;
-							var _g2 = 0;
-							while(_g2 < el.length) {
-								var e2 = el[_g2];
-								++_g2;
-								outExprs.push(e2);
+							break;
+						default:
+							var old3 = [this.varMap.h[v[0].__id__]];
+							if(old3[0] == null) {
+								undo.push((function(v) {
+									return function() {
+										_gthis.varMap.remove(v[0]);
+									};
+								})(v));
+							} else {
+								this.varMap.remove(v[0]);
+								undo.push((function(old,v) {
+									return function() {
+										_gthis.varMap.set(v[0],old[0]);
+									};
+								})(old3,v));
 							}
-						} else {
-							outExprs.push(e1);
+							var v21 = this.mapVar(v[0]);
+							outExprs.push({ e : hxsl_TExprDef.TVarDecl(v21,e1), t : hxsl_Type.TVoid, p : e1.p});
 						}
-						d = hxsl_TExprDef.TBlock(outExprs);
-					} else {
-						d = hxsl_Error.t("Cannot eval non-static call expresssion '" + new hxsl_Printer().exprString(c1) + "'",c1.p);
 					}
+					var e1 = this.handleReturn(this.evalExpr(f.expr,false),true);
+					var _g2 = 0;
+					while(_g2 < undo.length) {
+						var u = undo[_g2];
+						++_g2;
+						u();
+					}
+					var _g2 = e1.e;
+					if(_g2._hx_index == 4) {
+						var el = _g2.el;
+						var _g2 = 0;
+						while(_g2 < el.length) {
+							var e2 = el[_g2];
+							++_g2;
+							outExprs.push(e2);
+						}
+					} else {
+						outExprs.push(e1);
+					}
+					d = hxsl_TExprDef.TBlock(outExprs);
+				} else {
+					d = hxsl_TExprDef.TCall(c1,args);
 				}
 				break;
 			case 2:
@@ -42530,6 +42732,8 @@ Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
 components_physics_BindStick.crash = false;
+components_sledder_RiderBase.WHITE = new h3d_Vector(1,1,1,1);
+components_sledder_RiderBase.RED = new h3d_Vector(1,0,0,1);
 h2d_Console.HIDE_LOG_TIMEOUT = 3.;
 h2d_HtmlText.REG_SPACES = new EReg("[\r\n\t ]+","g");
 h3d_Buffer.GUID = 0;

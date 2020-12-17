@@ -35,6 +35,12 @@ class Simulation
 	
 	var timeDelta:Float = 0.0;
 	public function startSim() {
+		
+		if (Main.riders.riderCount == 0) {
+			Main.console.log("No riders in current track", 0xFF0000);
+			return;
+		}
+		
 		playing = true;
 		timeDelta = 0;
 		if (flagPoint != null) restoreFlagPoint();
@@ -98,6 +104,7 @@ class Simulation
 			var state = frameStates[rider][locframe];
 			if (state == null) {
 				recordRiderState(rider);
+				continue;
 			}
 			rider.crashed = state.crashed;
 			for (point in 0...rider.ridePoints.length) {
@@ -144,6 +151,7 @@ class Simulation
 	var rewindPoint:Int = 0;
 	var returnPoint:Int = 0;
 	public function updateSimHistory(_minFrame:Int) {
+		return;
 		if (updating) return;
 		updating = true;
 		playing = false;
