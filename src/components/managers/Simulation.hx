@@ -46,6 +46,8 @@ class Simulation
 		timeDelta = 0;
 		if (flagPoint != null) restoreFlagPoint();
 		else restoreState(0);
+		
+		Main.audio.playMusic(frames);
 	}
 	
 	public function pauseSim() {
@@ -53,12 +55,14 @@ class Simulation
 			startSim();
 			return;
 		}
+		Main.audio.stopMusic();
 		playing = false;
 		paused = true;
 	}
 	public function resumeSim() {
 		playing = true;
 		paused = false;
+		Main.audio.playMusic(frames);
 	}
 	
 	public function endSim() {
@@ -66,6 +70,8 @@ class Simulation
 		timeDelta = 0;
 		if (flagPoint != null) restoreFlagPoint();
 		else restoreState(0);
+		
+		Main.audio.stopMusic();
 	}
 	public function playSim(_delta:Float) {
 		

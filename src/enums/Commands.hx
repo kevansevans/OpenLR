@@ -20,6 +20,7 @@ enum abstract Commands(String) from String
 	
 	var listRiderInfo:String; //Show all riders and their names
 	var listSavedTracks:String; //Show all saved tracks
+	var loadAudio:String;
 	var loadTrack:String; //name, Load track with given name
 	
 	var newTrack:String; //Reset to blank canvas. THIS WILL NOT PROMPT YOU IF YOU WANT TO SAVE.
@@ -35,6 +36,7 @@ enum abstract Commands(String) from String
 	
 	var saveTrack:String; //[name, will default to current track name] Save track. If track name is not provided and track name is unset, it will not save.
 	var say:String; //Relay a chat message to console
+	var setAudioOffset:String; //seconds, set the starting offset of the audio when playing
 	var setAuthorName:String; //name, sets author name for track info
 	var setCanvasPosition:String; //x, y, Sets exact position of canvas
 	var setGridSize:String; //value, Sets exact ruler width and height

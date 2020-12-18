@@ -44,6 +44,13 @@ class ToolBehavior
 	public var cursorPencilRed:Cursor;
 	public var cursorPencilGreen:Cursor;
 	
+	public var bitmapLineBlue:BitmapData;
+	public var bitmapLineRed:BitmapData;
+	public var bitmapLineGreen:BitmapData;
+	public var cursorLineBlue:Cursor;
+	public var cursorLineRed:Cursor;
+	public var cursorLineGreen:Cursor;
+	
 	public var gridSnapDistance:Float = 0;
 	
 	public function new() 
@@ -65,6 +72,13 @@ class ToolBehavior
 		cursorPencilRed = Cursor.Custom(new CustomCursor([bitmapPencilRed], 0, 1, 25));
 		bitmapPencilGreen = Res.tool.pencilGreen.toBitmap();
 		cursorPencilGreen = Cursor.Custom(new CustomCursor([bitmapPencilGreen], 0, 1, 25));
+		
+		bitmapLineBlue = Res.tool.lineBlue.toBitmap();
+		cursorLineBlue = Cursor.Custom(new CustomCursor([bitmapLineBlue], 0, 12, 12));
+		bitmapLineRed = Res.tool.lineRed.toBitmap();
+		cursorLineRed = Cursor.Custom(new CustomCursor([bitmapLineRed], 0, 12, 12));
+		bitmapLineGreen = Res.tool.lineGreen.toBitmap();
+		cursorLineGreen = Cursor.Custom(new CustomCursor([bitmapLineGreen], 0, 12, 12));
 		
 		Main.canvas_interaction.cursor = cursorPencilBlue;
 	}
@@ -262,12 +276,41 @@ class ToolBehavior
 		switch (event.kind) {
 			case EKeyDown :
 				switch (event.keyCode) {
-					case Key.QWERTY_EQUALS :
-						Main.viewGridSize += 1;
+					case Key.QWERTY_BRACKET_RIGHT :
+						if (shifted) {
+							var zoom:Int = 2;
+							while (true) {
+								if (zoom <= Main.viewGridSize) {
+									zoom = zoom << 1;
+									if (zoom == 0) {
+										Main.console.log('Max left bitshift reached', 0xFF0000);
+										break;
+									}
+								} else {
+									Main.viewGridSize = zoom;
+									break;
+								}
+							}
+						} else {
+							Main.viewGridSize += 1;
+						}
 						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
-					case Key.QWERTY_MINUS :
-						Main.viewGridSize -= 1;
-						Main.viewGridSize = Std.int(Math.max(Main.viewGridSize, 1));
+					case Key.QWERTY_BRACKET_LEFT :
+						if (Main.viewGridSize == 1) return;
+						if (shifted) {
+							var zoom:Int = 2;
+							while (true) {
+								if (zoom >= Main.viewGridSize) {
+									Main.viewGridSize = zoom >> 1;
+									break;
+								} else {
+									zoom = zoom << 1;
+								}
+							}
+						} else {
+							Main.viewGridSize -= 1;
+							Main.viewGridSize = Std.int(Math.max(Main.viewGridSize, 1));
+						}
 						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.Q:
 						tool = PENCIL;
@@ -304,6 +347,7 @@ class ToolBehavior
 						
 					case Key.CTRL :
 						Main.simulation.rewinding = true;
+						Main.audio.stopMusic();
 						
 					case Key.SPACE :
 						if (!Main.simulation.paused) Main.simulation.pauseSim();
@@ -329,12 +373,12 @@ class ToolBehavior
 							case SCENERY_PLAYBACK :
 								Main.canvas.drawMode = FULL_EDIT;
 						}
-						
 				}
 			case EKeyUp :
 				switch (event.keyCode) {
 					case Key.CTRL :
 						Main.simulation.rewinding = false;
+						Main.audio.playMusic(Main.simulation.frames);
 					case Key.LSHIFT :
 						shifted = false;
 				}
@@ -347,6 +391,22 @@ class ToolBehavior
 		switch (tool) {
 			case PENCIL :
 				updatePencilCursor();
+			case LINE :
+				updateLineCursor();
+			default :
+				Main.canvas_interaction.cursor = Default;
+		}
+	}
+	
+	function updateLineCursor():Void 
+	{
+		switch (color) {
+			case FLOOR :
+				Main.canvas_interaction.cursor = cursorLineBlue;
+			case ACCEL :
+				Main.canvas_interaction.cursor = cursorLineRed;
+			case SCENE :
+				Main.canvas_interaction.cursor = cursorLineGreen;
 			default :
 				Main.canvas_interaction.cursor = Default;
 		}

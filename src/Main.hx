@@ -1,6 +1,7 @@
 package;
 
 import components.managers.Grid;
+import components.managers.Musicplayer;
 import components.managers.Riders;
 import components.managers.Simulation;
 import components.stage.TextInfo;
@@ -64,8 +65,11 @@ class Main extends App
 	
 	public static var trackName:Null<String> = null;
 	public static var authorName:Null<String> = null;
+	public static var songName:Null<String> = null;
 	
 	public static var textinfo:TextInfo;
+	
+	public static var audio:Musicplayer;
 	
 	@:macro public static function getBuildDate() {
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -134,6 +138,10 @@ class Main extends App
 		simulation = new Simulation();
 		
 		saveload = new SaveLoad();
+		
+		#if hl
+		audio = new Musicplayer();
+		#end
 		
 		//must load these last!
 		
@@ -342,6 +350,25 @@ class Main extends App
 		console.addCommand(Commands.say, "Relay a message to console", [arg26], function(_msg:String) {
 			console.log(_msg);
 		});
+		#if hl
+		var argMusic:ConsoleArgDesc = {t: AString, opt: false, name : "Song name"};
+		var argOffset:ConsoleArgDesc = {t: AFloat, opt: true, name : "Offset"};
+		console.addCommand(Commands.loadAudio, "Import a .ogg file to play with track", [argMusic, argOffset], function(_name:String, _offset:Float = 0.0) {
+			audio.loadAudio(_name);
+			if (_offset < 0) {
+				console.log("Offset needs to be zero or greater, ${_offset} is not valid...", 0xFF0000);
+				return;
+			}
+			audio.offset = _offset;
+		});
+		console.addCommand(Commands.setAudioOffset, "Changes start position of song", [argOffset], function(_offset:Float) {
+			if (_offset < 0) {
+				console.log("Offset needs to be zero or greater, ${_offset} is not valid...", 0xFF0000);
+				return;
+			}
+			audio.offset = _offset;
+		});
+		#end
 	}
 	
 	var riderPhysDelta:Float = 0.0;

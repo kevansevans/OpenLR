@@ -35,7 +35,8 @@ class SaveLoad
 			lines : new Array(),
 			riders : new Array(),
 			name : Main.trackName,
-			author : Main.authorName
+			author : Main.authorName,
+			song : Main.songName
 		}
 		
 		for (line in Main.grid.lines) {
@@ -137,6 +138,7 @@ class SaveLoad
 		
 		Main.trackName = loadObject.name;
 		Main.authorName = loadObject.author;
+		if (loadObject.song != null) Main.audio.loadAudio(loadObject.song);
 		
 		for (line in loadObject.lines) {
 			Main.canvas.addLine(line.linetype, line.startPoint.x, line.startPoint.y, line.endPoint.x, line.endPoint.y, line.inverted);
@@ -188,6 +190,7 @@ class SaveLoad
 typedef SaveData = {
 	var lines:Array<LineSave>;
 	var riders:Array<RiderSave>;
-	var name:String;
-	var author:String;
+	var name:Null<String>;
+	var author:Null<String>;
+	var song:Null<String>;
 }
