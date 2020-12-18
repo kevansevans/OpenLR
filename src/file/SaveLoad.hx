@@ -1,14 +1,18 @@
 package file;
 
+import components.lines.Floor;
+import components.lines.LineBase;
 import components.lines.LineBase.LineSave;
 import components.sledder.RiderBase;
 import format.abc.Data.Name;
-import haxe.macro.Expr.Var;
+import haxe.Json;
+import h2d.col.Point;
 
 import hxd.Save;
 
 #if sys
 import sys.FileSystem;
+import sys.io.File;
 #elseif js
 
 #end
@@ -41,7 +45,9 @@ class SaveLoad
 		for (sledder in Main.riders.riders) {
 			var rider:RiderSave = {
 				name : sledder.name,
-				startPoint : sledder.startPos
+				startPoint : sledder.startPos,
+				startFrame : sledder.enabledFrame,
+				stopFrame : sledder.disableFrame
 			}
 			saveObject.riders.push(rider);
 		}
@@ -137,9 +143,44 @@ class SaveLoad
 		}
 		
 		for (rider in loadObject.riders) {
-			Main.riders.addNewRider(rider.name, rider.startPoint);
+			Main.riders.addNewRider(rider.name, rider.startPoint, rider.startFrame, rider.stopFrame);
 		}
 		
+	}
+	
+	public function loadJSON(_fileName:String) {
+		#if js
+		//Create when I figure out how to import saves on JS
+		return;
+		#else
+		
+		if (!FileSystem.exists('./saves/${_fileName}.json')) return;
+		else {
+			var str:String = File.getBytes('./saves/${_fileName}.json').toString();
+			var loadObject:Dynamic = Json.parse(str);
+			
+			Main.trackName = loadObject.label;
+			Main.authorName = loadObject.creator;
+			
+			Main.riders.addNewRider("Bosh", new Point(loadObject.startPosition.x, loadObject.startPosition.y));
+			
+			var lineArray:Array<Dynamic> = loadObject.lines;
+			for (lineObject in lineArray) {
+				var lim:Int = -1;
+				if (!lineObject.leftExtended && !lineObject.rightExtended) {
+					lim = 0;
+				} else if (lineObject.leftExtended && !lineObject.rightExtended) {
+					lim = 1;
+				} else if (!lineObject.leftExtended && lineObject.rightExtended) {
+					lim = 2;
+				} else if (lineObject.leftExtended && lineObject.rightExtended) {
+					lim = 3;
+				}
+				Main.canvas.addLine(lineObject.type, lineObject.x1, lineObject.y1, lineObject.x2, lineObject.y2, lineObject.flipped, lim);
+			}
+		}
+		
+		#end
 	}
 	
 }

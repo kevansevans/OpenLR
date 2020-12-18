@@ -36,11 +36,15 @@ class RiderBase
 	
 	public var drawContactPoints:Bool = true;
 	
+	public var enabledFrame:Null<Int>;
+	public var disableFrame:Null<Int>;
+	public var enabled:Bool = true;
+	
 	static public var WHITE:Vector = new Vector(1, 1, 1, 1);
 	static public var BLACK:Vector = new Vector(0, 0, 0, 1);
 	static public var RED:Vector = new Vector(1, 0, 0, 1);
 	
-	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh" ) 
+	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh", ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
 	{
 		startPos = new Point(_x, _y);
 		
@@ -54,6 +58,9 @@ class RiderBase
 		ridePoints = new Array();
 		
 		bones = new Array();
+		
+		enabledFrame = _enable;
+		disableFrame = _disable;
 	}
 	
 	public function init() {}
@@ -85,6 +92,18 @@ class RiderBase
 		gfx.lineStyle(1, 0xCC00CC);
 		for (dot in ridePoints) {
 			gfx.drawCircle(dot.pos.x, dot.pos.y, 0.1, 5);
+		}
+	}
+	
+	public function stepRider() {
+		if (enabled) {
+			if ((enabledFrame == null || Main.simulation.frames >= enabledFrame) && (disableFrame == null || Main.simulation.frames < disableFrame)) {
+				iterate();
+				for (iteration in 0...6) {
+					constrainBones();
+					collision();
+				}
+			}
 		}
 	}
 	
@@ -133,4 +152,6 @@ class RiderBase
 typedef RiderSave = {
 	var name:String;
 	var startPoint:Point;
+	var startFrame:Null<Int>;
+	var stopFrame:Null<Int>;
 }

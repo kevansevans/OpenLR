@@ -3,12 +3,11 @@ package;
 import components.managers.Grid;
 import components.managers.Riders;
 import components.managers.Simulation;
-import components.sledder.Bosh;
+import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import enums.Commands;
 import file.SaveLoad;
 import h2d.col.Point;
-import haxe.macro.Context;
 import components.stage.Canvas;
 import hxd.res.DefaultFont;
 import components.stage.LRConsole;
@@ -21,7 +20,6 @@ import hxd.Res;
 #if hl
 import hl.UI;
 #end
-
 
 /**
  * ...
@@ -66,6 +64,8 @@ class Main extends App
 	
 	public static var trackName:Null<String> = null;
 	public static var authorName:Null<String> = null;
+	
+	public static var textinfo:TextInfo;
 	
 	@:macro public static function getBuildDate() {
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
@@ -134,6 +134,12 @@ class Main extends App
 		simulation = new Simulation();
 		
 		saveload = new SaveLoad();
+		
+		//must load these last!
+		
+		textinfo = new TextInfo();
+		s2d.addChild(textinfo.info);
+		textinfo.info.x = textinfo.info.y = 5;
 	}
 	
 	//EVERYTHING is a console command if and when possible.
@@ -228,10 +234,13 @@ class Main extends App
 			rider.startPos = new Point(_x, _y);
 			rider.init();
 		});
-		console.addCommand(Commands.addNewRider, "Add new rider to sim", [arg15, arg16, arg17], function(_name:String, ?_x:Float, ?_y:Float) {
+		var arg27:ConsoleArgDesc = {t: AInt, opt: true, name : "Enable frame"};
+		var arg28:ConsoleArgDesc = {t: AInt, opt: true, name : "End frame"};
+		console.addCommand(Commands.addNewRider, "Add new rider to sim", [arg15, arg16, arg17, arg27, arg28], function(_name:String, ?_x:Float, ?_y:Float, ?_en:Null<Int>, ?_ds:Null<Int>) {
 			var x = _x == null ? canvas.mouseX : _x;
 			var y = _y == null ? canvas.mouseY : _y;
-			riders.addNewRider(_name, new Point(x, y));
+			var startFrame = _en == null ? (simulation.frames - 1) : _en;
+			riders.addNewRider(_name, new Point(x, y), startFrame, _ds);
 		});
 		console.addCommand(Commands.listRiderInfo, "Print all riders and info into console", [], function() {
 			console.log("===");
@@ -239,6 +248,34 @@ class Main extends App
 				console.log('${rider.name} ${rider.startPos.x} ${rider.startPos.y}');
 			}
 			console.log("===");
+		});
+		console.addCommand(Commands.setRiderEnable, "Change specified rider's start frame", [arg15, arg27], function(_name:String, ?_frame:Null<Int>) {
+			if (riders.riders[_name] == null) {
+				console.log('Rider ${_name} does not exist...', 0xFF0000);
+				return;
+			}
+			var frame:Null<Int> = _frame == null ? simulation.frames : (_frame == 0 ? null : _frame);
+			if (frame != null && riders.riders[_name].disableFrame != null) {
+				if (_frame >= riders.riders[_name].disableFrame) {
+					console.log('Enable frame can not be greater than or equal to it\'s disabled frame, ${_frame} >= ${riders.riders[_name].disableFrame} is not valid!', 0xFF0000);
+					return;
+				}
+			}
+			riders.riders[_name].enabledFrame = _frame;
+		});
+		console.addCommand(Commands.setRiderDisable, "Change specified rider's stop frame", [arg15, arg28], function(_name:String, ?_frame:Null<Int>) {
+			if (riders.riders[_name] == null) {
+				console.log('Rider ${_name} does not exist...', 0xFF0000);
+				return;
+			}
+			var frame:Null<Int> = _frame == null ? simulation.frames : (_frame == -1 ? null : _frame);
+			if (frame != null && riders.riders[_name].enabledFrame != null) {
+				if (_frame <= riders.riders[_name].enabledFrame) {
+					console.log('Disable frame can not be less than or equal to it\'s enabled frame, ${_frame} <= ${riders.riders[_name].enabledFrame} is not valid!', 0xFF0000);
+					return;
+				}
+			}
+			riders.riders[_name].disableFrame = _frame;
 		});
 		console.addCommand(Commands.removeRider, "Remove specified rider", [arg15], function(_name:String) {riders.riders[_name].delete(); });
 		var arg18:ConsoleArgDesc = {t: AString, opt: false, name : "Track name"};
@@ -263,6 +300,7 @@ class Main extends App
 			
 		});
 		console.addCommand(Commands.loadTrack, "Load track with specified name", [arg18, arg19], function(_name:String, ?_offset:Int = 0) {
+			if (trackName != null) console.runCommand("saveTrack");
 			canvas.clear();
 			riders.deleteAllRiders();
 			saveload.loadTrack(_name, _offset); 
@@ -294,6 +332,16 @@ class Main extends App
 		console.addCommand(Commands.renameRider, "Rename and existing rider", [arg24, arg25], function(_old:String, _new:String){
 			riders.renameRider(_old, _new);
 		});
+		console.addCommand(Commands.importAlternativeSave, "Load valid JSON tracks", [arg20], function(_name:String) {
+			if (trackName != null) console.runCommand("saveTrack");
+			canvas.clear();
+			riders.deleteAllRiders();
+			saveload.loadJSON(_name);
+		});
+		var arg26:ConsoleArgDesc = {t: AString, opt: false, name : "message"};
+		console.addCommand(Commands.say, "Relay a message to console", [arg26], function(_msg:String) {
+			console.log(_msg);
+		});
 	}
 	
 	var riderPhysDelta:Float = 0.0;
@@ -302,12 +350,9 @@ class Main extends App
 	{
 		super.update(dt);
 		
-		updateGridLines();
+		textinfo.framerate = dt;
 		
-		if (simulation.updating) {
-			simulation.updateSim();
-			return;
-		}
+		updateGridLines();
 		
 		if (simulation.playing && !simulation.rewinding) {
 			simulation.playSim(dt);
@@ -316,6 +361,8 @@ class Main extends App
 		}
 		
 		canvas.drawRiders();
+		
+		textinfo.update();
 	}
 	
 	override function onResize():Void 
@@ -324,6 +371,8 @@ class Main extends App
 		
 		canvas_interaction.width = engine.width;
 		canvas_interaction.height = engine.height;
+		
+		textinfo.info.x = textinfo.info.y = 5;
 	}
 	
 	//this function needs to be improved

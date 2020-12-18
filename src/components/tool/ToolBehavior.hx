@@ -286,6 +286,8 @@ class ToolBehavior
 						Main.simulation.backSim();
 					case Key.D :
 						Main.simulation.stepSim();
+					case Key.S :
+						Main.simulation.startSim();
 						
 					case Key.NUMBER_1 :
 						color = FLOOR;

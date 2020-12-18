@@ -257,6 +257,13 @@ Main.prototype = $extend(hxd_App.prototype,{
 		Main.riders = new components_managers_Riders();
 		Main.simulation = new components_managers_Simulation();
 		Main.saveload = new file_SaveLoad();
+		Main.textinfo = new components_stage_TextInfo();
+		this.s2d.addChild(Main.textinfo.info);
+		var _this = Main.textinfo.info;
+		var _this1 = Main.textinfo.info;
+		_this1.posChanged = true;
+		_this.posChanged = true;
+		_this.x = _this1.y = 5;
 	}
 	,setConsoleActions: function() {
 		var _gthis = this;
@@ -403,10 +410,13 @@ Main.prototype = $extend(hxd_App.prototype,{
 			rider.startPos = new h2d_col_Point(_x,_y);
 			rider.init();
 		});
-		Main.console.addCommand("addNewRider","Add new rider to sim",[arg15,arg16,arg17],function(_name,_x,_y) {
+		var arg27 = { t : h2d_ConsoleArg.AInt, opt : true, name : "Enable frame"};
+		var arg28 = { t : h2d_ConsoleArg.AInt, opt : true, name : "End frame"};
+		Main.console.addCommand("addNewRider","Add new rider to sim",[arg15,arg16,arg17,arg27,arg28],function(_name,_x,_y,_en,_ds) {
 			var x = _x == null ? Main.canvas.get_mouseX() : _x;
 			var y = _y == null ? Main.canvas.get_mouseY() : _y;
-			Main.riders.addNewRider(_name,new h2d_col_Point(x,y));
+			var startFrame = _en == null ? Main.simulation.frames - 1 : _en;
+			Main.riders.addNewRider(_name,new h2d_col_Point(x,y),startFrame,_ds);
 		});
 		Main.console.addCommand("listRiderInfo","Print all riders and info into console",[],function() {
 			Main.console.log("===");
@@ -416,6 +426,34 @@ Main.prototype = $extend(hxd_App.prototype,{
 				Main.console.log("" + rider1.get_name() + " " + rider1.startPos.x + " " + rider1.startPos.y);
 			}
 			Main.console.log("===");
+		});
+		Main.console.addCommand("setRiderEnable","Change specified rider's start frame",[arg15,arg27],function(_name,_frame) {
+			if(Main.riders.riders.h[_name] == null) {
+				Main.console.log("Rider " + _name + " does not exist...",16711680);
+				return;
+			}
+			var frame = _frame == null ? Main.simulation.frames : _frame == 0 ? null : _frame;
+			if(frame != null && Main.riders.riders.h[_name].disableFrame != null) {
+				if(_frame >= Main.riders.riders.h[_name].disableFrame) {
+					Main.console.log("Enable frame can not be greater than or equal to it's disabled frame, " + _frame + " >= " + Main.riders.riders.h[_name].disableFrame + " is not valid!",16711680);
+					return;
+				}
+			}
+			Main.riders.riders.h[_name].enabledFrame = _frame;
+		});
+		Main.console.addCommand("setRiderDisable","Change specified rider's stop frame",[arg15,arg28],function(_name,_frame) {
+			if(Main.riders.riders.h[_name] == null) {
+				Main.console.log("Rider " + _name + " does not exist...",16711680);
+				return;
+			}
+			var frame = _frame == null ? Main.simulation.frames : _frame == -1 ? null : _frame;
+			if(frame != null && Main.riders.riders.h[_name].enabledFrame != null) {
+				if(_frame <= Main.riders.riders.h[_name].enabledFrame) {
+					Main.console.log("Disable frame can not be less than or equal to it's enabled frame, " + _frame + " <= " + Main.riders.riders.h[_name].enabledFrame + " is not valid!",16711680);
+					return;
+				}
+			}
+			Main.riders.riders.h[_name].disableFrame = _frame;
 		});
 		Main.console.addCommand("removeRider","Remove specified rider",[arg15],function(_name) {
 			Main.riders.riders.h[_name].delete();
@@ -443,6 +481,9 @@ Main.prototype = $extend(hxd_App.prototype,{
 		Main.console.addCommand("loadTrack","Load track with specified name",[arg18,arg19],function(_name,_offset) {
 			if(_offset == null) {
 				_offset = 0;
+			}
+			if(Main.trackName != null) {
+				Main.console.runCommand("saveTrack");
 			}
 			Main.canvas.clear();
 			Main.riders.deleteAllRiders();
@@ -482,25 +523,40 @@ Main.prototype = $extend(hxd_App.prototype,{
 		Main.console.addCommand("renameRider","Rename and existing rider",[arg24,arg25],function(_old,_new) {
 			Main.riders.renameRider(_old,_new);
 		});
+		Main.console.addCommand("importAlternativeSave","Load valid JSON tracks",[arg20],function(_name) {
+			if(Main.trackName != null) {
+				Main.console.runCommand("saveTrack");
+			}
+			Main.canvas.clear();
+			Main.riders.deleteAllRiders();
+			Main.saveload.loadJSON(_name);
+		});
+		var arg26 = { t : h2d_ConsoleArg.AString, opt : false, name : "message"};
+		Main.console.addCommand("say","Relay a message to console",[arg26],function(_msg) {
+			Main.console.log(_msg);
+		});
 	}
 	,update: function(dt) {
 		hxd_App.prototype.update.call(this,dt);
+		Main.textinfo.framerate = dt;
 		this.updateGridLines();
-		if(Main.simulation.updating) {
-			Main.simulation.updateSim();
-			return;
-		}
 		if(Main.simulation.playing && !Main.simulation.rewinding) {
 			Main.simulation.playSim(dt);
 		} else if(Main.simulation.rewinding) {
 			Main.simulation.rewindSim(dt);
 		}
 		Main.canvas.drawRiders();
+		Main.textinfo.update();
 	}
 	,onResize: function() {
 		hxd_App.prototype.onResize.call(this);
 		Main.canvas_interaction.width = this.engine.width;
 		Main.canvas_interaction.height = this.engine.height;
+		var _this = Main.textinfo.info;
+		var _this1 = Main.textinfo.info;
+		_this1.posChanged = true;
+		_this.posChanged = true;
+		_this.x = _this1.y = 5;
 	}
 	,updateGridLines: function() {
 		var ratio = Math.round(Main.viewGridSize * Main.canvas.scaleX);
@@ -1128,8 +1184,9 @@ components_lines_LineBase.prototype = {
 		this.dx = this.end.x - this.start.x;
 		this.dy = this.end.y - this.start.y;
 		this.C = this.dy * this.start.x - this.dx * this.start.y;
-		this.invSqrDistance = 1 / (Math.pow(this.dx,2) + Math.pow(this.dy,2));
-		this.distance = Math.sqrt(Math.pow(this.dx,2) + Math.pow(this.dy,2));
+		var _loc2 = Math.pow(this.dx,2) + Math.pow(this.dy,2);
+		this.invSqrDistance = 1 / _loc2;
+		this.distance = Math.sqrt(_loc2);
 		this.invDistance = 1 / this.distance;
 		this.nx = this.dy * this.invDistance * (this.shifted ? 1 : -1);
 		this.ny = this.dx * this.invDistance * (this.shifted ? -1 : 1);
@@ -1299,7 +1356,7 @@ components_lines_Floor.prototype = $extend(components_lines_LineBase.prototype,{
 				_point.pos.x -= _loc4 * this.nx;
 				_point.pos.y -= _loc4 * this.ny;
 				_point.vel.x += this.ny * _point.friction * _loc4 * (_point.vel.x < _point.pos.x ? 1 : -1);
-				_point.vel.y += this.nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1);
+				_point.vel.y -= this.nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1);
 			}
 		}
 	}
@@ -1438,6 +1495,9 @@ components_managers_Grid.prototype = {
 	}
 	,storeLine: function(_line,_x,_y) {
 		var key = "x" + _x + "y" + _y;
+		if(_line.keyList.indexOf(key) != -1) {
+			return;
+		}
 		if(this.registry.h[key] == null) {
 			var reg = { position : new h2d_col_Point(_x,_y), colliders : [], nonColliders : []};
 			this.registry.h[key] = reg;
@@ -1514,7 +1574,7 @@ components_managers_Riders.prototype = {
 			rider1.delete();
 		}
 	}
-	,addNewRider: function(_name,_start) {
+	,addNewRider: function(_name,_start,_startFrame,_endFrame) {
 		var setName = _name;
 		if(this.riders.h[setName] != null) {
 			var occupiedSpace = 0;
@@ -1523,7 +1583,7 @@ components_managers_Riders.prototype = {
 			setName += "" + occupiedSpace;
 		}
 		var this1 = this.riders;
-		var v = new components_sledder_Bosh(_start.x,_start.y,setName);
+		var v = new components_sledder_Bosh(_start.x,_start.y,setName,_startFrame,_endFrame);
 		this1.h[setName] = v;
 		++this.riderCount;
 		Main.simulation.recordGlobalSimState();
@@ -1552,19 +1612,7 @@ components_managers_Riders.prototype = {
 		var rider = haxe_ds_StringMap.valueIterator(this.riders.h);
 		while(rider.hasNext()) {
 			var rider1 = rider.next();
-			rider1.iterate();
-			rider1.constrainBones();
-			rider1.collision();
-			rider1.constrainBones();
-			rider1.collision();
-			rider1.constrainBones();
-			rider1.collision();
-			rider1.constrainBones();
-			rider1.collision();
-			rider1.constrainBones();
-			rider1.collision();
-			rider1.constrainBones();
-			rider1.collision();
+			rider1.stepRider();
 		}
 	}
 	,__class__: components_managers_Riders
@@ -1592,6 +1640,7 @@ components_managers_Simulation.prototype = {
 			return;
 		}
 		this.playing = true;
+		this.paused = false;
 		this.timeDelta = 0;
 		if(this.flagPoint != null) {
 			this.restoreFlagPoint();
@@ -1652,7 +1701,7 @@ components_managers_Simulation.prototype = {
 			var rider1 = rider.next();
 			var state = this.frameStates.h[rider1.__id__][locframe];
 			if(state == null) {
-				this.recordRiderState(rider1);
+				this.recordRiderState(rider1,this.frames);
 				continue;
 			}
 			rider1.crashed = state.crashed;
@@ -1670,17 +1719,17 @@ components_managers_Simulation.prototype = {
 		var rider = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
 		while(rider.hasNext()) {
 			var rider1 = rider.next();
-			this.recordRiderState(rider1);
+			this.recordRiderState(rider1,this.frames);
 		}
 	}
-	,recordRiderState: function(_rider) {
+	,recordRiderState: function(_rider,_frame) {
 		if(this.frameStates.h[_rider.__id__] == null) {
 			var this1 = this.frameStates;
 			var v = [];
 			this1.set(_rider,v);
 		}
 		var stat = { crashed : _rider.crashed, points : []};
-		this.frameStates.h[_rider.__id__][this.frames] = stat;
+		this.frameStates.h[_rider.__id__][_frame] = stat;
 		var _points = [];
 		var _g = 0;
 		var _g1 = _rider.ridePoints;
@@ -1689,7 +1738,7 @@ components_managers_Simulation.prototype = {
 			++_g;
 			_points.push(point.saveState());
 		}
-		this.frameStates.h[_rider.__id__][this.frames].points = _points;
+		this.frameStates.h[_rider.__id__][_frame].points = _points;
 	}
 	,updateSimHistory: function(_minFrame) {
 		return;
@@ -1724,12 +1773,16 @@ $hxClasses["components.physics.Stick"] = components_physics_Stick;
 components_physics_Stick.__name__ = "components.physics.Stick";
 components_physics_Stick.prototype = {
 	satisfy: function(_crashed) {
-		var dist = Math.sqrt(Math.pow(this.a.pos.x - this.b.pos.x,2) + Math.pow(this.a.pos.y - this.b.pos.y,2));
-		var ratio = dist == 0 ? 0 : (dist - this.restLength) / dist * 0.5;
-		this.a.pos.x -= (this.a.pos.x - this.b.pos.x) * ratio;
-		this.a.pos.y -= (this.a.pos.y - this.b.pos.y) * ratio;
-		this.b.pos.x += (this.a.pos.x - this.b.pos.x) * ratio;
-		this.b.pos.y += (this.a.pos.y - this.b.pos.y) * ratio;
+		var xDist = this.a.pos.x - this.b.pos.x;
+		var yDist = this.a.pos.y - this.b.pos.y;
+		var dist = Math.sqrt(Math.pow(xDist,2) + Math.pow(yDist,2));
+		var adjust = dist == 0 ? 0 : (dist - this.restLength) / dist * 0.5;
+		var xAdjust = xDist * adjust;
+		var yAdjust = yDist * adjust;
+		this.a.pos.x -= xAdjust;
+		this.a.pos.y -= yAdjust;
+		this.b.pos.x += xAdjust;
+		this.b.pos.y += yAdjust;
 		return _crashed;
 	}
 	,__class__: components_physics_Stick
@@ -1743,17 +1796,20 @@ components_physics_BindStick.__name__ = "components.physics.BindStick";
 components_physics_BindStick.__super__ = components_physics_Stick;
 components_physics_BindStick.prototype = $extend(components_physics_Stick.prototype,{
 	satisfy: function(_crashed) {
-		var dist = Math.sqrt(Math.pow(this.a.pos.x - this.b.pos.x,2) + Math.pow(this.a.pos.y - this.b.pos.y,2));
-		var ratio = dist == 0 ? 0 : (dist - this.restLength) / dist * 0.5;
-		if(ratio > this.endurance || _crashed) {
-			components_physics_BindStick.crash = true;
+		var xDist = this.a.pos.x - this.b.pos.x;
+		var yDist = this.a.pos.y - this.b.pos.y;
+		var dist = Math.sqrt(Math.pow(xDist,2) + Math.pow(yDist,2));
+		var adjust = dist == 0 ? 0 : (dist - this.restLength) / dist * 0.5;
+		if(adjust > this.endurance || _crashed) {
 			return true;
 		}
-		this.a.pos.x -= (this.a.pos.x - this.b.pos.x) * ratio;
-		this.a.pos.y -= (this.a.pos.y - this.b.pos.y) * ratio;
-		this.b.pos.x += (this.a.pos.x - this.b.pos.x) * ratio;
-		this.b.pos.y += (this.a.pos.y - this.b.pos.y) * ratio;
-		return false;
+		var xAdjust = xDist * adjust;
+		var yAdjust = yDist * adjust;
+		this.a.pos.x -= xAdjust;
+		this.a.pos.y -= yAdjust;
+		this.b.pos.x += xAdjust;
+		this.b.pos.y += yAdjust;
+		return _crashed;
 	}
 	,__class__: components_physics_BindStick
 });
@@ -1765,13 +1821,17 @@ components_physics_RepellStick.__name__ = "components.physics.RepellStick";
 components_physics_RepellStick.__super__ = components_physics_Stick;
 components_physics_RepellStick.prototype = $extend(components_physics_Stick.prototype,{
 	satisfy: function(_crashed) {
-		var dist = Math.sqrt(Math.pow(this.a.pos.x - this.b.pos.x,2) + Math.pow(this.a.pos.y - this.b.pos.y,2));
+		var xDist = this.a.pos.x - this.b.pos.x;
+		var yDist = this.a.pos.y - this.b.pos.y;
+		var dist = Math.sqrt(Math.pow(xDist,2) + Math.pow(yDist,2));
 		if(dist < this.restLength) {
-			var ratio = dist == 0 ? 0 : (dist - this.restLength) / dist * 0.5;
-			this.a.pos.x -= (this.a.pos.x - this.b.pos.x) * ratio;
-			this.a.pos.y -= (this.a.pos.y - this.b.pos.y) * ratio;
-			this.b.pos.x += (this.a.pos.x - this.b.pos.x) * ratio;
-			this.b.pos.y += (this.a.pos.y - this.b.pos.y) * ratio;
+			var adjust = dist == 0 ? 0 : (dist - this.restLength) / dist * 0.5;
+			var xAdjust = xDist * adjust;
+			var yAdjust = yDist * adjust;
+			this.a.pos.x -= xAdjust;
+			this.a.pos.y -= yAdjust;
+			this.b.pos.x += xAdjust;
+			this.b.pos.y += yAdjust;
 		}
 		return _crashed;
 	}
@@ -1800,8 +1860,8 @@ components_physics_RidePoint.prototype = {
 		var g = _grav == null ? this.grav : _grav;
 		this.dir.x = this.pos.x - this.vel.x + g.x;
 		this.dir.y = this.pos.y - this.vel.y + g.y;
-		var _this = this.pos;
-		this.vel = new h2d_col_Point(_this.x,_this.y);
+		this.vel.x = this.pos.x;
+		this.vel.y = this.pos.y;
 		var _this = this.pos;
 		var p = this.dir;
 		this.pos = new h2d_col_Point(_this.x + p.x,_this.y + p.y);
@@ -1844,7 +1904,7 @@ h3d_Vector.__name__ = "h3d.Vector";
 h3d_Vector.prototype = {
 	__class__: h3d_Vector
 };
-var components_sledder_RiderBase = function(_x,_y,_name) {
+var components_sledder_RiderBase = function(_x,_y,_name,_enable,_disable) {
 	if(_name == null) {
 		_name = "Bosh";
 	}
@@ -1854,6 +1914,7 @@ var components_sledder_RiderBase = function(_x,_y,_name) {
 	if(_x == null) {
 		_x = 0.0;
 	}
+	this.enabled = true;
 	this.drawContactPoints = true;
 	this.startPos = new h2d_col_Point();
 	this.crashed = false;
@@ -1867,6 +1928,8 @@ var components_sledder_RiderBase = function(_x,_y,_name) {
 	this.set_name(_name);
 	this.ridePoints = [];
 	this.bones = [];
+	this.enabledFrame = _enable;
+	this.disableFrame = _disable;
 };
 $hxClasses["components.sledder.RiderBase"] = components_sledder_RiderBase;
 components_sledder_RiderBase.__name__ = "components.sledder.RiderBase";
@@ -1914,6 +1977,25 @@ components_sledder_RiderBase.prototype = {
 			var dot = _g1[_g];
 			++_g;
 			this.gfx.drawCircle(dot.pos.x,dot.pos.y,0.1,5);
+		}
+	}
+	,stepRider: function() {
+		if(this.enabled) {
+			if((this.enabledFrame == null || Main.simulation.frames >= this.enabledFrame) && (this.disableFrame == null || Main.simulation.frames < this.disableFrame)) {
+				this.iterate();
+				this.constrainBones();
+				this.collision();
+				this.constrainBones();
+				this.collision();
+				this.constrainBones();
+				this.collision();
+				this.constrainBones();
+				this.collision();
+				this.constrainBones();
+				this.collision();
+				this.constrainBones();
+				this.collision();
+			}
 		}
 	}
 	,iterate: function() {
@@ -1976,7 +2058,7 @@ components_sledder_RiderBase.prototype = {
 	}
 	,__class__: components_sledder_RiderBase
 };
-var components_sledder_Bosh = function(_x,_y,_name) {
+var components_sledder_Bosh = function(_x,_y,_name,_enable,_disable) {
 	if(_name == null) {
 		_name = "Bosh";
 	}
@@ -1986,7 +2068,7 @@ var components_sledder_Bosh = function(_x,_y,_name) {
 	if(_x == null) {
 		_x = 0.0;
 	}
-	components_sledder_RiderBase.call(this,_x,_y,_name);
+	components_sledder_RiderBase.call(this,_x,_y,_name,_enable,_disable);
 	this.init();
 };
 $hxClasses["components.sledder.Bosh"] = components_sledder_Bosh;
@@ -4407,6 +4489,64 @@ components_stage_LRConsole.prototype = $extend(h2d_Console.prototype,{
 	}
 	,__class__: components_stage_LRConsole
 });
+var components_stage_TextInfo = function() {
+	this.info = new h2d_Text(hxd_res_DefaultFont.get());
+	this.info.color = new h3d_Vector(0.2,0.2,0.2);
+};
+$hxClasses["components.stage.TextInfo"] = components_stage_TextInfo;
+components_stage_TextInfo.__name__ = "components.stage.TextInfo";
+components_stage_TextInfo.prototype = {
+	update: function() {
+		this.info.set_text((Main.trackName == null ? "Untitled" : Main.trackName) + (" : " + Math.floor(1 / this.framerate) + "FPS\n"));
+		var _g = this.info;
+		_g.set_text(_g.text + ("" + this.timeStamp(Main.simulation.frames) + " : " + this.getSimState() + "\n"));
+	}
+	,timeStamp: function(_frames) {
+		var negative = false;
+		var frames = _frames;
+		if(_frames < 0) {
+			negative = true;
+			frames *= -1;
+		}
+		var seconds = frames / 40 | 0;
+		var minutes = seconds / 60 | 0;
+		var hours = minutes / 60 | 0;
+		var remFrames = frames % 40;
+		var remSeconds = seconds % 60;
+		var remMinutes = minutes % 60;
+		var _returnString = "";
+		if(frames < 40) {
+			_returnString = frames < 10 ? "0:0" + frames : "0:" + frames;
+		} else if(frames >= 40 && seconds < 60) {
+			_returnString = remFrames < 10 ? seconds + ":" + "0" + remFrames : seconds + ":" + remFrames;
+		} else if(seconds >= 60 && minutes < 60) {
+			_returnString = minutes + ":" + (remSeconds < 10 ? "0" + remSeconds : "" + remSeconds) + ":" + (remFrames < 10 ? "0" + remFrames : "" + remFrames);
+		} else if(minutes >= 60) {
+			_returnString = hours + ":" + (minutes < 10 ? "0" + remMinutes : "" + remMinutes) + ":" + (remSeconds < 10 ? "0" + remSeconds : "" + remSeconds) + ":" + (remFrames < 10 ? "0" + remFrames : "" + remFrames);
+		}
+		if(negative) {
+			_returnString = "-" + _returnString;
+		}
+		return _returnString;
+	}
+	,getSimState: function() {
+		var sim = Main.simulation;
+		if(sim.rewinding) {
+			return "Rewinding";
+		}
+		if(!sim.playing && !sim.paused && !sim.rewinding) {
+			return "Stopped";
+		}
+		if(sim.playing && !sim.paused && !sim.rewinding) {
+			return "Playing";
+		}
+		if(sim.paused && !sim.rewinding) {
+			return "Paused";
+		}
+		return "lousy smarch weather";
+	}
+	,__class__: components_stage_TextInfo
+};
 var components_tool_ToolMode = $hxEnums["components.tool.ToolMode"] = { __ename__ : "components.tool.ToolMode", __constructs__ : ["NONE","PENCIL","LINE","ERASER"]
 	,NONE: {_hx_index:0,__enum__:"components.tool.ToolMode",toString:$estr}
 	,PENCIL: {_hx_index:1,__enum__:"components.tool.ToolMode",toString:$estr}
@@ -4638,6 +4778,9 @@ components_tool_ToolBehavior.prototype = {
 				this.updateCursor();
 				Main.console.log("Tool set to Pencil",187);
 				break;
+			case 83:
+				Main.simulation.startSim();
+				break;
 			case 87:
 				this.tool = components_tool_ToolMode.LINE;
 				this.updateCursor();
@@ -4714,7 +4857,7 @@ file_SaveLoad.prototype = {
 		var sledder = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
 		while(sledder.hasNext()) {
 			var sledder1 = sledder.next();
-			var rider = { name : sledder1.get_name(), startPoint : sledder1.startPos};
+			var rider = { name : sledder1.get_name(), startPoint : sledder1.startPos, startFrame : sledder1.enabledFrame, stopFrame : sledder1.disableFrame};
 			saveObject.riders.push(rider);
 		}
 		hxd_Save.save(saveObject,_name,true);
@@ -4753,8 +4896,11 @@ file_SaveLoad.prototype = {
 		while(_g < _g1.length) {
 			var rider = _g1[_g];
 			++_g;
-			Main.riders.addNewRider(rider.name,rider.startPoint);
+			Main.riders.addNewRider(rider.name,rider.startPoint,rider.startFrame,rider.stopFrame);
 		}
+	}
+	,loadJSON: function(_fileName) {
+		return;
 	}
 	,__class__: file_SaveLoad
 };
@@ -42731,7 +42877,6 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
-components_physics_BindStick.crash = false;
 components_sledder_RiderBase.WHITE = new h3d_Vector(1,1,1,1);
 components_sledder_RiderBase.RED = new h3d_Vector(1,0,0,1);
 h2d_Console.HIDE_LOG_TIMEOUT = 3.;

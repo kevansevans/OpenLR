@@ -75,8 +75,9 @@ class LineBase
 		dx = end.x - start.x;
 		dy = end.y - start.y;
 		C = dy * start.x - dx * start.y;
-		invSqrDistance = 1 / (Math.pow(dx, 2) + Math.pow(dy, 2));
-		distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+		var _loc2 = Math.pow(dx, 2) + Math.pow(dy, 2);
+		invSqrDistance = 1 / _loc2;
+		distance = Math.sqrt(_loc2);
 		invDistance = 1 / distance;
 		nx = dy * invDistance * (shifted ? 1 : -1);
 		ny = dx * invDistance * (shifted ? -1 : 1);

@@ -112,6 +112,7 @@ class Grid
 	function storeLine(_line:LineBase, _x:Int, _y:Int)
 	{
 		var key = 'x${_x}y${_y}';
+		if (_line.keyList.contains(key)) return;
 		if (registry[key] == null) {
 			var reg:LineContainer = {
 				position : new Point(_x, _y),

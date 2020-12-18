@@ -8,13 +8,15 @@ enum abstract Commands(String) from String
 	//commands in brackets [] are optional with default value if there is one. IE [x, 0.0] means the x argument is optional and has a default value of 0.0
 	
 	var addCanvasPosition:String; //x, y, adds to the current existing canvas position
-	var addNewRider:String; //name, [x, 0.0], [y, 0.0], creates a new rider with specified name, and sets it's start point to given x y values
+	var addNewRider:String; //name, [x, 0.0], [y, 0.0], [enable frame], [disableFrame] creates a new rider with specified name, and sets it's start point to given x y values
 	
 	var drawLine:String; //[type, current active color], [x1, mouse x], [y1, mouse y], [x2, x1 + 10], [y2, same as y1], [shifted, false], [limmode], creates a new line
 	
 	var github:String; //Print github page
 	var gridSizeDec:String; //Change the ruler dimensions by -1
 	var gridSizeInc:String; //Change the ruler dimensions by +1
+	
+	var importAlternativeSave:String; //Import JSON tracks
 	
 	var listRiderInfo:String; //Show all riders and their names
 	var listSavedTracks:String; //Show all saved tracks
@@ -32,11 +34,14 @@ enum abstract Commands(String) from String
 	var rewindSimulation:String; //true/false, toggle rewinding
 	
 	var saveTrack:String; //[name, will default to current track name] Save track. If track name is not provided and track name is unset, it will not save.
+	var say:String; //Relay a chat message to console
 	var setAuthorName:String; //name, sets author name for track info
 	var setCanvasPosition:String; //x, y, Sets exact position of canvas
 	var setGridSize:String; //value, Sets exact ruler width and height
 	var setLineColor:String; //type, sets color type. Many values are supported.
 	var setRiderStart:String; //name, [x, 0.0], [y, 0.0], change the start position of specified rider.
+	var setRiderEnable:String; //name, [frame, current frame]. Changes the frame at which the specified rider starts riding. If no argument is provided, this is changed to the current frame position. -1 will disable (Start at frame 0)
+	var setRiderDisable:String; //name, [frame, current frame]. Changes the frame at which the specified rider Stops riding. If no argument is provided, this is changed to the current frame position. -1 will disable. (Never stop)
 	var setScale:String; //value, set track scale
 	var setTrackName:String; //name, set track name
 	var setTool:String; //type, change tool type

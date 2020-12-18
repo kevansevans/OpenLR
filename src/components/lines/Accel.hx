@@ -67,8 +67,8 @@ class Accel extends LineBase
 		if (_point.dir.x * nx + _point.dir.y * ny > 0)
 		{
 			if (_loc4 > 0 && _loc4 < zone && _loc7 >= limStart && _loc7 <= limEnd) {
-				_point.pos.x -= (_loc4 * nx);
-				_point.pos.y -= (_loc4 * ny);
+				_point.pos.x = _point.pos.x - _loc4 * nx;
+				_point.pos.y = _point.pos.y - _loc4 * ny;
 				_point.vel.x = _point.vel.x + ny * _point.friction * _loc4 * (_point.vel.x < _point.pos.x ? 1 : -1) + accx;
 				_point.vel.y = _point.vel.y - nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1) + accy;
 			}

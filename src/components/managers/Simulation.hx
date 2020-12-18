@@ -42,6 +42,7 @@ class Simulation
 		}
 		
 		playing = true;
+		paused = false;
 		timeDelta = 0;
 		if (flagPoint != null) restoreFlagPoint();
 		else restoreState(0);
@@ -103,7 +104,7 @@ class Simulation
 		for (rider in Main.riders.riders) {
 			var state = frameStates[rider][locframe];
 			if (state == null) {
-				recordRiderState(rider);
+				recordRiderState(rider, frames);
 				continue;
 			}
 			rider.crashed = state.crashed;
@@ -130,22 +131,22 @@ class Simulation
 	
 	public function recordGlobalSimState() {
 		for (rider in Main.riders.riders) {
-			recordRiderState(rider);
+			recordRiderState(rider, frames);
 		}
 	}
 	
-	public function recordRiderState(_rider:RiderBase) {
+	public function recordRiderState(_rider:RiderBase, _frame:Int) {
 		if (frameStates[_rider] == null) frameStates[_rider] = new Array();
 		var stat:RiderState = {
 			crashed : _rider.crashed,
 			points : new Array()
 		}
-		frameStates[_rider][frames] = stat;
+		frameStates[_rider][_frame] = stat;
 		var _points:Array<PointState> = new Array();
 		for (point in _rider.ridePoints) {
 			_points.push(point.saveState());
 		}
-		frameStates[_rider][frames].points = _points;
+		frameStates[_rider][_frame].points = _points;
 	}
 	
 	var rewindPoint:Int = 0;
@@ -169,6 +170,12 @@ class Simulation
 				return ;
 			}
 		}
+	}
+	
+	var localRiderFrame:Int = 0;
+	public function catchRiderUp(_rider:RiderBase) 
+	{
+		localRiderFrame = 0;
 	}
 	
 	function get_desiredSimSpeed():Float 

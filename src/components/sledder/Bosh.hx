@@ -13,9 +13,9 @@ import components.sledder.RiderBase;
 class Bosh extends RiderBase 
 {
 
-	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh") 
+	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh", ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
 	{
-		super(_x, _y, _name);
+		super(_x, _y, _name, _enable, _disable);
 		
 		init();
 	}
@@ -70,8 +70,8 @@ class Bosh extends RiderBase
 		bones.push(new RepellStick(ridePoints[5], ridePoints[8]));
 		bones.push(new RepellStick(ridePoints[5], ridePoints[9]));
 		
-		bones[20].restLength *= 0.5;
-		bones[21].restLength *= 0.5;
+		bones[20].restLength = bones[20].restLength * 0.5;
+		bones[21].restLength = bones[21].restLength * 0.5;
 	}
 	
 }

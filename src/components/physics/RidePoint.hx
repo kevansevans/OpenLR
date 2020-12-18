@@ -32,7 +32,8 @@ class RidePoint
 		dir.x = pos.x - vel.x + g.x;
 		dir.y = pos.y - vel.y + g.y;
 		
-		vel = pos.clone();
+		vel.x = pos.x;
+		vel.y = pos.y;
 		
 		pos = pos.add(dir);
 	}

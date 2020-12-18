@@ -28,7 +28,7 @@ class Riders
 		for (rider in riders) rider.delete();
 	}
 	
-	public function addNewRider(_name:String, _start:Point)
+	public function addNewRider(_name:String, _start:Point, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>)
 	{
 		var setName:String = _name;
 		if (riders[setName] != null) {
@@ -39,7 +39,7 @@ class Riders
 			Main.console.log('Rider name ${setName} already occupied, renaming to ${setName + occupiedSpace}');
 			setName += "" + occupiedSpace;
 		}
-		riders[setName] = new Bosh(_start.x, _start.y, setName);
+		riders[setName] = new Bosh(_start.x, _start.y, setName, _startFrame, _endFrame);
 		++riderCount;
 		Main.simulation.recordGlobalSimState();
 	}
@@ -67,11 +67,7 @@ class Riders
 	
 	public function stepRiders() {
 		for (rider in riders) {
-			rider.iterate();
-			for (iteration in 0...6) {
-				rider.constrainBones();
-				rider.collision();
-			}
+			rider.stepRider();
 		}
 	}
 	
