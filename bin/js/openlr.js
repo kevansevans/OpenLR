@@ -1411,6 +1411,7 @@ var components_managers_Grid = function() {
 	this.sceneCount = 0;
 	this.accelCount = 0;
 	this.floorCount = 0;
+	this.lineIDCount = 0;
 	this.lineCount = 0;
 	this.registry = new haxe_ds_StringMap();
 	this.lines = [];
@@ -1479,7 +1480,11 @@ components_managers_Grid.prototype = {
 	}
 	,addLine: function(_line) {
 		this.lines.push(_line);
+		if(_line.id == null) {
+			_line.id = this.lineIDCount;
+		}
 		++this.lineCount;
+		++this.lineIDCount;
 		switch(_line.type) {
 		case 0:
 			++this.floorCount;
@@ -1556,6 +1561,7 @@ components_managers_Grid.prototype = {
 	,__class__: components_managers_Grid
 };
 var components_managers_Musicplayer = function() {
+	this.playing = false;
 	this.offset = 0;
 	this.speedfilter = new hxd_snd_effect_Pitch();
 };
@@ -1574,12 +1580,19 @@ components_managers_Musicplayer.prototype = {
 		this.mixer = this.sound.play();
 		this.mixer.addEffect(this.speedfilter);
 		this.mixer.set_position(_offset / 40 + this.offset);
+		this.mixer.onEnd = function() {
+			Main.console.log("Audio has ended...");
+		};
+		this.playing = true;
 	}
 	,stopMusic: function() {
 		if(this.sound == null) {
 			return;
 		}
-		this.mixer.stop();
+		if(this.playing) {
+			this.mixer.stop();
+		}
+		this.playing = false;
 	}
 	,__class__: components_managers_Musicplayer
 };
@@ -1675,6 +1688,7 @@ components_managers_Simulation.prototype = {
 		} else {
 			this.restoreState(0);
 		}
+		Main.audio.stopMusic();
 		Main.audio.playMusic(this.frames);
 	}
 	,pauseSim: function() {
@@ -1693,6 +1707,7 @@ components_managers_Simulation.prototype = {
 	}
 	,endSim: function() {
 		this.playing = false;
+		this.paused = false;
 		this.timeDelta = 0;
 		if(this.flagPoint != null) {
 			this.restoreFlagPoint();
@@ -4827,6 +4842,9 @@ components_tool_ToolBehavior.prototype = {
 				this.tool = components_tool_ToolMode.LINE;
 				this.updateCursor();
 				Main.console.log("Tool set to Line",187);
+				break;
+			case 88:
+				Main.simulation.endSim();
 				break;
 			case 219:
 				if(Main.viewGridSize == 1) {
