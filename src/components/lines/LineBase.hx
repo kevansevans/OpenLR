@@ -18,6 +18,8 @@ class LineBase
 	public var rideLayer:Graphics;
 	public var colorLayer:Graphics;
 	
+	public var id:Null<Int>;
+	
 	public var start:Point;
 	public var end:Point;
 	

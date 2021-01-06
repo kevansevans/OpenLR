@@ -47,6 +47,7 @@ class Simulation
 		if (flagPoint != null) restoreFlagPoint();
 		else restoreState(0);
 		
+		Main.audio.stopMusic();
 		Main.audio.playMusic(frames);
 	}
 	
@@ -67,6 +68,7 @@ class Simulation
 	
 	public function endSim() {
 		playing = false;
+		paused = false;
 		timeDelta = 0;
 		if (flagPoint != null) restoreFlagPoint();
 		else restoreState(0);

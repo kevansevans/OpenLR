@@ -2,12 +2,20 @@ package components.sledder;
 import components.managers.Grid;
 import components.physics.RidePoint;
 import components.physics.Stick;
+import h2d.Anim;
+import h2d.Bitmap;
 import h2d.Graphics;
 import h2d.HtmlText;
+import h2d.Object;
+import h2d.Tile;
 import h2d.col.Point;
 import h3d.Vector;
 import haxe.PosInfos;
+import haxe.io.Bytes;
+import hxd.PixelFormat;
+import hxd.Pixels;
 import hxd.res.DefaultFont;
+import hxd.Res;
 
 /**
  * ...
@@ -147,6 +155,112 @@ class RiderBase
 		nameField.text = value;
 		return name = value;
 	}
+}
+
+class RiderScarf extends Object {
+	
+	var colorA:Null<Int> = 0x0A0A8;
+	var colorB:Null<Int>;
+	
+	var bitmap:Bitmap;
+	var pixels:Pixels;
+	
+	public function new() {
+		super();
+		
+		setColor();
+	}
+	
+	public function setColor(?_a:Null<Int>, ?_b:Null<Int>):Void 
+	{
+		if (_a == null && _a == null) {
+			var r = Std.int(0xFF * Main.rng.getRandomNormal());
+			var g = Std.int(0xFF * Main.rng.getRandomNormal());
+			var b = Std.int(0xFF * Main.rng.getRandomNormal());
+			colorA = r << 16 | g << 8 | b;
+		} else if (_a != null) {
+			colorA = _a;
+		}
+		
+		if (_b == null && _b == null) {
+			var r = Std.int(0xFF * Main.rng.getRandomNormal());
+			var g = Std.int(0xFF * Main.rng.getRandomNormal());
+			var b = Std.int(0xFF * Main.rng.getRandomNormal());
+			colorB = r << 16 | g << 8 | b;
+		} else if (_b != null) {
+			colorB = _b;
+		}
+		
+		pixels = Pixels.alloc(40, 100, PixelFormat.ARGB);
+		
+		for (x in 0...40) for (y in 0...100) {
+			if (y > 80) {
+				pixels.setPixel(x, y, 0xFF << 24 | colorA);
+			} else if (y > 60) {
+				pixels.setPixel(x, y, 0xFF << 24 | colorB);
+			} else if (y > 40) {
+				pixels.setPixel(x, y, 0xFF << 24 | colorA);
+			} else if (y > 20) {
+				pixels.setPixel(x, y, 0xFF << 24 | colorB);
+			} else {
+				pixels.setPixel(x, y, 0xFF << 24 | colorA);
+			}
+		}
+		
+		bitmap = new Bitmap(Tile.fromPixels(pixels), this);
+	}
+	
+}
+
+class RiderPart extends Object {
+	
+	public var bitmap:Bitmap;
+	public var anim:Anim;
+	
+	public function new (_part:BodyPart) {
+		
+		super();
+		
+		switch (_part) {
+			case BODY :
+				bitmap = new Bitmap(Res.rider.body.toTile(), this);
+				bitmap.x = -2;
+				bitmap.y = -62;
+			case ARM :
+				bitmap = new Bitmap(Res.rider.arm.toTile(), this);
+				bitmap.x = -15;
+				bitmap.y = -25;
+			case LEG :
+				bitmap = new Bitmap(Res.rider.leg.toTile(), this);
+				bitmap.x = -15;
+				bitmap.y = -38;
+			case SLED :
+				bitmap = new Bitmap(Res.rider.sled.toTile(), this);
+				bitmap.x = -16;
+				bitmap.y = -45.5;
+			case EYE :
+				anim = new Anim([
+					Res.rider.eye0001.toTile(), //Open
+					Res.rider.eye0002.toTile(), //Blink
+					Res.rider.eye0003.toTile(), //Dead
+				], 0, this);
+				anim.loop = false;
+				anim.x = 165;
+				anim.y = 11;
+		}
+		
+		if (_part != EYE) this.scale(0.05);
+		
+	}
+	
+}
+
+enum BodyPart {
+	BODY;
+	ARM;
+	LEG;
+	SLED;
+	EYE;
 }
 
 typedef RiderSave = {

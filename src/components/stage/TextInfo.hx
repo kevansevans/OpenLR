@@ -1,5 +1,8 @@
 package components.stage;
+import components.stage.Canvas;
+import components.tool.ToolBehavior.LineColor;
 import h2d.Text;
+import h3d.Engine;
 import h3d.Vector;
 import hxd.Res;
 import hxd.res.DefaultFont;
@@ -24,8 +27,50 @@ class TextInfo
 	public function update() {
 		
 		info.text = (Main.trackName == null ? 'Untitled' : Main.trackName) + ' : ${Math.floor(1/framerate)}FPS\n';
+		info.text += 'Draw calls: ${Main.locengine.drawCalls}\n';
 		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
+		info.text += 'Lines: ${Main.grid.lineCount}\n';
+		info.text += 'Floor: ${Main.grid.floorCount} ${getLineVisibility(FLOOR)}\n';
+		info.text += 'Accel: ${Main.grid.accelCount} ${getLineVisibility(ACCEL)}\n';
+		info.text += 'Scene: ${Main.grid.sceneCount} ${getLineVisibility(SCENE)}\n';
 		
+	}
+	
+	public function getLineVisibility(_line:LineColor):String 
+	{
+		switch (_line) 
+		{
+			case FLOOR :
+				
+				switch (Main.canvas.drawMode) {
+					case FULL_EDIT | PLAYBACK | NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+						return "";
+					default :
+						return  "(Not visible)";
+				}
+				
+			case ACCEL :
+				
+				switch (Main.canvas.drawMode) {
+					case FULL_EDIT | PLAYBACK | NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+						return "";
+					default :
+						return  "(Not visible)";
+				}
+				
+			case SCENE :
+				
+				switch (Main.canvas.drawMode) {
+					case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+						return "(Not visible)";
+					default :
+						return  "";
+				}
+				
+			default :
+		}
+		
+		return  "";
 	}
 	
 	public function timeStamp(_frames:Int):String

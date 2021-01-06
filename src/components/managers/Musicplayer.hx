@@ -27,6 +27,7 @@ class Musicplayer
 	}
 	var sound:Sound;
 	var mixer:Channel;
+	public var playing:Bool = false;
 	public function loadAudio(_name:String) {
 		
 		#if hl
@@ -57,11 +58,16 @@ class Musicplayer
 		mixer = sound.play();
 		mixer.addEffect(speedfilter);
 		mixer.position = (_offset / 40) + offset;
+		mixer.onEnd = function() {
+			Main.console.log("Audio has ended...");
+		}
+		playing = true;
 	}
 	
 	public function stopMusic() {
 		if (sound == null) return;
-		mixer.stop();
+		if (playing) mixer.stop();
+		playing = false;
 	}
 	
 }

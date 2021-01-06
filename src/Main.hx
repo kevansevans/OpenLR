@@ -8,8 +8,18 @@ import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import enums.Commands;
 import file.SaveLoad;
+import h2d.Mask;
 import h2d.col.Point;
+import h3d.Vector;
+import h3d.col.Point;
 import components.stage.Canvas;
+import h3d.Engine;
+import h3d.mat.Material;
+import h3d.mat.Texture;
+import h3d.prim.Cube;
+import h3d.prim.UV;
+import h3d.prim.Polygon;
+import h3d.scene.Mesh;
 import hxd.res.DefaultFont;
 import components.stage.LRConsole;
 import h2d.Console;
@@ -17,6 +27,7 @@ import h2d.Graphics;
 import h2d.Interactive;
 import hxd.App;
 import hxd.Res;
+import utils.TableRNG;
 
 #if hl
 import hl.UI;
@@ -42,6 +53,10 @@ import hl.UI;
 class Main extends App
 {
 	var ruler:Graphics;
+	
+	public static var locengine:Engine;
+	public static var tl(get, null):h2d.col.Point;
+	public static var br(get, null):h2d.col.Point;
 	
 	public static var canvas:Canvas;
 	
@@ -71,6 +86,10 @@ class Main extends App
 	
 	public static var audio:Musicplayer;
 	
+	public static var rng:TableRNG;
+	
+	var mask:Mask;
+	
 	@:macro public static function getBuildDate() {
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
 		var month:Int = Date.now().getMonth();
@@ -93,6 +112,11 @@ class Main extends App
 		
 		super();
 		
+		rng = new TableRNG();
+		rng.shuffle(Date.now().getMonth() + 1);
+		rng.shuffle(Date.now().getMinutes() + 1);
+		rng.shuffle(Date.now().getSeconds() + 1);
+		
 		#if (hl && !debug)
 		UI.closeConsole();
 		#end
@@ -102,6 +126,8 @@ class Main extends App
 	override function init():Void 
 	{
 		super.init();
+		
+		Main.locengine = engine;
 		
 		Res.initEmbed();
 		
@@ -114,9 +140,8 @@ class Main extends App
 		ruler = new Graphics();
 		s2d.addChild(ruler);
 		
-		canvas = new Canvas();
-		s2d.addChild(canvas);
-		sevents.addScene(canvas);
+		mask = new h2d.Mask(engine.width, engine.height, s2d);
+		canvas = new Canvas(mask);
 		
 		canvas.x = engine.width / 2;
 		canvas.y = engine.height / 2;
@@ -239,7 +264,7 @@ class Main extends App
 		console.addCommand(Commands.setRiderStart, "Set rider start position", [arg15, arg16, arg17], function(_name:String, _x:Float = 0.0, _y:Float = 0.0) {
 			var rider = riders.riders[_name];
 			if (rider == null) return;
-			rider.startPos = new Point(_x, _y);
+			rider.startPos = new h2d.col.Point(_x, _y);
 			rider.init();
 		});
 		var arg27:ConsoleArgDesc = {t: AInt, opt: true, name : "Enable frame"};
@@ -248,7 +273,7 @@ class Main extends App
 			var x = _x == null ? canvas.mouseX : _x;
 			var y = _y == null ? canvas.mouseY : _y;
 			var startFrame = _en == null ? (simulation.frames - 1) : _en;
-			riders.addNewRider(_name, new Point(x, y), startFrame, _ds);
+			riders.addNewRider(_name, new h2d.col.Point(x, y), startFrame, _ds);
 		});
 		console.addCommand(Commands.listRiderInfo, "Print all riders and info into console", [], function() {
 			console.log("===");
@@ -331,7 +356,7 @@ class Main extends App
 			if (trackName != null) console.runCommand("saveTrack");
 			canvas.clear();
 			riders.deleteAllRiders();
-			riders.addNewRider("Bosh", new Point(0, 0));
+			riders.addNewRider("Bosh", new h2d.col.Point(0, 0));
 			trackName = null;
 			authorName = null;
 		} );
@@ -399,10 +424,25 @@ class Main extends App
 		canvas_interaction.width = engine.width;
 		canvas_interaction.height = engine.height;
 		
+		mask.width = engine.width;
+		mask.height = engine.height;
+		
 		textinfo.info.x = textinfo.info.y = 5;
 	}
 	
 	//this function needs to be improved
+	static function get_tl():h2d.col.Point 
+	{
+		var point = canvas.globalToLocal(new h2d.col.Point());
+		return point;
+	}
+	
+	static function get_br():h2d.col.Point 
+	{
+		var point = canvas.globalToLocal(new h2d.col.Point(Main.locengine.width, Main.locengine.height));
+		return point;
+	}
+	
 	function updateGridLines() {
 		
 		var ratio = Math.round(viewGridSize * canvas.scaleX);

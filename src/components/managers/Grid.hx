@@ -4,6 +4,8 @@ import components.lines.Accel;
 import components.lines.LineBase;
 import h2d.col.Point;
 import components.tool.ToolBehavior.LineColor;
+import haxe.ds.ArraySort;
+import hxd.Key;
 
 /**
  * ...
@@ -16,6 +18,7 @@ class Grid
 	public var lines:Array<LineBase>;
 	
 	public var lineCount:Int = 0;
+	public var lineIDCount:Int = 0;
 	public var floorCount:Int = 0;
 	public var accelCount:Int = 0;
 	public var sceneCount:Int = 0;
@@ -95,7 +98,9 @@ class Grid
 	public function addLine(_line:LineBase):Void 
 	{
 		lines.push(_line);
+		if (_line.id == null) _line.id = lineIDCount;
 		++lineCount;
+		++lineIDCount;
 		switch (_line.type) {
 			case FLOOR :
 				++floorCount;
@@ -169,6 +174,7 @@ class Grid
 		}
 		return gObject;
 	}
+	
 }
 
 typedef GridObject = {

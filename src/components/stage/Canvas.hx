@@ -40,9 +40,11 @@ class Canvas extends Scene
 	
 	public var sledderLayer:Object;
 	
-	public function new() 
+	public function new(?_parent:Object) 
 	{
 		super();
+		
+		_parent.addChild(this);
 		
 		sceneColorLayer = new Object(this);
 		scenePlaybackLayer = new Object(this);

@@ -167,6 +167,7 @@ class SaveLoad
 			Main.riders.addNewRider("Bosh", new Point(loadObject.startPosition.x, loadObject.startPosition.y));
 			
 			var lineArray:Array<Dynamic> = loadObject.lines;
+			lineArray.reverse();
 			for (lineObject in lineArray) {
 				var lim:Int = -1;
 				if (!lineObject.leftExtended && !lineObject.rightExtended) {

@@ -102,3 +102,19 @@ switch (thing) {
 		object = fields;
 	default :
 }
+
+//////////////////////////
+
+var uvs:Array<UV> = new Array();
+		var points:Array<h3d.col.Point> = new Array();
+		
+		for (a in -10...10) {
+			points.push(new h3d.col.Point(Math.sin(a), 0, Math.cos(a)));
+			points.push(new h3d.col.Point(0, 0, 0));
+			points.push(new h3d.col.Point(Math.sin(a + 1), 0, Math.cos(a + 1)));
+			uvs.push(new UV(Math.sin(a), Math.cos(a)));
+			uvs.push(new UV(Math.sin(a + 1), Math.cos(a + 1)));
+		}
+		
+		s3d.camera.pos = new Vector(0, -1, 0);
+		s3d.camera.target = new Vector(0, 1, 0);

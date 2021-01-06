@@ -5,6 +5,8 @@ import components.physics.Stick;
 import components.physics.BindStick;
 import components.physics.RepellStick;
 import components.sledder.RiderBase;
+import components.sledder.RiderBase.RiderPart;
+import format.gif.Data.Frame;
 
 /**
  * ...
@@ -13,11 +15,123 @@ import components.sledder.RiderBase;
 class Bosh extends RiderBase 
 {
 
+	public var leftArm:RiderPart;
+	public var rightArm:RiderPart;
+	public var leftLeg:RiderPart;
+	public var rightLeg:RiderPart;
+	public var sled:RiderPart;
+	public var eye:RiderPart;
+	public var body:RiderPart;
+	public var scarf:RiderScarf;
+	public var eyeball:RiderPart;
+	
+	public var blinkRate:Float = 0.125;
+	var prevFrame:Int = 0;
+	
 	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh", ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
 	{
 		super(_x, _y, _name, _enable, _disable);
 		
 		init();
+		
+		Main.rng.setKeyOffset(_name, Main.rng.getRandom());
+		
+		leftArm = new RiderPart(ARM);
+		leftLeg = new RiderPart(LEG);
+		sled = new RiderPart(SLED);
+		eye = new RiderPart(EYE);
+		body = new RiderPart(BODY);
+		scarf = new RiderScarf();
+		rightArm = new RiderPart(ARM);
+		rightLeg = new RiderPart(LEG);
+		
+		Main.canvas.sledderLayer.addChild(leftArm);
+		Main.canvas.sledderLayer.addChild(leftLeg);
+		Main.canvas.sledderLayer.addChild(sled);
+		Main.canvas.sledderLayer.addChild(body);
+		body.addChild(eye);
+		body.addChild(scarf);
+		scarf.x = 105;
+		scarf.y = -59;
+		Main.canvas.sledderLayer.addChild(rightArm);
+		Main.canvas.sledderLayer.addChild(rightLeg);
+	}
+	
+	override public function delete():Void 
+	{
+		super.delete();
+		
+		Main.canvas.sledderLayer.removeChild(leftArm);
+		Main.canvas.sledderLayer.removeChild(leftLeg);
+		Main.canvas.sledderLayer.removeChild(sled);
+		Main.canvas.sledderLayer.removeChild(body);
+		Main.canvas.sledderLayer.removeChild(rightArm);
+		Main.canvas.sledderLayer.removeChild(rightLeg);
+	}
+	
+	override public function renderRider():Void 
+	{
+		updateEyeball(Main.simulation.frames);
+		
+		body.x = ridePoints[4].pos.x;
+		body.y = ridePoints[4].pos.y;
+		
+		sled.x = ridePoints[0].pos.x;
+		sled.y = ridePoints[0].pos.y;
+		
+		leftArm.x = rightArm.x = ridePoints[5].pos.x;
+		leftArm.y = rightArm.y = ridePoints[5].pos.y;
+		
+		leftLeg.x = rightLeg.x = ridePoints[4].pos.x;
+		leftLeg.y = rightLeg.y = ridePoints[4].pos.y;
+		
+		body.rotation = Math.atan2(ridePoints[5].pos.y - ridePoints[4].pos.y, ridePoints[5].pos.x - ridePoints[4].pos.x);
+		sled.rotation = Math.atan2(ridePoints[3].pos.y - ridePoints[0].pos.y, ridePoints[3].pos.x - ridePoints[0].pos.x);
+		leftArm.rotation = Math.atan2(ridePoints[6].pos.y - ridePoints[5].pos.y, ridePoints[6].pos.x - ridePoints[5].pos.x);
+		rightArm.rotation = Math.atan2(ridePoints[7].pos.y - ridePoints[5].pos.y, ridePoints[7].pos.x - ridePoints[5].pos.x);
+		leftLeg.rotation = Math.atan2(ridePoints[8].pos.y - ridePoints[4].pos.y, ridePoints[8].pos.x - ridePoints[4].pos.x);
+		rightLeg.rotation = Math.atan2(ridePoints[9].pos.y - ridePoints[4].pos.y, ridePoints[9].pos.x - ridePoints[4].pos.x);
+		
+		if (!crashed) {
+			gfx.clear();
+			gfx.lineStyle(0.1);
+			gfx.moveTo(ridePoints[6].pos.x, ridePoints[6].pos.y);
+			gfx.lineTo(ridePoints[3].pos.x, ridePoints[3].pos.y);
+			gfx.lineTo(ridePoints[7].pos.x, ridePoints[7].pos.y);
+		}
+		
+		nameField.scaleX = nameField.scaleY = 1 * (1 / Main.canvas.scaleX);
+		
+		nameField.x = ridePoints[1].pos.x;
+		nameField.y = ridePoints[1].pos.y;
+		nameField.rotation = sled.rotation;
+		
+		if (crashed) {
+			nameField.color = RiderBase.RED;
+		} else {
+			nameField.color = RiderBase.WHITE;
+		}
+	}
+	
+	public function updateEyeball(_frame:Int):Void 
+	{
+		if (_frame == prevFrame) return;
+		if (crashed) {
+			eye.anim.currentFrame = 2;
+		} else {
+			var rngValue:Float = 0;
+			if (_frame > prevFrame) {
+				rngValue = Main.rng.getRandomNormal(name);
+			} else if (_frame < prevFrame) {
+				rngValue = Main.rng.getRandomNormalDecrease(name);
+			}
+			if (rngValue < blinkRate) {
+				eye.anim.currentFrame = 1;
+			} else {
+				eye.anim.currentFrame = 0;
+			}
+			prevFrame = _frame;
+		}
 	}
 	
 	override public function reset() { init(); };
