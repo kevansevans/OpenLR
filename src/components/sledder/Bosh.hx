@@ -1,6 +1,8 @@
 package components.sledder;
 
 import components.physics.RidePoint;
+import components.physics.ScarfPoint;
+import components.physics.ScarfStick;
 import components.physics.Stick;
 import components.physics.BindStick;
 import components.physics.RepellStick;
@@ -22,10 +24,9 @@ class Bosh extends RiderBase
 	public var sled:RiderPart;
 	public var eye:RiderPart;
 	public var body:RiderPart;
-	public var scarf:RiderScarf;
 	public var eyeball:RiderPart;
 	
-	public var blinkRate:Float = 0.125;
+	public var blinkRate:Float = 1 / 32;
 	var prevFrame:Int = 0;
 	
 	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh", ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
@@ -41,7 +42,8 @@ class Bosh extends RiderBase
 		sled = new RiderPart(SLED);
 		eye = new RiderPart(EYE);
 		body = new RiderPart(BODY);
-		scarf = new RiderScarf();
+		neckscarf = new RiderScarf();
+		
 		rightArm = new RiderPart(ARM);
 		rightLeg = new RiderPart(LEG);
 		
@@ -50,9 +52,9 @@ class Bosh extends RiderBase
 		Main.canvas.sledderLayer.addChild(sled);
 		Main.canvas.sledderLayer.addChild(body);
 		body.addChild(eye);
-		body.addChild(scarf);
-		scarf.x = 105;
-		scarf.y = -59;
+		body.addChild(neckscarf);
+		neckscarf.x = 105;
+		neckscarf.y = -59;
 		Main.canvas.sledderLayer.addChild(rightArm);
 		Main.canvas.sledderLayer.addChild(rightLeg);
 	}
@@ -92,13 +94,32 @@ class Bosh extends RiderBase
 		leftLeg.rotation = Math.atan2(ridePoints[8].pos.y - ridePoints[4].pos.y, ridePoints[8].pos.x - ridePoints[4].pos.x);
 		rightLeg.rotation = Math.atan2(ridePoints[9].pos.y - ridePoints[4].pos.y, ridePoints[9].pos.x - ridePoints[4].pos.x);
 		
+		gfx.clear();
 		if (!crashed) {
-			gfx.clear();
-			gfx.lineStyle(0.1);
+			gfx.lineStyle(0.25);
 			gfx.moveTo(ridePoints[6].pos.x, ridePoints[6].pos.y);
 			gfx.lineTo(ridePoints[3].pos.x, ridePoints[3].pos.y);
 			gfx.lineTo(ridePoints[7].pos.x, ridePoints[7].pos.y);
 		}
+		
+		gfx.lineStyle(2, neckscarf.colorB);
+		gfx.moveTo(ridePoints[5].pos.x, ridePoints[5].pos.y);
+		gfx.lineTo(scarfPoints[0].pos.x, scarfPoints[0].pos.y);
+		gfx.lineStyle(2, neckscarf.colorA);
+		gfx.moveTo(scarfPoints[0].pos.x, scarfPoints[0].pos.y);
+		gfx.lineTo(scarfPoints[1].pos.x, scarfPoints[1].pos.y);
+		gfx.lineStyle(2, neckscarf.colorB);
+		gfx.moveTo(scarfPoints[1].pos.x, scarfPoints[1].pos.y);
+		gfx.lineTo(scarfPoints[2].pos.x, scarfPoints[2].pos.y);
+		gfx.lineStyle(2, neckscarf.colorA);
+		gfx.moveTo(scarfPoints[2].pos.x, scarfPoints[2].pos.y);
+		gfx.lineTo(scarfPoints[3].pos.x, scarfPoints[3].pos.y);
+		gfx.lineStyle(2, neckscarf.colorB);
+		gfx.moveTo(scarfPoints[3].pos.x, scarfPoints[3].pos.y);
+		gfx.lineTo(scarfPoints[4].pos.x, scarfPoints[4].pos.y);
+		gfx.lineStyle(2, neckscarf.colorA);
+		gfx.moveTo(scarfPoints[4].pos.x, scarfPoints[4].pos.y);
+		gfx.lineTo(scarfPoints[5].pos.x, scarfPoints[5].pos.y);
 		
 		nameField.scaleX = nameField.scaleY = 1 * (1 / Main.canvas.scaleX);
 		
@@ -139,7 +160,9 @@ class Bosh extends RiderBase
 	override public function init():Void 
 	{
 		ridePoints = new Array();
+		scarfPoints = new Array();
 		bones = new Array();
+		scarves = new Array();
 		
 		ridePoints.push(new RidePoint(0, 0, 0.8));
 		ridePoints.push(new RidePoint(0, 10));
@@ -152,7 +175,23 @@ class Bosh extends RiderBase
 		ridePoints.push(new RidePoint(23, 10, 0));
 		ridePoints.push(new RidePoint(23, 10, 0));
 		
+		scarfPoints.push(new ScarfPoint(7, -10));
+		scarfPoints.push(new ScarfPoint(3, -10));
+		scarfPoints.push(new ScarfPoint(0, -10));
+		scarfPoints.push(new ScarfPoint(-4, -10));
+		scarfPoints.push(new ScarfPoint(-7, -10));
+		scarfPoints.push(new ScarfPoint(-11, -10));
+		
 		for (point in ridePoints) {
+			point.pos.x *= 0.5;
+			point.pos.y *= 0.5;
+			point.pos.x += startPos.x;
+			point.pos.y += startPos.y;
+			point.vel.x = point.pos.x - 0.8 * 0.5;
+			point.vel.y = point.pos.y;
+		}
+		
+		for (point in scarfPoints) {
 			point.pos.x *= 0.5;
 			point.pos.y *= 0.5;
 			point.pos.x += startPos.x;
@@ -183,6 +222,13 @@ class Bosh extends RiderBase
 		bones.push(new BindStick(ridePoints[9], ridePoints[2], ENDURANCE));
 		bones.push(new RepellStick(ridePoints[5], ridePoints[8]));
 		bones.push(new RepellStick(ridePoints[5], ridePoints[9]));
+		
+		scarves.push(new ScarfStick(ridePoints[5], scarfPoints[0]));
+		scarves.push(new ScarfStick(scarfPoints[0], scarfPoints[1]));
+		scarves.push(new ScarfStick(scarfPoints[1], scarfPoints[2]));
+		scarves.push(new ScarfStick(scarfPoints[2], scarfPoints[3]));
+		scarves.push(new ScarfStick(scarfPoints[3], scarfPoints[4]));
+		scarves.push(new ScarfStick(scarfPoints[4], scarfPoints[5]));
 		
 		bones[20].restLength = bones[20].restLength * 0.5;
 		bones[21].restLength = bones[21].restLength * 0.5;

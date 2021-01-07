@@ -2,90 +2,8 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/mat/Stencil.h>
-venum* h3d_mat_Stencil_set_frontSTfail(h3d__mat__Stencil,venum*);
-venum* h3d_mat_Stencil_set_frontDPfail(h3d__mat__Stencil,venum*);
-venum* h3d_mat_Stencil_set_frontPass(h3d__mat__Stencil,venum*);
-venum* h3d_mat_Stencil_set_backSTfail(h3d__mat__Stencil,venum*);
-venum* h3d_mat_Stencil_set_backDPfail(h3d__mat__Stencil,venum*);
-venum* h3d_mat_Stencil_set_backPass(h3d__mat__Stencil,venum*);
-venum* h3d_mat_Stencil_set_backTest(h3d__mat__Stencil,venum*);
-venum* h3d_mat_Stencil_set_frontTest(h3d__mat__Stencil,venum*);
-int h3d_mat_Stencil_set_reference(h3d__mat__Stencil,int);
-int h3d_mat_Stencil_set_readMask(h3d__mat__Stencil,int);
-int h3d_mat_Stencil_set_writeMask(h3d__mat__Stencil,int);
 extern venum* g$h3d_mat_StencilOp_Keep;
 extern venum* g$h3d_mat_Compare_Always;
-
-void h3d_mat_Stencil_setFront(h3d__mat__Stencil r0,venum* r1,venum* r2,venum* r3) {
-	venum *r4;
-	r4 = h3d_mat_Stencil_set_frontSTfail(r0,r1);
-	r4 = h3d_mat_Stencil_set_frontDPfail(r0,r2);
-	r4 = h3d_mat_Stencil_set_frontPass(r0,r3);
-	return;
-}
-
-void h3d_mat_Stencil_setBack(h3d__mat__Stencil r0,venum* r1,venum* r2,venum* r3) {
-	venum *r4;
-	r4 = h3d_mat_Stencil_set_backSTfail(r0,r1);
-	r4 = h3d_mat_Stencil_set_backDPfail(r0,r2);
-	r4 = h3d_mat_Stencil_set_backPass(r0,r3);
-	return;
-}
-
-void h3d_mat_Stencil_setOp(h3d__mat__Stencil r0,venum* r1,venum* r2,venum* r3) {
-	h3d_mat_Stencil_setFront(r0,r1,r2,r3);
-	h3d_mat_Stencil_setBack(r0,r1,r2,r3);
-	return;
-}
-
-void h3d_mat_Stencil_setFunc(h3d__mat__Stencil r0,venum* r1,int* r2,int* r3,int* r4) {
-	venum *r8;
-	int r5, r6, r7, r9;
-	if( r2 ) goto label$c8b3904_4_3;
-	r5 = 0;
-	goto label$c8b3904_4_4;
-	label$c8b3904_4_3:
-	r5 = *r2;
-	label$c8b3904_4_4:
-	if( r3 ) goto label$c8b3904_4_7;
-	r6 = 255;
-	goto label$c8b3904_4_8;
-	label$c8b3904_4_7:
-	r6 = *r3;
-	label$c8b3904_4_8:
-	if( r4 ) goto label$c8b3904_4_11;
-	r7 = 255;
-	goto label$c8b3904_4_12;
-	label$c8b3904_4_11:
-	r7 = *r4;
-	label$c8b3904_4_12:
-	r8 = h3d_mat_Stencil_set_backTest(r0,r1);
-	r8 = h3d_mat_Stencil_set_frontTest(r0,r8);
-	r9 = h3d_mat_Stencil_set_reference(r0,r5);
-	r9 = h3d_mat_Stencil_set_readMask(r0,r6);
-	r9 = h3d_mat_Stencil_set_writeMask(r0,r7);
-	return;
-}
-
-void h3d_mat_Stencil_new(h3d__mat__Stencil r0) {
-	venum *r3, *r4, *r5, *r6;
-	int *r7, *r8, *r9;
-	int r1;
-	r1 = 0;
-	r0->opBits = r1;
-	r1 = 0;
-	r0->maskBits = r1;
-	r3 = (venum*)g$h3d_mat_StencilOp_Keep;
-	r4 = (venum*)g$h3d_mat_StencilOp_Keep;
-	r5 = (venum*)g$h3d_mat_StencilOp_Keep;
-	h3d_mat_Stencil_setOp(r0,r3,r4,r5);
-	r6 = (venum*)g$h3d_mat_Compare_Always;
-	r7 = NULL;
-	r8 = NULL;
-	r9 = NULL;
-	h3d_mat_Stencil_setFunc(r0,r6,r7,r8,r9);
-	return;
-}
 
 int h3d_mat_Stencil_set_readMask(h3d__mat__Stencil r0,int r1) {
 	int r2, r3, r4;
@@ -246,5 +164,76 @@ venum* h3d_mat_Stencil_set_backDPfail(h3d__mat__Stencil r0,venum* r1) {
 	r0->opBits = r2;
 	r0->backDPfail = r1;
 	return r1;
+}
+
+void h3d_mat_Stencil_setFront(h3d__mat__Stencil r0,venum* r1,venum* r2,venum* r3) {
+	venum *r4;
+	r4 = h3d_mat_Stencil_set_frontSTfail(r0,r1);
+	r4 = h3d_mat_Stencil_set_frontDPfail(r0,r2);
+	r4 = h3d_mat_Stencil_set_frontPass(r0,r3);
+	return;
+}
+
+void h3d_mat_Stencil_setBack(h3d__mat__Stencil r0,venum* r1,venum* r2,venum* r3) {
+	venum *r4;
+	r4 = h3d_mat_Stencil_set_backSTfail(r0,r1);
+	r4 = h3d_mat_Stencil_set_backDPfail(r0,r2);
+	r4 = h3d_mat_Stencil_set_backPass(r0,r3);
+	return;
+}
+
+void h3d_mat_Stencil_setOp(h3d__mat__Stencil r0,venum* r1,venum* r2,venum* r3) {
+	h3d_mat_Stencil_setFront(r0,r1,r2,r3);
+	h3d_mat_Stencil_setBack(r0,r1,r2,r3);
+	return;
+}
+
+void h3d_mat_Stencil_setFunc(h3d__mat__Stencil r0,venum* r1,int* r2,int* r3,int* r4) {
+	venum *r8;
+	int r5, r6, r7, r9;
+	if( r2 ) goto label$c8b3904_15_3;
+	r5 = 0;
+	goto label$c8b3904_15_4;
+	label$c8b3904_15_3:
+	r5 = *r2;
+	label$c8b3904_15_4:
+	if( r3 ) goto label$c8b3904_15_7;
+	r6 = 255;
+	goto label$c8b3904_15_8;
+	label$c8b3904_15_7:
+	r6 = *r3;
+	label$c8b3904_15_8:
+	if( r4 ) goto label$c8b3904_15_11;
+	r7 = 255;
+	goto label$c8b3904_15_12;
+	label$c8b3904_15_11:
+	r7 = *r4;
+	label$c8b3904_15_12:
+	r8 = h3d_mat_Stencil_set_backTest(r0,r1);
+	r8 = h3d_mat_Stencil_set_frontTest(r0,r8);
+	r9 = h3d_mat_Stencil_set_reference(r0,r5);
+	r9 = h3d_mat_Stencil_set_readMask(r0,r6);
+	r9 = h3d_mat_Stencil_set_writeMask(r0,r7);
+	return;
+}
+
+void h3d_mat_Stencil_new(h3d__mat__Stencil r0) {
+	venum *r3, *r4, *r5, *r6;
+	int *r7, *r8, *r9;
+	int r1;
+	r1 = 0;
+	r0->opBits = r1;
+	r1 = 0;
+	r0->maskBits = r1;
+	r3 = (venum*)g$h3d_mat_StencilOp_Keep;
+	r4 = (venum*)g$h3d_mat_StencilOp_Keep;
+	r5 = (venum*)g$h3d_mat_StencilOp_Keep;
+	h3d_mat_Stencil_setOp(r0,r3,r4,r5);
+	r6 = (venum*)g$h3d_mat_Compare_Always;
+	r7 = NULL;
+	r8 = NULL;
+	r9 = NULL;
+	h3d_mat_Stencil_setFunc(r0,r6,r7,r8,r9);
+	return;
 }
 

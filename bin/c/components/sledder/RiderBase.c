@@ -19,8 +19,11 @@ void h2d_Graphics_drawCircle(h2d__Graphics,double,double,double,int*);
 void components_sledder_RiderBase_iterate(components__sledder__RiderBase);
 void components_sledder_RiderBase_constrainBones(components__sledder__RiderBase);
 void components_sledder_RiderBase_collision(components__sledder__RiderBase);
-void components_physics_RidePoint_step(components__physics__RidePoint,h2d__col__Point);
+void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase);
+#include <components/physics/ScarfStick.h>
+bool components_physics_ScarfStick_satisfy(components__physics__ScarfStick,vdynamic*);
 #include <components/physics/Stick.h>
+void components_sledder_RiderScarf_setColor(components__sledder__RiderScarf,vdynamic*,vdynamic*);
 #include <components/managers/Grid.h>
 #include <components/lines/LineBase.h>
 vvirtual* components_managers_Grid_registryPosition(double,double);
@@ -240,7 +243,7 @@ void components_sledder_RiderBase_stepRider(components__sledder__RiderBase r0) {
 	vdynamic *r3;
 	int r4, r7;
 	r2 = r0->enabled;
-	if( !r2 ) goto label$2a8c663_4_33;
+	if( !r2 ) goto label$2a8c663_4_34;
 	r3 = r0->enabledFrame;
 	if( !r3 ) goto label$2a8c663_4_11;
 	r6 = ($Main)g$_Main;
@@ -249,7 +252,7 @@ void components_sledder_RiderBase_stepRider(components__sledder__RiderBase r0) {
 	r4 = r5->frames;
 	r3 = r0->enabledFrame;
 	r7 = r3 ? r3->v.i : 0;
-	if( r4 < r7 ) goto label$2a8c663_4_33;
+	if( r4 < r7 ) goto label$2a8c663_4_34;
 	label$2a8c663_4_11:
 	r3 = r0->disableFrame;
 	if( !r3 ) goto label$2a8c663_4_20;
@@ -259,7 +262,7 @@ void components_sledder_RiderBase_stepRider(components__sledder__RiderBase r0) {
 	r4 = r5->frames;
 	r3 = r0->disableFrame;
 	r7 = r3 ? r3->v.i : 0;
-	if( r4 >= r7 ) goto label$2a8c663_4_33;
+	if( r4 >= r7 ) goto label$2a8c663_4_34;
 	label$2a8c663_4_20:
 	components_sledder_RiderBase_iterate(r0);
 	components_sledder_RiderBase_constrainBones(r0);
@@ -274,7 +277,40 @@ void components_sledder_RiderBase_stepRider(components__sledder__RiderBase r0) {
 	components_sledder_RiderBase_collision(r0);
 	components_sledder_RiderBase_constrainBones(r0);
 	components_sledder_RiderBase_collision(r0);
-	label$2a8c663_4_33:
+	components_sledder_RiderBase_constrainScarf(r0);
+	label$2a8c663_4_34:
+	return;
+}
+
+void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase r0) {
+	hl__types__ArrayObj r3;
+	bool r8;
+	components__physics__ScarfStick r5;
+	vdynamic *r6, *r9;
+	varray *r7;
+	int r1, r4;
+	r1 = 0;
+	r3 = r0->scarves;
+	label$2a8c663_5_2:
+	if( r3 == NULL ) hl_null_access();
+	r4 = r3->length;
+	if( r1 >= r4 ) goto label$2a8c663_5_19;
+	r4 = r3->length;
+	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_5_10;
+	r5 = NULL;
+	goto label$2a8c663_5_13;
+	label$2a8c663_5_10:
+	r7 = r3->array;
+	r6 = ((vdynamic**)(r7 + 1))[r1];
+	r5 = (components__physics__ScarfStick)r6;
+	label$2a8c663_5_13:
+	++r1;
+	if( r5 == NULL ) hl_null_access();
+	r8 = r0->crashed;
+	r9 = hl_alloc_dynbool(r8);
+	r8 = components_physics_ScarfStick_satisfy(r5,r9);
+	goto label$2a8c663_5_2;
+	label$2a8c663_5_19:
 	return;
 }
 
@@ -287,25 +323,46 @@ void components_sledder_RiderBase_iterate(components__sledder__RiderBase r0) {
 	int r1, r4;
 	r1 = 0;
 	r3 = r0->ridePoints;
-	label$2a8c663_5_2:
+	label$2a8c663_6_2:
 	if( r3 == NULL ) hl_null_access();
 	r4 = r3->length;
-	if( r1 >= r4 ) goto label$2a8c663_5_18;
+	if( r1 >= r4 ) goto label$2a8c663_6_18;
 	r4 = r3->length;
-	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_5_10;
+	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_6_10;
 	r5 = NULL;
-	goto label$2a8c663_5_13;
-	label$2a8c663_5_10:
+	goto label$2a8c663_6_13;
+	label$2a8c663_6_10:
 	r7 = r3->array;
 	r6 = ((vdynamic**)(r7 + 1))[r1];
 	r5 = (components__physics__RidePoint)r6;
-	label$2a8c663_5_13:
+	label$2a8c663_6_13:
 	++r1;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r0->gravity;
-	components_physics_RidePoint_step(r5,r8);
-	goto label$2a8c663_5_2;
-	label$2a8c663_5_18:
+	((void (*)(components__physics__RidePoint,h2d__col__Point))r5->$type->vobj_proto[0])(r5,r8);
+	goto label$2a8c663_6_2;
+	label$2a8c663_6_18:
+	r1 = 0;
+	r3 = r0->scarfPoints;
+	label$2a8c663_6_20:
+	if( r3 == NULL ) hl_null_access();
+	r4 = r3->length;
+	if( r1 >= r4 ) goto label$2a8c663_6_36;
+	r4 = r3->length;
+	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_6_28;
+	r5 = NULL;
+	goto label$2a8c663_6_31;
+	label$2a8c663_6_28:
+	r7 = r3->array;
+	r6 = ((vdynamic**)(r7 + 1))[r1];
+	r5 = (components__physics__RidePoint)r6;
+	label$2a8c663_6_31:
+	++r1;
+	if( r5 == NULL ) hl_null_access();
+	r8 = r0->gravity;
+	((void (*)(components__physics__RidePoint,h2d__col__Point))r5->$type->vobj_proto[0])(r5,r8);
+	goto label$2a8c663_6_20;
+	label$2a8c663_6_36:
 	return;
 }
 
@@ -318,27 +375,35 @@ void components_sledder_RiderBase_constrainBones(components__sledder__RiderBase 
 	int r1, r4;
 	r1 = 0;
 	r3 = r0->bones;
-	label$2a8c663_6_2:
+	label$2a8c663_7_2:
 	if( r3 == NULL ) hl_null_access();
 	r4 = r3->length;
-	if( r1 >= r4 ) goto label$2a8c663_6_20;
+	if( r1 >= r4 ) goto label$2a8c663_7_20;
 	r4 = r3->length;
-	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_6_10;
+	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_7_10;
 	r5 = NULL;
-	goto label$2a8c663_6_13;
-	label$2a8c663_6_10:
+	goto label$2a8c663_7_13;
+	label$2a8c663_7_10:
 	r7 = r3->array;
 	r6 = ((vdynamic**)(r7 + 1))[r1];
 	r5 = (components__physics__Stick)r6;
-	label$2a8c663_6_13:
+	label$2a8c663_7_13:
 	++r1;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r0->crashed;
 	r9 = hl_alloc_dynbool(r8);
 	r8 = ((bool (*)(components__physics__Stick,vdynamic*))r5->$type->vobj_proto[0])(r5,r9);
 	r0->crashed = r8;
-	goto label$2a8c663_6_2;
-	label$2a8c663_6_20:
+	goto label$2a8c663_7_2;
+	label$2a8c663_7_20:
+	return;
+}
+
+void components_sledder_RiderBase_setColor(components__sledder__RiderBase r0,vdynamic* r1,vdynamic* r2) {
+	components__sledder__RiderScarf r4;
+	r4 = r0->neckscarf;
+	if( r4 == NULL ) hl_null_access();
+	components_sledder_RiderScarf_setColor(r4,r1,r2);
 	return;
 }
 
@@ -361,19 +426,19 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	int r1, r4, r5, r14, r15, r16, r18, r26;
 	r1 = 0;
 	r3 = r0->ridePoints;
-	label$2a8c663_7_2:
+	label$2a8c663_9_2:
 	if( r3 == NULL ) hl_null_access();
 	r5 = r3->length;
-	if( r1 >= r5 ) goto label$2a8c663_7_103;
+	if( r1 >= r5 ) goto label$2a8c663_9_103;
 	r5 = r3->length;
-	if( ((unsigned)r1) < ((unsigned)r5) ) goto label$2a8c663_7_10;
+	if( ((unsigned)r1) < ((unsigned)r5) ) goto label$2a8c663_9_10;
 	r7 = NULL;
-	goto label$2a8c663_7_13;
-	label$2a8c663_7_10:
+	goto label$2a8c663_9_13;
+	label$2a8c663_9_10:
 	r9 = r3->array;
 	r8 = ((vdynamic**)(r9 + 1))[r1];
 	r7 = (components__physics__RidePoint)r8;
-	label$2a8c663_7_13:
+	label$2a8c663_9_13:
 	++r1;
 	if( r7 == NULL ) hl_null_access();
 	r12 = r7->pos;
@@ -384,15 +449,15 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	r13 = r12->y;
 	r10 = components_managers_Grid_registryPosition(r11,r13);
 	r4 = -1;
-	label$2a8c663_7_23:
+	label$2a8c663_9_23:
 	r14 = 2;
-	if( r4 >= r14 ) goto label$2a8c663_7_102;
+	if( r4 >= r14 ) goto label$2a8c663_9_102;
 	r5 = r4;
 	++r4;
 	r14 = -1;
-	label$2a8c663_7_29:
+	label$2a8c663_9_29:
 	r16 = 2;
-	if( r14 >= r16 ) goto label$2a8c663_7_101;
+	if( r14 >= r16 ) goto label$2a8c663_9_101;
 	r15 = r14;
 	++r14;
 	r17 = (String)s$x;
@@ -418,9 +483,9 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	if( r22 == NULL ) hl_null_access();
 	r8 = haxe_ds_StringMap_get(r22,r17);
 	r25 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r8);
-	if( r25 ) goto label$2a8c663_7_59;
-	goto label$2a8c663_7_29;
-	label$2a8c663_7_59:
+	if( r25 ) goto label$2a8c663_9_59;
+	goto label$2a8c663_9_29;
+	label$2a8c663_9_59:
 	r24 = ($Main)g$_Main;
 	r23 = r24->grid;
 	if( r23 == NULL ) hl_null_access();
@@ -431,35 +496,35 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	r16 = 0;
 	if( r25 == NULL ) hl_null_access();
 	r6 = hl_vfields(r25)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r25)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r25->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
-	label$2a8c663_7_69:
+	label$2a8c663_9_69:
 	if( r6 == NULL ) hl_null_access();
 	r26 = r6->length;
-	if( r16 >= r26 ) goto label$2a8c663_7_84;
+	if( r16 >= r26 ) goto label$2a8c663_9_84;
 	r26 = r6->length;
-	if( ((unsigned)r16) < ((unsigned)r26) ) goto label$2a8c663_7_77;
+	if( ((unsigned)r16) < ((unsigned)r26) ) goto label$2a8c663_9_77;
 	r27 = NULL;
-	goto label$2a8c663_7_80;
-	label$2a8c663_7_77:
+	goto label$2a8c663_9_80;
+	label$2a8c663_9_77:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r16];
 	r27 = (components__lines__LineBase)r8;
-	label$2a8c663_7_80:
+	label$2a8c663_9_80:
 	++r16;
 	if( r27 == NULL ) hl_null_access();
 	((void (*)(components__lines__LineBase,components__physics__RidePoint))r27->$type->vobj_proto[2])(r27,r7);
-	goto label$2a8c663_7_69;
-	label$2a8c663_7_84:
+	goto label$2a8c663_9_69;
+	label$2a8c663_9_84:
 	if( r25 == NULL ) hl_null_access();
 	r28 = hl_vfields(r25)[1] ? (*(vdynamic**)(hl_vfields(r25)[1])) : (vdynamic*)hl_dyn_getp(r25->value,390036483/*lowFrame*/,&t$nul_i32);
-	if( !r28 ) goto label$2a8c663_7_94;
+	if( !r28 ) goto label$2a8c663_9_94;
 	r24 = ($Main)g$_Main;
 	r29 = r24->simulation;
 	if( r29 == NULL ) hl_null_access();
 	r16 = r29->frames;
 	r28 = hl_vfields(r25)[1] ? (*(vdynamic**)(hl_vfields(r25)[1])) : (vdynamic*)hl_dyn_getp(r25->value,390036483/*lowFrame*/,&t$nul_i32);
 	r18 = r28 ? r28->v.i : 0;
-	if( r16 >= r18 ) goto label$2a8c663_7_100;
-	label$2a8c663_7_94:
+	if( r16 >= r18 ) goto label$2a8c663_9_100;
+	label$2a8c663_9_94:
 	r24 = ($Main)g$_Main;
 	r29 = r24->simulation;
 	if( r29 == NULL ) hl_null_access();
@@ -467,13 +532,13 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	r28 = hl_alloc_dynamic(&t$_i32);
 	r28->v.i = r16;
 	if( hl_vfields(r25)[1] ) *(vdynamic**)(hl_vfields(r25)[1]) = (vdynamic*)r28; else hl_dyn_setp(r25->value,390036483/*lowFrame*/,&t$nul_i32,r28);
-	label$2a8c663_7_100:
-	goto label$2a8c663_7_29;
-	label$2a8c663_7_101:
-	goto label$2a8c663_7_23;
-	label$2a8c663_7_102:
-	goto label$2a8c663_7_2;
-	label$2a8c663_7_103:
+	label$2a8c663_9_100:
+	goto label$2a8c663_9_29;
+	label$2a8c663_9_101:
+	goto label$2a8c663_9_23;
+	label$2a8c663_9_102:
+	goto label$2a8c663_9_2;
+	label$2a8c663_9_103:
 	return;
 }
 
@@ -481,6 +546,28 @@ String components_sledder_RiderBase_get_name(components__sledder__RiderBase r0) 
 	String r1;
 	r1 = r0->name;
 	return r1;
+}
+
+int components_sledder_RiderBase_get_colorA(components__sledder__RiderBase r0) {
+	vdynamic *r1;
+	int r3;
+	components__sledder__RiderScarf r2;
+	r2 = r0->neckscarf;
+	if( r2 == NULL ) hl_null_access();
+	r1 = r2->colorA;
+	r3 = r1 ? r1->v.i : 0;
+	return r3;
+}
+
+int components_sledder_RiderBase_get_colorB(components__sledder__RiderBase r0) {
+	vdynamic *r1;
+	int r3;
+	components__sledder__RiderScarf r2;
+	r2 = r0->neckscarf;
+	if( r2 == NULL ) hl_null_access();
+	r1 = r2->colorB;
+	r3 = r1 ? r1->v.i : 0;
+	return r3;
 }
 
 String components_sledder_RiderBase_set_name(components__sledder__RiderBase r0,String r1) {
@@ -507,20 +594,20 @@ void components_sledder_RiderBase_new(components__sledder__RiderBase r0,vdynamic
 	double r6, r14, r15, r16;
 	double *r10, *r11;
 	int r13;
-	if( r1 ) goto label$2a8c663_10_3;
+	if( r1 ) goto label$2a8c663_14_3;
 	r6 = 0.;
 	r1 = hl_alloc_dynamic(&t$_f64);
 	r1->v.d = r6;
-	label$2a8c663_10_3:
-	if( r2 ) goto label$2a8c663_10_6;
+	label$2a8c663_14_3:
+	if( r2 ) goto label$2a8c663_14_6;
 	r6 = 0.;
 	r2 = hl_alloc_dynamic(&t$_f64);
 	r2->v.d = r6;
-	label$2a8c663_10_6:
-	if( r3 ) goto label$2a8c663_10_9;
+	label$2a8c663_14_6:
+	if( r3 ) goto label$2a8c663_14_9;
 	r7 = (String)s$Bosh;
 	r3 = r7;
-	label$2a8c663_10_9:
+	label$2a8c663_14_9:
 	r8 = true;
 	r0->enabled = r8;
 	r8 = true;
@@ -543,20 +630,20 @@ void components_sledder_RiderBase_new(components__sledder__RiderBase r0,vdynamic
 	h2d_col_Point_new(r9,r10,r11);
 	r0->gravity = r9;
 	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	if( r1 ) goto label$2a8c663_10_34;
+	if( r1 ) goto label$2a8c663_14_34;
 	r10 = NULL;
-	goto label$2a8c663_10_36;
-	label$2a8c663_10_34:
+	goto label$2a8c663_14_36;
+	label$2a8c663_14_34:
 	r15 = r1 ? r1->v.d : 0;
 	r10 = &r15;
-	label$2a8c663_10_36:
-	if( r2 ) goto label$2a8c663_10_39;
+	label$2a8c663_14_36:
+	if( r2 ) goto label$2a8c663_14_39;
 	r11 = NULL;
-	goto label$2a8c663_10_41;
-	label$2a8c663_10_39:
+	goto label$2a8c663_14_41;
+	label$2a8c663_14_39:
 	r16 = r2 ? r2->v.d : 0;
 	r11 = &r16;
-	label$2a8c663_10_41:
+	label$2a8c663_14_41:
 	h2d_col_Point_new(r9,r10,r11);
 	r0->startPos = r9;
 	r17 = (h2d__Graphics)hl_alloc_obj(&t$h2d_Graphics);
@@ -589,6 +676,9 @@ void components_sledder_RiderBase_new(components__sledder__RiderBase r0,vdynamic
 	r23 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r23);
 	r0->bones = r23;
+	r23 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r23);
+	r0->scarves = r23;
 	r0->enabledFrame = r4;
 	r0->disableFrame = r5;
 	return;

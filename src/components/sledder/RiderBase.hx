@@ -1,6 +1,7 @@
 package components.sledder;
 import components.managers.Grid;
 import components.physics.RidePoint;
+import components.physics.ScarfStick;
 import components.physics.Stick;
 import h2d.Anim;
 import h2d.Bitmap;
@@ -26,7 +27,12 @@ class RiderBase
 	public var ridePoints:Array<RidePoint>;
 	public var scarfPoints:Array<RidePoint>;
 	
+	public var colorA(get, null):Int;
+	public var colorB(get, null):Int;
+	public var neckscarf:RiderScarf;
+	
 	public var bones:Array<Stick>;
+	public var scarves:Array<ScarfStick>;
 	
 	public var gfx:Graphics;
 	
@@ -66,6 +72,7 @@ class RiderBase
 		ridePoints = new Array();
 		
 		bones = new Array();
+		scarves = new Array();
 		
 		enabledFrame = _enable;
 		disableFrame = _disable;
@@ -111,12 +118,23 @@ class RiderBase
 					constrainBones();
 					collision();
 				}
+				constrainScarf();
 			}
+		}
+	}
+	
+	public function constrainScarf():Void 
+	{
+		for (edge in scarves) {
+			edge.satisfy(crashed);
 		}
 	}
 	
 	public function iterate() {
 		for (point in ridePoints) {
+			point.step(gravity);
+		}
+		for (point in scarfPoints) {
 			point.step(gravity);
 		}
 	}
@@ -127,6 +145,12 @@ class RiderBase
 			crashed = edge.satisfy(crashed);
 		}
 	}
+	
+	public function setColor(?_a:Null<Int>, ?_b:Null<Int>) {
+		
+		neckscarf.setColor(_a, _b);
+		
+	};
 	
 	public function collision() {
 		for (point in ridePoints) {
@@ -150,6 +174,16 @@ class RiderBase
 		return name;
 	}
 	
+	function get_colorA():Int 
+	{
+		return neckscarf.colorA;
+	}
+	
+	function get_colorB():Int 
+	{
+		return neckscarf.colorB;
+	}
+	
 	function set_name(value:String):String 
 	{
 		nameField.text = value;
@@ -159,8 +193,8 @@ class RiderBase
 
 class RiderScarf extends Object {
 	
-	var colorA:Null<Int> = 0x0A0A8;
-	var colorB:Null<Int>;
+	public var colorA:Null<Int> = 0x0A0A8;
+	public var colorB:Null<Int>;
 	
 	var bitmap:Bitmap;
 	var pixels:Pixels;
@@ -268,4 +302,6 @@ typedef RiderSave = {
 	var startPoint:Point;
 	var startFrame:Null<Int>;
 	var stopFrame:Null<Int>;
+	var colora:Int;
+	var colorb:Int;
 }

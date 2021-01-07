@@ -27,6 +27,7 @@ import h2d.Graphics;
 import h2d.Interactive;
 import hxd.App;
 import hxd.Res;
+import network.WebRTC;
 import utils.TableRNG;
 
 #if hl
@@ -87,6 +88,10 @@ class Main extends App
 	public static var audio:Musicplayer;
 	
 	public static var rng:TableRNG;
+	
+	#if js
+	public static var p2p:WebRTC;
+	#end
 	
 	var mask:Mask;
 	
@@ -392,6 +397,16 @@ class Main extends App
 				return;
 			}
 			audio.offset = _offset;
+		});
+		#end
+		#if js
+		var argServerName:ConsoleArgDesc = {t: AString, opt: false, name : "Server Name"};
+		var argServerPassword:ConsoleArgDesc = {t: AString, opt: false, name : "Song name"};
+		console.addCommand('createServer', "Creates P2P server through WebRTC", [argServerName], function(_name:String) {
+			p2p = new WebRTC(true, function(_msg:String) { console.log(_msg); });
+		});
+		console.addCommand('joinServer', "Joins P2P server through WebRTC", [argServerName], function(_name:String) {
+			p2p = new WebRTC(false, function(_msg:String) { console.log(_msg); }, _name);
 		});
 		#end
 	}

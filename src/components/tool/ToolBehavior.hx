@@ -183,10 +183,11 @@ class ToolBehavior
 			
 			mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 			
-			var x:Float = -(mouseStart.x - mouseEnd.x);
-			var y:Float = -(mouseStart.y - mouseEnd.y);
+			var x:Float = -(mouseStart.x - mouseEnd.x) * Main.canvas.scaleX;
+			var y:Float = -(mouseStart.y - mouseEnd.y) * Main.canvas.scaleX;
 			
 			Main.canvas.addCanvasPosition(x, y);
+			mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 		}
 	}
 	
@@ -349,7 +350,9 @@ class ToolBehavior
 						
 					case Key.CTRL :
 						Main.simulation.rewinding = true;
+						#if hl
 						Main.audio.stopMusic();
+						#end
 						
 					case Key.SPACE :
 						if (!Main.simulation.paused) Main.simulation.pauseSim();
@@ -380,7 +383,9 @@ class ToolBehavior
 				switch (event.keyCode) {
 					case Key.CTRL :
 						Main.simulation.rewinding = false;
+						#if hl
 						Main.audio.playMusic(Main.simulation.frames);
+						#end
 					case Key.LSHIFT :
 						shifted = false;
 				}

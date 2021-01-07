@@ -175,8 +175,10 @@ void fun$init(void);
 #  include <_std/Main.c>
 #  include <hxd/res/Loader.c>
 #  include <hxd/fs/EmbedFileSystem.c>
-#  include <components/physics/RidePoint.c>
 #  include <components/physics/Stick.c>
+#  include <components/physics/RidePoint.c>
+#  include <components/physics/ScarfStick.c>
+#  include <components/sledder/RiderScarf.c>
 #  include <components/sledder/RiderBase.c>
 #  include <_std/Math.c>
 #  include <haxe/SysTools.c>
@@ -189,12 +191,12 @@ void fun$init(void);
 #  include <components/lines/Floor.c>
 #  include <components/lines/Scenery.c>
 #  include <hxd/fs/BytesFileEntry.c>
-#  include <components/sledder/RiderScarf.c>
 #  include <h2d/Anim.c>
 #  include <components/sledder/RiderPart.c>
 #  include <components/sledder/Bosh.c>
 #  include <components/physics/BindStick.c>
 #  include <components/physics/RepellStick.c>
+#  include <components/physics/ScarfPoint.c>
 #  include <hxd/res/Image.c>
 #  include <hxd/res/ImageInfo.c>
 #  include <haxe/Log.c>
@@ -386,6 +388,9 @@ void fun$init(void);
 #  include <hxsl/Serializer.c>
 #  include <hxsl/_Splitter/VarProps.c>
 #  include <sdl/Sdl.c>
+#  include <sys/ssl/Certificate.c>
+#  include <sys/ssl/SNICbResult.c>
+#  include <sys/ssl/Key.c>
 #  include <_std/Lambda.c>
 #  include <_std/Reflect.c>
 #  include <_std/StringTools.c>

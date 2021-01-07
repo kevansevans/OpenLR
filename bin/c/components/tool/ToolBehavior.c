@@ -292,7 +292,7 @@ void components_tool_ToolBehavior_mouseMove(components__tool__ToolBehavior r0,hx
 	$Main r9;
 	h2d__col__Point r6;
 	components__stage__Canvas r8;
-	double r7, r11, r13, r14, r15, r16, r17, r18, r19, r20, r22, r23, r24, r25, r26;
+	double r7, r11, r13, r14, r15, r16, r17, r18, r19, r20, r22, r23, r24, r25, r26, r27;
 	double *r10, *r12;
 	int r4, r21;
 	r3 = r0->leftIsDown;
@@ -456,7 +456,7 @@ void components_tool_ToolBehavior_mouseMove(components__tool__ToolBehavior r0,hx
 	}
 	label$80df762_3_151:
 	r3 = r0->middleIsDown;
-	if( !r3 ) goto label$80df762_3_186;
+	if( !r3 ) goto label$80df762_3_209;
 	r6 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 	r9 = ($Main)g$_Main;
 	r8 = r9->canvas;
@@ -478,6 +478,11 @@ void components_tool_ToolBehavior_mouseMove(components__tool__ToolBehavior r0,hx
 	r25 = r6->x;
 	r22 = r22 - r25;
 	r22 = -r22;
+	r9 = ($Main)g$_Main;
+	r8 = r9->canvas;
+	if( r8 == NULL ) hl_null_access();
+	r25 = r8->scaleX;
+	r22 = r22 * r25;
 	r6 = r0->mouseStart;
 	if( r6 == NULL ) hl_null_access();
 	r25 = r6->y;
@@ -489,8 +494,26 @@ void components_tool_ToolBehavior_mouseMove(components__tool__ToolBehavior r0,hx
 	r9 = ($Main)g$_Main;
 	r8 = r9->canvas;
 	if( r8 == NULL ) hl_null_access();
+	r26 = r8->scaleX;
+	r25 = r25 * r26;
+	r9 = ($Main)g$_Main;
+	r8 = r9->canvas;
+	if( r8 == NULL ) hl_null_access();
 	components_stage_Canvas_addCanvasPosition(r8,r22,r25);
-	label$80df762_3_186:
+	r6 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	r9 = ($Main)g$_Main;
+	r8 = r9->canvas;
+	if( r8 == NULL ) hl_null_access();
+	r26 = h2d_Scene_get_mouseX(((h2d__Scene)r8));
+	r10 = &r26;
+	r9 = ($Main)g$_Main;
+	r8 = r9->canvas;
+	if( r8 == NULL ) hl_null_access();
+	r27 = h2d_Scene_get_mouseY(((h2d__Scene)r8));
+	r12 = &r27;
+	h2d_col_Point_new(r6,r10,r12);
+	r0->mouseStart = r6;
+	label$80df762_3_209:
 	return;
 }
 

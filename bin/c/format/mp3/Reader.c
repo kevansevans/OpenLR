@@ -2,36 +2,30 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <format/mp3/Reader.h>
+bool haxe_io_Input_set_bigEndian(haxe__io__Input,bool);
+extern hl_type t$format_tools_BitsInput;
+void format_tools_BitsInput_new(format__tools__BitsInput,haxe__io__Input);
+int haxe_io_Input_readUInt16(haxe__io__Input);
+haxe__io__Bytes haxe_io_Input_read(haxe__io__Input,int);
+#include <format/mp3/FrameType.h>
+#include <haxe/Exception.h>
+#include <haxe/io/Eof.h>
+int format_tools_BitsInput_readBits(format__tools__BitsInput,int);
+extern venum* g$format_mp3_FrameType_FT_MP3;
+haxe__Exception haxe_Exception_caught(vdynamic*);
+extern haxe__io__$Eof g$_haxe_io_Eof;
+bool Std_isOfType(vdynamic*,vdynamic*);
+extern venum* g$format_mp3_FrameType_FT_NONE;
+#include <hl/types/ArrayObj.h>
 #include <format/mp3/Bitrate.h>
 #include <format/mp3/ChannelMode.h>
 #include <format/mp3/Emphasis.h>
 #include <format/mp3/Layer.h>
 #include <format/mp3/SamplingRate.h>
 #include <format/mp3/MPEGVersion.h>
-#include <haxe/Exception.h>
-#include <haxe/io/Eof.h>
-vvirtual* format_mp3_Reader_readFrameHeader(format__mp3__Reader);
-bool format_mp3_Tools_isInvalidFrameHeader(vvirtual*);
-int format_mp3_Tools_getSampleDataSizeHdr(vvirtual*);
-haxe__io__Bytes haxe_io_Input_read(haxe__io__Input,int);
-int format_mp3_Tools_getSampleCountHdr(vvirtual*);
-extern hl_type t$vrt_225d039;
-extern hl_type t$vrt_ce9d2f0;
-extern hl_type t$haxe_io_Bytes;
-haxe__Exception haxe_Exception_caught(vdynamic*);
-extern haxe__io__$Eof g$_haxe_io_Eof;
-bool Std_isOfType(vdynamic*,vdynamic*);
-bool haxe_io_Input_set_bigEndian(haxe__io__Input,bool);
-extern hl_type t$format_tools_BitsInput;
-void format_tools_BitsInput_new(format__tools__BitsInput,haxe__io__Input);
-int haxe_io_Input_readUInt16(haxe__io__Input);
-#include <format/mp3/FrameType.h>
-int format_tools_BitsInput_readBits(format__tools__BitsInput,int);
-extern venum* g$format_mp3_FrameType_FT_MP3;
-extern venum* g$format_mp3_FrameType_FT_NONE;
-#include <hl/types/ArrayObj.h>
 extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
+vvirtual* format_mp3_Reader_readFrame(format__mp3__Reader);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 #include <format/mp3/MPEG.h>
 #include <format/mp3/CLayer.h>
@@ -43,6 +37,7 @@ venum* format_mp3_Tools_getSamplingRate(int,int);
 extern venum* g$format_mp3_Bitrate_BR_Bad;
 extern venum* g$format_mp3_Bitrate_BR_Free;
 extern venum* g$format_mp3_SamplingRate_SR_Bad;
+extern hl_type t$vrt_ce9d2f0;
 venum* format_mp3_MPEG_num2Enum(int);
 extern hl_type t$format_mp3_MPEGVersion;
 venum* format_mp3_CLayer_num2Enum(int);
@@ -57,58 +52,11 @@ venum* format_mp3_CEmphasis_num2Enum(int);
 extern hl_type t$format_mp3_Emphasis;
 extern hl_type t$vrt_300e3ae;
 extern hl_type t$vrt_e12ae41;
-
-vvirtual* format_mp3_Reader_readFrame(format__mp3__Reader r0) {
-	vvirtual *r1, *r3;
-	haxe__io__Bytes r5;
-	bool r2;
-	haxe__io__$Eof r11;
-	haxe__Exception r10;
-	haxe__io__Input r6;
-	vdynamic *r4, *r9;
-	int r7, r8;
-	hl_trap_ctx trap$0;
-	r1 = format_mp3_Reader_readFrameHeader(r0);
-	if( !r1 ) goto label$33828b7_1_4;
-	r2 = format_mp3_Tools_isInvalidFrameHeader(r1);
-	if( !r2 ) goto label$33828b7_1_6;
-	label$33828b7_1_4:
-	r3 = NULL;
-	return r3;
-	label$33828b7_1_6:
-	hl_trap(trap$0,r4,label$33828b7_1_26);
-	r6 = r0->i;
-	if( r6 == NULL ) hl_null_access();
-	r7 = format_mp3_Tools_getSampleDataSizeHdr(r1);
-	r5 = haxe_io_Input_read(r6,r7);
-	r7 = r0->samples;
-	r8 = format_mp3_Tools_getSampleCountHdr(r1);
-	r7 = r7 + r8;
-	r0->samples = r7;
-	r7 = r0->sampleSize;
-	if( r5 == NULL ) hl_null_access();
-	r8 = r5->length;
-	r7 = r7 + r8;
-	r0->sampleSize = r7;
-	r3 = hl_alloc_virtual(&t$vrt_225d039);
-	if( hl_vfields(r3)[1] ) *(vvirtual**)(hl_vfields(r3)[1]) = (vvirtual*)r1; else hl_dyn_setp(r3->value,-50329203/*header*/,&t$vrt_ce9d2f0,r1);
-	if( hl_vfields(r3)[0] ) *(haxe__io__Bytes*)(hl_vfields(r3)[0]) = (haxe__io__Bytes)r5; else hl_dyn_setp(r3->value,40064820/*data*/,&t$haxe_io_Bytes,r5);
-	hl_endtrap(trap$0);
-	return r3;
-	hl_endtrap(trap$0);
-	label$33828b7_1_26:
-	r9 = NULL;
-	r10 = haxe_Exception_caught(r4);
-	if( r10 == NULL ) hl_null_access();
-	r9 = ((vdynamic* (*)(haxe__Exception))r10->$type->vobj_proto[0])(r10);
-	r11 = (haxe__io__$Eof)g$_haxe_io_Eof;
-	r2 = Std_isOfType(r9,((vdynamic*)r11));
-	if( !r2 ) goto label$33828b7_1_35;
-	r3 = NULL;
-	return r3;
-	label$33828b7_1_35:
-	hl_throw((vdynamic*)r4);
-}
+extern hl_type t$haxe_io_Bytes;
+bool format_mp3_Tools_isInvalidFrameHeader(vvirtual*);
+int format_mp3_Tools_getSampleDataSizeHdr(vvirtual*);
+int format_mp3_Tools_getSampleCountHdr(vvirtual*);
+extern hl_type t$vrt_225d039;
 
 void format_mp3_Reader_new(format__mp3__Reader r0,haxe__io__Input r1) {
 	bool r2;
@@ -189,33 +137,33 @@ venum* format_mp3_Reader_seekFrame(format__mp3__Reader r0) {
 	int r5, r7;
 	hl_trap_ctx trap$0;
 	r1 = false;
-	hl_trap(trap$0,r3,label$33828b7_4_43);
-	label$33828b7_4_2:
+	hl_trap(trap$0,r3,label$33828b7_3_43);
+	label$33828b7_3_2:
 	r4 = true;
-	if( !r4 ) goto label$33828b7_4_41;
+	if( !r4 ) goto label$33828b7_3_41;
 	r6 = r0->i;
 	if( r6 == NULL ) hl_null_access();
 	r5 = ((int (*)(haxe__io__Input))r6->$type->vobj_proto[0])(r6);
 	r4 = r0->any_read;
-	if( r4 ) goto label$33828b7_4_25;
+	if( r4 ) goto label$33828b7_3_25;
 	r4 = true;
 	r0->any_read = r4;
 	r7 = 73;
-	if( r5 != r7 ) goto label$33828b7_4_25;
+	if( r5 != r7 ) goto label$33828b7_3_25;
 	r6 = r0->i;
 	if( r6 == NULL ) hl_null_access();
 	r5 = ((int (*)(haxe__io__Input))r6->$type->vobj_proto[0])(r6);
 	r7 = 68;
-	if( r5 != r7 ) goto label$33828b7_4_25;
+	if( r5 != r7 ) goto label$33828b7_3_25;
 	r6 = r0->i;
 	if( r6 == NULL ) hl_null_access();
 	r5 = ((int (*)(haxe__io__Input))r6->$type->vobj_proto[0])(r6);
 	r7 = 51;
-	if( r5 != r7 ) goto label$33828b7_4_25;
+	if( r5 != r7 ) goto label$33828b7_3_25;
 	format_mp3_Reader_skipID3v2(r0);
-	label$33828b7_4_25:
+	label$33828b7_3_25:
 	r7 = 255;
-	if( r5 != r7 ) goto label$33828b7_4_40;
+	if( r5 != r7 ) goto label$33828b7_3_40;
 	r8 = r0->bits;
 	if( r8 == NULL ) hl_null_access();
 	r5 = 0;
@@ -225,28 +173,28 @@ venum* format_mp3_Reader_seekFrame(format__mp3__Reader r0) {
 	r5 = 3;
 	r5 = format_tools_BitsInput_readBits(r8,r5);
 	r7 = 7;
-	if( r5 != r7 ) goto label$33828b7_4_40;
+	if( r5 != r7 ) goto label$33828b7_3_40;
 	r9 = (venum*)g$format_mp3_FrameType_FT_MP3;
 	hl_endtrap(trap$0);
 	return r9;
-	label$33828b7_4_40:
-	goto label$33828b7_4_2;
-	label$33828b7_4_41:
+	label$33828b7_3_40:
+	goto label$33828b7_3_2;
+	label$33828b7_3_41:
 	hl_endtrap(trap$0);
-	goto label$33828b7_4_53;
-	label$33828b7_4_43:
+	goto label$33828b7_3_53;
+	label$33828b7_3_43:
 	r10 = NULL;
 	r11 = haxe_Exception_caught(r3);
 	if( r11 == NULL ) hl_null_access();
 	r10 = ((vdynamic* (*)(haxe__Exception))r11->$type->vobj_proto[0])(r11);
 	r12 = (haxe__io__$Eof)g$_haxe_io_Eof;
 	r4 = Std_isOfType(r10,((vdynamic*)r12));
-	if( !r4 ) goto label$33828b7_4_52;
+	if( !r4 ) goto label$33828b7_3_52;
 	r9 = (venum*)g$format_mp3_FrameType_FT_NONE;
 	return r9;
-	label$33828b7_4_52:
+	label$33828b7_3_52:
 	hl_throw((vdynamic*)r3);
-	label$33828b7_4_53:
+	label$33828b7_3_53:
 	r9 = NULL;
 	return r9;
 }
@@ -259,32 +207,32 @@ hl__types__ArrayObj format_mp3_Reader_readFrames(format__mp3__Reader r0) {
 	int r6;
 	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r1);
-	label$33828b7_5_2:
+	label$33828b7_4_2:
 	r3 = true;
-	if( !r3 ) goto label$33828b7_5_19;
+	if( !r3 ) goto label$33828b7_4_19;
 	r4 = format_mp3_Reader_seekFrame(r0);
 	r5 = (venum*)g$format_mp3_FrameType_FT_NONE;
-	if( r4 != r5 ) goto label$33828b7_5_9;
-	goto label$33828b7_5_19;
-	label$33828b7_5_9:
+	if( r4 != r5 ) goto label$33828b7_4_9;
+	goto label$33828b7_4_19;
+	label$33828b7_4_9:
 	if( r4 == NULL ) hl_null_access();
 	r6 = HL__ENUM_INDEX__(r4);
 	switch(r6) {
 		default:
-			goto label$33828b7_5_18;
+			goto label$33828b7_4_18;
 		case 0:
 			r7 = format_mp3_Reader_readFrame(r0);
-			if( !r7 ) goto label$33828b7_5_17;
+			if( !r7 ) goto label$33828b7_4_17;
 			if( r1 == NULL ) hl_null_access();
 			r6 = hl_types_ArrayObj_push(r1,((vdynamic*)r7));
-			label$33828b7_5_17:
-			goto label$33828b7_5_18;
+			label$33828b7_4_17:
+			goto label$33828b7_4_18;
 		case 1:
 			break;
 	}
-	label$33828b7_5_18:
-	goto label$33828b7_5_2;
-	label$33828b7_5_19:
+	label$33828b7_4_18:
+	goto label$33828b7_4_2;
+	label$33828b7_4_19:
 	return r1;
 }
 
@@ -311,14 +259,14 @@ vvirtual* format_mp3_Reader_readFrameHeader(format__mp3__Reader r0) {
 	r4 = !r4;
 	r7 = (format__mp3__$MPEG)g$_format_mp3_MPEG;
 	r6 = r7->Reserved;
-	if( r1 == r6 ) goto label$33828b7_6_18;
+	if( r1 == r6 ) goto label$33828b7_5_18;
 	r8 = (format__mp3__$CLayer)g$_format_mp3_CLayer;
 	r6 = r8->LReserved;
-	if( r3 != r6 ) goto label$33828b7_6_20;
-	label$33828b7_6_18:
+	if( r3 != r6 ) goto label$33828b7_5_20;
+	label$33828b7_5_18:
 	r9 = NULL;
 	return r9;
-	label$33828b7_6_20:
+	label$33828b7_5_20:
 	r2 = r0->bits;
 	if( r2 == NULL ) hl_null_access();
 	r5 = 4;
@@ -336,15 +284,15 @@ vvirtual* format_mp3_Reader_readFrameHeader(format__mp3__Reader r0) {
 	if( r2 == NULL ) hl_null_access();
 	r15 = format_tools_BitsInput_readBit(r2);
 	r16 = (venum*)g$format_mp3_Bitrate_BR_Bad;
-	if( r10 == r16 ) goto label$33828b7_6_42;
+	if( r10 == r16 ) goto label$33828b7_5_42;
 	r16 = (venum*)g$format_mp3_Bitrate_BR_Free;
-	if( r10 == r16 ) goto label$33828b7_6_42;
+	if( r10 == r16 ) goto label$33828b7_5_42;
 	r17 = (venum*)g$format_mp3_SamplingRate_SR_Bad;
-	if( r13 != r17 ) goto label$33828b7_6_44;
-	label$33828b7_6_42:
+	if( r13 != r17 ) goto label$33828b7_5_44;
+	label$33828b7_5_42:
 	r9 = NULL;
 	return r9;
-	label$33828b7_6_44:
+	label$33828b7_5_44:
 	r2 = r0->bits;
 	if( r2 == NULL ) hl_null_access();
 	r11 = 2;
@@ -366,12 +314,12 @@ vvirtual* format_mp3_Reader_readFrameHeader(format__mp3__Reader r0) {
 	r12 = 2;
 	r12 = format_tools_BitsInput_readBits(r2,r12);
 	r22 = 0;
-	if( !r4 ) goto label$33828b7_6_70;
+	if( !r4 ) goto label$33828b7_5_70;
 	r24 = r0->i;
 	if( r24 == NULL ) hl_null_access();
 	r23 = haxe_io_Input_readUInt16(r24);
 	r22 = r23;
-	label$33828b7_6_70:
+	label$33828b7_5_70:
 	r9 = hl_alloc_virtual(&t$vrt_ce9d2f0);
 	r25 = format_mp3_MPEG_num2Enum(r1);
 	if( hl_vfields(r9)[13] ) *(venum**)(hl_vfields(r9)[13]) = (venum*)r25; else hl_dyn_setp(r9->value,485615783/*version*/,&t$format_mp3_MPEGVersion,r25);
@@ -407,10 +355,10 @@ vvirtual* format_mp3_Reader_read(format__mp3__Reader r0) {
 	r3 = r0->sampleSize;
 	if( hl_vfields(r2)[3] ) *(int*)(hl_vfields(r2)[3]) = (int)r3; else hl_dyn_seti(r2->value,133925786/*sampleSize*/,&t$_i32,r3);
 	r5 = r0->id3v2_data;
-	if( r5 ) goto label$33828b7_7_11;
+	if( r5 ) goto label$33828b7_6_11;
 	r4 = NULL;
-	goto label$33828b7_7_18;
-	label$33828b7_7_11:
+	goto label$33828b7_6_18;
+	label$33828b7_6_11:
 	r4 = hl_alloc_virtual(&t$vrt_e12ae41);
 	r3 = r0->id3v2_version;
 	if( hl_vfields(r4)[2] ) *(int*)(hl_vfields(r4)[2]) = (int)r3; else hl_dyn_seti(r4->value,320789309/*versionBytes*/,&t$_i32,r3);
@@ -418,8 +366,60 @@ vvirtual* format_mp3_Reader_read(format__mp3__Reader r0) {
 	if( hl_vfields(r4)[1] ) *(int*)(hl_vfields(r4)[1]) = (int)r3; else hl_dyn_seti(r4->value,-133719227/*flagByte*/,&t$_i32,r3);
 	r5 = r0->id3v2_data;
 	if( hl_vfields(r4)[0] ) *(haxe__io__Bytes*)(hl_vfields(r4)[0]) = (haxe__io__Bytes)r5; else hl_dyn_setp(r4->value,40064820/*data*/,&t$haxe_io_Bytes,r5);
-	label$33828b7_7_18:
+	label$33828b7_6_18:
 	if( hl_vfields(r2)[1] ) *(vvirtual**)(hl_vfields(r2)[1]) = (vvirtual*)r4; else hl_dyn_setp(r2->value,-145532950/*id3v2*/,&t$vrt_e12ae41,r4);
 	return r2;
+}
+
+vvirtual* format_mp3_Reader_readFrame(format__mp3__Reader r0) {
+	vvirtual *r1, *r3;
+	haxe__io__Bytes r5;
+	bool r2;
+	haxe__io__$Eof r11;
+	haxe__Exception r10;
+	haxe__io__Input r6;
+	vdynamic *r4, *r9;
+	int r7, r8;
+	hl_trap_ctx trap$0;
+	r1 = format_mp3_Reader_readFrameHeader(r0);
+	if( !r1 ) goto label$33828b7_7_4;
+	r2 = format_mp3_Tools_isInvalidFrameHeader(r1);
+	if( !r2 ) goto label$33828b7_7_6;
+	label$33828b7_7_4:
+	r3 = NULL;
+	return r3;
+	label$33828b7_7_6:
+	hl_trap(trap$0,r4,label$33828b7_7_26);
+	r6 = r0->i;
+	if( r6 == NULL ) hl_null_access();
+	r7 = format_mp3_Tools_getSampleDataSizeHdr(r1);
+	r5 = haxe_io_Input_read(r6,r7);
+	r7 = r0->samples;
+	r8 = format_mp3_Tools_getSampleCountHdr(r1);
+	r7 = r7 + r8;
+	r0->samples = r7;
+	r7 = r0->sampleSize;
+	if( r5 == NULL ) hl_null_access();
+	r8 = r5->length;
+	r7 = r7 + r8;
+	r0->sampleSize = r7;
+	r3 = hl_alloc_virtual(&t$vrt_225d039);
+	if( hl_vfields(r3)[1] ) *(vvirtual**)(hl_vfields(r3)[1]) = (vvirtual*)r1; else hl_dyn_setp(r3->value,-50329203/*header*/,&t$vrt_ce9d2f0,r1);
+	if( hl_vfields(r3)[0] ) *(haxe__io__Bytes*)(hl_vfields(r3)[0]) = (haxe__io__Bytes)r5; else hl_dyn_setp(r3->value,40064820/*data*/,&t$haxe_io_Bytes,r5);
+	hl_endtrap(trap$0);
+	return r3;
+	hl_endtrap(trap$0);
+	label$33828b7_7_26:
+	r9 = NULL;
+	r10 = haxe_Exception_caught(r4);
+	if( r10 == NULL ) hl_null_access();
+	r9 = ((vdynamic* (*)(haxe__Exception))r10->$type->vobj_proto[0])(r10);
+	r11 = (haxe__io__$Eof)g$_haxe_io_Eof;
+	r2 = Std_isOfType(r9,((vdynamic*)r11));
+	if( !r2 ) goto label$33828b7_7_35;
+	r3 = NULL;
+	return r3;
+	label$33828b7_7_35:
+	hl_throw((vdynamic*)r4);
 }
 

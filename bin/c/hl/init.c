@@ -6,34 +6,91 @@
 hl__types__ArrayBytes_Int hl_types_ArrayBase_allocI32(vbyte*,int);
 int hl_types_ArrayBytes_Int_push(hl__types__ArrayBytes_Int,int);
 #include <haxe/ds/StringMap.h>
+#include <hl/types/ArrayObj.h>
+#include <hxsl/GlslOut.h>
 #include <_std/String.h>
 extern hl_type t$haxe_ds_StringMap;
 void haxe_ds_StringMap_new(haxe__ds__StringMap);
-extern String s$lt;
-extern String s$524a507;
+extern hxsl__$GlslOut g$_hxsl_GlslOut;
 void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
-extern String s$gt;
-extern String s$cedf8da;
-extern String s$amp;
-extern String s$6cff047;
-extern String s$quot;
-extern String s$b15835f;
-extern String s$apos;
-extern String s$3590cb8;
-#include <hxd/System.h>
-extern hxd__$System g$_hxd_System;
-extern String s$Program_timeout_infinite_loop_;
-vdynamic* haxe_Exception_thrown(vdynamic*);
+#include <haxe/ds/EnumValueMap.h>
 #include <hl/types/ArrayDyn.h>
-#include <haxe/macro/Binop.h>
-#include <hl/types/ArrayObj.h>
-extern haxe__macro__$Binop g$haxe_macro_Binop;
+#include <hxsl/TGlobal.h>
+extern hl_type t$haxe_ds_EnumValueMap;
+void haxe_ds_EnumValueMap_new(haxe__ds__EnumValueMap);
+extern hxsl__$TGlobal g$hxsl_TGlobal;
 #include <hl/BaseType.h>
 hl__types__ArrayDyn Type_allEnums(hl__BaseType);
 extern hl_type t$hl_types_ArrayObj;
 extern hl_type t$hl_types_ArrayDyn;
-extern hl_type t$haxe_macro_Binop;
-void hl_types_ArrayObj_insert(hl__types__ArrayObj,int,vdynamic*);
+extern String s$;
+String Std_string(vdynamic*);
+String String___add__(String,String);
+String String_charAt(String,int);
+String String_toLowerCase(String);
+String String_substr(String,int,vdynamic*);
+#include <haxe/ds/BalancedTree.h>
+void haxe_ds_BalancedTree_set(haxe__ds__BalancedTree,vdynamic*,vdynamic*);
+extern venum* g$hxsl_TGlobal_ToInt;
+extern String s$int;
+extern venum* g$hxsl_TGlobal_ToFloat;
+extern String s$float;
+extern venum* g$hxsl_TGlobal_ToBool;
+extern String s$bool;
+extern venum* g$hxsl_TGlobal_LReflect;
+extern String s$reflect;
+extern venum* g$hxsl_TGlobal_Mat3x4;
+extern String s$_mat3x4;
+extern venum* g$hxsl_TGlobal_VertexID;
+extern String s$gl_VertexID;
+extern venum* g$hxsl_TGlobal_InstanceID;
+extern String s$gl_InstanceID;
+extern venum* g$hxsl_TGlobal_IVec2;
+extern String s$ivec2;
+extern venum* g$hxsl_TGlobal_IVec3;
+extern String s$ivec3;
+extern venum* g$hxsl_TGlobal_IVec4;
+extern String s$ivec4;
+extern venum* g$hxsl_TGlobal_BVec2;
+extern String s$bvec2;
+extern venum* g$hxsl_TGlobal_BVec3;
+extern String s$bvec3;
+extern venum* g$hxsl_TGlobal_BVec4;
+extern String s$bvec4;
+extern venum* g$hxsl_TGlobal_FragCoord;
+extern String s$gl_FragCoord;
+extern venum* g$hxsl_TGlobal_FrontFacing;
+extern String s$gl_FrontFacing;
+vvirtual* haxe_ds_BalancedTree_iterator(haxe__ds__BalancedTree);
+extern hl_type t$vrt_0a81a53;
+extern hl_type t$fun_bf7849e;
+extern hl_type t$fun_820f49a;
+#include <haxe/ds/IntMap.h>
+extern String s$c2540a5;
+extern hl_type t$haxe_ds_IntMap;
+void haxe_ds_IntMap_new(haxe__ds__IntMap);
+vdynamic* String_charCodeAt(String,int);
+void haxe_ds_IntMap_set(haxe__ds__IntMap,int,vdynamic*);
+extern String s$R16F;
+extern String s$R16_FLOAT;
+extern String s$R32F;
+extern String s$R32_FLOAT;
+extern String s$RG16F;
+extern String s$R16G16_FLOAT;
+extern String s$RG32F;
+extern String s$R32G32_FLOAT;
+extern String s$RGB16F;
+extern String s$R16G16B16_FLOAT;
+extern String s$RGB32F;
+extern String s$R32G32B32_FLOAT;
+extern String s$RGBA16F;
+extern String s$R16G16B16A16_FLOAT;
+extern String s$RGBA32F;
+extern String s$R32G32B32A32_FLOAT;
+#include <hxd/System.h>
+extern hxd__$System g$_hxd_System;
+extern String s$Program_timeout_infinite_loop_;
+vdynamic* haxe_Exception_thrown(vdynamic*);
 #include <hl/Class.h>
 #include <h3d/IDrawable.h>
 #include <hl/CoreType.h>
@@ -91,6 +148,7 @@ void hl_types_ArrayObj_insert(hl__types__ArrayObj,int,vdynamic*);
 #include <haxe/IMap.h>
 #include <haxe/io/Encoding.h>
 #include <haxe/io/Error.h>
+#include <haxe/macro/Binop.h>
 #include <haxe/macro/Unop.h>
 #include <haxe/zip/FlushMode.h>
 #include <hl/DialogFlags.h>
@@ -115,7 +173,6 @@ void hl_types_ArrayObj_insert(hl__types__ArrayObj,int,vdynamic*);
 #include <hxsl/Prec.h>
 #include <hxsl/Const.h>
 #include <hxsl/FunctionKind.h>
-#include <hxsl/TGlobal.h>
 #include <hxsl/Component.h>
 #include <hxsl/TExprDef.h>
 #include <hxsl/Channel.h>
@@ -186,7 +243,6 @@ void hl_types_ArrayObj_insert(hl__types__ArrayObj,int,vdynamic*);
 #include <haxe/io/Bytes.h>
 #include <haxe/io/FPHelper.h>
 #include <haxe/xml/Parser.h>
-#include <haxe/ds/IntMap.h>
 #include <hxd/Charset.h>
 #include <hxd/Key.h>
 #include <hxd/Pad.h>
@@ -211,8 +267,6 @@ void hl_types_ArrayObj_insert(hl__types__ArrayObj,int,vdynamic*);
 #include <hxd/snd/effect/ReverbPreset.h>
 #include <hxsl/Tools.h>
 #include <hxsl/BatchShader.h>
-#include <hxsl/GlslOut.h>
-#include <haxe/ds/EnumValueMap.h>
 #include <hxsl/_Linker/ShaderInfos.h>
 #include <hxsl/Printer.h>
 #include <hxsl/RuntimeShader.h>
@@ -225,18 +279,17 @@ extern hl_type t$fun_0ecc9bc;
 extern hl_type t$fun_7b48b4f;
 void hxd_System_timeoutTick(void);
 void hxd_System_updateCursor(void);
+vbyte* fun$init__$3(void);
 extern hl_type t$fun_8de7c93;
 vbyte* fun$init__$4(void);
+haxe__ds__StringMap fun$init__$5(void);
 extern hl_type t$fun_16c9071;
-haxe__ds__IntMap fun$init__$6(void);
 extern hl_type t$fun_a98efe0;
 void hxd_System_setNativeCursor(venum*);
 extern hl_type t$fun_2061351;
 extern hl_type t$fun_04ba0e2;
-haxe__ds__StringMap fun$init__$8(void);
-haxe__ds__StringMap fun$init__$9(void);
-haxe__ds__EnumValueMap fun$init__$10(void);
 extern hl_type t$fun_6f2b9e6;
+hl__types__ArrayObj fun$init__$11(void);
 extern hl_type t$fun_bfeff6d;
 void Type_init(void);
 extern hl_type t$$Date;
@@ -334,6 +387,10 @@ extern hl_type t$components_physics_$RepellStick;
 extern hl_type t$components_physics_RepellStick;
 extern hl_type t$components_physics_$RidePoint;
 extern hl_type t$components_physics_RidePoint;
+extern hl_type t$components_physics_$ScarfPoint;
+extern hl_type t$components_physics_ScarfPoint;
+extern hl_type t$components_physics_$ScarfStick;
+extern hl_type t$components_physics_ScarfStick;
 extern hl_type t$h3d_$Vector;
 extern hl_type t$h3d_Vector;
 extern hl_type t$components_sledder_$RiderBase;
@@ -1004,8 +1061,6 @@ extern hl_type t$haxe__CallStack_$CallStack_Impl_;
 extern hl_type t$haxe__CallStack_CallStack_Impl_;
 extern hl_type t$haxe_$IMap;
 extern hl_type t$haxe_ds_ObjectMap;
-extern hl_type t$haxe_ds_IntMap;
-extern hl_type t$haxe_ds_EnumValueMap;
 extern hl_type t$haxe_ds_BalancedTree;
 extern haxe__$IMap g$_haxe_IMap;
 extern hl_type t$sys_thread__Mutex_$Mutex_Impl_;
@@ -1101,6 +1156,7 @@ extern hl_type t$haxe_iterators_ArrayIterator;
 extern hl_type t$haxe_iterators_$ArrayKeyValueIterator;
 extern hl_type t$haxe_iterators_ArrayKeyValueIterator;
 extern hl_type t$haxe_macro_$Binop;
+extern hl_type t$haxe_macro_Binop;
 extern venum* g$haxe_macro_Binop_OpAdd;
 extern venum* g$haxe_macro_Binop_OpMult;
 extern venum* g$haxe_macro_Binop_OpDiv;
@@ -1595,27 +1651,16 @@ extern venum* g$hxsl_TGlobal_Distance;
 extern venum* g$hxsl_TGlobal_Dot;
 extern venum* g$hxsl_TGlobal_Cross;
 extern venum* g$hxsl_TGlobal_Normalize;
-extern venum* g$hxsl_TGlobal_LReflect;
 extern venum* g$hxsl_TGlobal_Texture;
 extern venum* g$hxsl_TGlobal_TextureLod;
 extern venum* g$hxsl_TGlobal_Texel;
 extern venum* g$hxsl_TGlobal_TextureSize;
-extern venum* g$hxsl_TGlobal_ToInt;
-extern venum* g$hxsl_TGlobal_ToFloat;
-extern venum* g$hxsl_TGlobal_ToBool;
 extern venum* g$hxsl_TGlobal_Vec2;
 extern venum* g$hxsl_TGlobal_Vec3;
 extern venum* g$hxsl_TGlobal_Vec4;
-extern venum* g$hxsl_TGlobal_IVec2;
-extern venum* g$hxsl_TGlobal_IVec3;
-extern venum* g$hxsl_TGlobal_IVec4;
-extern venum* g$hxsl_TGlobal_BVec2;
-extern venum* g$hxsl_TGlobal_BVec3;
-extern venum* g$hxsl_TGlobal_BVec4;
 extern venum* g$hxsl_TGlobal_Mat2;
 extern venum* g$hxsl_TGlobal_Mat3;
 extern venum* g$hxsl_TGlobal_Mat4;
-extern venum* g$hxsl_TGlobal_Mat3x4;
 extern venum* g$hxsl_TGlobal_Saturate;
 extern venum* g$hxsl_TGlobal_Pack;
 extern venum* g$hxsl_TGlobal_Unpack;
@@ -1631,10 +1676,6 @@ extern venum* g$hxsl_TGlobal_ChannelReadLod;
 extern venum* g$hxsl_TGlobal_ChannelFetch;
 extern venum* g$hxsl_TGlobal_ChannelTextureSize;
 extern venum* g$hxsl_TGlobal_Trace;
-extern venum* g$hxsl_TGlobal_VertexID;
-extern venum* g$hxsl_TGlobal_InstanceID;
-extern venum* g$hxsl_TGlobal_FragCoord;
-extern venum* g$hxsl_TGlobal_FrontFacing;
 extern hl_type t$hxsl_$Component;
 extern hl_type t$hxsl_Component;
 extern venum* g$hxsl_Component_X;
@@ -1733,6 +1774,16 @@ extern hl_type t$sys_io_$File;
 extern hl_type t$sys_io_File;
 extern hl_type t$sys_io_$FileInput;
 extern hl_type t$sys_io_FileInput;
+extern hl_type t$sys_net_$Socket;
+extern hl_type t$sys_net_Socket;
+extern hl_type t$sys_ssl_$Certificate;
+extern hl_type t$sys_ssl_Certificate;
+extern hl_type t$sys_ssl_$SNICbResult;
+extern hl_type t$sys_ssl_SNICbResult;
+extern hl_type t$sys_ssl_$Key;
+extern hl_type t$sys_ssl_Key;
+extern hl_type t$sys_ssl_$Lib;
+extern hl_type t$sys_ssl_Lib;
 extern hl_type t$utils_$TableRNG;
 extern hl_type t$utils_TableRNG;
 extern $Math g$_Math;
@@ -1862,7 +1913,6 @@ extern hxd__$Charset g$_hxd_Charset;
 extern hxd__$Key g$_hxd_Key;
 extern hl_type t$vrt_f4cb177;
 extern hxd__$Pad g$_hxd_Pad;
-void haxe_ds_IntMap_new(haxe__ds__IntMap);
 extern hxd__$Timer g$_hxd_Timer;
 extern hxd__$Window g$_hxd_Window;
 extern hxd__fmt__fbx__$BaseLibrary g$_hxd_fmt_fbx_BaseLibrary;
@@ -1913,9 +1963,6 @@ extern String s$hvec4;
 extern String s$fvec2;
 extern String s$fvec3;
 extern String s$fvec4;
-extern String s$int;
-extern String s$float;
-extern String s$bool;
 extern String s$long;
 extern String s$short;
 extern String s$double;
@@ -1948,7 +1995,6 @@ extern String s$uniform;
 extern String s$varying;
 extern String s$inout;
 extern String s$void;
-extern hxsl__$GlslOut g$_hxsl_GlslOut;
 extern String s$84af96e;
 extern hxsl___Linker__$ShaderInfos g$_hxsl__Linker_ShaderInfos;
 extern String s$x;
@@ -1959,7 +2005,6 @@ extern hxsl__$Printer g$_hxsl_Printer;
 extern hxsl__$RuntimeShader g$_hxsl_RuntimeShader;
 extern hxsl__$Serializer g$_hxsl_Serializer;
 extern haxe__macro__$Unop g$haxe_macro_Unop;
-extern hxsl__$TGlobal g$hxsl_TGlobal;
 extern hxsl__$VarKind g$hxsl_VarKind;
 extern hxsl__$Prec g$hxsl_Prec;
 extern hxsl__$FunctionKind g$hxsl_FunctionKind;
@@ -1969,50 +2014,18 @@ void sdl_Event_new(sdl__Event);
 extern sdl__$Window g$_sdl_Window;
 void Main_main(void);
 void haxe_EntryPoint_run(void);
-extern String s$c2540a5;
-vdynamic* String_charCodeAt(String,int);
-void haxe_ds_IntMap_set(haxe__ds__IntMap,int,vdynamic*);
-void haxe_ds_EnumValueMap_new(haxe__ds__EnumValueMap);
-extern String s$;
-String Std_string(vdynamic*);
-String String___add__(String,String);
-String String_charAt(String,int);
-String String_toLowerCase(String);
-String String_substr(String,int,vdynamic*);
-#include <haxe/ds/BalancedTree.h>
-void haxe_ds_BalancedTree_set(haxe__ds__BalancedTree,vdynamic*,vdynamic*);
-extern String s$reflect;
-extern String s$_mat3x4;
-extern String s$gl_VertexID;
-extern String s$gl_InstanceID;
-extern String s$ivec2;
-extern String s$ivec3;
-extern String s$ivec4;
-extern String s$bvec2;
-extern String s$bvec3;
-extern String s$bvec4;
-extern String s$gl_FragCoord;
-extern String s$gl_FrontFacing;
-vvirtual* haxe_ds_BalancedTree_iterator(haxe__ds__BalancedTree);
-extern hl_type t$vrt_0a81a53;
-extern hl_type t$fun_bf7849e;
-extern hl_type t$fun_820f49a;
-extern String s$R16F;
-extern String s$R16_FLOAT;
-extern String s$R32F;
-extern String s$R32_FLOAT;
-extern String s$RG16F;
-extern String s$R16G16_FLOAT;
-extern String s$RG32F;
-extern String s$R32G32_FLOAT;
-extern String s$RGB16F;
-extern String s$R16G16B16_FLOAT;
-extern String s$RGB32F;
-extern String s$R32G32B32_FLOAT;
-extern String s$RGBA16F;
-extern String s$R16G16B16A16_FLOAT;
-extern String s$RGBA32F;
-extern String s$R32G32B32A32_FLOAT;
+extern String s$lt;
+extern String s$524a507;
+extern String s$gt;
+extern String s$cedf8da;
+extern String s$amp;
+extern String s$6cff047;
+extern String s$quot;
+extern String s$b15835f;
+extern String s$apos;
+extern String s$3590cb8;
+extern haxe__macro__$Binop g$haxe_macro_Binop;
+void hl_types_ArrayObj_insert(hl__types__ArrayObj,int,vdynamic*);
 
 hl__types__ArrayBytes_Int fun$init__$7() {
 	hl__types__ArrayBytes_Int r0;
@@ -2036,51 +2049,219 @@ hl__types__ArrayBytes_Int fun$init__$7() {
 	return r0;
 }
 
-vbyte* fun$init__$3() {
-	hl__types__ArrayBytes_Int r0;
-	int r2, r3, r4;
-	vbyte *r1;
+haxe__ds__StringMap fun$init__$9() {
+	String r6;
+	hl__types__ArrayObj r3;
+	haxe__ds__StringMap r0;
+	bool r9;
+	hxsl__$GlslOut r4;
+	vdynamic *r7;
+	varray *r8;
+	int r2, r5;
+	r0 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
+	haxe_ds_StringMap_new(r0);
 	r2 = 0;
-	r1 = hl_alloc_bytes(r2);
-	r2 = 0;
-	r2 = 0;
-	r0 = hl_types_ArrayBase_allocI32(r1,r2);
-	r2 = 0;
-	label$e988165_2_6:
-	r4 = 32;
-	if( r2 >= r4 ) goto label$e988165_2_16;
-	r3 = r2;
+	r4 = (hxsl__$GlslOut)g$_hxsl_GlslOut;
+	r3 = r4->KWD_LIST;
+	label$e988165_2_5:
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->length;
+	if( r2 >= r5 ) goto label$e988165_2_22;
+	r5 = r3->length;
+	if( ((unsigned)r2) < ((unsigned)r5) ) goto label$e988165_2_13;
+	r6 = NULL;
+	goto label$e988165_2_16;
+	label$e988165_2_13:
+	r8 = r3->array;
+	r7 = ((vdynamic**)(r8 + 1))[r2];
+	r6 = (String)r7;
+	label$e988165_2_16:
 	++r2;
 	if( r0 == NULL ) hl_null_access();
-	r4 = 36064;
-	r4 = r4 + r3;
-	r4 = hl_types_ArrayBytes_Int_push(r0,r4);
-	goto label$e988165_2_6;
-	label$e988165_2_16:
-	if( r0 == NULL ) hl_null_access();
-	r1 = r0->bytes;
-	return r1;
+	r9 = true;
+	r7 = hl_alloc_dynbool(r9);
+	haxe_ds_StringMap_set(r0,r6,r7);
+	goto label$e988165_2_5;
+	label$e988165_2_22:
+	return r0;
 }
 
-haxe__ds__StringMap fun$init__$5() {
+haxe__ds__EnumValueMap fun$init__$10() {
+	String r11, r12, r13;
+	haxe__ds__StringMap r18;
+	vvirtual *r15, *r16;
+	hl__types__ArrayObj r5;
+	venum *r8;
+	hxsl__$GlslOut r19;
+	bool r17;
+	haxe__ds__EnumValueMap r0;
+	hxsl__$TGlobal r4;
+	hl__types__ArrayDyn r3;
+	vdynamic *r9, *r14;
+	varray *r10;
+	int r2, r6, r7;
+	r0 = (haxe__ds__EnumValueMap)hl_alloc_obj(&t$haxe_ds_EnumValueMap);
+	haxe_ds_EnumValueMap_new(r0);
+	r2 = 0;
+	r4 = (hxsl__$TGlobal)g$hxsl_TGlobal;
+	r3 = Type_allEnums(((hl__BaseType)r4));
+	r5 = (hl__types__ArrayObj)hl_dyn_castp(&r3,&t$hl_types_ArrayDyn,&t$hl_types_ArrayObj);
+	label$e988165_3_6:
+	if( r5 == NULL ) hl_null_access();
+	r7 = r5->length;
+	if( r2 >= r7 ) goto label$e988165_3_33;
+	r7 = r5->length;
+	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$e988165_3_14;
+	r8 = NULL;
+	goto label$e988165_3_17;
+	label$e988165_3_14:
+	r10 = r5->array;
+	r9 = ((vdynamic**)(r10 + 1))[r2];
+	r8 = (venum*)r9;
+	label$e988165_3_17:
+	++r2;
+	r11 = (String)s$;
+	r12 = Std_string(((vdynamic*)r8));
+	r11 = String___add__(r11,r12);
+	if( r11 == NULL ) hl_null_access();
+	r6 = 0;
+	r12 = String_charAt(r11,r6);
+	if( r12 == NULL ) hl_null_access();
+	r12 = String_toLowerCase(r12);
+	r6 = 1;
+	r14 = NULL;
+	r13 = String_substr(r11,r6,r14);
+	r12 = String___add__(r12,r13);
+	if( r0 == NULL ) hl_null_access();
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r12));
+	goto label$e988165_3_6;
+	label$e988165_3_33:
+	if( r0 == NULL ) hl_null_access();
+	r8 = (venum*)g$hxsl_TGlobal_ToInt;
+	r11 = (String)s$int;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_ToFloat;
+	r11 = (String)s$float;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_ToBool;
+	r11 = (String)s$bool;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_LReflect;
+	r11 = (String)s$reflect;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_Mat3x4;
+	r11 = (String)s$_mat3x4;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_VertexID;
+	r11 = (String)s$gl_VertexID;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_InstanceID;
+	r11 = (String)s$gl_InstanceID;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_IVec2;
+	r11 = (String)s$ivec2;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_IVec3;
+	r11 = (String)s$ivec3;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_IVec4;
+	r11 = (String)s$ivec4;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_BVec2;
+	r11 = (String)s$bvec2;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_BVec3;
+	r11 = (String)s$bvec3;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_BVec4;
+	r11 = (String)s$bvec4;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_FragCoord;
+	r11 = (String)s$gl_FragCoord;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r8 = (venum*)g$hxsl_TGlobal_FrontFacing;
+	r11 = (String)s$gl_FrontFacing;
+	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
+	r15 = haxe_ds_BalancedTree_iterator(((haxe__ds__BalancedTree)r0));
+	r16 = hl_to_virtual(&t$vrt_0a81a53,(vdynamic*)r15);
+	label$e988165_3_81:
+	if( r16 == NULL ) hl_null_access();
+	if( hl_vfields(r16)[0] ) r17 = ((bool (*)(vdynamic*))hl_vfields(r16)[0])(r16->value); else {
+		vdynamic ret;
+		hl_dyn_call_obj(r16->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
+		r17 = (bool)ret.v.i;
+	}
+	if( !r17 ) goto label$e988165_3_93;
+	if( hl_vfields(r16)[1] ) r11 = ((String (*)(vdynamic*))hl_vfields(r16)[1])(r16->value); else {
+		r11 = (String)hl_dyn_call_obj(r16->value,&t$fun_820f49a,151160317/*next*/,NULL,NULL);
+	}
+	r19 = (hxsl__$GlslOut)g$_hxsl_GlslOut;
+	r18 = r19->KWDS;
+	if( r18 == NULL ) hl_null_access();
+	r17 = true;
+	r9 = hl_alloc_dynbool(r17);
+	haxe_ds_StringMap_set(r18,r11,r9);
+	goto label$e988165_3_81;
+	label$e988165_3_93:
+	return r0;
+}
+
+haxe__ds__IntMap fun$init__$6() {
+	String r0;
+	bool r8;
+	haxe__ds__IntMap r2;
+	vdynamic *r7, *r9;
+	int r3, r4, r5, r6;
+	r0 = (String)s$c2540a5;
+	r2 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
+	haxe_ds_IntMap_new(r2);
+	r3 = 0;
+	if( r0 == NULL ) hl_null_access();
+	r4 = r0->length;
+	label$e988165_4_6:
+	if( r3 >= r4 ) goto label$e988165_4_18;
+	r5 = r3;
+	++r3;
+	if( r2 == NULL ) hl_null_access();
+	if( r0 == NULL ) hl_null_access();
+	r7 = String_charCodeAt(r0,r5);
+	r6 = r7 ? r7->v.i : 0;
+	r8 = true;
+	r9 = hl_alloc_dynbool(r8);
+	haxe_ds_IntMap_set(r2,r6,r9);
+	goto label$e988165_4_6;
+	label$e988165_4_18:
+	return r2;
+}
+
+haxe__ds__StringMap fun$init__$8() {
 	String r2, r3;
 	haxe__ds__StringMap r0;
 	r0 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
 	haxe_ds_StringMap_new(r0);
-	r2 = (String)s$lt;
-	r3 = (String)s$524a507;
+	r2 = (String)s$R16F;
+	r3 = (String)s$R16_FLOAT;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$gt;
-	r3 = (String)s$cedf8da;
+	r2 = (String)s$R32F;
+	r3 = (String)s$R32_FLOAT;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$amp;
-	r3 = (String)s$6cff047;
+	r2 = (String)s$RG16F;
+	r3 = (String)s$R16G16_FLOAT;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$quot;
-	r3 = (String)s$b15835f;
+	r2 = (String)s$RG32F;
+	r3 = (String)s$R32G32_FLOAT;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$apos;
-	r3 = (String)s$3590cb8;
+	r2 = (String)s$RGB16F;
+	r3 = (String)s$R16G16B16_FLOAT;
+	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
+	r2 = (String)s$RGB32F;
+	r3 = (String)s$R32G32B32_FLOAT;
+	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
+	r2 = (String)s$RGBA16F;
+	r3 = (String)s$R16G16B16A16_FLOAT;
+	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
+	r2 = (String)s$RGBA32F;
+	r3 = (String)s$R32G32B32A32_FLOAT;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
 	return r0;
 }
@@ -2101,28 +2282,6 @@ void fun$init__$2() {
 	r1 = (String)s$Program_timeout_infinite_loop_;
 	r0 = haxe_Exception_thrown(((vdynamic*)r1));
 	hl_throw((vdynamic*)r0);
-}
-
-hl__types__ArrayObj fun$init__$11() {
-	hl__types__ArrayObj r2;
-	venum *r5;
-	haxe__macro__$Binop r1;
-	hl__types__ArrayDyn r0;
-	int r4;
-	r1 = (haxe__macro__$Binop)g$haxe_macro_Binop;
-	r0 = Type_allEnums(((hl__BaseType)r1));
-	r2 = (hl__types__ArrayObj)hl_dyn_castp(&r0,&t$hl_types_ArrayDyn,&t$hl_types_ArrayObj);
-	if( r2 == NULL ) hl_null_access();
-	r5 = NULL;
-	{ venum *tmp;
-	tmp = hl_alloc_enum(&t$haxe_macro_Binop,20);
-	((haxe_macro_Binop_OpAssignOp*)tmp)->p0 = r5;
-	r5 = tmp; };
-	if( r5 == NULL ) hl_null_access();
-	r4 = HL__ENUM_INDEX__(r5);
-	r5 = NULL;
-	hl_types_ArrayObj_insert(r2,r4,((vdynamic*)r5));
-	return r2;
 }
 
 void fun$init() {
@@ -2506,6 +2665,14 @@ void fun$init() {
 	r1 = &t$components_physics_$RidePoint;
 	r2 = &t$components_physics_RidePoint;
 	r3 = (vbyte*)USTR("components.physics.RidePoint");
+	r4 = Type_initClass(r1,r2,r3);
+	r1 = &t$components_physics_$ScarfPoint;
+	r2 = &t$components_physics_ScarfPoint;
+	r3 = (vbyte*)USTR("components.physics.ScarfPoint");
+	r4 = Type_initClass(r1,r2,r3);
+	r1 = &t$components_physics_$ScarfStick;
+	r2 = &t$components_physics_ScarfStick;
+	r3 = (vbyte*)USTR("components.physics.ScarfStick");
 	r4 = Type_initClass(r1,r2,r3);
 	r1 = &t$h3d_$Vector;
 	r2 = &t$h3d_Vector;
@@ -6320,6 +6487,26 @@ void fun$init() {
 	r2 = &t$sys_io_FileInput;
 	r3 = (vbyte*)USTR("sys.io.FileInput");
 	r4 = Type_initClass(r1,r2,r3);
+	r1 = &t$sys_net_$Socket;
+	r2 = &t$sys_net_Socket;
+	r3 = (vbyte*)USTR("sys.net.Socket");
+	r4 = Type_initClass(r1,r2,r3);
+	r1 = &t$sys_ssl_$Certificate;
+	r2 = &t$sys_ssl_Certificate;
+	r3 = (vbyte*)USTR("sys.ssl.Certificate");
+	r4 = Type_initClass(r1,r2,r3);
+	r1 = &t$sys_ssl_$SNICbResult;
+	r2 = &t$sys_ssl_SNICbResult;
+	r3 = (vbyte*)USTR("sys.ssl.SNICbResult");
+	r4 = Type_initClass(r1,r2,r3);
+	r1 = &t$sys_ssl_$Key;
+	r2 = &t$sys_ssl_Key;
+	r3 = (vbyte*)USTR("sys.ssl.Key");
+	r4 = Type_initClass(r1,r2,r3);
+	r1 = &t$sys_ssl_$Lib;
+	r2 = &t$sys_ssl_Lib;
+	r3 = (vbyte*)USTR("sys.ssl.Lib");
+	r4 = Type_initClass(r1,r2,r3);
 	r1 = &t$utils_$TableRNG;
 	r2 = &t$utils_TableRNG;
 	r3 = (vbyte*)USTR("utils.TableRNG");
@@ -6520,6 +6707,8 @@ void fun$init() {
 	if( r114 == NULL ) hl_null_access();
 	r63 = false;
 	r114->isBlocking = r63;
+	hl_socket_init();
+	ssl_ssl_init();
 	r116 = 14;
 	r117 = ($Main)g$_Main;
 	r117->viewGridSize = r116;
@@ -8359,221 +8548,53 @@ void fun$init() {
 	return;
 }
 
-haxe__ds__IntMap fun$init__$6() {
-	String r0;
-	bool r8;
-	haxe__ds__IntMap r2;
-	vdynamic *r7, *r9;
-	int r3, r4, r5, r6;
-	r0 = (String)s$c2540a5;
-	r2 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
-	haxe_ds_IntMap_new(r2);
-	r3 = 0;
-	if( r0 == NULL ) hl_null_access();
-	r4 = r0->length;
-	label$e988165_8_6:
-	if( r3 >= r4 ) goto label$e988165_8_18;
-	r5 = r3;
-	++r3;
-	if( r2 == NULL ) hl_null_access();
-	if( r0 == NULL ) hl_null_access();
-	r7 = String_charCodeAt(r0,r5);
-	r6 = r7 ? r7->v.i : 0;
-	r8 = true;
-	r9 = hl_alloc_dynbool(r8);
-	haxe_ds_IntMap_set(r2,r6,r9);
-	goto label$e988165_8_6;
-	label$e988165_8_18:
-	return r2;
-}
-
-haxe__ds__StringMap fun$init__$9() {
-	String r6;
-	hl__types__ArrayObj r3;
-	haxe__ds__StringMap r0;
-	bool r9;
-	hxsl__$GlslOut r4;
-	vdynamic *r7;
-	varray *r8;
-	int r2, r5;
-	r0 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
-	haxe_ds_StringMap_new(r0);
-	r2 = 0;
-	r4 = (hxsl__$GlslOut)g$_hxsl_GlslOut;
-	r3 = r4->KWD_LIST;
-	label$e988165_9_5:
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->length;
-	if( r2 >= r5 ) goto label$e988165_9_22;
-	r5 = r3->length;
-	if( ((unsigned)r2) < ((unsigned)r5) ) goto label$e988165_9_13;
-	r6 = NULL;
-	goto label$e988165_9_16;
-	label$e988165_9_13:
-	r8 = r3->array;
-	r7 = ((vdynamic**)(r8 + 1))[r2];
-	r6 = (String)r7;
-	label$e988165_9_16:
-	++r2;
-	if( r0 == NULL ) hl_null_access();
-	r9 = true;
-	r7 = hl_alloc_dynbool(r9);
-	haxe_ds_StringMap_set(r0,r6,r7);
-	goto label$e988165_9_5;
-	label$e988165_9_22:
-	return r0;
-}
-
-haxe__ds__EnumValueMap fun$init__$10() {
-	String r11, r12, r13;
-	haxe__ds__StringMap r18;
-	vvirtual *r15, *r16;
-	hl__types__ArrayObj r5;
-	venum *r8;
-	hxsl__$GlslOut r19;
-	bool r17;
-	haxe__ds__EnumValueMap r0;
-	hxsl__$TGlobal r4;
-	hl__types__ArrayDyn r3;
-	vdynamic *r9, *r14;
-	varray *r10;
-	int r2, r6, r7;
-	r0 = (haxe__ds__EnumValueMap)hl_alloc_obj(&t$haxe_ds_EnumValueMap);
-	haxe_ds_EnumValueMap_new(r0);
-	r2 = 0;
-	r4 = (hxsl__$TGlobal)g$hxsl_TGlobal;
-	r3 = Type_allEnums(((hl__BaseType)r4));
-	r5 = (hl__types__ArrayObj)hl_dyn_castp(&r3,&t$hl_types_ArrayDyn,&t$hl_types_ArrayObj);
-	label$e988165_10_6:
-	if( r5 == NULL ) hl_null_access();
-	r7 = r5->length;
-	if( r2 >= r7 ) goto label$e988165_10_33;
-	r7 = r5->length;
-	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$e988165_10_14;
-	r8 = NULL;
-	goto label$e988165_10_17;
-	label$e988165_10_14:
-	r10 = r5->array;
-	r9 = ((vdynamic**)(r10 + 1))[r2];
-	r8 = (venum*)r9;
-	label$e988165_10_17:
-	++r2;
-	r11 = (String)s$;
-	r12 = Std_string(((vdynamic*)r8));
-	r11 = String___add__(r11,r12);
-	if( r11 == NULL ) hl_null_access();
-	r6 = 0;
-	r12 = String_charAt(r11,r6);
-	if( r12 == NULL ) hl_null_access();
-	r12 = String_toLowerCase(r12);
-	r6 = 1;
-	r14 = NULL;
-	r13 = String_substr(r11,r6,r14);
-	r12 = String___add__(r12,r13);
-	if( r0 == NULL ) hl_null_access();
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r12));
-	goto label$e988165_10_6;
-	label$e988165_10_33:
-	if( r0 == NULL ) hl_null_access();
-	r8 = (venum*)g$hxsl_TGlobal_ToInt;
-	r11 = (String)s$int;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_ToFloat;
-	r11 = (String)s$float;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_ToBool;
-	r11 = (String)s$bool;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_LReflect;
-	r11 = (String)s$reflect;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_Mat3x4;
-	r11 = (String)s$_mat3x4;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_VertexID;
-	r11 = (String)s$gl_VertexID;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_InstanceID;
-	r11 = (String)s$gl_InstanceID;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_IVec2;
-	r11 = (String)s$ivec2;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_IVec3;
-	r11 = (String)s$ivec3;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_IVec4;
-	r11 = (String)s$ivec4;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_BVec2;
-	r11 = (String)s$bvec2;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_BVec3;
-	r11 = (String)s$bvec3;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_BVec4;
-	r11 = (String)s$bvec4;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_FragCoord;
-	r11 = (String)s$gl_FragCoord;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r8 = (venum*)g$hxsl_TGlobal_FrontFacing;
-	r11 = (String)s$gl_FrontFacing;
-	haxe_ds_BalancedTree_set(((haxe__ds__BalancedTree)r0),((vdynamic*)r8),((vdynamic*)r11));
-	r15 = haxe_ds_BalancedTree_iterator(((haxe__ds__BalancedTree)r0));
-	r16 = hl_to_virtual(&t$vrt_0a81a53,(vdynamic*)r15);
-	label$e988165_10_81:
-	if( r16 == NULL ) hl_null_access();
-	if( hl_vfields(r16)[0] ) r17 = ((bool (*)(vdynamic*))hl_vfields(r16)[0])(r16->value); else {
-		vdynamic ret;
-		hl_dyn_call_obj(r16->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
-		r17 = (bool)ret.v.i;
-	}
-	if( !r17 ) goto label$e988165_10_93;
-	if( hl_vfields(r16)[1] ) r11 = ((String (*)(vdynamic*))hl_vfields(r16)[1])(r16->value); else {
-		r11 = (String)hl_dyn_call_obj(r16->value,&t$fun_820f49a,151160317/*next*/,NULL,NULL);
-	}
-	r19 = (hxsl__$GlslOut)g$_hxsl_GlslOut;
-	r18 = r19->KWDS;
-	if( r18 == NULL ) hl_null_access();
-	r17 = true;
-	r9 = hl_alloc_dynbool(r17);
-	haxe_ds_StringMap_set(r18,r11,r9);
-	goto label$e988165_10_81;
-	label$e988165_10_93:
-	return r0;
-}
-
-haxe__ds__StringMap fun$init__$8() {
+haxe__ds__StringMap fun$init__$5() {
 	String r2, r3;
 	haxe__ds__StringMap r0;
 	r0 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
 	haxe_ds_StringMap_new(r0);
-	r2 = (String)s$R16F;
-	r3 = (String)s$R16_FLOAT;
+	r2 = (String)s$lt;
+	r3 = (String)s$524a507;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$R32F;
-	r3 = (String)s$R32_FLOAT;
+	r2 = (String)s$gt;
+	r3 = (String)s$cedf8da;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$RG16F;
-	r3 = (String)s$R16G16_FLOAT;
+	r2 = (String)s$amp;
+	r3 = (String)s$6cff047;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$RG32F;
-	r3 = (String)s$R32G32_FLOAT;
+	r2 = (String)s$quot;
+	r3 = (String)s$b15835f;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$RGB16F;
-	r3 = (String)s$R16G16B16_FLOAT;
-	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$RGB32F;
-	r3 = (String)s$R32G32B32_FLOAT;
-	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$RGBA16F;
-	r3 = (String)s$R16G16B16A16_FLOAT;
-	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
-	r2 = (String)s$RGBA32F;
-	r3 = (String)s$R32G32B32A32_FLOAT;
+	r2 = (String)s$apos;
+	r3 = (String)s$3590cb8;
 	haxe_ds_StringMap_set(r0,r2,((vdynamic*)r3));
 	return r0;
+}
+
+vbyte* fun$init__$3() {
+	hl__types__ArrayBytes_Int r0;
+	int r2, r3, r4;
+	vbyte *r1;
+	r2 = 0;
+	r1 = hl_alloc_bytes(r2);
+	r2 = 0;
+	r2 = 0;
+	r0 = hl_types_ArrayBase_allocI32(r1,r2);
+	r2 = 0;
+	label$e988165_10_6:
+	r4 = 32;
+	if( r2 >= r4 ) goto label$e988165_10_16;
+	r3 = r2;
+	++r2;
+	if( r0 == NULL ) hl_null_access();
+	r4 = 36064;
+	r4 = r4 + r3;
+	r4 = hl_types_ArrayBytes_Int_push(r0,r4);
+	goto label$e988165_10_6;
+	label$e988165_10_16:
+	if( r0 == NULL ) hl_null_access();
+	r1 = r0->bytes;
+	return r1;
 }
 
 vbyte* fun$init__$4() {
@@ -8582,5 +8603,27 @@ vbyte* fun$init__$4() {
 	r1 = 8;
 	r0 = hl_alloc_bytes(r1);
 	return r0;
+}
+
+hl__types__ArrayObj fun$init__$11() {
+	hl__types__ArrayObj r2;
+	venum *r5;
+	haxe__macro__$Binop r1;
+	hl__types__ArrayDyn r0;
+	int r4;
+	r1 = (haxe__macro__$Binop)g$haxe_macro_Binop;
+	r0 = Type_allEnums(((hl__BaseType)r1));
+	r2 = (hl__types__ArrayObj)hl_dyn_castp(&r0,&t$hl_types_ArrayDyn,&t$hl_types_ArrayObj);
+	if( r2 == NULL ) hl_null_access();
+	r5 = NULL;
+	{ venum *tmp;
+	tmp = hl_alloc_enum(&t$haxe_macro_Binop,20);
+	((haxe_macro_Binop_OpAssignOp*)tmp)->p0 = r5;
+	r5 = tmp; };
+	if( r5 == NULL ) hl_null_access();
+	r4 = HL__ENUM_INDEX__(r5);
+	r5 = NULL;
+	hl_types_ArrayObj_insert(r2,r4,((vdynamic*)r5));
+	return r2;
 }
 

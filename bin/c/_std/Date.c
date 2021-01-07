@@ -102,6 +102,22 @@ int Date_getMinutes(Date r0) {
 	return r1;
 }
 
+int Date_getSeconds(Date r0) {
+	int *r4, *r5, *r6, *r7, *r8, *r9, *r10;
+	int r1, r3;
+	r1 = 0;
+	r3 = r0->_t;
+	r4 = &r1;
+	r5 = NULL;
+	r6 = NULL;
+	r7 = NULL;
+	r8 = NULL;
+	r9 = NULL;
+	r10 = NULL;
+	hl_date_get_inf(r3,r5,r6,r7,r8,r9,r4,r10);
+	return r1;
+}
+
 vbyte* Date___string(Date r0) {
 	String r2;
 	vbyte *r1;

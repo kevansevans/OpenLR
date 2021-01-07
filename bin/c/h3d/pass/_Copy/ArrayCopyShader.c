@@ -2,19 +2,11 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/pass/_Copy/ArrayCopyShader.h>
-void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
 extern hl_type t$_i32;
-
-void h3d_pass__Copy_ArrayCopyShader_new(h3d__pass___Copy__ArrayCopyShader r0) {
-	int r1;
-	r1 = 0;
-	r0->layer__ = r1;
-	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
-	return;
-}
+void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 
 void h3d_pass__Copy_ArrayCopyShader_updateConstants(h3d__pass___Copy__ArrayCopyShader r0,hxsl__Globals r1) {
 	int r2;
@@ -31,7 +23,7 @@ vdynamic* h3d_pass__Copy_ArrayCopyShader_getParamValue(h3d__pass___Copy__ArrayCo
 	int r2;
 	switch(r1) {
 		default:
-			goto label$0027469_3_10;
+			goto label$0027469_2_10;
 		case 0:
 			r3 = r0->flipY__;
 			r4 = hl_alloc_dynamic(&t$_f64);
@@ -46,7 +38,7 @@ vdynamic* h3d_pass__Copy_ArrayCopyShader_getParamValue(h3d__pass___Copy__ArrayCo
 			r4->v.i = r2;
 			return r4;
 	}
-	label$0027469_3_10:
+	label$0027469_2_10:
 	r4 = NULL;
 	return r4;
 }
@@ -55,11 +47,19 @@ double h3d_pass__Copy_ArrayCopyShader_getParamFloatValue(h3d__pass___Copy__Array
 	double r3;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$0027469_4_4;
+	if( r1 != r2 ) goto label$0027469_3_4;
 	r3 = r0->flipY__;
 	return r3;
-	label$0027469_4_4:
+	label$0027469_3_4:
 	r3 = 0.;
 	return r3;
+}
+
+void h3d_pass__Copy_ArrayCopyShader_new(h3d__pass___Copy__ArrayCopyShader r0) {
+	int r1;
+	r1 = 0;
+	r0->layer__ = r1;
+	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
+	return;
 }
 

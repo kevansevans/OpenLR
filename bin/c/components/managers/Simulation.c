@@ -32,7 +32,7 @@ extern hl_type t$fun_6c7a217;
 vdynamic* haxe_ds_ObjectMap_get(haxe__ds__ObjectMap,vdynamic*);
 extern hl_type t$hl_types_ArrayObj;
 extern hl_type t$_dyn;
-extern hl_type t$vrt_6e00ada;
+extern hl_type t$vrt_5caddc6;
 void components_managers_Simulation_recordRiderState(components__managers__Simulation,components__sledder__RiderBase,int);
 extern hl_type t$_bool;
 extern hl_type t$vrt_6c2da0f;
@@ -269,7 +269,7 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 		hl_dyn_call_obj(r12->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r13 = (bool)ret.v.i;
 	}
-	if( !r13 ) goto label$d8284df_9_69;
+	if( !r13 ) goto label$d8284df_9_101;
 	if( hl_vfields(r12)[1] ) r14 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r12)[1])(r12->value); else {
 		r14 = (components__sledder__RiderBase)hl_dyn_call_obj(r12->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
 	}
@@ -285,7 +285,7 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	label$d8284df_9_26:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r3];
-	r18 = hl_to_virtual(&t$vrt_6e00ada,(vdynamic*)r11);
+	r18 = hl_to_virtual(&t$vrt_5caddc6,(vdynamic*)r11);
 	label$d8284df_9_29:
 	if( r18 ) goto label$d8284df_9_33;
 	r6 = r0->frames;
@@ -332,8 +332,45 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	components_physics_RidePoint_restoreState(r22,r23);
 	goto label$d8284df_9_41;
 	label$d8284df_9_68:
+	r6 = 0;
+	if( r14 == NULL ) hl_null_access();
+	r16 = r14->scarfPoints;
+	if( r16 == NULL ) hl_null_access();
+	r17 = r16->length;
+	label$d8284df_9_73:
+	if( r6 >= r17 ) goto label$d8284df_9_100;
+	r20 = r6;
+	++r6;
+	if( r14 == NULL ) hl_null_access();
+	r16 = r14->scarfPoints;
+	if( r16 == NULL ) hl_null_access();
+	r21 = r16->length;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d8284df_9_84;
+	r22 = NULL;
+	goto label$d8284df_9_87;
+	label$d8284df_9_84:
+	r19 = r16->array;
+	r11 = ((vdynamic**)(r19 + 1))[r20];
+	r22 = (components__physics__RidePoint)r11;
+	label$d8284df_9_87:
+	if( r22 == NULL ) hl_null_access();
+	if( r18 == NULL ) hl_null_access();
+	r16 = hl_vfields(r18)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r18)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r18->value,151751954/*scarves*/,&t$hl_types_ArrayObj);
+	if( r16 == NULL ) hl_null_access();
+	r21 = r16->length;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d8284df_9_95;
+	r23 = NULL;
+	goto label$d8284df_9_98;
+	label$d8284df_9_95:
+	r19 = r16->array;
+	r11 = ((vdynamic**)(r19 + 1))[r20];
+	r23 = hl_to_virtual(&t$vrt_6c2da0f,(vdynamic*)r11);
+	label$d8284df_9_98:
+	components_physics_RidePoint_restoreState(r22,r23);
+	goto label$d8284df_9_73;
+	label$d8284df_9_100:
 	goto label$d8284df_9_12;
-	label$d8284df_9_69:
+	label$d8284df_9_101:
 	return;
 }
 
@@ -376,13 +413,13 @@ void components_managers_Simulation_recordGlobalSimState(components__managers__S
 
 void components_managers_Simulation_recordRiderState(components__managers__Simulation r0,components__sledder__RiderBase r1,int r2) {
 	haxe__ds__ObjectMap r5;
-	vvirtual *r7, *r9, *r12, *r17;
-	hl__types__ArrayObj r6, r8;
+	vvirtual *r7, *r9, *r12, *r18;
+	hl__types__ArrayObj r6, r8, r15;
 	bool r10;
-	components__physics__RidePoint r16;
+	components__physics__RidePoint r17;
 	vdynamic *r4;
 	varray *r14;
-	int r11, r13, r15;
+	int r11, r13, r16;
 	r5 = r0->frameStates;
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_ObjectMap_get(r5,((vdynamic*)r1));
@@ -404,64 +441,108 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	if( r5 == NULL ) hl_null_access();
 	haxe_ds_ObjectMap_set(r5,((vdynamic*)r1),((vdynamic*)r6));
 	label$d8284df_12_18:
-	r9 = hl_alloc_virtual(&t$vrt_6e00ada);
+	r9 = hl_alloc_virtual(&t$vrt_5caddc6);
 	if( r1 == NULL ) hl_null_access();
 	r10 = r1->crashed;
 	if( hl_vfields(r9)[0] ) *(bool*)(hl_vfields(r9)[0]) = (bool)r10; else hl_dyn_seti(r9->value,-273866879/*crashed*/,&t$_bool,r10);
 	r6 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r6);
 	if( hl_vfields(r9)[1] ) *(hl__types__ArrayObj*)(hl_vfields(r9)[1]) = (hl__types__ArrayObj)r6; else hl_dyn_setp(r9->value,-147975645/*points*/,&t$hl_types_ArrayObj,r6);
+	r6 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r6);
+	if( hl_vfields(r9)[2] ) *(hl__types__ArrayObj*)(hl_vfields(r9)[2]) = (hl__types__ArrayObj)r6; else hl_dyn_setp(r9->value,151751954/*scarves*/,&t$hl_types_ArrayObj,r6);
 	r5 = r0->frameStates;
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_ObjectMap_get(r5,((vdynamic*)r1));
 	r6 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
 	if( r6 == NULL ) hl_null_access();
 	r13 = r6->length;
-	if( ((unsigned)r2) < ((unsigned)r13) ) goto label$d8284df_12_33;
+	if( ((unsigned)r2) < ((unsigned)r13) ) goto label$d8284df_12_36;
 	hl_types_ArrayObj___expand(r6,r2);
-	label$d8284df_12_33:
+	label$d8284df_12_36:
 	r14 = r6->array;
 	((vvirtual**)(r14 + 1))[r2] = r9;
 	r6 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r6);
+	r8 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r8);
 	r11 = 0;
-	r8 = r1->ridePoints;
-	label$d8284df_12_39:
-	if( r8 == NULL ) hl_null_access();
-	r15 = r8->length;
-	if( r11 >= r15 ) goto label$d8284df_12_56;
-	r15 = r8->length;
-	if( ((unsigned)r11) < ((unsigned)r15) ) goto label$d8284df_12_47;
-	r16 = NULL;
-	goto label$d8284df_12_50;
-	label$d8284df_12_47:
-	r14 = r8->array;
+	r15 = r1->ridePoints;
+	label$d8284df_12_44:
+	if( r15 == NULL ) hl_null_access();
+	r16 = r15->length;
+	if( r11 >= r16 ) goto label$d8284df_12_61;
+	r16 = r15->length;
+	if( ((unsigned)r11) < ((unsigned)r16) ) goto label$d8284df_12_52;
+	r17 = NULL;
+	goto label$d8284df_12_55;
+	label$d8284df_12_52:
+	r14 = r15->array;
 	r4 = ((vdynamic**)(r14 + 1))[r11];
-	r16 = (components__physics__RidePoint)r4;
-	label$d8284df_12_50:
+	r17 = (components__physics__RidePoint)r4;
+	label$d8284df_12_55:
 	++r11;
 	if( r6 == NULL ) hl_null_access();
-	if( r16 == NULL ) hl_null_access();
-	r17 = components_physics_RidePoint_saveState(r16);
-	r13 = hl_types_ArrayObj_push(r6,((vdynamic*)r17));
-	goto label$d8284df_12_39;
-	label$d8284df_12_56:
+	if( r17 == NULL ) hl_null_access();
+	r18 = components_physics_RidePoint_saveState(r17);
+	r13 = hl_types_ArrayObj_push(r6,((vdynamic*)r18));
+	goto label$d8284df_12_44;
+	label$d8284df_12_61:
+	r11 = 0;
+	if( r1 == NULL ) hl_null_access();
+	r15 = r1->scarfPoints;
+	label$d8284df_12_64:
+	if( r15 == NULL ) hl_null_access();
+	r16 = r15->length;
+	if( r11 >= r16 ) goto label$d8284df_12_81;
+	r16 = r15->length;
+	if( ((unsigned)r11) < ((unsigned)r16) ) goto label$d8284df_12_72;
+	r17 = NULL;
+	goto label$d8284df_12_75;
+	label$d8284df_12_72:
+	r14 = r15->array;
+	r4 = ((vdynamic**)(r14 + 1))[r11];
+	r17 = (components__physics__RidePoint)r4;
+	label$d8284df_12_75:
+	++r11;
+	if( r8 == NULL ) hl_null_access();
+	if( r17 == NULL ) hl_null_access();
+	r18 = components_physics_RidePoint_saveState(r17);
+	r13 = hl_types_ArrayObj_push(r8,((vdynamic*)r18));
+	goto label$d8284df_12_64;
+	label$d8284df_12_81:
 	r5 = r0->frameStates;
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_ObjectMap_get(r5,((vdynamic*)r1));
-	r8 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
-	if( r8 == NULL ) hl_null_access();
-	r13 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r13) ) goto label$d8284df_12_65;
+	r15 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
+	if( r15 == NULL ) hl_null_access();
+	r13 = r15->length;
+	if( ((unsigned)r2) < ((unsigned)r13) ) goto label$d8284df_12_90;
 	r12 = NULL;
-	goto label$d8284df_12_68;
-	label$d8284df_12_65:
-	r14 = r8->array;
+	goto label$d8284df_12_93;
+	label$d8284df_12_90:
+	r14 = r15->array;
 	r4 = ((vdynamic**)(r14 + 1))[r2];
-	r12 = hl_to_virtual(&t$vrt_6e00ada,(vdynamic*)r4);
-	label$d8284df_12_68:
+	r12 = hl_to_virtual(&t$vrt_5caddc6,(vdynamic*)r4);
+	label$d8284df_12_93:
 	if( r12 == NULL ) hl_null_access();
 	if( hl_vfields(r12)[1] ) *(hl__types__ArrayObj*)(hl_vfields(r12)[1]) = (hl__types__ArrayObj)r6; else hl_dyn_setp(r12->value,-147975645/*points*/,&t$hl_types_ArrayObj,r6);
+	r5 = r0->frameStates;
+	if( r5 == NULL ) hl_null_access();
+	r4 = haxe_ds_ObjectMap_get(r5,((vdynamic*)r1));
+	r15 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
+	if( r15 == NULL ) hl_null_access();
+	r13 = r15->length;
+	if( ((unsigned)r2) < ((unsigned)r13) ) goto label$d8284df_12_104;
+	r12 = NULL;
+	goto label$d8284df_12_107;
+	label$d8284df_12_104:
+	r14 = r15->array;
+	r4 = ((vdynamic**)(r14 + 1))[r2];
+	r12 = hl_to_virtual(&t$vrt_5caddc6,(vdynamic*)r4);
+	label$d8284df_12_107:
+	if( r12 == NULL ) hl_null_access();
+	if( hl_vfields(r12)[2] ) *(hl__types__ArrayObj*)(hl_vfields(r12)[2]) = (hl__types__ArrayObj)r8; else hl_dyn_setp(r12->value,151751954/*scarves*/,&t$hl_types_ArrayObj,r8);
 	return;
 }
 

@@ -47,8 +47,10 @@ class Simulation
 		if (flagPoint != null) restoreFlagPoint();
 		else restoreState(0);
 		
+		#if hl
 		Main.audio.stopMusic();
 		Main.audio.playMusic(frames);
+		#end
 	}
 	
 	public function pauseSim() {
@@ -56,14 +58,18 @@ class Simulation
 			startSim();
 			return;
 		}
+		#if hl
 		Main.audio.stopMusic();
+		#end
 		playing = false;
 		paused = true;
 	}
 	public function resumeSim() {
 		playing = true;
 		paused = false;
+		#if hl
 		Main.audio.playMusic(frames);
+		#end
 	}
 	
 	public function endSim() {
@@ -73,7 +79,9 @@ class Simulation
 		if (flagPoint != null) restoreFlagPoint();
 		else restoreState(0);
 		
+		#if hl
 		Main.audio.stopMusic();
+		#end
 	}
 	public function playSim(_delta:Float) {
 		
@@ -119,6 +127,9 @@ class Simulation
 			for (point in 0...rider.ridePoints.length) {
 				rider.ridePoints[point].restoreState(state.points[point]);
 			}
+			for (point in 0...rider.scarfPoints.length) {
+				rider.scarfPoints[point].restoreState(state.scarves[point]);
+			}
 		}
 	}
 	
@@ -147,14 +158,20 @@ class Simulation
 		if (frameStates[_rider] == null) frameStates[_rider] = new Array();
 		var stat:RiderState = {
 			crashed : _rider.crashed,
-			points : new Array()
+			points : new Array(),
+			scarves : new Array()
 		}
 		frameStates[_rider][_frame] = stat;
 		var _points:Array<PointState> = new Array();
+		var _scarves:Array<PointState> = new Array();
 		for (point in _rider.ridePoints) {
 			_points.push(point.saveState());
 		}
+		for (point in _rider.scarfPoints) {
+			_scarves.push(point.saveState());
+		}
 		frameStates[_rider][_frame].points = _points;
+		frameStates[_rider][_frame].scarves = _scarves;
 	}
 	
 	var rewindPoint:Int = 0;
@@ -201,4 +218,5 @@ class Simulation
 typedef RiderState = {
 	var crashed:Bool;
 	var points:Array<PointState>;
+	var scarves:Array<PointState>;
 }

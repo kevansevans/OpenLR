@@ -35,6 +35,8 @@ extern hl_type t$utils_TableRNG;
 void utils_TableRNG_new(utils__TableRNG,int*,int*);
 extern hl_type t$_i32;
 void utils_TableRNG_shuffle(utils__TableRNG,vdynamic*);
+int Date_getMinutes(Date);
+int Date_getSeconds(Date);
 #include <hxd/res/Loader.h>
 #include <hxd/fs/EmbedFileSystem.h>
 #include <hxd/fs/FileEntry.h>
@@ -407,10 +409,11 @@ void Main_main() {
 
 void Main_new(Main r0) {
 	utils__TableRNG r2;
+	Date r7;
 	$Main r5;
-	vdynamic *r7;
+	vdynamic *r9;
 	int *r3, *r4;
-	int r6;
+	int r6, r8;
 	hxd_App_new(((hxd__App)r0));
 	r2 = (utils__TableRNG)hl_alloc_obj(&t$utils_TableRNG);
 	r3 = NULL;
@@ -421,10 +424,36 @@ void Main_new(Main r0) {
 	r5 = ($Main)g$_Main;
 	r2 = r5->rng;
 	if( r2 == NULL ) hl_null_access();
-	r6 = 132;
-	r7 = hl_alloc_dynamic(&t$_i32);
-	r7->v.i = r6;
-	utils_TableRNG_shuffle(r2,r7);
+	r7 = Date_now();
+	if( r7 == NULL ) hl_null_access();
+	r6 = Date_getMonth(r7);
+	r8 = 1;
+	r6 = r6 + r8;
+	r9 = hl_alloc_dynamic(&t$_i32);
+	r9->v.i = r6;
+	utils_TableRNG_shuffle(r2,r9);
+	r5 = ($Main)g$_Main;
+	r2 = r5->rng;
+	if( r2 == NULL ) hl_null_access();
+	r7 = Date_now();
+	if( r7 == NULL ) hl_null_access();
+	r6 = Date_getMinutes(r7);
+	r8 = 1;
+	r6 = r6 + r8;
+	r9 = hl_alloc_dynamic(&t$_i32);
+	r9->v.i = r6;
+	utils_TableRNG_shuffle(r2,r9);
+	r5 = ($Main)g$_Main;
+	r2 = r5->rng;
+	if( r2 == NULL ) hl_null_access();
+	r7 = Date_now();
+	if( r7 == NULL ) hl_null_access();
+	r6 = Date_getSeconds(r7);
+	r8 = 1;
+	r6 = r6 + r8;
+	r9 = hl_alloc_dynamic(&t$_i32);
+	r9->v.i = r6;
+	utils_TableRNG_shuffle(r2,r9);
 	ui_ui_close_console();
 	return;
 }

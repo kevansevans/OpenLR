@@ -48,7 +48,9 @@ class SaveLoad
 				name : sledder.name,
 				startPoint : sledder.startPos,
 				startFrame : sledder.enabledFrame,
-				stopFrame : sledder.disableFrame
+				stopFrame : sledder.disableFrame,
+				colora : sledder.colorA,
+				colorb : sledder.colorB,
 			}
 			saveObject.riders.push(rider);
 		}
@@ -146,6 +148,7 @@ class SaveLoad
 		
 		for (rider in loadObject.riders) {
 			Main.riders.addNewRider(rider.name, rider.startPoint, rider.startFrame, rider.stopFrame);
+			Main.riders.riders[rider.name].setColor(rider.colora, rider.colorb);
 		}
 		
 	}

@@ -206,8 +206,10 @@
 #include <hxd/res/Loader.h>
 #include <hxd/fs/EmbedFileSystem.h>
 #include <h2d/ConsoleArg.h>
-#include <components/physics/RidePoint.h>
 #include <components/physics/Stick.h>
+#include <components/physics/RidePoint.h>
+#include <components/physics/ScarfStick.h>
+#include <components/sledder/RiderScarf.h>
 #include <components/sledder/RiderBase.h>
 #include <_std/Math.h>
 #include <haxe/SysTools.h>
@@ -222,12 +224,12 @@
 #include <components/lines/Floor.h>
 #include <components/lines/Scenery.h>
 #include <hxd/fs/BytesFileEntry.h>
-#include <components/sledder/RiderScarf.h>
 #include <h2d/Anim.h>
 #include <components/sledder/RiderPart.h>
 #include <components/sledder/Bosh.h>
 #include <components/physics/BindStick.h>
 #include <components/physics/RepellStick.h>
+#include <components/physics/ScarfPoint.h>
 #include <components/sledder/BodyPart.h>
 #include <hxd/res/Image.h>
 #include <hxd/res/ImageInfo.h>
@@ -452,6 +454,9 @@
 #include <hxsl/Serializer.h>
 #include <hxsl/_Splitter/VarProps.h>
 #include <sdl/Sdl.h>
+#include <sys/ssl/Certificate.h>
+#include <sys/ssl/SNICbResult.h>
+#include <sys/ssl/Key.h>
 #include <_std/Lambda.h>
 #include <h3d/IDrawable.h>
 #include <_std/Reflect.h>
@@ -512,6 +517,8 @@
 #include <hxsl/Tools2.h>
 #include <sdl/GL.h>
 #include <sys/io/File.h>
+#include <sys/net/Socket.h>
+#include <sys/ssl/Lib.h>
 extern hl_type t$String;
 extern vbyte string$b8896f0[];
 extern vbyte string$520de12[];
@@ -874,8 +881,10 @@ String s$x_position = 0;
 String s$y_position = 0;
 String s$setRiderStart = 0;
 String s$Set_rider_start_position = 0;
-components__physics__$RidePoint g$_components_physics_RidePoint = 0;
 components__physics__$Stick g$_components_physics_Stick = 0;
+components__physics__$RidePoint g$_components_physics_RidePoint = 0;
+components__physics__$ScarfStick g$_components_physics_ScarfStick = 0;
+components__sledder__$RiderScarf g$_components_sledder_RiderScarf = 0;
 components__sledder__$RiderBase g$_components_sledder_RiderBase = 0;
 String s$Enable_frame = 0;
 String s$End_frame = 0;
@@ -1012,7 +1021,6 @@ String s$_ogg = 0;
 String s$9ea6359 = 0;
 hxd__fs__$BytesFileEntry g$_hxd_fs_BytesFileEntry = 0;
 String s$Audio_has_ended_ = 0;
-components__sledder__$RiderScarf g$_components_sledder_RiderScarf = 0;
 h2d__$Anim g$_h2d_Anim = 0;
 components__sledder__$RiderPart g$_components_sledder_RiderPart = 0;
 components__sledder__$Bosh g$_components_sledder_Bosh = 0;
@@ -1022,6 +1030,7 @@ String s$_does_not_exist = 0;
 String s$No_riders_in_current_track = 0;
 components__physics__$BindStick g$_components_physics_BindStick = 0;
 components__physics__$RepellStick g$_components_physics_RepellStick = 0;
+components__physics__$ScarfPoint g$_components_physics_ScarfPoint = 0;
 components__sledder__$BodyPart g$components_sledder_BodyPart = 0;
 venum* g$components_sledder_BodyPart_ARM = 0;
 venum* g$components_sledder_BodyPart_LEG = 0;
@@ -2370,6 +2379,9 @@ String s$Failed_to_link_ = 0;
 String s$Can_t_read_ = 0;
 String s$Can_t_open_ = 0;
 String s$_for_writing = 0;
+sys__ssl__$Certificate g$_sys_ssl_Certificate = 0;
+sys__ssl__$SNICbResult g$_sys_ssl_SNICbResult = 0;
+sys__ssl__$Key g$_sys_ssl_Key = 0;
 String s$random = 0;
 $Lambda g$_Lambda = 0;
 h3d__$IDrawable g$_h3d_IDrawable = 0;
@@ -2646,6 +2658,8 @@ venum* g$hxsl_Channel_B = 0;
 venum* g$hxsl_Channel_A = 0;
 sdl__$GL g$_sdl_GL = 0;
 sys__io__$File g$_sys_io_File = 0;
+sys__net__$Socket g$_sys_net_Socket = 0;
+sys__ssl__$Lib g$_sys_ssl_Lib = 0;
 String s$Program_timeout_infinite_loop_ = 0;
 String s$12484cd = 0;
 String s$Default = 0;
@@ -5421,8 +5435,10 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$components_tool_ToolMode_LINE);
 	hl_add_root((void**)&g$components_tool_ToolMode_NONE);
 	hl_add_root((void**)&g$components_tool_ToolMode_PENCIL);
-	hl_add_root((void**)&g$_components_physics_RidePoint);
 	hl_add_root((void**)&g$_components_physics_Stick);
+	hl_add_root((void**)&g$_components_physics_RidePoint);
+	hl_add_root((void**)&g$_components_physics_ScarfStick);
+	hl_add_root((void**)&g$_components_sledder_RiderScarf);
 	hl_add_root((void**)&g$_components_sledder_RiderBase);
 	hl_add_root((void**)&g$_Math);
 	hl_add_root((void**)&g$_haxe_SysTools);
@@ -5444,12 +5460,12 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_components_lines_Floor);
 	hl_add_root((void**)&g$_components_lines_Scenery);
 	hl_add_root((void**)&g$_hxd_fs_BytesFileEntry);
-	hl_add_root((void**)&g$_components_sledder_RiderScarf);
 	hl_add_root((void**)&g$_h2d_Anim);
 	hl_add_root((void**)&g$_components_sledder_RiderPart);
 	hl_add_root((void**)&g$_components_sledder_Bosh);
 	hl_add_root((void**)&g$_components_physics_BindStick);
 	hl_add_root((void**)&g$_components_physics_RepellStick);
+	hl_add_root((void**)&g$_components_physics_ScarfPoint);
 	hl_add_root((void**)&g$components_sledder_BodyPart);
 	hl_add_root((void**)&g$components_sledder_BodyPart_ARM);
 	hl_add_root((void**)&g$components_sledder_BodyPart_LEG);
@@ -5905,6 +5921,9 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxsl_VarQualifier_Ignore);
 	hl_add_root((void**)&g$_hxsl__Splitter_VarProps);
 	hl_add_root((void**)&g$_sdl_Sdl);
+	hl_add_root((void**)&g$_sys_ssl_Certificate);
+	hl_add_root((void**)&g$_sys_ssl_SNICbResult);
+	hl_add_root((void**)&g$_sys_ssl_Key);
 	hl_add_root((void**)&g$_Lambda);
 	hl_add_root((void**)&g$_h3d_IDrawable);
 	hl_add_root((void**)&g$_Reflect);
@@ -6173,6 +6192,8 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxsl_Channel_A);
 	hl_add_root((void**)&g$_sdl_GL);
 	hl_add_root((void**)&g$_sys_io_File);
+	hl_add_root((void**)&g$_sys_net_Socket);
+	hl_add_root((void**)&g$_sys_ssl_Lib);
 }
 // oy4:tooloy15:pencilGreen.pngty14:pencilBlue.pngty13:lineGree...
 vbyte string$b8896f0[] = {111,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,108,0,105,0,110,0,101,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110\

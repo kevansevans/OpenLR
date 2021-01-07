@@ -8,6 +8,7 @@ typedef struct _components__sledder__RiderBase *components__sledder__RiderBase;
 #include <_std/String.h>
 #include <h3d/Vector.h>
 #include <hl/types/ArrayObj.h>
+#include <components/sledder/RiderScarf.h>
 #include <h2d/Graphics.h>
 #include <h2d/HtmlText.h>
 #include <h2d/col/Point.h>
@@ -26,7 +27,12 @@ struct _components__sledder__$RiderBase {
 struct _components__sledder__RiderBase {
 	hl_type *$type;
 	hl__types__ArrayObj ridePoints;
+	hl__types__ArrayObj scarfPoints;
+	int colorA;
+	int colorB;
+	components__sledder__RiderScarf neckscarf;
 	hl__types__ArrayObj bones;
+	hl__types__ArrayObj scarves;
 	h2d__Graphics gfx;
 	h2d__HtmlText nameField;
 	h2d__col__Point gravity;

@@ -124,6 +124,16 @@ Lambda.array = function(it) {
 	}
 	return a;
 };
+Lambda.exists = function(it,f) {
+	var x = $getIterator(it);
+	while(x.hasNext()) {
+		var x1 = x.next();
+		if(f(x1)) {
+			return true;
+		}
+	}
+	return false;
+};
 var h3d_IDrawable = function() { };
 $hxClasses["h3d.IDrawable"] = h3d_IDrawable;
 h3d_IDrawable.__name__ = "h3d.IDrawable";
@@ -214,7 +224,9 @@ hxd_App.prototype = {
 var Main = function() {
 	hxd_App.call(this);
 	Main.rng = new utils_TableRNG();
-	Main.rng.shuffle(132);
+	Main.rng.shuffle(new Date().getMonth() + 1);
+	Main.rng.shuffle(new Date().getMinutes() + 1);
+	Main.rng.shuffle(new Date().getSeconds() + 1);
 };
 $hxClasses["Main"] = Main;
 Main.__name__ = "Main";
@@ -536,6 +548,20 @@ Main.prototype = $extend(hxd_App.prototype,{
 		var arg26 = { t : h2d_ConsoleArg.AString, opt : false, name : "message"};
 		Main.console.addCommand("say","Relay a message to console",[arg26],function(_msg) {
 			Main.console.log(_msg);
+		});
+		var argServerName = { t : h2d_ConsoleArg.AString, opt : false, name : "Server Name"};
+		var argServerPassword_t = h2d_ConsoleArg.AString;
+		var argServerPassword_opt = false;
+		var argServerPassword_name = "Song name";
+		Main.console.addCommand("createServer","Creates P2P server through WebRTC",[argServerName],function(_name) {
+			Main.p2p = new network_WebRTC(true,function(_msg) {
+				Main.console.log(_msg);
+			});
+		});
+		Main.console.addCommand("joinServer","Joins P2P server through WebRTC",[argServerName],function(_name) {
+			Main.p2p = new network_WebRTC(false,function(_msg) {
+				Main.console.log(_msg);
+			},_name);
 		});
 	}
 	,update: function(dt) {
@@ -1565,38 +1591,12 @@ components_managers_Grid.prototype = {
 	,__class__: components_managers_Grid
 };
 var components_managers_Musicplayer = function() {
-	this.playing = false;
-	this.offset = 0;
 	this.speedfilter = new hxd_snd_effect_Pitch();
 };
 $hxClasses["components.managers.Musicplayer"] = components_managers_Musicplayer;
 components_managers_Musicplayer.__name__ = "components.managers.Musicplayer";
 components_managers_Musicplayer.prototype = {
 	loadAudio: function(_name) {
-	}
-	,playMusic: function(_offset) {
-		if(this.sound == null) {
-			return;
-		}
-		if(!Main.simulation.playing) {
-			return;
-		}
-		this.mixer = this.sound.play();
-		this.mixer.addEffect(this.speedfilter);
-		this.mixer.set_position(_offset / 40 + this.offset);
-		this.mixer.onEnd = function() {
-			Main.console.log("Audio has ended...");
-		};
-		this.playing = true;
-	}
-	,stopMusic: function() {
-		if(this.sound == null) {
-			return;
-		}
-		if(this.playing) {
-			this.mixer.stop();
-		}
-		this.playing = false;
 	}
 	,__class__: components_managers_Musicplayer
 };
@@ -1692,22 +1692,18 @@ components_managers_Simulation.prototype = {
 		} else {
 			this.restoreState(0);
 		}
-		Main.audio.stopMusic();
-		Main.audio.playMusic(this.frames);
 	}
 	,pauseSim: function() {
 		if(!this.playing && !this.paused) {
 			this.startSim();
 			return;
 		}
-		Main.audio.stopMusic();
 		this.playing = false;
 		this.paused = true;
 	}
 	,resumeSim: function() {
 		this.playing = true;
 		this.paused = false;
-		Main.audio.playMusic(this.frames);
 	}
 	,endSim: function() {
 		this.playing = false;
@@ -1718,7 +1714,6 @@ components_managers_Simulation.prototype = {
 		} else {
 			this.restoreState(0);
 		}
-		Main.audio.stopMusic();
 	}
 	,playSim: function(_delta) {
 		this.timeDelta += _delta;
@@ -1762,6 +1757,12 @@ components_managers_Simulation.prototype = {
 				var point = _g++;
 				rider1.ridePoints[point].restoreState(state.points[point]);
 			}
+			var _g2 = 0;
+			var _g3 = rider1.scarfPoints.length;
+			while(_g2 < _g3) {
+				var point1 = _g2++;
+				rider1.scarfPoints[point1].restoreState(state.scarves[point1]);
+			}
 		}
 	}
 	,restoreFlagPoint: function() {
@@ -1779,9 +1780,10 @@ components_managers_Simulation.prototype = {
 			var v = [];
 			this1.set(_rider,v);
 		}
-		var stat = { crashed : _rider.crashed, points : []};
+		var stat = { crashed : _rider.crashed, points : [], scarves : []};
 		this.frameStates.h[_rider.__id__][_frame] = stat;
 		var _points = [];
+		var _scarves = [];
 		var _g = 0;
 		var _g1 = _rider.ridePoints;
 		while(_g < _g1.length) {
@@ -1789,7 +1791,15 @@ components_managers_Simulation.prototype = {
 			++_g;
 			_points.push(point.saveState());
 		}
+		var _g = 0;
+		var _g1 = _rider.scarfPoints;
+		while(_g < _g1.length) {
+			var point = _g1[_g];
+			++_g;
+			_scarves.push(point.saveState());
+		}
 		this.frameStates.h[_rider.__id__][_frame].points = _points;
+		this.frameStates.h[_rider.__id__][_frame].scarves = _scarves;
 	}
 	,updateSimHistory: function(_minFrame) {
 		return;
@@ -1932,6 +1942,55 @@ components_physics_RidePoint.prototype = {
 	}
 	,__class__: components_physics_RidePoint
 };
+var components_physics_ScarfPoint = function(_x,_y,_af) {
+	if(_af == null) {
+		_af = 0.9;
+	}
+	if(_y == null) {
+		_y = 0.0;
+	}
+	if(_x == null) {
+		_x = 0.0;
+	}
+	components_physics_RidePoint.call(this,_x,_y);
+	this.airFriction = _af;
+};
+$hxClasses["components.physics.ScarfPoint"] = components_physics_ScarfPoint;
+components_physics_ScarfPoint.__name__ = "components.physics.ScarfPoint";
+components_physics_ScarfPoint.__super__ = components_physics_RidePoint;
+components_physics_ScarfPoint.prototype = $extend(components_physics_RidePoint.prototype,{
+	step: function(_grav) {
+		var g = _grav == null ? this.grav : _grav;
+		this.dir.x = (this.pos.x - this.vel.x) * this.airFriction + g.x;
+		this.dir.y = (this.pos.y - this.vel.y) * this.airFriction + g.y;
+		this.vel.x = this.pos.x;
+		this.vel.y = this.pos.y;
+		var _this = this.pos;
+		var p = this.dir;
+		this.pos = new h2d_col_Point(_this.x + p.x,_this.y + p.y);
+	}
+	,__class__: components_physics_ScarfPoint
+});
+var components_physics_ScarfStick = function(_a,_b) {
+	components_physics_Stick.call(this,_a,_b);
+};
+$hxClasses["components.physics.ScarfStick"] = components_physics_ScarfStick;
+components_physics_ScarfStick.__name__ = "components.physics.ScarfStick";
+components_physics_ScarfStick.__super__ = components_physics_Stick;
+components_physics_ScarfStick.prototype = $extend(components_physics_Stick.prototype,{
+	satisfy: function(_crashed) {
+		var xDist = this.a.pos.x - this.b.pos.x;
+		var yDist = this.a.pos.y - this.b.pos.y;
+		var dist = Math.sqrt(Math.pow(xDist,2) + Math.pow(yDist,2));
+		var adjust = dist == 0 ? 0 : (dist - this.restLength) / dist * 0.5;
+		var xAdjust = xDist * adjust;
+		var yAdjust = yDist * adjust;
+		this.b.pos.x += xAdjust;
+		this.b.pos.y += yAdjust;
+		return _crashed;
+	}
+	,__class__: components_physics_ScarfStick
+});
 var h3d_Vector = function(x,y,z,w) {
 	if(w == null) {
 		w = 1.;
@@ -1979,6 +2038,7 @@ var components_sledder_RiderBase = function(_x,_y,_name,_enable,_disable) {
 	this.set_name(_name);
 	this.ridePoints = [];
 	this.bones = [];
+	this.scarves = [];
 	this.enabledFrame = _enable;
 	this.disableFrame = _disable;
 };
@@ -2046,12 +2106,29 @@ components_sledder_RiderBase.prototype = {
 				this.collision();
 				this.constrainBones();
 				this.collision();
+				this.constrainScarf();
 			}
+		}
+	}
+	,constrainScarf: function() {
+		var _g = 0;
+		var _g1 = this.scarves;
+		while(_g < _g1.length) {
+			var edge = _g1[_g];
+			++_g;
+			edge.satisfy(this.crashed);
 		}
 	}
 	,iterate: function() {
 		var _g = 0;
 		var _g1 = this.ridePoints;
+		while(_g < _g1.length) {
+			var point = _g1[_g];
+			++_g;
+			point.step(this.gravity);
+		}
+		var _g = 0;
+		var _g1 = this.scarfPoints;
 		while(_g < _g1.length) {
 			var point = _g1[_g];
 			++_g;
@@ -2066,6 +2143,9 @@ components_sledder_RiderBase.prototype = {
 			++_g;
 			this.crashed = edge.satisfy(this.crashed);
 		}
+	}
+	,setColor: function(_a,_b) {
+		this.neckscarf.setColor(_a,_b);
 	}
 	,collision: function() {
 		var _g = 0;
@@ -2103,6 +2183,12 @@ components_sledder_RiderBase.prototype = {
 	,get_name: function() {
 		return this.name;
 	}
+	,get_colorA: function() {
+		return this.neckscarf.colorA;
+	}
+	,get_colorB: function() {
+		return this.neckscarf.colorB;
+	}
 	,set_name: function(value) {
 		this.nameField.set_text(value);
 		return this.name = value;
@@ -2120,7 +2206,7 @@ var components_sledder_Bosh = function(_x,_y,_name,_enable,_disable) {
 		_x = 0.0;
 	}
 	this.prevFrame = 0;
-	this.blinkRate = 0.125;
+	this.blinkRate = 0.03125;
 	components_sledder_RiderBase.call(this,_x,_y,_name,_enable,_disable);
 	this.init();
 	Main.rng.setKeyOffset(_name,Main.rng.getRandom());
@@ -2129,7 +2215,7 @@ var components_sledder_Bosh = function(_x,_y,_name,_enable,_disable) {
 	this.sled = new components_sledder_RiderPart(components_sledder_BodyPart.SLED);
 	this.eye = new components_sledder_RiderPart(components_sledder_BodyPart.EYE);
 	this.body = new components_sledder_RiderPart(components_sledder_BodyPart.BODY);
-	this.scarf = new components_sledder_RiderScarf();
+	this.neckscarf = new components_sledder_RiderScarf();
 	this.rightArm = new components_sledder_RiderPart(components_sledder_BodyPart.ARM);
 	this.rightLeg = new components_sledder_RiderPart(components_sledder_BodyPart.LEG);
 	Main.canvas.sledderLayer.addChild(this.leftArm);
@@ -2137,11 +2223,11 @@ var components_sledder_Bosh = function(_x,_y,_name,_enable,_disable) {
 	Main.canvas.sledderLayer.addChild(this.sled);
 	Main.canvas.sledderLayer.addChild(this.body);
 	this.body.addChild(this.eye);
-	this.body.addChild(this.scarf);
-	var _this = this.scarf;
+	this.body.addChild(this.neckscarf);
+	var _this = this.neckscarf;
 	_this.posChanged = true;
 	_this.x = 105;
-	var _this = this.scarf;
+	var _this = this.neckscarf;
 	_this.posChanged = true;
 	_this.y = -59;
 	Main.canvas.sledderLayer.addChild(this.rightArm);
@@ -2226,9 +2312,9 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 		var v = Math.atan2(this.ridePoints[9].pos.y - this.ridePoints[4].pos.y,this.ridePoints[9].pos.x - this.ridePoints[4].pos.x);
 		_this.posChanged = true;
 		_this.rotation = v;
+		this.gfx.clear();
 		if(!this.crashed) {
-			this.gfx.clear();
-			this.gfx.lineStyle(0.1);
+			this.gfx.lineStyle(0.25);
 			var _this = this.gfx;
 			var x = this.ridePoints[6].pos.x;
 			var y = this.ridePoints[6].pos.y;
@@ -2243,6 +2329,66 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 			var y = this.ridePoints[7].pos.y;
 			_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
 		}
+		this.gfx.lineStyle(2,this.neckscarf.colorB);
+		var _this = this.gfx;
+		var x = this.ridePoints[5].pos.x;
+		var y = this.ridePoints[5].pos.y;
+		_this.flush();
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		var _this = this.gfx;
+		var x = this.scarfPoints[0].pos.x;
+		var y = this.scarfPoints[0].pos.y;
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		this.gfx.lineStyle(2,this.neckscarf.colorA);
+		var _this = this.gfx;
+		var x = this.scarfPoints[0].pos.x;
+		var y = this.scarfPoints[0].pos.y;
+		_this.flush();
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		var _this = this.gfx;
+		var x = this.scarfPoints[1].pos.x;
+		var y = this.scarfPoints[1].pos.y;
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		this.gfx.lineStyle(2,this.neckscarf.colorB);
+		var _this = this.gfx;
+		var x = this.scarfPoints[1].pos.x;
+		var y = this.scarfPoints[1].pos.y;
+		_this.flush();
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		var _this = this.gfx;
+		var x = this.scarfPoints[2].pos.x;
+		var y = this.scarfPoints[2].pos.y;
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		this.gfx.lineStyle(2,this.neckscarf.colorA);
+		var _this = this.gfx;
+		var x = this.scarfPoints[2].pos.x;
+		var y = this.scarfPoints[2].pos.y;
+		_this.flush();
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		var _this = this.gfx;
+		var x = this.scarfPoints[3].pos.x;
+		var y = this.scarfPoints[3].pos.y;
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		this.gfx.lineStyle(2,this.neckscarf.colorB);
+		var _this = this.gfx;
+		var x = this.scarfPoints[3].pos.x;
+		var y = this.scarfPoints[3].pos.y;
+		_this.flush();
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		var _this = this.gfx;
+		var x = this.scarfPoints[4].pos.x;
+		var y = this.scarfPoints[4].pos.y;
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		this.gfx.lineStyle(2,this.neckscarf.colorA);
+		var _this = this.gfx;
+		var x = this.scarfPoints[4].pos.x;
+		var y = this.scarfPoints[4].pos.y;
+		_this.flush();
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+		var _this = this.gfx;
+		var x = this.scarfPoints[5].pos.x;
+		var y = this.scarfPoints[5].pos.y;
+		_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
 		var _this = this.nameField;
 		var _this1 = this.nameField;
 		_this1.posChanged = true;
@@ -2288,7 +2434,9 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 	}
 	,init: function() {
 		this.ridePoints = [];
+		this.scarfPoints = [];
 		this.bones = [];
+		this.scarves = [];
 		this.ridePoints.push(new components_physics_RidePoint(0,0,0.8));
 		this.ridePoints.push(new components_physics_RidePoint(0,10));
 		this.ridePoints.push(new components_physics_RidePoint(30,10));
@@ -2299,8 +2447,26 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 		this.ridePoints.push(new components_physics_RidePoint(23,-10,0.1));
 		this.ridePoints.push(new components_physics_RidePoint(23,10,0));
 		this.ridePoints.push(new components_physics_RidePoint(23,10,0));
+		this.scarfPoints.push(new components_physics_ScarfPoint(7,-10));
+		this.scarfPoints.push(new components_physics_ScarfPoint(3,-10));
+		this.scarfPoints.push(new components_physics_ScarfPoint(0,-10));
+		this.scarfPoints.push(new components_physics_ScarfPoint(-4,-10));
+		this.scarfPoints.push(new components_physics_ScarfPoint(-7,-10));
+		this.scarfPoints.push(new components_physics_ScarfPoint(-11,-10));
 		var _g = 0;
 		var _g1 = this.ridePoints;
+		while(_g < _g1.length) {
+			var point = _g1[_g];
+			++_g;
+			point.pos.x *= 0.5;
+			point.pos.y *= 0.5;
+			point.pos.x += this.startPos.x;
+			point.pos.y += this.startPos.y;
+			point.vel.x = point.pos.x - 0.4;
+			point.vel.y = point.pos.y;
+		}
+		var _g = 0;
+		var _g1 = this.scarfPoints;
 		while(_g < _g1.length) {
 			var point = _g1[_g];
 			++_g;
@@ -2333,6 +2499,12 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 		this.bones.push(new components_physics_BindStick(this.ridePoints[9],this.ridePoints[2],this.ENDURANCE));
 		this.bones.push(new components_physics_RepellStick(this.ridePoints[5],this.ridePoints[8]));
 		this.bones.push(new components_physics_RepellStick(this.ridePoints[5],this.ridePoints[9]));
+		this.scarves.push(new components_physics_ScarfStick(this.ridePoints[5],this.scarfPoints[0]));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[0],this.scarfPoints[1]));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[1],this.scarfPoints[2]));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[2],this.scarfPoints[3]));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[3],this.scarfPoints[4]));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[4],this.scarfPoints[5]));
 		this.bones[20].restLength *= 0.5;
 		this.bones[21].restLength *= 0.5;
 	}
@@ -5050,9 +5222,10 @@ components_tool_ToolBehavior.prototype = {
 		}
 		if(this.middleIsDown) {
 			this.mouseEnd = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
-			var x = -(this.mouseStart.x - this.mouseEnd.x);
-			var y = -(this.mouseStart.y - this.mouseEnd.y);
+			var x = -(this.mouseStart.x - this.mouseEnd.x) * Main.canvas.scaleX;
+			var y = -(this.mouseStart.y - this.mouseEnd.y) * Main.canvas.scaleX;
 			Main.canvas.addCanvasPosition(x,y);
+			this.mouseStart = new h2d_col_Point(Main.canvas.get_mouseX(),Main.canvas.get_mouseY());
 		}
 	}
 	,updatePreview: function() {
@@ -5132,7 +5305,6 @@ components_tool_ToolBehavior.prototype = {
 				break;
 			case 17:
 				Main.simulation.rewinding = true;
-				Main.audio.stopMusic();
 				break;
 			case 32:
 				if(!Main.simulation.paused) {
@@ -5231,7 +5403,6 @@ components_tool_ToolBehavior.prototype = {
 			switch(event.keyCode) {
 			case 17:
 				Main.simulation.rewinding = false;
-				Main.audio.playMusic(Main.simulation.frames);
 				break;
 			case 272:
 				this.shifted = false;
@@ -5302,7 +5473,7 @@ file_SaveLoad.prototype = {
 		var sledder = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
 		while(sledder.hasNext()) {
 			var sledder1 = sledder.next();
-			var rider = { name : sledder1.get_name(), startPoint : sledder1.startPos, startFrame : sledder1.enabledFrame, stopFrame : sledder1.disableFrame};
+			var rider = { name : sledder1.get_name(), startPoint : sledder1.startPos, startFrame : sledder1.enabledFrame, stopFrame : sledder1.disableFrame, colora : sledder1.get_colorA(), colorb : sledder1.get_colorB()};
 			saveObject.riders.push(rider);
 		}
 		hxd_Save.save(saveObject,_name,true);
@@ -5345,6 +5516,7 @@ file_SaveLoad.prototype = {
 			var rider = _g1[_g];
 			++_g;
 			Main.riders.addNewRider(rider.name,rider.startPoint,rider.startFrame,rider.stopFrame);
+			Main.riders.riders.h[rider.name].setColor(rider.colora,rider.colorb);
 		}
 	}
 	,loadJSON: function(_fileName) {
@@ -26729,6 +26901,184 @@ haxe_ds_StringMap.valueIterator = function(h) {
 haxe_ds_StringMap.prototype = {
 	__class__: haxe_ds_StringMap
 };
+var haxe_http_HttpBase = function(url) {
+	this.url = url;
+	this.headers = [];
+	this.params = [];
+	this.emptyOnData = $bind(this,this.onData);
+};
+$hxClasses["haxe.http.HttpBase"] = haxe_http_HttpBase;
+haxe_http_HttpBase.__name__ = "haxe.http.HttpBase";
+haxe_http_HttpBase.prototype = {
+	onData: function(data) {
+	}
+	,onBytes: function(data) {
+	}
+	,onError: function(msg) {
+	}
+	,onStatus: function(status) {
+	}
+	,hasOnData: function() {
+		return !Reflect.compareMethods($bind(this,this.onData),this.emptyOnData);
+	}
+	,success: function(data) {
+		this.responseBytes = data;
+		this.responseAsString = null;
+		if(this.hasOnData()) {
+			this.onData(this.get_responseData());
+		}
+		this.onBytes(this.responseBytes);
+	}
+	,get_responseData: function() {
+		if(this.responseAsString == null && this.responseBytes != null) {
+			this.responseAsString = this.responseBytes.getString(0,this.responseBytes.length,haxe_io_Encoding.UTF8);
+		}
+		return this.responseAsString;
+	}
+	,__class__: haxe_http_HttpBase
+};
+var haxe_http_HttpJs = function(url) {
+	this.async = true;
+	this.withCredentials = false;
+	haxe_http_HttpBase.call(this,url);
+};
+$hxClasses["haxe.http.HttpJs"] = haxe_http_HttpJs;
+haxe_http_HttpJs.__name__ = "haxe.http.HttpJs";
+haxe_http_HttpJs.__super__ = haxe_http_HttpBase;
+haxe_http_HttpJs.prototype = $extend(haxe_http_HttpBase.prototype,{
+	request: function(post) {
+		var _gthis = this;
+		this.responseAsString = null;
+		this.responseBytes = null;
+		var r = this.req = js_Browser.createXMLHttpRequest();
+		var onreadystatechange = function(_) {
+			if(r.readyState != 4) {
+				return;
+			}
+			var s;
+			try {
+				s = r.status;
+			} catch( _g ) {
+				s = null;
+			}
+			if(s == 0 && typeof(window) != "undefined" && $global.location != null) {
+				var protocol = $global.location.protocol.toLowerCase();
+				var rlocalProtocol = new EReg("^(?:about|app|app-storage|.+-extension|file|res|widget):$","");
+				var isLocal = rlocalProtocol.match(protocol);
+				if(isLocal) {
+					s = r.response != null ? 200 : 404;
+				}
+			}
+			if(s == undefined) {
+				s = null;
+			}
+			if(s != null) {
+				_gthis.onStatus(s);
+			}
+			if(s != null && s >= 200 && s < 400) {
+				_gthis.req = null;
+				_gthis.success(haxe_io_Bytes.ofData(r.response));
+			} else if(s == null || s == 0 && r.response == null) {
+				_gthis.req = null;
+				_gthis.onError("Failed to connect or resolve host");
+			} else if(s == null) {
+				_gthis.req = null;
+				var onreadystatechange = r.response != null ? haxe_io_Bytes.ofData(r.response) : null;
+				_gthis.responseBytes = onreadystatechange;
+				_gthis.onError("Http Error #" + r.status);
+			} else {
+				switch(s) {
+				case 12007:
+					_gthis.req = null;
+					_gthis.onError("Unknown host");
+					break;
+				case 12029:
+					_gthis.req = null;
+					_gthis.onError("Failed to connect to host");
+					break;
+				default:
+					_gthis.req = null;
+					var onreadystatechange = r.response != null ? haxe_io_Bytes.ofData(r.response) : null;
+					_gthis.responseBytes = onreadystatechange;
+					_gthis.onError("Http Error #" + r.status);
+				}
+			}
+		};
+		if(this.async) {
+			r.onreadystatechange = onreadystatechange;
+		}
+		var uri;
+		var _g = this.postBytes;
+		var _g1 = this.postData;
+		if(_g1 == null) {
+			if(_g == null) {
+				uri = null;
+			} else {
+				var bytes = _g;
+				uri = new Blob([bytes.b.bufferValue]);
+			}
+		} else if(_g == null) {
+			var str = _g1;
+			uri = str;
+		} else {
+			uri = null;
+		}
+		if(uri != null) {
+			post = true;
+		} else {
+			var _g = 0;
+			var _g1 = this.params;
+			while(_g < _g1.length) {
+				var p = _g1[_g];
+				++_g;
+				if(uri == null) {
+					uri = "";
+				} else {
+					uri = (uri == null ? "null" : Std.string(uri)) + "&";
+				}
+				var s = p.name;
+				var value = (uri == null ? "null" : Std.string(uri)) + encodeURIComponent(s) + "=";
+				var s1 = p.value;
+				uri = value + encodeURIComponent(s1);
+			}
+		}
+		try {
+			if(post) {
+				r.open("POST",this.url,this.async);
+			} else if(uri != null) {
+				var question = this.url.split("?").length <= 1;
+				r.open("GET",this.url + (question ? "?" : "&") + (uri == null ? "null" : Std.string(uri)),this.async);
+				uri = null;
+			} else {
+				r.open("GET",this.url,this.async);
+			}
+			r.responseType = "arraybuffer";
+		} catch( _g ) {
+			var e = haxe_Exception.caught(_g).unwrap();
+			this.req = null;
+			this.onError(e.toString());
+			return;
+		}
+		r.withCredentials = this.withCredentials;
+		if(!Lambda.exists(this.headers,function(h) {
+			return h.name == "Content-Type";
+		}) && post && this.postData == null) {
+			r.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		}
+		var _g = 0;
+		var _g1 = this.headers;
+		while(_g < _g1.length) {
+			var h = _g1[_g];
+			++_g;
+			r.setRequestHeader(h.name,h.value);
+		}
+		r.send(uri);
+		if(!this.async) {
+			onreadystatechange(null);
+		}
+	}
+	,__class__: haxe_http_HttpJs
+});
 var haxe_io_BytesBuffer = function() {
 	this.pos = 0;
 	this.size = 0;
@@ -34499,7 +34849,6 @@ hxd_res_NanoJpeg.prototype = {
 	,__class__: hxd_res_NanoJpeg
 };
 var hxd_res_Sound = function(entry) {
-	this.lastPlay = 0.;
 	hxd_res_Resource.call(this,entry);
 };
 $hxClasses["hxd.res.Sound"] = hxd_res_Sound;
@@ -34529,19 +34878,6 @@ hxd_res_Sound.prototype = $extend(hxd_res_Resource.prototype,{
 			this.watch($bind(this,this.watchCallb));
 		}
 		return this.data;
-	}
-	,play: function(loop,volume,channelGroup,soundGroup) {
-		if(volume == null) {
-			volume = 1.;
-		}
-		if(loop == null) {
-			loop = false;
-		}
-		this.lastPlay = HxOverrides.now() / 1000;
-		this.channel = hxd_snd_Manager.get().play(this,channelGroup,soundGroup);
-		this.channel.loop = loop;
-		this.channel.set_volume(volume);
-		return this.channel;
 	}
 	,watchCallb: function() {
 		var old = this.data;
@@ -34590,16 +34926,6 @@ hxd_snd_ChannelBase.prototype = {
 			}
 		}
 		this.currentVolume = this.volume;
-	}
-	,addEffect: function(e) {
-		if(e == null) {
-			throw haxe_Exception.thrown("Can't add null effect");
-		}
-		if(this.effects.indexOf(e) >= 0) {
-			throw haxe_Exception.thrown("effect already added on this channel");
-		}
-		this.effects.push(e);
-		return e;
 	}
 	,removeEffect: function(e) {
 		HxOverrides.remove(this.effects,e);
@@ -34681,11 +35007,6 @@ hxd_snd_Channel.prototype = $extend(hxd_snd_ChannelBase.prototype,{
 				++_g;
 				this.audibleVolume = e.applyAudibleVolumeModifier(this.audibleVolume);
 			}
-		}
-	}
-	,stop: function() {
-		if(this.manager != null) {
-			this.manager.releaseChannel(this);
 		}
 	}
 	,__class__: hxd_snd_Channel
@@ -35080,29 +35401,6 @@ hxd_snd_Manager.prototype = {
 			ch = ch.next;
 		}
 		return new hxd_impl_ArrayIterator_$hxd_$snd_$Channel(result);
-	}
-	,play: function(sound,channelGroup,soundGroup) {
-		if(soundGroup == null) {
-			soundGroup = this.masterSoundGroup;
-		}
-		if(channelGroup == null) {
-			channelGroup = this.masterChannelGroup;
-		}
-		var sdat = sound.getData();
-		if(sdat.samples == 0) {
-			throw haxe_Exception.thrown(Std.string(sound) + " has no samples");
-		}
-		var c = new hxd_snd_Channel();
-		c.sound = sound;
-		c.duration = sdat.get_duration();
-		c.manager = this;
-		c.soundGroup = soundGroup;
-		c.channelGroup = channelGroup;
-		c.next = this.channels;
-		c.isLoading = sdat.isLoading();
-		c.isVirtual = this.driver == null;
-		this.channels = c;
-		return c;
 	}
 	,updateVirtualChannels: function(now) {
 		var c = this.channels;
@@ -46143,6 +46441,18 @@ hxsl_Splitter.prototype = {
 	}
 	,__class__: hxsl_Splitter
 };
+var js_Browser = function() { };
+$hxClasses["js.Browser"] = js_Browser;
+js_Browser.__name__ = "js.Browser";
+js_Browser.createXMLHttpRequest = function() {
+	if(typeof XMLHttpRequest != "undefined") {
+		return new XMLHttpRequest();
+	}
+	if(typeof ActiveXObject != "undefined") {
+		return new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	throw haxe_Exception.thrown("Unable to create XMLHttpRequest object.");
+};
 var js_html__$CanvasElement_CanvasUtil = function() { };
 $hxClasses["js.html._CanvasElement.CanvasUtil"] = js_html__$CanvasElement_CanvasUtil;
 js_html__$CanvasElement_CanvasUtil.__name__ = "js.html._CanvasElement.CanvasUtil";
@@ -46160,6 +46470,104 @@ js_html__$CanvasElement_CanvasUtil.getContextWebGL = function(canvas,attribs) {
 	return null;
 };
 Math.__name__ = "Math";
+var network_WebRTC = function(isInitiator,onMessage,_name) {
+	if(_name == null) {
+		_name = "openlr_default";
+	}
+	this.dataChannelReady = false;
+	this.isInitiator = false;
+	this.iceServers = [{ urls : "stun:stun.ideasip.com"}];
+	this.onMessage = onMessage;
+	this.isInitiator = isInitiator;
+	this.CHANNEL_NAME = _name;
+	this.connect();
+};
+$hxClasses["network.WebRTC"] = network_WebRTC;
+network_WebRTC.__name__ = "network.WebRTC";
+network_WebRTC.prototype = {
+	connect: function() {
+		this.peerConnection = new RTCPeerConnection({iceServers: this.iceServers});
+		this.peerConnection.onicecandidate = $bind(this,this.onLocalIceCandidate);
+		this.peerConnection.iceconnectionstatechange = $bind(this,this.onIceConnectionStateChanged);
+		this.peerConnection.ondatachannel = $bind(this,this.onDataChannel);
+		if(this.isInitiator) {
+			this.openDataChannel(this.peerConnection.createDataChannel(this.CHANNEL_NAME,{ ordered : false}));
+		}
+		if(this.isInitiator) {
+			this.setLocalDescriptionAndSend();
+		}
+	}
+	,onLocalIceCandidate: function(event) {
+		if(event.candidate == null) {
+			if(this.peerConnection.localDescription.type == "offer") {
+				this.sendSdp(0,this.peerConnection.localDescription);
+			} else {
+				this.sendIceCandidate(this.hostId,this.peerConnection.localDescription);
+			}
+		}
+	}
+	,onIceConnectionStateChanged: function(event) {
+		haxe_Log.trace("Connection state: " + event.target.iceConnectionState,{ fileName : "src/network/WebRTC.hx", lineNumber : 77, className : "network.WebRTC", methodName : "onIceConnectionStateChanged"});
+	}
+	,onDataChannel: function(event) {
+		haxe_Log.trace("onChannel",{ fileName : "src/network/WebRTC.hx", lineNumber : 80, className : "network.WebRTC", methodName : "onDataChannel"});
+		if(!this.isInitiator) {
+			this.openDataChannel(event.channel);
+		}
+	}
+	,openDataChannel: function(channel) {
+		haxe_Log.trace("create channel",{ fileName : "src/network/WebRTC.hx", lineNumber : 86, className : "network.WebRTC", methodName : "openDataChannel"});
+		this.dataChannel = channel;
+		this.dataChannel.onopen = $bind(this,this.onDataChannelOpen);
+		this.dataChannel.close = $bind(this,this.onDataChannelClose);
+		this.dataChannel.onmessage = $bind(this,this.onDataChannelMessage);
+	}
+	,onDataChannelOpen: function() {
+		this.dataChannelReady = true;
+		if(this.onConnect != null) {
+			this.onConnect();
+		}
+		haxe_Log.trace("channel Open",{ fileName : "src/network/WebRTC.hx", lineNumber : 102, className : "network.WebRTC", methodName : "onDataChannelOpen"});
+	}
+	,onDataChannelMessage: function(event) {
+		this.onMessage(event.data);
+	}
+	,onDataChannelClose: function() {
+		this.dataChannelReady = false;
+	}
+	,setLocalDescriptionAndSend: function() {
+		var _gthis = this;
+		this.getDescription().then(function(localDescription) {
+			_gthis.peerConnection.setLocalDescription(localDescription);
+		},function(error) {
+			haxe_Log.trace("onSdpError: " + error.message,{ fileName : "src/network/WebRTC.hx", lineNumber : 120, className : "network.WebRTC", methodName : "setLocalDescriptionAndSend"});
+		});
+	}
+	,getDescription: function() {
+		if(this.isInitiator) {
+			return this.peerConnection.createOffer();
+		} else {
+			return this.peerConnection.createAnswer();
+		}
+	}
+	,sendSdp: function(userId,sdp) {
+		var sdpString = sdp.sdp;
+		sdpString = StringTools.replace(sdpString,"\r\n","$%");
+		var site = new haxe_http_HttpJs("{your server}/AddOffer.php?offer=" + sdpString);
+		site.async = true;
+		site.request();
+	}
+	,sendIceCandidate: function(userId,candidate) {
+		var sdpString = candidate.sdp;
+		sdpString = StringTools.replace(sdpString,"\r\n","$%");
+		var site = new haxe_http_HttpJs("{your server}/AddAnswer.php?answer=" + sdpString + "&offerID=" + this.hostId);
+		site.async = true;
+		site.request();
+		haxe_Log.trace("userId : " + Std.string(userId),{ fileName : "src/network/WebRTC.hx", lineNumber : 148, className : "network.WebRTC", methodName : "sendIceCandidate"});
+		haxe_Log.trace("candidate : " + Std.string(candidate),{ fileName : "src/network/WebRTC.hx", lineNumber : 149, className : "network.WebRTC", methodName : "sendIceCandidate"});
+	}
+	,__class__: network_WebRTC
+};
 var utils_TableRNG = function(_range,_size) {
 	if(_size == null) {
 		_size = 8;
