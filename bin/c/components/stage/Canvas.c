@@ -38,7 +38,6 @@ void components_stage_Canvas_removeLine(components__stage__Canvas,components__li
 #include <h2d/Graphics.h>
 #include <components/lines/Accel.h>
 #include <components/lines/Scenery.h>
-extern String s$New_line_creation_error_;
 extern hl_type t$components_lines_Floor;
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
@@ -49,6 +48,10 @@ void components_lines_Accel_new(components__lines__Accel,h2d__col__Point,h2d__co
 extern hl_type t$components_lines_Scenery;
 void components_lines_Scenery_new(components__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
 void components_managers_Grid_register(components__managers__Grid,components__lines__LineBase);
+#include <haxe/ds/IntMap.h>
+vvirtual* haxe_ds_IntMap_iterator(haxe__ds__IntMap);
+extern hl_type t$vrt_366632b;
+extern hl_type t$fun_4a57607;
 void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
 bool h2d_Object_set_visible(h2d__Object,bool);
 extern String s$Draw_mode_set_to_Edit;
@@ -447,22 +450,20 @@ void components_stage_Canvas_erase(components__stage__Canvas r0) {
 	return;
 }
 
-void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double r2,double r3,double r4,double r5,vdynamic* r6,vdynamic* r7) {
-	components__managers__Grid r38;
-	String r14;
-	h2d__Graphics r27;
+components__lines__LineBase components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double r2,double r3,double r4,double r5,vdynamic* r6,vdynamic* r7) {
+	components__managers__Grid r34;
+	h2d__Graphics r23;
 	bool r8;
-	h2d__Object r26;
-	components__lines__Floor r16;
-	$Main r13;
-	h2d__col__Point r17, r22;
+	h2d__Object r22;
+	components__lines__Floor r12;
+	$Main r35;
+	h2d__col__Point r13, r18;
 	components__lines__LineBase r10;
-	double r18, r20, r23, r24, r29, r30, r31, r32, r34, r35, r36, r37;
-	components__lines__Scenery r33;
-	double *r19, *r21;
-	vdynamic *r15, *r25;
-	components__lines__Accel r28;
-	components__stage__LRConsole r12;
+	double r14, r16, r19, r20, r25, r26, r27, r28, r30, r31, r32, r33;
+	components__lines__Scenery r29;
+	vdynamic *r21;
+	double *r15, *r17;
+	components__lines__Accel r24;
 	int r9;
 	if( r6 ) goto label$ae2bdbd_6_3;
 	r8 = false;
@@ -476,146 +477,137 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 	r10 = NULL;
 	switch(r1) {
 		default:
-			r13 = ($Main)g$_Main;
-			r12 = r13->console;
-			if( r12 == NULL ) hl_null_access();
-			r14 = (String)s$New_line_creation_error_;
-			r9 = 16711680;
-			r15 = hl_alloc_dynamic(&t$_i32);
-			r15->v.i = r9;
-			h2d_Console_log(((h2d__Console)r12),r14,r15);
-			return;
+			goto label$ae2bdbd_6_93;
 		case 0:
-			r16 = (components__lines__Floor)hl_alloc_obj(&t$components_lines_Floor);
-			r17 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r18 = r2;
-			r19 = &r18;
-			r20 = r3;
-			r21 = &r20;
-			h2d_col_Point_new(r17,r19,r21);
-			r22 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r23 = r4;
-			r19 = &r23;
-			r24 = r5;
-			r21 = &r24;
-			h2d_col_Point_new(r22,r19,r21);
+			r12 = (components__lines__Floor)hl_alloc_obj(&t$components_lines_Floor);
+			r13 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r14 = r2;
+			r15 = &r14;
+			r16 = r3;
+			r17 = &r16;
+			h2d_col_Point_new(r13,r15,r17);
+			r18 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r19 = r4;
+			r15 = &r19;
+			r20 = r5;
+			r17 = &r20;
+			h2d_col_Point_new(r18,r15,r17);
 			r8 = r6 ? r6->v.b : 0;
-			components_lines_Floor_new(r16,r17,r22,r8);
-			r10 = ((components__lines__LineBase)r16);
+			components_lines_Floor_new(r12,r13,r18,r8);
+			r10 = ((components__lines__LineBase)r12);
 			r9 = -1;
-			r25 = hl_alloc_dynamic(&t$_i32);
-			r25->v.i = r9;
-			if( r7 == r25 || (r7 && r25 && (r7->v.i == r25->v.i)) ) goto label$ae2bdbd_6_37;
+			r21 = hl_alloc_dynamic(&t$_i32);
+			r21->v.i = r9;
+			if( r7 == r21 || (r7 && r21 && (r7->v.i == r21->v.i)) ) goto label$ae2bdbd_6_30;
 			r9 = r7 ? r7->v.i : 0;
-			components_lines_LineBase_setLim(((components__lines__LineBase)r16),r9);
-			label$ae2bdbd_6_37:
-			r26 = r0->colorLayer;
-			if( r26 == NULL ) hl_null_access();
-			r27 = r16->colorLayer;
-			((void (*)(h2d__Object,h2d__Graphics))r26->$type->vobj_proto[1])(r26,r27);
-			r26 = r0->rideLayer;
-			if( r26 == NULL ) hl_null_access();
-			r27 = r16->rideLayer;
-			((void (*)(h2d__Object,h2d__Graphics))r26->$type->vobj_proto[1])(r26,r27);
-			goto label$ae2bdbd_6_100;
+			components_lines_LineBase_setLim(((components__lines__LineBase)r12),r9);
+			label$ae2bdbd_6_30:
+			r22 = r0->colorLayer;
+			if( r22 == NULL ) hl_null_access();
+			r23 = r12->colorLayer;
+			((void (*)(h2d__Object,h2d__Graphics))r22->$type->vobj_proto[1])(r22,r23);
+			r22 = r0->rideLayer;
+			if( r22 == NULL ) hl_null_access();
+			r23 = r12->rideLayer;
+			((void (*)(h2d__Object,h2d__Graphics))r22->$type->vobj_proto[1])(r22,r23);
+			goto label$ae2bdbd_6_93;
 		case 1:
-			r28 = (components__lines__Accel)hl_alloc_obj(&t$components_lines_Accel);
-			r17 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r29 = r2;
-			r19 = &r29;
-			r30 = r3;
-			r21 = &r30;
-			h2d_col_Point_new(r17,r19,r21);
-			r22 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r31 = r4;
-			r19 = &r31;
-			r32 = r5;
-			r21 = &r32;
-			h2d_col_Point_new(r22,r19,r21);
+			r24 = (components__lines__Accel)hl_alloc_obj(&t$components_lines_Accel);
+			r13 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r25 = r2;
+			r15 = &r25;
+			r26 = r3;
+			r17 = &r26;
+			h2d_col_Point_new(r13,r15,r17);
+			r18 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r27 = r4;
+			r15 = &r27;
+			r28 = r5;
+			r17 = &r28;
+			h2d_col_Point_new(r18,r15,r17);
 			r8 = r6 ? r6->v.b : 0;
-			components_lines_Accel_new(r28,r17,r22,r8);
-			r10 = ((components__lines__LineBase)r28);
+			components_lines_Accel_new(r24,r13,r18,r8);
+			r10 = ((components__lines__LineBase)r24);
 			r9 = -1;
-			r25 = hl_alloc_dynamic(&t$_i32);
-			r25->v.i = r9;
-			if( r7 == r25 || (r7 && r25 && (r7->v.i == r25->v.i)) ) goto label$ae2bdbd_6_67;
+			r21 = hl_alloc_dynamic(&t$_i32);
+			r21->v.i = r9;
+			if( r7 == r21 || (r7 && r21 && (r7->v.i == r21->v.i)) ) goto label$ae2bdbd_6_60;
 			r9 = r7 ? r7->v.i : 0;
-			components_lines_LineBase_setLim(((components__lines__LineBase)r28),r9);
-			label$ae2bdbd_6_67:
-			r26 = r0->colorLayer;
-			if( r26 == NULL ) hl_null_access();
-			r27 = r28->colorLayer;
-			((void (*)(h2d__Object,h2d__Graphics))r26->$type->vobj_proto[1])(r26,r27);
-			r26 = r0->rideLayer;
-			if( r26 == NULL ) hl_null_access();
-			r27 = r28->rideLayer;
-			((void (*)(h2d__Object,h2d__Graphics))r26->$type->vobj_proto[1])(r26,r27);
-			goto label$ae2bdbd_6_100;
+			components_lines_LineBase_setLim(((components__lines__LineBase)r24),r9);
+			label$ae2bdbd_6_60:
+			r22 = r0->colorLayer;
+			if( r22 == NULL ) hl_null_access();
+			r23 = r24->colorLayer;
+			((void (*)(h2d__Object,h2d__Graphics))r22->$type->vobj_proto[1])(r22,r23);
+			r22 = r0->rideLayer;
+			if( r22 == NULL ) hl_null_access();
+			r23 = r24->rideLayer;
+			((void (*)(h2d__Object,h2d__Graphics))r22->$type->vobj_proto[1])(r22,r23);
+			goto label$ae2bdbd_6_93;
 		case 2:
-			r33 = (components__lines__Scenery)hl_alloc_obj(&t$components_lines_Scenery);
-			r17 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r34 = r2;
-			r19 = &r34;
-			r35 = r3;
-			r21 = &r35;
-			h2d_col_Point_new(r17,r19,r21);
-			r22 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r36 = r4;
-			r19 = &r36;
-			r37 = r5;
-			r21 = &r37;
-			h2d_col_Point_new(r22,r19,r21);
+			r29 = (components__lines__Scenery)hl_alloc_obj(&t$components_lines_Scenery);
+			r13 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r30 = r2;
+			r15 = &r30;
+			r31 = r3;
+			r17 = &r31;
+			h2d_col_Point_new(r13,r15,r17);
+			r18 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r32 = r4;
+			r15 = &r32;
+			r33 = r5;
+			r17 = &r33;
+			h2d_col_Point_new(r18,r15,r17);
 			r8 = r6 ? r6->v.b : 0;
-			components_lines_Scenery_new(r33,r17,r22,r8);
-			r10 = ((components__lines__LineBase)r33);
-			r26 = r0->sceneColorLayer;
-			if( r26 == NULL ) hl_null_access();
-			r27 = r33->colorLayer;
-			((void (*)(h2d__Object,h2d__Graphics))r26->$type->vobj_proto[1])(r26,r27);
-			r26 = r0->scenePlaybackLayer;
-			if( r26 == NULL ) hl_null_access();
-			r27 = r33->rideLayer;
-			((void (*)(h2d__Object,h2d__Graphics))r26->$type->vobj_proto[1])(r26,r27);
+			components_lines_Scenery_new(r29,r13,r18,r8);
+			r10 = ((components__lines__LineBase)r29);
+			r22 = r0->sceneColorLayer;
+			if( r22 == NULL ) hl_null_access();
+			r23 = r29->colorLayer;
+			((void (*)(h2d__Object,h2d__Graphics))r22->$type->vobj_proto[1])(r22,r23);
+			r22 = r0->scenePlaybackLayer;
+			if( r22 == NULL ) hl_null_access();
+			r23 = r29->rideLayer;
+			((void (*)(h2d__Object,h2d__Graphics))r22->$type->vobj_proto[1])(r22,r23);
 	}
-	label$ae2bdbd_6_100:
+	label$ae2bdbd_6_93:
+	if( r10 == NULL ) hl_null_access();
 	((void (*)(components__lines__LineBase))r10->$type->vobj_proto[1])(r10);
-	r13 = ($Main)g$_Main;
-	r38 = r13->grid;
-	if( r38 == NULL ) hl_null_access();
-	components_managers_Grid_register(r38,r10);
-	return;
+	r35 = ($Main)g$_Main;
+	r34 = r35->grid;
+	if( r34 == NULL ) hl_null_access();
+	components_managers_Grid_register(r34,r10);
+	return r10;
 }
 
 void components_stage_Canvas_clear(components__stage__Canvas r0) {
-	components__managers__Grid r4;
-	hl__types__ArrayObj r3;
-	$Main r5;
-	components__lines__LineBase r7;
-	vdynamic *r8;
-	varray *r9;
-	int r1, r6;
-	r1 = 0;
-	r5 = ($Main)g$_Main;
-	r4 = r5->grid;
-	if( r4 == NULL ) hl_null_access();
-	r3 = r4->lines;
-	label$ae2bdbd_7_5:
+	components__managers__Grid r3;
+	vvirtual *r1, *r5;
+	bool r7;
+	haxe__ds__IntMap r2;
+	$Main r4;
+	components__lines__LineBase r8;
+	r4 = ($Main)g$_Main;
+	r3 = r4->grid;
 	if( r3 == NULL ) hl_null_access();
-	r6 = r3->length;
-	if( r1 >= r6 ) goto label$ae2bdbd_7_19;
-	r6 = r3->length;
-	if( ((unsigned)r1) < ((unsigned)r6) ) goto label$ae2bdbd_7_13;
-	r7 = NULL;
-	goto label$ae2bdbd_7_16;
-	label$ae2bdbd_7_13:
-	r9 = r3->array;
-	r8 = ((vdynamic**)(r9 + 1))[r1];
-	r7 = (components__lines__LineBase)r8;
-	label$ae2bdbd_7_16:
-	++r1;
-	components_stage_Canvas_removeLine(r0,r7);
-	goto label$ae2bdbd_7_5;
-	label$ae2bdbd_7_19:
+	r2 = r3->lines;
+	if( r2 == NULL ) hl_null_access();
+	r1 = haxe_ds_IntMap_iterator(r2);
+	r5 = hl_to_virtual(&t$vrt_366632b,(vdynamic*)r1);
+	label$ae2bdbd_7_7:
+	if( r5 == NULL ) hl_null_access();
+	if( hl_vfields(r5)[0] ) r7 = ((bool (*)(vdynamic*))hl_vfields(r5)[0])(r5->value); else {
+		vdynamic ret;
+		hl_dyn_call_obj(r5->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
+		r7 = (bool)ret.v.i;
+	}
+	if( !r7 ) goto label$ae2bdbd_7_14;
+	if( hl_vfields(r5)[1] ) r8 = ((components__lines__LineBase (*)(vdynamic*))hl_vfields(r5)[1])(r5->value); else {
+		r8 = (components__lines__LineBase)hl_dyn_call_obj(r5->value,&t$fun_4a57607,151160317/*next*/,NULL,NULL);
+	}
+	components_stage_Canvas_removeLine(r0,r8);
+	goto label$ae2bdbd_7_7;
+	label$ae2bdbd_7_14:
 	return;
 }
 

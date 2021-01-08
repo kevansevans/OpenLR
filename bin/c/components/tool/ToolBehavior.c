@@ -34,7 +34,7 @@ void components_stage_Canvas_addCanvasPosition(components__stage__Canvas,double,
 #include <h2d/Object.h>
 #include <h2d/Graphics.h>
 void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
-void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*);
+components__lines__LineBase components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*);
 #include <hxd/EventKind.h>
 #include <components/stage/DrawMode.h>
 #include <components/managers/Musicplayer.h>
@@ -700,6 +700,7 @@ void components_tool_ToolBehavior_drawLine(components__tool__ToolBehavior r0) {
 	bool r10;
 	$Main r3;
 	h2d__col__Point r6;
+	components__lines__LineBase r1;
 	components__stage__Canvas r2;
 	double r5, r7, r8, r9;
 	vdynamic *r11, *r12;
@@ -723,7 +724,7 @@ void components_tool_ToolBehavior_drawLine(components__tool__ToolBehavior r0) {
 	r10 = r0->shifted;
 	r11 = hl_alloc_dynbool(r10);
 	r12 = NULL;
-	components_stage_Canvas_addLine(r2,r4,r5,r7,r8,r9,r11,r12);
+	r1 = components_stage_Canvas_addLine(r2,r4,r5,r7,r8,r9,r11,r12);
 	return;
 }
 

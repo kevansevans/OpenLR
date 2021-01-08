@@ -30,6 +30,7 @@ enum abstract Commands(String) from String
 	
 	var recordFlagPoint:String; //Set flag at frame
 	var recordSimState:String; //Record state
+	var removeLine:String; //Remove a line
 	var removeRider:String; //name, deletes specified rider
 	var renameRider:String; //name, new name, rename rider
 	var rewindSimulation:String; //true/false, toggle rewinding
@@ -37,7 +38,7 @@ enum abstract Commands(String) from String
 	var saveTrack:String; //[name, will default to current track name] Save track. If track name is not provided and track name is unset, it will not save.
 	var say:String; //Relay a chat message to console
 	var setAudioOffset:String; //seconds, set the starting offset of the audio when playing
-	var setAuthorName:String; //name, sets author name for track info
+	var setAuthorName:String = "name"; //name, sets author name for track info
 	var setCanvasPosition:String; //x, y, Sets exact position of canvas
 	var setGridSize:String; //value, Sets exact ruler width and height
 	var setLineColor:String; //type, sets color type. Many values are supported.

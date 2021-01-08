@@ -4,6 +4,7 @@
 
 --each
 -lib heaps
+-lib peerhx
 -js bin/js/openlr.js
 
 --next

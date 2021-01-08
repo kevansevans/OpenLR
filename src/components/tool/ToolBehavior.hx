@@ -269,7 +269,10 @@ class ToolBehavior
 	
 	function drawLine():Void 
 	{
-		Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
+		var line:LineBase = Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
+		#if js
+		if (Main.p2p.connected) Main.p2p.sendLine(line);
+		#end
 	}
 	
 	function keyInputDown(event:Event):Void 

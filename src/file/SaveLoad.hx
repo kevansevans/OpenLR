@@ -40,6 +40,7 @@ class SaveLoad
 		}
 		
 		for (line in Main.grid.lines) {
+			if (line == null) continue;
 			saveObject.lines.push(line.toSaveObject());
 		}
 		

@@ -182,13 +182,13 @@
 #include <file/SaveLoad.h>
 #include <components/managers/Simulation.h>
 #include <components/managers/Riders.h>
+#include <components/managers/Grid.h>
 #include <h2d/GPoint.h>
 #include <h2d/_Graphics/GraphicsContent.h>
 #include <hxd/earcut/EarNode.h>
 #include <hxd/earcut/Earcut.h>
 #include <h2d/Graphics.h>
 #include <components/lines/LineBase.h>
-#include <components/managers/Grid.h>
 #include <components/tool/ToolMode.h>
 #include <components/tool/ToolBehavior.h>
 #include <h2d/Console.h>
@@ -454,9 +454,6 @@
 #include <hxsl/Serializer.h>
 #include <hxsl/_Splitter/VarProps.h>
 #include <sdl/Sdl.h>
-#include <sys/ssl/Certificate.h>
-#include <sys/ssl/SNICbResult.h>
-#include <sys/ssl/Key.h>
 #include <_std/Lambda.h>
 #include <h3d/IDrawable.h>
 #include <_std/Reflect.h>
@@ -517,8 +514,6 @@
 #include <hxsl/Tools2.h>
 #include <sdl/GL.h>
 #include <sys/io/File.h>
-#include <sys/net/Socket.h>
-#include <sys/ssl/Lib.h>
 extern hl_type t$String;
 extern vbyte string$b8896f0[];
 extern vbyte string$520de12[];
@@ -737,6 +732,8 @@ String s$OCT = 0;
 String s$NOV = 0;
 String s$DEC = 0;
 String s$Lousy_Smarch_Weather = 0;
+String s$853ae90 = 0;
+String s$5058f1a = 0;
 utils__$TableRNG g$_utils_TableRNG = 0;
 hxd__snd__$ChannelBase g$_hxd_snd_ChannelBase = 0;
 hxd__res__$Resource g$_hxd_res_Resource = 0;
@@ -775,13 +772,13 @@ components__stage__$TextInfo g$_components_stage_TextInfo = 0;
 file__$SaveLoad g$_file_SaveLoad = 0;
 components__managers__$Simulation g$_components_managers_Simulation = 0;
 components__managers__$Riders g$_components_managers_Riders = 0;
+components__managers__$Grid g$_components_managers_Grid = 0;
 h2d__$GPoint g$_h2d_GPoint = 0;
 h2d___Graphics__$GraphicsContent g$_h2d__Graphics_GraphicsContent = 0;
 hxd__earcut__$EarNode g$_hxd_earcut_EarNode = 0;
 hxd__earcut__$Earcut g$_hxd_earcut_Earcut = 0;
 h2d__$Graphics g$_h2d_Graphics = 0;
 components__lines__$LineBase g$_components_lines_LineBase = 0;
-components__managers__$Grid g$_components_managers_Grid = 0;
 components__tool__$ToolMode g$components_tool_ToolMode = 0;
 components__tool__$ToolBehavior g$_components_tool_ToolBehavior = 0;
 h2d__$Console g$_h2d_Console = 0;
@@ -796,7 +793,7 @@ components__stage__$LRConsole g$_components_stage_LRConsole = 0;
 components__stage__$DrawMode g$components_stage_DrawMode = 0;
 components__stage__$Canvas g$_components_stage_Canvas = 0;
 $Main g$_Main = 0;
-String s$Release_ = 0;
+String s$02bd774 = 0;
 hxd__res__$Loader g$_hxd_res_Loader = 0;
 hxd__fs__$EmbedFileSystem g$_hxd_fs_EmbedFileSystem = 0;
 String s$b8896f0 = 0;
@@ -835,6 +832,9 @@ String s$inverted = 0;
 String s$limit_mode = 0;
 String s$drawLine = 0;
 String s$add_line_to_track = 0;
+String s$Line_Index = 0;
+String s$removeLine = 0;
+String s$remove_specified_line = 0;
 venum* g$h2d_ConsoleArg_AString = 0;
 String s$Tool = 0;
 String s$setTool = 0;
@@ -938,6 +938,9 @@ String s$Load_valid_JSON_tracks = 0;
 String s$message = 0;
 String s$say = 0;
 String s$Relay_a_message_to_console = 0;
+String s$Author_name = 0;
+String s$name = 0;
+String s$Set_author_name = 0;
 String s$Song_name = 0;
 String s$Offset = 0;
 String s$loadAudio = 0;
@@ -985,7 +988,6 @@ sys__io__$FileOutput g$_sys_io_FileOutput = 0;
 String s$Windows = 0;
 hl_bytes_map* g$__types__ = 0;
 String s$Unknown_enum_constructor_ = 0;
-String s$5058f1a = 0;
 String s$Invalid_enum_index_ = 0;
 String s$Constructor_ = 0;
 String s$_takes_parameters = 0;
@@ -1056,7 +1058,6 @@ String s$d97a1d0 = 0;
 venum* g$h2d_ScaleModeAlign_Center = 0;
 venum* g$6537d82 = 0;
 String s$Set_canvas_position_to_ = 0;
-String s$New_line_creation_error_ = 0;
 String s$Draw_mode_set_to_Edit = 0;
 String s$Draw_mode_set_to_Playback = 0;
 String s$Draw_mode_set_to_No_Scenery_Edit = 0;
@@ -1071,7 +1072,6 @@ String s$Clear_console = 0;
 String s$d1457b7 = 0;
 String s$Command_not_found_ = 0;
 String s$b99834b = 0;
-String s$853ae90 = 0;
 String s$_0_1 = 0;
 String s$43ec3e5 = 0;
 String s$8154172 = 0;
@@ -2008,7 +2008,7 @@ hxd__fs__$DummyConvert g$_hxd_fs_DummyConvert = 0;
 hxd__fs___EmbedFileSystem__$EmbedEntry g$f88d513 = 0;
 String s$Missing_resource_ = 0;
 String s$_root_ = 0;
-String s$R_ = 0;
+String s$c1f723e = 0;
 hxd__fs__$NotFound g$_hxd_fs_NotFound = 0;
 hxd__fs__$FileInput g$_hxd_fs_FileInput = 0;
 String s$Resource_file_not_found_ = 0;
@@ -2379,9 +2379,6 @@ String s$Failed_to_link_ = 0;
 String s$Can_t_read_ = 0;
 String s$Can_t_open_ = 0;
 String s$_for_writing = 0;
-sys__ssl__$Certificate g$_sys_ssl_Certificate = 0;
-sys__ssl__$SNICbResult g$_sys_ssl_SNICbResult = 0;
-sys__ssl__$Key g$_sys_ssl_Key = 0;
 String s$random = 0;
 $Lambda g$_Lambda = 0;
 h3d__$IDrawable g$_h3d_IDrawable = 0;
@@ -2658,8 +2655,6 @@ venum* g$hxsl_Channel_B = 0;
 venum* g$hxsl_Channel_A = 0;
 sdl__$GL g$_sdl_GL = 0;
 sys__io__$File g$_sys_io_File = 0;
-sys__net__$Socket g$_sys_net_Socket = 0;
-sys__ssl__$Lib g$_sys_ssl_Lib = 0;
 String s$Program_timeout_infinite_loop_ = 0;
 String s$12484cd = 0;
 String s$Default = 0;
@@ -2789,7 +2784,9 @@ static struct _String const_s$OCT = {&t$String,(vbyte*)USTR("OCT"),3};
 static struct _String const_s$NOV = {&t$String,(vbyte*)USTR("NOV"),3};
 static struct _String const_s$DEC = {&t$String,(vbyte*)USTR("DEC"),3};
 static struct _String const_s$Lousy_Smarch_Weather = {&t$String,(vbyte*)USTR("Lousy Smarch Weather"),20};
-static struct _String const_s$Release_ = {&t$String,(vbyte*)USTR("Release:"),8};
+static struct _String const_s$853ae90 = {&t$String,(vbyte*)USTR(":"),1};
+static struct _String const_s$5058f1a = {&t$String,(vbyte*)USTR("."),1};
+static struct _String const_s$02bd774 = {&t$String,(vbyte*)USTR("R:"),2};
 static struct _String const_s$b8896f0 = {&t$String,(vbyte*)string$b8896f0,276};
 static struct _String const_s$OpenLR_ = {&t$String,(vbyte*)USTR("OpenLR - "),9};
 static struct _String const_s$Welcome_to_OpenLR_ = {&t$String,(vbyte*)USTR("Welcome to OpenLR: "),19};
@@ -2822,6 +2819,9 @@ static struct _String const_s$inverted = {&t$String,(vbyte*)USTR("inverted"),8};
 static struct _String const_s$limit_mode = {&t$String,(vbyte*)USTR("limit mode"),10};
 static struct _String const_s$drawLine = {&t$String,(vbyte*)USTR("drawLine"),8};
 static struct _String const_s$add_line_to_track = {&t$String,(vbyte*)USTR("add line to track"),17};
+static struct _String const_s$Line_Index = {&t$String,(vbyte*)USTR("Line Index"),10};
+static struct _String const_s$removeLine = {&t$String,(vbyte*)USTR("removeLine"),10};
+static struct _String const_s$remove_specified_line = {&t$String,(vbyte*)USTR("remove specified line"),21};
 static struct _String const_s$Tool = {&t$String,(vbyte*)USTR("Tool"),4};
 static struct _String const_s$setTool = {&t$String,(vbyte*)USTR("setTool"),7};
 static struct _String const_s$Change_current_active_tool = {&t$String,(vbyte*)USTR("Change current active tool"),26};
@@ -2915,6 +2915,9 @@ static struct _String const_s$Load_valid_JSON_tracks = {&t$String,(vbyte*)USTR("
 static struct _String const_s$message = {&t$String,(vbyte*)USTR("message"),7};
 static struct _String const_s$say = {&t$String,(vbyte*)USTR("say"),3};
 static struct _String const_s$Relay_a_message_to_console = {&t$String,(vbyte*)USTR("Relay a message to console"),26};
+static struct _String const_s$Author_name = {&t$String,(vbyte*)USTR("Author name"),11};
+static struct _String const_s$name = {&t$String,(vbyte*)USTR("name"),4};
+static struct _String const_s$Set_author_name = {&t$String,(vbyte*)USTR("Set author name"),15};
 static struct _String const_s$Song_name = {&t$String,(vbyte*)USTR("Song name"),9};
 static struct _String const_s$Offset = {&t$String,(vbyte*)USTR("Offset"),6};
 static struct _String const_s$loadAudio = {&t$String,(vbyte*)USTR("loadAudio"),9};
@@ -2955,7 +2958,6 @@ static struct _String const_s$Failed_to_read_directory_ = {&t$String,(vbyte*)UST
 static struct _String const_s$68b329d = {&t$String,(vbyte*)USTR("\n"),1};
 static struct _String const_s$Windows = {&t$String,(vbyte*)USTR("Windows"),7};
 static struct _String const_s$Unknown_enum_constructor_ = {&t$String,(vbyte*)USTR("Unknown enum constructor "),25};
-static struct _String const_s$5058f1a = {&t$String,(vbyte*)USTR("."),1};
 static struct _String const_s$Invalid_enum_index_ = {&t$String,(vbyte*)USTR("Invalid enum index "),19};
 static struct _String const_s$Constructor_ = {&t$String,(vbyte*)USTR("Constructor "),12};
 static struct _String const_s$_takes_parameters = {&t$String,(vbyte*)USTR(" takes parameters"),17};
@@ -2994,7 +2996,6 @@ static struct _String const_s$rider_eye0003_png = {&t$String,(vbyte*)USTR("rider
 static struct _String const_s$a7cc641 = {&t$String,(vbyte*)USTR("Interactive cammera cannot be null!"),35};
 static struct _String const_s$d97a1d0 = {&t$String,(vbyte*)USTR("Current interactive Camera cannot be removed from camera list!"),62};
 static struct _String const_s$Set_canvas_position_to_ = {&t$String,(vbyte*)USTR("Set canvas position to: "),24};
-static struct _String const_s$New_line_creation_error_ = {&t$String,(vbyte*)USTR("New line creation error!"),24};
 static struct _String const_s$Draw_mode_set_to_Edit = {&t$String,(vbyte*)USTR("Draw mode set to Edit"),21};
 static struct _String const_s$Draw_mode_set_to_Playback = {&t$String,(vbyte*)USTR("Draw mode set to Playback"),25};
 static struct _String const_s$Draw_mode_set_to_No_Scenery_Edit = {&t$String,(vbyte*)USTR("Draw mode set to No Scenery Edit"),32};
@@ -3009,7 +3010,6 @@ static struct _String const_s$Clear_console = {&t$String,(vbyte*)USTR("Clear con
 static struct _String const_s$d1457b7 = {&t$String,(vbyte*)USTR("?"),1};
 static struct _String const_s$Command_not_found_ = {&t$String,(vbyte*)USTR("Command not found \""),19};
 static struct _String const_s$b99834b = {&t$String,(vbyte*)USTR("|"),1};
-static struct _String const_s$853ae90 = {&t$String,(vbyte*)USTR(":"),1};
 static struct _String const_s$_0_1 = {&t$String,(vbyte*)USTR("=0|1"),4};
 static struct _String const_s$43ec3e5 = {&t$String,(vbyte*)USTR("="),1};
 static struct _String const_s$8154172 = {&t$String,(vbyte*)USTR("["),1};
@@ -3613,7 +3613,7 @@ static struct _String const_s$_fd = {&t$String,(vbyte*)USTR("-fd"),3};
 static struct _String const_s$CompressonatorCLI = {&t$String,(vbyte*)USTR("CompressonatorCLI"),17};
 static struct _String const_s$Missing_resource_ = {&t$String,(vbyte*)USTR("Missing resource "),17};
 static struct _String const_s$_root_ = {&t$String,(vbyte*)USTR("<root>"),6};
-static struct _String const_s$R_ = {&t$String,(vbyte*)USTR("R_"),2};
+static struct _String const_s$c1f723e = {&t$String,(vbyte*)USTR("R_"),2};
 static struct _String const_s$Resource_file_not_found_ = {&t$String,(vbyte*)USTR("Resource file not found '"),25};
 static struct _String const_s$hxd_res_defaultFont_png = {&t$String,(vbyte*)USTR("hxd/res/defaultFont.png"),23};
 static struct _String const_s$6d67fc4 = {&t$String,(vbyte*)string$6d67fc4,3182};
@@ -4014,7 +4014,9 @@ void hl_init_roots() {
 	s$NOV = &const_s$NOV;
 	s$DEC = &const_s$DEC;
 	s$Lousy_Smarch_Weather = &const_s$Lousy_Smarch_Weather;
-	s$Release_ = &const_s$Release_;
+	s$853ae90 = &const_s$853ae90;
+	s$5058f1a = &const_s$5058f1a;
+	s$02bd774 = &const_s$02bd774;
 	s$b8896f0 = &const_s$b8896f0;
 	s$OpenLR_ = &const_s$OpenLR_;
 	s$Welcome_to_OpenLR_ = &const_s$Welcome_to_OpenLR_;
@@ -4047,6 +4049,9 @@ void hl_init_roots() {
 	s$limit_mode = &const_s$limit_mode;
 	s$drawLine = &const_s$drawLine;
 	s$add_line_to_track = &const_s$add_line_to_track;
+	s$Line_Index = &const_s$Line_Index;
+	s$removeLine = &const_s$removeLine;
+	s$remove_specified_line = &const_s$remove_specified_line;
 	s$Tool = &const_s$Tool;
 	s$setTool = &const_s$setTool;
 	s$Change_current_active_tool = &const_s$Change_current_active_tool;
@@ -4140,6 +4145,9 @@ void hl_init_roots() {
 	s$message = &const_s$message;
 	s$say = &const_s$say;
 	s$Relay_a_message_to_console = &const_s$Relay_a_message_to_console;
+	s$Author_name = &const_s$Author_name;
+	s$name = &const_s$name;
+	s$Set_author_name = &const_s$Set_author_name;
 	s$Song_name = &const_s$Song_name;
 	s$Offset = &const_s$Offset;
 	s$loadAudio = &const_s$loadAudio;
@@ -4180,7 +4188,6 @@ void hl_init_roots() {
 	s$68b329d = &const_s$68b329d;
 	s$Windows = &const_s$Windows;
 	s$Unknown_enum_constructor_ = &const_s$Unknown_enum_constructor_;
-	s$5058f1a = &const_s$5058f1a;
 	s$Invalid_enum_index_ = &const_s$Invalid_enum_index_;
 	s$Constructor_ = &const_s$Constructor_;
 	s$_takes_parameters = &const_s$_takes_parameters;
@@ -4219,7 +4226,6 @@ void hl_init_roots() {
 	s$a7cc641 = &const_s$a7cc641;
 	s$d97a1d0 = &const_s$d97a1d0;
 	s$Set_canvas_position_to_ = &const_s$Set_canvas_position_to_;
-	s$New_line_creation_error_ = &const_s$New_line_creation_error_;
 	s$Draw_mode_set_to_Edit = &const_s$Draw_mode_set_to_Edit;
 	s$Draw_mode_set_to_Playback = &const_s$Draw_mode_set_to_Playback;
 	s$Draw_mode_set_to_No_Scenery_Edit = &const_s$Draw_mode_set_to_No_Scenery_Edit;
@@ -4234,7 +4240,6 @@ void hl_init_roots() {
 	s$d1457b7 = &const_s$d1457b7;
 	s$Command_not_found_ = &const_s$Command_not_found_;
 	s$b99834b = &const_s$b99834b;
-	s$853ae90 = &const_s$853ae90;
 	s$_0_1 = &const_s$_0_1;
 	s$43ec3e5 = &const_s$43ec3e5;
 	s$8154172 = &const_s$8154172;
@@ -4838,7 +4843,7 @@ void hl_init_roots() {
 	s$CompressonatorCLI = &const_s$CompressonatorCLI;
 	s$Missing_resource_ = &const_s$Missing_resource_;
 	s$_root_ = &const_s$_root_;
-	s$R_ = &const_s$R_;
+	s$c1f723e = &const_s$c1f723e;
 	s$Resource_file_not_found_ = &const_s$Resource_file_not_found_;
 	s$hxd_res_defaultFont_png = &const_s$hxd_res_defaultFont_png;
 	s$6d67fc4 = &const_s$6d67fc4;
@@ -5403,13 +5408,13 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_file_SaveLoad);
 	hl_add_root((void**)&g$_components_managers_Simulation);
 	hl_add_root((void**)&g$_components_managers_Riders);
+	hl_add_root((void**)&g$_components_managers_Grid);
 	hl_add_root((void**)&g$_h2d_GPoint);
 	hl_add_root((void**)&g$_h2d__Graphics_GraphicsContent);
 	hl_add_root((void**)&g$_hxd_earcut_EarNode);
 	hl_add_root((void**)&g$_hxd_earcut_Earcut);
 	hl_add_root((void**)&g$_h2d_Graphics);
 	hl_add_root((void**)&g$_components_lines_LineBase);
-	hl_add_root((void**)&g$_components_managers_Grid);
 	hl_add_root((void**)&g$components_tool_ToolMode);
 	hl_add_root((void**)&g$_components_tool_ToolBehavior);
 	hl_add_root((void**)&g$_h2d_Console);
@@ -5921,9 +5926,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxsl_VarQualifier_Ignore);
 	hl_add_root((void**)&g$_hxsl__Splitter_VarProps);
 	hl_add_root((void**)&g$_sdl_Sdl);
-	hl_add_root((void**)&g$_sys_ssl_Certificate);
-	hl_add_root((void**)&g$_sys_ssl_SNICbResult);
-	hl_add_root((void**)&g$_sys_ssl_Key);
 	hl_add_root((void**)&g$_Lambda);
 	hl_add_root((void**)&g$_h3d_IDrawable);
 	hl_add_root((void**)&g$_Reflect);
@@ -6192,8 +6194,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxsl_Channel_A);
 	hl_add_root((void**)&g$_sdl_GL);
 	hl_add_root((void**)&g$_sys_io_File);
-	hl_add_root((void**)&g$_sys_net_Socket);
-	hl_add_root((void**)&g$_sys_ssl_Lib);
 }
 // oy4:tooloy15:pencilGreen.pngty14:pencilBlue.pngty13:lineGree...
 vbyte string$b8896f0[] = {111,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,108,0,105,0,110,0,101,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110\

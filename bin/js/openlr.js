@@ -124,16 +124,6 @@ Lambda.array = function(it) {
 	}
 	return a;
 };
-Lambda.exists = function(it,f) {
-	var x = $getIterator(it);
-	while(x.hasNext()) {
-		var x1 = x.next();
-		if(f(x1)) {
-			return true;
-		}
-	}
-	return false;
-};
 var h3d_IDrawable = function() { };
 $hxClasses["h3d.IDrawable"] = h3d_IDrawable;
 h3d_IDrawable.__name__ = "h3d.IDrawable";
@@ -234,11 +224,11 @@ Main.getBuildDate = function() {
 	var months = ["JAN","FEB","MAR","APR","MAY","JUN","JUN","AUG","SEP","OCT","NOV","DEC"];
 	var month = new Date().getMonth();
 	var monthstr = months[month] != null ? months[month] : "Lousy Smarch Weather";
-	return new Date().getDate() + monthstr + new Date().getFullYear();
+	return new Date().getDate() + monthstr + new Date().getFullYear() + ":" + new Date().getHours() + "." + new Date().getMinutes();
 };
 Main.main = function() {
 	Main.build = "" + Main.getBuildDate();
-	Main.build = "Release:" + Main.build;
+	Main.build = "R:" + Main.build;
 	new Main();
 };
 Main.__super__ = hxd_App;
@@ -262,6 +252,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		_this.y = this.engine.height / 2;
 		Main.canvas_interaction = new h2d_Interactive(this.engine.width,this.engine.height,this.s2d);
 		Main.toolControl = new components_tool_ToolBehavior();
+		h2d_Console.HIDE_LOG_TIMEOUT = 25;
 		Main.console = new components_stage_LRConsole(hxd_res_DefaultFont.get(),this.s2d);
 		this.setConsoleActions();
 		Main.console.log("Welcome to OpenLR: " + Main.build,3355443);
@@ -278,6 +269,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		_this1.posChanged = true;
 		_this.posChanged = true;
 		_this.x = _this1.y = 5;
+		Main.p2p = new network_WebRTC();
 	}
 	,setConsoleActions: function() {
 		var _gthis = this;
@@ -330,6 +322,13 @@ Main.prototype = $extend(hxd_App.prototype,{
 			var shifted = _invert == null ? false : _invert;
 			var lim = _lim == null ? -1 : _lim;
 			Main.canvas.addLine(type,x1,y1,x2,y2,shifted,lim);
+		});
+		var arg29 = { t : h2d_ConsoleArg.AInt, opt : false, name : "Line Index"};
+		Main.console.addCommand("removeLine","remove specified line",[arg29],function(_index) {
+			if(_index != null) {
+				Main.canvas.removeLine(Main.grid.lines.h[_index]);
+			}
+			Main.console.log("" + _index);
 		});
 		var arg10 = { t : h2d_ConsoleArg.AString, opt : false, name : "Tool"};
 		Main.console.addCommand("setTool","Change current active tool",[arg10],function(_tool,_color) {
@@ -548,20 +547,28 @@ Main.prototype = $extend(hxd_App.prototype,{
 		var arg26 = { t : h2d_ConsoleArg.AString, opt : false, name : "message"};
 		Main.console.addCommand("say","Relay a message to console",[arg26],function(_msg) {
 			Main.console.log(_msg);
+			if(Main.p2p.connected) {
+				Main.p2p.sendData("chat:" + Main.authorName + ":" + _msg);
+			}
 		});
-		var argServerName = { t : h2d_ConsoleArg.AString, opt : false, name : "Server Name"};
-		var argServerPassword_t = h2d_ConsoleArg.AString;
-		var argServerPassword_opt = false;
-		var argServerPassword_name = "Song name";
+		var arg30 = { t : h2d_ConsoleArg.AString, opt : false, name : "Author name"};
+		Main.console.addCommand("name","Set author name",[arg30],function(_name) {
+			Main.authorName = _name;
+		});
+		var argServerName = { t : h2d_ConsoleArg.AString, opt : true, name : "ID Name"};
 		Main.console.addCommand("createServer","Creates P2P server through WebRTC",[argServerName],function(_name) {
-			Main.p2p = new network_WebRTC(true,function(_msg) {
-				Main.console.log(_msg);
-			});
+			if(Main.authorName == null) {
+				Main.console.log("Please set author name with /name before creating server",16711680);
+				return;
+			}
+			Main.p2p.create(_name);
 		});
 		Main.console.addCommand("joinServer","Joins P2P server through WebRTC",[argServerName],function(_name) {
-			Main.p2p = new network_WebRTC(false,function(_msg) {
-				Main.console.log(_msg);
-			},_name);
+			if(Main.authorName == null) {
+				Main.console.log("Please set author name with /name before joining server",16711680);
+				return;
+			}
+			Main.p2p.join(_name);
 		});
 	}
 	,update: function(dt) {
@@ -575,6 +582,9 @@ Main.prototype = $extend(hxd_App.prototype,{
 		}
 		Main.canvas.drawRiders();
 		Main.textinfo.update();
+		if(Main.p2p.connected) {
+			Main.p2p.sendData("updateCursor:" + Main.authorName + ":" + Main.canvas.get_mouseX() + ":" + Main.canvas.get_mouseY());
+		}
 	}
 	,onResize: function() {
 		hxd_App.prototype.onResize.call(this);
@@ -1444,7 +1454,7 @@ var components_managers_Grid = function() {
 	this.lineIDCount = 0;
 	this.lineCount = 0;
 	this.registry = new haxe_ds_StringMap();
-	this.lines = [];
+	this.lines = new haxe_ds_IntMap();
 };
 $hxClasses["components.managers.Grid"] = components_managers_Grid;
 components_managers_Grid.__name__ = "components.managers.Grid";
@@ -1509,10 +1519,10 @@ components_managers_Grid.prototype = {
 		}
 	}
 	,addLine: function(_line) {
-		this.lines.push(_line);
 		if(_line.id == null) {
 			_line.id = this.lineIDCount;
 		}
+		this.lines.h[_line.id] = _line;
 		++this.lineCount;
 		++this.lineIDCount;
 		switch(_line.type) {
@@ -1587,6 +1597,8 @@ components_managers_Grid.prototype = {
 		default:
 		}
 		--this.lineCount;
+		var v = null;
+		this.lines.h[_line.id] = v;
 	}
 	,__class__: components_managers_Grid
 };
@@ -4414,6 +4426,9 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 					var _loc4 = (_loc3 * _loc1.dx + _loc2 * _loc1.dy) * _loc1.invSqrDistance;
 					if(_loc12 < this.eraserSize * _loc9 || _loc13 < this.eraserSize * _loc9 || _loc11 < this.eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1) {
 						this.removeLine(line);
+						if(Main.p2p.connected) {
+							Main.p2p.removeLine(line.id);
+						}
 						continue;
 					}
 				}
@@ -4432,6 +4447,9 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 					var _loc41 = (_loc31 * _loc14.dx + _loc21 * _loc14.dy) * _loc14.invSqrDistance;
 					if(_loc121 < this.eraserSize * _loc91 || _loc131 < this.eraserSize * _loc91 || _loc111 < this.eraserSize * _loc91 && _loc41 >= 0 && _loc41 <= 1) {
 						this.removeLine(line1);
+						if(Main.p2p.connected) {
+							Main.p2p.removeLine(line1.id);
+						}
 						continue;
 					}
 				}
@@ -4469,19 +4487,16 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 			this.scenePlaybackLayer.addChild(line.rideLayer);
 			break;
 		default:
-			Main.console.log("New line creation error!",16711680);
-			return;
 		}
 		line.render();
 		Main.grid.register(line);
+		return line;
 	}
 	,clear: function() {
-		var _g = 0;
-		var _g1 = Main.grid.lines;
-		while(_g < _g1.length) {
-			var line = _g1[_g];
-			++_g;
-			this.removeLine(line);
+		var line = Main.grid.lines.iterator();
+		while(line.hasNext()) {
+			var line1 = line.next();
+			this.removeLine(line1);
 		}
 	}
 	,removeLine: function(_line) {
@@ -5275,7 +5290,10 @@ components_tool_ToolBehavior.prototype = {
 		}
 	}
 	,drawLine: function() {
-		Main.canvas.addLine(this.color,this.mouseStart.x,this.mouseStart.y,this.mouseEnd.x,this.mouseEnd.y,this.shifted);
+		var line = Main.canvas.addLine(this.color,this.mouseStart.x,this.mouseStart.y,this.mouseEnd.x,this.mouseEnd.y,this.shifted);
+		if(Main.p2p.connected) {
+			Main.p2p.sendLine(line);
+		}
 	}
 	,keyInputDown: function(event) {
 		switch(event.kind._hx_index) {
@@ -5463,12 +5481,13 @@ file_SaveLoad.__name__ = "file.SaveLoad";
 file_SaveLoad.prototype = {
 	saveTrack: function(_name) {
 		var saveObject = { lines : [], riders : [], name : Main.trackName, author : Main.authorName, song : Main.songName};
-		var _g = 0;
-		var _g1 = Main.grid.lines;
-		while(_g < _g1.length) {
-			var line = _g1[_g];
-			++_g;
-			saveObject.lines.push(line.toSaveObject());
+		var line = Main.grid.lines.iterator();
+		while(line.hasNext()) {
+			var line1 = line.next();
+			if(line1 == null) {
+				continue;
+			}
+			saveObject.lines.push(line1.toSaveObject());
 		}
 		var sledder = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
 		while(sledder.hasNext()) {
@@ -26901,184 +26920,6 @@ haxe_ds_StringMap.valueIterator = function(h) {
 haxe_ds_StringMap.prototype = {
 	__class__: haxe_ds_StringMap
 };
-var haxe_http_HttpBase = function(url) {
-	this.url = url;
-	this.headers = [];
-	this.params = [];
-	this.emptyOnData = $bind(this,this.onData);
-};
-$hxClasses["haxe.http.HttpBase"] = haxe_http_HttpBase;
-haxe_http_HttpBase.__name__ = "haxe.http.HttpBase";
-haxe_http_HttpBase.prototype = {
-	onData: function(data) {
-	}
-	,onBytes: function(data) {
-	}
-	,onError: function(msg) {
-	}
-	,onStatus: function(status) {
-	}
-	,hasOnData: function() {
-		return !Reflect.compareMethods($bind(this,this.onData),this.emptyOnData);
-	}
-	,success: function(data) {
-		this.responseBytes = data;
-		this.responseAsString = null;
-		if(this.hasOnData()) {
-			this.onData(this.get_responseData());
-		}
-		this.onBytes(this.responseBytes);
-	}
-	,get_responseData: function() {
-		if(this.responseAsString == null && this.responseBytes != null) {
-			this.responseAsString = this.responseBytes.getString(0,this.responseBytes.length,haxe_io_Encoding.UTF8);
-		}
-		return this.responseAsString;
-	}
-	,__class__: haxe_http_HttpBase
-};
-var haxe_http_HttpJs = function(url) {
-	this.async = true;
-	this.withCredentials = false;
-	haxe_http_HttpBase.call(this,url);
-};
-$hxClasses["haxe.http.HttpJs"] = haxe_http_HttpJs;
-haxe_http_HttpJs.__name__ = "haxe.http.HttpJs";
-haxe_http_HttpJs.__super__ = haxe_http_HttpBase;
-haxe_http_HttpJs.prototype = $extend(haxe_http_HttpBase.prototype,{
-	request: function(post) {
-		var _gthis = this;
-		this.responseAsString = null;
-		this.responseBytes = null;
-		var r = this.req = js_Browser.createXMLHttpRequest();
-		var onreadystatechange = function(_) {
-			if(r.readyState != 4) {
-				return;
-			}
-			var s;
-			try {
-				s = r.status;
-			} catch( _g ) {
-				s = null;
-			}
-			if(s == 0 && typeof(window) != "undefined" && $global.location != null) {
-				var protocol = $global.location.protocol.toLowerCase();
-				var rlocalProtocol = new EReg("^(?:about|app|app-storage|.+-extension|file|res|widget):$","");
-				var isLocal = rlocalProtocol.match(protocol);
-				if(isLocal) {
-					s = r.response != null ? 200 : 404;
-				}
-			}
-			if(s == undefined) {
-				s = null;
-			}
-			if(s != null) {
-				_gthis.onStatus(s);
-			}
-			if(s != null && s >= 200 && s < 400) {
-				_gthis.req = null;
-				_gthis.success(haxe_io_Bytes.ofData(r.response));
-			} else if(s == null || s == 0 && r.response == null) {
-				_gthis.req = null;
-				_gthis.onError("Failed to connect or resolve host");
-			} else if(s == null) {
-				_gthis.req = null;
-				var onreadystatechange = r.response != null ? haxe_io_Bytes.ofData(r.response) : null;
-				_gthis.responseBytes = onreadystatechange;
-				_gthis.onError("Http Error #" + r.status);
-			} else {
-				switch(s) {
-				case 12007:
-					_gthis.req = null;
-					_gthis.onError("Unknown host");
-					break;
-				case 12029:
-					_gthis.req = null;
-					_gthis.onError("Failed to connect to host");
-					break;
-				default:
-					_gthis.req = null;
-					var onreadystatechange = r.response != null ? haxe_io_Bytes.ofData(r.response) : null;
-					_gthis.responseBytes = onreadystatechange;
-					_gthis.onError("Http Error #" + r.status);
-				}
-			}
-		};
-		if(this.async) {
-			r.onreadystatechange = onreadystatechange;
-		}
-		var uri;
-		var _g = this.postBytes;
-		var _g1 = this.postData;
-		if(_g1 == null) {
-			if(_g == null) {
-				uri = null;
-			} else {
-				var bytes = _g;
-				uri = new Blob([bytes.b.bufferValue]);
-			}
-		} else if(_g == null) {
-			var str = _g1;
-			uri = str;
-		} else {
-			uri = null;
-		}
-		if(uri != null) {
-			post = true;
-		} else {
-			var _g = 0;
-			var _g1 = this.params;
-			while(_g < _g1.length) {
-				var p = _g1[_g];
-				++_g;
-				if(uri == null) {
-					uri = "";
-				} else {
-					uri = (uri == null ? "null" : Std.string(uri)) + "&";
-				}
-				var s = p.name;
-				var value = (uri == null ? "null" : Std.string(uri)) + encodeURIComponent(s) + "=";
-				var s1 = p.value;
-				uri = value + encodeURIComponent(s1);
-			}
-		}
-		try {
-			if(post) {
-				r.open("POST",this.url,this.async);
-			} else if(uri != null) {
-				var question = this.url.split("?").length <= 1;
-				r.open("GET",this.url + (question ? "?" : "&") + (uri == null ? "null" : Std.string(uri)),this.async);
-				uri = null;
-			} else {
-				r.open("GET",this.url,this.async);
-			}
-			r.responseType = "arraybuffer";
-		} catch( _g ) {
-			var e = haxe_Exception.caught(_g).unwrap();
-			this.req = null;
-			this.onError(e.toString());
-			return;
-		}
-		r.withCredentials = this.withCredentials;
-		if(!Lambda.exists(this.headers,function(h) {
-			return h.name == "Content-Type";
-		}) && post && this.postData == null) {
-			r.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-		}
-		var _g = 0;
-		var _g1 = this.headers;
-		while(_g < _g1.length) {
-			var h = _g1[_g];
-			++_g;
-			r.setRequestHeader(h.name,h.value);
-		}
-		r.send(uri);
-		if(!this.async) {
-			onreadystatechange(null);
-		}
-	}
-	,__class__: haxe_http_HttpJs
-});
 var haxe_io_BytesBuffer = function() {
 	this.pos = 0;
 	this.size = 0;
@@ -42687,6 +42528,13 @@ js_Boot.__downcastCheck = function(o,cl) {
 		return true;
 	}
 };
+js_Boot.__cast = function(o,t) {
+	if(o == null || js_Boot.__instanceof(o,t)) {
+		return o;
+	} else {
+		throw haxe_Exception.thrown("Cannot cast " + Std.string(o) + " to " + Std.string(t));
+	}
+};
 js_Boot.__nativeClassName = function(o) {
 	var name = js_Boot.__toStr.call(o).slice(8,-1);
 	if(name == "Object" || name == "Function" || name == "Math" || name == "JSON") {
@@ -46441,18 +46289,6 @@ hxsl_Splitter.prototype = {
 	}
 	,__class__: hxsl_Splitter
 };
-var js_Browser = function() { };
-$hxClasses["js.Browser"] = js_Browser;
-js_Browser.__name__ = "js.Browser";
-js_Browser.createXMLHttpRequest = function() {
-	if(typeof XMLHttpRequest != "undefined") {
-		return new XMLHttpRequest();
-	}
-	if(typeof ActiveXObject != "undefined") {
-		return new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	throw haxe_Exception.thrown("Unable to create XMLHttpRequest object.");
-};
 var js_html__$CanvasElement_CanvasUtil = function() { };
 $hxClasses["js.html._CanvasElement.CanvasUtil"] = js_html__$CanvasElement_CanvasUtil;
 js_html__$CanvasElement_CanvasUtil.__name__ = "js.html._CanvasElement.CanvasUtil";
@@ -46470,101 +46306,178 @@ js_html__$CanvasElement_CanvasUtil.getContextWebGL = function(canvas,attribs) {
 	return null;
 };
 Math.__name__ = "Math";
-var network_WebRTC = function(isInitiator,onMessage,_name) {
-	if(_name == null) {
-		_name = "openlr_default";
+var network_PeerCursor = function(_name) {
+	h2d_Object.call(this);
+	this.peername = _name;
+	this.nameField = new h2d_HtmlText(hxd_res_DefaultFont.get(),this);
+	var _this = this.nameField;
+	_this.posChanged = true;
+	_this.x = 6;
+	var _this = this.nameField;
+	var v = -(this.nameField.get_textHeight() / 2);
+	_this.posChanged = true;
+	_this.y = v;
+	this.nameField.set_text(_name);
+	this.gfx = new h2d_Graphics(this);
+	this.gfx.clear();
+	this.gfx.lineStyle(2,13369548,0.75);
+	this.gfx.drawCircle(0,0,1,10);
+};
+$hxClasses["network.PeerCursor"] = network_PeerCursor;
+network_PeerCursor.__name__ = "network.PeerCursor";
+network_PeerCursor.__super__ = h2d_Object;
+network_PeerCursor.prototype = $extend(h2d_Object.prototype,{
+	update: function(_x,_y) {
+		this.posChanged = true;
+		this.x = _x;
+		this.posChanged = true;
+		this.y = _y;
 	}
-	this.dataChannelReady = false;
-	this.isInitiator = false;
-	this.iceServers = [{ urls : "stun:stun.ideasip.com"}];
-	this.onMessage = onMessage;
-	this.isInitiator = isInitiator;
-	this.CHANNEL_NAME = _name;
-	this.connect();
+	,__class__: network_PeerCursor
+});
+var network_WebRTC = function(_name) {
+	this.isHost = false;
+	this.connected = false;
+	this.peer = new Peer(_name);
+	this.linkedCursors = new haxe_ds_StringMap();
 };
 $hxClasses["network.WebRTC"] = network_WebRTC;
 network_WebRTC.__name__ = "network.WebRTC";
 network_WebRTC.prototype = {
-	connect: function() {
-		this.peerConnection = new RTCPeerConnection({iceServers: this.iceServers});
-		this.peerConnection.onicecandidate = $bind(this,this.onLocalIceCandidate);
-		this.peerConnection.iceconnectionstatechange = $bind(this,this.onIceConnectionStateChanged);
-		this.peerConnection.ondatachannel = $bind(this,this.onDataChannel);
-		if(this.isInitiator) {
-			this.openDataChannel(this.peerConnection.createDataChannel(this.CHANNEL_NAME,{ ordered : false}));
-		}
-		if(this.isInitiator) {
-			this.setLocalDescriptionAndSend();
-		}
-	}
-	,onLocalIceCandidate: function(event) {
-		if(event.candidate == null) {
-			if(this.peerConnection.localDescription.type == "offer") {
-				this.sendSdp(0,this.peerConnection.localDescription);
-			} else {
-				this.sendIceCandidate(this.hostId,this.peerConnection.localDescription);
-			}
-		}
-	}
-	,onIceConnectionStateChanged: function(event) {
-		haxe_Log.trace("Connection state: " + event.target.iceConnectionState,{ fileName : "src/network/WebRTC.hx", lineNumber : 77, className : "network.WebRTC", methodName : "onIceConnectionStateChanged"});
-	}
-	,onDataChannel: function(event) {
-		haxe_Log.trace("onChannel",{ fileName : "src/network/WebRTC.hx", lineNumber : 80, className : "network.WebRTC", methodName : "onDataChannel"});
-		if(!this.isInitiator) {
-			this.openDataChannel(event.channel);
-		}
-	}
-	,openDataChannel: function(channel) {
-		haxe_Log.trace("create channel",{ fileName : "src/network/WebRTC.hx", lineNumber : 86, className : "network.WebRTC", methodName : "openDataChannel"});
-		this.dataChannel = channel;
-		this.dataChannel.onopen = $bind(this,this.onDataChannelOpen);
-		this.dataChannel.close = $bind(this,this.onDataChannelClose);
-		this.dataChannel.onmessage = $bind(this,this.onDataChannelMessage);
-	}
-	,onDataChannelOpen: function() {
-		this.dataChannelReady = true;
-		if(this.onConnect != null) {
-			this.onConnect();
-		}
-		haxe_Log.trace("channel Open",{ fileName : "src/network/WebRTC.hx", lineNumber : 102, className : "network.WebRTC", methodName : "onDataChannelOpen"});
-	}
-	,onDataChannelMessage: function(event) {
-		this.onMessage(event.data);
-	}
-	,onDataChannelClose: function() {
-		this.dataChannelReady = false;
-	}
-	,setLocalDescriptionAndSend: function() {
+	create: function(_name) {
 		var _gthis = this;
-		this.getDescription().then(function(localDescription) {
-			_gthis.peerConnection.setLocalDescription(localDescription);
-		},function(error) {
-			haxe_Log.trace("onSdpError: " + error.message,{ fileName : "src/network/WebRTC.hx", lineNumber : 120, className : "network.WebRTC", methodName : "setLocalDescriptionAndSend"});
+		this.isHost = true;
+		this.connections = [];
+		this.linked_connections = new haxe_ds_StringMap();
+		var this1 = this.linkedCursors;
+		var k = Main.authorName;
+		var v = new network_PeerCursor(Main.authorName);
+		this1.h[k] = v;
+		this.peer = new Peer(_name);
+		this.peer.on("open",function(_id) {
+			Main.console.log("Your network ID is: " + Std.string(_id));
+		});
+		this.peer.on("connection",function(_conn) {
+			Main.console.log("I've received a connection!");
+			_gthis.connections.push(_conn);
+			_gthis.connected = true;
+			_gthis.attachFunctions(_conn);
+		});
+		this.peer.on("data",function(data) {
+		});
+		this.peer.on("error",function(err) {
+			Main.console.log(err);
 		});
 	}
-	,getDescription: function() {
-		if(this.isInitiator) {
-			return this.peerConnection.createOffer();
-		} else {
-			return this.peerConnection.createAnswer();
+	,join: function(_name) {
+		var _gthis = this;
+		this.conn = this.peer.connect(_name);
+		this.conn.on("open",function(data) {
+			Main.console.log("Connected to " + _name);
+			_gthis.attachFunctions(_gthis.conn);
+			_gthis.connected = true;
+			_gthis.conn.send("console:say " + Main.authorName + " has joined the server!");
+			_gthis.conn.send("joinRequest:" + Main.authorName);
+		});
+		this.isHost = false;
+	}
+	,attachFunctions: function(_conn) {
+		var _gthis = this;
+		_conn.on("data",function(data) {
+			var items = (js_Boot.__cast(data , String)).split(":");
+			switch(items[0]) {
+			case "addCursor":
+				if(_gthis.isHost) {
+					return;
+				}
+				if(items[1] == Main.authorName) {
+					return;
+				}
+				var this1 = _gthis.linkedCursors;
+				var v = new network_PeerCursor(items[1]);
+				this1.h[items[1]] = v;
+				Main.canvas.addChild(_gthis.linkedCursors.h[items[1]]);
+				break;
+			case "chat":
+				Main.console.log("" + items[1] + ": " + items[2]);
+				break;
+			case "console":
+				Main.console.runCommand(items[1]);
+				break;
+			case "joinRequest":
+				if(!_gthis.isHost) {
+					return;
+				}
+				_gthis.linked_connections.h[items[1]] = _conn;
+				_gthis.downloadTrack(items[1]);
+				var this1 = _gthis.linkedCursors;
+				var v = new network_PeerCursor(items[1]);
+				this1.h[items[1]] = v;
+				_gthis.sendData("addCursor:" + items[1]);
+				Main.canvas.addChild(_gthis.linkedCursors.h[items[1]]);
+				_gthis.downloadCursors(items[1]);
+				break;
+			case "updateCursor":
+				_gthis.linkedCursors.h[items[1]].update(parseFloat(items[2]),parseFloat(items[3]));
+				break;
+			default:
+			}
+			switch(items[0]) {
+			case "addCursor":case "joinRequest":
+				break;
+			default:
+				if(_gthis.isHost && _gthis.connections.length > 1) {
+					_gthis.sendData(js_Boot.__cast(data , String),_conn);
+				}
+			}
+		});
+		_conn.on("error",function(err) {
+			Main.console.log(err);
+		});
+	}
+	,downloadCursors: function(_name) {
+		var cursor = haxe_ds_StringMap.valueIterator(this.linkedCursors.h);
+		while(cursor.hasNext()) {
+			var cursor1 = cursor.next();
+			this.linked_connections.h[_name].send("addCursor:" + cursor1.peername);
 		}
 	}
-	,sendSdp: function(userId,sdp) {
-		var sdpString = sdp.sdp;
-		sdpString = StringTools.replace(sdpString,"\r\n","$%");
-		var site = new haxe_http_HttpJs("{your server}/AddOffer.php?offer=" + sdpString);
-		site.async = true;
-		site.request();
+	,downloadTrack: function(_name) {
+		var lineCount = 0;
+		var _line = Main.grid.lines.iterator();
+		while(_line.hasNext()) {
+			var _line1 = _line.next();
+			var command = "drawLine " + _line1.type + " " + _line1.start.x + " " + _line1.start.y + " " + _line1.end.x + " " + _line1.end.y + " " + (_line1.shifted == null ? "null" : "" + _line1.shifted) + " " + _line1.limType;
+			this.linked_connections.h[_name].send("console:" + command);
+			this.linked_connections.h[_name].send("console:say " + lineCount + " of " + Main.grid.lineCount + " downloaded...");
+			++lineCount;
+		}
 	}
-	,sendIceCandidate: function(userId,candidate) {
-		var sdpString = candidate.sdp;
-		sdpString = StringTools.replace(sdpString,"\r\n","$%");
-		var site = new haxe_http_HttpJs("{your server}/AddAnswer.php?answer=" + sdpString + "&offerID=" + this.hostId);
-		site.async = true;
-		site.request();
-		haxe_Log.trace("userId : " + Std.string(userId),{ fileName : "src/network/WebRTC.hx", lineNumber : 148, className : "network.WebRTC", methodName : "sendIceCandidate"});
-		haxe_Log.trace("candidate : " + Std.string(candidate),{ fileName : "src/network/WebRTC.hx", lineNumber : 149, className : "network.WebRTC", methodName : "sendIceCandidate"});
+	,sendLine: function(_line) {
+		var command = "drawLine " + _line.type + " " + _line.start.x + " " + _line.start.y + " " + _line.end.x + " " + _line.end.y + " " + (_line.shifted == null ? "null" : "" + _line.shifted) + " " + _line.limType;
+		this.sendData("console:" + command);
+	}
+	,removeLine: function(_index) {
+		var command = "removeLine " + _index;
+		this.sendData("console:" + command);
+	}
+	,sendData: function(_msg,_sender) {
+		if(this.isHost) {
+			var _g = 0;
+			var _g1 = this.connections;
+			while(_g < _g1.length) {
+				var _conn = _g1[_g];
+				++_g;
+				if(_sender != null) {
+					if(_conn == _sender) {
+						continue;
+					}
+				}
+				_conn.send(_msg);
+			}
+		} else {
+			this.conn.send(_msg);
+		}
 	}
 	,__class__: network_WebRTC
 };

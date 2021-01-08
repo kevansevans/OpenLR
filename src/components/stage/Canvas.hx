@@ -108,6 +108,9 @@ class Canvas extends Scene
                 if (_loc12 < eraserSize * _loc9 || _loc13 < eraserSize * _loc9 || _loc11 < eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1)
                 {
 					removeLine(line);
+					#if js
+					if (Main.p2p.connected) Main.p2p.removeLine(line.id);
+					#end
 					continue;
 				}
 				
@@ -126,13 +129,16 @@ class Canvas extends Scene
                 if (_loc12 < eraserSize * _loc9 || _loc13 < eraserSize * _loc9 || _loc11 < eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1)
                 {
 					removeLine(line);
+					#if js
+					if (Main.p2p.connected) Main.p2p.removeLine(line.id);
+					#end
 					continue;
 				}
 			}
 		}
 	}
 	
-	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
+	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1):LineBase {
 		var line:LineBase = null;
 		switch (_type) {
 			case 0:
@@ -150,11 +156,11 @@ class Canvas extends Scene
 				sceneColorLayer.addChild(line.colorLayer);
 				scenePlaybackLayer.addChild(line.rideLayer);
 			default :
-				Main.console.log("New line creation error!", 0xFF0000);
-				return;
+			
 		}
 		line.render();
 		Main.grid.register(line);
+		return line;
 	}
 	
 	public function clear() {

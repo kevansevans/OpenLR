@@ -27,8 +27,11 @@ import h2d.Graphics;
 import h2d.Interactive;
 import hxd.App;
 import hxd.Res;
-import network.WebRTC;
 import utils.TableRNG;
+
+#if js
+import network.WebRTC;
+#end
 
 #if hl
 import hl.UI;
@@ -99,16 +102,16 @@ class Main extends App
 		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
 		var month:Int = Date.now().getMonth();
 		var monthstr:String = months[month] != null ? months[month] : "Lousy Smarch Weather";
-		return Date.now().getDate() + monthstr + Date.now().getFullYear();
+		return Date.now().getDate() + monthstr + Date.now().getFullYear() + ':' + Date.now().getHours() + '.' + Date.now().getMinutes();
     }
 	
 	static function main() 
 	{
 		build = "" + getBuildDate();
 		#if debug
-		build = "Debug:" + build;
+		build = "D:" + build;
 		#else
-		build = "Release:" + build;
+		build = "R:" + build;
 		#end
 		new Main();
 	}
@@ -155,6 +158,7 @@ class Main extends App
 		
 		toolControl = new ToolBehavior();
 		
+		Console.HIDE_LOG_TIMEOUT = 25;
 		console = new LRConsole(DefaultFont.get(), s2d);
 		setConsoleActions();
 		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
@@ -178,6 +182,10 @@ class Main extends App
 		textinfo = new TextInfo();
 		s2d.addChild(textinfo.info);
 		textinfo.info.x = textinfo.info.y = 5;
+		
+		#if js
+		p2p = new WebRTC();
+		#end
 	}
 	
 	//EVERYTHING is a console command if and when possible.
@@ -212,6 +220,13 @@ class Main extends App
 			var shifted:Bool = _invert == null ? false : _invert;
 			var lim = _lim == null ? -1 : _lim;
 			canvas.addLine(type, x1, y1, x2, y2, shifted, lim);
+		});
+		var arg29:ConsoleArgDesc = {t: AInt, opt: false, name : "Line Index"};
+		console.addCommand(Commands.removeLine, "remove specified line", [arg29], function(?_index:Int) {
+			if (_index != null) {
+				canvas.removeLine(grid.lines[_index]);
+			}
+			console.log('${_index}');
 		});
 		var arg10:ConsoleArgDesc = {t: AString, opt: false, name : "Tool"};
 		console.addCommand(Commands.setTool, "Change current active tool", [arg10], function(_tool:String, _color:String) {
@@ -379,6 +394,13 @@ class Main extends App
 		var arg26:ConsoleArgDesc = {t: AString, opt: false, name : "message"};
 		console.addCommand(Commands.say, "Relay a message to console", [arg26], function(_msg:String) {
 			console.log(_msg);
+			#if js
+			if (p2p.connected) p2p.sendData('chat:${authorName}:${_msg}');
+			#end
+		});
+		var arg30:ConsoleArgDesc = {t: AString, opt: false, name : "Author name"};
+		console.addCommand(Commands.setAuthorName, "Set author name", [arg30], function(_name:String) {
+			authorName = _name;
 		});
 		#if hl
 		var argMusic:ConsoleArgDesc = {t: AString, opt: false, name : "Song name"};
@@ -400,17 +422,25 @@ class Main extends App
 		});
 		#end
 		#if js
-		var argServerName:ConsoleArgDesc = {t: AString, opt: false, name : "Server Name"};
-		var argServerPassword:ConsoleArgDesc = {t: AString, opt: false, name : "Song name"};
-		console.addCommand('createServer', "Creates P2P server through WebRTC", [argServerName], function(_name:String) {
-			p2p = new WebRTC(true, function(_msg:String) { console.log(_msg); });
+		var argServerName:ConsoleArgDesc = {t: AString, opt: true, name : "ID Name"};
+		console.addCommand('createServer', "Creates P2P server through WebRTC", [argServerName], function(?_name:String) {
+			if (authorName == null) {
+				console.log('Please set author name with /name before creating server', 0xFF0000);
+				return;
+			}
+			p2p.create(_name);
 		});
 		console.addCommand('joinServer', "Joins P2P server through WebRTC", [argServerName], function(_name:String) {
-			p2p = new WebRTC(false, function(_msg:String) { console.log(_msg); }, _name);
+			if (authorName == null) {
+				console.log('Please set author name with /name before joining server', 0xFF0000);
+				return;
+			}
+			p2p.join(_name);
 		});
 		#end
 	}
 	
+	var networkDelta:Float = 0.0;
 	var riderPhysDelta:Float = 0.0;
 	var playing:Bool = false;
 	override function update(dt:Float):Void 
@@ -430,6 +460,12 @@ class Main extends App
 		canvas.drawRiders();
 		
 		textinfo.update();
+		
+		#if js
+		if (p2p.connected) {
+			p2p.sendData('updateCursor:${authorName}:${canvas.mouseX}:${canvas.mouseY}');
+		}
+		#end
 	}
 	
 	override function onResize():Void 

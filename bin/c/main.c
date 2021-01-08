@@ -156,13 +156,13 @@ void fun$init(void);
 #  include <file/SaveLoad.c>
 #  include <components/managers/Simulation.c>
 #  include <components/managers/Riders.c>
+#  include <components/managers/Grid.c>
 #  include <h2d/GPoint.c>
 #  include <h2d/_Graphics/GraphicsContent.c>
 #  include <hxd/earcut/EarNode.c>
 #  include <hxd/earcut/Earcut.c>
 #  include <h2d/Graphics.c>
 #  include <components/lines/LineBase.c>
-#  include <components/managers/Grid.c>
 #  include <components/tool/ToolBehavior.c>
 #  include <h2d/Console.c>
 #  include <h3d/shader/ColorMatrix.c>
@@ -388,9 +388,6 @@ void fun$init(void);
 #  include <hxsl/Serializer.c>
 #  include <hxsl/_Splitter/VarProps.c>
 #  include <sdl/Sdl.c>
-#  include <sys/ssl/Certificate.c>
-#  include <sys/ssl/SNICbResult.c>
-#  include <sys/ssl/Key.c>
 #  include <_std/Lambda.c>
 #  include <_std/Reflect.c>
 #  include <_std/StringTools.c>

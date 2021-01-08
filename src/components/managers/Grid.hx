@@ -1,6 +1,5 @@
 package components.managers;
 
-import components.lines.Accel;
 import components.lines.LineBase;
 import h2d.col.Point;
 import components.tool.ToolBehavior.LineColor;
@@ -15,7 +14,7 @@ class Grid
 {
 	public var registry:Map<String, LineContainer>;
 	
-	public var lines:Array<LineBase>;
+	public var lines:Map<Int, LineBase>;
 	
 	public var lineCount:Int = 0;
 	public var lineIDCount:Int = 0;
@@ -26,7 +25,7 @@ class Grid
 	public function new() 
 	{
 		registry = new Map();
-		lines = new Array();
+		lines = new Map();
 	}
 	
 	public function register(_line:LineBase)
@@ -97,8 +96,8 @@ class Grid
 	
 	public function addLine(_line:LineBase):Void 
 	{
-		lines.push(_line);
 		if (_line.id == null) _line.id = lineIDCount;
+		lines[_line.id] = _line;
 		++lineCount;
 		++lineIDCount;
 		switch (_line.type) {
@@ -161,6 +160,7 @@ class Grid
 			default :
 		}
 		--lineCount;
+		lines[_line.id] = null;
 	}
 	
 	static inline var GRIDSIZE:Int = 14;

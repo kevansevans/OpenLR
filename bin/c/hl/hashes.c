@@ -923,6 +923,9 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("isSpace"));
 	hl_hash((vbyte*)USTR("isBreakChar"));
 	hl_hash((vbyte*)USTR("isComplementChar"));
+	hl_hash((vbyte*)USTR("registryPosition"));
+	hl_hash((vbyte*)USTR("gx"));
+	hl_hash((vbyte*)USTR("gy"));
 	hl_hash((vbyte*)USTR("EARCUT"));
 	hl_hash((vbyte*)USTR("triangles"));
 	hl_hash((vbyte*)USTR("minX"));
@@ -954,9 +957,6 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("allocNext"));
 	hl_hash((vbyte*)USTR("i"));
 	hl_hash((vbyte*)USTR("steiner"));
-	hl_hash((vbyte*)USTR("registryPosition"));
-	hl_hash((vbyte*)USTR("gx"));
-	hl_hash((vbyte*)USTR("gy"));
 	hl_hash((vbyte*)USTR("HIDE_LOG_TIMEOUT"));
 	hl_hash((vbyte*)USTR("Element"));
 	hl_hash((vbyte*)USTR("PCData"));
@@ -2635,10 +2635,6 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("readFun"));
 	hl_hash((vbyte*)USTR("local"));
 	hl_hash((vbyte*)USTR("requireInit"));
-	hl_hash((vbyte*)USTR("__h"));
-	hl_hash((vbyte*)USTR("__x"));
-	hl_hash((vbyte*)USTR("cert"));
-	hl_hash((vbyte*)USTR("__k"));
 	hl_hash((vbyte*)USTR("ignore"));
 	hl_hash((vbyte*)USTR("hxUnserialize"));
 	hl_hash((vbyte*)USTR("hxSerialize"));
