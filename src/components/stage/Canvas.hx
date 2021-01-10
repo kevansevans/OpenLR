@@ -11,7 +11,7 @@ import h2d.Object;
 import h2d.Scene;
 import h2d.col.Point;
 import h2d.Bitmap;
-import h2d.Tile;
+import network.NetAction;
 
 /**
  * ...
@@ -108,9 +108,6 @@ class Canvas extends Scene
                 if (_loc12 < eraserSize * _loc9 || _loc13 < eraserSize * _loc9 || _loc11 < eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1)
                 {
 					removeLine(line);
-					#if js
-					if (Main.p2p.connected) Main.p2p.removeLine(line.id);
-					#end
 					continue;
 				}
 				
@@ -129,16 +126,13 @@ class Canvas extends Scene
                 if (_loc12 < eraserSize * _loc9 || _loc13 < eraserSize * _loc9 || _loc11 < eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1)
                 {
 					removeLine(line);
-					#if js
-					if (Main.p2p.connected) Main.p2p.removeLine(line.id);
-					#end
 					continue;
 				}
 			}
 		}
 	}
 	
-	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1):LineBase {
+	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
 		var line:LineBase = null;
 		switch (_type) {
 			case 0:
@@ -160,7 +154,20 @@ class Canvas extends Scene
 		}
 		line.render();
 		Main.grid.register(line);
-		return line;
+		
+		#if js
+		
+		if (Main.p2p.connected) Main.p2p.updateLineInfo(NetAction.lineDownload, [
+			line.type,
+			line.start.x,
+			line.start.y,
+			line.end.x,
+			line.end.y,
+			line.shifted,
+			line.limType
+		]);
+		
+		#end
 	}
 	
 	public function clear() {
@@ -175,6 +182,10 @@ class Canvas extends Scene
 		sceneColorLayer.removeChild(_line.colorLayer);
 		scenePlaybackLayer.removeChild(_line.rideLayer);
 		rideLayer.removeChild(_line.rideLayer);
+		
+		#if js
+		if (Main.p2p.connected) Main.p2p.updateLineInfo(NetAction.deleteLine, [_line.id]);
+		#end
 	}
 	
 	function get_drawMode():DrawMode 
@@ -224,4 +235,39 @@ class Canvas extends Scene
 		}
 		return drawMode = _mode;
 	}
+	
+	#if js
+	public function P2PLineAdd(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
+		var line:LineBase = null;
+		switch (_type) {
+			case 0:
+				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
+				if (_limMode != -1) line.setLim(_limMode);
+				colorLayer.addChild(line.colorLayer);
+				rideLayer.addChild(line.rideLayer);
+			case 1 :
+				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
+				if (_limMode != -1) line.setLim(_limMode);
+				colorLayer.addChild(line.colorLayer);
+				rideLayer.addChild(line.rideLayer);
+			case 2 :
+				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
+				sceneColorLayer.addChild(line.colorLayer);
+				scenePlaybackLayer.addChild(line.rideLayer);
+			default :
+			
+		}
+		line.render();
+		Main.grid.register(line);
+	}
+	
+	public function P2PRemoveLine(_id:Int) {
+		var _line = Main.grid.lines[_id];
+		Main.grid.unregister(_line);
+		colorLayer.removeChild(_line.colorLayer);
+		sceneColorLayer.removeChild(_line.colorLayer);
+		scenePlaybackLayer.removeChild(_line.rideLayer);
+		rideLayer.removeChild(_line.rideLayer);
+	}
+	#end
 }

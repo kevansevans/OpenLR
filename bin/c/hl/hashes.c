@@ -1023,7 +1023,6 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("textinfo"));
 	hl_hash((vbyte*)USTR("audio"));
 	hl_hash((vbyte*)USTR("rng"));
-	hl_hash((vbyte*)USTR("getBuildDate"));
 	hl_hash((vbyte*)USTR("main"));
 	hl_hash((vbyte*)USTR("rideLayer"));
 	hl_hash((vbyte*)USTR("sceneColorLayer"));
@@ -1289,6 +1288,8 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("addNewRider"));
 	hl_hash((vbyte*)USTR("renameRider"));
 	hl_hash((vbyte*)USTR("stepRiders"));
+	hl_hash((vbyte*)USTR("resetPositions"));
+	hl_hash((vbyte*)USTR("removeRider"));
 	hl_hash((vbyte*)USTR("frameStates"));
 	hl_hash((vbyte*)USTR("flagPoint"));
 	hl_hash((vbyte*)USTR("paused"));
@@ -1318,6 +1319,8 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("listTrackFiles"));
 	hl_hash((vbyte*)USTR("loadTrack"));
 	hl_hash((vbyte*)USTR("loadJSON"));
+	hl_hash((vbyte*)USTR("saveUserInfo"));
+	hl_hash((vbyte*)USTR("loadUserInfo"));
 	hl_hash((vbyte*)USTR("info"));
 	hl_hash((vbyte*)USTR("framerate"));
 	hl_hash((vbyte*)USTR("getLineVisibility"));
@@ -1372,6 +1375,7 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("writeInt32"));
 	hl_hash((vbyte*)USTR("writeInput"));
 	hl_hash((vbyte*)USTR("writeString"));
+	hl_hash((vbyte*)USTR("crash"));
 	hl_hash((vbyte*)USTR("DEFAULT_FILTER"));
 	hl_hash((vbyte*)USTR("DEFAULT_ASYNC"));
 	hl_hash((vbyte*)USTR("decodeJPG"));

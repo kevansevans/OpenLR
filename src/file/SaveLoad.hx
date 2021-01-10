@@ -190,6 +190,24 @@ class SaveLoad
 		#end
 	}
 	
+	public function saveUserInfo() {
+		var info:UserInfo = {
+			name : Main.authorName
+		}
+		
+		Save.save(info, 'playerdata', true);
+	}
+	
+	public function loadUserInfo() {
+		
+		var info = Save.load(null, 'playerdata', true);
+		
+		if (info != null) {
+			Main.authorName = info.name;
+		}
+		
+	}
+	
 }
 
 typedef SaveData = {
@@ -198,4 +216,8 @@ typedef SaveData = {
 	var name:Null<String>;
 	var author:Null<String>;
 	var song:Null<String>;
+}
+
+typedef UserInfo = {
+	var name:String;
 }

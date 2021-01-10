@@ -91,7 +91,7 @@ void components_stage_Canvas_drawRiders(components__stage__Canvas r0) {
 		r8 = (components__sledder__RiderBase)hl_dyn_call_obj(r5->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
 	}
 	if( r8 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r8->$type->vobj_proto[2])(r8);
+	((void (*)(components__sledder__RiderBase))r8->$type->vobj_proto[3])(r8);
 	goto label$ae2bdbd_1_7;
 	label$ae2bdbd_1_15:
 	return;
@@ -450,7 +450,7 @@ void components_stage_Canvas_erase(components__stage__Canvas r0) {
 	return;
 }
 
-components__lines__LineBase components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double r2,double r3,double r4,double r5,vdynamic* r6,vdynamic* r7) {
+void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double r2,double r3,double r4,double r5,vdynamic* r6,vdynamic* r7) {
 	components__managers__Grid r34;
 	h2d__Graphics r23;
 	bool r8;
@@ -577,7 +577,7 @@ components__lines__LineBase components_stage_Canvas_addLine(components__stage__C
 	r34 = r35->grid;
 	if( r34 == NULL ) hl_null_access();
 	components_managers_Grid_register(r34,r10);
-	return r10;
+	return;
 }
 
 void components_stage_Canvas_clear(components__stage__Canvas r0) {

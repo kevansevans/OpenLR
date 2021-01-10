@@ -17,7 +17,7 @@ void components_stage_LRConsole_new(components__stage__LRConsole r0,h2d__Font r1
 	h2d__TextInput r7;
 	int r6;
 	h2d_Console_new(((h2d__Console)r0),r1,r2);
-	r4 = 5.;
+	r4 = 30.;
 	r5 = (h2d__$Console)g$_h2d_Console;
 	r5->HIDE_LOG_TIMEOUT = r4;
 	r7 = r0->tf;

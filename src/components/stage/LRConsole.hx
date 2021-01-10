@@ -18,7 +18,7 @@ class LRConsole extends Console
 	{
 		super(font, parent);
 		
-		Console.HIDE_LOG_TIMEOUT = 5;
+		Console.HIDE_LOG_TIMEOUT = 30;
 		
 		tf.textColor = 0xFF111111;
 	}

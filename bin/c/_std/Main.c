@@ -2,44 +2,21 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <_std/Main.h>
-#include <hl/types/ArrayObj.h>
-#include <_std/Date.h>
-extern hl_type t$String;
-#include <hl/natives.h>
-extern String s$JAN;
-extern String s$FEB;
-extern String s$MAR;
-extern String s$APR;
-extern String s$MAY;
-extern String s$JUN;
-extern String s$AUG;
-extern String s$SEP;
-extern String s$OCT;
-extern String s$NOV;
-extern String s$DEC;
-hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
-Date Date_now(void);
-int Date_getMonth(Date);
-extern String s$Lousy_Smarch_Weather;
-int Date_getDate(Date);
-String String___alloc__(vbyte*,int);
-String String___add__(String,String);
-int Date_getFullYear(Date);
-extern String s$853ae90;
-int Date_getHours(Date);
-extern String s$5058f1a;
-int Date_getMinutes(Date);
-extern String s$;
+extern String s$Release;
 extern $Main g$_Main;
-extern String s$02bd774;
 extern hl_type t$Main;
 void Main_new(Main);
+#include <_std/Date.h>
 void hxd_App_new(hxd__App);
 extern hl_type t$utils_TableRNG;
 void utils_TableRNG_new(utils__TableRNG,int*,int*);
+Date Date_now(void);
+int Date_getMonth(Date);
 extern hl_type t$_i32;
 void utils_TableRNG_shuffle(utils__TableRNG,vdynamic*);
+int Date_getMinutes(Date);
 int Date_getSeconds(Date);
+#include <hl/natives.h>
 #include <hxd/res/Loader.h>
 #include <hxd/fs/EmbedFileSystem.h>
 #include <hxd/fs/FileEntry.h>
@@ -53,7 +30,7 @@ int Date_getSeconds(Date);
 void hxd_App_init(hxd__App);
 extern hl_type t$hxd_res_Loader;
 extern hl_type t$hxd_fs_EmbedFileSystem;
-extern String s$b8896f0;
+extern String s$28f5fed;
 vdynamic* haxe_Unserializer_run(String);
 void hxd_fs_EmbedFileSystem_new(hxd__fs__EmbedFileSystem,vdynamic*);
 extern hl_type t$vrt_fa4db88;
@@ -61,6 +38,7 @@ void hxd_res_Loader_new(hxd__res__Loader,vvirtual*);
 hxd__res__Loader hxd_Res_set_loader(hxd__res__Loader);
 hxd__Window hxd_Window_getInstance(void);
 extern String s$OpenLR_;
+String String___add__(String,String);
 String hxd_Window_set_title(hxd__Window,String);
 extern hl_type t$h2d_Graphics;
 void h2d_Graphics_new(h2d__Graphics,h2d__Object);
@@ -83,6 +61,9 @@ extern String s$Welcome_to_OpenLR_;
 void h2d_Console_log(h2d__Console,String,vdynamic*);
 extern String s$Press_to_toggle_console_;
 extern String s$a351128;
+extern String s$6c51ece;
+extern String s$Press_X_to_stop_;
+extern String s$3f659a9;
 extern hl_type t$components_managers_Grid;
 void components_managers_Grid_new(components__managers__Grid);
 extern hl_type t$components_managers_Riders;
@@ -91,6 +72,7 @@ extern hl_type t$components_managers_Simulation;
 void components_managers_Simulation_new(components__managers__Simulation);
 extern hl_type t$file_SaveLoad;
 void file_SaveLoad_new(file__SaveLoad);
+void file_SaveLoad_loadUserInfo(file__SaveLoad);
 extern hl_type t$components_managers_Musicplayer;
 void components_managers_Musicplayer_new(components__managers__Musicplayer);
 extern hl_type t$components_stage_TextInfo;
@@ -100,16 +82,17 @@ extern String s$Set_grid_size_to_;
 String Std_string(vdynamic*);
 double Math_max(double,double);
 extern String s$Set_canvas_scale_to_;
-#include <components/lines/LineBase.h>
 double h2d_Scene_get_mouseX(h2d__Scene);
 extern hl_type t$_f64;
 double h2d_Scene_get_mouseY(h2d__Scene);
-components__lines__LineBase components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*);
+void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*);
 #include <haxe/ds/IntMap.h>
+#include <components/lines/LineBase.h>
 vdynamic* haxe_ds_IntMap_get(haxe__ds__IntMap,int);
 void components_stage_Canvas_removeLine(components__stage__Canvas,components__lines__LineBase);
 #include <components/tool/ToolMode.h>
 String String_toUpperCase(String);
+extern String s$;
 extern String s$_is_not_a_recognized_tool_name;
 extern venum* g$components_tool_ToolMode_ERASER;
 extern venum* g$components_tool_ToolMode_LINE;
@@ -121,6 +104,7 @@ void components_stage_Canvas_addCanvasPosition(components__stage__Canvas,double,
 bool h2d_Object_set_visible(h2d__Object,bool);
 extern String s$7ce4f5c;
 extern String s$ee6321b;
+String String___alloc__(vbyte*,int);
 extern String s$9eb5ce1;
 extern String s$8b9e9e3;
 extern String s$4aaf8b9;
@@ -147,6 +131,7 @@ extern String s$96bf69c;
 extern String s$_is_not_valid_;
 extern String s$71b4f2d;
 extern String s$dbb0f13;
+void components_managers_Riders_removeRider(components__managers__Riders,String);
 extern String s$Track_name_set_to_;
 extern String s$652b44f;
 void file_SaveLoad_saveTrack(file__SaveLoad,String);
@@ -165,8 +150,11 @@ extern String s$Grid_snapping_set_to_;
 extern String s$Bosh;
 void components_managers_Riders_renameRider(components__managers__Riders,String,String);
 void file_SaveLoad_loadJSON(file__SaveLoad,String);
+void file_SaveLoad_saveUserInfo(file__SaveLoad);
+extern String s$Author_name_set_to_;
 void components_managers_Musicplayer_loadAudio(components__managers__Musicplayer,String);
 extern String s$fbf0612;
+#include <hl/types/ArrayObj.h>
 #include <h2d/ConsoleArg.h>
 extern hl_type t$fun_7b48b4f;
 extern hl_type t$fun_a01f396;
@@ -184,11 +172,13 @@ extern hl_type t$fun_0a89fd7;
 extern String s$github;
 extern String s$Link_to_github_page;
 extern hl_type t$vrt_6b9bbd4;
+hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 void h2d_Console_addCommand(h2d__Console,String,String,hl__types__ArrayObj,vdynamic*);
 extern venum* g$h2d_ConsoleArg_AFloat;
 extern hl_type t$h2d_ConsoleArg;
 extern hl_type t$nul_bool;
 extern String s$x_value;
+extern hl_type t$String;
 extern String s$y_value;
 extern String s$setCanvasPosition;
 extern String s$Sets_the_position_of_the_canvas;
@@ -307,135 +297,15 @@ void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
 void h2d_Graphics_flush(h2d__Graphics);
 void h2d_Graphics_addVertex(h2d__Graphics,double,double,double,double,double,double,double*,double*);
 
-String Main_getBuildDate() {
-	String r4, r9, r12;
-	Date r5;
-	hl__types__ArrayObj r0;
-	hl_type *r2;
-	int *r10;
-	vdynamic *r8;
-	vbyte *r11;
-	int r3, r6, r7;
-	varray *r1;
-	r2 = &t$String;
-	r3 = 12;
-	r1 = hl_alloc_array(r2,r3);
-	r4 = (String)s$JAN;
-	r3 = 0;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$FEB;
-	r3 = 1;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$MAR;
-	r3 = 2;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$APR;
-	r3 = 3;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$MAY;
-	r3 = 4;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$JUN;
-	r3 = 5;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$JUN;
-	r3 = 6;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$AUG;
-	r3 = 7;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$SEP;
-	r3 = 8;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$OCT;
-	r3 = 9;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$NOV;
-	r3 = 10;
-	((String*)(r1 + 1))[r3] = r4;
-	r4 = (String)s$DEC;
-	r3 = 11;
-	((String*)(r1 + 1))[r3] = r4;
-	r0 = hl_types_ArrayObj_alloc(r1);
-	r5 = Date_now();
-	if( r5 == NULL ) hl_null_access();
-	r3 = Date_getMonth(r5);
-	if( r0 == NULL ) hl_null_access();
-	r7 = r0->length;
-	if( ((unsigned)r3) < ((unsigned)r7) ) goto label$36888b6_1_48;
-	r4 = NULL;
-	goto label$36888b6_1_51;
-	label$36888b6_1_48:
-	r1 = r0->array;
-	r8 = ((vdynamic**)(r1 + 1))[r3];
-	r4 = (String)r8;
-	label$36888b6_1_51:
-	if( !r4 ) goto label$36888b6_1_60;
-	r7 = r0->length;
-	if( ((unsigned)r3) < ((unsigned)r7) ) goto label$36888b6_1_56;
-	r4 = NULL;
-	goto label$36888b6_1_59;
-	label$36888b6_1_56:
-	r1 = r0->array;
-	r8 = ((vdynamic**)(r1 + 1))[r3];
-	r4 = (String)r8;
-	label$36888b6_1_59:
-	goto label$36888b6_1_61;
-	label$36888b6_1_60:
-	r4 = (String)s$Lousy_Smarch_Weather;
-	label$36888b6_1_61:
-	r5 = Date_now();
-	if( r5 == NULL ) hl_null_access();
-	r6 = Date_getDate(r5);
-	r10 = &r6;
-	r11 = hl_itos(r6,r10);
-	r9 = String___alloc__(r11,r6);
-	r9 = String___add__(r9,r4);
-	r5 = Date_now();
-	if( r5 == NULL ) hl_null_access();
-	r6 = Date_getFullYear(r5);
-	r10 = &r6;
-	r11 = hl_itos(r6,r10);
-	r12 = String___alloc__(r11,r6);
-	r9 = String___add__(r9,r12);
-	r12 = (String)s$853ae90;
-	r9 = String___add__(r9,r12);
-	r5 = Date_now();
-	if( r5 == NULL ) hl_null_access();
-	r6 = Date_getHours(r5);
-	r10 = &r6;
-	r11 = hl_itos(r6,r10);
-	r12 = String___alloc__(r11,r6);
-	r9 = String___add__(r9,r12);
-	r12 = (String)s$5058f1a;
-	r9 = String___add__(r9,r12);
-	r5 = Date_now();
-	if( r5 == NULL ) hl_null_access();
-	r6 = Date_getMinutes(r5);
-	r10 = &r6;
-	r11 = hl_itos(r6,r10);
-	r12 = String___alloc__(r11,r6);
-	r9 = String___add__(r9,r12);
-	return r9;
-}
-
 void Main_main() {
-	String r0, r1;
-	Main r3;
-	$Main r2;
-	r0 = (String)s$;
-	r1 = Main_getBuildDate();
-	r0 = String___add__(r0,r1);
-	r2 = ($Main)g$_Main;
-	r2->build = r0;
-	r0 = (String)s$02bd774;
-	r2 = ($Main)g$_Main;
-	r1 = r2->build;
-	r0 = String___add__(r0,r1);
-	r2 = ($Main)g$_Main;
-	r2->build = r0;
-	r3 = (Main)hl_alloc_obj(&t$Main);
-	Main_new(r3);
+	String r0;
+	Main r2;
+	$Main r1;
+	r0 = (String)s$Release;
+	r1 = ($Main)g$_Main;
+	r1->build = r0;
+	r2 = (Main)hl_alloc_obj(&t$Main);
+	Main_new(r2);
 	return;
 }
 
@@ -526,18 +396,18 @@ void Main_init(Main r0) {
 	r3->locengine = r2;
 	r4 = (hxd__res__Loader)hl_alloc_obj(&t$hxd_res_Loader);
 	r5 = (hxd__fs__EmbedFileSystem)hl_alloc_obj(&t$hxd_fs_EmbedFileSystem);
-	r7 = (String)s$b8896f0;
+	r7 = (String)s$28f5fed;
 	r6 = haxe_Unserializer_run(r7);
 	hxd_fs_EmbedFileSystem_new(r5,r6);
-	if( r5 ) goto label$36888b6_4_12;
+	if( r5 ) goto label$36888b6_3_12;
 	r8 = NULL;
-	goto label$36888b6_4_16;
-	label$36888b6_4_12:
+	goto label$36888b6_3_16;
+	label$36888b6_3_12:
 	r8 = r5->f$1;
-	if( r8 ) goto label$36888b6_4_16;
+	if( r8 ) goto label$36888b6_3_16;
 	r8 = hl_to_virtual(&t$vrt_fa4db88,(vdynamic*)r5);
 	r5->f$1 = r8;
-	label$36888b6_4_16:
+	label$36888b6_3_16:
 	hxd_res_Loader_new(r4,r8);
 	r4 = hxd_Res_set_loader(r4);
 	r9 = hxd_Window_getInstance();
@@ -661,6 +531,30 @@ void Main_init(Main r0) {
 	r12 = hl_alloc_dynamic(&t$_i32);
 	r12->v.i = r11;
 	h2d_Console_log(((h2d__Console)r27),r7,r12);
+	r3 = ($Main)g$_Main;
+	r27 = r3->console;
+	if( r27 == NULL ) hl_null_access();
+	r7 = (String)s$6c51ece;
+	r11 = 3355443;
+	r12 = hl_alloc_dynamic(&t$_i32);
+	r12->v.i = r11;
+	h2d_Console_log(((h2d__Console)r27),r7,r12);
+	r3 = ($Main)g$_Main;
+	r27 = r3->console;
+	if( r27 == NULL ) hl_null_access();
+	r7 = (String)s$Press_X_to_stop_;
+	r11 = 3355443;
+	r12 = hl_alloc_dynamic(&t$_i32);
+	r12->v.i = r11;
+	h2d_Console_log(((h2d__Console)r27),r7,r12);
+	r3 = ($Main)g$_Main;
+	r27 = r3->console;
+	if( r27 == NULL ) hl_null_access();
+	r7 = (String)s$3f659a9;
+	r11 = 3355443;
+	r12 = hl_alloc_dynamic(&t$_i32);
+	r12->v.i = r11;
+	h2d_Console_log(((h2d__Console)r27),r7,r12);
 	r29 = (components__managers__Grid)hl_alloc_obj(&t$components_managers_Grid);
 	components_managers_Grid_new(r29);
 	r3 = ($Main)g$_Main;
@@ -677,6 +571,10 @@ void Main_init(Main r0) {
 	file_SaveLoad_new(r32);
 	r3 = ($Main)g$_Main;
 	r3->saveload = r32;
+	r3 = ($Main)g$_Main;
+	r32 = r3->saveload;
+	if( r32 == NULL ) hl_null_access();
+	file_SaveLoad_loadUserInfo(r32);
 	r33 = (components__managers__Musicplayer)hl_alloc_obj(&t$components_managers_Musicplayer);
 	components_managers_Musicplayer_new(r33);
 	r3 = ($Main)g$_Main;
@@ -762,11 +660,11 @@ void Main_setConsoleActions__$4(vdynamic* r0) {
 	vdynamic *r2;
 	components__stage__LRConsole r5;
 	int r1;
-	if( r0 ) goto label$36888b6_8_3;
+	if( r0 ) goto label$36888b6_7_3;
 	r1 = 64;
 	r0 = hl_alloc_dynamic(&t$_i32);
 	r0->v.i = r1;
-	label$36888b6_8_3:
+	label$36888b6_7_3:
 	r1 = r0 ? r0->v.i : 0;
 	r3 = ($Main)g$_Main;
 	r3->viewGridSize = r1;
@@ -774,12 +672,12 @@ void Main_setConsoleActions__$4(vdynamic* r0) {
 	r5 = r3->console;
 	if( r5 == NULL ) hl_null_access();
 	r6 = (String)s$Set_grid_size_to_;
-	if( r0 ) goto label$36888b6_8_13;
+	if( r0 ) goto label$36888b6_7_13;
 	r7 = NULL;
-	goto label$36888b6_8_14;
-	label$36888b6_8_13:
+	goto label$36888b6_7_14;
+	label$36888b6_7_13:
 	r7 = Std_string(((vdynamic*)r0));
-	label$36888b6_8_14:
+	label$36888b6_7_14:
 	r6 = String___add__(r6,r7);
 	r1 = 187;
 	r2 = hl_alloc_dynamic(&t$_i32);
@@ -825,11 +723,11 @@ void Main_setConsoleActions__$7(vdynamic* r0) {
 	vdynamic *r2;
 	components__stage__LRConsole r5;
 	int r1;
-	if( r0 ) goto label$36888b6_11_3;
+	if( r0 ) goto label$36888b6_10_3;
 	r1 = 2;
 	r0 = hl_alloc_dynamic(&t$_i32);
 	r0->v.i = r1;
-	label$36888b6_11_3:
+	label$36888b6_10_3:
 	r1 = r0 ? r0->v.i : 0;
 	r3 = ($Main)g$_Main;
 	r3->viewGridSize = r1;
@@ -837,12 +735,12 @@ void Main_setConsoleActions__$7(vdynamic* r0) {
 	r5 = r3->console;
 	if( r5 == NULL ) hl_null_access();
 	r6 = (String)s$Set_canvas_scale_to_;
-	if( r0 ) goto label$36888b6_11_13;
+	if( r0 ) goto label$36888b6_10_13;
 	r7 = NULL;
-	goto label$36888b6_11_14;
-	label$36888b6_11_13:
+	goto label$36888b6_10_14;
+	label$36888b6_10_13:
 	r7 = Std_string(((vdynamic*)r0));
-	label$36888b6_11_14:
+	label$36888b6_10_14:
 	r6 = String___add__(r6,r7);
 	r1 = 187;
 	r2 = hl_alloc_dynamic(&t$_i32);
@@ -854,125 +752,109 @@ void Main_setConsoleActions__$7(vdynamic* r0) {
 void Main_setConsoleActions__$8(vdynamic* r0,vdynamic* r1,vdynamic* r2,vdynamic* r3,vdynamic* r4,vdynamic* r5,vdynamic* r6) {
 	bool r19;
 	$Main r10;
-	components__lines__LineBase r22;
 	components__tool__ToolBehavior r9;
 	components__stage__Canvas r14;
-	double r13, r17, r23, r24;
+	double r13, r17, r22, r23;
 	vdynamic *r7, *r12, *r15, *r16, *r18, *r20, *r21;
 	int r8;
-	if( r0 ) goto label$36888b6_12_7;
+	if( r0 ) goto label$36888b6_11_7;
 	r10 = ($Main)g$_Main;
 	r9 = r10->toolControl;
 	if( r9 == NULL ) hl_null_access();
 	r8 = r9->color;
 	r7 = hl_alloc_dynamic(&t$_i32);
 	r7->v.i = r8;
-	goto label$36888b6_12_8;
-	label$36888b6_12_7:
+	goto label$36888b6_11_8;
+	label$36888b6_11_7:
 	r7 = r0;
-	label$36888b6_12_8:
-	if( r1 ) goto label$36888b6_12_15;
+	label$36888b6_11_8:
+	if( r1 ) goto label$36888b6_11_15;
 	r10 = ($Main)g$_Main;
 	r14 = r10->canvas;
 	if( r14 == NULL ) hl_null_access();
 	r13 = h2d_Scene_get_mouseX(((h2d__Scene)r14));
 	r12 = hl_alloc_dynamic(&t$_f64);
 	r12->v.d = r13;
-	goto label$36888b6_12_16;
-	label$36888b6_12_15:
+	goto label$36888b6_11_16;
+	label$36888b6_11_15:
 	r12 = r1;
-	label$36888b6_12_16:
-	if( r2 ) goto label$36888b6_12_23;
+	label$36888b6_11_16:
+	if( r2 ) goto label$36888b6_11_23;
 	r10 = ($Main)g$_Main;
 	r14 = r10->canvas;
 	if( r14 == NULL ) hl_null_access();
 	r13 = h2d_Scene_get_mouseY(((h2d__Scene)r14));
 	r15 = hl_alloc_dynamic(&t$_f64);
 	r15->v.d = r13;
-	goto label$36888b6_12_24;
-	label$36888b6_12_23:
+	goto label$36888b6_11_24;
+	label$36888b6_11_23:
 	r15 = r2;
-	label$36888b6_12_24:
-	if( r3 ) goto label$36888b6_12_30;
+	label$36888b6_11_24:
+	if( r3 ) goto label$36888b6_11_30;
 	r13 = r12 ? r12->v.d : 0;
 	r17 = 10.;
 	r13 = r13 + r17;
 	r16 = hl_alloc_dynamic(&t$_f64);
 	r16->v.d = r13;
-	goto label$36888b6_12_31;
-	label$36888b6_12_30:
+	goto label$36888b6_11_31;
+	label$36888b6_11_30:
 	r16 = r3;
-	label$36888b6_12_31:
-	if( r4 ) goto label$36888b6_12_34;
+	label$36888b6_11_31:
+	if( r4 ) goto label$36888b6_11_34;
 	r18 = r15;
-	goto label$36888b6_12_35;
-	label$36888b6_12_34:
+	goto label$36888b6_11_35;
+	label$36888b6_11_34:
 	r18 = r4;
-	label$36888b6_12_35:
-	if( r5 ) goto label$36888b6_12_38;
+	label$36888b6_11_35:
+	if( r5 ) goto label$36888b6_11_38;
 	r19 = false;
-	goto label$36888b6_12_39;
-	label$36888b6_12_38:
+	goto label$36888b6_11_39;
+	label$36888b6_11_38:
 	r19 = r5 ? r5->v.b : 0;
-	label$36888b6_12_39:
-	if( r6 ) goto label$36888b6_12_43;
+	label$36888b6_11_39:
+	if( r6 ) goto label$36888b6_11_43;
 	r8 = -1;
 	r21 = hl_alloc_dynamic(&t$_i32);
 	r21->v.i = r8;
-	goto label$36888b6_12_44;
-	label$36888b6_12_43:
+	goto label$36888b6_11_44;
+	label$36888b6_11_43:
 	r21 = r6;
-	label$36888b6_12_44:
+	label$36888b6_11_44:
 	r10 = ($Main)g$_Main;
 	r14 = r10->canvas;
 	if( r14 == NULL ) hl_null_access();
 	r8 = r7 ? r7->v.i : 0;
 	r13 = r12 ? r12->v.d : 0;
 	r17 = r15 ? r15->v.d : 0;
-	r23 = r16 ? r16->v.d : 0;
-	r24 = r18 ? r18->v.d : 0;
+	r22 = r16 ? r16->v.d : 0;
+	r23 = r18 ? r18->v.d : 0;
 	r20 = hl_alloc_dynbool(r19);
-	r22 = components_stage_Canvas_addLine(r14,r8,r13,r17,r23,r24,r20,r21);
+	components_stage_Canvas_addLine(r14,r8,r13,r17,r22,r23,r20,r21);
 	return;
 }
 
 void Main_setConsoleActions__$9(vdynamic* r0) {
-	String r11, r12;
-	components__managers__Grid r7;
-	haxe__ds__IntMap r6;
-	$Main r4;
-	components__lines__LineBase r9;
-	components__stage__Canvas r3;
-	vdynamic *r2, *r5;
-	components__stage__LRConsole r10;
-	int r8;
-	if( !r0 ) goto label$36888b6_13_13;
-	r4 = ($Main)g$_Main;
-	r3 = r4->canvas;
-	if( r3 == NULL ) hl_null_access();
-	r4 = ($Main)g$_Main;
-	r7 = r4->grid;
-	if( r7 == NULL ) hl_null_access();
-	r6 = r7->lines;
+	components__managers__Grid r6;
+	haxe__ds__IntMap r5;
+	$Main r3;
+	components__lines__LineBase r8;
+	components__stage__Canvas r2;
+	vdynamic *r4;
+	int r7;
+	if( !r0 ) goto label$36888b6_12_13;
+	r3 = ($Main)g$_Main;
+	r2 = r3->canvas;
+	if( r2 == NULL ) hl_null_access();
+	r3 = ($Main)g$_Main;
+	r6 = r3->grid;
 	if( r6 == NULL ) hl_null_access();
-	r8 = r0 ? r0->v.i : 0;
-	r5 = haxe_ds_IntMap_get(r6,r8);
-	r9 = (components__lines__LineBase)r5;
-	components_stage_Canvas_removeLine(r3,r9);
-	label$36888b6_13_13:
-	r4 = ($Main)g$_Main;
-	r10 = r4->console;
-	if( r10 == NULL ) hl_null_access();
-	r11 = (String)s$;
-	if( r0 ) goto label$36888b6_13_20;
-	r12 = NULL;
-	goto label$36888b6_13_21;
-	label$36888b6_13_20:
-	r12 = Std_string(((vdynamic*)r0));
-	label$36888b6_13_21:
-	r11 = String___add__(r11,r12);
-	r2 = NULL;
-	h2d_Console_log(((h2d__Console)r10),r11,r2);
+	r5 = r6->lines;
+	if( r5 == NULL ) hl_null_access();
+	r7 = r0 ? r0->v.i : 0;
+	r4 = haxe_ds_IntMap_get(r5,r7);
+	r8 = (components__lines__LineBase)r4;
+	components_stage_Canvas_removeLine(r2,r8);
+	label$36888b6_12_13:
 	return;
 }
 
@@ -987,46 +869,46 @@ void Main_setConsoleActions__$10(String r0,String r1) {
 	int r4, r5;
 	if( r0 == NULL ) hl_null_access();
 	r3 = String_toUpperCase(r0);
-	if( !r3 ) goto label$36888b6_14_11;
+	if( !r3 ) goto label$36888b6_13_11;
 	r4 = r3->length;
 	r5 = 6;
-	if( r4 != r5 ) goto label$36888b6_14_11;
+	if( r4 != r5 ) goto label$36888b6_13_11;
 	r6 = r3->bytes;
 	r7 = (vbyte*)USTR("ERASER");
 	r4 = hl_string_compare(r6,r7,r4);
 	r5 = 0;
-	if( r4 == r5 ) goto label$36888b6_14_49;
-	label$36888b6_14_11:
-	if( !r3 ) goto label$36888b6_14_20;
+	if( r4 == r5 ) goto label$36888b6_13_49;
+	label$36888b6_13_11:
+	if( !r3 ) goto label$36888b6_13_20;
 	r4 = r3->length;
 	r5 = 4;
-	if( r4 != r5 ) goto label$36888b6_14_20;
+	if( r4 != r5 ) goto label$36888b6_13_20;
 	r6 = r3->bytes;
 	r7 = (vbyte*)USTR("LINE");
 	r4 = hl_string_compare(r6,r7,r4);
 	r5 = 0;
-	if( r4 == r5 ) goto label$36888b6_14_55;
-	label$36888b6_14_20:
-	if( !r3 ) goto label$36888b6_14_29;
+	if( r4 == r5 ) goto label$36888b6_13_55;
+	label$36888b6_13_20:
+	if( !r3 ) goto label$36888b6_13_29;
 	r4 = r3->length;
 	r5 = 4;
-	if( r4 != r5 ) goto label$36888b6_14_29;
+	if( r4 != r5 ) goto label$36888b6_13_29;
 	r6 = r3->bytes;
 	r7 = (vbyte*)USTR("NONE");
 	r4 = hl_string_compare(r6,r7,r4);
 	r5 = 0;
-	if( r4 == r5 ) goto label$36888b6_14_61;
-	label$36888b6_14_29:
-	if( !r3 ) goto label$36888b6_14_38;
+	if( r4 == r5 ) goto label$36888b6_13_61;
+	label$36888b6_13_29:
+	if( !r3 ) goto label$36888b6_13_38;
 	r4 = r3->length;
 	r5 = 6;
-	if( r4 != r5 ) goto label$36888b6_14_38;
+	if( r4 != r5 ) goto label$36888b6_13_38;
 	r6 = r3->bytes;
 	r7 = (vbyte*)USTR("PENCIL");
 	r4 = hl_string_compare(r6,r7,r4);
 	r5 = 0;
-	if( r4 == r5 ) goto label$36888b6_14_67;
-	label$36888b6_14_38:
+	if( r4 == r5 ) goto label$36888b6_13_67;
+	label$36888b6_13_38:
 	r9 = ($Main)g$_Main;
 	r8 = r9->console;
 	if( r8 == NULL ) hl_null_access();
@@ -1038,35 +920,35 @@ void Main_setConsoleActions__$10(String r0,String r1) {
 	r11 = hl_alloc_dynamic(&t$_i32);
 	r11->v.i = r4;
 	h2d_Console_log(((h2d__Console)r8),r3,r11);
-	goto label$36888b6_14_72;
-	label$36888b6_14_49:
+	goto label$36888b6_13_72;
+	label$36888b6_13_49:
 	r9 = ($Main)g$_Main;
 	r12 = r9->toolControl;
 	if( r12 == NULL ) hl_null_access();
 	r13 = (venum*)g$components_tool_ToolMode_ERASER;
 	r12->tool = r13;
-	goto label$36888b6_14_72;
-	label$36888b6_14_55:
+	goto label$36888b6_13_72;
+	label$36888b6_13_55:
 	r9 = ($Main)g$_Main;
 	r12 = r9->toolControl;
 	if( r12 == NULL ) hl_null_access();
 	r13 = (venum*)g$components_tool_ToolMode_LINE;
 	r12->tool = r13;
-	goto label$36888b6_14_72;
-	label$36888b6_14_61:
+	goto label$36888b6_13_72;
+	label$36888b6_13_61:
 	r9 = ($Main)g$_Main;
 	r12 = r9->toolControl;
 	if( r12 == NULL ) hl_null_access();
 	r13 = (venum*)g$components_tool_ToolMode_NONE;
 	r12->tool = r13;
-	goto label$36888b6_14_72;
-	label$36888b6_14_67:
+	goto label$36888b6_13_72;
+	label$36888b6_13_67:
 	r9 = ($Main)g$_Main;
 	r12 = r9->toolControl;
 	if( r12 == NULL ) hl_null_access();
 	r13 = (venum*)g$components_tool_ToolMode_PENCIL;
 	r12->tool = r13;
-	label$36888b6_14_72:
+	label$36888b6_13_72:
 	return;
 }
 
@@ -1080,186 +962,186 @@ void Main_setConsoleActions__$11(String r0) {
 	int r3, r4;
 	if( r0 == NULL ) hl_null_access();
 	r2 = String_toUpperCase(r0);
-	if( !r2 ) goto label$36888b6_15_11;
+	if( !r2 ) goto label$36888b6_14_11;
 	r3 = r2->length;
 	r4 = 1;
-	if( r3 != r4 ) goto label$36888b6_15_11;
+	if( r3 != r4 ) goto label$36888b6_14_11;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("1");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_175;
-	label$36888b6_15_11:
-	if( !r2 ) goto label$36888b6_15_20;
+	if( r3 == r4 ) goto label$36888b6_14_175;
+	label$36888b6_14_11:
+	if( !r2 ) goto label$36888b6_14_20;
 	r3 = r2->length;
 	r4 = 4;
-	if( r3 != r4 ) goto label$36888b6_15_20;
+	if( r3 != r4 ) goto label$36888b6_14_20;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("BLUE");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_175;
-	label$36888b6_15_20:
-	if( !r2 ) goto label$36888b6_15_29;
+	if( r3 == r4 ) goto label$36888b6_14_175;
+	label$36888b6_14_20:
+	if( !r2 ) goto label$36888b6_14_29;
 	r3 = r2->length;
 	r4 = 5;
-	if( r3 != r4 ) goto label$36888b6_15_29;
+	if( r3 != r4 ) goto label$36888b6_14_29;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("FLOOR");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_175;
-	label$36888b6_15_29:
-	if( !r2 ) goto label$36888b6_15_38;
+	if( r3 == r4 ) goto label$36888b6_14_175;
+	label$36888b6_14_29:
+	if( !r2 ) goto label$36888b6_14_38;
 	r3 = r2->length;
 	r4 = 6;
-	if( r3 != r4 ) goto label$36888b6_15_38;
+	if( r3 != r4 ) goto label$36888b6_14_38;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("NORMAL");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_175;
-	label$36888b6_15_38:
-	if( !r2 ) goto label$36888b6_15_47;
+	if( r3 == r4 ) goto label$36888b6_14_175;
+	label$36888b6_14_38:
+	if( !r2 ) goto label$36888b6_14_47;
 	r3 = r2->length;
 	r4 = 1;
-	if( r3 != r4 ) goto label$36888b6_15_47;
+	if( r3 != r4 ) goto label$36888b6_14_47;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("2");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_181;
-	label$36888b6_15_47:
-	if( !r2 ) goto label$36888b6_15_56;
+	if( r3 == r4 ) goto label$36888b6_14_181;
+	label$36888b6_14_47:
+	if( !r2 ) goto label$36888b6_14_56;
 	r3 = r2->length;
 	r4 = 3;
-	if( r3 != r4 ) goto label$36888b6_15_56;
+	if( r3 != r4 ) goto label$36888b6_14_56;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("ACC");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_181;
-	label$36888b6_15_56:
-	if( !r2 ) goto label$36888b6_15_65;
+	if( r3 == r4 ) goto label$36888b6_14_181;
+	label$36888b6_14_56:
+	if( !r2 ) goto label$36888b6_14_65;
 	r3 = r2->length;
 	r4 = 5;
-	if( r3 != r4 ) goto label$36888b6_15_65;
+	if( r3 != r4 ) goto label$36888b6_14_65;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("ACCEL");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_181;
-	label$36888b6_15_65:
-	if( !r2 ) goto label$36888b6_15_74;
+	if( r3 == r4 ) goto label$36888b6_14_181;
+	label$36888b6_14_65:
+	if( !r2 ) goto label$36888b6_14_74;
 	r3 = r2->length;
 	r4 = 10;
-	if( r3 != r4 ) goto label$36888b6_15_74;
+	if( r3 != r4 ) goto label$36888b6_14_74;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("ACCELERATE");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_181;
-	label$36888b6_15_74:
-	if( !r2 ) goto label$36888b6_15_83;
+	if( r3 == r4 ) goto label$36888b6_14_181;
+	label$36888b6_14_74:
+	if( !r2 ) goto label$36888b6_14_83;
 	r3 = r2->length;
 	r4 = 4;
-	if( r3 != r4 ) goto label$36888b6_15_83;
+	if( r3 != r4 ) goto label$36888b6_14_83;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("FAST");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_181;
-	label$36888b6_15_83:
-	if( !r2 ) goto label$36888b6_15_92;
+	if( r3 == r4 ) goto label$36888b6_14_181;
+	label$36888b6_14_83:
+	if( !r2 ) goto label$36888b6_14_92;
 	r3 = r2->length;
 	r4 = 3;
-	if( r3 != r4 ) goto label$36888b6_15_92;
+	if( r3 != r4 ) goto label$36888b6_14_92;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("RED");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_181;
-	label$36888b6_15_92:
-	if( !r2 ) goto label$36888b6_15_101;
+	if( r3 == r4 ) goto label$36888b6_14_181;
+	label$36888b6_14_92:
+	if( !r2 ) goto label$36888b6_14_101;
 	r3 = r2->length;
 	r4 = 5;
-	if( r3 != r4 ) goto label$36888b6_15_101;
+	if( r3 != r4 ) goto label$36888b6_14_101;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("SPEED");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_181;
-	label$36888b6_15_101:
-	if( !r2 ) goto label$36888b6_15_110;
+	if( r3 == r4 ) goto label$36888b6_14_181;
+	label$36888b6_14_101:
+	if( !r2 ) goto label$36888b6_14_110;
 	r3 = r2->length;
 	r4 = 1;
-	if( r3 != r4 ) goto label$36888b6_15_110;
+	if( r3 != r4 ) goto label$36888b6_14_110;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("0");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_187;
-	label$36888b6_15_110:
-	if( !r2 ) goto label$36888b6_15_119;
+	if( r3 == r4 ) goto label$36888b6_14_187;
+	label$36888b6_14_110:
+	if( !r2 ) goto label$36888b6_14_119;
 	r3 = r2->length;
 	r4 = 3;
-	if( r3 != r4 ) goto label$36888b6_15_119;
+	if( r3 != r4 ) goto label$36888b6_14_119;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("ANY");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_187;
-	label$36888b6_15_119:
-	if( !r2 ) goto label$36888b6_15_128;
+	if( r3 == r4 ) goto label$36888b6_14_187;
+	label$36888b6_14_119:
+	if( !r2 ) goto label$36888b6_14_128;
 	r3 = r2->length;
 	r4 = 4;
-	if( r3 != r4 ) goto label$36888b6_15_128;
+	if( r3 != r4 ) goto label$36888b6_14_128;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("NONE");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_187;
-	label$36888b6_15_128:
-	if( !r2 ) goto label$36888b6_15_137;
+	if( r3 == r4 ) goto label$36888b6_14_187;
+	label$36888b6_14_128:
+	if( !r2 ) goto label$36888b6_14_137;
 	r3 = r2->length;
 	r4 = 1;
-	if( r3 != r4 ) goto label$36888b6_15_137;
+	if( r3 != r4 ) goto label$36888b6_14_137;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("3");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_193;
-	label$36888b6_15_137:
-	if( !r2 ) goto label$36888b6_15_146;
+	if( r3 == r4 ) goto label$36888b6_14_193;
+	label$36888b6_14_137:
+	if( !r2 ) goto label$36888b6_14_146;
 	r3 = r2->length;
 	r4 = 5;
-	if( r3 != r4 ) goto label$36888b6_15_146;
+	if( r3 != r4 ) goto label$36888b6_14_146;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("GREEN");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_193;
-	label$36888b6_15_146:
-	if( !r2 ) goto label$36888b6_15_155;
+	if( r3 == r4 ) goto label$36888b6_14_193;
+	label$36888b6_14_146:
+	if( !r2 ) goto label$36888b6_14_155;
 	r3 = r2->length;
 	r4 = 5;
-	if( r3 != r4 ) goto label$36888b6_15_155;
+	if( r3 != r4 ) goto label$36888b6_14_155;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("SCENE");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_193;
-	label$36888b6_15_155:
-	if( !r2 ) goto label$36888b6_15_164;
+	if( r3 == r4 ) goto label$36888b6_14_193;
+	label$36888b6_14_155:
+	if( !r2 ) goto label$36888b6_14_164;
 	r3 = r2->length;
 	r4 = 7;
-	if( r3 != r4 ) goto label$36888b6_15_164;
+	if( r3 != r4 ) goto label$36888b6_14_164;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("SCENERY");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$36888b6_15_193;
-	label$36888b6_15_164:
+	if( r3 == r4 ) goto label$36888b6_14_193;
+	label$36888b6_14_164:
 	r8 = ($Main)g$_Main;
 	r7 = r8->console;
 	if( r7 == NULL ) hl_null_access();
@@ -1271,35 +1153,35 @@ void Main_setConsoleActions__$11(String r0) {
 	r10 = hl_alloc_dynamic(&t$_i32);
 	r10->v.i = r3;
 	h2d_Console_log(((h2d__Console)r7),r2,r10);
-	goto label$36888b6_15_198;
-	label$36888b6_15_175:
+	goto label$36888b6_14_198;
+	label$36888b6_14_175:
 	r8 = ($Main)g$_Main;
 	r11 = r8->toolControl;
 	if( r11 == NULL ) hl_null_access();
 	r3 = 0;
 	r11->color = r3;
-	goto label$36888b6_15_198;
-	label$36888b6_15_181:
+	goto label$36888b6_14_198;
+	label$36888b6_14_181:
 	r8 = ($Main)g$_Main;
 	r11 = r8->toolControl;
 	if( r11 == NULL ) hl_null_access();
 	r3 = 1;
 	r11->color = r3;
-	goto label$36888b6_15_198;
-	label$36888b6_15_187:
+	goto label$36888b6_14_198;
+	label$36888b6_14_187:
 	r8 = ($Main)g$_Main;
 	r11 = r8->toolControl;
 	if( r11 == NULL ) hl_null_access();
 	r3 = -1;
 	r11->color = r3;
-	goto label$36888b6_15_198;
-	label$36888b6_15_193:
+	goto label$36888b6_14_198;
+	label$36888b6_14_193:
 	r8 = ($Main)g$_Main;
 	r11 = r8->toolControl;
 	if( r11 == NULL ) hl_null_access();
 	r3 = 2;
 	r11->color = r3;
-	label$36888b6_15_198:
+	label$36888b6_14_198:
 	return;
 }
 
@@ -1310,7 +1192,7 @@ void Main_setConsoleActions__$12() {
 	r2 = ($Main)g$_Main;
 	r1 = r2->canvas;
 	if( r1 == NULL ) hl_null_access();
-	r3 = 1;
+	r3 = -1;
 	components_stage_Canvas_zoomCanvas(r1,r3);
 	return;
 }
@@ -1322,7 +1204,7 @@ void Main_setConsoleActions__$13() {
 	r2 = ($Main)g$_Main;
 	r1 = r2->canvas;
 	if( r1 == NULL ) hl_null_access();
-	r3 = -1;
+	r3 = 1;
 	components_stage_Canvas_zoomCanvas(r1,r3);
 	return;
 }
@@ -1485,18 +1367,18 @@ void Main_setConsoleActions__$22(String r0,double* r1,double* r2) {
 	h2d__col__Point r11;
 	double r3, r4, r12, r13;
 	vdynamic *r5;
-	if( r1 ) goto label$36888b6_26_3;
+	if( r1 ) goto label$36888b6_25_3;
 	r3 = 0.;
-	goto label$36888b6_26_4;
-	label$36888b6_26_3:
+	goto label$36888b6_25_4;
+	label$36888b6_25_3:
 	r3 = *r1;
-	label$36888b6_26_4:
-	if( r2 ) goto label$36888b6_26_7;
+	label$36888b6_25_4:
+	if( r2 ) goto label$36888b6_25_7;
 	r4 = 0.;
-	goto label$36888b6_26_8;
-	label$36888b6_26_7:
+	goto label$36888b6_25_8;
+	label$36888b6_25_7:
 	r4 = *r2;
-	label$36888b6_26_8:
+	label$36888b6_25_8:
 	r8 = ($Main)g$_Main;
 	r7 = r8->riders;
 	if( r7 == NULL ) hl_null_access();
@@ -1504,9 +1386,9 @@ void Main_setConsoleActions__$22(String r0,double* r1,double* r2) {
 	if( r6 == NULL ) hl_null_access();
 	r5 = haxe_ds_StringMap_get(r6,r0);
 	r9 = (components__sledder__RiderBase)r5;
-	if( r9 ) goto label$36888b6_26_17;
+	if( r9 ) goto label$36888b6_25_17;
 	return;
-	label$36888b6_26_17:
+	label$36888b6_25_17:
 	if( r9 == NULL ) hl_null_access();
 	r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 	r12 = r3;
@@ -1529,29 +1411,29 @@ void Main_setConsoleActions__$23(String r0,vdynamic* r1,vdynamic* r2,vdynamic* r
 	double *r17, *r18;
 	vdynamic *r5, *r10, *r11;
 	int r12, r14;
-	if( r1 ) goto label$36888b6_27_7;
+	if( r1 ) goto label$36888b6_26_7;
 	r8 = ($Main)g$_Main;
 	r7 = r8->canvas;
 	if( r7 == NULL ) hl_null_access();
 	r6 = h2d_Scene_get_mouseX(((h2d__Scene)r7));
 	r5 = hl_alloc_dynamic(&t$_f64);
 	r5->v.d = r6;
-	goto label$36888b6_27_8;
-	label$36888b6_27_7:
+	goto label$36888b6_26_8;
+	label$36888b6_26_7:
 	r5 = r1;
-	label$36888b6_27_8:
-	if( r2 ) goto label$36888b6_27_15;
+	label$36888b6_26_8:
+	if( r2 ) goto label$36888b6_26_15;
 	r8 = ($Main)g$_Main;
 	r7 = r8->canvas;
 	if( r7 == NULL ) hl_null_access();
 	r6 = h2d_Scene_get_mouseY(((h2d__Scene)r7));
 	r10 = hl_alloc_dynamic(&t$_f64);
 	r10->v.d = r6;
-	goto label$36888b6_27_16;
-	label$36888b6_27_15:
+	goto label$36888b6_26_16;
+	label$36888b6_26_15:
 	r10 = r2;
-	label$36888b6_27_16:
-	if( r3 ) goto label$36888b6_27_25;
+	label$36888b6_26_16:
+	if( r3 ) goto label$36888b6_26_25;
 	r8 = ($Main)g$_Main;
 	r13 = r8->simulation;
 	if( r13 == NULL ) hl_null_access();
@@ -1560,28 +1442,28 @@ void Main_setConsoleActions__$23(String r0,vdynamic* r1,vdynamic* r2,vdynamic* r
 	r12 = r12 - r14;
 	r11 = hl_alloc_dynamic(&t$_i32);
 	r11->v.i = r12;
-	goto label$36888b6_27_26;
-	label$36888b6_27_25:
+	goto label$36888b6_26_26;
+	label$36888b6_26_25:
 	r11 = r3;
-	label$36888b6_27_26:
+	label$36888b6_26_26:
 	r8 = ($Main)g$_Main;
 	r15 = r8->riders;
 	if( r15 == NULL ) hl_null_access();
 	r16 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	if( r5 ) goto label$36888b6_27_33;
+	if( r5 ) goto label$36888b6_26_33;
 	r17 = NULL;
-	goto label$36888b6_27_35;
-	label$36888b6_27_33:
+	goto label$36888b6_26_35;
+	label$36888b6_26_33:
 	r6 = r5 ? r5->v.d : 0;
 	r17 = &r6;
-	label$36888b6_27_35:
-	if( r10 ) goto label$36888b6_27_38;
+	label$36888b6_26_35:
+	if( r10 ) goto label$36888b6_26_38;
 	r18 = NULL;
-	goto label$36888b6_27_40;
-	label$36888b6_27_38:
+	goto label$36888b6_26_40;
+	label$36888b6_26_38:
 	r19 = r10 ? r10->v.d : 0;
 	r18 = &r19;
-	label$36888b6_27_40:
+	label$36888b6_26_40:
 	h2d_col_Point_new(r16,r17,r18);
 	components_managers_Riders_addNewRider(r15,r0,r16,r11,r4);
 	return;
@@ -1615,14 +1497,14 @@ void Main_setConsoleActions__$24() {
 	if( r6 == NULL ) hl_null_access();
 	r5 = haxe_ds_StringMap_iterator(r6);
 	r8 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r5);
-	label$36888b6_28_13:
+	label$36888b6_27_13:
 	if( r8 == NULL ) hl_null_access();
 	if( hl_vfields(r8)[0] ) r9 = ((bool (*)(vdynamic*))hl_vfields(r8)[0])(r8->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r8->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r9 = (bool)ret.v.i;
 	}
-	if( !r9 ) goto label$36888b6_28_46;
+	if( !r9 ) goto label$36888b6_27_46;
 	if( hl_vfields(r8)[1] ) r10 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r8)[1])(r8->value); else {
 		r10 = (components__sledder__RiderBase)hl_dyn_call_obj(r8->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
 	}
@@ -1653,8 +1535,8 @@ void Main_setConsoleActions__$24() {
 	r3 = String___add__(r3,r11);
 	r4 = NULL;
 	h2d_Console_log(((h2d__Console)r1),r3,r4);
-	goto label$36888b6_28_13;
-	label$36888b6_28_46:
+	goto label$36888b6_27_13;
+	label$36888b6_27_46:
 	r2 = ($Main)g$_Main;
 	r1 = r2->console;
 	if( r1 == NULL ) hl_null_access();
@@ -1665,6 +1547,127 @@ void Main_setConsoleActions__$24() {
 }
 
 void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
+	String r7, r10;
+	components__managers__Riders r5;
+	haxe__ds__StringMap r4;
+	components__sledder__RiderBase r8;
+	$Main r6;
+	components__managers__Simulation r13;
+	vdynamic *r3, *r12, *r14;
+	int r11, r15;
+	components__stage__LRConsole r9;
+	r6 = ($Main)g$_Main;
+	r5 = r6->riders;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->riders;
+	if( r4 == NULL ) hl_null_access();
+	r3 = haxe_ds_StringMap_get(r4,r0);
+	r8 = (components__sledder__RiderBase)r3;
+	if( r8 ) goto label$36888b6_28_19;
+	r6 = ($Main)g$_Main;
+	r9 = r6->console;
+	if( r9 == NULL ) hl_null_access();
+	r7 = (String)s$Rider_;
+	r7 = String___add__(r7,r0);
+	r10 = (String)s$_does_not_exist_;
+	r7 = String___add__(r7,r10);
+	r11 = 16711680;
+	r12 = hl_alloc_dynamic(&t$_i32);
+	r12->v.i = r11;
+	h2d_Console_log(((h2d__Console)r9),r7,r12);
+	return;
+	label$36888b6_28_19:
+	if( r1 ) goto label$36888b6_28_26;
+	r6 = ($Main)g$_Main;
+	r13 = r6->simulation;
+	if( r13 == NULL ) hl_null_access();
+	r11 = r13->frames;
+	r12 = hl_alloc_dynamic(&t$_i32);
+	r12->v.i = r11;
+	goto label$36888b6_28_32;
+	label$36888b6_28_26:
+	r11 = 0;
+	r14 = hl_alloc_dynamic(&t$_i32);
+	r14->v.i = r11;
+	if( r1 != r14 && (!r1 || !r14 || (r1->v.i != r14->v.i)) ) goto label$36888b6_28_31;
+	r12 = NULL;
+	goto label$36888b6_28_32;
+	label$36888b6_28_31:
+	r12 = r1;
+	label$36888b6_28_32:
+	if( !r12 ) goto label$36888b6_28_86;
+	r6 = ($Main)g$_Main;
+	r5 = r6->riders;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->riders;
+	if( r4 == NULL ) hl_null_access();
+	r3 = haxe_ds_StringMap_get(r4,r0);
+	r8 = (components__sledder__RiderBase)r3;
+	if( r8 == NULL ) hl_null_access();
+	r14 = r8->disableFrame;
+	if( !r14 ) goto label$36888b6_28_86;
+	r11 = r1 ? r1->v.i : 0;
+	r6 = ($Main)g$_Main;
+	r5 = r6->riders;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->riders;
+	if( r4 == NULL ) hl_null_access();
+	r3 = haxe_ds_StringMap_get(r4,r0);
+	r8 = (components__sledder__RiderBase)r3;
+	if( r8 == NULL ) hl_null_access();
+	r14 = r8->disableFrame;
+	r15 = r14 ? r14->v.i : 0;
+	if( r11 < r15 ) goto label$36888b6_28_86;
+	r6 = ($Main)g$_Main;
+	r9 = r6->console;
+	if( r9 == NULL ) hl_null_access();
+	r7 = (String)s$520de12;
+	if( r1 ) goto label$36888b6_28_62;
+	r10 = NULL;
+	goto label$36888b6_28_63;
+	label$36888b6_28_62:
+	r10 = Std_string(((vdynamic*)r1));
+	label$36888b6_28_63:
+	r7 = String___add__(r7,r10);
+	r10 = (String)s$96bf69c;
+	r7 = String___add__(r7,r10);
+	r6 = ($Main)g$_Main;
+	r5 = r6->riders;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->riders;
+	if( r4 == NULL ) hl_null_access();
+	r3 = haxe_ds_StringMap_get(r4,r0);
+	r8 = (components__sledder__RiderBase)r3;
+	if( r8 == NULL ) hl_null_access();
+	r14 = r8->disableFrame;
+	if( r14 ) goto label$36888b6_28_78;
+	r10 = NULL;
+	goto label$36888b6_28_79;
+	label$36888b6_28_78:
+	r10 = Std_string(((vdynamic*)r14));
+	label$36888b6_28_79:
+	r7 = String___add__(r7,r10);
+	r10 = (String)s$_is_not_valid_;
+	r7 = String___add__(r7,r10);
+	r11 = 16711680;
+	r14 = hl_alloc_dynamic(&t$_i32);
+	r14->v.i = r11;
+	h2d_Console_log(((h2d__Console)r9),r7,r14);
+	return;
+	label$36888b6_28_86:
+	r6 = ($Main)g$_Main;
+	r5 = r6->riders;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->riders;
+	if( r4 == NULL ) hl_null_access();
+	r3 = haxe_ds_StringMap_get(r4,r0);
+	r8 = (components__sledder__RiderBase)r3;
+	if( r8 == NULL ) hl_null_access();
+	r8->enabledFrame = r1;
+	return;
+}
+
+void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
 	String r7, r10;
 	components__managers__Riders r5;
 	haxe__ds__StringMap r4;
@@ -1704,7 +1707,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r12->v.i = r11;
 	goto label$36888b6_29_32;
 	label$36888b6_29_26:
-	r11 = 0;
+	r11 = -1;
 	r14 = hl_alloc_dynamic(&t$_i32);
 	r14->v.i = r11;
 	if( r1 != r14 && (!r1 || !r14 || (r1->v.i != r14->v.i)) ) goto label$36888b6_29_31;
@@ -1722,7 +1725,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r3 = haxe_ds_StringMap_get(r4,r0);
 	r8 = (components__sledder__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
-	r14 = r8->disableFrame;
+	r14 = r8->enabledFrame;
 	if( !r14 ) goto label$36888b6_29_86;
 	r11 = r1 ? r1->v.i : 0;
 	r6 = ($Main)g$_Main;
@@ -1733,13 +1736,13 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r3 = haxe_ds_StringMap_get(r4,r0);
 	r8 = (components__sledder__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
-	r14 = r8->disableFrame;
+	r14 = r8->enabledFrame;
 	r15 = r14 ? r14->v.i : 0;
-	if( r11 < r15 ) goto label$36888b6_29_86;
+	if( r15 < r11 ) goto label$36888b6_29_86;
 	r6 = ($Main)g$_Main;
 	r9 = r6->console;
 	if( r9 == NULL ) hl_null_access();
-	r7 = (String)s$520de12;
+	r7 = (String)s$71b4f2d;
 	if( r1 ) goto label$36888b6_29_62;
 	r10 = NULL;
 	goto label$36888b6_29_63;
@@ -1747,7 +1750,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r10 = Std_string(((vdynamic*)r1));
 	label$36888b6_29_63:
 	r7 = String___add__(r7,r10);
-	r10 = (String)s$96bf69c;
+	r10 = (String)s$dbb0f13;
 	r7 = String___add__(r7,r10);
 	r6 = ($Main)g$_Main;
 	r5 = r6->riders;
@@ -1757,7 +1760,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r3 = haxe_ds_StringMap_get(r4,r0);
 	r8 = (components__sledder__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
-	r14 = r8->disableFrame;
+	r14 = r8->enabledFrame;
 	if( r14 ) goto label$36888b6_29_78;
 	r10 = NULL;
 	goto label$36888b6_29_79;
@@ -1781,146 +1784,17 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r3 = haxe_ds_StringMap_get(r4,r0);
 	r8 = (components__sledder__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
-	r8->enabledFrame = r1;
-	return;
-}
-
-void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
-	String r7, r10;
-	components__managers__Riders r5;
-	haxe__ds__StringMap r4;
-	components__sledder__RiderBase r8;
-	$Main r6;
-	components__managers__Simulation r13;
-	vdynamic *r3, *r12, *r14;
-	int r11, r15;
-	components__stage__LRConsole r9;
-	r6 = ($Main)g$_Main;
-	r5 = r6->riders;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->riders;
-	if( r4 == NULL ) hl_null_access();
-	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
-	if( r8 ) goto label$36888b6_30_19;
-	r6 = ($Main)g$_Main;
-	r9 = r6->console;
-	if( r9 == NULL ) hl_null_access();
-	r7 = (String)s$Rider_;
-	r7 = String___add__(r7,r0);
-	r10 = (String)s$_does_not_exist_;
-	r7 = String___add__(r7,r10);
-	r11 = 16711680;
-	r12 = hl_alloc_dynamic(&t$_i32);
-	r12->v.i = r11;
-	h2d_Console_log(((h2d__Console)r9),r7,r12);
-	return;
-	label$36888b6_30_19:
-	if( r1 ) goto label$36888b6_30_26;
-	r6 = ($Main)g$_Main;
-	r13 = r6->simulation;
-	if( r13 == NULL ) hl_null_access();
-	r11 = r13->frames;
-	r12 = hl_alloc_dynamic(&t$_i32);
-	r12->v.i = r11;
-	goto label$36888b6_30_32;
-	label$36888b6_30_26:
-	r11 = -1;
-	r14 = hl_alloc_dynamic(&t$_i32);
-	r14->v.i = r11;
-	if( r1 != r14 && (!r1 || !r14 || (r1->v.i != r14->v.i)) ) goto label$36888b6_30_31;
-	r12 = NULL;
-	goto label$36888b6_30_32;
-	label$36888b6_30_31:
-	r12 = r1;
-	label$36888b6_30_32:
-	if( !r12 ) goto label$36888b6_30_86;
-	r6 = ($Main)g$_Main;
-	r5 = r6->riders;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->riders;
-	if( r4 == NULL ) hl_null_access();
-	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
-	if( r8 == NULL ) hl_null_access();
-	r14 = r8->enabledFrame;
-	if( !r14 ) goto label$36888b6_30_86;
-	r11 = r1 ? r1->v.i : 0;
-	r6 = ($Main)g$_Main;
-	r5 = r6->riders;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->riders;
-	if( r4 == NULL ) hl_null_access();
-	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
-	if( r8 == NULL ) hl_null_access();
-	r14 = r8->enabledFrame;
-	r15 = r14 ? r14->v.i : 0;
-	if( r15 < r11 ) goto label$36888b6_30_86;
-	r6 = ($Main)g$_Main;
-	r9 = r6->console;
-	if( r9 == NULL ) hl_null_access();
-	r7 = (String)s$71b4f2d;
-	if( r1 ) goto label$36888b6_30_62;
-	r10 = NULL;
-	goto label$36888b6_30_63;
-	label$36888b6_30_62:
-	r10 = Std_string(((vdynamic*)r1));
-	label$36888b6_30_63:
-	r7 = String___add__(r7,r10);
-	r10 = (String)s$dbb0f13;
-	r7 = String___add__(r7,r10);
-	r6 = ($Main)g$_Main;
-	r5 = r6->riders;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->riders;
-	if( r4 == NULL ) hl_null_access();
-	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
-	if( r8 == NULL ) hl_null_access();
-	r14 = r8->enabledFrame;
-	if( r14 ) goto label$36888b6_30_78;
-	r10 = NULL;
-	goto label$36888b6_30_79;
-	label$36888b6_30_78:
-	r10 = Std_string(((vdynamic*)r14));
-	label$36888b6_30_79:
-	r7 = String___add__(r7,r10);
-	r10 = (String)s$_is_not_valid_;
-	r7 = String___add__(r7,r10);
-	r11 = 16711680;
-	r14 = hl_alloc_dynamic(&t$_i32);
-	r14->v.i = r11;
-	h2d_Console_log(((h2d__Console)r9),r7,r14);
-	return;
-	label$36888b6_30_86:
-	r6 = ($Main)g$_Main;
-	r5 = r6->riders;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->riders;
-	if( r4 == NULL ) hl_null_access();
-	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
-	if( r8 == NULL ) hl_null_access();
 	r8->disableFrame = r1;
 	return;
 }
 
 void Main_setConsoleActions__$27(String r0) {
-	components__managers__Riders r4;
-	haxe__ds__StringMap r3;
-	components__sledder__RiderBase r6;
-	$Main r5;
-	vdynamic *r2;
-	r5 = ($Main)g$_Main;
-	r4 = r5->riders;
-	if( r4 == NULL ) hl_null_access();
-	r3 = r4->riders;
-	if( r3 == NULL ) hl_null_access();
-	r2 = haxe_ds_StringMap_get(r3,r0);
-	r6 = (components__sledder__RiderBase)r2;
-	if( r6 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r6->$type->vobj_proto[1])(r6);
+	components__managers__Riders r2;
+	$Main r3;
+	r3 = ($Main)g$_Main;
+	r2 = r3->riders;
+	if( r2 == NULL ) hl_null_access();
+	components_managers_Riders_removeRider(r2,r0);
 	return;
 }
 
@@ -1950,10 +1824,10 @@ void Main_setConsoleActions__$29(String r0) {
 	vdynamic *r6;
 	int r5;
 	components__stage__LRConsole r4;
-	if( r0 ) goto label$36888b6_33_12;
+	if( r0 ) goto label$36888b6_32_12;
 	r3 = ($Main)g$_Main;
 	r2 = r3->trackName;
-	if( r2 ) goto label$36888b6_33_12;
+	if( r2 ) goto label$36888b6_32_12;
 	r3 = ($Main)g$_Main;
 	r4 = r3->console;
 	if( r4 == NULL ) hl_null_access();
@@ -1963,11 +1837,11 @@ void Main_setConsoleActions__$29(String r0) {
 	r6->v.i = r5;
 	h2d_Console_log(((h2d__Console)r4),r2,r6);
 	return;
-	label$36888b6_33_12:
-	if( r0 ) goto label$36888b6_33_32;
+	label$36888b6_32_12:
+	if( r0 ) goto label$36888b6_32_32;
 	r3 = ($Main)g$_Main;
 	r2 = r3->trackName;
-	if( !r2 ) goto label$36888b6_33_32;
+	if( !r2 ) goto label$36888b6_32_32;
 	r3 = ($Main)g$_Main;
 	r7 = r3->saveload;
 	if( r7 == NULL ) hl_null_access();
@@ -1983,8 +1857,8 @@ void Main_setConsoleActions__$29(String r0) {
 	r2 = String___add__(r2,r8);
 	r6 = NULL;
 	h2d_Console_log(((h2d__Console)r4),r2,r6);
-	goto label$36888b6_33_47;
-	label$36888b6_33_32:
+	goto label$36888b6_32_47;
+	label$36888b6_32_32:
 	r3 = ($Main)g$_Main;
 	r7 = r3->saveload;
 	if( r7 == NULL ) hl_null_access();
@@ -2000,7 +1874,7 @@ void Main_setConsoleActions__$29(String r0) {
 	r2 = String___add__(r2,r8);
 	r6 = NULL;
 	h2d_Console_log(((h2d__Console)r4),r2,r6);
-	label$36888b6_33_47:
+	label$36888b6_32_47:
 	return;
 }
 
@@ -2012,20 +1886,20 @@ void Main_setConsoleActions__$30(String r0,vdynamic* r1) {
 	file__SaveLoad r9;
 	components__stage__LRConsole r6;
 	int r2;
-	if( r1 ) goto label$36888b6_34_3;
+	if( r1 ) goto label$36888b6_33_3;
 	r2 = 0;
 	r1 = hl_alloc_dynamic(&t$_i32);
 	r1->v.i = r2;
-	label$36888b6_34_3:
+	label$36888b6_33_3:
 	r5 = ($Main)g$_Main;
 	r4 = r5->trackName;
-	if( !r4 ) goto label$36888b6_34_11;
+	if( !r4 ) goto label$36888b6_33_11;
 	r5 = ($Main)g$_Main;
 	r6 = r5->console;
 	if( r6 == NULL ) hl_null_access();
 	r4 = (String)s$saveTrack;
 	h2d_Console_runCommand(((h2d__Console)r6),r4);
-	label$36888b6_34_11:
+	label$36888b6_33_11:
 	r5 = ($Main)g$_Main;
 	r7 = r5->canvas;
 	if( r7 == NULL ) hl_null_access();
@@ -2061,26 +1935,26 @@ void Main_setConsoleActions__$32(vdynamic* r0) {
 	vbyte *r10;
 	components__stage__LRConsole r6;
 	int r3;
-	if( r0 ) goto label$36888b6_36_3;
+	if( r0 ) goto label$36888b6_35_3;
 	r1 = 0.;
 	r0 = hl_alloc_dynamic(&t$_f64);
 	r0->v.d = r1;
-	label$36888b6_36_3:
+	label$36888b6_35_3:
 	r1 = r0 ? r0->v.d : 0;
 	r4 = ($Main)g$_Main;
 	r3 = r4->viewGridSize;
 	r5 = (double)r3;
-	if( !(r5 < r1) ) goto label$36888b6_36_29;
+	if( !(r5 < r1) ) goto label$36888b6_35_29;
 	r4 = ($Main)g$_Main;
 	r6 = r4->console;
 	if( r6 == NULL ) hl_null_access();
 	r7 = (String)s$Snap_distance_;
-	if( r0 ) goto label$36888b6_36_15;
+	if( r0 ) goto label$36888b6_35_15;
 	r8 = NULL;
-	goto label$36888b6_36_16;
-	label$36888b6_36_15:
+	goto label$36888b6_35_16;
+	label$36888b6_35_15:
 	r8 = Std_string(((vdynamic*)r0));
-	label$36888b6_36_16:
+	label$36888b6_35_16:
 	r7 = String___add__(r7,r8);
 	r8 = (String)s$3533c42;
 	r7 = String___add__(r7,r8);
@@ -2095,7 +1969,7 @@ void Main_setConsoleActions__$32(vdynamic* r0) {
 	r11->v.i = r3;
 	h2d_Console_log(((h2d__Console)r6),r7,r11);
 	return;
-	label$36888b6_36_29:
+	label$36888b6_35_29:
 	r4 = ($Main)g$_Main;
 	r12 = r4->toolControl;
 	if( r12 == NULL ) hl_null_access();
@@ -2105,29 +1979,29 @@ void Main_setConsoleActions__$32(vdynamic* r0) {
 	r1 = (double)r3;
 	r13 = hl_alloc_dynamic(&t$_f64);
 	r13->v.d = r1;
-	if( r0 != r13 && (!r0 || !r13 || (r0->v.d != r13->v.d)) ) goto label$36888b6_36_45;
+	if( r0 != r13 && (!r0 || !r13 || (r0->v.d != r13->v.d)) ) goto label$36888b6_35_45;
 	r4 = ($Main)g$_Main;
 	r6 = r4->console;
 	if( r6 == NULL ) hl_null_access();
 	r7 = (String)s$Grid_snapping_off_;
 	r11 = NULL;
 	h2d_Console_log(((h2d__Console)r6),r7,r11);
-	goto label$36888b6_36_56;
-	label$36888b6_36_45:
+	goto label$36888b6_35_56;
+	label$36888b6_35_45:
 	r4 = ($Main)g$_Main;
 	r6 = r4->console;
 	if( r6 == NULL ) hl_null_access();
 	r7 = (String)s$Grid_snapping_set_to_;
-	if( r0 ) goto label$36888b6_36_52;
+	if( r0 ) goto label$36888b6_35_52;
 	r8 = NULL;
-	goto label$36888b6_36_53;
-	label$36888b6_36_52:
+	goto label$36888b6_35_53;
+	label$36888b6_35_52:
 	r8 = Std_string(((vdynamic*)r0));
-	label$36888b6_36_53:
+	label$36888b6_35_53:
 	r7 = String___add__(r7,r8);
 	r11 = NULL;
 	h2d_Console_log(((h2d__Console)r6),r7,r11);
-	label$36888b6_36_56:
+	label$36888b6_35_56:
 	return;
 }
 
@@ -2144,13 +2018,13 @@ void Main_setConsoleActions__$33() {
 	components__stage__LRConsole r3;
 	r2 = ($Main)g$_Main;
 	r1 = r2->trackName;
-	if( !r1 ) goto label$36888b6_37_8;
+	if( !r1 ) goto label$36888b6_36_8;
 	r2 = ($Main)g$_Main;
 	r3 = r2->console;
 	if( r3 == NULL ) hl_null_access();
 	r1 = (String)s$saveTrack;
 	h2d_Console_runCommand(((h2d__Console)r3),r1);
-	label$36888b6_37_8:
+	label$36888b6_36_8:
 	r2 = ($Main)g$_Main;
 	r4 = r2->canvas;
 	if( r4 == NULL ) hl_null_access();
@@ -2177,9 +2051,6 @@ void Main_setConsoleActions__$33() {
 	r1 = NULL;
 	r2 = ($Main)g$_Main;
 	r2->trackName = r1;
-	r1 = NULL;
-	r2 = ($Main)g$_Main;
-	r2->authorName = r1;
 	return;
 }
 
@@ -2202,13 +2073,13 @@ void Main_setConsoleActions__$35(String r0) {
 	components__stage__LRConsole r4;
 	r3 = ($Main)g$_Main;
 	r2 = r3->trackName;
-	if( !r2 ) goto label$36888b6_39_8;
+	if( !r2 ) goto label$36888b6_38_8;
 	r3 = ($Main)g$_Main;
 	r4 = r3->console;
 	if( r4 == NULL ) hl_null_access();
 	r2 = (String)s$saveTrack;
 	h2d_Console_runCommand(((h2d__Console)r4),r2);
-	label$36888b6_39_8:
+	label$36888b6_38_8:
 	r3 = ($Main)g$_Main;
 	r5 = r3->canvas;
 	if( r5 == NULL ) hl_null_access();
@@ -2237,9 +2108,24 @@ void Main_setConsoleActions__$36(String r0) {
 }
 
 void Main_setConsoleActions__$37(String r0) {
-	$Main r1;
-	r1 = ($Main)g$_Main;
-	r1->authorName = r0;
+	String r1;
+	$Main r2;
+	file__SaveLoad r4;
+	vdynamic *r6;
+	components__stage__LRConsole r5;
+	r2 = ($Main)g$_Main;
+	r2->authorName = r0;
+	r2 = ($Main)g$_Main;
+	r4 = r2->saveload;
+	if( r4 == NULL ) hl_null_access();
+	file_SaveLoad_saveUserInfo(r4);
+	r2 = ($Main)g$_Main;
+	r5 = r2->console;
+	if( r5 == NULL ) hl_null_access();
+	r1 = (String)s$Author_name_set_to_;
+	r1 = String___add__(r1,r0);
+	r6 = NULL;
+	h2d_Console_log(((h2d__Console)r5),r1,r6);
 	return;
 }
 
@@ -2251,18 +2137,18 @@ void Main_setConsoleActions__$38(String r0,double* r1) {
 	vdynamic *r10;
 	int r9;
 	components__stage__LRConsole r8;
-	if( r1 ) goto label$36888b6_42_3;
+	if( r1 ) goto label$36888b6_41_3;
 	r2 = 0.;
-	goto label$36888b6_42_4;
-	label$36888b6_42_3:
+	goto label$36888b6_41_4;
+	label$36888b6_41_3:
 	r2 = *r1;
-	label$36888b6_42_4:
+	label$36888b6_41_4:
 	r5 = ($Main)g$_Main;
 	r4 = r5->audio;
 	if( r4 == NULL ) hl_null_access();
 	components_managers_Musicplayer_loadAudio(r4,r0);
 	r7 = 0.;
-	if( !(r2 < r7) ) goto label$36888b6_42_18;
+	if( !(r2 < r7) ) goto label$36888b6_41_18;
 	r5 = ($Main)g$_Main;
 	r8 = r5->console;
 	if( r8 == NULL ) hl_null_access();
@@ -2272,7 +2158,7 @@ void Main_setConsoleActions__$38(String r0,double* r1) {
 	r10->v.i = r9;
 	h2d_Console_log(((h2d__Console)r8),r6,r10);
 	return;
-	label$36888b6_42_18:
+	label$36888b6_41_18:
 	r5 = ($Main)g$_Main;
 	r4 = r5->audio;
 	if( r4 == NULL ) hl_null_access();
@@ -2289,7 +2175,7 @@ void Main_setConsoleActions__$39(double r0) {
 	int r6;
 	components__stage__LRConsole r3;
 	r2 = 0.;
-	if( !(r0 < r2) ) goto label$36888b6_43_10;
+	if( !(r0 < r2) ) goto label$36888b6_42_10;
 	r4 = ($Main)g$_Main;
 	r3 = r4->console;
 	if( r3 == NULL ) hl_null_access();
@@ -2299,7 +2185,7 @@ void Main_setConsoleActions__$39(double r0) {
 	r7->v.i = r6;
 	h2d_Console_log(((h2d__Console)r3),r5,r7);
 	return;
-	label$36888b6_43_10:
+	label$36888b6_42_10:
 	r4 = ($Main)g$_Main;
 	r8 = r4->audio;
 	if( r8 == NULL ) hl_null_access();
@@ -3142,28 +3028,28 @@ void Main_update(Main r0,double r1) {
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->playing;
-	if( !r5 ) goto label$36888b6_45_21;
+	if( !r5 ) goto label$36888b6_44_21;
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->rewinding;
-	if( r5 ) goto label$36888b6_45_21;
+	if( r5 ) goto label$36888b6_44_21;
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	components_managers_Simulation_playSim(r6,r1);
-	goto label$36888b6_45_30;
-	label$36888b6_45_21:
+	goto label$36888b6_44_30;
+	label$36888b6_44_21:
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->rewinding;
-	if( !r5 ) goto label$36888b6_45_30;
+	if( !r5 ) goto label$36888b6_44_30;
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	components_managers_Simulation_rewindSim(r6,r1);
-	label$36888b6_45_30:
+	label$36888b6_44_30:
 	r4 = ($Main)g$_Main;
 	r7 = r4->canvas;
 	if( r7 == NULL ) hl_null_access();
@@ -3276,8 +3162,8 @@ void Main_updateGridLines(Main r0) {
 	r12 = r13->width;
 	r14 = 10;
 	r12 = r12 * r14;
-	label$36888b6_47_32:
-	if( r7 >= r12 ) goto label$36888b6_47_123;
+	label$36888b6_46_32:
+	if( r7 >= r12 ) goto label$36888b6_46_123;
 	r14 = r7;
 	++r7;
 	r11 = r0->ruler;
@@ -3291,7 +3177,7 @@ void Main_updateGridLines(Main r0) {
 	h2d_Graphics_lineStyle(r11,r16,r17,r18);
 	r19 = r1 == 0 ? 0 : r14 % r1;
 	r20 = 0;
-	if( r19 != r20 ) goto label$36888b6_47_122;
+	if( r19 != r20 ) goto label$36888b6_46_122;
 	r21 = (double)r14;
 	r21 = r21 + r2;
 	r3 = ($Main)g$_Main;
@@ -3300,17 +3186,17 @@ void Main_updateGridLines(Main r0) {
 	r22 = r5->x;
 	r21 = r21 - r22;
 	r22 = 0.;
-	if( r21 != r22 ) goto label$36888b6_47_61;
+	if( r21 != r22 ) goto label$36888b6_46_61;
 	r21 = (double)r14;
 	r23 = hl_alloc_dynamic(&t$_f64);
 	r23->v.d = r21;
 	r9 = r23;
-	goto label$36888b6_47_32;
-	label$36888b6_47_61:
+	goto label$36888b6_46_32;
+	label$36888b6_46_61:
 	r20 = 3;
-	if( r20 < r1 ) goto label$36888b6_47_64;
-	goto label$36888b6_47_32;
-	label$36888b6_47_64:
+	if( r20 < r1 ) goto label$36888b6_46_64;
+	goto label$36888b6_46_32;
+	label$36888b6_46_64:
 	r11 = r0->ruler;
 	r21 = (double)r14;
 	r21 = r21 + r2;
@@ -3369,17 +3255,17 @@ void Main_updateGridLines(Main r0) {
 	r33 = r33 + r34;
 	r18 = &r33;
 	h2d_Graphics_addVertex(r11,r21,r22,r26,r27,r28,r31,r16,r18);
-	label$36888b6_47_122:
-	goto label$36888b6_47_32;
-	label$36888b6_47_123:
+	label$36888b6_46_122:
+	goto label$36888b6_46_32;
+	label$36888b6_46_123:
 	r7 = 0;
 	r13 = r0->engine;
 	if( r13 == NULL ) hl_null_access();
 	r12 = r13->height;
 	r14 = 10;
 	r12 = r12 * r14;
-	label$36888b6_47_129:
-	if( r7 >= r12 ) goto label$36888b6_47_220;
+	label$36888b6_46_129:
+	if( r7 >= r12 ) goto label$36888b6_46_220;
 	r14 = r7;
 	++r7;
 	r11 = r0->ruler;
@@ -3393,7 +3279,7 @@ void Main_updateGridLines(Main r0) {
 	h2d_Graphics_lineStyle(r11,r16,r17,r18);
 	r20 = r1 == 0 ? 0 : r14 % r1;
 	r36 = 0;
-	if( r20 != r36 ) goto label$36888b6_47_219;
+	if( r20 != r36 ) goto label$36888b6_46_219;
 	r22 = (double)r14;
 	r22 = r22 + r4;
 	r3 = ($Main)g$_Main;
@@ -3402,17 +3288,17 @@ void Main_updateGridLines(Main r0) {
 	r24 = r5->y;
 	r22 = r22 - r24;
 	r24 = 0.;
-	if( r22 != r24 ) goto label$36888b6_47_158;
+	if( r22 != r24 ) goto label$36888b6_46_158;
 	r22 = (double)r14;
 	r23 = hl_alloc_dynamic(&t$_f64);
 	r23->v.d = r22;
 	r10 = r23;
-	goto label$36888b6_47_129;
-	label$36888b6_47_158:
+	goto label$36888b6_46_129;
+	label$36888b6_46_158:
 	r36 = 3;
-	if( r36 < r1 ) goto label$36888b6_47_161;
-	goto label$36888b6_47_129;
-	label$36888b6_47_161:
+	if( r36 < r1 ) goto label$36888b6_46_161;
+	goto label$36888b6_46_129;
+	label$36888b6_46_161:
 	r11 = r0->ruler;
 	r22 = (double)r14;
 	r22 = r22 + r4;
@@ -3471,9 +3357,9 @@ void Main_updateGridLines(Main r0) {
 	r39 = r39 + r40;
 	r18 = &r39;
 	h2d_Graphics_addVertex(r11,r22,r24,r27,r28,r31,r37,r16,r18);
-	label$36888b6_47_219:
-	goto label$36888b6_47_129;
-	label$36888b6_47_220:
+	label$36888b6_46_219:
+	goto label$36888b6_46_129;
+	label$36888b6_46_220:
 	r11 = r0->ruler;
 	if( r11 == NULL ) hl_null_access();
 	r7 = 2;
@@ -3484,7 +3370,7 @@ void Main_updateGridLines(Main r0) {
 	r24 = 0.25;
 	r18 = &r24;
 	h2d_Graphics_lineStyle(r11,r16,r17,r18);
-	if( !r9 ) goto label$36888b6_47_289;
+	if( !r9 ) goto label$36888b6_46_289;
 	r11 = r0->ruler;
 	r25 = r9 ? r9->v.d : 0;
 	r25 = r25 + r2;
@@ -3543,8 +3429,8 @@ void Main_updateGridLines(Main r0) {
 	r45 = r45 + r46;
 	r18 = &r45;
 	h2d_Graphics_addVertex(r11,r25,r26,r31,r37,r40,r43,r16,r18);
-	label$36888b6_47_289:
-	if( !r10 ) goto label$36888b6_47_348;
+	label$36888b6_46_289:
+	if( !r10 ) goto label$36888b6_46_348;
 	r11 = r0->ruler;
 	r25 = r10 ? r10->v.d : 0;
 	r25 = r25 + r4;
@@ -3603,7 +3489,7 @@ void Main_updateGridLines(Main r0) {
 	r49 = r49 + r50;
 	r18 = &r49;
 	h2d_Graphics_addVertex(r11,r25,r26,r31,r37,r40,r47,r16,r18);
-	label$36888b6_47_348:
+	label$36888b6_46_348:
 	return;
 }
 

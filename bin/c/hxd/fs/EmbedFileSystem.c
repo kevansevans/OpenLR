@@ -2,7 +2,7 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxd/fs/EmbedFileSystem.h>
-extern String s$c1f723e;
+extern String s$R_;
 extern hxd__fs__$EmbedFileSystem g$_hxd_fs_EmbedFileSystem;
 extern String s$b14a7b8;
 String EReg_replace(EReg,String,String);
@@ -34,7 +34,7 @@ String hxd_fs_EmbedFileSystem_resolve(String r0) {
 	String r1, r2, r5;
 	hxd__fs__$EmbedFileSystem r4;
 	EReg r3;
-	r1 = (String)s$c1f723e;
+	r1 = (String)s$R_;
 	r4 = (hxd__fs__$EmbedFileSystem)g$_hxd_fs_EmbedFileSystem;
 	r3 = r4->invalidChars;
 	if( r3 == NULL ) hl_null_access();

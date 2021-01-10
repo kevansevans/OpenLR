@@ -98,20 +98,13 @@ class Main extends App
 	
 	var mask:Mask;
 	
-	@:macro public static function getBuildDate() {
-		var months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUN", "AUG", "SEP", "OCT", "NOV", "DEC"];
-		var month:Int = Date.now().getMonth();
-		var monthstr:String = months[month] != null ? months[month] : "Lousy Smarch Weather";
-		return Date.now().getDate() + monthstr + Date.now().getFullYear() + ':' + Date.now().getHours() + '.' + Date.now().getMinutes();
-    }
 	
 	static function main() 
 	{
-		build = "" + getBuildDate();
 		#if debug
-		build = "D:" + build;
+		build = "Debug";
 		#else
-		build = "R:" + build;
+		build = "Release";
 		#end
 		new Main();
 	}
@@ -164,6 +157,9 @@ class Main extends App
 		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
 		console.log("Press / to toggle console...", 0x333333);
 		console.log("https://github.com/kevansevans/OpenLR", 0x333333);
+		console.log("Press S to play, Space to toggle pause.", 0x333333);
+		console.log("Press X to stop.", 0x333333);
+		console.log("Press 123 and QWE to cycle tools.", 0x333333);
 		
 		grid = new Grid();
 		
@@ -172,6 +168,7 @@ class Main extends App
 		simulation = new Simulation();
 		
 		saveload = new SaveLoad();
+		saveload.loadUserInfo();
 		
 		#if hl
 		audio = new Musicplayer();
@@ -226,7 +223,6 @@ class Main extends App
 			if (_index != null) {
 				canvas.removeLine(grid.lines[_index]);
 			}
-			console.log('${_index}');
 		});
 		var arg10:ConsoleArgDesc = {t: AString, opt: false, name : "Tool"};
 		console.addCommand(Commands.setTool, "Change current active tool", [arg10], function(_tool:String, _color:String) {
@@ -260,8 +256,8 @@ class Main extends App
 		});
 		var arg12:ConsoleArgDesc = {t: AFloat, opt: false, name : "x"};
 		var arg13:ConsoleArgDesc = {t: AFloat, opt: false, name : "y"};
-		console.addCommand(Commands.zoomIn, "Increase zoom by 1", [], function() {canvas.zoomCanvas(1); });
-		console.addCommand(Commands.zoomOut, "Decrease zoom by 1", [], function() {canvas.zoomCanvas( -1); });
+		console.addCommand(Commands.zoomIn, "Increase zoom by 1", [], function() {canvas.zoomCanvas(-1); });
+		console.addCommand(Commands.zoomOut, "Decrease zoom by 1", [], function() {canvas.zoomCanvas(1); });
 		console.addCommand(Commands.addCanvasPosition, "Add values to existing canvas position", [arg12, arg13], function(_x:Float, _y:Float) { canvas.addCanvasPosition(_x, _y); });
 		var arg14:ConsoleArgDesc = {t: ABool, opt: false, name : "true/false"};
 		console.addCommand(Commands.showGrid, "Toggle grid visibility", [arg14], function(_visible:Bool) { ruler.visible = _visible; });
@@ -330,7 +326,9 @@ class Main extends App
 			}
 			riders.riders[_name].disableFrame = _frame;
 		});
-		console.addCommand(Commands.removeRider, "Remove specified rider", [arg15], function(_name:String) {riders.riders[_name].delete(); });
+		console.addCommand(Commands.removeRider, "Remove specified rider", [arg15], function(_name:String) {
+			riders.removeRider(_name);
+		});
 		var arg18:ConsoleArgDesc = {t: AString, opt: false, name : "Track name"};
 		var arg19:ConsoleArgDesc = {t: AInt, opt: true, name : "previous version offset"};
 		var arg20:ConsoleArgDesc = {t: AString, opt: true, name : "Track name"};
@@ -378,7 +376,6 @@ class Main extends App
 			riders.deleteAllRiders();
 			riders.addNewRider("Bosh", new h2d.col.Point(0, 0));
 			trackName = null;
-			authorName = null;
 		} );
 		var arg24:ConsoleArgDesc = {t: AString, opt: false, name : "Rider name"};
 		var arg25:ConsoleArgDesc = {t: AString, opt: false, name : "New name"};
@@ -394,13 +391,12 @@ class Main extends App
 		var arg26:ConsoleArgDesc = {t: AString, opt: false, name : "message"};
 		console.addCommand(Commands.say, "Relay a message to console", [arg26], function(_msg:String) {
 			console.log(_msg);
-			#if js
-			if (p2p.connected) p2p.sendData('chat:${authorName}:${_msg}');
-			#end
 		});
 		var arg30:ConsoleArgDesc = {t: AString, opt: false, name : "Author name"};
 		console.addCommand(Commands.setAuthorName, "Set author name", [arg30], function(_name:String) {
 			authorName = _name;
+			saveload.saveUserInfo();
+			console.log('Author name set to ${_name}');
 		});
 		#if hl
 		var argMusic:ConsoleArgDesc = {t: AString, opt: false, name : "Song name"};
@@ -435,7 +431,15 @@ class Main extends App
 				console.log('Please set author name with /name before joining server', 0xFF0000);
 				return;
 			}
+			if (grid.lineCount > 0) {
+				console.runCommand(Commands.saveTrack + ' ${Date.now().getTime()}');
+				console.runCommand(Commands.newTrack);
+			}
+			riders.deleteAllRiders();
 			p2p.join(_name);
+		});
+		console.addCommand(Commands.disconnect, "Disconnects from online session", [], function() {
+			p2p.disconnect();
 		});
 		#end
 	}
@@ -462,9 +466,7 @@ class Main extends App
 		textinfo.update();
 		
 		#if js
-		if (p2p.connected) {
-			p2p.sendData('updateCursor:${authorName}:${canvas.mouseX}:${canvas.mouseY}');
-		}
+		if (p2p.connected) p2p.updateCursor();
 		#end
 	}
 	

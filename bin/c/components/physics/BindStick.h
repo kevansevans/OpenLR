@@ -17,6 +17,7 @@ struct _components__physics__$BindStick {
 	varray* __implementedBy__;
 	String __name__;
 	vdynamic* __constructor__;
+	bool crash;
 };
 struct _components__physics__BindStick {
 	hl_type *$type;

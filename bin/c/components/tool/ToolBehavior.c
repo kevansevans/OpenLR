@@ -34,11 +34,12 @@ void components_stage_Canvas_addCanvasPosition(components__stage__Canvas,double,
 #include <h2d/Object.h>
 #include <h2d/Graphics.h>
 void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
-components__lines__LineBase components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*);
+void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*);
 #include <hxd/EventKind.h>
 #include <components/stage/DrawMode.h>
 #include <components/managers/Musicplayer.h>
 #include <components/stage/LRConsole.h>
+#include <components/managers/Riders.h>
 venum* components_stage_Canvas_get_drawMode(components__stage__Canvas);
 extern venum* g$994fdec;
 venum* components_stage_Canvas_set_drawMode(components__stage__Canvas,venum*);
@@ -64,6 +65,7 @@ void components_managers_Simulation_startSim(components__managers__Simulation);
 extern venum* g$components_tool_ToolMode_LINE;
 extern String s$Tool_set_to_Line;
 void components_managers_Simulation_endSim(components__managers__Simulation);
+void components_managers_Riders_resetPositions(components__managers__Riders);
 double Math_max(double,double);
 extern String s$Ruler_width_set_to_;
 String String___alloc__(vbyte*,int);
@@ -700,7 +702,6 @@ void components_tool_ToolBehavior_drawLine(components__tool__ToolBehavior r0) {
 	bool r10;
 	$Main r3;
 	h2d__col__Point r6;
-	components__lines__LineBase r1;
 	components__stage__Canvas r2;
 	double r5, r7, r8, r9;
 	vdynamic *r11, *r12;
@@ -724,24 +725,25 @@ void components_tool_ToolBehavior_drawLine(components__tool__ToolBehavior r0) {
 	r10 = r0->shifted;
 	r11 = hl_alloc_dynbool(r10);
 	r12 = NULL;
-	r1 = components_stage_Canvas_addLine(r2,r4,r5,r7,r8,r9,r11,r12);
+	components_stage_Canvas_addLine(r2,r4,r5,r7,r8,r9,r11,r12);
 	return;
 }
 
 void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0,hxd__Event r1) {
-	String r13, r21;
+	components__managers__Riders r16;
+	String r13, r22;
 	venum *r4, *r6, *r15;
 	bool r10;
 	components__managers__Musicplayer r11;
 	$Main r8;
 	components__stage__Canvas r7;
-	double r17, r18;
+	double r18, r19;
 	components__managers__Simulation r9;
-	int *r19;
+	int *r20;
 	vdynamic *r14;
-	vbyte *r20;
+	vbyte *r21;
 	components__stage__LRConsole r12;
-	int r3, r5, r16;
+	int r3, r5, r17;
 	if( r1 == NULL ) hl_null_access();
 	r4 = r1->kind;
 	if( r4 == NULL ) hl_null_access();
@@ -756,7 +758,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 		case 5:
 		case 6:
 		case 7:
-			goto label$80df762_7_330;
+			goto label$80df762_7_334;
 		case 8:
 			r3 = r1->keyCode;
 			r5 = 9;
@@ -786,14 +788,14 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r5 = 88;
 			if( r5 == r3 ) goto label$80df762_7_197;
 			r5 = 219;
-			if( r5 == r3 ) goto label$80df762_7_202;
+			if( r5 == r3 ) goto label$80df762_7_206;
 			r5 = 221;
-			if( r5 == r3 ) goto label$80df762_7_253;
+			if( r5 == r3 ) goto label$80df762_7_257;
 			r5 = 272;
-			if( r5 == r3 ) goto label$80df762_7_300;
+			if( r5 == r3 ) goto label$80df762_7_304;
 			r5 = 528;
-			if( r5 == r3 ) goto label$80df762_7_303;
-			goto label$80df762_7_307;
+			if( r5 == r3 ) goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_42:
 			r8 = ($Main)g$_Main;
 			r7 = r8->canvas;
@@ -847,7 +849,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 					r6 = components_stage_Canvas_set_drawMode(r7,r6);
 			}
 			label$80df762_7_85:
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_86:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
@@ -858,7 +860,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r11 = r8->audio;
 			if( r11 == NULL ) hl_null_access();
 			components_managers_Musicplayer_stopMusic(r11);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_96:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
@@ -881,7 +883,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			if( r9 == NULL ) hl_null_access();
 			components_managers_Simulation_resumeSim(r9);
 			label$80df762_7_115:
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_116:
 			r3 = 0;
 			r0->color = r3;
@@ -894,7 +896,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_127:
 			r3 = 1;
 			r0->color = r3;
@@ -907,7 +909,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_138:
 			r3 = 2;
 			r0->color = r3;
@@ -920,19 +922,19 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_149:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
 			if( r9 == NULL ) hl_null_access();
 			components_managers_Simulation_backSim(r9);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_154:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
 			if( r9 == NULL ) hl_null_access();
 			components_managers_Simulation_stepSim(r9);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_159:
 			r15 = (venum*)g$components_tool_ToolMode_ERASER;
 			r0->tool = r15;
@@ -945,7 +947,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_170:
 			r15 = (venum*)g$components_tool_ToolMode_PENCIL;
 			r0->tool = r15;
@@ -958,13 +960,13 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_181:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
 			if( r9 == NULL ) hl_null_access();
 			components_managers_Simulation_startSim(r9);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_186:
 			r15 = (venum*)g$components_tool_ToolMode_LINE;
 			r0->tool = r15;
@@ -977,42 +979,46 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
+			goto label$80df762_7_311;
 			label$80df762_7_197:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
 			if( r9 == NULL ) hl_null_access();
 			components_managers_Simulation_endSim(r9);
-			goto label$80df762_7_307;
-			label$80df762_7_202:
+			r8 = ($Main)g$_Main;
+			r16 = r8->riders;
+			if( r16 == NULL ) hl_null_access();
+			components_managers_Riders_resetPositions(r16);
+			goto label$80df762_7_311;
+			label$80df762_7_206:
 			r8 = ($Main)g$_Main;
 			r3 = r8->viewGridSize;
 			r5 = 1;
-			if( r3 != r5 ) goto label$80df762_7_207;
+			if( r3 != r5 ) goto label$80df762_7_211;
 			return;
-			label$80df762_7_207:
+			label$80df762_7_211:
 			r10 = r0->shifted;
-			if( !r10 ) goto label$80df762_7_226;
+			if( !r10 ) goto label$80df762_7_230;
 			r3 = 2;
-			label$80df762_7_210:
+			label$80df762_7_214:
 			r10 = true;
-			if( !r10 ) goto label$80df762_7_225;
+			if( !r10 ) goto label$80df762_7_229;
 			r8 = ($Main)g$_Main;
-			r16 = r8->viewGridSize;
-			if( r3 < r16 ) goto label$80df762_7_221;
-			r16 = 1;
-			r5 = r3 >> r16;
+			r17 = r8->viewGridSize;
+			if( r3 < r17 ) goto label$80df762_7_225;
+			r17 = 1;
+			r5 = r3 >> r17;
 			r8 = ($Main)g$_Main;
 			r8->viewGridSize = r5;
-			goto label$80df762_7_225;
-			label$80df762_7_221:
-			r16 = 1;
-			r5 = r3 << r16;
-			r3 = r5;
-			goto label$80df762_7_210;
+			goto label$80df762_7_229;
 			label$80df762_7_225:
-			goto label$80df762_7_239;
-			label$80df762_7_226:
+			r17 = 1;
+			r5 = r3 << r17;
+			r3 = r5;
+			goto label$80df762_7_214;
+			label$80df762_7_229:
+			goto label$80df762_7_243;
+			label$80df762_7_230:
 			r8 = ($Main)g$_Main;
 			r3 = r8->viewGridSize;
 			r5 = 1;
@@ -1020,43 +1026,43 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r8->viewGridSize = r3;
 			r8 = ($Main)g$_Main;
 			r3 = r8->viewGridSize;
-			r17 = (double)r3;
-			r18 = 1.;
-			r17 = Math_max(r17,r18);
-			r3 = (int)r17;
+			r18 = (double)r3;
+			r19 = 1.;
+			r18 = Math_max(r18,r19);
+			r3 = (int)r18;
 			r8 = ($Main)g$_Main;
 			r8->viewGridSize = r3;
-			label$80df762_7_239:
+			label$80df762_7_243:
 			r8 = ($Main)g$_Main;
 			r12 = r8->console;
 			if( r12 == NULL ) hl_null_access();
 			r13 = (String)s$Ruler_width_set_to_;
 			r8 = ($Main)g$_Main;
 			r3 = r8->viewGridSize;
-			r19 = &r3;
-			r20 = hl_itos(r3,r19);
-			r21 = String___alloc__(r20,r3);
-			r13 = String___add__(r13,r21);
+			r20 = &r3;
+			r21 = hl_itos(r3,r20);
+			r22 = String___alloc__(r21,r3);
+			r13 = String___add__(r13,r22);
 			r3 = 26367;
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
-			label$80df762_7_253:
+			goto label$80df762_7_311;
+			label$80df762_7_257:
 			r10 = r0->shifted;
-			if( !r10 ) goto label$80df762_7_281;
+			if( !r10 ) goto label$80df762_7_285;
 			r3 = 2;
-			label$80df762_7_256:
+			label$80df762_7_260:
 			r10 = true;
-			if( !r10 ) goto label$80df762_7_280;
+			if( !r10 ) goto label$80df762_7_284;
 			r8 = ($Main)g$_Main;
-			r16 = r8->viewGridSize;
-			if( r16 < r3 ) goto label$80df762_7_276;
-			r16 = 1;
-			r5 = r3 << r16;
+			r17 = r8->viewGridSize;
+			if( r17 < r3 ) goto label$80df762_7_280;
+			r17 = 1;
+			r5 = r3 << r17;
 			r3 = r5;
-			r16 = 0;
-			if( r5 != r16 ) goto label$80df762_7_275;
+			r17 = 0;
+			if( r5 != r17 ) goto label$80df762_7_279;
 			r8 = ($Main)g$_Main;
 			r12 = r8->console;
 			if( r12 == NULL ) hl_null_access();
@@ -1065,58 +1071,58 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r5;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_280;
-			label$80df762_7_275:
-			goto label$80df762_7_279;
-			label$80df762_7_276:
+			goto label$80df762_7_284;
+			label$80df762_7_279:
+			goto label$80df762_7_283;
+			label$80df762_7_280:
 			r8 = ($Main)g$_Main;
 			r8->viewGridSize = r3;
-			goto label$80df762_7_280;
-			label$80df762_7_279:
-			goto label$80df762_7_256;
-			label$80df762_7_280:
-			goto label$80df762_7_286;
-			label$80df762_7_281:
+			goto label$80df762_7_284;
+			label$80df762_7_283:
+			goto label$80df762_7_260;
+			label$80df762_7_284:
+			goto label$80df762_7_290;
+			label$80df762_7_285:
 			r8 = ($Main)g$_Main;
 			r3 = r8->viewGridSize;
 			r5 = 1;
 			r3 = r3 + r5;
 			r8->viewGridSize = r3;
-			label$80df762_7_286:
+			label$80df762_7_290:
 			r8 = ($Main)g$_Main;
 			r12 = r8->console;
 			if( r12 == NULL ) hl_null_access();
 			r13 = (String)s$Ruler_width_set_to_;
 			r8 = ($Main)g$_Main;
 			r3 = r8->viewGridSize;
-			r19 = &r3;
-			r20 = hl_itos(r3,r19);
-			r21 = String___alloc__(r20,r3);
-			r13 = String___add__(r13,r21);
+			r20 = &r3;
+			r21 = hl_itos(r3,r20);
+			r22 = String___alloc__(r21,r3);
+			r13 = String___add__(r13,r22);
 			r3 = 26367;
 			r14 = hl_alloc_dynamic(&t$_i32);
 			r14->v.i = r3;
 			h2d_Console_log(((h2d__Console)r12),r13,r14);
-			goto label$80df762_7_307;
-			label$80df762_7_300:
+			goto label$80df762_7_311;
+			label$80df762_7_304:
 			r10 = true;
 			r0->shifted = r10;
-			goto label$80df762_7_307;
-			label$80df762_7_303:
+			goto label$80df762_7_311;
+			label$80df762_7_307:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
 			if( r9 == NULL ) hl_null_access();
 			components_managers_Simulation_updateSim(r9);
-			label$80df762_7_307:
-			goto label$80df762_7_330;
+			label$80df762_7_311:
+			goto label$80df762_7_334;
 		case 9:
 			r3 = r1->keyCode;
 			r5 = 17;
-			if( r5 == r3 ) goto label$80df762_7_314;
+			if( r5 == r3 ) goto label$80df762_7_318;
 			r5 = 272;
-			if( r5 == r3 ) goto label$80df762_7_328;
-			goto label$80df762_7_330;
-			label$80df762_7_314:
+			if( r5 == r3 ) goto label$80df762_7_332;
+			goto label$80df762_7_334;
+			label$80df762_7_318:
 			r8 = ($Main)g$_Main;
 			r9 = r8->simulation;
 			if( r9 == NULL ) hl_null_access();
@@ -1130,12 +1136,12 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			if( r9 == NULL ) hl_null_access();
 			r3 = r9->frames;
 			components_managers_Musicplayer_playMusic(r11,r3);
-			goto label$80df762_7_330;
-			label$80df762_7_328:
+			goto label$80df762_7_334;
+			label$80df762_7_332:
 			r10 = false;
 			r0->shifted = r10;
 	}
-	label$80df762_7_330:
+	label$80df762_7_334:
 	return;
 }
 

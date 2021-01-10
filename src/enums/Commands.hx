@@ -10,6 +10,7 @@ enum abstract Commands(String) from String
 	var addCanvasPosition:String; //x, y, adds to the current existing canvas position
 	var addNewRider:String; //name, [x, 0.0], [y, 0.0], [enable frame], [disableFrame] creates a new rider with specified name, and sets it's start point to given x y values
 	
+	var disconnect:String; //Leave current server;
 	var drawLine:String; //[type, current active color], [x1, mouse x], [y1, mouse y], [x2, x1 + 10], [y2, same as y1], [shifted, false], [limmode], creates a new line
 	
 	var github:String; //Print github page

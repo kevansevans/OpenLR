@@ -50,7 +50,6 @@ struct _$Main {
 	components__stage__TextInfo textinfo;
 	components__managers__Musicplayer audio;
 	utils__TableRNG rng;
-	vclosure* getBuildDate;
 	vclosure* main;
 };
 struct _Main {

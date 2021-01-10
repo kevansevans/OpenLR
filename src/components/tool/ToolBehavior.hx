@@ -269,10 +269,7 @@ class ToolBehavior
 	
 	function drawLine():Void 
 	{
-		var line:LineBase = Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
-		#if js
-		if (Main.p2p.connected) Main.p2p.sendLine(line);
-		#end
+		Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
 	}
 	
 	function keyInputDown(event:Event):Void 
@@ -337,6 +334,7 @@ class ToolBehavior
 						Main.simulation.startSim();
 					case Key.X :
 						Main.simulation.endSim();
+						Main.riders.resetPositions();
 						
 					case Key.NUMBER_1 :
 						color = FLOOR;

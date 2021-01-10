@@ -2,7 +2,9 @@ package components.managers;
 import components.physics.BindStick;
 import components.sledder.Bosh;
 import components.sledder.RiderBase;
+import format.gif.Data.Frame;
 import h2d.col.Point;
+import network.NetAction;
 
 /**
  * ...
@@ -42,6 +44,25 @@ class Riders
 		riders[setName] = new Bosh(_start.x, _start.y, setName, _startFrame, _endFrame);
 		++riderCount;
 		Main.simulation.recordGlobalSimState();
+		
+		#if js
+		
+		if (Main.p2p.connected) {
+			
+			Main.p2p.updateRiderData(NetAction.addRider, 
+				[
+					riders[setName].name, 
+					riders[setName].startPos.x, 
+					riders[setName].startPos.y,
+					riders[setName].enabledFrame,
+					riders[setName].disableFrame,
+					
+				]
+			);
+			
+		}
+		
+		#end
 	}
 	
 	public function renameRider(_old:String, _new:String) {
@@ -77,5 +98,33 @@ class Riders
 			rider.reset();
 		}
 	}
+	
+	public function removeRider(_name:String) {
+		riders[_name].delete();
+		
+		#if js
+		if (Main.p2p.connected) {
+			Main.p2p.updateRiderData(NetAction.removeRider, [_name]);
+		}
+		#end
+	}
+	
+	#if js
+	
+	public function P2PAddRider(_name:String, _x:Float, _y:Float, _startFrame:Null<Int>, _endFrame:Null<Int>) {
+		riders[_name] = new Bosh(_x, _y, _name, _startFrame, _endFrame);
+		++riderCount;
+		Main.simulation.recordGlobalSimState();
+	}
+	
+	public function P2PRemoveRider(_name:String) {
+		riders[_name].delete();
+	}
+	
+	public function P2PUpdateRider() {
+		
+	}
+	
+	#end
 	
 }
