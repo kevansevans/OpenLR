@@ -91,6 +91,8 @@ extern venum* g$hxd_Platform_IOS;
 extern venum* g$hxd_Platform_Android;
 extern venum* g$hxd_Platform_PC;
 void hl__UI_Sentinel_Impl__tick(ui_sentinel*);
+bool hl__UI_Sentinel_Impl__get_pause(ui_sentinel*);
+bool hl__UI_Sentinel_Impl__set_pause(ui_sentinel*,bool);
 
 void hxd_System_setLoop(vclosure* r0) {
 	hxd__$System r1;
@@ -782,5 +784,27 @@ void hxd_System_timeoutTick() {
 	r1 = r2->sentinel;
 	hl__UI_Sentinel_Impl__tick(r1);
 	return;
+}
+
+bool hxd_System_get_allowTimeout() {
+	ui_sentinel *r1;
+	bool r0;
+	hxd__$System r2;
+	r2 = (hxd__$System)g$_hxd_System;
+	r1 = r2->sentinel;
+	r0 = hl__UI_Sentinel_Impl__get_pause(r1);
+	r0 = !r0;
+	return r0;
+}
+
+bool hxd_System_set_allowTimeout(bool r0) {
+	ui_sentinel *r2;
+	bool r1;
+	hxd__$System r3;
+	r3 = (hxd__$System)g$_hxd_System;
+	r2 = r3->sentinel;
+	r1 = !r0;
+	r1 = hl__UI_Sentinel_Impl__set_pause(r2,r1);
+	return r1;
 }
 

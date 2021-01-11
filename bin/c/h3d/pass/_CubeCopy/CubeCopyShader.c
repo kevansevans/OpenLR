@@ -2,21 +2,12 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/pass/_CubeCopy/CubeCopyShader.h>
-extern hl_type t$h3d_Matrix;
-void h3d_Matrix_new(h3d__Matrix);
-void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
-
-void h3d_pass__CubeCopy_CubeCopyShader_new(h3d__pass___CubeCopy__CubeCopyShader r0) {
-	h3d__Matrix r1;
-	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
-	h3d_Matrix_new(r1);
-	r0->mat__ = r1;
-	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
-	return;
-}
+extern hl_type t$h3d_Matrix;
+void h3d_Matrix_new(h3d__Matrix);
+void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 
 void h3d_pass__CubeCopy_CubeCopyShader_updateConstants(h3d__pass___CubeCopy__CubeCopyShader r0,hxsl__Globals r1) {
 	int r2;
@@ -33,7 +24,7 @@ vdynamic* h3d_pass__CubeCopy_CubeCopyShader_getParamValue(h3d__pass___CubeCopy__
 	h3d__mat__Texture r4;
 	switch(r1) {
 		default:
-			goto label$562ef52_3_9;
+			goto label$562ef52_2_9;
 		case 0:
 			r2 = r0->flipY__;
 			r3 = hl_alloc_dynamic(&t$_f64);
@@ -46,7 +37,7 @@ vdynamic* h3d_pass__CubeCopy_CubeCopyShader_getParamValue(h3d__pass___CubeCopy__
 			r5 = r0->mat__;
 			return ((vdynamic*)r5);
 	}
-	label$562ef52_3_9:
+	label$562ef52_2_9:
 	r3 = NULL;
 	return r3;
 }
@@ -55,11 +46,20 @@ double h3d_pass__CubeCopy_CubeCopyShader_getParamFloatValue(h3d__pass___CubeCopy
 	double r3;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$562ef52_4_4;
+	if( r1 != r2 ) goto label$562ef52_3_4;
 	r3 = r0->flipY__;
 	return r3;
-	label$562ef52_4_4:
+	label$562ef52_3_4:
 	r3 = 0.;
 	return r3;
+}
+
+void h3d_pass__CubeCopy_CubeCopyShader_new(h3d__pass___CubeCopy__CubeCopyShader r0) {
+	h3d__Matrix r1;
+	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
+	h3d_Matrix_new(r1);
+	r0->mat__ = r1;
+	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
+	return;
 }
 

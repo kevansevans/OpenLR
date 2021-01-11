@@ -223,6 +223,7 @@
 #include <components/lines/Accel.h>
 #include <components/lines/Floor.h>
 #include <components/lines/Scenery.h>
+#include <components/lines/Undefined.h>
 #include <hxd/fs/BytesFileEntry.h>
 #include <h2d/Anim.h>
 #include <components/sledder/RiderPart.h>
@@ -515,7 +516,7 @@
 #include <sdl/GL.h>
 #include <sys/io/File.h>
 extern hl_type t$String;
-extern vbyte string$28f5fed[];
+extern vbyte string$e69bf3c[];
 extern vbyte string$520de12[];
 extern vbyte string$71b4f2d[];
 extern vbyte string$652b44f[];
@@ -782,7 +783,7 @@ $Main g$_Main = 0;
 String s$Release = 0;
 hxd__res__$Loader g$_hxd_res_Loader = 0;
 hxd__fs__$EmbedFileSystem g$_hxd_fs_EmbedFileSystem = 0;
-String s$28f5fed = 0;
+String s$e69bf3c = 0;
 String s$OpenLR_ = 0;
 String s$Welcome_to_OpenLR_ = 0;
 String s$Press_to_toggle_console_ = 0;
@@ -922,7 +923,7 @@ String s$Bosh = 0;
 String s$New_name = 0;
 String s$renameRider = 0;
 String s$Rename_and_existing_rider = 0;
-String s$importAlternativeSave = 0;
+String s$importJSONSave = 0;
 String s$Load_valid_JSON_tracks = 0;
 String s$message = 0;
 String s$say = 0;
@@ -931,13 +932,15 @@ String s$Author_name = 0;
 String s$name = 0;
 String s$Set_author_name = 0;
 String s$Author_name_set_to_ = 0;
-String s$Song_name = 0;
 String s$Offset = 0;
 String s$loadAudio = 0;
 String s$02e4d9c = 0;
-String s$fbf0612 = 0;
+String s$Import_ogg_file = 0;
+String s$Vorbis = 0;
+String s$ogg = 0;
 String s$setAudioOffset = 0;
 String s$Changes_start_position_of_song = 0;
+String s$fbf0612 = 0;
 String s$Invalid_function_ = 0;
 $Math g$_Math = 0;
 String s$Can_t_add_ = 0;
@@ -1006,6 +1009,7 @@ haxe__iterators__$ArrayIterator g$_haxe_iterators_ArrayIterator = 0;
 components__lines__$Accel g$_components_lines_Accel = 0;
 components__lines__$Floor g$_components_lines_Floor = 0;
 components__lines__$Scenery g$_components_lines_Scenery = 0;
+components__lines__$Undefined g$_components_lines_Undefined = 0;
 String s$Error_registering_line = 0;
 String s$_music = 0;
 String s$f1e7e73 = 0;
@@ -1103,6 +1107,10 @@ String s$tool_pencilGreen_png = 0;
 String s$tool_lineBlue_png = 0;
 String s$tool_lineRed_png = 0;
 String s$tool_lineGreen_png = 0;
+String s$tool_eraser_png = 0;
+String s$tool_eraserBlue_png = 0;
+String s$tool_eraserRed_png = 0;
+String s$tool_eraserGreen_png = 0;
 haxe__$Log g$_haxe_Log = 0;
 String s$3b33a12 = 0;
 String s$components_tool_ToolBehavior = 0;
@@ -1115,6 +1123,9 @@ venum* g$2a65ad1 = 0;
 String s$Line_type_set_to_Normal = 0;
 String s$Line_type_set_to_Accel = 0;
 String s$Line_type_set_to_Scenery = 0;
+String s$Color_eraser_ = 0;
+String s$on = 0;
+String s$off = 0;
 String s$Tool_set_to_Eraser = 0;
 String s$Tool_set_to_Pencil = 0;
 String s$Tool_set_to_Line = 0;
@@ -1623,6 +1634,7 @@ String s$Eof = 0;
 haxe__io__$FPHelper g$_haxe_io_FPHelper = 0;
 haxe__io__$Path g$_haxe_io_Path = 0;
 String s$58b9e70 = 0;
+String s$7f81377 = 0;
 haxe__iterators__$ArrayKeyValueIterator g$19142ef = 0;
 String s$_is_missing_element_ = 0;
 String s$Invalid_nodeType_ = 0;
@@ -1679,6 +1691,7 @@ hl__$Mikktspace g$_hl_Mikktspace = 0;
 hl__$Window g$_hl_Window = 0;
 hl__$Button g$_hl_Button = 0;
 hl__$WinLog g$_hl_WinLog = 0;
+String s$3db6003 = 0;
 hl__types__$BytesIterator_Float g$_hl_types_BytesIterator_Float = 0;
 hl__types__$BytesKeyValueIterator_Float g$1e08d4d = 0;
 String s$Invalid_array_index_ = 0;
@@ -1976,7 +1989,6 @@ String s$44100 = 0;
 String s$61bce13 = 0;
 String s$_h = 0;
 hxd__fs__$ConvertWAV2OGG g$_hxd_fs_ConvertWAV2OGG = 0;
-String s$ogg = 0;
 String s$oggenc = 0;
 String s$_Q = 0;
 String s$_o = 0;
@@ -2778,7 +2790,7 @@ static struct _String const_s$g = {&t$String,(vbyte*)USTR("g"),1};
 static struct _String const_s$ = {&t$String,(vbyte*)USTR(""),0};
 static struct _String const_s$c3e97dd = {&t$String,(vbyte*)USTR("$"),1};
 static struct _String const_s$Release = {&t$String,(vbyte*)USTR("Release"),7};
-static struct _String const_s$28f5fed = {&t$String,(vbyte*)string$28f5fed,321};
+static struct _String const_s$e69bf3c = {&t$String,(vbyte*)string$e69bf3c,395};
 static struct _String const_s$OpenLR_ = {&t$String,(vbyte*)USTR("OpenLR - "),9};
 static struct _String const_s$Welcome_to_OpenLR_ = {&t$String,(vbyte*)USTR("Welcome to OpenLR: "),19};
 static struct _String const_s$Press_to_toggle_console_ = {&t$String,(vbyte*)USTR("Press / to toggle console..."),28};
@@ -2904,7 +2916,7 @@ static struct _String const_s$Bosh = {&t$String,(vbyte*)USTR("Bosh"),4};
 static struct _String const_s$New_name = {&t$String,(vbyte*)USTR("New name"),8};
 static struct _String const_s$renameRider = {&t$String,(vbyte*)USTR("renameRider"),11};
 static struct _String const_s$Rename_and_existing_rider = {&t$String,(vbyte*)USTR("Rename and existing rider"),25};
-static struct _String const_s$importAlternativeSave = {&t$String,(vbyte*)USTR("importAlternativeSave"),21};
+static struct _String const_s$importJSONSave = {&t$String,(vbyte*)USTR("importJSONSave"),14};
 static struct _String const_s$Load_valid_JSON_tracks = {&t$String,(vbyte*)USTR("Load valid JSON tracks"),22};
 static struct _String const_s$message = {&t$String,(vbyte*)USTR("message"),7};
 static struct _String const_s$say = {&t$String,(vbyte*)USTR("say"),3};
@@ -2913,13 +2925,15 @@ static struct _String const_s$Author_name = {&t$String,(vbyte*)USTR("Author name
 static struct _String const_s$name = {&t$String,(vbyte*)USTR("name"),4};
 static struct _String const_s$Set_author_name = {&t$String,(vbyte*)USTR("Set author name"),15};
 static struct _String const_s$Author_name_set_to_ = {&t$String,(vbyte*)USTR("Author name set to "),19};
-static struct _String const_s$Song_name = {&t$String,(vbyte*)USTR("Song name"),9};
 static struct _String const_s$Offset = {&t$String,(vbyte*)USTR("Offset"),6};
 static struct _String const_s$loadAudio = {&t$String,(vbyte*)USTR("loadAudio"),9};
 static struct _String const_s$02e4d9c = {&t$String,(vbyte*)USTR("Import a .ogg file to play with track"),37};
-static struct _String const_s$fbf0612 = {&t$String,(vbyte*)USTR("Offset needs to be zero or greater, ${_offset} is not valid..."),62};
+static struct _String const_s$Import_ogg_file = {&t$String,(vbyte*)USTR("Import .ogg file"),16};
+static struct _String const_s$Vorbis = {&t$String,(vbyte*)USTR("Vorbis"),6};
+static struct _String const_s$ogg = {&t$String,(vbyte*)USTR("ogg"),3};
 static struct _String const_s$setAudioOffset = {&t$String,(vbyte*)USTR("setAudioOffset"),14};
 static struct _String const_s$Changes_start_position_of_song = {&t$String,(vbyte*)USTR("Changes start position of song"),30};
+static struct _String const_s$fbf0612 = {&t$String,(vbyte*)USTR("Offset needs to be zero or greater, ${_offset} is not valid..."),62};
 static struct _String const_s$Invalid_function_ = {&t$String,(vbyte*)USTR("Invalid function "),17};
 static struct _String const_s$Can_t_add_ = {&t$String,(vbyte*)USTR("Can't add "),10};
 static struct _String const_s$84c4047 = {&t$String,(vbyte*)USTR("("),1};
@@ -3046,12 +3060,19 @@ static struct _String const_s$tool_pencilGreen_png = {&t$String,(vbyte*)USTR("to
 static struct _String const_s$tool_lineBlue_png = {&t$String,(vbyte*)USTR("tool/lineBlue.png"),17};
 static struct _String const_s$tool_lineRed_png = {&t$String,(vbyte*)USTR("tool/lineRed.png"),16};
 static struct _String const_s$tool_lineGreen_png = {&t$String,(vbyte*)USTR("tool/lineGreen.png"),18};
+static struct _String const_s$tool_eraser_png = {&t$String,(vbyte*)USTR("tool/eraser.png"),15};
+static struct _String const_s$tool_eraserBlue_png = {&t$String,(vbyte*)USTR("tool/eraserBlue.png"),19};
+static struct _String const_s$tool_eraserRed_png = {&t$String,(vbyte*)USTR("tool/eraserRed.png"),18};
+static struct _String const_s$tool_eraserGreen_png = {&t$String,(vbyte*)USTR("tool/eraserGreen.png"),20};
 static struct _String const_s$3b33a12 = {&t$String,(vbyte*)USTR("src/components/tool/ToolBehavior.hx"),35};
 static struct _String const_s$components_tool_ToolBehavior = {&t$String,(vbyte*)USTR("components.tool.ToolBehavior"),28};
 static struct _String const_s$mouseDown = {&t$String,(vbyte*)USTR("mouseDown"),9};
 static struct _String const_s$Line_type_set_to_Normal = {&t$String,(vbyte*)USTR("Line type set to Normal"),23};
 static struct _String const_s$Line_type_set_to_Accel = {&t$String,(vbyte*)USTR("Line type set to Accel"),22};
 static struct _String const_s$Line_type_set_to_Scenery = {&t$String,(vbyte*)USTR("Line type set to Scenery"),24};
+static struct _String const_s$Color_eraser_ = {&t$String,(vbyte*)USTR("Color eraser "),13};
+static struct _String const_s$on = {&t$String,(vbyte*)USTR("on"),2};
+static struct _String const_s$off = {&t$String,(vbyte*)USTR("off"),3};
 static struct _String const_s$Tool_set_to_Eraser = {&t$String,(vbyte*)USTR("Tool set to Eraser"),18};
 static struct _String const_s$Tool_set_to_Pencil = {&t$String,(vbyte*)USTR("Tool set to Pencil"),18};
 static struct _String const_s$Tool_set_to_Line = {&t$String,(vbyte*)USTR("Tool set to Line"),16};
@@ -3324,6 +3345,7 @@ static struct _String const_s$Unclosed_string = {&t$String,(vbyte*)USTR("Unclose
 static struct _String const_s$Invalid_number_at_position_ = {&t$String,(vbyte*)USTR("Invalid number at position "),27};
 static struct _String const_s$Eof = {&t$String,(vbyte*)USTR("Eof"),3};
 static struct _String const_s$58b9e70 = {&t$String,(vbyte*)USTR(".."),2};
+static struct _String const_s$7f81377 = {&t$String,(vbyte*)USTR("\\\\"),2};
 static struct _String const_s$_is_missing_element_ = {&t$String,(vbyte*)USTR(" is missing element "),20};
 static struct _String const_s$Invalid_nodeType_ = {&t$String,(vbyte*)USTR("Invalid nodeType "),17};
 static struct _String const_s$d69af4e = {&t$String,(vbyte*)USTR("Cannot access document attribute "),33};
@@ -3367,6 +3389,7 @@ static struct _String const_s$_DOCTYPE_ = {&t$String,(vbyte*)USTR("<!DOCTYPE "),
 static struct _String const_s$b5a6ed8 = {&t$String,(vbyte*)USTR("<?"),2};
 static struct _String const_s$6ec256c = {&t$String,(vbyte*)USTR("?>"),2};
 static struct _String const_s$Compression_failed = {&t$String,(vbyte*)USTR("Compression failed"),18};
+static struct _String const_s$3db6003 = {&t$String,(vbyte*)USTR("*."),2};
 static struct _String const_s$Invalid_array_index_ = {&t$String,(vbyte*)USTR("Invalid array index "),20};
 static struct _String const_s$2f43b42 = {&t$String,(vbyte*)USTR("..."),3};
 static struct _String const_s$Invalid_pixels_size = {&t$String,(vbyte*)USTR("Invalid pixels size"),19};
@@ -3592,7 +3615,6 @@ static struct _String const_s$_resample = {&t$String,(vbyte*)USTR("--resample"),
 static struct _String const_s$44100 = {&t$String,(vbyte*)USTR("44100"),5};
 static struct _String const_s$61bce13 = {&t$String,(vbyte*)USTR("--silent"),8};
 static struct _String const_s$_h = {&t$String,(vbyte*)USTR("-h"),2};
-static struct _String const_s$ogg = {&t$String,(vbyte*)USTR("ogg"),3};
 static struct _String const_s$oggenc = {&t$String,(vbyte*)USTR("oggenc"),6};
 static struct _String const_s$_Q = {&t$String,(vbyte*)USTR("-Q"),2};
 static struct _String const_s$_o = {&t$String,(vbyte*)USTR("-o"),2};
@@ -4013,7 +4035,7 @@ void hl_init_roots() {
 	s$ = &const_s$;
 	s$c3e97dd = &const_s$c3e97dd;
 	s$Release = &const_s$Release;
-	s$28f5fed = &const_s$28f5fed;
+	s$e69bf3c = &const_s$e69bf3c;
 	s$OpenLR_ = &const_s$OpenLR_;
 	s$Welcome_to_OpenLR_ = &const_s$Welcome_to_OpenLR_;
 	s$Press_to_toggle_console_ = &const_s$Press_to_toggle_console_;
@@ -4139,7 +4161,7 @@ void hl_init_roots() {
 	s$New_name = &const_s$New_name;
 	s$renameRider = &const_s$renameRider;
 	s$Rename_and_existing_rider = &const_s$Rename_and_existing_rider;
-	s$importAlternativeSave = &const_s$importAlternativeSave;
+	s$importJSONSave = &const_s$importJSONSave;
 	s$Load_valid_JSON_tracks = &const_s$Load_valid_JSON_tracks;
 	s$message = &const_s$message;
 	s$say = &const_s$say;
@@ -4148,13 +4170,15 @@ void hl_init_roots() {
 	s$name = &const_s$name;
 	s$Set_author_name = &const_s$Set_author_name;
 	s$Author_name_set_to_ = &const_s$Author_name_set_to_;
-	s$Song_name = &const_s$Song_name;
 	s$Offset = &const_s$Offset;
 	s$loadAudio = &const_s$loadAudio;
 	s$02e4d9c = &const_s$02e4d9c;
-	s$fbf0612 = &const_s$fbf0612;
+	s$Import_ogg_file = &const_s$Import_ogg_file;
+	s$Vorbis = &const_s$Vorbis;
+	s$ogg = &const_s$ogg;
 	s$setAudioOffset = &const_s$setAudioOffset;
 	s$Changes_start_position_of_song = &const_s$Changes_start_position_of_song;
+	s$fbf0612 = &const_s$fbf0612;
 	s$Invalid_function_ = &const_s$Invalid_function_;
 	s$Can_t_add_ = &const_s$Can_t_add_;
 	s$84c4047 = &const_s$84c4047;
@@ -4281,12 +4305,19 @@ void hl_init_roots() {
 	s$tool_lineBlue_png = &const_s$tool_lineBlue_png;
 	s$tool_lineRed_png = &const_s$tool_lineRed_png;
 	s$tool_lineGreen_png = &const_s$tool_lineGreen_png;
+	s$tool_eraser_png = &const_s$tool_eraser_png;
+	s$tool_eraserBlue_png = &const_s$tool_eraserBlue_png;
+	s$tool_eraserRed_png = &const_s$tool_eraserRed_png;
+	s$tool_eraserGreen_png = &const_s$tool_eraserGreen_png;
 	s$3b33a12 = &const_s$3b33a12;
 	s$components_tool_ToolBehavior = &const_s$components_tool_ToolBehavior;
 	s$mouseDown = &const_s$mouseDown;
 	s$Line_type_set_to_Normal = &const_s$Line_type_set_to_Normal;
 	s$Line_type_set_to_Accel = &const_s$Line_type_set_to_Accel;
 	s$Line_type_set_to_Scenery = &const_s$Line_type_set_to_Scenery;
+	s$Color_eraser_ = &const_s$Color_eraser_;
+	s$on = &const_s$on;
+	s$off = &const_s$off;
 	s$Tool_set_to_Eraser = &const_s$Tool_set_to_Eraser;
 	s$Tool_set_to_Pencil = &const_s$Tool_set_to_Pencil;
 	s$Tool_set_to_Line = &const_s$Tool_set_to_Line;
@@ -4559,6 +4590,7 @@ void hl_init_roots() {
 	s$Invalid_number_at_position_ = &const_s$Invalid_number_at_position_;
 	s$Eof = &const_s$Eof;
 	s$58b9e70 = &const_s$58b9e70;
+	s$7f81377 = &const_s$7f81377;
 	s$_is_missing_element_ = &const_s$_is_missing_element_;
 	s$Invalid_nodeType_ = &const_s$Invalid_nodeType_;
 	s$d69af4e = &const_s$d69af4e;
@@ -4602,6 +4634,7 @@ void hl_init_roots() {
 	s$b5a6ed8 = &const_s$b5a6ed8;
 	s$6ec256c = &const_s$6ec256c;
 	s$Compression_failed = &const_s$Compression_failed;
+	s$3db6003 = &const_s$3db6003;
 	s$Invalid_array_index_ = &const_s$Invalid_array_index_;
 	s$2f43b42 = &const_s$2f43b42;
 	s$Invalid_pixels_size = &const_s$Invalid_pixels_size;
@@ -4827,7 +4860,6 @@ void hl_init_roots() {
 	s$44100 = &const_s$44100;
 	s$61bce13 = &const_s$61bce13;
 	s$_h = &const_s$_h;
-	s$ogg = &const_s$ogg;
 	s$oggenc = &const_s$oggenc;
 	s$_Q = &const_s$_Q;
 	s$_o = &const_s$_o;
@@ -5479,6 +5511,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_components_lines_Accel);
 	hl_add_root((void**)&g$_components_lines_Floor);
 	hl_add_root((void**)&g$_components_lines_Scenery);
+	hl_add_root((void**)&g$_components_lines_Undefined);
 	hl_add_root((void**)&g$_hxd_fs_BytesFileEntry);
 	hl_add_root((void**)&g$_h2d_Anim);
 	hl_add_root((void**)&g$_components_sledder_RiderPart);
@@ -6211,12 +6244,13 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_sys_io_File);
 }
 // oy5:soundoy11:connect.oggty14:disconnect.oggtgy4:tooloy15:pe...
-vbyte string$28f5fed[] = {111,0,121,0,53,0,58,0,115,0,111,0,117,0,110,0,100,0,111,0,121,0,49,0,49,0,58,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,121,0,49,0,52,0,58,0,100,0,105,0,115,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,103,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108\
-	,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,108,0,105,0,110,0,101,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,82,0,101,0,100,0,46,0,112,0,110,0,103\
-	,0,116,0,121,0,49,0,49,0,58,0,108,0,105,0,110,0,101,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,50,0,58,0,108,0,105,0,110,0,101,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,48,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,114,0,105,0,100,0,101,0,114,0,111,0,121,0,55,0,58,0,108,0,101\
-	,0,103,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,51,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,50,0,46,0,112,0,110,0,103,0,116,0,121,0,56,0,58,0,115,0,108,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,49,0,46,0,112,0,110\
-	,0,103,0,116,0,121,0,55,0,58,0,97,0,114,0,109,0,46,0,112,0,110,0,103,0,116,0,121,0,56,0,58,0,98,0,111,0,100,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,108,0,105,0,110,0,101,0,115,0,111,0,121,0,57,0,58,0,98,0,108,0,97,0,99,0,107,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,48,0,58,0,97,0,110,0,103,0,101,0,114,0,121,0,46,0,112,0,110,0,103,0,116,0,103\
-	,0,103,0,0,0};
+vbyte string$e69bf3c[] = {111,0,121,0,53,0,58,0,115,0,111,0,117,0,110,0,100,0,111,0,121,0,49,0,49,0,58,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,121,0,49,0,52,0,58,0,100,0,105,0,115,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,103,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108\
+	,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,108,0,105,0,110,0,101,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103\
+	,0,116,0,121,0,49,0,51,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,108,0,105,0,110,0,101,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,50,0,58,0,108,0,105,0,110,0,101,0,66,0,108\
+	,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,50,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,109,0,112,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,53,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,48,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,114\
+	,0,105,0,100,0,101,0,114,0,111,0,121,0,55,0,58,0,108,0,101,0,103,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,51,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,50,0,46,0,112,0,110,0,103,0,116,0,121,0,56,0,58,0,115,0,108,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58\
+	,0,101,0,121,0,101,0,48,0,48,0,48,0,49,0,46,0,112,0,110,0,103,0,116,0,121,0,55,0,58,0,97,0,114,0,109,0,46,0,112,0,110,0,103,0,116,0,121,0,56,0,58,0,98,0,111,0,100,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,108,0,105,0,110,0,101,0,115,0,111,0,121,0,57,0,58,0,98,0,108,0,97,0,99,0,107,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,48,0,58,0,97,0,110\
+	,0,103,0,101,0,114,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,103,0,0,0};
 // Enable frame can not be greater than or equal to it's disabl...
 vbyte string$520de12[] = {69,0,110,0,97,0,98,0,108,0,101,0,32,0,102,0,114,0,97,0,109,0,101,0,32,0,99,0,97,0,110,0,32,0,110,0,111,0,116,0,32,0,98,0,101,0,32,0,103,0,114,0,101,0,97,0,116,0,101,0,114,0,32,0,116,0,104,0,97,0,110,0,32,0,111,0,114,0,32,0,101,0,113,0,117,0,97,0,108,0,32,0,116,0,111,0,32,0,105,0,116,0,39,0,115,0,32,0,100,0,105,0,115,0,97,0,98,0,108,0,101,0,100,0,32,0,102\
 	,0,114,0,97,0,109,0,101,0,44,0,32,0,0,0};
@@ -6965,8 +6999,12 @@ vbyte bytes$cefc2d7[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,153
 vbyte bytes$9656779[] = {
 #  include "hl/bytes_6ddfdb277f429f69ffdfbc86dac1ecba.h"
 };
+vbyte bytes$5d4e496[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,10,0,0,0,10,8,6,0,0,0,141,50,207,189,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,65,100,111,98,101,32,73,109,97,103,101,82,101,97,100,121,113,201,101,60,0,0,0,86,73,68,65,84,120,218,98,100,64,0,127,32,46,96,64,5,19,128,120,35,178,64,61,16,255,199,129,235,97,138,236,241,40,130,97,144,26,134,243,68,40,60,207,8,101,16,4,76,12,68,2,144,194\
+	,11,68,168,187,0,11,22,66,110,244,135,233,152,143,71,209,124,116,227,227,129,248,62,146,130,251,80,49,48,0,8,48,0,196,97,49,242,96,125,155,120,0,0,0,0,73,69,78,68,174,66,96,130};
 vbyte bytes$82c69b5[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,23,0,0,0,23,8,6,0,0,0,224,42,212,160,0,0,0,185,73,68,65,84,72,137,237,148,203,13,194,48,16,5,199,192,61,233,192,116,16,9,165,0,74,160,148,116,64,11,161,2,74,128,18,40,192,88,180,64,7,166,0,216,92,18,9,4,73,214,252,4,82,230,100,173,222,142,87,242,199,16,131,99,141,16,24,83,50,227,216,23,55,145,114,169,87,41,57,167,190,248,40,74,222,160,16,63,47,87\
 	,50,200,191,47,159,168,147,30,203,153,18,195,244,115,227,252,10,6,199,6,88,116,100,10,114,86,119,213,61,75,132,2,72,91,250,182,154,3,157,63,172,10,161,67,92,247,121,44,30,171,216,228,22,71,130,39,139,238,107,197,147,225,72,180,241,184,123,126,97,7,132,247,78,220,224,144,171,111,183,151,255,125,254,131,252,69,185,199,34,28,128,160,109,169,0,50,150,37,85,198,184,86,29,0,0,0,0,73,69,78,68,174,66,96,130};
+vbyte bytes$38bf951[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,10,0,0,0,10,8,6,0,0,0,141,50,207,189,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,65,100,111,98,101,32,73,109,97,103,101,82,101,97,100,121,113,201,101,60,0,0,0,128,73,68,65,84,120,218,98,100,128,129,211,12,254,12,140,12,5,12,200,224,63,195,4,6,83,134,141,32,38,35,88,224,44,67,61,80,176,129,1,27,96,4,138,27,51,52,50,50,156,99,176,103,248\
+	,199,112,128,1,31,96,98,112,96,4,90,121,30,168,203,0,175,194,255,12,23,24,25,206,0,41,34,0,9,10,137,182,26,18,44,27,8,40,12,128,4,207,25,134,249,64,50,1,135,178,5,12,38,12,137,8,238,25,134,120,32,190,15,118,51,4,223,7,139,65,1,64,128,1,0,241,131,37,61,221,82,184,127,0,0,0,0,73,69,78,68,174,66,96,130};
 vbyte bytes$516a74e[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,12,0,0,0,26,8,6,0,0,0,131,250,189,97,0,0,1,110,73,68,65,84,56,141,149,211,75,78,194,80,20,198,241,63,15,11,229,33,14,32,24,131,188,6,198,132,84,52,38,142,29,104,116,6,59,160,59,208,21,232,22,220,129,238,64,93,129,186,2,113,230,12,53,49,36,146,8,42,68,202,235,58,64,74,105,110,139,158,164,131,123,242,253,78,78,147,123,193,189,142,128,75,160,52,39,7,64,12\
 	,16,150,175,246,59,192,177,78,109,64,0,77,55,208,84,18,121,225,89,80,173,224,220,41,92,241,42,97,17,41,236,9,53,179,37,124,139,201,9,40,122,29,128,30,88,94,155,158,134,3,128,42,240,32,3,25,96,87,73,228,204,198,200,104,3,92,0,200,128,174,196,115,120,252,202,56,60,48,16,3,195,29,4,86,214,205,195,224,179,49,9,127,200,64,201,171,198,178,129,68,126,186,126,251,221,156,46,3,186,154,222,180,76,127,3,49,124,2,238,100,32,3,148,213,116,209,108,244\
 	,91,245,153,233,118,160,7,83,26,190,208,18,0,35,163,195,240,171,225,14,66,249,29,243,208,107,212,0,174,128,103,25,40,249,34,241,172,186,186,97,7,51,211,173,160,28,202,109,79,119,111,190,50,234,117,90,192,181,12,196,0,61,170,29,154,205,110,253,81,58,125,2,244,96,74,195,31,77,0,48,234,119,49,198,224,204,9,28,71,11,251,102,227,251,165,10,112,139,237,103,173,37,188,129,176,136,106,7,34,89,58,17,254,241,85,174,56,133,65,254,170,98,255,1,69,183,176,29\
@@ -6983,6 +7021,8 @@ vbyte bytes$2014610[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,23,
 	,45,189,252,251,242,145,54,232,193,30,161,52,48,254,96,63,63,130,113,176,2,102,29,153,34,135,197,253,230,22,230,2,5,144,182,212,173,53,23,58,125,180,41,80,117,136,235,58,15,214,131,85,28,114,131,131,196,67,22,91,215,138,135,204,65,162,205,71,189,243,19,108,128,234,173,29,55,56,144,171,111,55,200,255,142,127,47,127,77,238,193,10,236,168,39,83,197,25,69,98,37,85,110,81,55,248,0,0,0,0,73,69,78,68,174,66,96,130};
 vbyte bytes$b58ce6b[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,23,0,0,0,23,8,6,0,0,0,224,42,212,160,0,0,0,190,73,68,65,84,72,137,237,149,177,13,194,48,16,69,223,1,125,216,32,108,144,21,50,2,35,32,69,56,109,54,96,133,80,2,66,140,0,35,48,2,140,192,6,102,0,56,138,136,10,153,248,36,130,82,228,149,214,191,231,147,207,178,5,11,75,61,32,120,30,212,236,229,214,22,31,153,228,194,2,168,24,227,99,226,54,249,155,173,220,187\
 	,147,71,50,200,255,47,159,68,39,11,77,129,26,152,117,213,76,127,16,156,30,129,121,48,161,84,236,100,253,177,238,116,133,82,33,76,3,149,167,246,129,10,121,96,83,255,69,12,74,222,12,170,25,150,13,167,9,165,102,230,186,32,165,102,56,77,98,227,182,123,254,228,12,248,216,142,173,79,110,115,198,27,185,254,94,110,100,144,247,89,94,104,138,114,65,227,62,103,128,23,0,49,44,78,115,251,43,155,0,0,0,0,73,69,78,68,174,66,96,130};
+vbyte bytes$bf7eb5d[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,10,0,0,0,10,8,6,0,0,0,141,50,207,189,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,65,100,111,98,101,32,73,109,97,103,101,82,101,97,100,121,113,201,101,60,0,0,0,129,73,68,65,84,120,218,98,100,128,129,148,255,254,12,140,12,5,12,200,224,63,195,4,134,57,140,27,65,76,70,176,64,218,255,122,32,217,192,128,29,52,48,204,98,108,100,100,72,253,111,15,84,126\
+	,128,1,31,248,207,224,192,4,164,38,48,16,6,19,152,128,166,25,16,84,6,84,195,196,64,36,96,2,218,127,129,160,42,160,26,144,194,6,34,20,54,48,129,195,233,63,195,2,60,138,22,128,212,64,220,56,155,49,17,72,38,0,241,3,36,37,15,192,98,16,57,6,128,0,3,0,241,107,31,39,97,189,244,187,0,0,0,0,73,69,78,68,174,66,96,130};
 vbyte bytes$96b9725[] = {
 #  include "hl/bytes_83cfebedbf75a6fd97dddac2ef7e89e3.h"
 };
@@ -7005,11 +7045,14 @@ vbyte bytes$7628c5a[] = {
 vbyte bytes$4ee7804[] = {
 #  include "hl/bytes_4c2b7cf2398dec7c5a80f57d853f0ddd.h"
 };
-vbyte bytes$3b863f5[] = {
-#  include "hl/bytes_c6f826af236ff2eec1272fafbdaf6554.h"
-};
 vbyte bytes$6df3a06[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,19,0,0,0,28,8,6,0,0,0,131,6,132,25,0,0,0,118,73,68,65,84,72,137,237,149,193,13,128,32,12,69,159,46,192,42,110,224,168,172,224,6,196,13,220,4,157,0,47,154,84,163,197,18,143,253,73,19,248,77,31,229,244,225,71,117,149,126,0,6,113,95,128,173,229,161,0,100,160,136,202,135,111,86,188,129,206,138,111,3,218,55,139,210,123,156,235,235,11,126,151,195,28,230,48,135,57,204\
 	,8,91,141,190,10,155,140,190,170,0,36,174,201,148,80,162,174,22,194,0,163,56,207,45,91,53,105,7,123,96,23,55,74,49,236,164,0,0,0,0,73,69,78,68,174,66,96,130};
 vbyte bytes$4851c37[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,19,0,0,0,28,8,6,0,0,0,131,6,132,25,0,0,0,201,73,68,65,84,72,137,237,212,81,13,131,48,16,198,241,127,102,0,9,72,64,2,18,144,128,20,164,32,1,9,147,128,133,57,64,194,183,135,117,9,233,218,187,43,123,220,46,225,1,184,251,165,253,66,129,127,53,151,160,23,44,130,254,235,121,193,46,144,224,16,12,141,208,144,230,36,216,17,108,233,166,9,204,32,9,54,4,221,105,117\
 	,33,176,0,237,130,238,253,50,12,154,208,169,41,7,63,154,34,61,161,230,38,200,217,70,223,154,171,5,234,18,228,128,38,116,51,188,71,186,188,103,238,170,242,176,165,150,224,13,232,16,204,238,183,85,193,138,199,171,120,124,28,104,181,194,46,128,107,4,146,96,170,244,77,89,223,234,65,179,179,131,185,8,234,245,99,11,67,6,184,144,101,16,130,42,224,129,96,20,220,107,25,5,192,41,205,143,87,230,127,189,158,97,69,58,100,44,236,72,222,0,0,0,0,73,69,78,68,174\
 	,66,96,130};
+vbyte bytes$8b8715f[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,12,0,0,0,25,8,6,0,0,0,5,110,207,207,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,65,100,111,98,101,32,73,109,97,103,101,82,101,97,100,121,113,201,101,60,0,0,1,131,73,68,65,84,120,218,98,102,192,15,236,129,120,1,148,253,0,136,127,18,80,207,112,31,136,255,35,225,249,132,76,255,143,5,227,4,235,229,228,228,254,139,137,137,33,43,126,207,140,67,177,60,16\
+	,207,112,117,117,101,16,17,17,97,96,99,99,99,120,243,230,13,72,188,130,9,135,134,2,93,93,93,6,94,94,94,184,192,255,255,96,215,44,192,165,33,1,164,1,6,94,191,126,205,0,13,173,143,216,52,196,11,9,9,9,200,203,203,131,57,191,127,255,102,120,247,238,29,76,3,3,54,13,9,14,14,14,112,206,203,151,47,25,254,254,253,123,1,200,60,136,77,3,200,88,7,51,51,51,184,192,131,7,160,248,98,152,0,227,163,107,40,176,183,183,103,224,226,226,2,115,222,190\
+	,125,203,240,249,243,231,15,64,230,6,108,26,248,209,157,115,237,218,53,6,168,226,143,216,52,4,168,168,168,8,104,107,107,131,57,63,126,252,96,184,115,231,14,136,217,128,236,4,100,13,5,161,161,161,112,206,229,203,151,65,212,1,32,126,136,77,131,62,48,146,12,108,108,108,224,18,167,79,159,102,64,74,169,24,26,10,92,92,92,224,49,123,251,246,109,134,143,31,63,130,60,187,16,155,6,176,103,115,115,115,225,130,39,79,158,196,106,58,76,67,2,200,41,50,50,50,96,129\
+	,175,95,191,50,156,58,117,10,37,236,209,53,20,248,248,248,192,5,182,109,219,134,213,179,200,0,156,214,3,3,3,255,183,182,182,254,23,21,21,5,241,253,241,101,20,244,28,117,159,80,190,69,215,96,79,138,134,124,6,34,0,76,241,122,6,34,1,72,241,121,104,124,16,4,0,1,6,0,4,5,135,17,39,116,152,114,0,0,0,0,73,69,78,68,174,66,96,130};
+vbyte bytes$0d89fbb[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,10,0,0,0,10,8,6,0,0,0,141,50,207,189,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,65,100,111,98,101,32,73,109,97,103,101,82,101,97,100,121,113,201,101,60,0,0,0,134,73,68,65,84,120,218,140,144,205,13,195,32,12,70,31,158,40,82,219,115,178,65,87,160,27,116,131,58,27,100,4,86,200,6,185,87,173,50,66,22,233,143,93,113,224,80,65,158,100,176,224,233,19\
+	,38,144,185,195,57,192,149,130,15,76,39,152,189,15,190,60,224,102,135,202,31,76,208,3,140,225,9,253,27,22,42,8,12,242,178,120,26,184,35,22,221,181,68,119,132,157,136,13,177,182,36,119,60,81,119,4,170,228,127,74,21,41,185,243,123,227,17,46,182,69,171,173,16,188,143,249,142,175,0,3,0,101,213,25,239,189,170,193,98,0,0,0,0,73,69,78,68,174,66,96,130};

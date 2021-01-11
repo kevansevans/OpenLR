@@ -2,15 +2,10 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/MinMaxShader.h>
-void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
-
-void h3d_shader_MinMaxShader_new(h3d__shader__MinMaxShader r0) {
-	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
-	return;
-}
+void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 
 void h3d_shader_MinMaxShader_updateConstants(h3d__shader__MinMaxShader r0,hxsl__Globals r1) {
 	bool r4;
@@ -18,12 +13,12 @@ void h3d_shader_MinMaxShader_updateConstants(h3d__shader__MinMaxShader r0,hxsl__
 	r2 = 0;
 	r0->constBits = r2;
 	r4 = r0->isMax__;
-	if( !r4 ) goto label$88fd2fb_2_8;
+	if( !r4 ) goto label$88fd2fb_1_8;
 	r2 = r0->constBits;
 	r5 = 1;
 	r2 = r2 | r5;
 	r0->constBits = r2;
-	label$88fd2fb_2_8:
+	label$88fd2fb_1_8:
 	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
 	return;
 }
@@ -35,7 +30,7 @@ vdynamic* h3d_shader_MinMaxShader_getParamValue(h3d__shader__MinMaxShader r0,int
 	h3d__mat__Texture r4;
 	switch(r1) {
 		default:
-			goto label$88fd2fb_3_12;
+			goto label$88fd2fb_2_12;
 		case 0:
 			r2 = r0->flipY__;
 			r3 = hl_alloc_dynamic(&t$_f64);
@@ -52,7 +47,7 @@ vdynamic* h3d_shader_MinMaxShader_getParamValue(h3d__shader__MinMaxShader r0,int
 			r3 = hl_alloc_dynbool(r5);
 			return r3;
 	}
-	label$88fd2fb_3_12:
+	label$88fd2fb_2_12:
 	r3 = NULL;
 	return r3;
 }
@@ -61,11 +56,16 @@ double h3d_shader_MinMaxShader_getParamFloatValue(h3d__shader__MinMaxShader r0,i
 	double r3;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$88fd2fb_4_4;
+	if( r1 != r2 ) goto label$88fd2fb_3_4;
 	r3 = r0->flipY__;
 	return r3;
-	label$88fd2fb_4_4:
+	label$88fd2fb_3_4:
 	r3 = 0.;
 	return r3;
+}
+
+void h3d_shader_MinMaxShader_new(h3d__shader__MinMaxShader r0) {
+	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
+	return;
 }
 

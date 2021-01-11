@@ -107,7 +107,13 @@ class Canvas extends Scene
                 var _loc4 = (_loc3 * _loc1.dx + _loc2 * _loc1.dy) * _loc1.invSqrDistance;
                 if (_loc12 < eraserSize * _loc9 || _loc13 < eraserSize * _loc9 || _loc11 < eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1)
                 {
-					removeLine(line);
+					if (Main.toolControl.colorEraser) {
+						
+						if (line.type == Main.toolControl.color) removeLine(line);
+						
+					} else {
+						removeLine(line);
+					}
 					continue;
 				}
 				
@@ -125,7 +131,13 @@ class Canvas extends Scene
                 var _loc4 = (_loc3 * _loc1.dx + _loc2 * _loc1.dy) * _loc1.invSqrDistance;
                 if (_loc12 < eraserSize * _loc9 || _loc13 < eraserSize * _loc9 || _loc11 < eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1)
                 {
-					removeLine(line);
+					if (Main.toolControl.colorEraser) {
+						
+						if (line.type == Main.toolControl.color) removeLine(line);
+						
+					} else {
+						removeLine(line);
+					}
 					continue;
 				}
 			}

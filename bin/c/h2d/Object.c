@@ -983,6 +983,36 @@ void h2d_Object_setParentContainer(h2d__Object r0,h2d__Object r1) {
 	return;
 }
 
+void h2d_Object_removeChildren(h2d__Object r0) {
+	hl__types__ArrayObj r2;
+	h2d__Object r5;
+	vdynamic *r6;
+	varray *r7;
+	int r1, r3;
+	label$4895a69_15_0:
+	r2 = r0->children;
+	if( r2 == NULL ) hl_null_access();
+	r1 = r2->length;
+	r3 = 0;
+	if( r3 >= r1 ) goto label$4895a69_15_18;
+	r2 = r0->children;
+	if( r2 == NULL ) hl_null_access();
+	r1 = 0;
+	r3 = r2->length;
+	if( ((unsigned)r1) < ((unsigned)r3) ) goto label$4895a69_15_13;
+	r5 = NULL;
+	goto label$4895a69_15_16;
+	label$4895a69_15_13:
+	r7 = r2->array;
+	r6 = ((vdynamic**)(r7 + 1))[r1];
+	r5 = (h2d__Object)r6;
+	label$4895a69_15_16:
+	((void (*)(h2d__Object,h2d__Object))r0->$type->vobj_proto[6])(r0,r5);
+	goto label$4895a69_15_0;
+	label$4895a69_15_18:
+	return;
+}
+
 void h2d_Object_draw(h2d__Object r0,h2d__RenderContext r1) {
 	return;
 }
@@ -995,11 +1025,11 @@ void h2d_Object_sync(h2d__Object r0,h2d__RenderContext r1) {
 	varray *r12;
 	int r5, r6, r8, r9;
 	r2 = r0->posChanged;
-	if( !r2 ) goto label$4895a69_16_5;
+	if( !r2 ) goto label$4895a69_17_5;
 	((void (*)(h2d__Object))r0->$type->vobj_proto[9])(r0);
 	r4 = false;
 	r0->posChanged = r4;
-	label$4895a69_16_5:
+	label$4895a69_17_5:
 	if( r1 == NULL ) hl_null_access();
 	r5 = r1->frame;
 	r0->lastFrame = r5;
@@ -1007,57 +1037,57 @@ void h2d_Object_sync(h2d__Object r0,h2d__RenderContext r1) {
 	r7 = r0->children;
 	if( r7 == NULL ) hl_null_access();
 	r6 = r7->length;
-	label$4895a69_16_12:
-	if( r5 >= r6 ) goto label$4895a69_16_53;
+	label$4895a69_17_12:
+	if( r5 >= r6 ) goto label$4895a69_17_53;
 	r7 = r0->children;
 	if( r7 == NULL ) hl_null_access();
 	r9 = r7->length;
-	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$4895a69_16_20;
+	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$4895a69_17_20;
 	r10 = NULL;
-	goto label$4895a69_16_23;
-	label$4895a69_16_20:
+	goto label$4895a69_17_23;
+	label$4895a69_17_20:
 	r12 = r7->array;
 	r11 = ((vdynamic**)(r12 + 1))[r5];
 	r10 = (h2d__Object)r11;
-	label$4895a69_16_23:
-	if( r10 ) goto label$4895a69_16_25;
-	goto label$4895a69_16_53;
-	label$4895a69_16_25:
+	label$4895a69_17_23:
+	if( r10 ) goto label$4895a69_17_25;
+	goto label$4895a69_17_53;
+	label$4895a69_17_25:
 	if( r10 == NULL ) hl_null_access();
 	r8 = r10->lastFrame;
 	if( r1 == NULL ) hl_null_access();
 	r9 = r1->frame;
-	if( r8 == r9 ) goto label$4895a69_16_34;
-	if( !r2 ) goto label$4895a69_16_33;
+	if( r8 == r9 ) goto label$4895a69_17_34;
+	if( !r2 ) goto label$4895a69_17_33;
 	r4 = true;
 	r10->posChanged = r4;
-	label$4895a69_16_33:
+	label$4895a69_17_33:
 	((void (*)(h2d__Object,h2d__RenderContext))r10->$type->vobj_proto[8])(r10,r1);
-	label$4895a69_16_34:
+	label$4895a69_17_34:
 	r7 = r0->children;
 	if( r7 == NULL ) hl_null_access();
 	r9 = r7->length;
-	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$4895a69_16_40;
+	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$4895a69_17_40;
 	r13 = NULL;
-	goto label$4895a69_16_43;
-	label$4895a69_16_40:
+	goto label$4895a69_17_43;
+	label$4895a69_17_40:
 	r12 = r7->array;
 	r11 = ((vdynamic**)(r12 + 1))[r5];
 	r13 = (h2d__Object)r11;
-	label$4895a69_16_43:
-	if( r13 == r10 ) goto label$4895a69_16_51;
+	label$4895a69_17_43:
+	if( r13 == r10 ) goto label$4895a69_17_51;
 	r8 = 0;
 	r5 = r8;
 	r7 = r0->children;
 	if( r7 == NULL ) hl_null_access();
 	r8 = r7->length;
 	r6 = r8;
-	goto label$4895a69_16_52;
-	label$4895a69_16_51:
+	goto label$4895a69_17_52;
+	label$4895a69_17_51:
 	++r5;
-	label$4895a69_16_52:
-	goto label$4895a69_16_12;
-	label$4895a69_16_53:
+	label$4895a69_17_52:
+	goto label$4895a69_17_12;
+	label$4895a69_17_53:
 	return;
 }
 
@@ -1069,38 +1099,38 @@ void h2d_Object_syncPos(h2d__Object r0) {
 	varray *r8;
 	int r4, r6;
 	r2 = r0->parent;
-	if( !r2 ) goto label$4895a69_17_5;
+	if( !r2 ) goto label$4895a69_18_5;
 	r2 = r0->parent;
 	if( r2 == NULL ) hl_null_access();
 	h2d_Object_syncPos(r2);
-	label$4895a69_17_5:
+	label$4895a69_18_5:
 	r3 = r0->posChanged;
-	if( !r3 ) goto label$4895a69_17_28;
+	if( !r3 ) goto label$4895a69_18_28;
 	((void (*)(h2d__Object))r0->$type->vobj_proto[9])(r0);
 	r4 = 0;
 	r5 = r0->children;
-	label$4895a69_17_10:
+	label$4895a69_18_10:
 	if( r5 == NULL ) hl_null_access();
 	r6 = r5->length;
-	if( r4 >= r6 ) goto label$4895a69_17_26;
+	if( r4 >= r6 ) goto label$4895a69_18_26;
 	r6 = r5->length;
-	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$4895a69_17_18;
+	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$4895a69_18_18;
 	r2 = NULL;
-	goto label$4895a69_17_21;
-	label$4895a69_17_18:
+	goto label$4895a69_18_21;
+	label$4895a69_18_18:
 	r8 = r5->array;
 	r7 = ((vdynamic**)(r8 + 1))[r4];
 	r2 = (h2d__Object)r7;
-	label$4895a69_17_21:
+	label$4895a69_18_21:
 	++r4;
 	if( r2 == NULL ) hl_null_access();
 	r3 = true;
 	r2->posChanged = r3;
-	goto label$4895a69_17_10;
-	label$4895a69_17_26:
+	goto label$4895a69_18_10;
+	label$4895a69_18_26:
 	r3 = false;
 	r0->posChanged = r3;
-	label$4895a69_17_28:
+	label$4895a69_18_28:
 	return;
 }
 
@@ -1108,10 +1138,10 @@ void h2d_Object_calcAbsPos(h2d__Object r0) {
 	h2d__Object r2;
 	double r3, r4, r5, r6, r7, r8, r9, r10, r11;
 	r2 = r0->parent;
-	if( r2 ) goto label$4895a69_18_40;
+	if( r2 ) goto label$4895a69_19_40;
 	r3 = r0->rotation;
 	r4 = 0.;
-	if( r3 != r4 ) goto label$4895a69_18_16;
+	if( r3 != r4 ) goto label$4895a69_19_16;
 	r4 = 1.;
 	r5 = 0.;
 	r5 = r0->scaleX;
@@ -1122,8 +1152,8 @@ void h2d_Object_calcAbsPos(h2d__Object r0) {
 	r0->matC = r5;
 	r5 = r0->scaleY;
 	r0->matD = r5;
-	goto label$4895a69_18_35;
-	label$4895a69_18_16:
+	goto label$4895a69_19_35;
+	label$4895a69_19_16:
 	r5 = r0->rotation;
 	r5 = hl_math_cos(r5);
 	r3 = r5;
@@ -1143,16 +1173,16 @@ void h2d_Object_calcAbsPos(h2d__Object r0) {
 	r5 = r0->scaleY;
 	r5 = r5 * r3;
 	r0->matD = r5;
-	label$4895a69_18_35:
+	label$4895a69_19_35:
 	r5 = r0->x;
 	r0->absX = r5;
 	r5 = r0->y;
 	r0->absY = r5;
-	goto label$4895a69_18_153;
-	label$4895a69_18_40:
+	goto label$4895a69_19_153;
+	label$4895a69_19_40:
 	r3 = r0->rotation;
 	r4 = 0.;
-	if( r3 != r4 ) goto label$4895a69_18_68;
+	if( r3 != r4 ) goto label$4895a69_19_68;
 	r3 = r0->scaleX;
 	r2 = r0->parent;
 	if( r2 == NULL ) hl_null_access();
@@ -1177,8 +1207,8 @@ void h2d_Object_calcAbsPos(h2d__Object r0) {
 	r4 = r2->matD;
 	r3 = r3 * r4;
 	r0->matD = r3;
-	goto label$4895a69_18_121;
-	label$4895a69_18_68:
+	goto label$4895a69_19_121;
+	label$4895a69_19_68:
 	r3 = r0->rotation;
 	r3 = hl_math_cos(r3);
 	r4 = r0->rotation;
@@ -1232,7 +1262,7 @@ void h2d_Object_calcAbsPos(h2d__Object r0) {
 	r10 = r8 * r11;
 	r9 = r9 + r10;
 	r0->matD = r9;
-	label$4895a69_18_121:
+	label$4895a69_19_121:
 	r3 = r0->x;
 	r2 = r0->parent;
 	if( r2 == NULL ) hl_null_access();
@@ -1265,7 +1295,7 @@ void h2d_Object_calcAbsPos(h2d__Object r0) {
 	r4 = r2->absY;
 	r3 = r3 + r4;
 	r0->absY = r3;
-	label$4895a69_18_153:
+	label$4895a69_19_153:
 	return;
 }
 
@@ -1277,13 +1307,13 @@ void h2d_Object_emitTile(h2d__Object r0,h2d__RenderContext r1,h2d__Tile r2) {
 	h2d__$Object r5;
 	r5 = (h2d__$Object)g$_h2d_Object;
 	r4 = r5->nullDrawable;
-	if( r4 ) goto label$4895a69_19_8;
+	if( r4 ) goto label$4895a69_20_8;
 	r4 = (h2d__Drawable)hl_alloc_obj(&t$h2d_Drawable);
 	r6 = NULL;
 	h2d_Drawable_new(r4,r6);
 	r5 = (h2d__$Object)g$_h2d_Object;
 	r5->nullDrawable = r4;
-	label$4895a69_19_8:
+	label$4895a69_20_8:
 	r5 = (h2d__$Object)g$_h2d_Object;
 	r4 = r5->nullDrawable;
 	if( r4 == NULL ) hl_null_access();
@@ -1330,7 +1360,7 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->tmpBounds;
 	r5 = r1->inFilter;
-	if( !r5 ) goto label$4895a69_20_99;
+	if( !r5 ) goto label$4895a69_21_99;
 	r7 = r1->baseShader;
 	if( r7 == NULL ) hl_null_access();
 	r6 = r7->filterMatrixA__;
@@ -1425,8 +1455,8 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r22 = r1->viewY;
 	r21 = r21 + r22;
 	r20 = r21;
-	goto label$4895a69_20_151;
-	label$4895a69_20_99:
+	goto label$4895a69_21_151;
+	label$4895a69_21_99:
 	r9 = r0->matA;
 	r10 = r1->viewA;
 	r9 = r9 * r10;
@@ -1479,7 +1509,7 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r10 = r1->viewY;
 	r9 = r9 + r10;
 	r20 = r9;
-	label$4895a69_20_151:
+	label$4895a69_21_151:
 	if( r3 == NULL ) hl_null_access();
 	r9 = 1e+020;
 	r3->xMin = r9;
@@ -1501,21 +1531,21 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r12 = r12 + r13;
 	r12 = r12 + r20;
 	r14 = r3->xMin;
-	if( !(r11 < r14) ) goto label$4895a69_20_174;
+	if( !(r11 < r14) ) goto label$4895a69_21_174;
 	r3->xMin = r11;
-	label$4895a69_20_174:
+	label$4895a69_21_174:
 	r14 = r3->xMax;
-	if( !(r14 < r11) ) goto label$4895a69_20_177;
+	if( !(r14 < r11) ) goto label$4895a69_21_177;
 	r3->xMax = r11;
-	label$4895a69_20_177:
+	label$4895a69_21_177:
 	r14 = r3->yMin;
-	if( !(r12 < r14) ) goto label$4895a69_20_180;
+	if( !(r12 < r14) ) goto label$4895a69_21_180;
 	r3->yMin = r12;
-	label$4895a69_20_180:
+	label$4895a69_21_180:
 	r14 = r3->yMax;
-	if( !(r14 < r12) ) goto label$4895a69_20_183;
+	if( !(r14 < r12) ) goto label$4895a69_21_183;
 	r3->yMax = r12;
-	label$4895a69_20_183:
+	label$4895a69_21_183:
 	r9 = r2->xMax;
 	r10 = r2->yMin;
 	r11 = r9 * r15;
@@ -1527,21 +1557,21 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r12 = r12 + r13;
 	r12 = r12 + r20;
 	r14 = r3->xMin;
-	if( !(r11 < r14) ) goto label$4895a69_20_196;
+	if( !(r11 < r14) ) goto label$4895a69_21_196;
 	r3->xMin = r11;
-	label$4895a69_20_196:
+	label$4895a69_21_196:
 	r14 = r3->xMax;
-	if( !(r14 < r11) ) goto label$4895a69_20_199;
+	if( !(r14 < r11) ) goto label$4895a69_21_199;
 	r3->xMax = r11;
-	label$4895a69_20_199:
+	label$4895a69_21_199:
 	r14 = r3->yMin;
-	if( !(r12 < r14) ) goto label$4895a69_20_202;
+	if( !(r12 < r14) ) goto label$4895a69_21_202;
 	r3->yMin = r12;
-	label$4895a69_20_202:
+	label$4895a69_21_202:
 	r14 = r3->yMax;
-	if( !(r14 < r12) ) goto label$4895a69_20_205;
+	if( !(r14 < r12) ) goto label$4895a69_21_205;
 	r3->yMax = r12;
-	label$4895a69_20_205:
+	label$4895a69_21_205:
 	r9 = r2->xMin;
 	r10 = r2->yMax;
 	r11 = r9 * r15;
@@ -1553,21 +1583,21 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r12 = r12 + r13;
 	r12 = r12 + r20;
 	r14 = r3->xMin;
-	if( !(r11 < r14) ) goto label$4895a69_20_218;
+	if( !(r11 < r14) ) goto label$4895a69_21_218;
 	r3->xMin = r11;
-	label$4895a69_20_218:
+	label$4895a69_21_218:
 	r14 = r3->xMax;
-	if( !(r14 < r11) ) goto label$4895a69_20_221;
+	if( !(r14 < r11) ) goto label$4895a69_21_221;
 	r3->xMax = r11;
-	label$4895a69_20_221:
+	label$4895a69_21_221:
 	r14 = r3->yMin;
-	if( !(r12 < r14) ) goto label$4895a69_20_224;
+	if( !(r12 < r14) ) goto label$4895a69_21_224;
 	r3->yMin = r12;
-	label$4895a69_20_224:
+	label$4895a69_21_224:
 	r14 = r3->yMax;
-	if( !(r14 < r12) ) goto label$4895a69_20_227;
+	if( !(r14 < r12) ) goto label$4895a69_21_227;
 	r3->yMax = r12;
-	label$4895a69_20_227:
+	label$4895a69_21_227:
 	r9 = r2->xMax;
 	r10 = r2->yMax;
 	r11 = r9 * r15;
@@ -1579,45 +1609,45 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r12 = r12 + r13;
 	r12 = r12 + r20;
 	r14 = r3->xMin;
-	if( !(r11 < r14) ) goto label$4895a69_20_240;
+	if( !(r11 < r14) ) goto label$4895a69_21_240;
 	r3->xMin = r11;
-	label$4895a69_20_240:
+	label$4895a69_21_240:
 	r14 = r3->xMax;
-	if( !(r14 < r11) ) goto label$4895a69_20_243;
+	if( !(r14 < r11) ) goto label$4895a69_21_243;
 	r3->xMax = r11;
-	label$4895a69_20_243:
+	label$4895a69_21_243:
 	r14 = r3->yMin;
-	if( !(r12 < r14) ) goto label$4895a69_20_246;
+	if( !(r12 < r14) ) goto label$4895a69_21_246;
 	r3->yMin = r12;
-	label$4895a69_20_246:
+	label$4895a69_21_246:
 	r14 = r3->yMax;
-	if( !(r14 < r12) ) goto label$4895a69_20_249;
+	if( !(r14 < r12) ) goto label$4895a69_21_249;
 	r3->yMax = r12;
-	label$4895a69_20_249:
+	label$4895a69_21_249:
 	r9 = r3->xMin;
 	r10 = -1.;
-	if( !(r9 < r10) ) goto label$4895a69_20_254;
+	if( !(r9 < r10) ) goto label$4895a69_21_254;
 	r9 = -1.;
 	r3->xMin = r9;
-	label$4895a69_20_254:
+	label$4895a69_21_254:
 	r9 = r3->yMin;
 	r10 = -1.;
-	if( !(r9 < r10) ) goto label$4895a69_20_259;
+	if( !(r9 < r10) ) goto label$4895a69_21_259;
 	r9 = -1.;
 	r3->yMin = r9;
-	label$4895a69_20_259:
+	label$4895a69_21_259:
 	r9 = r3->xMax;
 	r10 = 1.;
-	if( !(r10 < r9) ) goto label$4895a69_20_264;
+	if( !(r10 < r9) ) goto label$4895a69_21_264;
 	r9 = 1.;
 	r3->xMax = r9;
-	label$4895a69_20_264:
+	label$4895a69_21_264:
 	r9 = r3->yMax;
 	r10 = 1.;
-	if( !(r10 < r9) ) goto label$4895a69_20_269;
+	if( !(r10 < r9) ) goto label$4895a69_21_269;
 	r9 = 1.;
 	r3->yMax = r9;
-	label$4895a69_20_269:
+	label$4895a69_21_269:
 	r9 = 1.;
 	r10 = r15 * r18;
 	r11 = r16 * r17;
@@ -1649,21 +1679,21 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r23 = r23 + r24;
 	r23 = r23 * r9;
 	r25 = r3->xMin;
-	if( !(r22 < r25) ) goto label$4895a69_20_302;
+	if( !(r22 < r25) ) goto label$4895a69_21_302;
 	r3->xMin = r22;
-	label$4895a69_20_302:
+	label$4895a69_21_302:
 	r25 = r3->xMax;
-	if( !(r25 < r22) ) goto label$4895a69_20_305;
+	if( !(r25 < r22) ) goto label$4895a69_21_305;
 	r3->xMax = r22;
-	label$4895a69_20_305:
+	label$4895a69_21_305:
 	r25 = r3->yMin;
-	if( !(r23 < r25) ) goto label$4895a69_20_308;
+	if( !(r23 < r25) ) goto label$4895a69_21_308;
 	r3->yMin = r23;
-	label$4895a69_20_308:
+	label$4895a69_21_308:
 	r25 = r3->yMax;
-	if( !(r25 < r23) ) goto label$4895a69_20_311;
+	if( !(r25 < r23) ) goto label$4895a69_21_311;
 	r3->yMax = r23;
-	label$4895a69_20_311:
+	label$4895a69_21_311:
 	r22 = r12 - r19;
 	r14 = r22;
 	r22 = r11 - r20;
@@ -1678,21 +1708,21 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r23 = r23 + r24;
 	r23 = r23 * r9;
 	r25 = r3->xMin;
-	if( !(r22 < r25) ) goto label$4895a69_20_327;
+	if( !(r22 < r25) ) goto label$4895a69_21_327;
 	r3->xMin = r22;
-	label$4895a69_20_327:
+	label$4895a69_21_327:
 	r25 = r3->xMax;
-	if( !(r25 < r22) ) goto label$4895a69_20_330;
+	if( !(r25 < r22) ) goto label$4895a69_21_330;
 	r3->xMax = r22;
-	label$4895a69_20_330:
+	label$4895a69_21_330:
 	r25 = r3->yMin;
-	if( !(r23 < r25) ) goto label$4895a69_20_333;
+	if( !(r23 < r25) ) goto label$4895a69_21_333;
 	r3->yMin = r23;
-	label$4895a69_20_333:
+	label$4895a69_21_333:
 	r25 = r3->yMax;
-	if( !(r25 < r23) ) goto label$4895a69_20_336;
+	if( !(r25 < r23) ) goto label$4895a69_21_336;
 	r3->yMax = r23;
-	label$4895a69_20_336:
+	label$4895a69_21_336:
 	r22 = r10 - r19;
 	r14 = r22;
 	r22 = r13 - r20;
@@ -1707,21 +1737,21 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r23 = r23 + r24;
 	r23 = r23 * r9;
 	r25 = r3->xMin;
-	if( !(r22 < r25) ) goto label$4895a69_20_352;
+	if( !(r22 < r25) ) goto label$4895a69_21_352;
 	r3->xMin = r22;
-	label$4895a69_20_352:
+	label$4895a69_21_352:
 	r25 = r3->xMax;
-	if( !(r25 < r22) ) goto label$4895a69_20_355;
+	if( !(r25 < r22) ) goto label$4895a69_21_355;
 	r3->xMax = r22;
-	label$4895a69_20_355:
+	label$4895a69_21_355:
 	r25 = r3->yMin;
-	if( !(r23 < r25) ) goto label$4895a69_20_358;
+	if( !(r23 < r25) ) goto label$4895a69_21_358;
 	r3->yMin = r23;
-	label$4895a69_20_358:
+	label$4895a69_21_358:
 	r25 = r3->yMax;
-	if( !(r25 < r23) ) goto label$4895a69_20_361;
+	if( !(r25 < r23) ) goto label$4895a69_21_361;
 	r3->yMax = r23;
-	label$4895a69_20_361:
+	label$4895a69_21_361:
 	r22 = r12 - r19;
 	r14 = r22;
 	r22 = r13 - r20;
@@ -1736,56 +1766,56 @@ void h2d_Object_clipBounds(h2d__Object r0,h2d__RenderContext r1,h2d__col__Bounds
 	r23 = r23 + r24;
 	r23 = r23 * r9;
 	r25 = r3->xMin;
-	if( !(r22 < r25) ) goto label$4895a69_20_377;
+	if( !(r22 < r25) ) goto label$4895a69_21_377;
 	r3->xMin = r22;
-	label$4895a69_20_377:
+	label$4895a69_21_377:
 	r25 = r3->xMax;
-	if( !(r25 < r22) ) goto label$4895a69_20_380;
+	if( !(r25 < r22) ) goto label$4895a69_21_380;
 	r3->xMax = r22;
-	label$4895a69_20_380:
+	label$4895a69_21_380:
 	r25 = r3->yMin;
-	if( !(r23 < r25) ) goto label$4895a69_20_383;
+	if( !(r23 < r25) ) goto label$4895a69_21_383;
 	r3->yMin = r23;
-	label$4895a69_20_383:
+	label$4895a69_21_383:
 	r25 = r3->yMax;
-	if( !(r25 < r23) ) goto label$4895a69_20_386;
+	if( !(r25 < r23) ) goto label$4895a69_21_386;
 	r3->yMax = r23;
-	label$4895a69_20_386:
+	label$4895a69_21_386:
 	r14 = r2->xMin;
 	r21 = r3->xMin;
-	if( !(r14 < r21) ) goto label$4895a69_20_391;
+	if( !(r14 < r21) ) goto label$4895a69_21_391;
 	r22 = r21;
-	goto label$4895a69_20_392;
-	label$4895a69_20_391:
+	goto label$4895a69_21_392;
+	label$4895a69_21_391:
 	r22 = r14;
-	label$4895a69_20_392:
+	label$4895a69_21_392:
 	r2->xMin = r22;
 	r22 = r2->yMin;
 	r23 = r3->yMin;
-	if( !(r22 < r23) ) goto label$4895a69_20_398;
+	if( !(r22 < r23) ) goto label$4895a69_21_398;
 	r24 = r23;
-	goto label$4895a69_20_399;
-	label$4895a69_20_398:
+	goto label$4895a69_21_399;
+	label$4895a69_21_398:
 	r24 = r22;
-	label$4895a69_20_399:
+	label$4895a69_21_399:
 	r2->yMin = r24;
 	r24 = r2->xMax;
 	r25 = r3->xMax;
-	if( !(r25 < r24) ) goto label$4895a69_20_405;
+	if( !(r25 < r24) ) goto label$4895a69_21_405;
 	r26 = r25;
-	goto label$4895a69_20_406;
-	label$4895a69_20_405:
+	goto label$4895a69_21_406;
+	label$4895a69_21_405:
 	r26 = r24;
-	label$4895a69_20_406:
+	label$4895a69_21_406:
 	r2->xMax = r26;
 	r26 = r2->yMax;
 	r27 = r3->yMax;
-	if( !(r27 < r26) ) goto label$4895a69_20_412;
+	if( !(r27 < r26) ) goto label$4895a69_21_412;
 	r28 = r27;
-	goto label$4895a69_20_413;
-	label$4895a69_20_412:
+	goto label$4895a69_21_413;
+	label$4895a69_21_412:
 	r28 = r26;
-	label$4895a69_20_413:
+	label$4895a69_21_413:
 	r2->yMax = r28;
 	return;
 }
@@ -1809,9 +1839,9 @@ void h2d_Object_drawFilters(h2d__Object r0,h2d__RenderContext r1) {
 	int r11, r12, r13, r14, r15, r16, r25, r27, r30;
 	if( r1 == NULL ) hl_null_access();
 	r3 = h2d_RenderContext_pushFilter(r1,r0);
-	if( r3 ) goto label$4895a69_21_4;
+	if( r3 ) goto label$4895a69_22_4;
 	return;
-	label$4895a69_21_4:
+	label$4895a69_22_4:
 	r4 = r1->tmpBounds;
 	r5 = (h2d__col__Bounds)hl_alloc_obj(&t$h2d_col_Bounds);
 	h2d_col_Bounds_new(r5);
@@ -1822,43 +1852,43 @@ void h2d_Object_drawFilters(h2d__Object r0,h2d__RenderContext r1) {
 	r7 = r0->filter;
 	if( r7 == NULL ) hl_null_access();
 	r3 = r7->autoBounds;
-	if( !r3 ) goto label$4895a69_21_20;
+	if( !r3 ) goto label$4895a69_22_20;
 	r7 = r0->filter;
 	if( r7 == NULL ) hl_null_access();
 	r8 = r7->boundsExtend;
 	r6 = r8;
-	goto label$4895a69_21_44;
-	label$4895a69_21_20:
+	goto label$4895a69_22_44;
+	label$4895a69_22_20:
 	r7 = r0->filter;
 	if( r7 == NULL ) hl_null_access();
 	h2d_filter_Filter_getBounds(r7,r0,r4);
 	if( r4 == NULL ) hl_null_access();
 	r8 = r4->xMin;
 	r10 = r5->xMin;
-	if( !(r8 < r10) ) goto label$4895a69_21_29;
+	if( !(r8 < r10) ) goto label$4895a69_22_29;
 	r8 = r4->xMin;
 	r5->xMin = r8;
-	label$4895a69_21_29:
+	label$4895a69_22_29:
 	r8 = r4->xMax;
 	r10 = r5->xMax;
-	if( !(r10 < r8) ) goto label$4895a69_21_34;
+	if( !(r10 < r8) ) goto label$4895a69_22_34;
 	r8 = r4->xMax;
 	r5->xMax = r8;
-	label$4895a69_21_34:
+	label$4895a69_22_34:
 	r8 = r4->yMin;
 	r10 = r5->yMin;
-	if( !(r8 < r10) ) goto label$4895a69_21_39;
+	if( !(r8 < r10) ) goto label$4895a69_22_39;
 	r8 = r4->yMin;
 	r5->yMin = r8;
-	label$4895a69_21_39:
+	label$4895a69_22_39:
 	r8 = r4->yMax;
 	r10 = r5->yMax;
-	if( !(r10 < r8) ) goto label$4895a69_21_44;
+	if( !(r10 < r8) ) goto label$4895a69_22_44;
 	r8 = r4->yMax;
 	r5->yMax = r8;
-	label$4895a69_21_44:
+	label$4895a69_22_44:
 	r10 = 0.;
-	if( !(r6 >= r10) ) goto label$4895a69_21_80;
+	if( !(r6 >= r10) ) goto label$4895a69_22_80;
 	r9 = h2d_Object_getBounds(r0,r0,r4);
 	if( r4 == NULL ) hl_null_access();
 	r8 = r4->xMin;
@@ -1875,28 +1905,28 @@ void h2d_Object_drawFilters(h2d__Object r0,h2d__RenderContext r1) {
 	r4->yMax = r8;
 	r8 = r4->xMin;
 	r10 = r5->xMin;
-	if( !(r8 < r10) ) goto label$4895a69_21_65;
+	if( !(r8 < r10) ) goto label$4895a69_22_65;
 	r8 = r4->xMin;
 	r5->xMin = r8;
-	label$4895a69_21_65:
+	label$4895a69_22_65:
 	r8 = r4->xMax;
 	r10 = r5->xMax;
-	if( !(r10 < r8) ) goto label$4895a69_21_70;
+	if( !(r10 < r8) ) goto label$4895a69_22_70;
 	r8 = r4->xMax;
 	r5->xMax = r8;
-	label$4895a69_21_70:
+	label$4895a69_22_70:
 	r8 = r4->yMin;
 	r10 = r5->yMin;
-	if( !(r8 < r10) ) goto label$4895a69_21_75;
+	if( !(r8 < r10) ) goto label$4895a69_22_75;
 	r8 = r4->yMin;
 	r5->yMin = r8;
-	label$4895a69_21_75:
+	label$4895a69_22_75:
 	r8 = r4->yMax;
 	r10 = r5->yMax;
-	if( !(r10 < r8) ) goto label$4895a69_21_80;
+	if( !(r10 < r8) ) goto label$4895a69_22_80;
 	r8 = r4->yMax;
 	r5->yMax = r8;
-	label$4895a69_21_80:
+	label$4895a69_22_80:
 	((void (*)(h2d__Object,h2d__RenderContext,h2d__col__Bounds))r0->$type->vobj_proto[11])(r0,r1,r5);
 	r8 = r5->xMin;
 	r10 = 1e-010;
@@ -1919,16 +1949,16 @@ void h2d_Object_drawFilters(h2d__Object r0,h2d__RenderContext r1) {
 	r8 = r8 - r10;
 	r14 = hl_math_ceil(r8);
 	r16 = 0;
-	if( r16 >= r13 ) goto label$4895a69_21_108;
+	if( r16 >= r13 ) goto label$4895a69_22_108;
 	r16 = 0;
-	if( r16 >= r14 ) goto label$4895a69_21_108;
+	if( r16 >= r14 ) goto label$4895a69_22_108;
 	r8 = r5->xMax;
 	r10 = r5->xMin;
-	if( !(r8 < r10) ) goto label$4895a69_21_110;
-	label$4895a69_21_108:
+	if( !(r8 < r10) ) goto label$4895a69_22_110;
+	label$4895a69_22_108:
 	h2d_RenderContext_popFilter(r1);
 	return;
-	label$4895a69_21_110:
+	label$4895a69_22_110:
 	r18 = r1->textures;
 	if( r18 == NULL ) hl_null_access();
 	r19 = (String)s$filterTemp;
@@ -2027,8 +2057,8 @@ void h2d_Object_drawFilters(h2d__Object r0,h2d__RenderContext r1) {
 	r7 = r0->filter;
 	if( r7 == NULL ) hl_null_access();
 	r56 = h2d_filter_Filter_draw(r7,r1,r54);
-	if( r56 == r55 ) goto label$4895a69_21_218;
-	if( !r56 ) goto label$4895a69_21_218;
+	if( r56 == r55 ) goto label$4895a69_22_218;
+	if( !r56 ) goto label$4895a69_22_218;
 	if( r56 == NULL ) hl_null_access();
 	r52 = r56->dx;
 	r53 = (double)r11;
@@ -2038,7 +2068,7 @@ void h2d_Object_drawFilters(h2d__Object r0,h2d__RenderContext r1) {
 	r53 = (double)r12;
 	r52 = r52 + r53;
 	r56->dy = r52;
-	label$4895a69_21_218:
+	label$4895a69_22_218:
 	r41 = r34->filterMatrixA__;
 	if( r41 == NULL ) hl_null_access();
 	r41->x = r10;
@@ -2054,9 +2084,9 @@ void h2d_Object_drawFilters(h2d__Object r0,h2d__RenderContext r1) {
 	h2d_RenderContext_popTarget(r1);
 	h2d_RenderContext_popFilter(r1);
 	r1->globalAlpha = r8;
-	if( r56 ) goto label$4895a69_21_235;
+	if( r56 ) goto label$4895a69_22_235;
 	return;
-	label$4895a69_21_235:
+	label$4895a69_22_235:
 	((void (*)(h2d__Object,h2d__RenderContext,h2d__Tile))r0->$type->vobj_proto[12])(r0,r1,r56);
 	return;
 }
@@ -2093,45 +2123,45 @@ void h2d_Object_drawRec(h2d__Object r0,h2d__RenderContext r1) {
 	varray *r9;
 	int r5, r7;
 	r3 = r0->visible;
-	if( r3 ) goto label$4895a69_23_3;
+	if( r3 ) goto label$4895a69_24_3;
 	return;
-	label$4895a69_23_3:
+	label$4895a69_24_3:
 	r3 = r0->posChanged;
-	if( !r3 ) goto label$4895a69_23_26;
+	if( !r3 ) goto label$4895a69_24_26;
 	((void (*)(h2d__Object))r0->$type->vobj_proto[9])(r0);
 	r5 = 0;
 	r6 = r0->children;
-	label$4895a69_23_8:
+	label$4895a69_24_8:
 	if( r6 == NULL ) hl_null_access();
 	r7 = r6->length;
-	if( r5 >= r7 ) goto label$4895a69_23_24;
+	if( r5 >= r7 ) goto label$4895a69_24_24;
 	r7 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$4895a69_23_16;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$4895a69_24_16;
 	r8 = NULL;
-	goto label$4895a69_23_19;
-	label$4895a69_23_16:
+	goto label$4895a69_24_19;
+	label$4895a69_24_16:
 	r9 = r6->array;
 	r4 = ((vdynamic**)(r9 + 1))[r5];
 	r8 = (h2d__Object)r4;
-	label$4895a69_23_19:
+	label$4895a69_24_19:
 	++r5;
 	if( r8 == NULL ) hl_null_access();
 	r3 = true;
 	r8->posChanged = r3;
-	goto label$4895a69_23_8;
-	label$4895a69_23_24:
+	goto label$4895a69_24_8;
+	label$4895a69_24_24:
 	r3 = false;
 	r0->posChanged = r3;
-	label$4895a69_23_26:
+	label$4895a69_24_26:
 	r10 = r0->filter;
-	if( !r10 ) goto label$4895a69_23_34;
+	if( !r10 ) goto label$4895a69_24_34;
 	r10 = r0->filter;
 	if( r10 == NULL ) hl_null_access();
 	r3 = h2d_filter_Filter_get_enable(r10);
-	if( !r3 ) goto label$4895a69_23_34;
+	if( !r3 ) goto label$4895a69_24_34;
 	h2d_Object_drawFilters(r0,r1);
-	goto label$4895a69_23_42;
-	label$4895a69_23_34:
+	goto label$4895a69_24_42;
+	label$4895a69_24_34:
 	if( r1 == NULL ) hl_null_access();
 	r11 = r1->globalAlpha;
 	r12 = r1->globalAlpha;
@@ -2140,7 +2170,7 @@ void h2d_Object_drawRec(h2d__Object r0,h2d__RenderContext r1) {
 	r1->globalAlpha = r12;
 	((void (*)(h2d__Object,h2d__RenderContext))r0->$type->vobj_proto[14])(r0,r1);
 	r1->globalAlpha = r11;
-	label$4895a69_23_42:
+	label$4895a69_24_42:
 	return;
 }
 
@@ -2153,54 +2183,54 @@ void h2d_Object_drawContent(h2d__Object r0,h2d__RenderContext r1) {
 	int r4, r6, r7;
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->front2back;
-	if( !r3 ) goto label$4895a69_24_25;
+	if( !r3 ) goto label$4895a69_25_25;
 	r5 = r0->children;
 	if( r5 == NULL ) hl_null_access();
 	r4 = r5->length;
-	label$4895a69_24_6:
+	label$4895a69_25_6:
 	r6 = r4;
 	--r4;
 	r7 = 0;
-	if( r7 >= r6 ) goto label$4895a69_24_23;
+	if( r7 >= r6 ) goto label$4895a69_25_23;
 	r5 = r0->children;
 	if( r5 == NULL ) hl_null_access();
 	r7 = r5->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$4895a69_24_17;
+	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$4895a69_25_17;
 	r8 = NULL;
-	goto label$4895a69_24_20;
-	label$4895a69_24_17:
+	goto label$4895a69_25_20;
+	label$4895a69_25_17:
 	r10 = r5->array;
 	r9 = ((vdynamic**)(r10 + 1))[r4];
 	r8 = (h2d__Object)r9;
-	label$4895a69_24_20:
+	label$4895a69_25_20:
 	if( r8 == NULL ) hl_null_access();
 	((void (*)(h2d__Object,h2d__RenderContext))r8->$type->vobj_proto[13])(r8,r1);
-	goto label$4895a69_24_6;
-	label$4895a69_24_23:
+	goto label$4895a69_25_6;
+	label$4895a69_25_23:
 	((void (*)(h2d__Object,h2d__RenderContext))r0->$type->vobj_proto[7])(r0,r1);
-	goto label$4895a69_24_43;
-	label$4895a69_24_25:
+	goto label$4895a69_25_43;
+	label$4895a69_25_25:
 	((void (*)(h2d__Object,h2d__RenderContext))r0->$type->vobj_proto[7])(r0,r1);
 	r4 = 0;
 	r5 = r0->children;
-	label$4895a69_24_28:
+	label$4895a69_25_28:
 	if( r5 == NULL ) hl_null_access();
 	r7 = r5->length;
-	if( r4 >= r7 ) goto label$4895a69_24_43;
+	if( r4 >= r7 ) goto label$4895a69_25_43;
 	r7 = r5->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$4895a69_24_36;
+	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$4895a69_25_36;
 	r8 = NULL;
-	goto label$4895a69_24_39;
-	label$4895a69_24_36:
+	goto label$4895a69_25_39;
+	label$4895a69_25_36:
 	r10 = r5->array;
 	r9 = ((vdynamic**)(r10 + 1))[r4];
 	r8 = (h2d__Object)r9;
-	label$4895a69_24_39:
+	label$4895a69_25_39:
 	++r4;
 	if( r8 == NULL ) hl_null_access();
 	((void (*)(h2d__Object,h2d__RenderContext))r8->$type->vobj_proto[13])(r8,r1);
-	goto label$4895a69_24_28;
-	label$4895a69_24_43:
+	goto label$4895a69_25_28;
+	label$4895a69_25_43:
 	return;
 }
 
@@ -2246,22 +2276,22 @@ void h2d_Object_new(h2d__Object r0,h2d__Object r1) {
 	r3 = 0.;
 	r0->absY = r3;
 	r5 = NULL;
-	if( r1 != r5 ) goto label$4895a69_26_32;
+	if( r1 != r5 ) goto label$4895a69_27_32;
 	r4 = false;
-	goto label$4895a69_26_33;
-	label$4895a69_26_32:
+	goto label$4895a69_27_33;
+	label$4895a69_27_32:
 	r4 = true;
-	label$4895a69_26_33:
+	label$4895a69_27_33:
 	r0->posChanged = r4;
 	r8 = &t$h2d_Object;
 	r9 = 0;
 	r7 = hl_alloc_array(r8,r9);
 	r6 = hl_types_ArrayObj_alloc(r7);
 	r0->children = r6;
-	if( !r1 ) goto label$4895a69_26_42;
+	if( !r1 ) goto label$4895a69_27_42;
 	if( r1 == NULL ) hl_null_access();
 	((void (*)(h2d__Object,h2d__Object))r1->$type->vobj_proto[1])(r1,r0);
-	label$4895a69_26_42:
+	label$4895a69_27_42:
 	return;
 }
 

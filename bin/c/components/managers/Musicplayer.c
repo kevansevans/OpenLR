@@ -27,6 +27,7 @@ void hxd_fs_BytesFileEntry_new(hxd__fs__BytesFileEntry,String,haxe__io__Bytes);
 extern hl_type t$ctx_69acb46;
 extern hl_type t$fun_13e5d39;
 void hxd_fs_BytesFileEntry_load(hxd__fs__BytesFileEntry,vclosure*);
+extern String s$;
 extern String s$Audio_has_ended_;
 #include <components/managers/Simulation.h>
 #include <hxd/snd/ChannelGroup.h>
@@ -117,6 +118,38 @@ void components_managers_Musicplayer_loadAudio(components__managers__Musicplayer
 	return;
 }
 
+void components_managers_Musicplayer_loadAudioAsBytes__$1(venum* r0) {
+	components__managers__Musicplayer r1;
+	hxd__fs__BytesFileEntry r3;
+	hxd__res__Sound r2;
+	r1 = ((Enumt$ctx_69acb46*)r0)->p1;
+	if( r1 == NULL ) hl_null_access();
+	r2 = (hxd__res__Sound)hl_alloc_obj(&t$hxd_res_Sound);
+	r3 = ((Enumt$ctx_69acb46*)r0)->p0;
+	hxd_res_Sound_new(r2,((hxd__fs__FileEntry)r3));
+	r1->sound = r2;
+	return;
+}
+
+void components_managers_Musicplayer_loadAudioAsBytes(components__managers__Musicplayer r0,haxe__io__Bytes r1,String r2) {
+	String r5;
+	venum *r7;
+	hxd__fs__BytesFileEntry r4;
+	$Main r8;
+	vclosure *r6;
+	r4 = (hxd__fs__BytesFileEntry)hl_alloc_obj(&t$hxd_fs_BytesFileEntry);
+	r5 = (String)s$;
+	hxd_fs_BytesFileEntry_new(r4,r5,r1);
+	r7 = hl_alloc_enum(&t$ctx_69acb46,0);
+	((Enumt$ctx_69acb46*)r7)->p0 = (hxd__fs__BytesFileEntry)r4;
+	((Enumt$ctx_69acb46*)r7)->p1 = (components__managers__Musicplayer)r0;
+	r6 = hl_alloc_closure_ptr(&t$fun_13e5d39,components_managers_Musicplayer_loadAudioAsBytes__$1,r7);
+	hxd_fs_BytesFileEntry_load(r4,r6);
+	r8 = ($Main)g$_Main;
+	r8->songName = r2;
+	return;
+}
+
 void components_managers_Musicplayer_playMusic__$1() {
 	String r3;
 	$Main r2;
@@ -146,16 +179,16 @@ void components_managers_Musicplayer_playMusic(components__managers__Musicplayer
 	hxd__snd__ChannelGroup r10;
 	static vclosure cl$0 = { &t$fun_7b48b4f, components_managers_Musicplayer_playMusic__$1, 0 };
 	r3 = r0->sound;
-	if( r3 ) goto label$22fe1bd_4_3;
+	if( r3 ) goto label$22fe1bd_6_3;
 	return;
-	label$22fe1bd_4_3:
+	label$22fe1bd_6_3:
 	r6 = ($Main)g$_Main;
 	r5 = r6->simulation;
 	if( r5 == NULL ) hl_null_access();
 	r4 = r5->playing;
-	if( r4 ) goto label$22fe1bd_4_9;
+	if( r4 ) goto label$22fe1bd_6_9;
 	return;
-	label$22fe1bd_4_9:
+	label$22fe1bd_6_9:
 	r3 = r0->sound;
 	if( r3 == NULL ) hl_null_access();
 	r8 = NULL;
@@ -191,15 +224,15 @@ void components_managers_Musicplayer_stopMusic(components__managers__Musicplayer
 	hxd__res__Sound r2;
 	hxd__snd__Channel r4;
 	r2 = r0->sound;
-	if( r2 ) goto label$22fe1bd_5_3;
+	if( r2 ) goto label$22fe1bd_7_3;
 	return;
-	label$22fe1bd_5_3:
+	label$22fe1bd_7_3:
 	r3 = r0->playing;
-	if( !r3 ) goto label$22fe1bd_5_8;
+	if( !r3 ) goto label$22fe1bd_7_8;
 	r4 = r0->mixer;
 	if( r4 == NULL ) hl_null_access();
 	hxd_snd_Channel_stop(r4);
-	label$22fe1bd_5_8:
+	label$22fe1bd_7_8:
 	r3 = false;
 	r0->playing = r3;
 	return;

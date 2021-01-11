@@ -211,6 +211,7 @@
 		"components/lines/Accel.c",
 		"components/lines/Floor.c",
 		"components/lines/Scenery.c",
+		"components/lines/Undefined.c",
 		"hxd/fs/BytesFileEntry.c",
 		"h2d/Anim.c",
 		"components/sledder/RiderPart.c",

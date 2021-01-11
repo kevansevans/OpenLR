@@ -12,6 +12,8 @@ extern hl_type t$fun_6c7a217;
 #include <_std/Main.h>
 #include <components/sledder/Bosh.h>
 #include <components/managers/Simulation.h>
+extern hl_type t$_i32;
+String String_substr(String,int,vdynamic*);
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 #include <hl/natives.h>
 String String___alloc__(vbyte*,int);
@@ -31,10 +33,8 @@ void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
 void components_managers_Simulation_recordGlobalSimState(components__managers__Simulation);
 extern String s$Rider_;
 extern String s$_does_not_exist;
-extern hl_type t$_i32;
 bool haxe_ds_StringMap_remove(haxe__ds__StringMap,String);
 String components_sledder_RiderBase_set_name(components__sledder__RiderBase,String);
-void components_sledder_RiderBase_stepRider(components__sledder__RiderBase);
 #include <components/physics/BindStick.h>
 extern components__physics__$BindStick g$_components_physics_BindStick;
 void haxe_ds_StringMap_new(haxe__ds__StringMap);
@@ -68,74 +68,85 @@ void components_managers_Riders_deleteAllRiders(components__managers__Riders r0)
 }
 
 void components_managers_Riders_addNewRider(components__managers__Riders r0,String r1,h2d__col__Point r2,vdynamic* r3,vdynamic* r4) {
-	String r5, r9, r15, r18;
+	String r5, r8, r16, r19;
 	vvirtual *r20;
-	haxe__ds__StringMap r8;
+	haxe__ds__StringMap r12;
 	components__sledder__Bosh r21;
-	$Main r17;
-	components__sledder__RiderBase r10;
+	$Main r18;
+	components__sledder__RiderBase r13;
 	components__managers__Simulation r25;
 	double r22;
-	int *r13;
-	vdynamic *r7, *r19, *r23, *r24;
-	components__stage__LRConsole r16;
-	vbyte *r14;
-	int r11, r12;
+	int *r14;
+	vdynamic *r10, *r11, *r23, *r24;
+	components__stage__LRConsole r17;
+	vbyte *r15;
+	int r7, r9;
 	r5 = r1;
-	r8 = r0->riders;
-	if( r8 == NULL ) hl_null_access();
-	r7 = haxe_ds_StringMap_get(r8,r1);
-	r10 = (components__sledder__RiderBase)r7;
-	if( !r10 ) goto label$fbc84c5_2_43;
-	r11 = 0;
-	label$fbc84c5_2_7:
-	r8 = r0->riders;
-	if( r8 == NULL ) hl_null_access();
-	r12 = r11;
-	r13 = &r12;
-	r14 = hl_itos(r12,r13);
-	r15 = String___alloc__(r14,r12);
-	r9 = String___add__(r5,r15);
-	r7 = haxe_ds_StringMap_get(r8,r9);
-	r10 = (components__sledder__RiderBase)r7;
-	if( !r10 ) goto label$fbc84c5_2_20;
-	++r11;
-	goto label$fbc84c5_2_7;
-	label$fbc84c5_2_20:
-	r17 = ($Main)g$_Main;
-	r16 = r17->console;
-	if( r16 == NULL ) hl_null_access();
-	r9 = (String)s$Rider_name_;
-	r9 = String___add__(r9,r5);
-	r15 = (String)s$_already_occupied_renaming_to_;
-	r9 = String___add__(r9,r15);
-	r12 = r11;
-	r13 = &r12;
-	r14 = hl_itos(r12,r13);
-	r18 = String___alloc__(r14,r12);
-	r15 = String___add__(r5,r18);
-	r9 = String___add__(r9,r15);
-	r19 = NULL;
-	h2d_Console_log(((h2d__Console)r16),r9,r19);
-	r15 = (String)s$;
-	r12 = r11;
-	r13 = &r12;
-	r14 = hl_itos(r12,r13);
-	r18 = String___alloc__(r14,r12);
-	r15 = String___add__(r15,r18);
-	r9 = String___add__(r5,r15);
-	r5 = r9;
-	label$fbc84c5_2_43:
-	r8 = r0->riders;
-	if( r8 ) goto label$fbc84c5_2_47;
+	if( r1 == NULL ) hl_null_access();
+	r7 = r1->length;
+	r9 = 30;
+	if( r9 >= r7 ) goto label$fbc84c5_2_10;
+	r7 = 0;
+	r9 = 30;
+	r10 = hl_alloc_dynamic(&t$_i32);
+	r10->v.i = r9;
+	r8 = String_substr(r1,r7,r10);
+	r5 = r8;
+	label$fbc84c5_2_10:
+	r12 = r0->riders;
+	if( r12 == NULL ) hl_null_access();
+	r11 = haxe_ds_StringMap_get(r12,r5);
+	r13 = (components__sledder__RiderBase)r11;
+	if( !r13 ) goto label$fbc84c5_2_52;
+	r7 = 0;
+	label$fbc84c5_2_16:
+	r12 = r0->riders;
+	if( r12 == NULL ) hl_null_access();
+	r9 = r7;
+	r14 = &r9;
+	r15 = hl_itos(r9,r14);
+	r16 = String___alloc__(r15,r9);
+	r8 = String___add__(r5,r16);
+	r11 = haxe_ds_StringMap_get(r12,r8);
+	r13 = (components__sledder__RiderBase)r11;
+	if( !r13 ) goto label$fbc84c5_2_29;
+	++r7;
+	goto label$fbc84c5_2_16;
+	label$fbc84c5_2_29:
+	r18 = ($Main)g$_Main;
+	r17 = r18->console;
+	if( r17 == NULL ) hl_null_access();
+	r8 = (String)s$Rider_name_;
+	r8 = String___add__(r8,r5);
+	r16 = (String)s$_already_occupied_renaming_to_;
+	r8 = String___add__(r8,r16);
+	r9 = r7;
+	r14 = &r9;
+	r15 = hl_itos(r9,r14);
+	r19 = String___alloc__(r15,r9);
+	r16 = String___add__(r5,r19);
+	r8 = String___add__(r8,r16);
+	r10 = NULL;
+	h2d_Console_log(((h2d__Console)r17),r8,r10);
+	r16 = (String)s$;
+	r9 = r7;
+	r14 = &r9;
+	r15 = hl_itos(r9,r14);
+	r19 = String___alloc__(r15,r9);
+	r16 = String___add__(r16,r19);
+	r8 = String___add__(r5,r16);
+	r5 = r8;
+	label$fbc84c5_2_52:
+	r12 = r0->riders;
+	if( r12 ) goto label$fbc84c5_2_56;
 	r20 = NULL;
-	goto label$fbc84c5_2_51;
-	label$fbc84c5_2_47:
-	r20 = r8->f$1;
-	if( r20 ) goto label$fbc84c5_2_51;
-	r20 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r8);
-	r8->f$1 = r20;
-	label$fbc84c5_2_51:
+	goto label$fbc84c5_2_60;
+	label$fbc84c5_2_56:
+	r20 = r12->f$1;
+	if( r20 ) goto label$fbc84c5_2_60;
+	r20 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r12);
+	r12->f$1 = r20;
+	label$fbc84c5_2_60:
 	r21 = (components__sledder__Bosh)hl_alloc_obj(&t$components_sledder_Bosh);
 	if( r2 == NULL ) hl_null_access();
 	r22 = r2->x;
@@ -145,14 +156,14 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	r24 = hl_alloc_dynamic(&t$_f64);
 	r24->v.d = r22;
 	components_sledder_Bosh_new(r21,r23,r24,r5,r3,r4);
-	r8 = (haxe__ds__StringMap)hl_dyn_castp(&r20,&t$vrt_b840ca7,&t$haxe_ds_StringMap);
-	if( r8 == NULL ) hl_null_access();
-	haxe_ds_StringMap_set(r8,r5,((vdynamic*)r21));
-	r11 = r0->riderCount;
-	++r11;
-	r0->riderCount = r11;
-	r17 = ($Main)g$_Main;
-	r25 = r17->simulation;
+	r12 = (haxe__ds__StringMap)hl_dyn_castp(&r20,&t$vrt_b840ca7,&t$haxe_ds_StringMap);
+	if( r12 == NULL ) hl_null_access();
+	haxe_ds_StringMap_set(r12,r5,((vdynamic*)r21));
+	r7 = r0->riderCount;
+	++r7;
+	r0->riderCount = r7;
+	r18 = ($Main)g$_Main;
+	r25 = r18->simulation;
 	if( r25 == NULL ) hl_null_access();
 	components_managers_Simulation_recordGlobalSimState(r25);
 	return;
@@ -268,7 +279,7 @@ void components_managers_Riders_stepRiders(components__managers__Riders r0) {
 		r6 = (components__sledder__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
 	}
 	if( r6 == NULL ) hl_null_access();
-	components_sledder_RiderBase_stepRider(r6);
+	((void (*)(components__sledder__RiderBase))r6->$type->vobj_proto[4])(r6);
 	goto label$fbc84c5_4_4;
 	label$fbc84c5_4_12:
 	return;

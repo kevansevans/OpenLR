@@ -26,6 +26,7 @@ double Math_max(double,double);
 double Math_min(double,double);
 #include <components/managers/Grid.h>
 #include <components/lines/LineBase.h>
+#include <components/tool/ToolBehavior.h>
 vvirtual* components_managers_Grid_registryPosition(double,double);
 extern String s$;
 extern String s$x;
@@ -210,7 +211,9 @@ void components_stage_Canvas_erase(components__stage__Canvas r0) {
 	hl__types__ArrayObj r22;
 	haxe__ds__StringMap r17;
 	vvirtual *r1, *r20;
+	bool r35;
 	$Main r19;
+	components__tool__ToolBehavior r36;
 	h2d__col__Point r28;
 	components__lines__LineBase r24;
 	double r2, r3, r21, r26, r27, r29, r30, r31, r32, r33, r34;
@@ -229,13 +232,13 @@ void components_stage_Canvas_erase(components__stage__Canvas r0) {
 	r6 = -1;
 	label$ae2bdbd_5_8:
 	r8 = 2;
-	if( r6 >= r8 ) goto label$ae2bdbd_5_215;
+	if( r6 >= r8 ) goto label$ae2bdbd_5_241;
 	r7 = r6;
 	++r6;
 	r8 = -1;
 	label$ae2bdbd_5_14:
 	r10 = 2;
-	if( r8 >= r10 ) goto label$ae2bdbd_5_214;
+	if( r8 >= r10 ) goto label$ae2bdbd_5_240;
 	r9 = r8;
 	++r8;
 	r11 = (String)s$x;
@@ -279,7 +282,7 @@ void components_stage_Canvas_erase(components__stage__Canvas r0) {
 	label$ae2bdbd_5_56:
 	if( r22 == NULL ) hl_null_access();
 	r23 = r22->length;
-	if( r10 >= r23 ) goto label$ae2bdbd_5_133;
+	if( r10 >= r23 ) goto label$ae2bdbd_5_146;
 	r23 = r22->length;
 	if( ((unsigned)r10) < ((unsigned)r23) ) goto label$ae2bdbd_5_64;
 	r24 = NULL;
@@ -347,33 +350,49 @@ void components_stage_Canvas_erase(components__stage__Canvas r0) {
 	r12 = r0->eraserSize;
 	r34 = (double)r12;
 	r34 = r34 * r2;
-	if( !(r31 < r34) ) goto label$ae2bdbd_5_132;
+	if( !(r31 < r34) ) goto label$ae2bdbd_5_145;
 	r34 = 0.;
-	if( !(r32 >= r34) ) goto label$ae2bdbd_5_132;
+	if( !(r32 >= r34) ) goto label$ae2bdbd_5_145;
 	r34 = 1.;
-	if( !(r34 >= r32) ) goto label$ae2bdbd_5_132;
+	if( !(r34 >= r32) ) goto label$ae2bdbd_5_145;
 	label$ae2bdbd_5_130:
+	r19 = ($Main)g$_Main;
+	r36 = r19->toolControl;
+	if( r36 == NULL ) hl_null_access();
+	r35 = r36->colorEraser;
+	if( !r35 ) goto label$ae2bdbd_5_143;
+	r12 = r24->type;
+	r19 = ($Main)g$_Main;
+	r36 = r19->toolControl;
+	if( r36 == NULL ) hl_null_access();
+	r23 = r36->color;
+	if( r12 != r23 ) goto label$ae2bdbd_5_142;
 	components_stage_Canvas_removeLine(r0,r24);
+	label$ae2bdbd_5_142:
+	goto label$ae2bdbd_5_144;
+	label$ae2bdbd_5_143:
+	components_stage_Canvas_removeLine(r0,r24);
+	label$ae2bdbd_5_144:
 	goto label$ae2bdbd_5_56;
-	label$ae2bdbd_5_132:
+	label$ae2bdbd_5_145:
 	goto label$ae2bdbd_5_56;
-	label$ae2bdbd_5_133:
+	label$ae2bdbd_5_146:
 	r10 = 0;
 	if( r20 == NULL ) hl_null_access();
 	r22 = hl_vfields(r20)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r20)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r20->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj);
-	label$ae2bdbd_5_136:
+	label$ae2bdbd_5_149:
 	if( r22 == NULL ) hl_null_access();
 	r23 = r22->length;
-	if( r10 >= r23 ) goto label$ae2bdbd_5_213;
+	if( r10 >= r23 ) goto label$ae2bdbd_5_239;
 	r23 = r22->length;
-	if( ((unsigned)r10) < ((unsigned)r23) ) goto label$ae2bdbd_5_144;
+	if( ((unsigned)r10) < ((unsigned)r23) ) goto label$ae2bdbd_5_157;
 	r24 = NULL;
-	goto label$ae2bdbd_5_147;
-	label$ae2bdbd_5_144:
+	goto label$ae2bdbd_5_160;
+	label$ae2bdbd_5_157:
 	r25 = r22->array;
 	r16 = ((vdynamic**)(r25 + 1))[r10];
 	r24 = (components__lines__LineBase)r16;
-	label$ae2bdbd_5_147:
+	label$ae2bdbd_5_160:
 	++r10;
 	r26 = h2d_Scene_get_mouseX(((h2d__Scene)r0));
 	if( r24 == NULL ) hl_null_access();
@@ -424,29 +443,45 @@ void components_stage_Canvas_erase(components__stage__Canvas r0) {
 	r12 = r0->eraserSize;
 	r34 = (double)r12;
 	r34 = r34 * r2;
-	if( r29 < r34 ) goto label$ae2bdbd_5_210;
+	if( r29 < r34 ) goto label$ae2bdbd_5_223;
 	r12 = r0->eraserSize;
 	r34 = (double)r12;
 	r34 = r34 * r2;
-	if( r30 < r34 ) goto label$ae2bdbd_5_210;
+	if( r30 < r34 ) goto label$ae2bdbd_5_223;
 	r12 = r0->eraserSize;
 	r34 = (double)r12;
 	r34 = r34 * r2;
-	if( !(r31 < r34) ) goto label$ae2bdbd_5_212;
+	if( !(r31 < r34) ) goto label$ae2bdbd_5_238;
 	r34 = 0.;
-	if( !(r32 >= r34) ) goto label$ae2bdbd_5_212;
+	if( !(r32 >= r34) ) goto label$ae2bdbd_5_238;
 	r34 = 1.;
-	if( !(r34 >= r32) ) goto label$ae2bdbd_5_212;
-	label$ae2bdbd_5_210:
+	if( !(r34 >= r32) ) goto label$ae2bdbd_5_238;
+	label$ae2bdbd_5_223:
+	r19 = ($Main)g$_Main;
+	r36 = r19->toolControl;
+	if( r36 == NULL ) hl_null_access();
+	r35 = r36->colorEraser;
+	if( !r35 ) goto label$ae2bdbd_5_236;
+	r12 = r24->type;
+	r19 = ($Main)g$_Main;
+	r36 = r19->toolControl;
+	if( r36 == NULL ) hl_null_access();
+	r23 = r36->color;
+	if( r12 != r23 ) goto label$ae2bdbd_5_235;
 	components_stage_Canvas_removeLine(r0,r24);
-	goto label$ae2bdbd_5_136;
-	label$ae2bdbd_5_212:
-	goto label$ae2bdbd_5_136;
-	label$ae2bdbd_5_213:
+	label$ae2bdbd_5_235:
+	goto label$ae2bdbd_5_237;
+	label$ae2bdbd_5_236:
+	components_stage_Canvas_removeLine(r0,r24);
+	label$ae2bdbd_5_237:
+	goto label$ae2bdbd_5_149;
+	label$ae2bdbd_5_238:
+	goto label$ae2bdbd_5_149;
+	label$ae2bdbd_5_239:
 	goto label$ae2bdbd_5_14;
-	label$ae2bdbd_5_214:
+	label$ae2bdbd_5_240:
 	goto label$ae2bdbd_5_8;
-	label$ae2bdbd_5_215:
+	label$ae2bdbd_5_241:
 	return;
 }
 

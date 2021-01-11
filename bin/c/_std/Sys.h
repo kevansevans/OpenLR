@@ -22,6 +22,7 @@ struct _$Sys {
 	vclosure* makePath;
 	vclosure* println;
 	vclosure* stderr;
+	vclosure* getCwd;
 	vclosure* systemName;
 	vclosure* command;
 };

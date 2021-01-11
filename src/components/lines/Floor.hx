@@ -1,9 +1,7 @@
 package components.lines;
 
 import components.physics.RidePoint;
-import enums.LineDrawMode;
 import h2d.col.Point;
-import components.tool.ToolBehavior.LineColor;
 
 /**
  * ...

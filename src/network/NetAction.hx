@@ -6,6 +6,7 @@ package network;
 enum abstract NetAction(String) from String {
 	var joinRequest:String;
 	var relayEcho:String;
+	var relayChat:String;
 	var lineDownload:String;
 	var deleteLine:String;
 	var addNewCursor:String;

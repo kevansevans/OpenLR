@@ -2,6 +2,9 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxsl/Cache.h>
+#include <hxsl/ShaderInstance.h>
+extern hl_type t$vrt_283fa46;
+extern hl_type t$vrt_7c116e9;
 extern hl_type t$hxsl_SearchMap;
 void hxsl_SearchMap_new(hxsl__SearchMap);
 extern hl_type t$haxe_ds_StringMap;
@@ -92,7 +95,6 @@ extern hl_type t$hxsl_Shader;
 extern hl_type t$_dyn;
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 #include <hxsl/ShaderList.h>
-#include <hxsl/ShaderInstance.h>
 #include <hxsl/RuntimeShader.h>
 vdynamic* haxe_ds_IntMap_get(haxe__ds__IntMap,int);
 void haxe_ds_IntMap_set(haxe__ds__IntMap,int,vdynamic*);
@@ -113,11 +115,9 @@ extern venum* g$hxsl_VarKind_Local;
 #include <hxsl/ShaderInstanceDesc.h>
 #include <hxsl/RuntimeShaderData.h>
 extern hl_type t$fun_8000bc1;
-extern hl_type t$vrt_283fa46;
 extern hl_type t$hxsl_ShaderInstance;
 void hl_types_ArrayObj_reverse(hl__types__ArrayObj);
 extern hl_type t$hl_types_ArrayDyn;
-int hxsl_Cache_compileRuntimeShader__$2(vclosure*,vdynamic*,vdynamic*);
 extern hl_type t$fun_d4c4225;
 void haxe_ds_ArraySort_sort(hl__types__ArrayDyn,vclosure*);
 extern hl_type t$hxsl_Linker;
@@ -164,7 +164,6 @@ void hxsl_Flatten_new(hxsl__Flatten);
 extern hl_type t$hxsl_RuntimeShaderData;
 void hxsl_RuntimeShaderData_new(hxsl__RuntimeShaderData);
 vvirtual* hxsl_Flatten_flatten(hxsl__Flatten,vvirtual*,venum*,bool);
-extern hl_type t$vrt_7c116e9;
 vvirtual* haxe_ds_ObjectMap_keys(haxe__ds__ObjectMap);
 extern hl_type t$vrt_11e33cd;
 extern hl_type t$fun_bf7849e;
@@ -176,11 +175,28 @@ extern hl_type t$hxsl_AllocParam;
 extern hl_type t$vrt_7e2476c;
 void hxsl_AllocParam_new(hxsl__AllocParam,String,int,int,int,venum*);
 bool hxsl_Tools_isSampler(venum*);
-int hxsl_Cache_flattenShader__$2(vclosure*,vdynamic*,vdynamic*);
 extern hl_type t$fun_aafc2df;
 void hl_types_ArrayObj_sort(hl__types__ArrayObj,vclosure*);
 extern hxsl__$Cache g$_hxsl_Cache;
 extern hl_type t$hxsl_Cache;
+
+int hxsl_Cache_compileRuntimeShader__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
+	vvirtual *r3, *r4;
+	int r5;
+	r3 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r1);
+	r4 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r2);
+	r5 = r0->hasValue ? ((int (*)(vdynamic*,vvirtual*,vvirtual*))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(vvirtual*,vvirtual*))r0->fun)(r3,r4);
+	return r5;
+}
+
+int hxsl_Cache_flattenShader__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
+	vvirtual *r3, *r4;
+	int r5;
+	r3 = hl_to_virtual(&t$vrt_7c116e9,(vdynamic*)r1);
+	r4 = hl_to_virtual(&t$vrt_7c116e9,(vdynamic*)r2);
+	r5 = r0->hasValue ? ((int (*)(vdynamic*,vvirtual*,vvirtual*))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(vvirtual*,vvirtual*))r0->fun)(r3,r4);
+	return r5;
+}
 
 void hxsl_Cache_new(hxsl__Cache r0) {
 	haxe__ds__StringMap r4;
@@ -220,8 +236,8 @@ vvirtual* hxsl_Cache_getLinkShader__$1(vvirtual* r0,venum* r1,int r2,hl__types__
 	r10 = 0;
 	if( r3 == NULL ) hl_null_access();
 	r11 = r3->length;
-	label$2c4895f_2_8:
-	if( r10 >= r11 ) goto label$2c4895f_2_39;
+	label$2c4895f_4_8:
+	if( r10 >= r11 ) goto label$2c4895f_4_39;
 	r12 = r10;
 	++r10;
 	if( r4 == NULL ) hl_null_access();
@@ -231,14 +247,14 @@ vvirtual* hxsl_Cache_getLinkShader__$1(vvirtual* r0,venum* r1,int r2,hl__types__
 	r13 = r13 - r15;
 	r13 = r13 - r12;
 	r15 = r3->length;
-	if( ((unsigned)r13) < ((unsigned)r15) ) goto label$2c4895f_2_22;
+	if( ((unsigned)r13) < ((unsigned)r15) ) goto label$2c4895f_4_22;
 	r16 = NULL;
-	goto label$2c4895f_2_25;
-	label$2c4895f_2_22:
+	goto label$2c4895f_4_25;
+	label$2c4895f_4_22:
 	r6 = r3->array;
 	r17 = ((vdynamic**)(r6 + 1))[r13];
 	r16 = (venum*)r17;
-	label$2c4895f_2_25:
+	label$2c4895f_4_25:
 	r15 = r3->length;
 	r18 = 1;
 	r15 = r15 - r18;
@@ -252,8 +268,8 @@ vvirtual* hxsl_Cache_getLinkShader__$1(vvirtual* r0,venum* r1,int r2,hl__types__
 	r8 = r13;
 	if( r5 == NULL ) hl_null_access();
 	hl_types_ArrayObj_unshift(r5,((vdynamic*)r14));
-	goto label$2c4895f_2_8;
-	label$2c4895f_2_39:
+	goto label$2c4895f_4_8;
+	label$2c4895f_4_39:
 	r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
 	r20 = hl_alloc_virtual(&t$vrt_6e3ace9);
 	r21 = hl_alloc_enum(&t$hxsl_TExprDef,2);
@@ -284,22 +300,22 @@ vvirtual* hxsl_Cache_getLinkShader__$2(venum* r0,String r1,venum* r2,vvirtual* r
 	hxsl__SharedShader r17;
 	vdynamic *r8;
 	int r12, r18;
-	if( r3 ) goto label$2c4895f_3_3;
+	if( r3 ) goto label$2c4895f_5_3;
 	r4 = r1;
-	goto label$2c4895f_3_7;
-	label$2c4895f_3_3:
+	goto label$2c4895f_5_7;
+	label$2c4895f_5_3:
 	r4 = hxsl_Tools_getName(r3);
 	r6 = (String)s$5058f1a;
 	r4 = String___add__(r4,r6);
 	r4 = String___add__(r4,r1);
-	label$2c4895f_3_7:
+	label$2c4895f_5_7:
 	r9 = ((Enumt$ctx_6fe9cfc*)r0)->p1;
 	if( r9 == NULL ) hl_null_access();
 	r8 = haxe_ds_StringMap_get(r9,r4);
 	r5 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r8);
-	if( !r5 ) goto label$2c4895f_3_13;
+	if( !r5 ) goto label$2c4895f_5_13;
 	return r5;
-	label$2c4895f_3_13:
+	label$2c4895f_5_13:
 	r11 = hl_alloc_virtual(&t$vrt_cf61ea9);
 	r12 = hxsl_Tools_allocVarId();
 	if( hl_vfields(r11)[0] ) *(int*)(hl_vfields(r11)[0]) = (int)r12; else hl_dyn_seti(r11->value,23515/*id*/,&t$_i32,r12);
@@ -310,7 +326,7 @@ vvirtual* hxsl_Cache_getLinkShader__$2(venum* r0,String r1,venum* r2,vvirtual* r
 	if( hl_vfields(r11)[3] ) *(vvirtual**)(hl_vfields(r11)[3]) = (vvirtual*)r3; else hl_dyn_setp(r11->value,-310508246/*parent*/,&t$vrt_09f4a29,r3);
 	r10 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r11);
 	r5 = r10;
-	if( r3 ) goto label$2c4895f_3_32;
+	if( r3 ) goto label$2c4895f_5_32;
 	r17 = ((Enumt$ctx_6fe9cfc*)r0)->p0;
 	if( r17 == NULL ) hl_null_access();
 	r16 = r17->data;
@@ -318,23 +334,23 @@ vvirtual* hxsl_Cache_getLinkShader__$2(venum* r0,String r1,venum* r2,vvirtual* r
 	r15 = hl_vfields(r16)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,239676598/*vars*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r12 = hl_types_ArrayObj_push(r15,((vdynamic*)r5));
-	goto label$2c4895f_3_45;
-	label$2c4895f_3_32:
+	goto label$2c4895f_5_45;
+	label$2c4895f_5_32:
 	if( r3 == NULL ) hl_null_access();
 	r13 = hl_vfields(r3)[5] ? (*(venum**)(hl_vfields(r3)[5])) : (venum*)hl_dyn_getp(r3->value,218690500/*type*/,&t$hxsl_Type);
 	if( r13 == NULL ) hl_null_access();
 	r12 = HL__ENUM_INDEX__(r13);
 	r18 = 13;
-	if( r12 != r18 ) goto label$2c4895f_3_42;
+	if( r12 != r18 ) goto label$2c4895f_5_42;
 	r15 = ((hxsl_Type_TStruct*)r13)->p0;
 	if( r15 == NULL ) hl_null_access();
 	r12 = hl_types_ArrayObj_push(r15,((vdynamic*)r5));
-	goto label$2c4895f_3_45;
-	label$2c4895f_3_42:
+	goto label$2c4895f_5_45;
+	label$2c4895f_5_42:
 	r6 = (String)s$assert;
 	r8 = haxe_Exception_thrown(((vdynamic*)r6));
 	hl_throw((vdynamic*)r8);
-	label$2c4895f_3_45:
+	label$2c4895f_5_45:
 	r9 = ((Enumt$ctx_6fe9cfc*)r0)->p1;
 	if( r9 == NULL ) hl_null_access();
 	haxe_ds_StringMap_set(r9,r4,((vdynamic*)r5));
@@ -357,7 +373,7 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 	r3 = HL__ENUM_INDEX__(r1);
 	switch(r3) {
 		default:
-			goto label$2c4895f_4_223;
+			goto label$2c4895f_6_223;
 		case 0:
 			r5 = ((hxsl_Output_Const*)r1)->p0;
 			r6 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -378,7 +394,7 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( r14 == NULL ) hl_null_access();
 			r11 = haxe_ds_StringMap_get(r14,r13);
 			r16 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r11);
-			if( !r16 ) goto label$2c4895f_4_30;
+			if( !r16 ) goto label$2c4895f_6_30;
 			r6 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,1);
 			((hxsl_TExprDef_TVar*)r7)->p0 = r16;
@@ -389,16 +405,16 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			r10 = ((Enumt$ctx_7028576*)r0)->p0;
 			if( hl_vfields(r6)[1] ) *(vvirtual**)(hl_vfields(r6)[1]) = (vvirtual*)r10; else hl_dyn_setp(r6->value,112/*p*/,&t$vrt_379f5a4,r10);
 			return r6;
-			label$2c4895f_4_30:
+			label$2c4895f_6_30:
 			if( r13 == NULL ) hl_null_access();
 			r19 = (String)s$5058f1a;
 			r18 = String_split(r13,r19);
 			r17 = NULL;
-			label$2c4895f_4_34:
+			label$2c4895f_6_34:
 			if( r18 == NULL ) hl_null_access();
 			r3 = r18->length;
 			r21 = 1;
-			if( r21 >= r3 ) goto label$2c4895f_4_51;
+			if( r21 >= r3 ) goto label$2c4895f_6_51;
 			r23 = ((Enumt$ctx_7028576*)r0)->p4;
 			if( r23 == NULL ) hl_null_access();
 			r11 = hl_types_ArrayObj_shift(r18);
@@ -411,26 +427,26 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			((hxsl_Type_TStruct*)r9)->p0 = r20;
 			r22 = r23->hasValue ? ((vvirtual* (*)(vdynamic*,String,venum*,vvirtual*))r23->fun)((vdynamic*)r23->value,r15,r9,r17) : ((vvirtual* (*)(String,venum*,vvirtual*))r23->fun)(r15,r9,r17);
 			r17 = r22;
-			goto label$2c4895f_4_34;
-			label$2c4895f_4_51:
-			if( !r12 ) goto label$2c4895f_4_54;
+			goto label$2c4895f_6_34;
+			label$2c4895f_6_51:
+			if( !r12 ) goto label$2c4895f_6_54;
 			r3 = r12 ? r12->v.i : 0;
 			r2 = r3;
-			label$2c4895f_4_54:
+			label$2c4895f_6_54:
 			r23 = ((Enumt$ctx_7028576*)r0)->p4;
 			if( r23 == NULL ) hl_null_access();
 			r11 = hl_types_ArrayObj_shift(r18);
 			r15 = (String)r11;
 			r21 = 1;
-			if( r2 != r21 ) goto label$2c4895f_4_62;
+			if( r2 != r21 ) goto label$2c4895f_6_62;
 			r9 = (venum*)g$hxsl_Type_TFloat;
-			goto label$2c4895f_4_64;
-			label$2c4895f_4_62:
+			goto label$2c4895f_6_64;
+			label$2c4895f_6_62:
 			r26 = (venum*)g$hxsl_VecType_VFloat;
 			r9 = hl_alloc_enum(&t$hxsl_Type,5);
 			((hxsl_Type_TVec*)r9)->p0 = r2;
 			((hxsl_Type_TVec*)r9)->p1 = r26;
-			label$2c4895f_4_64:
+			label$2c4895f_6_64:
 			r22 = r23->hasValue ? ((vvirtual* (*)(vdynamic*,String,venum*,vvirtual*))r23->fun)((vdynamic*)r23->value,r15,r9,r17) : ((vvirtual* (*)(String,venum*,vvirtual*))r23->fun)(r15,r9,r17);
 			r6 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,1);
@@ -461,14 +477,14 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( r18 == NULL ) hl_null_access();
 			r3 = 0;
 			r21 = r18->length;
-			if( ((unsigned)r3) < ((unsigned)r21) ) goto label$2c4895f_4_94;
+			if( ((unsigned)r3) < ((unsigned)r21) ) goto label$2c4895f_6_94;
 			r30 = NULL;
-			goto label$2c4895f_4_97;
-			label$2c4895f_4_94:
+			goto label$2c4895f_6_97;
+			label$2c4895f_6_94:
 			r31 = r18->array;
 			r11 = ((vdynamic**)(r31 + 1))[r3];
 			r30 = (vclosure*)r11;
-			label$2c4895f_4_97:
+			label$2c4895f_6_97:
 			if( r30 == NULL ) hl_null_access();
 			r3 = 3;
 			r29 = r30->hasValue ? ((vvirtual* (*)(vdynamic*,venum*,int))r30->fun)((vdynamic*)r30->value,r4,r3) : ((vvirtual* (*)(venum*,int))r30->fun)(r4,r3);
@@ -503,14 +519,14 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( r18 == NULL ) hl_null_access();
 			r3 = 0;
 			r21 = r18->length;
-			if( ((unsigned)r3) < ((unsigned)r21) ) goto label$2c4895f_4_130;
+			if( ((unsigned)r3) < ((unsigned)r21) ) goto label$2c4895f_6_130;
 			r30 = NULL;
-			goto label$2c4895f_4_133;
-			label$2c4895f_4_130:
+			goto label$2c4895f_6_133;
+			label$2c4895f_6_130:
 			r31 = r18->array;
 			r11 = ((vdynamic**)(r31 + 1))[r3];
 			r30 = (vclosure*)r11;
-			label$2c4895f_4_133:
+			label$2c4895f_6_133:
 			if( r30 == NULL ) hl_null_access();
 			r3 = 1;
 			r29 = r30->hasValue ? ((vvirtual* (*)(vdynamic*,venum*,int))r30->fun)((vdynamic*)r30->value,r4,r3) : ((vvirtual* (*)(venum*,int))r30->fun)(r4,r3);
@@ -536,14 +552,14 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( r33 == NULL ) hl_null_access();
 			r21 = 0;
 			r34 = r33->length;
-			if( ((unsigned)r21) < ((unsigned)r34) ) goto label$2c4895f_4_158;
+			if( ((unsigned)r21) < ((unsigned)r34) ) goto label$2c4895f_6_158;
 			r30 = NULL;
-			goto label$2c4895f_4_161;
-			label$2c4895f_4_158:
+			goto label$2c4895f_6_161;
+			label$2c4895f_6_158:
 			r24 = r33->array;
 			r11 = ((vdynamic**)(r24 + 1))[r21];
 			r30 = (vclosure*)r11;
-			label$2c4895f_4_161:
+			label$2c4895f_6_161:
 			r6 = r32->hasValue ? ((vvirtual* (*)(vdynamic*,venum*,int,hl__types__ArrayObj,vclosure*))r32->fun)((vdynamic*)r32->value,r28,r3,r18,r30) : ((vvirtual* (*)(venum*,int,hl__types__ArrayObj,vclosure*))r32->fun)(r28,r3,r18,r30);
 			return r6;
 		case 5:
@@ -556,14 +572,14 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( r33 == NULL ) hl_null_access();
 			r21 = 0;
 			r34 = r33->length;
-			if( ((unsigned)r21) < ((unsigned)r34) ) goto label$2c4895f_4_175;
+			if( ((unsigned)r21) < ((unsigned)r34) ) goto label$2c4895f_6_175;
 			r30 = NULL;
-			goto label$2c4895f_4_178;
-			label$2c4895f_4_175:
+			goto label$2c4895f_6_178;
+			label$2c4895f_6_175:
 			r24 = r33->array;
 			r11 = ((vdynamic**)(r24 + 1))[r21];
 			r30 = (vclosure*)r11;
-			label$2c4895f_4_178:
+			label$2c4895f_6_178:
 			r6 = r32->hasValue ? ((vvirtual* (*)(vdynamic*,venum*,int,hl__types__ArrayObj,vclosure*))r32->fun)((vdynamic*)r32->value,r28,r3,r18,r30) : ((vvirtual* (*)(venum*,int,hl__types__ArrayObj,vclosure*))r32->fun)(r28,r3,r18,r30);
 			return r6;
 		case 6:
@@ -576,14 +592,14 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( r33 == NULL ) hl_null_access();
 			r21 = 0;
 			r34 = r33->length;
-			if( ((unsigned)r21) < ((unsigned)r34) ) goto label$2c4895f_4_192;
+			if( ((unsigned)r21) < ((unsigned)r34) ) goto label$2c4895f_6_192;
 			r30 = NULL;
-			goto label$2c4895f_4_195;
-			label$2c4895f_4_192:
+			goto label$2c4895f_6_195;
+			label$2c4895f_6_192:
 			r24 = r33->array;
 			r11 = ((vdynamic**)(r24 + 1))[r21];
 			r30 = (vclosure*)r11;
-			label$2c4895f_4_195:
+			label$2c4895f_6_195:
 			r6 = r32->hasValue ? ((vvirtual* (*)(vdynamic*,venum*,int,hl__types__ArrayObj,vclosure*))r32->fun)((vdynamic*)r32->value,r28,r3,r18,r30) : ((vvirtual* (*)(venum*,int,hl__types__ArrayObj,vclosure*))r32->fun)(r28,r3,r18,r30);
 			return r6;
 		case 7:
@@ -594,14 +610,14 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( r20 == NULL ) hl_null_access();
 			r3 = 0;
 			r21 = r20->length;
-			if( ((unsigned)r3) < ((unsigned)r21) ) goto label$2c4895f_4_207;
+			if( ((unsigned)r3) < ((unsigned)r21) ) goto label$2c4895f_6_207;
 			r30 = NULL;
-			goto label$2c4895f_4_210;
-			label$2c4895f_4_207:
+			goto label$2c4895f_6_210;
+			label$2c4895f_6_207:
 			r24 = r20->array;
 			r11 = ((vdynamic**)(r24 + 1))[r3];
 			r30 = (vclosure*)r11;
-			label$2c4895f_4_210:
+			label$2c4895f_6_210:
 			if( r30 == NULL ) hl_null_access();
 			r3 = 4;
 			r27 = r30->hasValue ? ((vvirtual* (*)(vdynamic*,venum*,int))r30->fun)((vdynamic*)r30->value,r4,r3) : ((vvirtual* (*)(venum*,int))r30->fun)(r4,r3);
@@ -620,7 +636,7 @@ vvirtual* hxsl_Cache_getLinkShader__$3(venum* r0,venum* r1,int r2) {
 			if( hl_vfields(r6)[1] ) *(vvirtual**)(hl_vfields(r6)[1]) = (vvirtual*)r10; else hl_dyn_setp(r6->value,112/*p*/,&t$vrt_379f5a4,r10);
 			return r6;
 	}
-	label$2c4895f_4_223:
+	label$2c4895f_6_223:
 	r6 = NULL;
 	return r6;
 }
@@ -648,9 +664,9 @@ vvirtual* hxsl_Cache_getLinkShader__$4(venum* r0,venum* r1) {
 	if( r6 == NULL ) hl_null_access();
 	r3 = 0;
 	r7 = r6->length;
-	if( ((unsigned)r3) < ((unsigned)r7) ) goto label$2c4895f_5_12;
+	if( ((unsigned)r3) < ((unsigned)r7) ) goto label$2c4895f_7_12;
 	hl_types_ArrayBytes_Int___expand(r6,r3);
-	label$2c4895f_5_12:
+	label$2c4895f_7_12:
 	r9 = r6->bytes;
 	r7 = 2;
 	r7 = r3 << r7;
@@ -687,14 +703,14 @@ vvirtual* hxsl_Cache_getLinkShader__$4(venum* r0,venum* r1) {
 	if( r17 == NULL ) hl_null_access();
 	r3 = 0;
 	r7 = r17->length;
-	if( ((unsigned)r3) < ((unsigned)r7) ) goto label$2c4895f_5_50;
+	if( ((unsigned)r3) < ((unsigned)r7) ) goto label$2c4895f_7_50;
 	r26 = NULL;
-	goto label$2c4895f_5_53;
-	label$2c4895f_5_50:
+	goto label$2c4895f_7_53;
+	label$2c4895f_7_50:
 	r27 = r17->array;
 	r15 = ((vdynamic**)(r27 + 1))[r3];
 	r26 = (vclosure*)r15;
-	label$2c4895f_5_53:
+	label$2c4895f_7_53:
 	if( r26 == NULL ) hl_null_access();
 	r3 = 4;
 	r25 = r26->hasValue ? ((vvirtual* (*)(vdynamic*,venum*,int))r26->fun)((vdynamic*)r26->value,r1,r3) : ((vvirtual* (*)(venum*,int))r26->fun)(r1,r3);
@@ -745,27 +761,27 @@ void hxsl_Cache_getLinkShader__$5(venum* r0,venum* r1,hl__types__ArrayObj r2) {
 	r7 = hl_alloc_array(r8,r4);
 	r6 = hl_types_ArrayObj_alloc(r7);
 	r4 = 0;
-	label$2c4895f_6_23:
+	label$2c4895f_8_23:
 	if( r2 == NULL ) hl_null_access();
 	r16 = r2->length;
-	if( r4 >= r16 ) goto label$2c4895f_6_41;
+	if( r4 >= r16 ) goto label$2c4895f_8_41;
 	r16 = r2->length;
-	if( ((unsigned)r4) < ((unsigned)r16) ) goto label$2c4895f_6_31;
+	if( ((unsigned)r4) < ((unsigned)r16) ) goto label$2c4895f_8_31;
 	r18 = NULL;
-	goto label$2c4895f_6_34;
-	label$2c4895f_6_31:
+	goto label$2c4895f_8_34;
+	label$2c4895f_8_31:
 	r7 = r2->array;
 	r12 = ((vdynamic**)(r7 + 1))[r4];
 	r18 = (venum*)r12;
-	label$2c4895f_6_34:
+	label$2c4895f_8_34:
 	++r4;
 	if( r6 == NULL ) hl_null_access();
 	r20 = ((Enumt$ctx_affda8a*)r0)->p2;
 	if( r20 == NULL ) hl_null_access();
 	r19 = r20->hasValue ? ((vvirtual* (*)(vdynamic*,venum*))r20->fun)((vdynamic*)r20->value,r18) : ((vvirtual* (*)(venum*))r20->fun)(r18);
 	r15 = hl_types_ArrayObj_push(r6,((vdynamic*)r19));
-	goto label$2c4895f_6_23;
-	label$2c4895f_6_41:
+	goto label$2c4895f_8_23;
+	label$2c4895f_8_41:
 	r21 = hl_alloc_virtual(&t$vrt_ab557b2);
 	if( hl_vfields(r21)[2] ) *(venum**)(hl_vfields(r21)[2]) = (venum*)r1; else hl_dyn_setp(r21->value,118088286/*kind*/,&t$hxsl_FunctionKind,r1);
 	if( hl_vfields(r21)[3] ) *(vvirtual**)(hl_vfields(r21)[3]) = (vvirtual*)r13; else hl_dyn_setp(r21->value,5691731/*ref*/,&t$vrt_09f4a29,r13);
@@ -817,25 +833,25 @@ hxsl__Shader hxsl_Cache_getLinkShader(hxsl__Cache r0,hl__types__ArrayObj r1) {
 	r3 = hl_alloc_array(r4,r5);
 	r2 = hl_types_ArrayObj_alloc(r3);
 	r5 = 0;
-	label$2c4895f_7_5:
+	label$2c4895f_9_5:
 	if( r1 == NULL ) hl_null_access();
 	r8 = r1->length;
-	if( r5 >= r8 ) goto label$2c4895f_7_21;
+	if( r5 >= r8 ) goto label$2c4895f_9_21;
 	r8 = r1->length;
-	if( ((unsigned)r5) < ((unsigned)r8) ) goto label$2c4895f_7_13;
+	if( ((unsigned)r5) < ((unsigned)r8) ) goto label$2c4895f_9_13;
 	r10 = NULL;
-	goto label$2c4895f_7_16;
-	label$2c4895f_7_13:
+	goto label$2c4895f_9_16;
+	label$2c4895f_9_13:
 	r3 = r1->array;
 	r11 = ((vdynamic**)(r3 + 1))[r5];
 	r10 = (venum*)r11;
-	label$2c4895f_7_16:
+	label$2c4895f_9_16:
 	++r5;
 	if( r2 == NULL ) hl_null_access();
 	r12 = Std_string(((vdynamic*)r10));
 	r7 = hl_types_ArrayObj_push(r2,((vdynamic*)r12));
-	goto label$2c4895f_7_5;
-	label$2c4895f_7_21:
+	goto label$2c4895f_9_5;
+	label$2c4895f_9_21:
 	if( r2 == NULL ) hl_null_access();
 	r12 = (String)s$c0cb5f0;
 	r12 = hl_types_ArrayObj_join(r2,r12);
@@ -843,9 +859,9 @@ hxsl__Shader hxsl_Cache_getLinkShader(hxsl__Cache r0,hl__types__ArrayObj r1) {
 	if( r13 == NULL ) hl_null_access();
 	r11 = haxe_ds_StringMap_get(r13,r12);
 	r15 = (hxsl__Shader)r11;
-	if( !r15 ) goto label$2c4895f_7_30;
+	if( !r15 ) goto label$2c4895f_9_30;
 	return r15;
-	label$2c4895f_7_30:
+	label$2c4895f_9_30:
 	r17 = (hxsl__SharedShader)hl_alloc_obj(&t$hxsl_SharedShader);
 	r14 = (String)s$;
 	hxsl_SharedShader_new(r17,r14);
@@ -912,9 +928,9 @@ hxsl__Shader hxsl_Cache_getLinkShader(hxsl__Cache r0,hl__types__ArrayObj r1) {
 	((Enumt$ctx_7028576*)r31)->p5 = (hl__types__ArrayObj)r9;
 	r29 = hl_alloc_closure_ptr(&t$fun_e4894d1,hxsl_Cache_getLinkShader__$3,r31);
 	r7 = r9->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$2c4895f_7_95;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$2c4895f_9_95;
 	hl_types_ArrayObj___expand(r9,r5);
-	label$2c4895f_7_95:
+	label$2c4895f_9_95:
 	r3 = r9->array;
 	((vclosure**)(r3 + 1))[r5] = r29;
 	r33 = hl_alloc_enum(&t$ctx_155a94c,0);
@@ -970,8 +986,8 @@ hxsl__RuntimeShader hxsl_Cache_link(hxsl__Cache r0,hxsl__ShaderList r1,bool r2) 
 	r3 = r0->linkCache;
 	r5 = r1;
 	r6 = NULL;
-	label$2c4895f_8_3:
-	if( r5 == r6 ) goto label$2c4895f_8_33;
+	label$2c4895f_10_3:
+	if( r5 == r6 ) goto label$2c4895f_10_33;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r5->s;
 	r7 = r5->next;
@@ -980,18 +996,18 @@ hxsl__RuntimeShader hxsl_Cache_link(hxsl__Cache r0,hxsl__ShaderList r1,bool r2) 
 	r9 = r8->instance;
 	if( r3 == NULL ) hl_null_access();
 	r10 = r3->next;
-	if( r10 ) goto label$2c4895f_8_17;
+	if( r10 ) goto label$2c4895f_10_17;
 	r10 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 	haxe_ds_IntMap_new(r10);
 	r3->next = r10;
-	label$2c4895f_8_17:
+	label$2c4895f_10_17:
 	r10 = r3->next;
 	if( r10 == NULL ) hl_null_access();
 	if( r9 == NULL ) hl_null_access();
 	r13 = r9->id;
 	r12 = haxe_ds_IntMap_get(r10,r13);
 	r11 = (hxsl__SearchMap)r12;
-	if( r11 ) goto label$2c4895f_8_31;
+	if( r11 ) goto label$2c4895f_10_31;
 	r14 = (hxsl__SearchMap)hl_alloc_obj(&t$hxsl_SearchMap);
 	hxsl_SearchMap_new(r14);
 	r11 = r14;
@@ -999,16 +1015,16 @@ hxsl__RuntimeShader hxsl_Cache_link(hxsl__Cache r0,hxsl__ShaderList r1,bool r2) 
 	if( r10 == NULL ) hl_null_access();
 	r13 = r9->id;
 	haxe_ds_IntMap_set(r10,r13,((vdynamic*)r11));
-	label$2c4895f_8_31:
+	label$2c4895f_10_31:
 	r3 = r11;
-	goto label$2c4895f_8_3;
-	label$2c4895f_8_33:
+	goto label$2c4895f_10_3;
+	label$2c4895f_10_33:
 	if( r3 == NULL ) hl_null_access();
 	r15 = r3->linked;
-	if( r15 ) goto label$2c4895f_8_38;
+	if( r15 ) goto label$2c4895f_10_38;
 	r15 = hxsl_Cache_compileRuntimeShader(r0,r1,r2);
 	r3->linked = r15;
-	label$2c4895f_8_38:
+	label$2c4895f_10_38:
 	r15 = r3->linked;
 	return r15;
 }
@@ -1034,23 +1050,23 @@ void hxsl_Cache_compileRuntimeShader__$3(hl__types__ArrayObj r0,vvirtual* r1) {
 	int r5, r8, r13;
 	if( r1 == NULL ) hl_null_access();
 	r3 = hl_vfields(r1)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
-	if( !r3 ) goto label$2c4895f_10_31;
+	if( !r3 ) goto label$2c4895f_12_31;
 	r3 = hl_vfields(r1)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
 	if( r3 == NULL ) hl_null_access();
 	r6 = (venum*)g$hxsl_VarQualifier_PerObject;
 	r7 = NULL;
 	r5 = hl_types_ArrayObj_indexOf(r3,((vdynamic*)r6),r7);
 	r8 = 0;
-	if( r5 < r8 ) goto label$2c4895f_10_31;
+	if( r5 < r8 ) goto label$2c4895f_12_31;
 	r3 = hl_vfields(r1)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
 	if( r3 == NULL ) hl_null_access();
 	r5 = r3->length;
 	r8 = 1;
-	if( r5 != r8 ) goto label$2c4895f_10_18;
+	if( r5 != r8 ) goto label$2c4895f_12_18;
 	r3 = NULL;
 	if( hl_vfields(r1)[4] ) *(hl__types__ArrayObj*)(hl_vfields(r1)[4]) = (hl__types__ArrayObj)r3; else hl_dyn_setp(r1->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj,r3);
-	goto label$2c4895f_10_26;
-	label$2c4895f_10_18:
+	goto label$2c4895f_12_26;
+	label$2c4895f_12_18:
 	r3 = hl_vfields(r1)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
 	if( r3 == NULL ) hl_null_access();
 	r3 = hl_types_ArrayObj_copy(r3);
@@ -1059,49 +1075,49 @@ void hxsl_Cache_compileRuntimeShader__$3(hl__types__ArrayObj r0,vvirtual* r1) {
 	if( r3 == NULL ) hl_null_access();
 	r6 = (venum*)g$hxsl_VarQualifier_PerObject;
 	r9 = hl_types_ArrayObj_remove(r3,((vdynamic*)r6));
-	label$2c4895f_10_26:
+	label$2c4895f_12_26:
 	r10 = hl_vfields(r1)[1] ? (*(venum**)(hl_vfields(r1)[1])) : (venum*)hl_dyn_getp(r1->value,118088286/*kind*/,&t$hxsl_VarKind);
 	r11 = (venum*)g$hxsl_VarKind_Var;
-	if( r10 == r11 ) goto label$2c4895f_10_31;
+	if( r10 == r11 ) goto label$2c4895f_12_31;
 	r10 = (venum*)g$hxsl_VarKind_Local;
 	if( hl_vfields(r1)[1] ) *(venum**)(hl_vfields(r1)[1]) = (venum*)r10; else hl_dyn_setp(r1->value,118088286/*kind*/,&t$hxsl_VarKind,r10);
-	label$2c4895f_10_31:
+	label$2c4895f_12_31:
 	r12 = hl_vfields(r1)[5] ? (*(venum**)(hl_vfields(r1)[5])) : (venum*)hl_dyn_getp(r1->value,218690500/*type*/,&t$hxsl_Type);
 	if( r12 == NULL ) hl_null_access();
 	r5 = HL__ENUM_INDEX__(r12);
 	r8 = 13;
-	if( r5 != r8 ) goto label$2c4895f_10_62;
+	if( r5 != r8 ) goto label$2c4895f_12_62;
 	r3 = ((hxsl_Type_TStruct*)r12)->p0;
 	r5 = 0;
-	label$2c4895f_10_38:
+	label$2c4895f_12_38:
 	if( r3 == NULL ) hl_null_access();
 	r13 = r3->length;
-	if( r5 >= r13 ) goto label$2c4895f_10_62;
+	if( r5 >= r13 ) goto label$2c4895f_12_62;
 	r13 = r3->length;
-	if( ((unsigned)r5) < ((unsigned)r13) ) goto label$2c4895f_10_46;
+	if( ((unsigned)r5) < ((unsigned)r13) ) goto label$2c4895f_12_46;
 	r4 = NULL;
-	goto label$2c4895f_10_49;
-	label$2c4895f_10_46:
+	goto label$2c4895f_12_49;
+	label$2c4895f_12_46:
 	r15 = r3->array;
 	r14 = ((vdynamic**)(r15 + 1))[r5];
 	r4 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r14);
-	label$2c4895f_10_49:
+	label$2c4895f_12_49:
 	++r5;
 	if( r0 == NULL ) hl_null_access();
 	r8 = 0;
 	r13 = r0->length;
-	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$2c4895f_10_56;
+	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$2c4895f_12_56;
 	r16 = NULL;
-	goto label$2c4895f_10_59;
-	label$2c4895f_10_56:
+	goto label$2c4895f_12_59;
+	label$2c4895f_12_56:
 	r15 = r0->array;
 	r14 = ((vdynamic**)(r15 + 1))[r8];
 	r16 = (vclosure*)r14;
-	label$2c4895f_10_59:
+	label$2c4895f_12_59:
 	if( r16 == NULL ) hl_null_access();
 	r16->hasValue ? ((void (*)(vdynamic*,vvirtual*))r16->fun)((vdynamic*)r16->value,r4) : ((void (*)(vvirtual*))r16->fun)(r4);
-	goto label$2c4895f_10_38;
-	label$2c4895f_10_62:
+	goto label$2c4895f_12_38;
+	label$2c4895f_12_62:
 	return;
 }
 
@@ -1145,8 +1161,8 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r6 = 0;
 	r8 = r1;
 	r9 = NULL;
-	label$2c4895f_11_7:
-	if( r8 == r9 ) goto label$2c4895f_11_25;
+	label$2c4895f_13_7:
+	if( r8 == r9 ) goto label$2c4895f_13_25;
 	if( r8 == NULL ) hl_null_access();
 	r11 = r8->s;
 	r10 = r8->next;
@@ -1162,42 +1178,42 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	++r6;
 	if( hl_vfields(r15)[0] ) *(int*)(hl_vfields(r15)[0]) = (int)r13; else hl_dyn_seti(r15->value,-32204280/*index*/,&t$_i32,r13);
 	r13 = hl_types_ArrayObj_push(r3,((vdynamic*)r15));
-	goto label$2c4895f_11_7;
-	label$2c4895f_11_25:
+	goto label$2c4895f_13_7;
+	label$2c4895f_13_25:
 	if( r3 == NULL ) hl_null_access();
 	hl_types_ArrayObj_reverse(r3);
 	r16 = (hl__types__ArrayDyn)hl_dyn_castp(&r3,&t$hl_types_ArrayObj,&t$hl_types_ArrayDyn);
 	r17 = &cl$0;
-	if( r17 ) goto label$2c4895f_11_32;
+	if( r17 ) goto label$2c4895f_13_32;
 	r18 = NULL;
-	goto label$2c4895f_11_33;
-	label$2c4895f_11_32:
+	goto label$2c4895f_13_33;
+	label$2c4895f_13_32:
 	r18 = hl_alloc_closure_ptr(&t$fun_d4c4225,hxsl_Cache_compileRuntimeShader__$2,r17);
-	label$2c4895f_11_33:
+	label$2c4895f_13_33:
 	haxe_ds_ArraySort_sort(r16,r18);
 	r19 = (hxsl__Linker)hl_alloc_obj(&t$hxsl_Linker);
 	r20 = r2;
 	r21 = &r20;
 	hxsl_Linker_new(r19,r21);
-	hl_trap(trap$0,r22,label$2c4895f_11_68);
+	hl_trap(trap$0,r22,label$2c4895f_13_68);
 	r5 = &t$vrt_f479cb2;
 	r13 = 0;
 	r4 = hl_alloc_array(r5,r13);
 	r14 = hl_types_ArrayObj_alloc(r4);
 	r13 = 0;
-	label$2c4895f_11_44:
+	label$2c4895f_13_44:
 	if( r3 == NULL ) hl_null_access();
 	r24 = r3->length;
-	if( r13 >= r24 ) goto label$2c4895f_11_63;
+	if( r13 >= r24 ) goto label$2c4895f_13_63;
 	r24 = r3->length;
-	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_11_52;
+	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_13_52;
 	r15 = NULL;
-	goto label$2c4895f_11_55;
-	label$2c4895f_11_52:
+	goto label$2c4895f_13_55;
+	label$2c4895f_13_52:
 	r4 = r3->array;
 	r22 = ((vdynamic**)(r4 + 1))[r13];
 	r15 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r22);
-	label$2c4895f_11_55:
+	label$2c4895f_13_55:
 	++r13;
 	if( r14 == NULL ) hl_null_access();
 	if( r15 == NULL ) hl_null_access();
@@ -1205,40 +1221,40 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	if( r12 == NULL ) hl_null_access();
 	r26 = r12->shader;
 	r23 = hl_types_ArrayObj_push(r14,((vdynamic*)r26));
-	goto label$2c4895f_11_44;
-	label$2c4895f_11_63:
+	goto label$2c4895f_13_44;
+	label$2c4895f_13_63:
 	if( r19 == NULL ) hl_null_access();
 	r27 = hxsl_Linker_link(r19,r14);
 	r26 = r27;
 	hl_endtrap(trap$0);
-	goto label$2c4895f_11_114;
-	label$2c4895f_11_68:
+	goto label$2c4895f_13_114;
+	label$2c4895f_13_68:
 	r28 = NULL;
 	r29 = haxe_Exception_caught(r22);
 	if( r29 == NULL ) hl_null_access();
 	r28 = ((vdynamic* (*)(haxe__Exception))r29->$type->vobj_proto[0])(r29);
 	r32 = (hxsl__$Error)g$_hxsl_Error;
 	r30 = Std_isOfType(r28,((vdynamic*)r32));
-	if( !r30 ) goto label$2c4895f_11_113;
+	if( !r30 ) goto label$2c4895f_13_113;
 	r33 = (hxsl__Error)hl_dyn_castp(&r28,&t$_dyn,&t$hxsl_Error);
 	r5 = &t$String;
 	r13 = 0;
 	r4 = hl_alloc_array(r5,r13);
 	r14 = hl_types_ArrayObj_alloc(r4);
 	r13 = 0;
-	label$2c4895f_11_81:
+	label$2c4895f_13_81:
 	if( r3 == NULL ) hl_null_access();
 	r24 = r3->length;
-	if( r13 >= r24 ) goto label$2c4895f_11_102;
+	if( r13 >= r24 ) goto label$2c4895f_13_102;
 	r24 = r3->length;
-	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_11_89;
+	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_13_89;
 	r15 = NULL;
-	goto label$2c4895f_11_92;
-	label$2c4895f_11_89:
+	goto label$2c4895f_13_92;
+	label$2c4895f_13_89:
 	r4 = r3->array;
 	r31 = ((vdynamic**)(r4 + 1))[r13];
 	r15 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r31);
-	label$2c4895f_11_92:
+	label$2c4895f_13_92:
 	++r13;
 	if( r14 == NULL ) hl_null_access();
 	if( r15 == NULL ) hl_null_access();
@@ -1248,8 +1264,8 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r21 = NULL;
 	r34 = hxsl_Printer_shaderToString(r27,r21);
 	r23 = hl_types_ArrayObj_push(r14,((vdynamic*)r34));
-	goto label$2c4895f_11_81;
-	label$2c4895f_11_102:
+	goto label$2c4895f_13_81;
+	label$2c4895f_13_102:
 	if( r33 == NULL ) hl_null_access();
 	r34 = r33->msg;
 	r35 = (String)s$b8ab2cd;
@@ -1261,10 +1277,10 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r33->msg = r34;
 	r31 = haxe_Exception_thrown(((vdynamic*)r33));
 	hl_throw((vdynamic*)r31);
-	label$2c4895f_11_113:
+	label$2c4895f_13_113:
 	hl_throw((vdynamic*)r22);
-	label$2c4895f_11_114:
-	if( !r2 ) goto label$2c4895f_11_157;
+	label$2c4895f_13_114:
+	if( !r2 ) goto label$2c4895f_13_157;
 	r5 = &t$fun_cd51779;
 	r13 = 1;
 	r4 = hl_alloc_array(r5,r13);
@@ -1276,89 +1292,89 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r13 = 0;
 	r38 = hl_alloc_closure_ptr(&t$fun_af8bfcb,hxsl_Cache_compileRuntimeShader__$3,r14);
 	r23 = r14->length;
-	if( ((unsigned)r13) < ((unsigned)r23) ) goto label$2c4895f_11_128;
+	if( ((unsigned)r13) < ((unsigned)r23) ) goto label$2c4895f_13_128;
 	hl_types_ArrayObj___expand(r14,r13);
-	label$2c4895f_11_128:
+	label$2c4895f_13_128:
 	r4 = r14->array;
 	((vclosure**)(r4 + 1))[r13] = r38;
 	r13 = 0;
 	if( r27 == NULL ) hl_null_access();
 	r25 = hl_vfields(r27)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r27)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r27->value,239676598/*vars*/,&t$hl_types_ArrayObj);
-	label$2c4895f_11_133:
+	label$2c4895f_13_133:
 	if( r25 == NULL ) hl_null_access();
 	r24 = r25->length;
-	if( r13 >= r24 ) goto label$2c4895f_11_157;
+	if( r13 >= r24 ) goto label$2c4895f_13_157;
 	r24 = r25->length;
-	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_11_141;
+	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_13_141;
 	r39 = NULL;
-	goto label$2c4895f_11_144;
-	label$2c4895f_11_141:
+	goto label$2c4895f_13_144;
+	label$2c4895f_13_141:
 	r4 = r25->array;
 	r28 = ((vdynamic**)(r4 + 1))[r13];
 	r39 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r28);
-	label$2c4895f_11_144:
+	label$2c4895f_13_144:
 	++r13;
 	if( r14 == NULL ) hl_null_access();
 	r23 = 0;
 	r24 = r14->length;
-	if( ((unsigned)r23) < ((unsigned)r24) ) goto label$2c4895f_11_151;
+	if( ((unsigned)r23) < ((unsigned)r24) ) goto label$2c4895f_13_151;
 	r38 = NULL;
-	goto label$2c4895f_11_154;
-	label$2c4895f_11_151:
+	goto label$2c4895f_13_154;
+	label$2c4895f_13_151:
 	r4 = r14->array;
 	r28 = ((vdynamic**)(r4 + 1))[r23];
 	r38 = (vclosure*)r28;
-	label$2c4895f_11_154:
+	label$2c4895f_13_154:
 	if( r38 == NULL ) hl_null_access();
 	r38->hasValue ? ((void (*)(vdynamic*,vvirtual*))r38->fun)((vdynamic*)r38->value,r39) : ((void (*)(vvirtual*))r38->fun)(r39);
-	goto label$2c4895f_11_133;
-	label$2c4895f_11_157:
+	goto label$2c4895f_13_133;
+	label$2c4895f_13_157:
 	r40 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 	haxe_ds_IntMap_new(r40);
 	r13 = 0;
 	if( r19 == NULL ) hl_null_access();
 	r14 = r19->allVars;
-	label$2c4895f_11_162:
+	label$2c4895f_13_162:
 	if( r14 == NULL ) hl_null_access();
 	r24 = r14->length;
-	if( r13 >= r24 ) goto label$2c4895f_11_225;
+	if( r13 >= r24 ) goto label$2c4895f_13_225;
 	r24 = r14->length;
-	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_11_170;
+	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_13_170;
 	r41 = NULL;
-	goto label$2c4895f_11_173;
-	label$2c4895f_11_170:
+	goto label$2c4895f_13_173;
+	label$2c4895f_13_170:
 	r4 = r14->array;
 	r28 = ((vdynamic**)(r4 + 1))[r13];
 	r41 = (hxsl___Linker__AllocatedVar)r28;
-	label$2c4895f_11_173:
+	label$2c4895f_13_173:
 	++r13;
 	if( r41 == NULL ) hl_null_access();
 	r39 = r41->v;
 	if( r39 == NULL ) hl_null_access();
 	r42 = hl_vfields(r39)[1] ? (*(venum**)(hl_vfields(r39)[1])) : (venum*)hl_dyn_getp(r39->value,118088286/*kind*/,&t$hxsl_VarKind);
 	r43 = (venum*)g$hxsl_VarKind_Param;
-	if( r42 != r43 ) goto label$2c4895f_11_224;
+	if( r42 != r43 ) goto label$2c4895f_13_224;
 	r39 = r41->v;
 	if( r39 == NULL ) hl_null_access();
 	r44 = hl_vfields(r39)[5] ? (*(venum**)(hl_vfields(r39)[5])) : (venum*)hl_dyn_getp(r39->value,218690500/*type*/,&t$hxsl_Type);
 	if( r44 == NULL ) hl_null_access();
 	r23 = HL__ENUM_INDEX__(r44);
 	r24 = 13;
-	if( r23 != r24 ) goto label$2c4895f_11_189;
+	if( r23 != r24 ) goto label$2c4895f_13_189;
 	r25 = ((hxsl_Type_TStruct*)r44)->p0;
-	goto label$2c4895f_11_162;
-	label$2c4895f_11_189:
+	goto label$2c4895f_13_162;
+	label$2c4895f_13_189:
 	if( r3 == NULL ) hl_null_access();
 	r23 = r41->instanceIndex;
 	r24 = r3->length;
-	if( ((unsigned)r23) < ((unsigned)r24) ) goto label$2c4895f_11_195;
+	if( ((unsigned)r23) < ((unsigned)r24) ) goto label$2c4895f_13_195;
 	r15 = NULL;
-	goto label$2c4895f_11_198;
-	label$2c4895f_11_195:
+	goto label$2c4895f_13_198;
+	label$2c4895f_13_195:
 	r4 = r3->array;
 	r28 = ((vdynamic**)(r4 + 1))[r23];
 	r15 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r28);
-	label$2c4895f_11_198:
+	label$2c4895f_13_198:
 	if( r40 == NULL ) hl_null_access();
 	r23 = r41->id;
 	r45 = hl_alloc_virtual(&t$vrt_70d5f54);
@@ -1373,37 +1389,37 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	if( r25 == NULL ) hl_null_access();
 	r24 = 0;
 	r47 = r25->length;
-	if( ((unsigned)r24) < ((unsigned)r47) ) goto label$2c4895f_11_215;
+	if( ((unsigned)r24) < ((unsigned)r47) ) goto label$2c4895f_13_215;
 	r39 = NULL;
-	goto label$2c4895f_11_218;
-	label$2c4895f_11_215:
+	goto label$2c4895f_13_218;
+	label$2c4895f_13_215:
 	r4 = r25->array;
 	r28 = ((vdynamic**)(r4 + 1))[r24];
 	r39 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r28);
-	label$2c4895f_11_218:
+	label$2c4895f_13_218:
 	if( r39 == NULL ) hl_null_access();
 	r24 = hl_vfields(r39)[0] ? (*(int*)(hl_vfields(r39)[0])) : (int)hl_dyn_geti(r39->value,23515/*id*/,&t$_i32);
 	r28 = haxe_ds_IntMap_get(r46,r24);
 	r48 = (vdynamic*)r28;
 	if( hl_vfields(r45)[0] ) *(vdynamic**)(hl_vfields(r45)[0]) = (vdynamic*)r48; else hl_dyn_setp(r45->value,-32204280/*index*/,&t$nul_i32,r48);
 	haxe_ds_IntMap_set(r40,r23,((vdynamic*)r45));
-	label$2c4895f_11_224:
-	goto label$2c4895f_11_162;
-	label$2c4895f_11_225:
-	hl_trap(trap$0,r28,label$2c4895f_11_231);
+	label$2c4895f_13_224:
+	goto label$2c4895f_13_162;
+	label$2c4895f_13_225:
+	hl_trap(trap$0,r28,label$2c4895f_13_231);
 	r50 = (hxsl__Splitter)hl_alloc_obj(&t$hxsl_Splitter);
 	hxsl_Splitter_new(r50);
 	r49 = hxsl_Splitter_split(r50,r26);
 	hl_endtrap(trap$0);
-	goto label$2c4895f_11_250;
-	label$2c4895f_11_231:
+	goto label$2c4895f_13_250;
+	label$2c4895f_13_231:
 	r31 = NULL;
 	r29 = haxe_Exception_caught(r28);
 	if( r29 == NULL ) hl_null_access();
 	r31 = ((vdynamic* (*)(haxe__Exception))r29->$type->vobj_proto[0])(r29);
 	r32 = (hxsl__$Error)g$_hxsl_Error;
 	r30 = Std_isOfType(r31,((vdynamic*)r32));
-	if( !r30 ) goto label$2c4895f_11_249;
+	if( !r30 ) goto label$2c4895f_13_249;
 	r33 = (hxsl__Error)hl_dyn_castp(&r31,&t$_dyn,&t$hxsl_Error);
 	if( r33 == NULL ) hl_null_access();
 	r34 = r33->msg;
@@ -1415,9 +1431,9 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r33->msg = r34;
 	r52 = haxe_Exception_thrown(((vdynamic*)r33));
 	hl_throw((vdynamic*)r52);
-	label$2c4895f_11_249:
+	label$2c4895f_13_249:
 	hl_throw((vdynamic*)r28);
-	label$2c4895f_11_250:
+	label$2c4895f_13_250:
 	r54 = (hxsl__Dce)hl_alloc_obj(&t$hxsl_Dce);
 	hxsl_Dce_new(r54);
 	if( r49 == NULL ) hl_null_access();
@@ -1434,8 +1450,8 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r14 = hl_types_ArrayObj_alloc(r4);
 	r8 = r1;
 	r9 = NULL;
-	label$2c4895f_11_266:
-	if( r8 == r9 ) goto label$2c4895f_11_280;
+	label$2c4895f_13_266:
+	if( r8 == r9 ) goto label$2c4895f_13_280;
 	if( r8 == NULL ) hl_null_access();
 	r11 = r8->s;
 	r10 = r8->next;
@@ -1447,8 +1463,8 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r13 = r11->constBits;
 	hxsl_ShaderInstanceDesc_new(r57,r58,r13);
 	r13 = hl_types_ArrayObj_push(r14,((vdynamic*)r57));
-	goto label$2c4895f_11_266;
-	label$2c4895f_11_280:
+	goto label$2c4895f_13_266;
+	label$2c4895f_13_280:
 	if( r56 == NULL ) hl_null_access();
 	r60 = hl_alloc_virtual(&t$vrt_a3e2f53);
 	if( hl_vfields(r60)[0] ) *(hl__types__ArrayObj*)(hl_vfields(r60)[0]) = (hl__types__ArrayObj)r14; else hl_dyn_setp(r60->value,186287176/*instances*/,&t$hl_types_ArrayObj,r14);
@@ -1458,8 +1474,8 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r13 = 0;
 	if( r3 == NULL ) hl_null_access();
 	r23 = r3->length;
-	label$2c4895f_11_289:
-	if( r13 >= r23 ) goto label$2c4895f_11_322;
+	label$2c4895f_13_289:
+	if( r13 >= r23 ) goto label$2c4895f_13_322;
 	r24 = r13;
 	++r13;
 	if( r3 == NULL ) hl_null_access();
@@ -1468,14 +1484,14 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r47 = r47 - r61;
 	r47 = r47 - r24;
 	r61 = r3->length;
-	if( ((unsigned)r47) < ((unsigned)r61) ) goto label$2c4895f_11_302;
+	if( ((unsigned)r47) < ((unsigned)r61) ) goto label$2c4895f_13_302;
 	r15 = NULL;
-	goto label$2c4895f_11_305;
-	label$2c4895f_11_302:
+	goto label$2c4895f_13_305;
+	label$2c4895f_13_302:
 	r4 = r3->array;
 	r31 = ((vdynamic**)(r4 + 1))[r47];
 	r15 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r31);
-	label$2c4895f_11_305:
+	label$2c4895f_13_305:
 	if( r56 == NULL ) hl_null_access();
 	r60 = r56->spec;
 	if( r60 == NULL ) hl_null_access();
@@ -1484,18 +1500,18 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	if( r15 == NULL ) hl_null_access();
 	r47 = hl_vfields(r15)[0] ? (*(int*)(hl_vfields(r15)[0])) : (int)hl_dyn_geti(r15->value,-32204280/*index*/,&t$_i32);
 	r61 = r25->length;
-	if( ((unsigned)r47) < ((unsigned)r61) ) goto label$2c4895f_11_316;
+	if( ((unsigned)r47) < ((unsigned)r61) ) goto label$2c4895f_13_316;
 	r57 = NULL;
-	goto label$2c4895f_11_319;
-	label$2c4895f_11_316:
+	goto label$2c4895f_13_319;
+	label$2c4895f_13_316:
 	r4 = r25->array;
 	r31 = ((vdynamic**)(r4 + 1))[r47];
 	r57 = (hxsl__ShaderInstanceDesc)r31;
-	label$2c4895f_11_319:
+	label$2c4895f_13_319:
 	if( r57 == NULL ) hl_null_access();
 	r57->index = r24;
-	goto label$2c4895f_11_289;
-	label$2c4895f_11_322:
+	goto label$2c4895f_13_289;
+	label$2c4895f_13_322:
 	r5 = &t$String;
 	r13 = 0;
 	r4 = hl_alloc_array(r5,r13);
@@ -1505,19 +1521,19 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r60 = r56->spec;
 	if( r60 == NULL ) hl_null_access();
 	r37 = hl_vfields(r60)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r60)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r60->value,186287176/*instances*/,&t$hl_types_ArrayObj);
-	label$2c4895f_11_331:
+	label$2c4895f_13_331:
 	if( r37 == NULL ) hl_null_access();
 	r24 = r37->length;
-	if( r13 >= r24 ) goto label$2c4895f_11_366;
+	if( r13 >= r24 ) goto label$2c4895f_13_366;
 	r24 = r37->length;
-	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_11_339;
+	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$2c4895f_13_339;
 	r57 = NULL;
-	goto label$2c4895f_11_342;
-	label$2c4895f_11_339:
+	goto label$2c4895f_13_342;
+	label$2c4895f_13_339:
 	r4 = r37->array;
 	r31 = ((vdynamic**)(r4 + 1))[r13];
 	r57 = (hxsl__ShaderInstanceDesc)r31;
-	label$2c4895f_11_342:
+	label$2c4895f_13_342:
 	++r13;
 	if( r25 == NULL ) hl_null_access();
 	if( r57 == NULL ) hl_null_access();
@@ -1541,8 +1557,8 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r35 = String___alloc__(r63,r23);
 	r34 = String___add__(r34,r35);
 	r23 = hl_types_ArrayObj_push(r25,((vdynamic*)r34));
-	goto label$2c4895f_11_331;
-	label$2c4895f_11_366:
+	goto label$2c4895f_13_331;
+	label$2c4895f_13_366:
 	if( r25 == NULL ) hl_null_access();
 	r34 = (String)s$853ae90;
 	r34 = hl_types_ArrayObj_join(r25,r34);
@@ -1570,17 +1586,17 @@ hxsl__RuntimeShader hxsl_Cache_compileRuntimeShader(hxsl__Cache r0,hxsl__ShaderL
 	r35 = r56->signature;
 	r31 = haxe_ds_StringMap_get(r65,r35);
 	r59 = (hxsl__RuntimeShader)r31;
-	if( !r59 ) goto label$2c4895f_11_398;
+	if( !r59 ) goto label$2c4895f_13_398;
 	if( r59 == NULL ) hl_null_access();
 	r13 = r59->id;
 	r56->id = r13;
-	goto label$2c4895f_11_402;
-	label$2c4895f_11_398:
+	goto label$2c4895f_13_402;
+	label$2c4895f_13_398:
 	r65 = r0->byID;
 	if( r65 == NULL ) hl_null_access();
 	r35 = r56->signature;
 	haxe_ds_StringMap_set(r65,r35,((vdynamic*)r56));
-	label$2c4895f_11_402:
+	label$2c4895f_13_402:
 	return r56;
 }
 
@@ -1621,8 +1637,8 @@ void hxsl_Cache_initGlobals(hxsl__Cache r0,hxsl__RuntimeShader r1,hxsl__RuntimeS
 	int r7;
 	if( r2 == NULL ) hl_null_access();
 	r3 = r2->globals;
-	label$2c4895f_13_2:
-	if( !r3 ) goto label$2c4895f_13_15;
+	label$2c4895f_15_2:
+	if( !r3 ) goto label$2c4895f_15_15;
 	if( r1 == NULL ) hl_null_access();
 	r6 = r1->globals;
 	if( r6 == NULL ) hl_null_access();
@@ -1633,15 +1649,15 @@ void hxsl_Cache_initGlobals(hxsl__Cache r0,hxsl__RuntimeShader r1,hxsl__RuntimeS
 	haxe_ds_IntMap_set(r6,r7,r9);
 	r5 = r3->next;
 	r3 = r5;
-	goto label$2c4895f_13_2;
-	label$2c4895f_13_15:
+	goto label$2c4895f_15_2;
+	label$2c4895f_15_15:
 	if( r2 == NULL ) hl_null_access();
 	r10 = r2->params;
-	label$2c4895f_13_17:
-	if( !r10 ) goto label$2c4895f_13_34;
+	label$2c4895f_15_17:
+	if( !r10 ) goto label$2c4895f_15_34;
 	if( r10 == NULL ) hl_null_access();
 	r5 = r10->perObjectGlobal;
-	if( !r5 ) goto label$2c4895f_13_31;
+	if( !r5 ) goto label$2c4895f_15_31;
 	if( r1 == NULL ) hl_null_access();
 	r6 = r1->globals;
 	if( r6 == NULL ) hl_null_access();
@@ -1651,11 +1667,11 @@ void hxsl_Cache_initGlobals(hxsl__Cache r0,hxsl__RuntimeShader r1,hxsl__RuntimeS
 	r8 = true;
 	r9 = hl_alloc_dynbool(r8);
 	haxe_ds_IntMap_set(r6,r7,r9);
-	label$2c4895f_13_31:
+	label$2c4895f_15_31:
 	r11 = r10->next;
 	r10 = r11;
-	goto label$2c4895f_13_17;
-	label$2c4895f_13_34:
+	goto label$2c4895f_15_17;
+	label$2c4895f_15_34:
 	return;
 }
 
@@ -1664,10 +1680,10 @@ String hxsl_Cache_getPath(hxsl__Cache r0,vvirtual* r1) {
 	vvirtual *r2;
 	if( r1 == NULL ) hl_null_access();
 	r2 = hl_vfields(r1)[3] ? (*(vvirtual**)(hl_vfields(r1)[3])) : (vvirtual*)hl_dyn_getp(r1->value,-310508246/*parent*/,&t$vrt_09f4a29);
-	if( r2 ) goto label$2c4895f_14_5;
+	if( r2 ) goto label$2c4895f_16_5;
 	r3 = hl_vfields(r1)[2] ? (*(String*)(hl_vfields(r1)[2])) : (String)hl_dyn_getp(r1->value,150958933/*name*/,&t$String);
 	return r3;
-	label$2c4895f_14_5:
+	label$2c4895f_16_5:
 	r2 = hl_vfields(r1)[3] ? (*(vvirtual**)(hl_vfields(r1)[3])) : (vvirtual*)hl_dyn_getp(r1->value,-310508246/*parent*/,&t$vrt_09f4a29);
 	r3 = hxsl_Cache_getPath(r0,r2);
 	r4 = (String)s$5058f1a;
@@ -1729,14 +1745,14 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 	if( r15 == NULL ) hl_null_access();
 	r14 = haxe_ds_ObjectMap_keys(r15);
 	r17 = hl_to_virtual(&t$vrt_11e33cd,(vdynamic*)r14);
-	label$2c4895f_16_18:
+	label$2c4895f_18_18:
 	if( r17 == NULL ) hl_null_access();
 	if( hl_vfields(r17)[0] ) r8 = ((bool (*)(vdynamic*))hl_vfields(r17)[0])(r17->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r17->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r8 = (bool)ret.v.i;
 	}
-	if( !r8 ) goto label$2c4895f_16_357;
+	if( !r8 ) goto label$2c4895f_18_357;
 	if( hl_vfields(r17)[1] ) r18 = ((vvirtual* (*)(vdynamic*))hl_vfields(r17)[1])(r17->value); else {
 		r18 = (vvirtual*)hl_dyn_call_obj(r17->value,&t$fun_32c99d1,151160317/*next*/,NULL,NULL);
 	}
@@ -1761,23 +1777,23 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 			r10 = hl_alloc_array(r11,r12);
 			r23 = hl_types_ArrayObj_alloc(r10);
 			r12 = 0;
-			label$2c4895f_16_41:
+			label$2c4895f_18_41:
 			if( r20 == NULL ) hl_null_access();
 			r25 = r20->length;
-			if( r12 >= r25 ) goto label$2c4895f_16_67;
+			if( r12 >= r25 ) goto label$2c4895f_18_67;
 			r25 = r20->length;
-			if( ((unsigned)r12) < ((unsigned)r25) ) goto label$2c4895f_16_49;
+			if( ((unsigned)r12) < ((unsigned)r25) ) goto label$2c4895f_18_49;
 			r27 = NULL;
-			goto label$2c4895f_16_52;
-			label$2c4895f_16_49:
+			goto label$2c4895f_18_52;
+			label$2c4895f_18_49:
 			r10 = r20->array;
 			r16 = ((vdynamic**)(r10 + 1))[r12];
 			r27 = (hxsl___Flatten__Alloc)r16;
-			label$2c4895f_16_52:
+			label$2c4895f_18_52:
 			++r12;
 			if( r27 == NULL ) hl_null_access();
 			r19 = r27->v;
-			if( !r19 ) goto label$2c4895f_16_66;
+			if( !r19 ) goto label$2c4895f_18_66;
 			if( r23 == NULL ) hl_null_access();
 			r28 = (hxsl__AllocGlobal)hl_alloc_obj(&t$hxsl_AllocGlobal);
 			r24 = r27->pos;
@@ -1788,114 +1804,114 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 			r29 = hl_vfields(r19)[5] ? (*(venum**)(hl_vfields(r19)[5])) : (venum*)hl_dyn_getp(r19->value,218690500/*type*/,&t$hxsl_Type);
 			hxsl_AllocGlobal_new(r28,r24,r22,r29);
 			r24 = hl_types_ArrayObj_push(r23,((vdynamic*)r28));
-			label$2c4895f_16_66:
-			goto label$2c4895f_16_41;
-			label$2c4895f_16_67:
+			label$2c4895f_18_66:
+			goto label$2c4895f_18_41;
+			label$2c4895f_18_67:
 			r26 = r23;
 			r12 = 0;
 			if( r23 == NULL ) hl_null_access();
 			r24 = r23->length;
 			r25 = 1;
 			r24 = r24 - r25;
-			label$2c4895f_16_73:
-			if( r12 >= r24 ) goto label$2c4895f_16_97;
+			label$2c4895f_18_73:
+			if( r12 >= r24 ) goto label$2c4895f_18_97;
 			r25 = r12;
 			++r12;
 			if( r26 == NULL ) hl_null_access();
 			r31 = r26->length;
-			if( ((unsigned)r25) < ((unsigned)r31) ) goto label$2c4895f_16_82;
+			if( ((unsigned)r25) < ((unsigned)r31) ) goto label$2c4895f_18_82;
 			r28 = NULL;
-			goto label$2c4895f_16_85;
-			label$2c4895f_16_82:
+			goto label$2c4895f_18_85;
+			label$2c4895f_18_82:
 			r10 = r26->array;
 			r16 = ((vdynamic**)(r10 + 1))[r25];
 			r28 = (hxsl__AllocGlobal)r16;
-			label$2c4895f_16_85:
+			label$2c4895f_18_85:
 			if( r28 == NULL ) hl_null_access();
 			r31 = 1;
 			r30 = r25 + r31;
 			r31 = r26->length;
-			if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_16_92;
+			if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_18_92;
 			r32 = NULL;
-			goto label$2c4895f_16_95;
-			label$2c4895f_16_92:
+			goto label$2c4895f_18_95;
+			label$2c4895f_18_92:
 			r10 = r26->array;
 			r16 = ((vdynamic**)(r10 + 1))[r30];
 			r32 = (hxsl__AllocGlobal)r16;
-			label$2c4895f_16_95:
+			label$2c4895f_18_95:
 			r28->next = r32;
-			goto label$2c4895f_16_73;
-			label$2c4895f_16_97:
+			goto label$2c4895f_18_73;
+			label$2c4895f_18_97:
 			if( r18 == NULL ) hl_null_access();
 			r29 = hl_vfields(r18)[5] ? (*(venum**)(hl_vfields(r18)[5])) : (venum*)hl_dyn_getp(r18->value,218690500/*type*/,&t$hxsl_Type);
 			if( r29 == NULL ) hl_null_access();
 			r12 = HL__ENUM_INDEX__(r29);
 			r24 = 15;
-			if( r12 != r24 ) goto label$2c4895f_16_151;
+			if( r12 != r24 ) goto label$2c4895f_18_151;
 			r34 = ((hxsl_Type_TArray*)r29)->p1;
 			r33 = ((hxsl_Type_TArray*)r29)->p0;
 			if( r33 == NULL ) hl_null_access();
 			r12 = HL__ENUM_INDEX__(r33);
 			r24 = 5;
-			if( r12 != r24 ) goto label$2c4895f_16_147;
+			if( r12 != r24 ) goto label$2c4895f_18_147;
 			r12 = ((hxsl_Type_TVec*)r33)->p0;
 			r24 = 4;
-			if( r12 != r24 ) goto label$2c4895f_16_143;
+			if( r12 != r24 ) goto label$2c4895f_18_143;
 			r35 = ((hxsl_Type_TVec*)r33)->p1;
 			if( r35 == NULL ) hl_null_access();
 			r12 = HL__ENUM_INDEX__(r35);
 			r24 = 1;
-			if( r12 != r24 ) goto label$2c4895f_16_139;
+			if( r12 != r24 ) goto label$2c4895f_18_139;
 			if( r34 == NULL ) hl_null_access();
 			r12 = HL__ENUM_INDEX__(r34);
 			r24 = 0;
-			if( r12 != r24 ) goto label$2c4895f_16_135;
+			if( r12 != r24 ) goto label$2c4895f_18_135;
 			r12 = ((hxsl_SizeDecl_SConst*)r34)->p0;
 			if( r6 == NULL ) hl_null_access();
 			if( r26 == NULL ) hl_null_access();
 			r24 = 0;
 			r25 = r26->length;
-			if( ((unsigned)r24) < ((unsigned)r25) ) goto label$2c4895f_16_129;
+			if( ((unsigned)r24) < ((unsigned)r25) ) goto label$2c4895f_18_129;
 			r28 = NULL;
-			goto label$2c4895f_16_132;
-			label$2c4895f_16_129:
+			goto label$2c4895f_18_132;
+			label$2c4895f_18_129:
 			r10 = r26->array;
 			r16 = ((vdynamic**)(r10 + 1))[r24];
 			r28 = (hxsl__AllocGlobal)r16;
-			label$2c4895f_16_132:
+			label$2c4895f_18_132:
 			r6->globals = r28;
 			r6->globalsSize = r12;
-			goto label$2c4895f_16_138;
-			label$2c4895f_16_135:
+			goto label$2c4895f_18_138;
+			label$2c4895f_18_135:
 			r22 = (String)s$assert;
 			r16 = haxe_Exception_thrown(((vdynamic*)r22));
 			hl_throw((vdynamic*)r16);
-			label$2c4895f_16_138:
-			goto label$2c4895f_16_142;
-			label$2c4895f_16_139:
+			label$2c4895f_18_138:
+			goto label$2c4895f_18_142;
+			label$2c4895f_18_139:
 			r22 = (String)s$assert;
 			r16 = haxe_Exception_thrown(((vdynamic*)r22));
 			hl_throw((vdynamic*)r16);
-			label$2c4895f_16_142:
-			goto label$2c4895f_16_146;
-			label$2c4895f_16_143:
+			label$2c4895f_18_142:
+			goto label$2c4895f_18_146;
+			label$2c4895f_18_143:
 			r22 = (String)s$assert;
 			r16 = haxe_Exception_thrown(((vdynamic*)r22));
 			hl_throw((vdynamic*)r16);
-			label$2c4895f_16_146:
-			goto label$2c4895f_16_150;
-			label$2c4895f_16_147:
+			label$2c4895f_18_146:
+			goto label$2c4895f_18_150;
+			label$2c4895f_18_147:
 			r22 = (String)s$assert;
 			r16 = haxe_Exception_thrown(((vdynamic*)r22));
 			hl_throw((vdynamic*)r16);
-			label$2c4895f_16_150:
-			goto label$2c4895f_16_154;
-			label$2c4895f_16_151:
+			label$2c4895f_18_150:
+			goto label$2c4895f_18_154;
+			label$2c4895f_18_151:
 			r22 = (String)s$assert;
 			r16 = haxe_Exception_thrown(((vdynamic*)r22));
 			hl_throw((vdynamic*)r16);
-			label$2c4895f_16_154:
-			goto label$2c4895f_16_356;
+			label$2c4895f_18_154:
+			goto label$2c4895f_18_356;
 		case 2:
 			r11 = &t$hxsl_AllocParam;
 			r12 = 0;
@@ -1903,32 +1919,32 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 			r23 = hl_types_ArrayObj_alloc(r10);
 			r12 = 0;
 			r24 = 0;
-			label$2c4895f_16_161:
+			label$2c4895f_18_161:
 			if( r20 == NULL ) hl_null_access();
 			r30 = r20->length;
-			if( r24 >= r30 ) goto label$2c4895f_16_244;
+			if( r24 >= r30 ) goto label$2c4895f_18_244;
 			r30 = r20->length;
-			if( ((unsigned)r24) < ((unsigned)r30) ) goto label$2c4895f_16_169;
+			if( ((unsigned)r24) < ((unsigned)r30) ) goto label$2c4895f_18_169;
 			r27 = NULL;
-			goto label$2c4895f_16_172;
-			label$2c4895f_16_169:
+			goto label$2c4895f_18_172;
+			label$2c4895f_18_169:
 			r10 = r20->array;
 			r16 = ((vdynamic**)(r10 + 1))[r24];
 			r27 = (hxsl___Flatten__Alloc)r16;
-			label$2c4895f_16_172:
+			label$2c4895f_18_172:
 			++r24;
 			if( r27 == NULL ) hl_null_access();
 			r19 = r27->v;
-			if( r19 ) goto label$2c4895f_16_177;
-			goto label$2c4895f_16_161;
-			label$2c4895f_16_177:
+			if( r19 ) goto label$2c4895f_18_177;
+			goto label$2c4895f_18_161;
+			label$2c4895f_18_177:
 			if( r3 == NULL ) hl_null_access();
 			r19 = r27->v;
 			if( r19 == NULL ) hl_null_access();
 			r25 = hl_vfields(r19)[0] ? (*(int*)(hl_vfields(r19)[0])) : (int)hl_dyn_geti(r19->value,23515/*id*/,&t$_i32);
 			r16 = haxe_ds_IntMap_get(r3,r25);
 			r37 = hl_to_virtual(&t$vrt_7e2476c,(vdynamic*)r16);
-			if( r37 ) goto label$2c4895f_16_208;
+			if( r37 ) goto label$2c4895f_18_208;
 			r38 = (hxsl__AllocParam)hl_alloc_obj(&t$hxsl_AllocParam);
 			r19 = r27->v;
 			if( r19 == NULL ) hl_null_access();
@@ -1952,8 +1968,8 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 			if( r23 == NULL ) hl_null_access();
 			r25 = hl_types_ArrayObj_push(r23,((vdynamic*)r38));
 			++r12;
-			goto label$2c4895f_16_161;
-			label$2c4895f_16_208:
+			goto label$2c4895f_18_161;
+			label$2c4895f_18_208:
 			r38 = (hxsl__AllocParam)hl_alloc_obj(&t$hxsl_AllocParam);
 			r19 = r27->v;
 			if( r19 == NULL ) hl_null_access();
@@ -1972,73 +1988,73 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 			if( r29 == NULL ) hl_null_access();
 			r25 = HL__ENUM_INDEX__(r29);
 			r30 = 15;
-			if( r25 != r30 ) goto label$2c4895f_16_240;
+			if( r25 != r30 ) goto label$2c4895f_18_240;
 			r34 = ((hxsl_Type_TArray*)r29)->p1;
 			r33 = ((hxsl_Type_TArray*)r29)->p0;
 			r8 = hxsl_Tools_isSampler(r33);
-			if( !r8 ) goto label$2c4895f_16_238;
+			if( !r8 ) goto label$2c4895f_18_238;
 			r25 = r27->size;
 			r25 = -r25;
 			r38->pos = r25;
 			r30 = r27->size;
 			r25 = r12 + r30;
 			r12 = r25;
-			goto label$2c4895f_16_239;
-			label$2c4895f_16_238:
+			goto label$2c4895f_18_239;
+			label$2c4895f_18_238:
 			++r12;
-			label$2c4895f_16_239:
-			goto label$2c4895f_16_241;
-			label$2c4895f_16_240:
+			label$2c4895f_18_239:
+			goto label$2c4895f_18_241;
+			label$2c4895f_18_240:
 			++r12;
-			label$2c4895f_16_241:
+			label$2c4895f_18_241:
 			if( r23 == NULL ) hl_null_access();
 			r25 = hl_types_ArrayObj_push(r23,((vdynamic*)r38));
-			goto label$2c4895f_16_161;
-			label$2c4895f_16_244:
+			goto label$2c4895f_18_161;
+			label$2c4895f_18_244:
 			r24 = 0;
 			if( r23 == NULL ) hl_null_access();
 			r25 = r23->length;
 			r30 = 1;
 			r25 = r25 - r30;
-			label$2c4895f_16_249:
-			if( r24 >= r25 ) goto label$2c4895f_16_273;
+			label$2c4895f_18_249:
+			if( r24 >= r25 ) goto label$2c4895f_18_273;
 			r30 = r24;
 			++r24;
 			if( r23 == NULL ) hl_null_access();
 			r40 = r23->length;
-			if( ((unsigned)r30) < ((unsigned)r40) ) goto label$2c4895f_16_258;
+			if( ((unsigned)r30) < ((unsigned)r40) ) goto label$2c4895f_18_258;
 			r38 = NULL;
-			goto label$2c4895f_16_261;
-			label$2c4895f_16_258:
+			goto label$2c4895f_18_261;
+			label$2c4895f_18_258:
 			r10 = r23->array;
 			r16 = ((vdynamic**)(r10 + 1))[r30];
 			r38 = (hxsl__AllocParam)r16;
-			label$2c4895f_16_261:
+			label$2c4895f_18_261:
 			if( r38 == NULL ) hl_null_access();
 			r40 = 1;
 			r31 = r30 + r40;
 			r40 = r23->length;
-			if( ((unsigned)r31) < ((unsigned)r40) ) goto label$2c4895f_16_268;
+			if( ((unsigned)r31) < ((unsigned)r40) ) goto label$2c4895f_18_268;
 			r39 = NULL;
-			goto label$2c4895f_16_271;
-			label$2c4895f_16_268:
+			goto label$2c4895f_18_271;
+			label$2c4895f_18_268:
 			r10 = r23->array;
 			r16 = ((vdynamic**)(r10 + 1))[r31];
 			r39 = (hxsl__AllocParam)r16;
-			label$2c4895f_16_271:
+			label$2c4895f_18_271:
 			r38->next = r39;
-			goto label$2c4895f_16_249;
-			label$2c4895f_16_273:
+			goto label$2c4895f_18_249;
+			label$2c4895f_18_273:
 			if( r18 == NULL ) hl_null_access();
 			r29 = hl_vfields(r18)[5] ? (*(venum**)(hl_vfields(r18)[5])) : (venum*)hl_dyn_getp(r18->value,218690500/*type*/,&t$hxsl_Type);
 			if( r29 == NULL ) hl_null_access();
 			r24 = HL__ENUM_INDEX__(r29);
 			r25 = 15;
-			if( r24 != r25 ) goto label$2c4895f_16_353;
+			if( r24 != r25 ) goto label$2c4895f_18_353;
 			r34 = ((hxsl_Type_TArray*)r29)->p1;
 			r33 = ((hxsl_Type_TArray*)r29)->p0;
 			r8 = hxsl_Tools_isSampler(r33);
-			if( !r8 ) goto label$2c4895f_16_293;
+			if( !r8 ) goto label$2c4895f_18_293;
 			if( r9 == NULL ) hl_null_access();
 			r42 = hl_alloc_virtual(&t$vrt_7c116e9);
 			if( hl_vfields(r42)[1] ) *(venum**)(hl_vfields(r42)[1]) = (venum*)r33; else hl_dyn_setp(r42->value,116/*t*/,&t$hxsl_Type,r33);
@@ -2048,8 +2064,8 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 			r24 = r6->texturesCount;
 			r24 = r24 + r12;
 			r6->texturesCount = r24;
-			goto label$2c4895f_16_352;
-			label$2c4895f_16_293:
+			goto label$2c4895f_18_352;
+			label$2c4895f_18_293:
 			if( r33 == NULL ) hl_null_access();
 			r24 = HL__ENUM_INDEX__(r33);
 			switch(r24) {
@@ -2075,50 +2091,50 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 				case 5:
 					r24 = ((hxsl_Type_TVec*)r33)->p0;
 					r25 = 4;
-					if( r24 != r25 ) goto label$2c4895f_16_333;
+					if( r24 != r25 ) goto label$2c4895f_18_333;
 					r35 = ((hxsl_Type_TVec*)r33)->p1;
 					if( r35 == NULL ) hl_null_access();
 					r24 = HL__ENUM_INDEX__(r35);
 					r25 = 1;
-					if( r24 != r25 ) goto label$2c4895f_16_329;
+					if( r24 != r25 ) goto label$2c4895f_18_329;
 					if( r34 == NULL ) hl_null_access();
 					r24 = HL__ENUM_INDEX__(r34);
 					r25 = 0;
-					if( r24 != r25 ) goto label$2c4895f_16_325;
+					if( r24 != r25 ) goto label$2c4895f_18_325;
 					r24 = ((hxsl_SizeDecl_SConst*)r34)->p0;
 					if( r6 == NULL ) hl_null_access();
 					if( r23 == NULL ) hl_null_access();
 					r25 = 0;
 					r30 = r23->length;
-					if( ((unsigned)r25) < ((unsigned)r30) ) goto label$2c4895f_16_319;
+					if( ((unsigned)r25) < ((unsigned)r30) ) goto label$2c4895f_18_319;
 					r38 = NULL;
-					goto label$2c4895f_16_322;
-					label$2c4895f_16_319:
+					goto label$2c4895f_18_322;
+					label$2c4895f_18_319:
 					r10 = r23->array;
 					r16 = ((vdynamic**)(r10 + 1))[r25];
 					r38 = (hxsl__AllocParam)r16;
-					label$2c4895f_16_322:
+					label$2c4895f_18_322:
 					r6->params = r38;
 					r6->paramsSize = r24;
-					goto label$2c4895f_16_328;
-					label$2c4895f_16_325:
+					goto label$2c4895f_18_328;
+					label$2c4895f_18_325:
 					r22 = (String)s$assert;
 					r16 = haxe_Exception_thrown(((vdynamic*)r22));
 					hl_throw((vdynamic*)r16);
-					label$2c4895f_16_328:
-					goto label$2c4895f_16_332;
-					label$2c4895f_16_329:
+					label$2c4895f_18_328:
+					goto label$2c4895f_18_332;
+					label$2c4895f_18_329:
 					r22 = (String)s$assert;
 					r16 = haxe_Exception_thrown(((vdynamic*)r22));
 					hl_throw((vdynamic*)r16);
-					label$2c4895f_16_332:
-					goto label$2c4895f_16_336;
-					label$2c4895f_16_333:
+					label$2c4895f_18_332:
+					goto label$2c4895f_18_336;
+					label$2c4895f_18_333:
 					r22 = (String)s$assert;
 					r16 = haxe_Exception_thrown(((vdynamic*)r22));
 					hl_throw((vdynamic*)r16);
-					label$2c4895f_16_336:
-					goto label$2c4895f_16_352;
+					label$2c4895f_18_336:
+					goto label$2c4895f_18_352;
 				case 16:
 					r36 = ((hxsl_Type_TBuffer*)r33)->p1;
 					r41 = ((hxsl_Type_TBuffer*)r33)->p0;
@@ -2126,83 +2142,83 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 					if( r23 == NULL ) hl_null_access();
 					r24 = 0;
 					r25 = r23->length;
-					if( ((unsigned)r24) < ((unsigned)r25) ) goto label$2c4895f_16_346;
+					if( ((unsigned)r24) < ((unsigned)r25) ) goto label$2c4895f_18_346;
 					r38 = NULL;
-					goto label$2c4895f_16_349;
-					label$2c4895f_16_346:
+					goto label$2c4895f_18_349;
+					label$2c4895f_18_346:
 					r10 = r23->array;
 					r16 = ((vdynamic**)(r10 + 1))[r24];
 					r38 = (hxsl__AllocParam)r16;
-					label$2c4895f_16_349:
+					label$2c4895f_18_349:
 					r6->buffers = r38;
 					r24 = r23->length;
 					r6->bufferCount = r24;
 			}
-			label$2c4895f_16_352:
-			goto label$2c4895f_16_356;
-			label$2c4895f_16_353:
+			label$2c4895f_18_352:
+			goto label$2c4895f_18_356;
+			label$2c4895f_18_353:
 			r22 = (String)s$assert;
 			r16 = haxe_Exception_thrown(((vdynamic*)r22));
 			hl_throw((vdynamic*)r16);
 	}
-	label$2c4895f_16_356:
-	goto label$2c4895f_16_18;
-	label$2c4895f_16_357:
+	label$2c4895f_18_356:
+	goto label$2c4895f_18_18;
+	label$2c4895f_18_357:
 	if( r9 == NULL ) hl_null_access();
 	r12 = r9->length;
 	r24 = 0;
-	if( r24 >= r12 ) goto label$2c4895f_16_438;
+	if( r24 >= r12 ) goto label$2c4895f_18_438;
 	r43 = &cl$0;
-	if( r43 ) goto label$2c4895f_16_365;
+	if( r43 ) goto label$2c4895f_18_365;
 	r44 = NULL;
-	goto label$2c4895f_16_366;
-	label$2c4895f_16_365:
+	goto label$2c4895f_18_366;
+	label$2c4895f_18_365:
 	r44 = hl_alloc_closure_ptr(&t$fun_aafc2df,hxsl_Cache_flattenShader__$2,r43);
-	label$2c4895f_16_366:
+	label$2c4895f_18_366:
 	hl_types_ArrayObj_sort(r9,r44);
 	if( r6 == NULL ) hl_null_access();
 	r12 = 0;
 	r24 = r9->length;
-	if( ((unsigned)r12) < ((unsigned)r24) ) goto label$2c4895f_16_373;
+	if( ((unsigned)r12) < ((unsigned)r24) ) goto label$2c4895f_18_373;
 	r42 = NULL;
-	goto label$2c4895f_16_376;
-	label$2c4895f_16_373:
+	goto label$2c4895f_18_376;
+	label$2c4895f_18_373:
 	r10 = r9->array;
 	r16 = ((vdynamic**)(r10 + 1))[r12];
 	r42 = hl_to_virtual(&t$vrt_7c116e9,(vdynamic*)r16);
-	label$2c4895f_16_376:
+	label$2c4895f_18_376:
 	if( r42 == NULL ) hl_null_access();
 	r20 = hl_vfields(r42)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r42)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r42->value,4847905/*all*/,&t$hl_types_ArrayObj);
 	if( r20 == NULL ) hl_null_access();
 	r12 = 0;
 	r24 = r20->length;
-	if( ((unsigned)r12) < ((unsigned)r24) ) goto label$2c4895f_16_384;
+	if( ((unsigned)r12) < ((unsigned)r24) ) goto label$2c4895f_18_384;
 	r38 = NULL;
-	goto label$2c4895f_16_387;
-	label$2c4895f_16_384:
+	goto label$2c4895f_18_387;
+	label$2c4895f_18_384:
 	r10 = r20->array;
 	r16 = ((vdynamic**)(r10 + 1))[r12];
 	r38 = (hxsl__AllocParam)r16;
-	label$2c4895f_16_387:
+	label$2c4895f_18_387:
 	r6->textures = r38;
 	r12 = 1;
 	r24 = r9->length;
-	label$2c4895f_16_390:
-	if( r12 >= r24 ) goto label$2c4895f_16_438;
+	label$2c4895f_18_390:
+	if( r12 >= r24 ) goto label$2c4895f_18_438;
 	r25 = r12;
 	++r12;
 	if( r9 == NULL ) hl_null_access();
 	r31 = 1;
 	r30 = r25 - r31;
 	r31 = r9->length;
-	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_16_401;
+	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_18_401;
 	r42 = NULL;
-	goto label$2c4895f_16_404;
-	label$2c4895f_16_401:
+	goto label$2c4895f_18_404;
+	label$2c4895f_18_401:
 	r10 = r9->array;
 	r16 = ((vdynamic**)(r10 + 1))[r30];
 	r42 = hl_to_virtual(&t$vrt_7c116e9,(vdynamic*)r16);
-	label$2c4895f_16_404:
+	label$2c4895f_18_404:
 	if( r42 == NULL ) hl_null_access();
 	r20 = hl_vfields(r42)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r42)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r42->value,4847905/*all*/,&t$hl_types_ArrayObj);
 	if( r20 == NULL ) hl_null_access();
@@ -2210,56 +2226,56 @@ hxsl__RuntimeShaderData hxsl_Cache_flattenShader(hxsl__Cache r0,vvirtual* r1,ven
 	r31 = 1;
 	r30 = r30 - r31;
 	r31 = r20->length;
-	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_16_414;
+	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_18_414;
 	r38 = NULL;
-	goto label$2c4895f_16_417;
-	label$2c4895f_16_414:
+	goto label$2c4895f_18_417;
+	label$2c4895f_18_414:
 	r10 = r20->array;
 	r16 = ((vdynamic**)(r10 + 1))[r30];
 	r38 = (hxsl__AllocParam)r16;
-	label$2c4895f_16_417:
+	label$2c4895f_18_417:
 	if( r38 == NULL ) hl_null_access();
 	r31 = r9->length;
-	if( ((unsigned)r25) < ((unsigned)r31) ) goto label$2c4895f_16_422;
+	if( ((unsigned)r25) < ((unsigned)r31) ) goto label$2c4895f_18_422;
 	r42 = NULL;
-	goto label$2c4895f_16_425;
-	label$2c4895f_16_422:
+	goto label$2c4895f_18_425;
+	label$2c4895f_18_422:
 	r10 = r9->array;
 	r16 = ((vdynamic**)(r10 + 1))[r25];
 	r42 = hl_to_virtual(&t$vrt_7c116e9,(vdynamic*)r16);
-	label$2c4895f_16_425:
+	label$2c4895f_18_425:
 	if( r42 == NULL ) hl_null_access();
 	r23 = hl_vfields(r42)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r42)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r42->value,4847905/*all*/,&t$hl_types_ArrayObj);
 	if( r23 == NULL ) hl_null_access();
 	r30 = 0;
 	r31 = r23->length;
-	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_16_433;
+	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$2c4895f_18_433;
 	r45 = NULL;
-	goto label$2c4895f_16_436;
-	label$2c4895f_16_433:
+	goto label$2c4895f_18_436;
+	label$2c4895f_18_433:
 	r10 = r23->array;
 	r16 = ((vdynamic**)(r10 + 1))[r30];
 	r45 = (hxsl__AllocParam)r16;
-	label$2c4895f_16_436:
+	label$2c4895f_18_436:
 	r38->next = r45;
-	goto label$2c4895f_16_390;
-	label$2c4895f_16_438:
+	goto label$2c4895f_18_390;
+	label$2c4895f_18_438:
 	if( r6 == NULL ) hl_null_access();
 	r28 = r6->globals;
-	if( r28 ) goto label$2c4895f_16_443;
+	if( r28 ) goto label$2c4895f_18_443;
 	r12 = 0;
 	r6->globalsSize = r12;
-	label$2c4895f_16_443:
+	label$2c4895f_18_443:
 	r38 = r6->params;
-	if( r38 ) goto label$2c4895f_16_447;
+	if( r38 ) goto label$2c4895f_18_447;
 	r12 = 0;
 	r6->paramsSize = r12;
-	label$2c4895f_16_447:
+	label$2c4895f_18_447:
 	r38 = r6->buffers;
-	if( r38 ) goto label$2c4895f_16_451;
+	if( r38 ) goto label$2c4895f_18_451;
 	r12 = 0;
 	r6->bufferCount = r12;
-	label$2c4895f_16_451:
+	label$2c4895f_18_451:
 	r6->data = r7;
 	return r6;
 }
@@ -2269,31 +2285,13 @@ hxsl__Cache hxsl_Cache_get() {
 	hxsl__$Cache r1;
 	r1 = (hxsl__$Cache)g$_hxsl_Cache;
 	r0 = r1->INST;
-	if( r0 ) goto label$2c4895f_17_8;
+	if( r0 ) goto label$2c4895f_19_8;
 	r3 = (hxsl__Cache)hl_alloc_obj(&t$hxsl_Cache);
 	hxsl_Cache_new(r3);
 	r0 = r3;
 	r1 = (hxsl__$Cache)g$_hxsl_Cache;
 	r1->INST = r3;
-	label$2c4895f_17_8:
+	label$2c4895f_19_8:
 	return r0;
-}
-
-int hxsl_Cache_compileRuntimeShader__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
-	vvirtual *r3, *r4;
-	int r5;
-	r3 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r1);
-	r4 = hl_to_virtual(&t$vrt_283fa46,(vdynamic*)r2);
-	r5 = r0->hasValue ? ((int (*)(vdynamic*,vvirtual*,vvirtual*))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(vvirtual*,vvirtual*))r0->fun)(r3,r4);
-	return r5;
-}
-
-int hxsl_Cache_flattenShader__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
-	vvirtual *r3, *r4;
-	int r5;
-	r3 = hl_to_virtual(&t$vrt_7c116e9,(vdynamic*)r1);
-	r4 = hl_to_virtual(&t$vrt_7c116e9,(vdynamic*)r2);
-	r5 = r0->hasValue ? ((int (*)(vdynamic*,vvirtual*,vvirtual*))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(vvirtual*,vvirtual*))r0->fun)(r3,r4);
-	return r5;
 }
 

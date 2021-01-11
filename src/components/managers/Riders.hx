@@ -2,7 +2,6 @@ package components.managers;
 import components.physics.BindStick;
 import components.sledder.Bosh;
 import components.sledder.RiderBase;
-import format.gif.Data.Frame;
 import h2d.col.Point;
 import network.NetAction;
 
@@ -33,6 +32,7 @@ class Riders
 	public function addNewRider(_name:String, _start:Point, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>)
 	{
 		var setName:String = _name;
+		if (setName.length > 30) setName = setName.substr(0, 30);
 		if (riders[setName] != null) {
 			var occupiedSpace:Int = 0;
 			while (riders[setName + occupiedSpace] != null) {

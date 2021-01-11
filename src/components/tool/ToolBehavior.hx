@@ -1,15 +1,11 @@
 package components.tool;
+import components.lines.Undefined;
+import components.managers.Grid;
 import components.lines.Floor;
 import components.lines.Accel;
 import components.lines.Scenery;
 import components.lines.LineBase;
-import components.stage.Canvas;
-import enums.Commands;
-import h2d.Bitmap;
 import hxd.BitmapData;
-import h2d.Tile;
-import h2d.Interactive;
-import h2d.Scene;
 import h2d.col.Point;
 import hxd.Cursor;
 import hxd.Event;
@@ -51,7 +47,18 @@ class ToolBehavior
 	public var cursorLineRed:Cursor;
 	public var cursorLineGreen:Cursor;
 	
+	public var bitmapEraser:BitmapData;
+	public var bitmapEraserBlue:BitmapData;
+	public var bitmapEraserRed:BitmapData;
+	public var bitmapEraserGreen:BitmapData;
+	public var cursorEraser:Cursor;
+	public var cursorEraserBlue:Cursor;
+	public var cursorEraserRed:Cursor;
+	public var cursorEraserGreen:Cursor;
+	
 	public var gridSnapDistance:Float = 0;
+	public var snapDistance:Float = 15;
+	public var colorEraser:Bool = false;
 	
 	public function new() 
 	{
@@ -80,6 +87,15 @@ class ToolBehavior
 		bitmapLineGreen = Res.tool.lineGreen.toBitmap();
 		cursorLineGreen = Cursor.Custom(new CustomCursor([bitmapLineGreen], 0, 12, 12));
 		
+		bitmapEraser = Res.tool.eraser.toBitmap();
+		cursorEraser = Cursor.Custom(new CustomCursor([bitmapEraser], 0, 5, 5));
+		bitmapEraserBlue = Res.tool.eraserBlue.toBitmap();
+		cursorEraserBlue = Cursor.Custom(new CustomCursor([bitmapEraserBlue], 0, 5, 5));
+		bitmapEraserRed = Res.tool.eraserRed.toBitmap();
+		cursorEraserRed = Cursor.Custom(new CustomCursor([bitmapEraserRed], 0, 5, 5));
+		bitmapEraserGreen = Res.tool.eraserGreen.toBitmap();
+		cursorEraserGreen = Cursor.Custom(new CustomCursor([bitmapEraserGreen], 0, 5, 5));
+		
 		Main.canvas_interaction.cursor = cursorPencilBlue;
 	}
 	
@@ -100,20 +116,17 @@ class ToolBehavior
 				mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 				
 				switch (tool) {
+					
 					case ERASER :
+						
 						Main.canvas.erase();
+						
 					case PENCIL | LINE :
-						if (gridSnapDistance > 0) {
-							var cornerX:Float = Math.round(Main.canvas.mouseX / Main.viewGridSize) * Main.viewGridSize;
-							var cornerY:Float = Math.round(Main.canvas.mouseY / Main.viewGridSize) * Main.viewGridSize;
-							var distance = Math.sqrt(Math.pow(cornerX - Main.canvas.mouseX, 2) + Math.pow(cornerY - Main.canvas.mouseY, 2));
-							
-							if (distance <= gridSnapDistance) {
-								mouseStart = new Point(cornerX, cornerY);
-							}
-						}
+						
+						snap(mouseStart);
 						
 					default :
+						
 				}
 			case 2 :
 				middleIsDown = true;
@@ -138,6 +151,9 @@ class ToolBehavior
 	
 	function mouseMove(event:Event):Void 
 	{
+		
+		Main.canvas.preview.removeChildren();
+		
 		if (!leftIsDown) {
 			//actions that may need the mose to not be held?
 		} else {
@@ -152,6 +168,8 @@ class ToolBehavior
 						mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 						mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 					}
+					
+					updatePreview();
 					
 				case LINE :
 					
@@ -191,34 +209,39 @@ class ToolBehavior
 		}
 	}
 	
-	var previewLine:LineBase;
+	public var tempLine:LineBase;
+	
 	function updatePreview() {
 		
-		return;
+		var preview = Main.canvas.preview;
 		
-		if (previewLine != null) {
-			Main.grid.unregister(previewLine);
-			Main.canvas.preview.removeChild(previewLine.rideLayer);
-			Main.canvas.preview.removeChild(previewLine.colorLayer);
+		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10) {
+			
+			tempLine = new Undefined(mouseStart, mouseEnd, shifted);
+			preview.addChild(tempLine.colorLayer);
+			
+		} else {
+		
+			switch (color) {
+				case FLOOR :
+					
+					tempLine = new Floor(mouseStart, mouseEnd, shifted);
+					preview.addChild(tempLine.colorLayer);
+					preview.addChild(tempLine.rideLayer);
+					
+				case ACCEL :
+					
+					tempLine = new Accel(mouseStart, mouseEnd, shifted);
+					preview.addChild(tempLine.colorLayer);
+					preview.addChild(tempLine.rideLayer);
+					
+				case SCENE :
+					
+					tempLine = new Scenery(mouseStart, mouseEnd, shifted);
+					preview.addChild(tempLine.colorLayer);
+			}
 		}
-		
-		switch (color) {
-			case FLOOR :
-				previewLine = new Floor(new Point(mouseStart.x, mouseStart.x), new Point(mouseEnd.x, mouseEnd.y), false);
-				Main.canvas.preview.addChild(previewLine.colorLayer);
-				Main.canvas.preview.addChild(previewLine.rideLayer);
-				Main.grid.register(previewLine);
-			case ACCEL :
-				previewLine = new Accel(new Point(mouseStart.x, mouseStart.x), new Point(mouseEnd.x, mouseEnd.y), false);
-				Main.canvas.preview.addChild(previewLine.colorLayer);
-				Main.canvas.preview.addChild(previewLine.rideLayer);
-				Main.grid.register(previewLine);
-			case SCENE :
-				previewLine = new Scenery(new Point(mouseStart.x, mouseStart.x), new Point(mouseEnd.x, mouseEnd.y), false);
-				Main.canvas.preview.addChild(previewLine.colorLayer);
-		}
-		
-		previewLine.render();
+		tempLine.render();
 	}
 	
 	function mouseUp(event:Event):Void 
@@ -232,31 +255,13 @@ class ToolBehavior
 					case PENCIL :
 						
 					case LINE :
+						
 						mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
-						if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2)) < 10) {
-							if (gridSnapDistance > 0) {
-								
-								var cornerX:Float = Math.round(Main.canvas.mouseX / Main.viewGridSize) * Main.viewGridSize;
-								var cornerY:Float = Math.round(Main.canvas.mouseY / Main.viewGridSize) * Main.viewGridSize;
-								var distance = Math.sqrt(Math.pow(cornerX - Main.canvas.mouseX, 2) + Math.pow(cornerY - Main.canvas.mouseY, 2));
-								
-								if (distance <= gridSnapDistance && distance != 0) {
-									mouseEnd = new Point(cornerX, cornerY);
-								} else {
-									return;
-								}
-							} else {
-								return;
-							}
-						}
+						
+						snap(mouseEnd);
+						
 						drawLine();
 						
-						if (previewLine != null) {
-							Main.grid.unregister(previewLine);
-							Main.canvas.preview.removeChild(previewLine.rideLayer);
-							Main.canvas.preview.removeChild(previewLine.colorLayer);
-							previewLine = null;
-						}
 					case ERASER :
 						
 					default :
@@ -265,10 +270,73 @@ class ToolBehavior
 				middleIsDown = false;
 			default:
 		}
+		
+		Main.canvas.preview.removeChildren();
+	}
+	
+	public function snap(_pos:Point):Void 
+	{
+		if (color == LineColor.NONE || color == LineColor.SCENE) return;
+		
+		var radius:Float = snapDistance / Main.canvas.scaleX;
+		var gridpos:GridObject = Grid.registryPosition(_pos.x, _pos.y);
+		
+		var lineDist:Null<Float> = null;
+		var gridDist:Null<Float> = null;
+		
+		var lineSnap:Point = _pos.clone();
+		var gridSnap:Point = _pos.clone();
+		
+		for (_x in -1...2) for (_y in -1...2) {
+			
+			var key:String = 'x${_x + gridpos.x}y${_y + gridpos.y}';
+			if (Main.grid.registry[key] == null) continue;
+			
+			var chunk = Main.grid.registry[key];
+			for (line in chunk.colliders) {
+				
+				var distanceA:Float = Math.sqrt(Math.pow(lineSnap.x - line.start.x, 2) + Math.pow(lineSnap.y - line.start.y, 2));
+				var distanceB:Float = Math.sqrt(Math.pow(lineSnap.x - line.end.x, 2) + Math.pow(lineSnap.y - line.end.y, 2));
+				
+				if (distanceA <= radius || (distanceB <= radius && distanceA < distanceB && distanceA <= radius)) {
+					_pos.x = line.start.x;
+					_pos.y = line.start.y;
+					lineDist = distanceA;
+				}
+				if (distanceB <= radius || (distanceA <= radius && distanceB < distanceA && distanceB <= radius)) {
+					_pos.x = line.end.x;
+					_pos.y = line.end.y;
+					lineDist = distanceB;
+				}
+			}
+		}
+		
+		if (gridSnapDistance > 0) {
+			var cornerX:Float = Math.round(Main.canvas.mouseX / Main.viewGridSize) * Main.viewGridSize;
+			var cornerY:Float = Math.round(Main.canvas.mouseY / Main.viewGridSize) * Main.viewGridSize;
+			var distanceC = Math.sqrt(Math.pow(cornerX - Main.canvas.mouseX, 2) + Math.pow(cornerY - Main.canvas.mouseY, 2));
+							
+			if (distanceC <= gridSnapDistance) {
+				gridSnap = new Point(cornerX, cornerY);
+			}
+		}
+		
+		if (lineDist == null && gridDist == null) {
+			return;
+		} else if (lineDist == null) {
+			_pos = gridSnap.clone();
+		} else if (gridDist == null) {
+			_pos = lineSnap.clone();
+		} else {
+			if (lineDist <= gridDist) _pos = lineSnap.clone();
+			else _pos = gridSnap.clone();
+		}
 	}
 	
 	function drawLine():Void 
 	{
+		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10) return;
+		
 		Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
 	}
 	
@@ -322,6 +390,10 @@ class ToolBehavior
 						updateCursor();
 						Main.console.log("Tool set to Line", 0x0000BB);
 					case Key.E:
+						if (tool == ERASER) {
+							colorEraser = !colorEraser;
+							Main.console.log('Color eraser ' + (colorEraser == true ? 'on' : 'off'));
+						}
 						tool = ERASER;
 						updateCursor();
 						Main.console.log("Tool set to Eraser", 0x0000BB);
@@ -402,7 +474,25 @@ class ToolBehavior
 			case LINE :
 				updateLineCursor();
 			default :
-				Main.canvas_interaction.cursor = Default;
+				updateEraserCursor();
+		}
+	}
+	
+	function updateEraserCursor():Void 
+	{
+		if (!colorEraser) {
+			Main.canvas_interaction.cursor = cursorEraser;
+		} else {
+			switch (color) {
+				case FLOOR :
+					Main.canvas_interaction.cursor = cursorEraserBlue;
+				case ACCEL :
+					Main.canvas_interaction.cursor = cursorEraserRed;
+				case SCENE :
+					Main.canvas_interaction.cursor = cursorEraserGreen;
+				default :
+					Main.canvas_interaction.cursor = Default;
+			}
 		}
 	}
 	

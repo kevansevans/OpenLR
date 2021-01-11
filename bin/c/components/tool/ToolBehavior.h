@@ -37,13 +37,23 @@ struct _components__tool__ToolBehavior {
 	venum* cursorLineBlue;
 	venum* cursorLineRed;
 	venum* cursorLineGreen;
+	hxd__BitmapData bitmapEraser;
+	hxd__BitmapData bitmapEraserBlue;
+	hxd__BitmapData bitmapEraserRed;
+	hxd__BitmapData bitmapEraserGreen;
+	venum* cursorEraser;
+	venum* cursorEraserBlue;
+	venum* cursorEraserRed;
+	venum* cursorEraserGreen;
 	double gridSnapDistance;
+	double snapDistance;
+	bool colorEraser;
 	h2d__col__Point mouseStart;
 	h2d__col__Point mouseEnd;
 	bool leftIsDown;
 	bool middleIsDown;
 	bool shifted;
-	components__lines__LineBase previewLine;
+	components__lines__LineBase tempLine;
 };
 #endif
 

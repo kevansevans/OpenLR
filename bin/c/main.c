@@ -190,6 +190,7 @@ void fun$init(void);
 #  include <components/lines/Accel.c>
 #  include <components/lines/Floor.c>
 #  include <components/lines/Scenery.c>
+#  include <components/lines/Undefined.c>
 #  include <hxd/fs/BytesFileEntry.c>
 #  include <h2d/Anim.c>
 #  include <components/sledder/RiderPart.c>

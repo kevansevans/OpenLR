@@ -20,13 +20,16 @@ import h3d.prim.Cube;
 import h3d.prim.UV;
 import h3d.prim.Polygon;
 import h3d.scene.Mesh;
+import haxe.io.Bytes;
 import hxd.res.DefaultFont;
+import hxd.File;
 import components.stage.LRConsole;
 import h2d.Console;
 import h2d.Graphics;
 import h2d.Interactive;
 import hxd.App;
 import hxd.Res;
+import network.PeerCursor;
 import utils.TableRNG;
 
 #if js
@@ -351,6 +354,16 @@ class Main extends App
 			
 		});
 		console.addCommand(Commands.loadTrack, "Load track with specified name", [arg18, arg19], function(_name:String, ?_offset:Int = 0) {
+			
+			#if js
+			if (p2p.connected) {
+				if (!p2p.isHost) {
+					console.log("Only the host is allowed to use this command.", 0xFF0000);
+					return;
+				}
+			}
+			#end
+			
 			if (trackName != null) console.runCommand("saveTrack");
 			canvas.clear();
 			riders.deleteAllRiders();
@@ -371,6 +384,16 @@ class Main extends App
 			}
 		});
 		console.addCommand(Commands.newTrack, "New track. Will save if track name has been set", [], function() {
+			
+			#if js
+			if (p2p.connected) {
+				if (!p2p.isHost) {
+					console.log("Only the host is allowed to use this command.", 0xFF0000);
+					return;
+				}
+			}
+			#end
+			
 			if (trackName != null) console.runCommand("saveTrack");
 			canvas.clear();
 			riders.deleteAllRiders();
@@ -382,7 +405,17 @@ class Main extends App
 		console.addCommand(Commands.renameRider, "Rename and existing rider", [arg24, arg25], function(_old:String, _new:String){
 			riders.renameRider(_old, _new);
 		});
-		console.addCommand(Commands.importAlternativeSave, "Load valid JSON tracks", [arg20], function(_name:String) {
+		console.addCommand(Commands.importJSONSave, "Load valid JSON tracks", [arg20], function(_name:String) {
+			
+			#if js
+			if (p2p.connected) {
+				if (!p2p.isHost) {
+					console.log("Only the host is allowed to use this command.", 0xFF0000);
+					return;
+				}
+			}
+			#end
+			
 			if (trackName != null) console.runCommand("saveTrack");
 			canvas.clear();
 			riders.deleteAllRiders();
@@ -395,10 +428,13 @@ class Main extends App
 		var arg30:ConsoleArgDesc = {t: AString, opt: false, name : "Author name"};
 		console.addCommand(Commands.setAuthorName, "Set author name", [arg30], function(_name:String) {
 			authorName = _name;
+			if (authorName.length > 30) {
+				authorName = authorName.substr(0, 30);
+			}
 			saveload.saveUserInfo();
-			console.log('Author name set to ${_name}');
+			console.log('Author name set to ${authorName}');
 		});
-		#if hl
+		/*#if hl
 		var argMusic:ConsoleArgDesc = {t: AString, opt: false, name : "Song name"};
 		var argOffset:ConsoleArgDesc = {t: AFloat, opt: true, name : "Offset"};
 		console.addCommand(Commands.loadAudio, "Import a .ogg file to play with track", [argMusic, argOffset], function(_name:String, _offset:Float = 0.0) {
@@ -409,6 +445,26 @@ class Main extends App
 			}
 			audio.offset = _offset;
 		});
+		#elseif js*/
+		var argOffset:ConsoleArgDesc = {t: AFloat, opt: true, name : "Offset"};
+		console.addCommand(Commands.loadAudio, "Import a .ogg file to play with track", [argOffset], function(_offset:Float = 0.0) {
+			File.browse( function(_file:BrowseSelect) {
+				_file.load(
+					function(_bytes:Bytes) {
+						audio.loadAudioAsBytes(_bytes, _file.fileName);
+					}
+				);
+			},
+				{
+					title : "Import .ogg file",
+					fileTypes : [{
+						name : "Vorbis",
+						extensions : ['ogg']
+					}]
+				}
+			);
+		});
+		//#end
 		console.addCommand(Commands.setAudioOffset, "Changes start position of song", [argOffset], function(_offset:Float) {
 			if (_offset < 0) {
 				console.log("Offset needs to be zero or greater, ${_offset} is not valid...", 0xFF0000);
@@ -416,7 +472,6 @@ class Main extends App
 			}
 			audio.offset = _offset;
 		});
-		#end
 		#if js
 		var argServerName:ConsoleArgDesc = {t: AString, opt: true, name : "ID Name"};
 		console.addCommand('createServer', "Creates P2P server through WebRTC", [argServerName], function(?_name:String) {

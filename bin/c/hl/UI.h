@@ -6,6 +6,8 @@ typedef struct _hl__UI *hl__UI;
 #include <hl/Class.h>
 #include <hl/BaseType.h>
 #include <_std/String.h>
+#include <hl/types/ArrayObj.h>
+#include <hl/Window.h>
 
 
 struct _hl__$UI {
@@ -16,6 +18,8 @@ struct _hl__$UI {
 	String __name__;
 	vdynamic* __constructor__;
 	vclosure* dialog;
+	vclosure* loadFile;
+	vclosure* chooseFile;
 };
 struct _hl__UI {
 	hl_type *$type;

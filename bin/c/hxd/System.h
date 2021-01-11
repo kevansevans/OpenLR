@@ -39,6 +39,8 @@ struct _hxd__$System {
 	vclosure* getValue;
 	vclosure* get_platform;
 	vclosure* timeoutTick;
+	vclosure* get_allowTimeout;
+	vclosure* set_allowTimeout;
 };
 struct _hxd__System {
 	hl_type *$type;

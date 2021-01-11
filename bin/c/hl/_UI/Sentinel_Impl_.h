@@ -17,6 +17,8 @@ struct _hl___UI__$Sentinel_Impl_ {
 	String __name__;
 	vdynamic* __constructor__;
 	vclosure* _new;
+	vclosure* get_pause;
+	vclosure* set_pause;
 	vclosure* tick;
 };
 struct _hl___UI__Sentinel_Impl_ {

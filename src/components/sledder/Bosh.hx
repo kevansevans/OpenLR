@@ -26,7 +26,7 @@ class Bosh extends RiderBase
 	public var body:RiderPart;
 	public var eyeball:RiderPart;
 	
-	public var blinkRate:Float = 1 / 32;
+	public var blinkRate:Float = 0.1;
 	var prevFrame:Int = 0;
 	
 	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh", ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
@@ -69,6 +69,17 @@ class Bosh extends RiderBase
 		Main.canvas.sledderLayer.removeChild(body);
 		Main.canvas.sledderLayer.removeChild(rightArm);
 		Main.canvas.sledderLayer.removeChild(rightLeg);
+	}
+	
+	override public function stepRider():Void 
+	{
+		super.stepRider();
+		
+		var fakiex = ridePoints[3].pos.x - ridePoints[0].pos.x;
+		var fakiey = ridePoints[3].pos.y - ridePoints[0].pos.y;
+		if (fakiex * (ridePoints[1].pos.y - ridePoints[0].pos.y) - fakiey * (ridePoints[1].pos.x - ridePoints[0].pos.x) < 0) {
+			crashed = true;
+		}
 	}
 	
 	override public function renderRider():Void 
@@ -232,6 +243,8 @@ class Bosh extends RiderBase
 		
 		bones[20].restLength = bones[20].restLength * 0.5;
 		bones[21].restLength = bones[21].restLength * 0.5;
+		
+		crashed = false;
 	}
 	
 }

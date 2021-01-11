@@ -31,7 +31,7 @@ class WebRTC
 	var needsToDownload:Bool = true;
 	
 	var initialized:Bool = false;
-	var isHost:Bool = false;
+	public var isHost:Bool = false;
 	
 	public function new(?_name:String) 
 	{
@@ -128,6 +128,14 @@ class WebRTC
 					
 				case relayEcho :
 					
+					for (info in packet.echoinfo) {
+						Main.console.log('${info}');
+					}
+					
+				case relayChat :
+					
+					Main.console.log('${Main.authorName}:${packet.data[0]}', 0xFF);
+					
 				case lineDownload :
 					
 					Main.canvas.P2PLineAdd(packet.data[0], packet.data[1], packet.data[2], packet.data[3], packet.data[4], packet.data[5], packet.data[6]);
@@ -168,7 +176,6 @@ class WebRTC
 			
 			if (packet.localecho || packet.globalecho) {
 				for (info in packet.echoinfo) {
-					if (info == null) break;
 					Main.console.log('${info}');
 				}
 			}
@@ -328,6 +335,20 @@ class WebRTC
 			echoinfo : [],
 		}
 		sendGeneralPacketInfo(packet);
+	}
+	
+	public function relayChatMessage(_msg:String) {
+		
+		var packet:OpenLRPacket = {
+			action : NetAction.relayChat,
+			peername : Main.authorName,
+			data : [_msg],
+			localecho : false,
+			globalecho : false,
+			echoinfo : []
+		}
+		sendGeneralPacketInfo(packet);
+		
 	}
 	
 	function sendGeneralPacketInfo(_packet:OpenLRPacket) {

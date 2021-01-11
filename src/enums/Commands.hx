@@ -17,7 +17,9 @@ enum abstract Commands(String) from String
 	var gridSizeDec:String; //Change the ruler dimensions by -1
 	var gridSizeInc:String; //Change the ruler dimensions by +1
 	
-	var importAlternativeSave:String; //Import JSON tracks
+	var importSave:String;
+	var importJSONSave:String;
+	var importTRKSave:String;
 	
 	var listRiderInfo:String; //Show all riders and their names
 	var listSavedTracks:String; //Show all saved tracks

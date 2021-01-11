@@ -3,6 +3,34 @@
 #include <hlc.h>
 #include <hl/UI.h>
 #include <hl/natives.h>
+String hl_UI_chooseFile(bool,vvirtual*);
+#include <haxe/io/Path.h>
+extern hl_type t$String;
+String sys_FileSystem_absolutePath(String);
+String Sys_systemName(void);
+extern String s$Windows;
+int String___compare(String,vdynamic*);
+extern String s$6666cd7;
+hl__types__ArrayObj String_split(String,String);
+extern String s$28d397e;
+String hl_types_ArrayObj_join(hl__types__ArrayObj,String);
+bool sys_FileSystem_isDirectory(String);
+extern hl_type t$haxe_io_Path;
+void haxe_io_Path_new(haxe__io__Path,String);
+extern String s$;
+extern String s$5058f1a;
+String String___add__(String,String);
+extern hl_type t$_bytes;
+extern hl_type t$hl_types_ArrayObj;
+extern hl_type t$vrt_9739cc8;
+hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
+extern String s$3db6003;
+int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
+extern String s$9eecb7d;
+extern hl_type t$_array;
+extern hl_type t$nul_i32;
+extern hl_type t$hl_Window;
+extern hl_type t$ui_window;
 
 void hl_UI_dialog(String r0,String r1,int r2) {
 	vbyte *r4, *r5;
@@ -13,5 +41,181 @@ void hl_UI_dialog(String r0,String r1,int r2) {
 	r5 = r1->bytes;
 	r3 = ui_ui_dialog(r4,r5,r2);
 	return;
+}
+
+String hl_UI_loadFile(vvirtual* r0) {
+	String r1;
+	bool r2;
+	r2 = false;
+	r1 = hl_UI_chooseFile(r2,r0);
+	return r1;
+}
+
+String hl_UI_chooseFile(bool r0,vvirtual* r1) {
+	ui_window *r31;
+	String r5, r6, r7, r11, r12;
+	vdynobj *r2;
+	vvirtual *r24;
+	hl__types__ArrayObj r8, r23, r26;
+	hl_type *r18;
+	haxe__io__Path r10;
+	bool r9;
+	vdynamic *r3, *r13, *r29;
+	hl__Window r30;
+	varray *r17, *r19, *r25;
+	int r15, r16, r20, r21, r22, r27, r28;
+	vbyte *r14;
+	r2 = hl_alloc_dynobj();
+	r3 = ((vdynamic*)r2);
+	if( r1 == NULL ) hl_null_access();
+	r5 = hl_vfields(r1)[0] ? (*(String*)(hl_vfields(r1)[0])) : (String)hl_dyn_getp(r1->value,37969014/*fileName*/,&t$String);
+	if( !r5 ) goto label$ed69b4d_3_44;
+	r5 = hl_vfields(r1)[0] ? (*(String*)(hl_vfields(r1)[0])) : (String)hl_dyn_getp(r1->value,37969014/*fileName*/,&t$String);
+	r5 = sys_FileSystem_absolutePath(r5);
+	r6 = Sys_systemName();
+	r7 = (String)s$Windows;
+	if( r6 != r7 && (!r6 || !r7 || String___compare(r6,(vdynamic*)r7) != 0) ) goto label$ed69b4d_3_17;
+	if( r5 == NULL ) hl_null_access();
+	r7 = (String)s$6666cd7;
+	r8 = String_split(r5,r7);
+	if( r8 == NULL ) hl_null_access();
+	r6 = (String)s$28d397e;
+	r6 = hl_types_ArrayObj_join(r8,r6);
+	r5 = r6;
+	label$ed69b4d_3_17:
+	r6 = NULL;
+	r9 = sys_FileSystem_isDirectory(r5);
+	if( !r9 ) goto label$ed69b4d_3_23;
+	r6 = r5;
+	r7 = NULL;
+	goto label$ed69b4d_3_36;
+	label$ed69b4d_3_23:
+	r10 = (haxe__io__Path)hl_alloc_obj(&t$haxe_io_Path);
+	haxe_io_Path_new(r10,r5);
+	r7 = r10->dir;
+	r6 = r7;
+	r7 = r10->file;
+	r11 = r10->ext;
+	if( r11 ) goto label$ed69b4d_3_32;
+	r11 = (String)s$;
+	goto label$ed69b4d_3_35;
+	label$ed69b4d_3_32:
+	r11 = (String)s$5058f1a;
+	r12 = r10->ext;
+	r11 = String___add__(r11,r12);
+	label$ed69b4d_3_35:
+	r7 = String___add__(r7,r11);
+	label$ed69b4d_3_36:
+	if( !r7 ) goto label$ed69b4d_3_40;
+	if( r7 == NULL ) hl_null_access();
+	r14 = r7->bytes;
+	hl_dyn_setp((vdynamic*)r2,37969014/*fileName*/,&t$_bytes,r14);
+	label$ed69b4d_3_40:
+	if( !r6 ) goto label$ed69b4d_3_44;
+	if( r6 == NULL ) hl_null_access();
+	r14 = r6->bytes;
+	hl_dyn_setp((vdynamic*)r2,272953965/*directory*/,&t$_bytes,r14);
+	label$ed69b4d_3_44:
+	r5 = hl_vfields(r1)[3] ? (*(String*)(hl_vfields(r1)[3])) : (String)hl_dyn_getp(r1->value,272307608/*title*/,&t$String);
+	if( !r5 ) goto label$ed69b4d_3_50;
+	r5 = hl_vfields(r1)[3] ? (*(String*)(hl_vfields(r1)[3])) : (String)hl_dyn_getp(r1->value,272307608/*title*/,&t$String);
+	if( r5 == NULL ) hl_null_access();
+	r14 = r5->bytes;
+	hl_dyn_setp((vdynamic*)r2,272307608/*title*/,&t$_bytes,r14);
+	label$ed69b4d_3_50:
+	r8 = hl_vfields(r1)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,155623867/*filters*/,&t$hl_types_ArrayObj);
+	if( !r8 ) goto label$ed69b4d_3_119;
+	r8 = hl_vfields(r1)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,155623867/*filters*/,&t$hl_types_ArrayObj);
+	if( r8 == NULL ) hl_null_access();
+	r15 = r8->length;
+	r16 = 2;
+	r15 = r15 * r16;
+	r18 = &t$_bytes;
+	r17 = hl_alloc_array(r18,r15);
+	r19 = r17;
+	r16 = 0;
+	r20 = 0;
+	r8 = hl_vfields(r1)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,155623867/*filters*/,&t$hl_types_ArrayObj);
+	label$ed69b4d_3_63:
+	if( r8 == NULL ) hl_null_access();
+	r22 = r8->length;
+	if( r20 >= r22 ) goto label$ed69b4d_3_114;
+	r22 = r8->length;
+	if( ((unsigned)r20) < ((unsigned)r22) ) goto label$ed69b4d_3_71;
+	r24 = NULL;
+	goto label$ed69b4d_3_74;
+	label$ed69b4d_3_71:
+	r25 = r8->array;
+	r13 = ((vdynamic**)(r25 + 1))[r20];
+	r24 = hl_to_virtual(&t$vrt_9739cc8,(vdynamic*)r13);
+	label$ed69b4d_3_74:
+	++r20;
+	r21 = r16;
+	++r16;
+	if( r24 == NULL ) hl_null_access();
+	r5 = hl_vfields(r24)[1] ? (*(String*)(hl_vfields(r24)[1])) : (String)hl_dyn_getp(r24->value,150958933/*name*/,&t$String);
+	if( r5 == NULL ) hl_null_access();
+	r14 = r5->bytes;
+	((vbyte**)(r19 + 1))[r21] = r14;
+	r21 = r16;
+	++r16;
+	r18 = &t$String;
+	r22 = 0;
+	r25 = hl_alloc_array(r18,r22);
+	r23 = hl_types_ArrayObj_alloc(r25);
+	r22 = 0;
+	r26 = hl_vfields(r24)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r24)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r24->value,52298172/*exts*/,&t$hl_types_ArrayObj);
+	label$ed69b4d_3_90:
+	if( r26 == NULL ) hl_null_access();
+	r28 = r26->length;
+	if( r22 >= r28 ) goto label$ed69b4d_3_107;
+	r28 = r26->length;
+	if( ((unsigned)r22) < ((unsigned)r28) ) goto label$ed69b4d_3_98;
+	r5 = NULL;
+	goto label$ed69b4d_3_101;
+	label$ed69b4d_3_98:
+	r25 = r26->array;
+	r13 = ((vdynamic**)(r25 + 1))[r22];
+	r5 = (String)r13;
+	label$ed69b4d_3_101:
+	++r22;
+	if( r23 == NULL ) hl_null_access();
+	r6 = (String)s$3db6003;
+	r6 = String___add__(r6,r5);
+	r27 = hl_types_ArrayObj_push(r23,((vdynamic*)r6));
+	goto label$ed69b4d_3_90;
+	label$ed69b4d_3_107:
+	if( r23 == NULL ) hl_null_access();
+	r5 = (String)s$9eecb7d;
+	r5 = hl_types_ArrayObj_join(r23,r5);
+	if( r5 == NULL ) hl_null_access();
+	r14 = r5->bytes;
+	((vbyte**)(r19 + 1))[r21] = r14;
+	goto label$ed69b4d_3_63;
+	label$ed69b4d_3_114:
+	if( r3 == NULL ) hl_null_access();
+	hl_dyn_setp((vdynamic*)r3,155623867/*filters*/,&t$_array,r19);
+	if( r1 == NULL ) hl_null_access();
+	r29 = hl_vfields(r1)[1] ? (*(vdynamic**)(hl_vfields(r1)[1])) : (vdynamic*)hl_dyn_getp(r1->value,231141833/*filterIndex*/,&t$nul_i32);
+	hl_dyn_setp((vdynamic*)r3,231141833/*filterIndex*/,&t$nul_i32,r29);
+	label$ed69b4d_3_119:
+	r30 = hl_vfields(r1)[4] ? (*(hl__Window*)(hl_vfields(r1)[4])) : (hl__Window)hl_dyn_getp(r1->value,311203066/*window*/,&t$hl_Window);
+	if( !r30 ) goto label$ed69b4d_3_125;
+	r30 = hl_vfields(r1)[4] ? (*(hl__Window*)(hl_vfields(r1)[4])) : (hl__Window)hl_dyn_getp(r1->value,311203066/*window*/,&t$hl_Window);
+	if( r30 == NULL ) hl_null_access();
+	r31 = r30->h;
+	hl_dyn_setp((vdynamic*)r3,311203066/*window*/,&t$ui_window,r31);
+	label$ed69b4d_3_125:
+	r14 = ui_ui_choose_file(r0,r3);
+	if( r14 ) goto label$ed69b4d_3_129;
+	r5 = NULL;
+	return r5;
+	label$ed69b4d_3_129:
+	r5 = (String)hl_alloc_obj(&t$String);
+	r5->bytes = r14;
+	r15 = 0;
+	r15 = hl_ucs2length(r14,r15);
+	r5->length = r15;
+	return r5;
 }
 

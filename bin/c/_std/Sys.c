@@ -92,6 +92,14 @@ haxe__io__Output Sys_stderr() {
 	return ((haxe__io__Output)r0);
 }
 
+String Sys_getCwd() {
+	String r0;
+	vbyte *r1;
+	r1 = hl_sys_get_cwd();
+	r0 = Sys_makePath(r1);
+	return r0;
+}
+
 String Sys_systemName() {
 	String r1;
 	int r2;
@@ -117,14 +125,14 @@ int Sys_command(String r0,hl__types__ArrayObj r1) {
 	int r2, r4, r11, r13;
 	static vclosure cl$0 = { &t$fun_0cf7b0f, haxe_SysTools_quoteUnixArg, 0 };
 	r2 = 0;
-	if( r1 ) goto label$e42c1e8_6_5;
+	if( r1 ) goto label$e42c1e8_7_5;
 	r5 = Sys_getPath(r0);
 	r4 = hl_sys_command(r5);
-	goto label$e42c1e8_6_83;
-	label$e42c1e8_6_5:
+	goto label$e42c1e8_7_83;
+	label$e42c1e8_7_5:
 	r6 = Sys_systemName();
 	r7 = (String)s$Windows;
-	if( r6 != r7 && (!r6 || !r7 || String___compare(r6,(vdynamic*)r7) != 0) ) goto label$e42c1e8_6_47;
+	if( r6 != r7 && (!r6 || !r7 || String___compare(r6,(vdynamic*)r7) != 0) ) goto label$e42c1e8_7_47;
 	r9 = &t$String;
 	r4 = 0;
 	r8 = hl_alloc_array(r9,r4);
@@ -141,33 +149,33 @@ int Sys_command(String r0,hl__types__ArrayObj r1) {
 	r10 = hl_types_ArrayObj_alloc(r8);
 	if( r10 == NULL ) hl_null_access();
 	r10 = hl_types_ArrayObj_concat(r10,r1);
-	label$e42c1e8_6_24:
+	label$e42c1e8_7_24:
 	if( r10 == NULL ) hl_null_access();
 	r13 = r10->length;
-	if( r4 >= r13 ) goto label$e42c1e8_6_41;
+	if( r4 >= r13 ) goto label$e42c1e8_7_41;
 	r13 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r13) ) goto label$e42c1e8_6_32;
+	if( ((unsigned)r4) < ((unsigned)r13) ) goto label$e42c1e8_7_32;
 	r6 = NULL;
-	goto label$e42c1e8_6_35;
-	label$e42c1e8_6_32:
+	goto label$e42c1e8_7_35;
+	label$e42c1e8_7_32:
 	r8 = r10->array;
 	r14 = ((vdynamic**)(r8 + 1))[r4];
 	r6 = (String)r14;
-	label$e42c1e8_6_35:
+	label$e42c1e8_7_35:
 	++r4;
 	if( r3 == NULL ) hl_null_access();
 	r15 = true;
 	r7 = haxe_SysTools_quoteWinArg(r6,r15);
 	r11 = hl_types_ArrayObj_push(r3,((vdynamic*)r7));
-	goto label$e42c1e8_6_24;
-	label$e42c1e8_6_41:
+	goto label$e42c1e8_7_24;
+	label$e42c1e8_7_41:
 	if( r3 == NULL ) hl_null_access();
 	r6 = (String)s$7215ee9;
 	r6 = hl_types_ArrayObj_join(r3,r6);
 	r5 = Sys_getPath(r6);
 	r4 = hl_sys_command(r5);
-	goto label$e42c1e8_6_83;
-	label$e42c1e8_6_47:
+	goto label$e42c1e8_7_83;
+	label$e42c1e8_7_47:
 	r16 = &cl$0;
 	r9 = &t$String;
 	r4 = 0;
@@ -182,32 +190,32 @@ int Sys_command(String r0,hl__types__ArrayObj r1) {
 	r10 = hl_types_ArrayObj_alloc(r8);
 	if( r10 == NULL ) hl_null_access();
 	r10 = hl_types_ArrayObj_concat(r10,r1);
-	label$e42c1e8_6_61:
+	label$e42c1e8_7_61:
 	if( r10 == NULL ) hl_null_access();
 	r13 = r10->length;
-	if( r4 >= r13 ) goto label$e42c1e8_6_78;
+	if( r4 >= r13 ) goto label$e42c1e8_7_78;
 	r13 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r13) ) goto label$e42c1e8_6_69;
+	if( ((unsigned)r4) < ((unsigned)r13) ) goto label$e42c1e8_7_69;
 	r6 = NULL;
-	goto label$e42c1e8_6_72;
-	label$e42c1e8_6_69:
+	goto label$e42c1e8_7_72;
+	label$e42c1e8_7_69:
 	r8 = r10->array;
 	r14 = ((vdynamic**)(r8 + 1))[r4];
 	r6 = (String)r14;
-	label$e42c1e8_6_72:
+	label$e42c1e8_7_72:
 	++r4;
 	if( r3 == NULL ) hl_null_access();
 	if( r16 == NULL ) hl_null_access();
 	r7 = r16->hasValue ? ((String (*)(vdynamic*,String))r16->fun)((vdynamic*)r16->value,r6) : ((String (*)(String))r16->fun)(r6);
 	r11 = hl_types_ArrayObj_push(r3,((vdynamic*)r7));
-	goto label$e42c1e8_6_61;
-	label$e42c1e8_6_78:
+	goto label$e42c1e8_7_61;
+	label$e42c1e8_7_78:
 	if( r3 == NULL ) hl_null_access();
 	r6 = (String)s$7215ee9;
 	r6 = hl_types_ArrayObj_join(r3,r6);
 	r5 = Sys_getPath(r6);
 	r4 = hl_sys_command(r5);
-	label$e42c1e8_6_83:
+	label$e42c1e8_7_83:
 	return r4;
 }
 

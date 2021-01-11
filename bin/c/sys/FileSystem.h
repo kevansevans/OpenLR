@@ -18,6 +18,7 @@ struct _sys__$FileSystem {
 	vdynamic* __constructor__;
 	vclosure* exists;
 	vclosure* rename;
+	vclosure* absolutePath;
 	vclosure* isDirectory;
 	vclosure* createDirectory;
 	vclosure* deleteFile;

@@ -22,6 +22,7 @@ struct _haxe__io__$Path {
 	vclosure* normalize;
 	vclosure* addTrailingSlash;
 	vclosure* removeTrailingSlashes;
+	vclosure* isAbsolute;
 };
 struct _haxe__io__Path {
 	hl_type *$type;

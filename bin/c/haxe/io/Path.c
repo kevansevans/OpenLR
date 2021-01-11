@@ -31,6 +31,9 @@ void StringBuf_add(StringBuf,vdynamic*);
 void StringBuf_addChar(StringBuf,int);
 extern String s$853ae90;
 String StringBuf_toString(StringBuf);
+bool StringTools_startsWith(String,String);
+String String_charAt(String,int);
+extern String s$7f81377;
 
 void haxe_io_Path_new(haxe__io__Path r0,String r1) {
 	String r3, r8;
@@ -670,5 +673,33 @@ String haxe_io_Path_removeTrailingSlashes(String r0) {
 	goto label$aa1abd3_9_0;
 	label$aa1abd3_9_19:
 	return r0;
+}
+
+bool haxe_io_Path_isAbsolute(String r0) {
+	String r2, r3;
+	bool r1;
+	int r4;
+	r3 = (String)s$6666cd7;
+	r1 = StringTools_startsWith(r0,r3);
+	if( !r1 ) goto label$aa1abd3_10_5;
+	r1 = true;
+	return r1;
+	label$aa1abd3_10_5:
+	if( r0 == NULL ) hl_null_access();
+	r4 = 1;
+	r2 = String_charAt(r0,r4);
+	r3 = (String)s$853ae90;
+	if( r2 != r3 && (!r2 || !r3 || String___compare(r2,(vdynamic*)r3) != 0) ) goto label$aa1abd3_10_12;
+	r1 = true;
+	return r1;
+	label$aa1abd3_10_12:
+	r3 = (String)s$7f81377;
+	r1 = StringTools_startsWith(r0,r3);
+	if( !r1 ) goto label$aa1abd3_10_17;
+	r1 = true;
+	return r1;
+	label$aa1abd3_10_17:
+	r1 = false;
+	return r1;
 }
 

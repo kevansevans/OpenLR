@@ -17,8 +17,11 @@ String String___add__(String,String);
 extern String s$_to_;
 void SysError_new(SysError,String);
 vdynamic* haxe_Exception_thrown(vdynamic*);
+bool haxe_io_Path_isAbsolute(String);
 extern hl_type t$String;
+String Sys_getCwd(void);
 hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
+String haxe_io_Path_join(hl__types__ArrayObj);
 String haxe_io_Path_directory(String);
 void hl_types_ArrayObj_unshift(hl__types__ArrayObj,vdynamic*);
 extern String s$Failed_to_create_directory_;
@@ -81,6 +84,30 @@ void sys_FileSystem_rename(String r0,String r1) {
 	return;
 }
 
+String sys_FileSystem_absolutePath(String r0) {
+	String r2;
+	hl__types__ArrayObj r3;
+	hl_type *r5;
+	bool r1;
+	int r6;
+	varray *r4;
+	r1 = haxe_io_Path_isAbsolute(r0);
+	if( !r1 ) goto label$71a15a3_3_3;
+	return r0;
+	label$71a15a3_3_3:
+	r5 = &t$String;
+	r6 = 2;
+	r4 = hl_alloc_array(r5,r6);
+	r2 = Sys_getCwd();
+	r6 = 0;
+	((String*)(r4 + 1))[r6] = r2;
+	r6 = 1;
+	((String*)(r4 + 1))[r6] = r0;
+	r3 = hl_types_ArrayObj_alloc(r4);
+	r2 = haxe_io_Path_join(r3);
+	return r2;
+}
+
 bool sys_FileSystem_isDirectory(String r0) {
 	String r3, r8;
 	bool r1;
@@ -93,20 +120,20 @@ bool sys_FileSystem_isDirectory(String r0) {
 	r5 = 58;
 	r6 = hl_alloc_dynamic(&t$_i32);
 	r6->v.i = r5;
-	if( r4 != r6 && (!r4 || !r6 || (r4->v.i != r6->v.i)) ) goto label$71a15a3_3_11;
+	if( r4 != r6 && (!r4 || !r6 || (r4->v.i != r6->v.i)) ) goto label$71a15a3_4_11;
 	r5 = r0->length;
 	r7 = 3;
-	if( r7 < r5 ) goto label$71a15a3_3_11;
+	if( r7 < r5 ) goto label$71a15a3_4_11;
 	r3 = haxe_io_Path_addTrailingSlash(r0);
-	goto label$71a15a3_3_16;
-	label$71a15a3_3_11:
+	goto label$71a15a3_4_16;
+	label$71a15a3_4_11:
 	r8 = (String)s$6666cd7;
-	if( r0 != r8 && (!r0 || !r8 || String___compare(r0,(vdynamic*)r8) != 0) ) goto label$71a15a3_3_15;
+	if( r0 != r8 && (!r0 || !r8 || String___compare(r0,(vdynamic*)r8) != 0) ) goto label$71a15a3_4_15;
 	r3 = (String)s$6666cd7;
-	goto label$71a15a3_3_16;
-	label$71a15a3_3_15:
+	goto label$71a15a3_4_16;
+	label$71a15a3_4_15:
 	r3 = haxe_io_Path_removeTrailingSlashes(r0);
-	label$71a15a3_3_16:
+	label$71a15a3_4_16:
 	r2 = Sys_getPath(r3);
 	r1 = hl_sys_is_dir(r2);
 	return r1;
@@ -128,33 +155,33 @@ void sys_FileSystem_createDirectory(String r0) {
 	r7 = 0;
 	r5 = hl_alloc_array(r6,r7);
 	r4 = hl_types_ArrayObj_alloc(r5);
-	label$71a15a3_4_6:
+	label$71a15a3_5_6:
 	r8 = true;
-	if( !r8 ) goto label$71a15a3_4_17;
+	if( !r8 ) goto label$71a15a3_5_17;
 	r9 = haxe_io_Path_directory(r1);
 	r3 = r9;
-	if( r1 != r3 && (!r1 || !r3 || String___compare(r1,(vdynamic*)r3) != 0) ) goto label$71a15a3_4_13;
-	goto label$71a15a3_4_17;
-	label$71a15a3_4_13:
+	if( r1 != r3 && (!r1 || !r3 || String___compare(r1,(vdynamic*)r3) != 0) ) goto label$71a15a3_5_13;
+	goto label$71a15a3_5_17;
+	label$71a15a3_5_13:
 	if( r4 == NULL ) hl_null_access();
 	hl_types_ArrayObj_unshift(r4,((vdynamic*)r1));
 	r1 = r3;
-	goto label$71a15a3_4_6;
-	label$71a15a3_4_17:
+	goto label$71a15a3_5_6;
+	label$71a15a3_5_17:
 	r7 = 0;
-	label$71a15a3_4_18:
+	label$71a15a3_5_18:
 	if( r4 == NULL ) hl_null_access();
 	r12 = r4->length;
-	if( r7 >= r12 ) goto label$71a15a3_4_51;
+	if( r7 >= r12 ) goto label$71a15a3_5_51;
 	r12 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r12) ) goto label$71a15a3_4_26;
+	if( ((unsigned)r7) < ((unsigned)r12) ) goto label$71a15a3_5_26;
 	r9 = NULL;
-	goto label$71a15a3_4_29;
-	label$71a15a3_4_26:
+	goto label$71a15a3_5_29;
+	label$71a15a3_5_26:
 	r5 = r4->array;
 	r13 = ((vdynamic**)(r5 + 1))[r7];
 	r9 = (String)r13;
-	label$71a15a3_4_29:
+	label$71a15a3_5_29:
 	++r7;
 	if( r9 == NULL ) hl_null_access();
 	r11 = r9->length;
@@ -164,22 +191,22 @@ void sys_FileSystem_createDirectory(String r0) {
 	r11 = 58;
 	r15 = hl_alloc_dynamic(&t$_i32);
 	r15->v.i = r11;
-	if( r14 == r15 || (r14 && r15 && (r14->v.i == r15->v.i)) ) goto label$71a15a3_4_50;
+	if( r14 == r15 || (r14 && r15 && (r14->v.i == r15->v.i)) ) goto label$71a15a3_5_50;
 	r8 = sys_FileSystem_exists(r9);
-	if( r8 ) goto label$71a15a3_4_50;
+	if( r8 ) goto label$71a15a3_5_50;
 	r16 = Sys_getPath(r9);
 	r11 = 493;
 	r8 = hl_sys_create_dir(r16,r11);
-	if( r8 ) goto label$71a15a3_4_50;
+	if( r8 ) goto label$71a15a3_5_50;
 	r17 = (SysError)hl_alloc_obj(&t$SysError);
 	r10 = (String)s$Failed_to_create_directory_;
 	r10 = String___add__(r10,r9);
 	SysError_new(r17,r10);
 	r13 = haxe_Exception_thrown(((vdynamic*)r17));
 	hl_throw((vdynamic*)r13);
-	label$71a15a3_4_50:
-	goto label$71a15a3_4_18;
-	label$71a15a3_4_51:
+	label$71a15a3_5_50:
+	goto label$71a15a3_5_18;
+	label$71a15a3_5_51:
 	return;
 }
 
@@ -191,14 +218,14 @@ void sys_FileSystem_deleteFile(String r0) {
 	vbyte *r3;
 	r3 = Sys_getPath(r0);
 	r2 = hl_sys_delete(r3);
-	if( r2 ) goto label$71a15a3_5_9;
+	if( r2 ) goto label$71a15a3_6_9;
 	r6 = (SysError)hl_alloc_obj(&t$SysError);
 	r4 = (String)s$Can_t_delete_file_;
 	r4 = String___add__(r4,r0);
 	SysError_new(r6,r4);
 	r5 = haxe_Exception_thrown(((vdynamic*)r6));
 	hl_throw((vdynamic*)r5);
-	label$71a15a3_5_9:
+	label$71a15a3_6_9:
 	return;
 }
 
@@ -213,29 +240,29 @@ hl__types__ArrayObj sys_FileSystem_readDirectory(String r0) {
 	varray *r1, *r5;
 	r2 = Sys_getPath(r0);
 	r1 = hl_sys_read_dir(r2);
-	if( r1 ) goto label$71a15a3_6_9;
+	if( r1 ) goto label$71a15a3_7_9;
 	r7 = (SysError)hl_alloc_obj(&t$SysError);
 	r3 = (String)s$Failed_to_read_directory_;
 	r3 = String___add__(r3,r0);
 	SysError_new(r7,r3);
 	r6 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r6);
-	label$71a15a3_6_9:
+	label$71a15a3_7_9:
 	r9 = &t$String;
 	r10 = 0;
 	r5 = hl_alloc_array(r9,r10);
 	r8 = hl_types_ArrayObj_alloc(r5);
 	r10 = 0;
-	label$71a15a3_6_14:
+	label$71a15a3_7_14:
 	r12 = r1->size;
-	if( r10 >= r12 ) goto label$71a15a3_6_23;
+	if( r10 >= r12 ) goto label$71a15a3_7_23;
 	r2 = ((vbyte**)(r1 + 1))[r10];
 	++r10;
 	if( r8 == NULL ) hl_null_access();
 	r3 = Sys_makePath(r2);
 	r11 = hl_types_ArrayObj_push(r8,((vdynamic*)r3));
-	goto label$71a15a3_6_14;
-	label$71a15a3_6_23:
+	goto label$71a15a3_7_14;
+	label$71a15a3_7_23:
 	return r8;
 }
 

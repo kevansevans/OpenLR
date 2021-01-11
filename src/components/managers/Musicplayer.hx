@@ -52,6 +52,15 @@ class Musicplayer
 		#end
 	}
 	
+	public function loadAudioAsBytes(_bytes:Bytes, _name:String) {
+		var bFileEntry = new BytesFileEntry('', _bytes);
+		bFileEntry.load( function() {
+			sound = new Sound(bFileEntry);
+		});
+		
+		Main.songName = _name;
+	}
+	
 	public function playMusic(_offset:Int) {
 		if (sound == null) return;
 		if (!Main.simulation.playing) return;
