@@ -369,6 +369,7 @@ class Main extends App
 			riders.deleteAllRiders();
 			saveload.loadTrack(_name, _offset); 
 		});
+		});
 		console.addCommand(Commands.listSavedTracks, "Print any found tracks", [], function() {saveload.listTrackFiles(); });
 		var arg23:ConsoleArgDesc = {t: AFloat, opt: true, name : "Snap distance"};
 		console.addCommand(Commands.snapToGrid, "Enable grid snapping. Set to 0 to disable", [arg23], function(?_range:Float = 0) {
@@ -381,6 +382,14 @@ class Main extends App
 				console.log('Grid snapping off...');
 			} else {
 				console.log('Grid snapping set to ${_range}');
+			}
+		});
+		console.addCommand(Commands.snapToLines, "Enable line snapping. Set to 0 to disable", [arg23], function(?_range:Float = 0) {
+			toolControl.snapDistance = _range;
+			if (_range == 0) {
+				console.log('Line snapping off...');
+			} else {
+				console.log('Line snapping set to ${_range}');
 			}
 		});
 		console.addCommand(Commands.newTrack, "New track. Will save if track name has been set", [], function() {
