@@ -34,7 +34,6 @@ struct _hxd__$System {
 	vclosure* runMainLoop;
 	vclosure* reportError;
 	vclosure* setNativeCursor;
-	vclosure* updateCursor;
 	vclosure* getDefaultFrameRate;
 	vclosure* getValue;
 	vclosure* get_platform;

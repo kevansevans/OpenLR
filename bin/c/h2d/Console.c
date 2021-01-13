@@ -24,7 +24,6 @@ void h2d_Object_onRemove(h2d__Object);
 #include <hxd/EventKind.h>
 #include <h2d/Font.h>
 double h2d_Text_get_textHeight(h2d__Text);
-void h2d_Console_show(h2d__Console);
 vvirtual* haxe_ds_StringMap_keys(haxe__ds__StringMap);
 #include <hl/types/ArrayDyn.h>
 #include <h2d/ConsoleArg.h>
@@ -189,7 +188,7 @@ void h2d_Console_addAlias(h2d__Console r0,String r1,String r2) {
 }
 
 void h2d_Console_runCommand(h2d__Console r0,String r1) {
-	((void (*)(h2d__Console,String))r0->$type->vobj_proto[16])(r0,r1);
+	((void (*)(h2d__Console,String))r0->$type->vobj_proto[17])(r0,r1);
 	return;
 }
 
@@ -292,7 +291,7 @@ void h2d_Console_onEvent(h2d__Console r0,hxd__Event r1) {
 			if( r13 == NULL ) hl_null_access();
 			r5 = r13->visible;
 			if( r5 ) goto label$40582a2_8_47;
-			h2d_Console_show(r0);
+			((void (*)(h2d__Console))r0->$type->vobj_proto[16])(r0);
 	}
 	label$40582a2_8_47:
 	return;
@@ -775,7 +774,7 @@ void h2d_Console_handleKey(h2d__Console r0,hxd__Event r1) {
 			if( r9 == r12 || (r9 && r12 && String___compare(r9,(vdynamic*)r12) == 0) ) goto label$40582a2_14_50;
 			r7 = r9;
 			label$40582a2_14_50:
-			((void (*)(h2d__Console,String))r0->$type->vobj_proto[16])(r0,r7);
+			((void (*)(h2d__Console,String))r0->$type->vobj_proto[17])(r0,r7);
 			r13 = r0->logTxt;
 			if( r13 == NULL ) hl_null_access();
 			r3 = r13->visible;

@@ -2,9 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/scene/Scene.h>
-#include <h3d/scene/Interactive.h>
-extern hl_type t$h3d_scene_Interactive;
-extern hl_type t$_dyn;
 #include <h3d/Engine.h>
 #include <h3d/mat/MaterialSetup.h>
 void h3d_scene_Object_new(h3d__scene__Object,h3d__scene__Object);
@@ -12,6 +9,7 @@ hxd__Window hxd_Window_getInstance(void);
 extern hl_type t$fun_b4832bf;
 #include <hl/natives.h>
 hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
+extern hl_type t$h3d_scene_Interactive;
 extern hl_type t$h3d_Camera;
 void h3d_Camera_new(h3d__Camera,double*,double*,double*,double*,double*,bool*);
 extern h3d__$Engine g$_h3d_Engine;
@@ -21,6 +19,7 @@ extern h3d__mat__$MaterialSetup g$_h3d_mat_MaterialSetup;
 h3d__scene__Renderer h3d_mat_MaterialSetup_createRenderer(h3d__mat__MaterialSetup);
 h3d__scene__Renderer h3d_scene_Scene_set_renderer(h3d__scene__Scene,h3d__scene__Renderer);
 h3d__scene__LightSystem h3d_mat_MaterialSetup_createLightSystem(h3d__mat__MaterialSetup);
+#include <h3d/scene/Interactive.h>
 #include <h3d/Vector.h>
 extern hl_type t$vrt_c8e313e;
 void h3d_scene_Interactive_handleEvent(h3d__scene__Interactive,hxd__Event);
@@ -36,6 +35,7 @@ extern hl_type t$fun_258ac7d;
 vdynamic* hl_types_ArrayObj_pop(hl__types__ArrayObj);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 extern hl_type t$fun_9e0a57f;
+int h3d_scene_Scene_handleEvent__$1(vclosure*,vdynamic*,vdynamic*);
 extern hl_type t$fun_390b646;
 void hl_types_ArrayObj_sort(hl__types__ArrayObj,vclosure*);
 void hl_types_ArrayObj_unshift(hl__types__ArrayObj,vdynamic*);
@@ -64,15 +64,7 @@ void h3d_scene_PassObjects_new(h3d__scene__PassObjects);
 void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
 void h3d_scene_Renderer_process(h3d__scene__Renderer,hl__types__ArrayObj);
 void h3d_scene_RenderContext_done(h3d__scene__RenderContext);
-
-int h3d_scene_Scene_handleEvent__$1(vclosure* r0,vdynamic* r1,vdynamic* r2) {
-	h3d__scene__Interactive r3, r4;
-	int r5;
-	r3 = (h3d__scene__Interactive)hl_dyn_castp(&r1,&t$_dyn,&t$h3d_scene_Interactive);
-	r4 = (h3d__scene__Interactive)hl_dyn_castp(&r2,&t$_dyn,&t$h3d_scene_Interactive);
-	r5 = r0->hasValue ? ((int (*)(vdynamic*,h3d__scene__Interactive,h3d__scene__Interactive))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(h3d__scene__Interactive,h3d__scene__Interactive))r0->fun)(r3,r4);
-	return r5;
-}
+extern hl_type t$_dyn;
 
 void h3d_scene_Scene_new(h3d__scene__Scene r0,vdynamic* r1,vdynamic* r2) {
 	bool *r17;
@@ -93,14 +85,14 @@ void h3d_scene_Scene_new(h3d__scene__Scene r0,vdynamic* r1,vdynamic* r2) {
 	int r10;
 	varray *r8;
 	h3d__scene__Object r5;
-	if( r1 ) goto label$891d561_2_3;
+	if( r1 ) goto label$891d561_1_3;
 	r3 = true;
 	r1 = hl_alloc_dynbool(r3);
-	label$891d561_2_3:
-	if( r2 ) goto label$891d561_2_6;
+	label$891d561_1_3:
+	if( r2 ) goto label$891d561_1_6;
 	r3 = true;
 	r2 = hl_alloc_dynbool(r3);
-	label$891d561_2_6:
+	label$891d561_1_6:
 	r5 = NULL;
 	h3d_scene_Object_new(((h3d__scene__Object)r0),r5);
 	r6 = hxd_Window_getInstance();
@@ -131,7 +123,7 @@ void h3d_scene_Scene_new(h3d__scene__Scene r0,vdynamic* r1,vdynamic* r2) {
 	r0->camera = r11;
 	r19 = (h3d__$Engine)g$_h3d_Engine;
 	r18 = r19->CURRENT;
-	if( !r18 ) goto label$891d561_2_46;
+	if( !r18 ) goto label$891d561_1_46;
 	r11 = r0->camera;
 	if( r11 == NULL ) hl_null_access();
 	if( r18 == NULL ) hl_null_access();
@@ -141,26 +133,26 @@ void h3d_scene_Scene_new(h3d__scene__Scene r0,vdynamic* r1,vdynamic* r2) {
 	r21 = (double)r10;
 	r20 = r20 / r21;
 	r11->screenRatio = r20;
-	label$891d561_2_46:
+	label$891d561_1_46:
 	r22 = (h3d__scene__RenderContext)hl_alloc_obj(&t$h3d_scene_RenderContext);
 	h3d_scene_RenderContext_new(r22);
 	r0->ctx = r22;
 	r3 = r1 ? r1->v.b : 0;
-	if( !r3 ) goto label$891d561_2_56;
+	if( !r3 ) goto label$891d561_1_56;
 	r25 = (h3d__mat__$MaterialSetup)g$_h3d_mat_MaterialSetup;
 	r24 = r25->current;
 	if( r24 == NULL ) hl_null_access();
 	r23 = h3d_mat_MaterialSetup_createRenderer(r24);
 	r23 = h3d_scene_Scene_set_renderer(r0,r23);
-	label$891d561_2_56:
+	label$891d561_1_56:
 	r3 = r2 ? r2->v.b : 0;
-	if( !r3 ) goto label$891d561_2_63;
+	if( !r3 ) goto label$891d561_1_63;
 	r25 = (h3d__mat__$MaterialSetup)g$_h3d_mat_MaterialSetup;
 	r24 = r25->current;
 	if( r24 == NULL ) hl_null_access();
 	r26 = h3d_mat_MaterialSetup_createLightSystem(r24);
 	r0->lightSystem = r26;
-	label$891d561_2_63:
+	label$891d561_1_63:
 	return;
 }
 
@@ -178,40 +170,40 @@ void h3d_scene_Scene_dispatchListeners(h3d__scene__Scene r0,hxd__Event r1) {
 	int r2, r5;
 	r2 = 0;
 	r4 = r0->eventListeners;
-	label$891d561_4_2:
+	label$891d561_3_2:
 	if( r4 == NULL ) hl_null_access();
 	r5 = r4->length;
-	if( r2 >= r5 ) goto label$891d561_4_21;
+	if( r2 >= r5 ) goto label$891d561_3_21;
 	r5 = r4->length;
-	if( ((unsigned)r2) < ((unsigned)r5) ) goto label$891d561_4_10;
+	if( ((unsigned)r2) < ((unsigned)r5) ) goto label$891d561_3_10;
 	r6 = NULL;
-	goto label$891d561_4_13;
-	label$891d561_4_10:
+	goto label$891d561_3_13;
+	label$891d561_3_10:
 	r8 = r4->array;
 	r7 = ((vdynamic**)(r8 + 1))[r2];
 	r6 = (vclosure*)r7;
-	label$891d561_4_13:
+	label$891d561_3_13:
 	++r2;
 	if( r6 == NULL ) hl_null_access();
 	r6->hasValue ? ((void (*)(vdynamic*,hxd__Event))r6->fun)((vdynamic*)r6->value,r1) : ((void (*)(hxd__Event))r6->fun)(r1);
 	if( r1 == NULL ) hl_null_access();
 	r9 = r1->propagate;
-	if( r9 ) goto label$891d561_4_20;
-	goto label$891d561_4_21;
-	label$891d561_4_20:
-	goto label$891d561_4_2;
-	label$891d561_4_21:
+	if( r9 ) goto label$891d561_3_20;
+	goto label$891d561_3_21;
+	label$891d561_3_20:
+	goto label$891d561_3_2;
+	label$891d561_3_21:
 	return;
 }
 
 h3d__scene__Renderer h3d_scene_Scene_set_renderer(h3d__scene__Scene r0,h3d__scene__Renderer r1) {
 	h3d__scene__RenderContext r2;
 	r0->renderer = r1;
-	if( !r1 ) goto label$891d561_5_5;
+	if( !r1 ) goto label$891d561_4_5;
 	if( r1 == NULL ) hl_null_access();
 	r2 = r0->ctx;
 	r1->ctx = r2;
-	label$891d561_5_5:
+	label$891d561_4_5:
 	return r1;
 }
 
@@ -227,10 +219,10 @@ int h3d_scene_Scene_sortHitPointByCameraDistance(h3d__scene__Scene r0,h3d__scene
 	r4 = r2->hitPoint;
 	if( r4 == NULL ) hl_null_access();
 	r5 = r4->w;
-	if( !(r5 < r3) ) goto label$891d561_6_11;
+	if( !(r5 < r3) ) goto label$891d561_5_11;
 	r6 = -1;
 	return r6;
-	label$891d561_6_11:
+	label$891d561_5_11:
 	r6 = 1;
 	return r6;
 }
@@ -248,23 +240,23 @@ bool h3d_scene_Scene_isInteractiveVisible(h3d__scene__Scene r0,vvirtual* r1) {
 	int r4, r5;
 	h3d__scene__Object r2, r3;
 	r2 = (h3d__scene__Object)hl_dyn_castp(&r1,&t$vrt_c8e313e,&t$h3d_scene_Object);
-	label$891d561_8_1:
-	if( r2 == ((h3d__scene__Object)r0) ) goto label$891d561_8_15;
-	if( !r2 ) goto label$891d561_8_10;
+	label$891d561_7_1:
+	if( r2 == ((h3d__scene__Object)r0) ) goto label$891d561_7_15;
+	if( !r2 ) goto label$891d561_7_10;
 	if( r2 == NULL ) hl_null_access();
 	r4 = r2->flags;
 	r5 = 2;
 	r4 = r4 & r5;
 	r5 = 0;
-	if( r4 != r5 ) goto label$891d561_8_12;
-	label$891d561_8_10:
+	if( r4 != r5 ) goto label$891d561_7_12;
+	label$891d561_7_10:
 	r6 = false;
 	return r6;
-	label$891d561_8_12:
+	label$891d561_7_12:
 	r3 = r2->parent;
 	r2 = r3;
-	goto label$891d561_8_1;
-	label$891d561_8_15:
+	goto label$891d561_7_1;
+	label$891d561_7_15:
 	r6 = true;
 	return r6;
 }
@@ -289,15 +281,15 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 	if( r5 == NULL ) hl_null_access();
 	r4 = r5->length;
 	r6 = 0;
-	if( r4 != r6 ) goto label$891d561_9_7;
+	if( r4 != r6 ) goto label$891d561_8_7;
 	r7 = NULL;
 	return r7;
-	label$891d561_9_7:
+	label$891d561_8_7:
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r4 = r5->length;
 	r6 = 0;
-	if( r4 != r6 ) goto label$891d561_9_507;
+	if( r4 != r6 ) goto label$891d561_8_507;
 	if( r1 == NULL ) hl_null_access();
 	r9 = r1->relX;
 	r10 = r0->window;
@@ -358,41 +350,41 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 	r4 = 0x80000000;
 	r6 = 0;
 	r5 = r0->interactives;
-	label$891d561_9_72:
+	label$891d561_8_72:
 	if( r5 == NULL ) hl_null_access();
 	r31 = r5->length;
-	if( r6 >= r31 ) goto label$891d561_9_248;
+	if( r6 >= r31 ) goto label$891d561_8_248;
 	r31 = r5->length;
-	if( ((unsigned)r6) < ((unsigned)r31) ) goto label$891d561_9_80;
+	if( ((unsigned)r6) < ((unsigned)r31) ) goto label$891d561_8_80;
 	r7 = NULL;
-	goto label$891d561_9_83;
-	label$891d561_9_80:
+	goto label$891d561_8_83;
+	label$891d561_8_80:
 	r33 = r5->array;
 	r8 = ((vdynamic**)(r33 + 1))[r6];
 	r7 = (h3d__scene__Interactive)r8;
-	label$891d561_9_83:
+	label$891d561_8_83:
 	++r6;
 	if( r7 == NULL ) hl_null_access();
 	r30 = r7->priority;
-	if( r30 >= r4 ) goto label$891d561_9_88;
-	goto label$891d561_9_72;
-	label$891d561_9_88:
+	if( r30 >= r4 ) goto label$891d561_8_88;
+	goto label$891d561_8_72;
+	label$891d561_8_88:
 	r35 = ((h3d__scene__Object)r7);
-	label$891d561_9_89:
-	if( !r35 ) goto label$891d561_9_100;
+	label$891d561_8_89:
+	if( !r35 ) goto label$891d561_8_100;
 	if( r35 == NULL ) hl_null_access();
 	r30 = r35->flags;
 	r31 = 2;
 	r30 = r30 & r31;
 	r31 = 0;
-	if( r30 == r31 ) goto label$891d561_9_100;
+	if( r30 == r31 ) goto label$891d561_8_100;
 	r36 = r35->parent;
 	r35 = r36;
-	goto label$891d561_9_89;
-	label$891d561_9_100:
-	if( !r35 ) goto label$891d561_9_102;
-	goto label$891d561_9_72;
-	label$891d561_9_102:
+	goto label$891d561_8_89;
+	label$891d561_8_100:
+	if( !r35 ) goto label$891d561_8_102;
+	goto label$891d561_8_72;
+	label$891d561_8_102:
 	if( r7 == NULL ) hl_null_access();
 	r37 = h3d_scene_Object_getInvPos(((h3d__scene__Object)r7));
 	if( r23 == NULL ) hl_null_access();
@@ -471,15 +463,15 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 	h3d_col_Ray_normalize(r23);
 	r38 = r23->lx;
 	r39 = r23->lx;
-	if( r38 == r39 ) goto label$891d561_9_188;
+	if( r38 == r39 ) goto label$891d561_8_188;
 	r23->px = r24;
 	r23->py = r25;
 	r23->pz = r26;
 	r23->lx = r27;
 	r23->ly = r28;
 	r23->lz = r29;
-	goto label$891d561_9_72;
-	label$891d561_9_188:
+	goto label$891d561_8_72;
+	label$891d561_8_188:
 	r52 = r7->shape;
 	if( r52 == NULL ) hl_null_access();
 	r53 = r7->bestMatch;
@@ -490,15 +482,15 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 		r38 = (double)ret.v.d;
 	}
 	r40 = 0.;
-	if( !(r38 < r40) ) goto label$891d561_9_201;
+	if( !(r38 < r40) ) goto label$891d561_8_201;
 	r23->px = r24;
 	r23->py = r25;
 	r23->pz = r26;
 	r23->lx = r27;
 	r23->ly = r28;
 	r23->lz = r29;
-	goto label$891d561_9_72;
-	label$891d561_9_201:
+	goto label$891d561_8_72;
+	label$891d561_8_201:
 	r39 = r23->px;
 	r41 = r23->lx;
 	r40 = r38 * r41;
@@ -527,62 +519,62 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 	if( r18 == NULL ) hl_null_access();
 	r18->z = r41;
 	r30 = r7->priority;
-	if( r4 >= r30 ) goto label$891d561_9_244;
-	label$891d561_9_230:
+	if( r4 >= r30 ) goto label$891d561_8_244;
+	label$891d561_8_230:
 	r32 = r0->hitInteractives;
 	if( r32 == NULL ) hl_null_access();
 	r30 = r32->length;
 	r31 = 0;
-	if( r31 >= r30 ) goto label$891d561_9_241;
+	if( r31 >= r30 ) goto label$891d561_8_241;
 	r32 = r0->hitInteractives;
 	if( r32 == NULL ) hl_null_access();
 	r8 = hl_types_ArrayObj_pop(r32);
 	r34 = (h3d__scene__Interactive)r8;
-	goto label$891d561_9_230;
-	label$891d561_9_241:
+	goto label$891d561_8_230;
+	label$891d561_8_241:
 	if( r7 == NULL ) hl_null_access();
 	r30 = r7->priority;
 	r4 = r30;
-	label$891d561_9_244:
+	label$891d561_8_244:
 	r32 = r0->hitInteractives;
 	if( r32 == NULL ) hl_null_access();
 	r30 = hl_types_ArrayObj_push(r32,((vdynamic*)r7));
-	goto label$891d561_9_72;
-	label$891d561_9_248:
+	goto label$891d561_8_72;
+	label$891d561_8_248:
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r6 = r5->length;
 	r30 = 0;
-	if( r6 != r30 ) goto label$891d561_9_255;
+	if( r6 != r30 ) goto label$891d561_8_255;
 	r7 = NULL;
 	return r7;
-	label$891d561_9_255:
+	label$891d561_8_255:
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r6 = r5->length;
 	r30 = 1;
-	if( r30 >= r6 ) goto label$891d561_9_503;
+	if( r30 >= r6 ) goto label$891d561_8_503;
 	r6 = 0;
 	r5 = r0->hitInteractives;
-	label$891d561_9_262:
+	label$891d561_8_262:
 	if( r5 == NULL ) hl_null_access();
 	r31 = r5->length;
-	if( r6 >= r31 ) goto label$891d561_9_495;
+	if( r6 >= r31 ) goto label$891d561_8_495;
 	r31 = r5->length;
-	if( ((unsigned)r6) < ((unsigned)r31) ) goto label$891d561_9_270;
+	if( ((unsigned)r6) < ((unsigned)r31) ) goto label$891d561_8_270;
 	r7 = NULL;
-	goto label$891d561_9_273;
-	label$891d561_9_270:
+	goto label$891d561_8_273;
+	label$891d561_8_270:
 	r33 = r5->array;
 	r8 = ((vdynamic**)(r33 + 1))[r6];
 	r7 = (h3d__scene__Interactive)r8;
-	label$891d561_9_273:
+	label$891d561_8_273:
 	++r6;
 	if( r7 == NULL ) hl_null_access();
 	r37 = r7->invPos;
 	r38 = 0.;
 	r52 = r7->preciseShape;
-	if( !r52 ) goto label$891d561_9_389;
+	if( !r52 ) goto label$891d561_8_389;
 	if( r23 == NULL ) hl_null_access();
 	r39 = r23->px;
 	r40 = r23->py;
@@ -667,7 +659,7 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 		r39 = (double)ret.v.d;
 	}
 	r41 = 0.;
-	if( !(r41 < r39) ) goto label$891d561_9_381;
+	if( !(r41 < r39) ) goto label$891d561_8_381;
 	r40 = r23->px;
 	r42 = r23->lx;
 	r41 = r39 * r42;
@@ -689,18 +681,18 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 	r18 = r7->hitPoint;
 	if( r18 == NULL ) hl_null_access();
 	r18->z = r42;
-	goto label$891d561_9_383;
-	label$891d561_9_381:
+	goto label$891d561_8_383;
+	label$891d561_8_381:
 	r40 = 1.;
 	r38 = r40;
-	label$891d561_9_383:
+	label$891d561_8_383:
 	r23->px = r24;
 	r23->py = r25;
 	r23->pz = r26;
 	r23->lx = r27;
 	r23->ly = r28;
 	r23->lz = r29;
-	label$891d561_9_389:
+	label$891d561_8_389:
 	r18 = r7->hitPoint;
 	if( r18 == NULL ) hl_null_access();
 	r39 = r18->x;
@@ -806,37 +798,37 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 	if( r55 == NULL ) hl_null_access();
 	r43 = r41 + r38;
 	r55->w = r43;
-	goto label$891d561_9_262;
-	label$891d561_9_495:
+	goto label$891d561_8_262;
+	label$891d561_8_495:
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r56 = hl_alloc_closure_ptr(&t$fun_9e0a57f,h3d_scene_Scene_sortHitPointByCameraDistance,r0);
-	if( r56 ) goto label$891d561_9_501;
+	if( r56 ) goto label$891d561_8_501;
 	r57 = NULL;
-	goto label$891d561_9_502;
-	label$891d561_9_501:
+	goto label$891d561_8_502;
+	label$891d561_8_501:
 	r57 = hl_alloc_closure_ptr(&t$fun_390b646,h3d_scene_Scene_handleEvent__$1,r56);
-	label$891d561_9_502:
+	label$891d561_8_502:
 	hl_types_ArrayObj_sort(r5,r57);
-	label$891d561_9_503:
+	label$891d561_8_503:
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r7 = NULL;
 	hl_types_ArrayObj_unshift(r5,((vdynamic*)r7));
-	label$891d561_9_507:
+	label$891d561_8_507:
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r4 = r5->length;
 	r6 = 0;
-	if( r6 >= r4 ) goto label$891d561_9_556;
+	if( r6 >= r4 ) goto label$891d561_8_556;
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r8 = hl_types_ArrayObj_pop(r5);
 	r7 = (h3d__scene__Interactive)r8;
-	if( r7 ) goto label$891d561_9_520;
+	if( r7 ) goto label$891d561_8_520;
 	r34 = NULL;
 	return r34;
-	label$891d561_9_520:
+	label$891d561_8_520:
 	if( r1 == NULL ) hl_null_access();
 	if( r7 == NULL ) hl_null_access();
 	r13 = r7->hitPoint;
@@ -853,29 +845,29 @@ h3d__scene__Interactive h3d_scene_Scene_handleEvent(h3d__scene__Scene r0,hxd__Ev
 	r1->relZ = r9;
 	h3d_scene_Interactive_handleEvent(r7,r1);
 	r53 = r1->cancel;
-	if( !r53 ) goto label$891d561_9_542;
+	if( !r53 ) goto label$891d561_8_542;
 	r53 = false;
 	r1->cancel = r53;
 	r53 = false;
 	r1->propagate = r53;
-	goto label$891d561_9_507;
-	label$891d561_9_542:
+	goto label$891d561_8_507;
+	label$891d561_8_542:
 	r53 = r1->propagate;
-	if( r53 ) goto label$891d561_9_555;
-	label$891d561_9_544:
+	if( r53 ) goto label$891d561_8_555;
+	label$891d561_8_544:
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r4 = r5->length;
 	r6 = 0;
-	if( r6 >= r4 ) goto label$891d561_9_555;
+	if( r6 >= r4 ) goto label$891d561_8_555;
 	r5 = r0->hitInteractives;
 	if( r5 == NULL ) hl_null_access();
 	r8 = hl_types_ArrayObj_pop(r5);
 	r34 = (h3d__scene__Interactive)r8;
-	goto label$891d561_9_544;
-	label$891d561_9_555:
+	goto label$891d561_8_544;
+	label$891d561_8_555:
 	return r7;
-	label$891d561_9_556:
+	label$891d561_8_556:
 	r7 = NULL;
 	return r7;
 }
@@ -890,11 +882,11 @@ void h3d_scene_Scene_addEventTarget(h3d__scene__Scene r0,h3d__scene__Interactive
 	r5 = NULL;
 	r3 = hl_types_ArrayObj_indexOf(r4,((vdynamic*)r1),r5);
 	r6 = 0;
-	if( r3 < r6 ) goto label$891d561_10_9;
+	if( r3 < r6 ) goto label$891d561_9_9;
 	r8 = (String)s$assert;
 	r7 = haxe_Exception_thrown(((vdynamic*)r8));
 	hl_throw((vdynamic*)r7);
-	label$891d561_10_9:
+	label$891d561_9_9:
 	r4 = r0->interactives;
 	if( r4 == NULL ) hl_null_access();
 	r3 = hl_types_ArrayObj_push(r4,((vdynamic*)r1));
@@ -909,26 +901,26 @@ void h3d_scene_Scene_removeEventTarget(h3d__scene__Scene r0,h3d__scene__Interact
 	r4 = r0->interactives;
 	if( r4 == NULL ) hl_null_access();
 	r3 = hl_types_ArrayObj_remove(r4,((vdynamic*)r1));
-	if( !r3 ) goto label$891d561_11_19;
+	if( !r3 ) goto label$891d561_10_19;
 	r5 = r0->events;
-	if( !r5 ) goto label$891d561_11_16;
+	if( !r5 ) goto label$891d561_10_16;
 	r5 = r0->events;
 	if( r5 == NULL ) hl_null_access();
-	if( r1 ) goto label$891d561_11_11;
+	if( r1 ) goto label$891d561_10_11;
 	r6 = NULL;
-	goto label$891d561_11_15;
-	label$891d561_11_11:
+	goto label$891d561_10_15;
+	label$891d561_10_11:
 	r6 = r1->f$44;
-	if( r6 ) goto label$891d561_11_15;
+	if( r6 ) goto label$891d561_10_15;
 	r6 = hl_to_virtual(&t$vrt_c8e313e,(vdynamic*)r1);
 	r1->f$44 = r6;
-	label$891d561_11_15:
+	label$891d561_10_15:
 	hxd_SceneEvents_onRemove(r5,r6);
-	label$891d561_11_16:
+	label$891d561_10_16:
 	r4 = r0->hitInteractives;
 	if( r4 == NULL ) hl_null_access();
 	r3 = hl_types_ArrayObj_remove(r4,((vdynamic*)r1));
-	label$891d561_11_19:
+	label$891d561_10_19:
 	return;
 }
 
@@ -966,12 +958,12 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r4 = 32;
 	r3 = r3 & r4;
 	r4 = 0;
-	if( r3 != r4 ) goto label$891d561_13_6;
+	if( r3 != r4 ) goto label$891d561_12_6;
 	h3d_scene_Object_onAdd(((h3d__scene__Object)r0));
-	label$891d561_13_6:
+	label$891d561_12_6:
 	if( r1 == NULL ) hl_null_access();
 	r5 = h3d_Engine_getCurrentTarget(r1);
-	if( r5 ) goto label$891d561_13_18;
+	if( r5 ) goto label$891d561_12_18;
 	r7 = r0->camera;
 	if( r7 == NULL ) hl_null_access();
 	r3 = r1->width;
@@ -980,8 +972,8 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r9 = (double)r3;
 	r8 = r8 / r9;
 	r7->screenRatio = r8;
-	goto label$891d561_13_27;
-	label$891d561_13_18:
+	goto label$891d561_12_27;
+	label$891d561_12_18:
 	r7 = r0->camera;
 	if( r7 == NULL ) hl_null_access();
 	if( r5 == NULL ) hl_null_access();
@@ -991,20 +983,20 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r9 = (double)r3;
 	r8 = r8 / r9;
 	r7->screenRatio = r8;
-	label$891d561_13_27:
+	label$891d561_12_27:
 	r7 = r0->camera;
 	if( r7 == NULL ) hl_null_access();
 	h3d_Camera_update(r7);
 	r7 = r0->camera;
 	if( r7 == NULL ) hl_null_access();
 	r10 = r7->rightHanded;
-	if( !r10 ) goto label$891d561_13_39;
+	if( !r10 ) goto label$891d561_12_39;
 	r11 = r1->driver;
 	if( r11 == NULL ) hl_null_access();
 	r12 = (venum*)g$4b90600;
 	r3 = 1;
 	((void (*)(h3d__impl__Driver,venum*,int))r11->$type->vobj_proto[1])(r11,r12,r3);
-	label$891d561_13_39:
+	label$891d561_12_39:
 	r13 = r0->ctx;
 	if( r13 == NULL ) hl_null_access();
 	r7 = r0->camera;
@@ -1028,17 +1020,17 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r13 = r0->ctx;
 	if( r13 == NULL ) hl_null_access();
 	r15 = r13->passes;
-	if( r15 ) goto label$891d561_13_66;
+	if( r15 ) goto label$891d561_12_66;
 	r17 = NULL;
 	r16 = r17;
-	goto label$891d561_13_156;
-	label$891d561_13_66:
+	goto label$891d561_12_156;
+	label$891d561_12_66:
 	r3 = 1;
 	r4 = 0;
 	r18 = 0;
-	label$891d561_13_69:
+	label$891d561_12_69:
 	r10 = true;
-	if( !r10 ) goto label$891d561_13_155;
+	if( !r10 ) goto label$891d561_12_155;
 	r17 = r15;
 	r19 = NULL;
 	r15 = r19;
@@ -1046,46 +1038,46 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r19 = r20;
 	r22 = 0;
 	r21 = r22;
-	label$891d561_13_79:
-	if( !r17 ) goto label$891d561_13_145;
+	label$891d561_12_79:
+	if( !r17 ) goto label$891d561_12_145;
 	++r21;
 	r20 = r17;
 	r22 = 0;
 	r4 = r22;
 	r22 = 0;
 	r24 = r3;
-	label$891d561_13_87:
-	if( r22 >= r24 ) goto label$891d561_13_97;
+	label$891d561_12_87:
+	if( r22 >= r24 ) goto label$891d561_12_97;
 	++r22;
 	++r4;
 	if( r20 == NULL ) hl_null_access();
 	r23 = r20->next;
 	r20 = r23;
-	if( r23 ) goto label$891d561_13_96;
-	goto label$891d561_13_97;
-	label$891d561_13_96:
-	goto label$891d561_13_87;
-	label$891d561_13_97:
+	if( r23 ) goto label$891d561_12_96;
+	goto label$891d561_12_97;
+	label$891d561_12_96:
+	goto label$891d561_12_87;
+	label$891d561_12_97:
 	r18 = r3;
-	label$891d561_13_98:
+	label$891d561_12_98:
 	r24 = 0;
-	if( r24 < r4 ) goto label$891d561_13_104;
+	if( r24 < r4 ) goto label$891d561_12_104;
 	r24 = 0;
-	if( r24 >= r18 ) goto label$891d561_13_143;
-	if( !r20 ) goto label$891d561_13_143;
-	label$891d561_13_104:
+	if( r24 >= r18 ) goto label$891d561_12_143;
+	if( !r20 ) goto label$891d561_12_143;
+	label$891d561_12_104:
 	r24 = 0;
-	if( r4 != r24 ) goto label$891d561_13_112;
+	if( r4 != r24 ) goto label$891d561_12_112;
 	r23 = r20;
 	if( r20 == NULL ) hl_null_access();
 	r25 = r20->next;
 	r20 = r25;
 	--r18;
-	goto label$891d561_13_136;
-	label$891d561_13_112:
+	goto label$891d561_12_136;
+	label$891d561_12_112:
 	r24 = 0;
-	if( r18 == r24 ) goto label$891d561_13_126;
-	if( !r20 ) goto label$891d561_13_126;
+	if( r18 == r24 ) goto label$891d561_12_126;
+	if( !r20 ) goto label$891d561_12_126;
 	if( r17 == NULL ) hl_null_access();
 	r26 = r17->pass;
 	if( r26 == NULL ) hl_null_access();
@@ -1096,47 +1088,47 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r24 = r26->passId;
 	r22 = r22 - r24;
 	r24 = 0;
-	if( r24 < r22 ) goto label$891d561_13_132;
-	label$891d561_13_126:
+	if( r24 < r22 ) goto label$891d561_12_132;
+	label$891d561_12_126:
 	r23 = r17;
 	if( r17 == NULL ) hl_null_access();
 	r25 = r17->next;
 	r17 = r25;
 	--r4;
-	goto label$891d561_13_136;
-	label$891d561_13_132:
+	goto label$891d561_12_136;
+	label$891d561_12_132:
 	r23 = r20;
 	r25 = r20->next;
 	r20 = r25;
 	--r18;
-	label$891d561_13_136:
-	if( !r19 ) goto label$891d561_13_140;
+	label$891d561_12_136:
+	if( !r19 ) goto label$891d561_12_140;
 	if( r19 == NULL ) hl_null_access();
 	r19->next = r23;
-	goto label$891d561_13_141;
-	label$891d561_13_140:
+	goto label$891d561_12_141;
+	label$891d561_12_140:
 	r15 = r23;
-	label$891d561_13_141:
+	label$891d561_12_141:
 	r19 = r23;
-	goto label$891d561_13_98;
-	label$891d561_13_143:
+	goto label$891d561_12_98;
+	label$891d561_12_143:
 	r17 = r20;
-	goto label$891d561_13_79;
-	label$891d561_13_145:
+	goto label$891d561_12_79;
+	label$891d561_12_145:
 	if( r19 == NULL ) hl_null_access();
 	r27 = NULL;
 	r19->next = r27;
 	r24 = 1;
-	if( r24 < r21 ) goto label$891d561_13_151;
-	goto label$891d561_13_155;
-	label$891d561_13_151:
+	if( r24 < r21 ) goto label$891d561_12_151;
+	goto label$891d561_12_155;
+	label$891d561_12_151:
 	r24 = 2;
 	r22 = r3 * r24;
 	r3 = r22;
-	goto label$891d561_13_69;
-	label$891d561_13_155:
+	goto label$891d561_12_69;
+	label$891d561_12_155:
 	r16 = r15;
-	label$891d561_13_156:
+	label$891d561_12_156:
 	r13 = r0->ctx;
 	if( r13 == NULL ) hl_null_access();
 	r13->passes = r16;
@@ -1148,26 +1140,26 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r29 = hl_alloc_array(r30,r3);
 	r28 = hl_types_ArrayObj_alloc(r29);
 	r3 = -1;
-	label$891d561_13_167:
-	if( !r17 ) goto label$891d561_13_230;
+	label$891d561_12_167:
+	if( !r17 ) goto label$891d561_12_230;
 	if( r17 == NULL ) hl_null_access();
 	r26 = r17->pass;
 	if( r26 == NULL ) hl_null_access();
 	r4 = r26->passId;
 	r19 = r17;
 	r20 = NULL;
-	label$891d561_13_175:
-	if( !r19 ) goto label$891d561_13_186;
+	label$891d561_12_175:
+	if( !r19 ) goto label$891d561_12_186;
 	if( r19 == NULL ) hl_null_access();
 	r26 = r19->pass;
 	if( r26 == NULL ) hl_null_access();
 	r18 = r26->passId;
-	if( r18 != r4 ) goto label$891d561_13_186;
+	if( r18 != r4 ) goto label$891d561_12_186;
 	r20 = r19;
 	r23 = r19->next;
 	r19 = r23;
-	goto label$891d561_13_175;
-	label$891d561_13_186:
+	goto label$891d561_12_175;
+	label$891d561_12_186:
 	if( r20 == NULL ) hl_null_access();
 	r25 = NULL;
 	r20->next = r25;
@@ -1177,15 +1169,15 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	if( r31 == NULL ) hl_null_access();
 	++r3;
 	r18 = r31->length;
-	if( ((unsigned)r3) < ((unsigned)r18) ) goto label$891d561_13_198;
+	if( ((unsigned)r3) < ((unsigned)r18) ) goto label$891d561_12_198;
 	r32 = NULL;
-	goto label$891d561_13_201;
-	label$891d561_13_198:
+	goto label$891d561_12_201;
+	label$891d561_12_198:
 	r29 = r31->array;
 	r33 = ((vdynamic**)(r29 + 1))[r3];
 	r32 = (h3d__scene__PassObjects)r33;
-	label$891d561_13_201:
-	if( r32 ) goto label$891d561_13_214;
+	label$891d561_12_201:
+	if( r32 ) goto label$891d561_12_214;
 	r34 = (h3d__scene__PassObjects)hl_alloc_obj(&t$h3d_scene_PassObjects);
 	h3d_scene_PassObjects_new(r34);
 	r32 = r34;
@@ -1194,12 +1186,12 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r31 = r13->cachedPassObjects;
 	if( r31 == NULL ) hl_null_access();
 	r21 = r31->length;
-	if( ((unsigned)r3) < ((unsigned)r21) ) goto label$891d561_13_212;
+	if( ((unsigned)r3) < ((unsigned)r21) ) goto label$891d561_12_212;
 	hl_types_ArrayObj___expand(r31,r3);
-	label$891d561_13_212:
+	label$891d561_12_212:
 	r29 = r31->array;
 	((h3d__scene__PassObjects*)(r29 + 1))[r3] = r34;
-	label$891d561_13_214:
+	label$891d561_12_214:
 	if( r32 == NULL ) hl_null_access();
 	if( r17 == NULL ) hl_null_access();
 	r26 = r17->pass;
@@ -1215,10 +1207,10 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	if( r28 == NULL ) hl_null_access();
 	r18 = hl_types_ArrayObj_push(r28,((vdynamic*)r32));
 	r17 = r19;
-	goto label$891d561_13_167;
-	label$891d561_13_230:
+	goto label$891d561_12_167;
+	label$891d561_12_230:
 	r37 = r0->lightSystem;
-	if( !r37 ) goto label$891d561_13_240;
+	if( !r37 ) goto label$891d561_12_240;
 	r13 = r0->ctx;
 	if( r13 == NULL ) hl_null_access();
 	r37 = r0->lightSystem;
@@ -1227,21 +1219,21 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	if( r37 == NULL ) hl_null_access();
 	r13 = r0->ctx;
 	((void (*)(h3d__scene__LightSystem,h3d__scene__RenderContext))r37->$type->vobj_proto[1])(r37,r13);
-	label$891d561_13_240:
+	label$891d561_12_240:
 	r14 = r0->renderer;
 	if( r14 == NULL ) hl_null_access();
 	h3d_scene_Renderer_process(r14,r28);
 	r7 = r0->camera;
 	if( r7 == NULL ) hl_null_access();
 	r10 = r7->rightHanded;
-	if( !r10 ) goto label$891d561_13_253;
+	if( !r10 ) goto label$891d561_12_253;
 	if( r1 == NULL ) hl_null_access();
 	r11 = r1->driver;
 	if( r11 == NULL ) hl_null_access();
 	r12 = (venum*)g$4b90600;
 	r4 = 0;
 	((void (*)(h3d__impl__Driver,venum*,int))r11->$type->vobj_proto[1])(r11,r12,r4);
-	label$891d561_13_253:
+	label$891d561_12_253:
 	r13 = r0->ctx;
 	if( r13 == NULL ) hl_null_access();
 	h3d_scene_RenderContext_done(r13);
@@ -1259,8 +1251,8 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r13->engine = r6;
 	r4 = 0;
 	r18 = r3;
-	label$891d561_13_270:
-	if( r4 >= r18 ) goto label$891d561_13_296;
+	label$891d561_12_270:
+	if( r4 >= r18 ) goto label$891d561_12_296;
 	r21 = r4;
 	++r4;
 	r13 = r0->ctx;
@@ -1268,14 +1260,14 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r31 = r13->cachedPassObjects;
 	if( r31 == NULL ) hl_null_access();
 	r24 = r31->length;
-	if( ((unsigned)r21) < ((unsigned)r24) ) goto label$891d561_13_282;
+	if( ((unsigned)r21) < ((unsigned)r24) ) goto label$891d561_12_282;
 	r32 = NULL;
-	goto label$891d561_13_285;
-	label$891d561_13_282:
+	goto label$891d561_12_285;
+	label$891d561_12_282:
 	r29 = r31->array;
 	r33 = ((vdynamic**)(r29 + 1))[r21];
 	r32 = (h3d__scene__PassObjects)r33;
-	label$891d561_13_285:
+	label$891d561_12_285:
 	if( r32 == NULL ) hl_null_access();
 	r35 = NULL;
 	r32->name = r35;
@@ -1286,8 +1278,17 @@ void h3d_scene_Scene_render(h3d__scene__Scene r0,h3d__Engine r1) {
 	r19 = NULL;
 	r36->lastDisc = r19;
 	r36->discarded = r19;
-	goto label$891d561_13_270;
-	label$891d561_13_296:
+	goto label$891d561_12_270;
+	label$891d561_12_296:
 	return;
+}
+
+int h3d_scene_Scene_handleEvent__$1(vclosure* r0,vdynamic* r1,vdynamic* r2) {
+	h3d__scene__Interactive r3, r4;
+	int r5;
+	r3 = (h3d__scene__Interactive)hl_dyn_castp(&r1,&t$_dyn,&t$h3d_scene_Interactive);
+	r4 = (h3d__scene__Interactive)hl_dyn_castp(&r2,&t$_dyn,&t$h3d_scene_Interactive);
+	r5 = r0->hasValue ? ((int (*)(vdynamic*,h3d__scene__Interactive,h3d__scene__Interactive))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(h3d__scene__Interactive,h3d__scene__Interactive))r0->fun)(r3,r4);
+	return r5;
 }
 

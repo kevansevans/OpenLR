@@ -112,6 +112,12 @@ class LineBase
 		colorLayer.lineTo(gfxEnd.x, gfxEnd.y);
 	}
 	
+	public function clear()
+	{
+		colorLayer.remove();
+		rideLayer.remove();
+	}
+	
 	public function collide(_point:RidePoint) {
 		
 	}

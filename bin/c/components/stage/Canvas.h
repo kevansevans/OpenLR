@@ -85,7 +85,6 @@ struct _components__stage__Canvas {
 	h2d__Object scenePlaybackLayer;
 	h2d__Object colorLayer;
 	h2d__Object preview;
-	int eraserSize;
 	venum* drawMode;
 	h2d__Object sledderLayer;
 };

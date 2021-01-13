@@ -5,6 +5,7 @@
 void components_physics_Stick_new(components__physics__Stick,components__physics__RidePoint,components__physics__RidePoint);
 #include <h2d/col/Point.h>
 #include <hl/natives.h>
+extern hl_type t$_f64;
 
 void components_physics_ScarfStick_new(components__physics__ScarfStick r0,components__physics__RidePoint r1,components__physics__RidePoint r2) {
 	components_physics_Stick_new(((components__physics__Stick)r0),r1,r2);
@@ -12,10 +13,12 @@ void components_physics_ScarfStick_new(components__physics__ScarfStick r0,compon
 }
 
 bool components_physics_ScarfStick_satisfy(components__physics__ScarfStick r0,vdynamic* r1) {
-	bool r11;
+	bool r13;
 	h2d__col__Point r3;
 	components__physics__RidePoint r4;
-	double r2, r5, r6, r7, r8, r9, r10;
+	double r2, r5, r6, r7, r8, r12;
+	vdynamic *r9, *r11;
+	int r10;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
@@ -38,40 +41,46 @@ bool components_physics_ScarfStick_satisfy(components__physics__ScarfStick r0,vd
 	if( r3 == NULL ) hl_null_access();
 	r6 = r3->y;
 	r5 = r5 - r6;
-	r7 = 2.;
-	r6 = hl_math_pow(r2,r7);
-	r8 = 2.;
-	r7 = hl_math_pow(r5,r8);
+	r6 = r2 * r2;
+	r7 = r5 * r5;
 	r6 = r6 + r7;
 	r6 = hl_math_sqrt(r6);
+	r9 = NULL;
 	r8 = 0.;
-	if( r6 != r8 ) goto label$e5dd32e_2_32;
-	r7 = 0.;
-	goto label$e5dd32e_2_37;
-	label$e5dd32e_2_32:
+	if( r6 != r8 ) goto label$e5dd32e_2_33;
+	r10 = 0;
+	r7 = (double)r10;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	goto label$e5dd32e_2_39;
+	label$e5dd32e_2_33:
 	r8 = r0->restLength;
 	r7 = r6 - r8;
 	r7 = r7 / r6;
 	r8 = 0.5;
 	r7 = r7 * r8;
-	label$e5dd32e_2_37:
-	r8 = r2 * r7;
-	r9 = r5 * r7;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	label$e5dd32e_2_39:
+	r8 = r11 ? r11->v.d : 0;
+	r7 = r2 * r8;
+	r12 = r11 ? r11->v.d : 0;
+	r8 = r5 * r12;
 	r4 = r0->b;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r10 = r3->x;
-	r10 = r10 + r8;
-	r3->x = r10;
+	r12 = r3->x;
+	r12 = r12 + r7;
+	r3->x = r12;
 	r4 = r0->b;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r10 = r3->y;
-	r10 = r10 + r9;
-	r3->y = r10;
-	r11 = r1 ? r1->v.b : 0;
-	return r11;
+	r12 = r3->y;
+	r12 = r12 + r8;
+	r3->y = r12;
+	r13 = r1 ? r1->v.b : 0;
+	return r13;
 }
 

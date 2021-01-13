@@ -16,9 +16,9 @@ void h2d_Object_onRemove(h2d__Object);
 #include <h2d/RenderContext.h>
 void h2d_TileGroup_drawWith(h2d__TileGroup,h2d__RenderContext,h2d__Drawable);
 #include <h3d/Buffer.h>
+#include <h3d/impl/ManagedBuffer.h>
 #include <h3d/Engine.h>
 void h2d_Object_sync(h2d__Object,h2d__RenderContext);
-bool h3d_Buffer_isDisposed(h3d__Buffer);
 extern h3d__$Engine g$_h3d_Engine;
 void h2d_TileLayerContent_alloc(h2d__TileLayerContent,h3d__Engine);
 #include <h2d/impl/BatchDrawState.h>
@@ -153,38 +153,55 @@ void h2d_TileGroup_draw(h2d__TileGroup r0,h2d__RenderContext r1) {
 }
 
 void h2d_TileGroup_sync(h2d__TileGroup r0,h2d__RenderContext r1) {
+	vvirtual *r8;
 	h2d__TileLayerContent r4;
-	bool r3;
-	h3d__Engine r6;
-	h3d__$Engine r7;
+	bool r3, r6;
+	h3d__Engine r9;
+	h3d__$Engine r10;
 	h3d__Buffer r5;
+	h3d__impl__ManagedBuffer r7;
 	h2d_Object_sync(((h2d__Object)r0),r1);
 	r3 = r0->visible;
-	if( !r3 ) goto label$daf1523_7_14;
+	if( !r3 ) goto label$daf1523_7_24;
 	r4 = r0->content;
 	if( r4 == NULL ) hl_null_access();
 	r5 = r4->buffer;
-	if( !r5 ) goto label$daf1523_7_11;
+	if( !r5 ) goto label$daf1523_7_19;
 	r5 = r4->buffer;
 	if( r5 == NULL ) hl_null_access();
-	r3 = h3d_Buffer_isDisposed(r5);
-	if( !r3 ) goto label$daf1523_7_14;
-	label$daf1523_7_11:
-	r7 = (h3d__$Engine)g$_h3d_Engine;
-	r6 = r7->CURRENT;
-	h2d_TileLayerContent_alloc(r4,r6);
-	label$daf1523_7_14:
+	r7 = r5->buffer;
+	if( !r7 ) goto label$daf1523_7_17;
+	r7 = r5->buffer;
+	if( r7 == NULL ) hl_null_access();
+	r8 = r7->vbuf;
+	if( !r8 ) goto label$daf1523_7_17;
+	r6 = false;
+	goto label$daf1523_7_18;
+	label$daf1523_7_17:
+	r6 = true;
+	label$daf1523_7_18:
+	goto label$daf1523_7_20;
+	label$daf1523_7_19:
+	r6 = true;
+	label$daf1523_7_20:
+	if( !r6 ) goto label$daf1523_7_24;
+	r10 = (h3d__$Engine)g$_h3d_Engine;
+	r9 = r10->CURRENT;
+	h2d_TileLayerContent_alloc(r4,r9);
+	label$daf1523_7_24:
 	return;
 }
 
 void h2d_TileGroup_drawWith(h2d__TileGroup r0,h2d__RenderContext r1,h2d__Drawable r2) {
-	h2d__impl__BatchDrawState r14;
+	vvirtual *r14;
+	h2d__impl__BatchDrawState r17;
 	h2d__TileLayerContent r4;
-	bool r8;
-	h3d__Engine r12;
-	h3d__$Engine r13;
+	bool r8, r12;
+	h3d__Engine r15;
+	h3d__$Engine r16;
 	h3d__Buffer r11;
-	int *r15, *r16;
+	int *r18, *r19;
+	h3d__impl__ManagedBuffer r13;
 	int r3, r6, r7, r9, r10;
 	r4 = r0->content;
 	if( r4 == NULL ) hl_null_access();
@@ -223,24 +240,37 @@ void h2d_TileGroup_drawWith(h2d__TileGroup r0,h2d__RenderContext r1,h2d__Drawabl
 	r4 = r0->content;
 	if( r4 == NULL ) hl_null_access();
 	r11 = r4->buffer;
-	if( !r11 ) goto label$daf1523_8_37;
+	if( !r11 ) goto label$daf1523_8_45;
 	r11 = r4->buffer;
 	if( r11 == NULL ) hl_null_access();
-	r8 = h3d_Buffer_isDisposed(r11);
-	if( !r8 ) goto label$daf1523_8_40;
-	label$daf1523_8_37:
-	r13 = (h3d__$Engine)g$_h3d_Engine;
-	r12 = r13->CURRENT;
-	h2d_TileLayerContent_alloc(r4,r12);
-	label$daf1523_8_40:
-	r14 = r4->state;
-	if( r14 == NULL ) hl_null_access();
+	r13 = r11->buffer;
+	if( !r13 ) goto label$daf1523_8_43;
+	r13 = r11->buffer;
+	if( r13 == NULL ) hl_null_access();
+	r14 = r13->vbuf;
+	if( !r14 ) goto label$daf1523_8_43;
+	r12 = false;
+	goto label$daf1523_8_44;
+	label$daf1523_8_43:
+	r12 = true;
+	label$daf1523_8_44:
+	goto label$daf1523_8_46;
+	label$daf1523_8_45:
+	r12 = true;
+	label$daf1523_8_46:
+	if( !r12 ) goto label$daf1523_8_50;
+	r16 = (h3d__$Engine)g$_h3d_Engine;
+	r15 = r16->CURRENT;
+	h2d_TileLayerContent_alloc(r4,r15);
+	label$daf1523_8_50:
+	r17 = r4->state;
+	if( r17 == NULL ) hl_null_access();
 	r11 = r4->buffer;
 	r7 = r6;
-	r15 = &r7;
+	r18 = &r7;
 	r9 = r3 - r6;
-	r16 = &r9;
-	h2d_impl_BatchDrawState_drawQuads(r14,r1,r11,r15,r16);
+	r19 = &r9;
+	h2d_impl_BatchDrawState_drawQuads(r17,r1,r11,r18,r19);
 	return;
 }
 

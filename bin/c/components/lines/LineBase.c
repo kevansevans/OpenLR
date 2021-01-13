@@ -8,12 +8,12 @@ void h2d_Graphics_clear(h2d__Graphics);
 void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
 void h2d_Graphics_flush(h2d__Graphics);
 void h2d_Graphics_addVertex(h2d__Graphics,double,double,double,double,double,double,double*,double*);
+#include <h2d/Object.h>
 #include <components/physics/RidePoint.h>
 extern hl_type t$vrt_f776906;
 extern hl_type t$_i32;
 extern hl_type t$h2d_col_Point;
 extern hl_type t$_bool;
-#include <h2d/Object.h>
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
 extern hl_type t$h2d_Graphics;
 void h2d_Graphics_new(h2d__Graphics,h2d__Object);
@@ -226,6 +226,30 @@ void components_lines_LineBase_render(components__lines__LineBase r0) {
 	return;
 }
 
+void components_lines_LineBase_clear(components__lines__LineBase r0) {
+	h2d__Graphics r1;
+	h2d__Object r3;
+	r1 = r0->colorLayer;
+	if( !r1 ) goto label$eaddf6e_4_8;
+	if( r1 == NULL ) hl_null_access();
+	r3 = r1->parent;
+	if( !r3 ) goto label$eaddf6e_4_8;
+	r3 = r1->parent;
+	if( r3 == NULL ) hl_null_access();
+	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r1);
+	label$eaddf6e_4_8:
+	r1 = r0->rideLayer;
+	if( !r1 ) goto label$eaddf6e_4_16;
+	if( r1 == NULL ) hl_null_access();
+	r3 = r1->parent;
+	if( !r3 ) goto label$eaddf6e_4_16;
+	r3 = r1->parent;
+	if( r3 == NULL ) hl_null_access();
+	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r1);
+	label$eaddf6e_4_16:
+	return;
+}
+
 void components_lines_LineBase_collide(components__lines__LineBase r0,components__physics__RidePoint r1) {
 	return;
 }
@@ -257,11 +281,11 @@ void components_lines_LineBase_new(components__lines__LineBase r0,h2d__col__Poin
 	double r6, r9, r11;
 	double *r10, *r12;
 	int r5;
-	if( r4 ) goto label$eaddf6e_6_3;
+	if( r4 ) goto label$eaddf6e_7_3;
 	r5 = 0;
 	r4 = hl_alloc_dynamic(&t$_i32);
 	r4->v.i = r5;
-	label$eaddf6e_6_3:
+	label$eaddf6e_7_3:
 	r5 = 15;
 	r0->lineCapSegment = r5;
 	r6 = 0.0025000000000000001;

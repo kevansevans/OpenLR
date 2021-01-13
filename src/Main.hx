@@ -4,6 +4,7 @@ import components.managers.Grid;
 import components.managers.Musicplayer;
 import components.managers.Riders;
 import components.managers.Simulation;
+import components.stage.PolyCanvas;
 import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import enums.Commands;
@@ -67,6 +68,8 @@ class Main extends App
 	
 	public static var canvas:Canvas;
 	
+	public static var polyCanvas:PolyCanvas;
+	
 	public static var viewGridSize:Int = 14;
 	
 	public static var canvas_interaction:Interactive;
@@ -100,7 +103,6 @@ class Main extends App
 	#end
 	
 	var mask:Mask;
-	
 	
 	static function main() 
 	{
@@ -149,6 +151,8 @@ class Main extends App
 		
 		canvas.x = engine.width / 2;
 		canvas.y = engine.height / 2;
+		
+		//polyCanvas = new PolyCanvas(s3d);
 		
 		canvas_interaction = new Interactive(engine.width, engine.height, s2d);
 		
@@ -365,32 +369,19 @@ class Main extends App
 			#end
 			
 			if (trackName != null) console.runCommand("saveTrack");
-			canvas.clear();
+			grid.deleteTrack();
 			riders.deleteAllRiders();
 			saveload.loadTrack(_name, _offset); 
 		});
-		});
 		console.addCommand(Commands.listSavedTracks, "Print any found tracks", [], function() {saveload.listTrackFiles(); });
-		var arg23:ConsoleArgDesc = {t: AFloat, opt: true, name : "Snap distance"};
-		console.addCommand(Commands.snapToGrid, "Enable grid snapping. Set to 0 to disable", [arg23], function(?_range:Float = 0) {
-			if (_range > viewGridSize) {
-				console.log('Snap distance ${_range} is larger than the ruler\'s dimensions of ${viewGridSize}', 0xFF0000);
-				return;
-			}
-			toolControl.gridSnapDistance = _range;
-			if (_range == 0) {
-				console.log('Grid snapping off...');
-			} else {
-				console.log('Grid snapping set to ${_range}');
-			}
+		var arg23:ConsoleArgDesc = {t: ABool, opt: false, name : "True/False"};
+		console.addCommand(Commands.snapToGrid, "Toggle grid snapping", [arg23], function(_toggle:Bool) {
+			toolControl.gridSnapping = _toggle;
+			console.log(_toggle == true ? 'Grid snapping on!' : 'Grid snapping off!');
 		});
-		console.addCommand(Commands.snapToLines, "Enable line snapping. Set to 0 to disable", [arg23], function(?_range:Float = 0) {
-			toolControl.snapDistance = _range;
-			if (_range == 0) {
-				console.log('Line snapping off...');
-			} else {
-				console.log('Line snapping set to ${_range}');
-			}
+		console.addCommand(Commands.snapToLines, "Toggle line snapping", [arg23], function(_toggle:Bool) {
+			toolControl.lineSnapping = _toggle;
+			console.log(_toggle == true ? 'Line snapping on!' : 'Line snapping off!');
 		});
 		console.addCommand(Commands.newTrack, "New track. Will save if track name has been set", [], function() {
 			
@@ -404,7 +395,7 @@ class Main extends App
 			#end
 			
 			if (trackName != null) console.runCommand("saveTrack");
-			canvas.clear();
+			grid.deleteTrack();
 			riders.deleteAllRiders();
 			riders.addNewRider("Bosh", new h2d.col.Point(0, 0));
 			trackName = null;
@@ -426,7 +417,8 @@ class Main extends App
 			#end
 			
 			if (trackName != null) console.runCommand("saveTrack");
-			canvas.clear();
+			
+			grid.deleteTrack();
 			riders.deleteAllRiders();
 			saveload.loadJSON(_name);
 		});
@@ -455,6 +447,8 @@ class Main extends App
 			audio.offset = _offset;
 		});
 		#elseif js*/
+		
+		//this does nothing on JS end of things, need to investigate
 		var argOffset:ConsoleArgDesc = {t: AFloat, opt: true, name : "Offset"};
 		console.addCommand(Commands.loadAudio, "Import a .ogg file to play with track", [argOffset], function(_offset:Float = 0.0) {
 			File.browse( function(_file:BrowseSelect) {

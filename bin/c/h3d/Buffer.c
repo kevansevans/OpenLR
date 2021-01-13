@@ -72,44 +72,22 @@ void h3d_Buffer_new(h3d__Buffer r0,int r1,int r2,hl__types__ArrayObj r3) {
 	return;
 }
 
-bool h3d_Buffer_isDisposed(h3d__Buffer r0) {
-	vvirtual *r3, *r4;
-	bool r2;
-	h3d__impl__ManagedBuffer r1;
-	r1 = r0->buffer;
-	if( !r1 ) goto label$e040f64_2_11;
-	r1 = r0->buffer;
-	if( r1 == NULL ) hl_null_access();
-	r3 = r1->vbuf;
-	r4 = NULL;
-	if( r3 == r4 || (r3 && r4 && r3->value && r4->value && r3->value == r4->value) ) goto label$e040f64_2_9;
-	r2 = false;
-	goto label$e040f64_2_10;
-	label$e040f64_2_9:
-	r2 = true;
-	label$e040f64_2_10:
-	return r2;
-	label$e040f64_2_11:
-	r2 = true;
-	return r2;
-}
-
 void h3d_Buffer_dispose(h3d__Buffer r0) {
 	h3d__Buffer r3;
 	h3d__impl__ManagedBuffer r2;
 	r2 = r0->buffer;
-	if( !r2 ) goto label$e040f64_3_12;
+	if( !r2 ) goto label$e040f64_2_12;
 	r2 = r0->buffer;
 	if( r2 == NULL ) hl_null_access();
 	h3d_impl_ManagedBuffer_freeBuffer(r2,r0);
 	r2 = NULL;
 	r0->buffer = r2;
 	r3 = r0->next;
-	if( !r3 ) goto label$e040f64_3_12;
+	if( !r3 ) goto label$e040f64_2_12;
 	r3 = r0->next;
 	if( r3 == NULL ) hl_null_access();
 	h3d_Buffer_dispose(r3);
-	label$e040f64_3_12:
+	label$e040f64_2_12:
 	return;
 }
 
@@ -118,16 +96,16 @@ int h3d_Buffer_totalVertices(h3d__Buffer r0) {
 	int r1, r4, r5;
 	r1 = 0;
 	r2 = r0;
-	label$e040f64_4_2:
-	if( !r2 ) goto label$e040f64_4_11;
+	label$e040f64_3_2:
+	if( !r2 ) goto label$e040f64_3_11;
 	if( r2 == NULL ) hl_null_access();
 	r5 = r2->vertices;
 	r4 = r1 + r5;
 	r1 = r4;
 	r3 = r2->next;
 	r2 = r3;
-	goto label$e040f64_4_2;
-	label$e040f64_4_11:
+	goto label$e040f64_3_2;
+	label$e040f64_3_11:
 	return r1;
 }
 
@@ -137,42 +115,42 @@ void h3d_Buffer_uploadVector(h3d__Buffer r0,hl__types__ArrayBytes_hl_F32 r1,int 
 	vdynamic *r11;
 	h3d__impl__ManagedBuffer r13;
 	int r5, r9, r10, r14, r15, r16;
-	if( r4 ) goto label$e040f64_5_3;
+	if( r4 ) goto label$e040f64_4_3;
 	r5 = 0;
-	goto label$e040f64_5_4;
-	label$e040f64_5_3:
+	goto label$e040f64_4_4;
+	label$e040f64_4_3:
 	r5 = *r4;
-	label$e040f64_5_4:
+	label$e040f64_4_4:
 	r6 = r0;
-	label$e040f64_5_5:
-	if( !r6 ) goto label$e040f64_5_16;
+	label$e040f64_4_5:
+	if( !r6 ) goto label$e040f64_4_16;
 	if( r6 == NULL ) hl_null_access();
 	r10 = r6->vertices;
-	if( r5 < r10 ) goto label$e040f64_5_16;
+	if( r5 < r10 ) goto label$e040f64_4_16;
 	r10 = r6->vertices;
 	r9 = r5 - r10;
 	r5 = r9;
 	r8 = r6->next;
 	r6 = r8;
-	goto label$e040f64_5_5;
-	label$e040f64_5_16:
+	goto label$e040f64_4_5;
+	label$e040f64_4_16:
 	r10 = 0;
-	if( r10 >= r3 ) goto label$e040f64_5_51;
-	if( r6 ) goto label$e040f64_5_23;
+	if( r10 >= r3 ) goto label$e040f64_4_51;
+	if( r6 ) goto label$e040f64_4_23;
 	r12 = (String)s$Too_many_vertices;
 	r11 = haxe_Exception_thrown(((vdynamic*)r12));
 	hl_throw((vdynamic*)r11);
-	label$e040f64_5_23:
+	label$e040f64_4_23:
 	r9 = r3 + r5;
 	if( r6 == NULL ) hl_null_access();
 	r10 = r6->vertices;
-	if( r10 >= r9 ) goto label$e040f64_5_30;
+	if( r10 >= r9 ) goto label$e040f64_4_30;
 	r9 = r6->vertices;
 	r9 = r9 - r5;
-	goto label$e040f64_5_31;
-	label$e040f64_5_30:
+	goto label$e040f64_4_31;
+	label$e040f64_4_30:
 	r9 = r3;
-	label$e040f64_5_31:
+	label$e040f64_4_31:
 	r13 = r6->buffer;
 	if( r13 == NULL ) hl_null_access();
 	r10 = r6->position;
@@ -192,8 +170,8 @@ void h3d_Buffer_uploadVector(h3d__Buffer r0,hl__types__ArrayBytes_hl_F32 r1,int 
 	r3 = r10;
 	r8 = r6->next;
 	r6 = r8;
-	goto label$e040f64_5_16;
-	label$e040f64_5_51:
+	goto label$e040f64_4_16;
+	label$e040f64_4_51:
 	return;
 }
 

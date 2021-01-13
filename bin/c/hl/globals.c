@@ -234,7 +234,9 @@
 #include <components/sledder/BodyPart.h>
 #include <hxd/res/Image.h>
 #include <hxd/res/ImageInfo.h>
+#include <h3d/col/Point.h>
 #include <haxe/Log.h>
+#include <components/tool/ToolFunction.h>
 #include <haxe/format/JsonParser.h>
 #include <haxe/io/Input.h>
 #include <format/gif/Reader.h>
@@ -269,7 +271,6 @@
 #include <hxd/impl/Allocator.h>
 #include <hxsl/Output.h>
 #include <h3d/impl/Feature.h>
-#include <h3d/col/Point.h>
 #include <hxd/SystemValue.h>
 #include <h3d/impl/_GlDriver/CompiledAttribute.h>
 #include <h3d/impl/InputNames.h>
@@ -466,13 +467,13 @@
 #include <_std/Type.h>
 #include <_Xml/XmlType_Impl_.h>
 #include <hxd/InteractiveScene.h>
+#include <hxd/impl/_Serializable/NoSerializeSupport.h>
 #include <format/gif/Tools.h>
 #include <format/mp3/CChannelMode.h>
 #include <format/mp3/CEmphasis.h>
 #include <format/mp3/Tools.h>
 #include <format/png/Tools.h>
 #include <format/tools/Deflate.h>
-#include <hxd/impl/_Serializable/NoSerializeSupport.h>
 #include <hxd/Interactive.h>
 #include <h2d/col/Collider.h>
 #include <h3d/col/Collider.h>
@@ -910,13 +911,15 @@ String s$loadTrack = 0;
 String s$Load_track_with_specified_name = 0;
 String s$listSavedTracks = 0;
 String s$Print_any_found_tracks = 0;
-String s$Snap_distance = 0;
+String s$True_False = 0;
 String s$snapToGrid = 0;
-String s$da9217b = 0;
-String s$Snap_distance_ = 0;
-String s$3533c42 = 0;
+String s$Toggle_grid_snapping = 0;
+String s$Grid_snapping_on_ = 0;
 String s$Grid_snapping_off_ = 0;
-String s$Grid_snapping_set_to_ = 0;
+String s$snapToLines = 0;
+String s$Toggle_line_snapping = 0;
+String s$Line_snapping_on_ = 0;
+String s$Line_snapping_off_ = 0;
 String s$newTrack = 0;
 String s$f9d2d9b = 0;
 String s$Bosh = 0;
@@ -1026,6 +1029,8 @@ String s$_already_occupied_renaming_to_ = 0;
 String s$_does_not_exist = 0;
 components__physics__$BindStick g$_components_physics_BindStick = 0;
 String s$No_riders_in_current_track = 0;
+String s$Set_flag_on_frame_ = 0;
+String s$Disabled_flag = 0;
 components__physics__$RepellStick g$_components_physics_RepellStick = 0;
 components__physics__$ScarfPoint g$_components_physics_ScarfPoint = 0;
 components__sledder__$BodyPart g$components_sledder_BodyPart = 0;
@@ -1085,6 +1090,8 @@ String s$ERROR_ = 0;
 String s$_font_color_ = 0;
 String s$490d6e0 = 0;
 String s$_font_br_ = 0;
+h3d__col__$Point g$_h3d_col_Point = 0;
+String s$_is_not_a_Mesh = 0;
 String s$Untitled = 0;
 String s$FPS_ = 0;
 String s$Draw_calls_ = 0;
@@ -1115,6 +1122,7 @@ haxe__$Log g$_haxe_Log = 0;
 String s$3b33a12 = 0;
 String s$components_tool_ToolBehavior = 0;
 String s$mouseDown = 0;
+components__tool__$ToolFunction g$_components_tool_ToolFunction = 0;
 venum* g$994fdec = 0;
 venum* g$92fe76c = 0;
 venum* g$ab5747c = 0;
@@ -1312,7 +1320,6 @@ venum* g$hxd_EventKind_EPush = 0;
 venum* g$hxd_EventKind_ERelease = 0;
 venum* g$hxd_EventKind_EKeyDown = 0;
 String s$Too_many_vertices = 0;
-h3d__col__$Point g$_h3d_col_Point = 0;
 String s$FOVY = 0;
 hxd__$SystemValue g$hxd_SystemValue = 0;
 venum* g$hxd_SystemValue_IsWindowed = 0;
@@ -1513,7 +1520,6 @@ h3d__prim__$Plane2D g$_h3d_prim_Plane2D = 0;
 String s$Cannot_realloc_ = 0;
 venum* g$h3d_BufferFlag_Triangles = 0;
 String s$Bounds_not_defined_for_ = 0;
-String s$_is_not_a_Mesh = 0;
 h3d__shader__$VertexColorAlpha g$_h3d_shader_VertexColorAlpha = 0;
 venum* g$4b90600 = 0;
 h3d__shader__$SkinTangent g$_h3d_shader_SkinTangent = 0;
@@ -2347,6 +2353,7 @@ String s$ignore = 0;
 String s$perInstance_ = 0;
 String s$doc_ = 0;
 String s$149c4f8 = 0;
+String s$borrow_ = 0;
 String s$_global_ = 0;
 String s$_input_ = 0;
 String s$_param_ = 0;
@@ -2414,6 +2421,7 @@ sys__$FileSystem g$_sys_FileSystem = 0;
 $Type g$_Type = 0;
 _Xml__$XmlType_Impl_ g$__Xml_XmlType_Impl_ = 0;
 hxd__$InteractiveScene g$_hxd_InteractiveScene = 0;
+hxd__impl___Serializable__$NoSerializeSupport g$29a4c6e = 0;
 format__gif__$Tools g$_format_gif_Tools = 0;
 venum* g$format_mp3_SamplingRate_SR_8000 = 0;
 venum* g$format_mp3_SamplingRate_SR_11025 = 0;
@@ -2460,7 +2468,6 @@ venum* g$h2d_BlendMode_Screen = 0;
 venum* g$h2d_BlendMode_Sub = 0;
 venum* g$h2d_BlendMode_Max = 0;
 venum* g$h2d_BlendMode_Min = 0;
-hxd__impl___Serializable__$NoSerializeSupport g$29a4c6e = 0;
 venum* g$h2d_LineHeightMode_TextOnly = 0;
 venum* g$h2d_ImageVerticalAlign_Top = 0;
 venum* g$h2d_ImageVerticalAlign_Middle = 0;
@@ -2903,13 +2910,15 @@ static struct _String const_s$loadTrack = {&t$String,(vbyte*)USTR("loadTrack"),9
 static struct _String const_s$Load_track_with_specified_name = {&t$String,(vbyte*)USTR("Load track with specified name"),30};
 static struct _String const_s$listSavedTracks = {&t$String,(vbyte*)USTR("listSavedTracks"),15};
 static struct _String const_s$Print_any_found_tracks = {&t$String,(vbyte*)USTR("Print any found tracks"),22};
-static struct _String const_s$Snap_distance = {&t$String,(vbyte*)USTR("Snap distance"),13};
+static struct _String const_s$True_False = {&t$String,(vbyte*)USTR("True/False"),10};
 static struct _String const_s$snapToGrid = {&t$String,(vbyte*)USTR("snapToGrid"),10};
-static struct _String const_s$da9217b = {&t$String,(vbyte*)USTR("Enable grid snapping. Set to 0 to disable"),41};
-static struct _String const_s$Snap_distance_ = {&t$String,(vbyte*)USTR("Snap distance "),14};
-static struct _String const_s$3533c42 = {&t$String,(vbyte*)USTR(" is larger than the ruler's dimensions of "),42};
-static struct _String const_s$Grid_snapping_off_ = {&t$String,(vbyte*)USTR("Grid snapping off..."),20};
-static struct _String const_s$Grid_snapping_set_to_ = {&t$String,(vbyte*)USTR("Grid snapping set to "),21};
+static struct _String const_s$Toggle_grid_snapping = {&t$String,(vbyte*)USTR("Toggle grid snapping"),20};
+static struct _String const_s$Grid_snapping_on_ = {&t$String,(vbyte*)USTR("Grid snapping on!"),17};
+static struct _String const_s$Grid_snapping_off_ = {&t$String,(vbyte*)USTR("Grid snapping off!"),18};
+static struct _String const_s$snapToLines = {&t$String,(vbyte*)USTR("snapToLines"),11};
+static struct _String const_s$Toggle_line_snapping = {&t$String,(vbyte*)USTR("Toggle line snapping"),20};
+static struct _String const_s$Line_snapping_on_ = {&t$String,(vbyte*)USTR("Line snapping on!"),17};
+static struct _String const_s$Line_snapping_off_ = {&t$String,(vbyte*)USTR("Line snapping off!"),18};
 static struct _String const_s$newTrack = {&t$String,(vbyte*)USTR("newTrack"),8};
 static struct _String const_s$f9d2d9b = {&t$String,(vbyte*)USTR("New track. Will save if track name has been set"),47};
 static struct _String const_s$Bosh = {&t$String,(vbyte*)USTR("Bosh"),4};
@@ -2994,6 +3003,8 @@ static struct _String const_s$Rider_name_ = {&t$String,(vbyte*)USTR("Rider name 
 static struct _String const_s$_already_occupied_renaming_to_ = {&t$String,(vbyte*)USTR(" already occupied, renaming to "),31};
 static struct _String const_s$_does_not_exist = {&t$String,(vbyte*)USTR(" does not exist"),15};
 static struct _String const_s$No_riders_in_current_track = {&t$String,(vbyte*)USTR("No riders in current track"),26};
+static struct _String const_s$Set_flag_on_frame_ = {&t$String,(vbyte*)USTR("Set flag on frame "),18};
+static struct _String const_s$Disabled_flag = {&t$String,(vbyte*)USTR("Disabled flag"),13};
 static struct _String const_s$Recursive_addChild = {&t$String,(vbyte*)USTR("Recursive addChild"),18};
 static struct _String const_s$filterTemp = {&t$String,(vbyte*)USTR("filterTemp"),10};
 static struct _String const_s$rider_body_png = {&t$String,(vbyte*)USTR("rider/body.png"),14};
@@ -3038,6 +3049,7 @@ static struct _String const_s$ERROR_ = {&t$String,(vbyte*)USTR("ERROR "),6};
 static struct _String const_s$_font_color_ = {&t$String,(vbyte*)USTR("<font color=\"#"),14};
 static struct _String const_s$490d6e0 = {&t$String,(vbyte*)USTR("\">"),2};
 static struct _String const_s$_font_br_ = {&t$String,(vbyte*)USTR("</font><br/>"),12};
+static struct _String const_s$_is_not_a_Mesh = {&t$String,(vbyte*)USTR(" is not a Mesh"),14};
 static struct _String const_s$Untitled = {&t$String,(vbyte*)USTR("Untitled"),8};
 static struct _String const_s$FPS_ = {&t$String,(vbyte*)USTR("FPS\n"),4};
 static struct _String const_s$Draw_calls_ = {&t$String,(vbyte*)USTR("Draw calls: "),12};
@@ -3262,7 +3274,6 @@ static struct _String const_s$Too_many_vertices_in_begin_ = {&t$String,(vbyte*)U
 static struct _String const_s$646f081 = {&t$String,(vbyte*)USTR("Cannot clear() BigPrimitive while it's flushing"),47};
 static struct _String const_s$Cannot_realloc_ = {&t$String,(vbyte*)USTR("Cannot realloc "),15};
 static struct _String const_s$Bounds_not_defined_for_ = {&t$String,(vbyte*)USTR("Bounds not defined for "),23};
-static struct _String const_s$_is_not_a_Mesh = {&t$String,(vbyte*)USTR(" is not a Mesh"),14};
 static struct _String const_s$add = {&t$String,(vbyte*)USTR("add"),3};
 static struct _String const_s$global_ambientLight = {&t$String,(vbyte*)USTR("global.ambientLight"),19};
 static struct _String const_s$global_perPixelLighting = {&t$String,(vbyte*)USTR("global.perPixelLighting"),23};
@@ -3866,6 +3877,7 @@ static struct _String const_s$ignore = {&t$String,(vbyte*)USTR("ignore"),6};
 static struct _String const_s$perInstance_ = {&t$String,(vbyte*)USTR("perInstance("),12};
 static struct _String const_s$doc_ = {&t$String,(vbyte*)USTR("doc(\""),5};
 static struct _String const_s$149c4f8 = {&t$String,(vbyte*)USTR("\")"),2};
+static struct _String const_s$borrow_ = {&t$String,(vbyte*)USTR("borrow("),7};
 static struct _String const_s$_global_ = {&t$String,(vbyte*)USTR("@global "),8};
 static struct _String const_s$_input_ = {&t$String,(vbyte*)USTR("@input "),7};
 static struct _String const_s$_param_ = {&t$String,(vbyte*)USTR("@param "),7};
@@ -4148,13 +4160,15 @@ void hl_init_roots() {
 	s$Load_track_with_specified_name = &const_s$Load_track_with_specified_name;
 	s$listSavedTracks = &const_s$listSavedTracks;
 	s$Print_any_found_tracks = &const_s$Print_any_found_tracks;
-	s$Snap_distance = &const_s$Snap_distance;
+	s$True_False = &const_s$True_False;
 	s$snapToGrid = &const_s$snapToGrid;
-	s$da9217b = &const_s$da9217b;
-	s$Snap_distance_ = &const_s$Snap_distance_;
-	s$3533c42 = &const_s$3533c42;
+	s$Toggle_grid_snapping = &const_s$Toggle_grid_snapping;
+	s$Grid_snapping_on_ = &const_s$Grid_snapping_on_;
 	s$Grid_snapping_off_ = &const_s$Grid_snapping_off_;
-	s$Grid_snapping_set_to_ = &const_s$Grid_snapping_set_to_;
+	s$snapToLines = &const_s$snapToLines;
+	s$Toggle_line_snapping = &const_s$Toggle_line_snapping;
+	s$Line_snapping_on_ = &const_s$Line_snapping_on_;
+	s$Line_snapping_off_ = &const_s$Line_snapping_off_;
 	s$newTrack = &const_s$newTrack;
 	s$f9d2d9b = &const_s$f9d2d9b;
 	s$Bosh = &const_s$Bosh;
@@ -4239,6 +4253,8 @@ void hl_init_roots() {
 	s$_already_occupied_renaming_to_ = &const_s$_already_occupied_renaming_to_;
 	s$_does_not_exist = &const_s$_does_not_exist;
 	s$No_riders_in_current_track = &const_s$No_riders_in_current_track;
+	s$Set_flag_on_frame_ = &const_s$Set_flag_on_frame_;
+	s$Disabled_flag = &const_s$Disabled_flag;
 	s$Recursive_addChild = &const_s$Recursive_addChild;
 	s$filterTemp = &const_s$filterTemp;
 	s$rider_body_png = &const_s$rider_body_png;
@@ -4283,6 +4299,7 @@ void hl_init_roots() {
 	s$_font_color_ = &const_s$_font_color_;
 	s$490d6e0 = &const_s$490d6e0;
 	s$_font_br_ = &const_s$_font_br_;
+	s$_is_not_a_Mesh = &const_s$_is_not_a_Mesh;
 	s$Untitled = &const_s$Untitled;
 	s$FPS_ = &const_s$FPS_;
 	s$Draw_calls_ = &const_s$Draw_calls_;
@@ -4507,7 +4524,6 @@ void hl_init_roots() {
 	s$646f081 = &const_s$646f081;
 	s$Cannot_realloc_ = &const_s$Cannot_realloc_;
 	s$Bounds_not_defined_for_ = &const_s$Bounds_not_defined_for_;
-	s$_is_not_a_Mesh = &const_s$_is_not_a_Mesh;
 	s$add = &const_s$add;
 	s$global_ambientLight = &const_s$global_ambientLight;
 	s$global_perPixelLighting = &const_s$global_perPixelLighting;
@@ -5111,6 +5127,7 @@ void hl_init_roots() {
 	s$perInstance_ = &const_s$perInstance_;
 	s$doc_ = &const_s$doc_;
 	s$149c4f8 = &const_s$149c4f8;
+	s$borrow_ = &const_s$borrow_;
 	s$_global_ = &const_s$_global_;
 	s$_input_ = &const_s$_input_;
 	s$_param_ = &const_s$_param_;
@@ -5532,7 +5549,9 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$h2d_ScaleMode_Resize);
 	hl_add_root((void**)&g$h2d_ScaleModeAlign_Center);
 	hl_add_root((void**)&g$6537d82);
+	hl_add_root((void**)&g$_h3d_col_Point);
 	hl_add_root((void**)&g$_haxe_Log);
+	hl_add_root((void**)&g$_components_tool_ToolFunction);
 	hl_add_root((void**)&g$994fdec);
 	hl_add_root((void**)&g$92fe76c);
 	hl_add_root((void**)&g$ab5747c);
@@ -5641,7 +5660,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxd_EventKind_EPush);
 	hl_add_root((void**)&g$hxd_EventKind_ERelease);
 	hl_add_root((void**)&g$hxd_EventKind_EKeyDown);
-	hl_add_root((void**)&g$_h3d_col_Point);
 	hl_add_root((void**)&g$hxd_SystemValue);
 	hl_add_root((void**)&g$hxd_SystemValue_IsWindowed);
 	hl_add_root((void**)&g$afbe7cb);
@@ -5987,6 +6005,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_Type);
 	hl_add_root((void**)&g$__Xml_XmlType_Impl_);
 	hl_add_root((void**)&g$_hxd_InteractiveScene);
+	hl_add_root((void**)&g$29a4c6e);
 	hl_add_root((void**)&g$_format_gif_Tools);
 	hl_add_root((void**)&g$format_mp3_SamplingRate_SR_8000);
 	hl_add_root((void**)&g$format_mp3_SamplingRate_SR_11025);
@@ -6033,7 +6052,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$h2d_BlendMode_Sub);
 	hl_add_root((void**)&g$h2d_BlendMode_Max);
 	hl_add_root((void**)&g$h2d_BlendMode_Min);
-	hl_add_root((void**)&g$29a4c6e);
 	hl_add_root((void**)&g$h2d_LineHeightMode_TextOnly);
 	hl_add_root((void**)&g$h2d_ImageVerticalAlign_Top);
 	hl_add_root((void**)&g$h2d_ImageVerticalAlign_Middle);

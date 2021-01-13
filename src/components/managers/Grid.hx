@@ -42,9 +42,12 @@ class Grid
 		var bottom = _line.dy > 0 ? end.y : start.y;
 		var top = _line.dy > 0 ? start.y : end.y;
 		
-		storeLine(_line, start.x, start.y);
-		
-		if (_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) return;
+		if (_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) {
+			storeLine(_line, start.x, start.y);
+			return;
+		} else {
+			storeLine(_line, start.x, start.y);
+		}
 		
 		var x = _line.start.x;
 		var y = _line.start.y;
@@ -81,13 +84,13 @@ class Grid
 					x += difX;
 					y += difY;
 				} else {
-					x += _line.dx * difY * invDy;
+					x = x + _line.dx * difY * invDy;
 					y += difY;
 				}
 			}
-			var pos = registryPosition(x, y);
-			if (pos.x >= left && pos.x <= right && pos.y >= top && pos.y <= bottom) {
-				storeLine(_line, pos.x, pos.y);
+			start = registryPosition(x, y);
+			if (start.x >= left && start.x <= right && start.y >= top && start.y <= bottom) {
+				storeLine(_line, start.x, start.y);
 				continue;
 			}
 			return;
@@ -116,20 +119,19 @@ class Grid
 	function storeLine(_line:LineBase, _x:Int, _y:Int)
 	{
 		var key = 'x${_x}y${_y}';
-		if (_line.keyList.contains(key)) return;
 		if (registry[key] == null) {
 			var reg:LineContainer = {
 				position : new Point(_x, _y),
-				colliders : new Array(),
-				nonColliders : new Array()
+				allLines : [],
+				colliders : [],
+				nonColliders : []
 			}
 			registry[key] = reg;
 		}
+		registry[key].allLines.push(_line);
 		switch (_line.type) {
-			case FLOOR :
-				registry[key].colliders.push(_line);
-			case ACCEL :
-				registry[key].colliders.push(_line);
+			case FLOOR | ACCEL:
+				registry[key].colliders[_line.id] = _line;
 			case SCENE :
 				registry[key].nonColliders.push(_line);
 			default :
@@ -139,8 +141,13 @@ class Grid
 		if (registry[key].lowFrame != null) Main.simulation.updateSimHistory(registry[key].lowFrame);
 	}
 	
+	public function deleteTrack() {
+		for (line in lines) unregister(line);
+	}
+	
 	public function unregister(_line:LineBase) {
 		for (key in _line.keyList) {
+			registry[key].allLines.remove(_line);
 			switch (_line.type) {
 				case FLOOR | ACCEL :
 					registry[key].colliders.remove(_line);
@@ -159,6 +166,7 @@ class Grid
 				--sceneCount;
 			default :
 		}
+		_line.clear();
 		--lineCount;
 		lines[_line.id] = null;
 	}
@@ -186,6 +194,7 @@ typedef GridObject = {
 
 typedef LineContainer = {
 	var position:Point;
+	var allLines:Array<LineBase>;
 	var colliders:Array<LineBase>;
 	var nonColliders:Array<LineBase>;
 	@:optional var lowFrame:Int;

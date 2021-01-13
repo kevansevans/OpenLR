@@ -30,38 +30,3 @@ void hxd_CustomCursor_reset(hxd__CustomCursor r0) {
 	return;
 }
 
-int hxd_CustomCursor_update(hxd__CustomCursor r0,double r1) {
-	hl__types__ArrayObj r8;
-	double r2, r3, r5;
-	int r4, r6, r7;
-	r2 = r0->frameTime;
-	r2 = r2 + r1;
-	r3 = r0->frameDelay;
-	r4 = r0->frameIndex;
-	label$f5fec1b_3_4:
-	if( !(r2 >= r3) ) goto label$f5fec1b_3_10;
-	r5 = r2 - r3;
-	r2 = r5;
-	++r4;
-	goto label$f5fec1b_3_4;
-	label$f5fec1b_3_10:
-	r0->frameTime = r2;
-	r8 = r0->frames;
-	if( r8 == NULL ) hl_null_access();
-	r7 = r8->length;
-	if( r4 < r7 ) goto label$f5fec1b_3_20;
-	r8 = r0->frames;
-	if( r8 == NULL ) hl_null_access();
-	r7 = r8->length;
-	r6 = r7 == 0 ? 0 : r4 % r7;
-	r4 = r6;
-	label$f5fec1b_3_20:
-	r7 = r0->frameIndex;
-	if( r4 == r7 ) goto label$f5fec1b_3_24;
-	r0->frameIndex = r4;
-	return r4;
-	label$f5fec1b_3_24:
-	r6 = -1;
-	return r6;
-}
-

@@ -9,7 +9,7 @@ void h3d_Engine_doFlushTarget(h3d__Engine);
 #include <h3d/mat/Pass.h>
 #include <h3d/shader/Buffers.h>
 #include <h3d/Buffer.h>
-bool h3d_Buffer_isDisposed(h3d__Buffer);
+#include <h3d/impl/ManagedBuffer.h>
 #include <h3d/Indexes.h>
 bool h3d_Indexes_isDisposed(h3d__Indexes);
 extern String s$Buffer_is_split;
@@ -116,23 +116,30 @@ void h3d_Engine_uploadShaderBuffers(h3d__Engine r0,h3d__shader__Buffers r1,int r
 }
 
 bool h3d_Engine_selectBuffer(h3d__Engine r0,h3d__Buffer r1) {
-	bool r3;
-	h3d__impl__Driver r4;
+	vvirtual *r4;
+	bool r5;
+	h3d__impl__Driver r6;
+	h3d__impl__ManagedBuffer r3;
 	if( r1 == NULL ) hl_null_access();
-	r3 = h3d_Buffer_isDisposed(r1);
-	if( !r3 ) goto label$5eb80ee_5_5;
-	r3 = false;
-	return r3;
-	label$5eb80ee_5_5:
-	r3 = r0->needFlushTarget;
-	if( !r3 ) goto label$5eb80ee_5_8;
+	r3 = r1->buffer;
+	if( !r3 ) goto label$5eb80ee_5_7;
+	r3 = r1->buffer;
+	if( r3 == NULL ) hl_null_access();
+	r4 = r3->vbuf;
+	if( r4 ) goto label$5eb80ee_5_9;
+	label$5eb80ee_5_7:
+	r5 = false;
+	return r5;
+	label$5eb80ee_5_9:
+	r5 = r0->needFlushTarget;
+	if( !r5 ) goto label$5eb80ee_5_12;
 	h3d_Engine_doFlushTarget(r0);
-	label$5eb80ee_5_8:
-	r4 = r0->driver;
-	if( r4 == NULL ) hl_null_access();
-	((void (*)(h3d__impl__Driver,h3d__Buffer))r4->$type->vobj_proto[12])(r4,r1);
-	r3 = true;
-	return r3;
+	label$5eb80ee_5_12:
+	r6 = r0->driver;
+	if( r6 == NULL ) hl_null_access();
+	((void (*)(h3d__impl__Driver,h3d__Buffer))r6->$type->vobj_proto[12])(r6,r1);
+	r5 = true;
+	return r5;
 }
 
 void h3d_Engine_renderBuffer(h3d__Engine r0,h3d__Buffer r1,h3d__Indexes r2,int r3,int* r4,int* r5) {

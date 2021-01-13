@@ -83,9 +83,6 @@ void hxd_Pixels_dispose(hxd__Pixels);
 void hxd_CustomCursor_reset(hxd__CustomCursor);
 extern hl_type t$_dyn;
 void sdl__Cursor_Cursor_Impl__set(sdl_cursor*);
-#include <hxd/Timer.h>
-extern hxd__$Timer g$_hxd_Timer;
-int hxd_CustomCursor_update(hxd__CustomCursor,double);
 venum* hxd_System_get_platform(void);
 extern venum* g$hxd_Platform_IOS;
 extern venum* g$hxd_Platform_Android;
@@ -585,46 +582,6 @@ void hxd_System_setNativeCursor(venum* r0) {
 	return;
 }
 
-void hxd_System_updateCursor() {
-	hl__types__ArrayObj r7;
-	hxd__CustomCursor r1;
-	sdl_cursor *r8;
-	hxd__$Timer r5;
-	hxd__$System r2;
-	double r4;
-	vdynamic *r9;
-	varray *r10;
-	int r3, r6;
-	r2 = (hxd__$System)g$_hxd_System;
-	r1 = r2->currentCustomCursor;
-	if( !r1 ) goto label$7609c18_11_24;
-	r2 = (hxd__$System)g$_hxd_System;
-	r1 = r2->currentCustomCursor;
-	if( r1 == NULL ) hl_null_access();
-	r5 = (hxd__$Timer)g$_hxd_Timer;
-	r4 = r5->elapsedTime;
-	r3 = hxd_CustomCursor_update(r1,r4);
-	r6 = -1;
-	if( r3 == r6 ) goto label$7609c18_11_24;
-	r2 = (hxd__$System)g$_hxd_System;
-	r1 = r2->currentCustomCursor;
-	if( r1 == NULL ) hl_null_access();
-	r7 = r1->alloc;
-	if( r7 == NULL ) hl_null_access();
-	r6 = r7->length;
-	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$7609c18_11_20;
-	r8 = NULL;
-	goto label$7609c18_11_23;
-	label$7609c18_11_20:
-	r10 = r7->array;
-	r9 = ((vdynamic**)(r10 + 1))[r3];
-	r8 = (sdl_cursor*)hl_dyn_castp(&r9,&t$_dyn,&t$sdl_cursor);
-	label$7609c18_11_23:
-	sdl__Cursor_Cursor_Impl__set(r8);
-	label$7609c18_11_24:
-	return;
-}
-
 double hxd_System_getDefaultFrameRate() {
 	double r0;
 	r0 = 60.;
@@ -639,51 +596,51 @@ bool hxd_System_getValue(venum* r0) {
 	r1 = HL__ENUM_INDEX__(r0);
 	switch(r1) {
 		default:
-			goto label$7609c18_13_35;
+			goto label$7609c18_12_35;
 		case 0:
 			r2 = hxd_System_get_platform();
 			r3 = (venum*)g$hxd_Platform_IOS;
-			if( r2 == r3 ) goto label$7609c18_13_14;
+			if( r2 == r3 ) goto label$7609c18_12_14;
 			r2 = hxd_System_get_platform();
 			r3 = (venum*)g$hxd_Platform_Android;
-			if( r2 == r3 ) goto label$7609c18_13_12;
+			if( r2 == r3 ) goto label$7609c18_12_12;
 			r4 = false;
-			goto label$7609c18_13_13;
-			label$7609c18_13_12:
+			goto label$7609c18_12_13;
+			label$7609c18_12_12:
 			r4 = true;
-			label$7609c18_13_13:
+			label$7609c18_12_13:
 			return r4;
-			label$7609c18_13_14:
+			label$7609c18_12_14:
 			r4 = true;
 			return r4;
 		case 1:
 			r2 = hxd_System_get_platform();
 			r3 = (venum*)g$hxd_Platform_PC;
-			if( r2 == r3 ) goto label$7609c18_13_21;
+			if( r2 == r3 ) goto label$7609c18_12_21;
 			r4 = false;
-			goto label$7609c18_13_22;
-			label$7609c18_13_21:
+			goto label$7609c18_12_22;
+			label$7609c18_12_21:
 			r4 = true;
-			label$7609c18_13_22:
+			label$7609c18_12_22:
 			return r4;
 		case 2:
 			r2 = hxd_System_get_platform();
 			r3 = (venum*)g$hxd_Platform_IOS;
-			if( r2 == r3 ) goto label$7609c18_13_33;
+			if( r2 == r3 ) goto label$7609c18_12_33;
 			r2 = hxd_System_get_platform();
 			r3 = (venum*)g$hxd_Platform_Android;
-			if( r2 == r3 ) goto label$7609c18_13_31;
+			if( r2 == r3 ) goto label$7609c18_12_31;
 			r4 = false;
-			goto label$7609c18_13_32;
-			label$7609c18_13_31:
+			goto label$7609c18_12_32;
+			label$7609c18_12_31:
 			r4 = true;
-			label$7609c18_13_32:
+			label$7609c18_12_32:
 			return r4;
-			label$7609c18_13_33:
+			label$7609c18_12_33:
 			r4 = true;
 			return r4;
 	}
-	label$7609c18_13_35:
+	label$7609c18_12_35:
 	r4 = false;
 	return r4;
 }
@@ -696,82 +653,82 @@ venum* hxd_System_get_platform() {
 	int r3, r4;
 	r1 = (hxd__$System)g$_hxd_System;
 	r0 = r1->platform;
-	if( r0 ) goto label$7609c18_14_67;
+	if( r0 ) goto label$7609c18_13_67;
 	r2 = Sys_systemName();
-	if( !r2 ) goto label$7609c18_14_13;
+	if( !r2 ) goto label$7609c18_13_13;
 	r3 = r2->length;
 	r4 = 7;
-	if( r3 != r4 ) goto label$7609c18_14_13;
+	if( r3 != r4 ) goto label$7609c18_13_13;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Android");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_14_60;
-	label$7609c18_14_13:
-	if( !r2 ) goto label$7609c18_14_22;
+	if( r3 == r4 ) goto label$7609c18_13_60;
+	label$7609c18_13_13:
+	if( !r2 ) goto label$7609c18_13_22;
 	r3 = r2->length;
 	r4 = 5;
-	if( r3 != r4 ) goto label$7609c18_14_22;
+	if( r3 != r4 ) goto label$7609c18_13_22;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Linux");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_14_62;
-	label$7609c18_14_22:
-	if( !r2 ) goto label$7609c18_14_31;
+	if( r3 == r4 ) goto label$7609c18_13_62;
+	label$7609c18_13_22:
+	if( !r2 ) goto label$7609c18_13_31;
 	r3 = r2->length;
 	r4 = 3;
-	if( r3 != r4 ) goto label$7609c18_14_31;
+	if( r3 != r4 ) goto label$7609c18_13_31;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Mac");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_14_62;
-	label$7609c18_14_31:
-	if( !r2 ) goto label$7609c18_14_40;
+	if( r3 == r4 ) goto label$7609c18_13_62;
+	label$7609c18_13_31:
+	if( !r2 ) goto label$7609c18_13_40;
 	r3 = r2->length;
 	r4 = 7;
-	if( r3 != r4 ) goto label$7609c18_14_40;
+	if( r3 != r4 ) goto label$7609c18_13_40;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Windows");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_14_62;
-	label$7609c18_14_40:
-	if( !r2 ) goto label$7609c18_14_49;
+	if( r3 == r4 ) goto label$7609c18_13_62;
+	label$7609c18_13_40:
+	if( !r2 ) goto label$7609c18_13_49;
 	r3 = r2->length;
 	r4 = 3;
-	if( r3 != r4 ) goto label$7609c18_14_49;
+	if( r3 != r4 ) goto label$7609c18_13_49;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("iOS");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_14_64;
-	label$7609c18_14_49:
-	if( !r2 ) goto label$7609c18_14_58;
+	if( r3 == r4 ) goto label$7609c18_13_64;
+	label$7609c18_13_49:
+	if( !r2 ) goto label$7609c18_13_58;
 	r3 = r2->length;
 	r4 = 4;
-	if( r3 != r4 ) goto label$7609c18_14_58;
+	if( r3 != r4 ) goto label$7609c18_13_58;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("tvOS");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_14_64;
-	label$7609c18_14_58:
+	if( r3 == r4 ) goto label$7609c18_13_64;
+	label$7609c18_13_58:
 	r7 = (venum*)g$hxd_Platform_PC;
-	goto label$7609c18_14_65;
-	label$7609c18_14_60:
+	goto label$7609c18_13_65;
+	label$7609c18_13_60:
 	r7 = (venum*)g$hxd_Platform_Android;
-	goto label$7609c18_14_65;
-	label$7609c18_14_62:
+	goto label$7609c18_13_65;
+	label$7609c18_13_62:
 	r7 = (venum*)g$hxd_Platform_PC;
-	goto label$7609c18_14_65;
-	label$7609c18_14_64:
+	goto label$7609c18_13_65;
+	label$7609c18_13_64:
 	r7 = (venum*)g$hxd_Platform_IOS;
-	label$7609c18_14_65:
+	label$7609c18_13_65:
 	r1 = (hxd__$System)g$_hxd_System;
 	r1->platform = r7;
-	label$7609c18_14_67:
+	label$7609c18_13_67:
 	r1 = (hxd__$System)g$_hxd_System;
 	r0 = r1->platform;
 	return r0;

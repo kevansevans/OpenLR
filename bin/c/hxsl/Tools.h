@@ -28,6 +28,7 @@ struct _hxsl__$Tools {
 	vclosure* getConstBits;
 	vclosure* isConst;
 	vclosure* hasQualifier;
+	vclosure* hasBorrowQualifier;
 	vclosure* isSampler;
 	vclosure* toString;
 	vclosure* hasSideEffect;

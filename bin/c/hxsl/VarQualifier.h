@@ -46,5 +46,9 @@ typedef struct {
 	HL__ENUM_CONSTRUCT__
 	String p0;
 } hxsl_VarQualifier_Doc;
+typedef struct {
+	HL__ENUM_CONSTRUCT__
+	String p0;
+} hxsl_VarQualifier_Borrow;
 #endif
 

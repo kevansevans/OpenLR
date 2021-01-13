@@ -5,6 +5,7 @@
 void components_physics_Stick_new(components__physics__Stick,components__physics__RidePoint,components__physics__RidePoint);
 #include <h2d/col/Point.h>
 #include <hl/natives.h>
+extern hl_type t$_f64;
 
 void components_physics_BindStick_new(components__physics__BindStick r0,components__physics__RidePoint r1,components__physics__RidePoint r2,double r3) {
 	double r5, r6;
@@ -18,10 +19,12 @@ void components_physics_BindStick_new(components__physics__BindStick r0,componen
 }
 
 bool components_physics_BindStick_satisfy(components__physics__BindStick r0,vdynamic* r1) {
-	bool r10;
+	bool r12;
 	h2d__col__Point r3;
 	components__physics__RidePoint r4;
-	double r2, r5, r6, r7, r8, r9, r11;
+	double r2, r5, r6, r7, r8, r13;
+	vdynamic *r9, *r11;
+	int r10;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
@@ -44,62 +47,69 @@ bool components_physics_BindStick_satisfy(components__physics__BindStick r0,vdyn
 	if( r3 == NULL ) hl_null_access();
 	r6 = r3->y;
 	r5 = r5 - r6;
-	r7 = 2.;
-	r6 = hl_math_pow(r2,r7);
-	r8 = 2.;
-	r7 = hl_math_pow(r5,r8);
+	r6 = r2 * r2;
+	r7 = r5 * r5;
 	r6 = r6 + r7;
 	r6 = hl_math_sqrt(r6);
+	r9 = NULL;
 	r8 = 0.;
-	if( r6 != r8 ) goto label$f8f83e5_2_32;
-	r7 = 0.;
-	goto label$f8f83e5_2_37;
-	label$f8f83e5_2_32:
+	if( r6 != r8 ) goto label$f8f83e5_2_33;
+	r10 = 0;
+	r7 = (double)r10;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	goto label$f8f83e5_2_39;
+	label$f8f83e5_2_33:
 	r8 = r0->restLength;
 	r7 = r6 - r8;
 	r7 = r7 / r6;
 	r8 = 0.5;
 	r7 = r7 * r8;
-	label$f8f83e5_2_37:
-	r9 = r0->endurance;
-	if( r9 < r7 ) goto label$f8f83e5_2_41;
-	r10 = r1 ? r1->v.b : 0;
-	if( !r10 ) goto label$f8f83e5_2_43;
-	label$f8f83e5_2_41:
-	r10 = true;
-	return r10;
-	label$f8f83e5_2_43:
-	r8 = r2 * r7;
-	r9 = r5 * r7;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	label$f8f83e5_2_39:
+	r7 = r11 ? r11->v.d : 0;
+	r8 = r0->endurance;
+	if( r8 < r7 ) goto label$f8f83e5_2_44;
+	r12 = r1 ? r1->v.b : 0;
+	if( !r12 ) goto label$f8f83e5_2_46;
+	label$f8f83e5_2_44:
+	r12 = true;
+	return r12;
+	label$f8f83e5_2_46:
+	r8 = r11 ? r11->v.d : 0;
+	r7 = r2 * r8;
+	r13 = r11 ? r11->v.d : 0;
+	r8 = r5 * r13;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r11 = r3->x;
-	r11 = r11 - r8;
-	r3->x = r11;
+	r13 = r3->x;
+	r13 = r13 - r7;
+	r3->x = r13;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r11 = r3->y;
-	r11 = r11 - r9;
-	r3->y = r11;
+	r13 = r3->y;
+	r13 = r13 - r8;
+	r3->y = r13;
 	r4 = r0->b;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r11 = r3->x;
-	r11 = r11 + r8;
-	r3->x = r11;
+	r13 = r3->x;
+	r13 = r13 + r7;
+	r3->x = r13;
 	r4 = r0->b;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r11 = r3->y;
-	r11 = r11 + r9;
-	r3->y = r11;
-	r10 = r1 ? r1->v.b : 0;
-	return r10;
+	r13 = r3->y;
+	r13 = r13 + r8;
+	r3->y = r13;
+	r12 = r1 ? r1->v.b : 0;
+	return r12;
 }
 

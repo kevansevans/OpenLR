@@ -28,6 +28,7 @@ struct _hxsl___Linker__AllocatedVar {
 	hl__types__ArrayObj merged;
 	venum* kind;
 	hxsl___Linker__AllocatedVar parent;
+	String rootShaderName;
 	int instanceIndex;
 };
 #endif

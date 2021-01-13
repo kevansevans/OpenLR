@@ -18,23 +18,30 @@ extern String s$x;
 String String___alloc__(vbyte*,int);
 String String___add__(String,String);
 extern String s$y;
-bool hl_types_ArrayObj_contains(hl__types__ArrayObj,vdynamic*);
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
-extern hl_type t$vrt_f730762;
-extern hl_type t$vrt_a2a1457;
+extern hl_type t$vrt_3d3bf19;
+extern hl_type t$vrt_e998098;
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
+extern hl_type t$components_lines_LineBase;
+hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 extern hl_type t$hl_types_ArrayObj;
-void hl_types_ArrayObj_new(hl__types__ArrayObj);
 void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
+int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 extern $Main g$_Main;
 extern String s$Error_registering_line;
 #include <h2d/Console.h>
 void h2d_Console_log(h2d__Console,String,vdynamic*);
-int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
+void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
 extern hl_type t$nul_i32;
 void components_managers_Simulation_updateSimHistory(components__managers__Simulation,int);
+vvirtual* haxe_ds_IntMap_iterator(haxe__ds__IntMap);
+extern hl_type t$vrt_366632b;
+extern hl_type t$fun_bf7849e;
+extern hl_type t$fun_4a57607;
+void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
 bool hl_types_ArrayObj_remove(hl__types__ArrayObj,vdynamic*);
+void components_lines_LineBase_clear(components__lines__LineBase);
 extern hl_type t$vrt_689169c;
 extern hl_type t$haxe_ds_StringMap;
 void haxe_ds_StringMap_new(haxe__ds__StringMap);
@@ -105,22 +112,26 @@ void components_managers_Grid_register(components__managers__Grid r0,components_
 	if( r8 == NULL ) hl_null_access();
 	r12 = hl_vfields(r8)[3] ? (*(int*)(hl_vfields(r8)[3])) : (int)hl_dyn_geti(r8->value,121/*y*/,&t$_i32);
 	label$e6f4f97_1_50:
+	r5 = r1->dx;
+	r7 = 0.;
+	if( r5 != r7 ) goto label$e6f4f97_1_56;
+	r5 = r1->dy;
+	r7 = 0.;
+	if( r5 == r7 ) goto label$e6f4f97_1_58;
+	label$e6f4f97_1_56:
+	if( r10 != r2 ) goto label$e6f4f97_1_63;
+	if( r12 != r11 ) goto label$e6f4f97_1_63;
+	label$e6f4f97_1_58:
 	if( r4 == NULL ) hl_null_access();
 	r13 = hl_vfields(r4)[2] ? (*(int*)(hl_vfields(r4)[2])) : (int)hl_dyn_geti(r4->value,120/*x*/,&t$_i32);
 	r14 = hl_vfields(r4)[3] ? (*(int*)(hl_vfields(r4)[3])) : (int)hl_dyn_geti(r4->value,121/*y*/,&t$_i32);
 	components_managers_Grid_storeLine(r0,r1,r13,r14);
-	r5 = r1->dx;
-	r7 = 0.;
-	if( r5 != r7 ) goto label$e6f4f97_1_60;
-	r5 = r1->dy;
-	r7 = 0.;
-	if( r5 == r7 ) goto label$e6f4f97_1_62;
-	label$e6f4f97_1_60:
-	if( r10 != r2 ) goto label$e6f4f97_1_63;
-	if( r12 != r11 ) goto label$e6f4f97_1_63;
-	label$e6f4f97_1_62:
 	return;
 	label$e6f4f97_1_63:
+	if( r4 == NULL ) hl_null_access();
+	r13 = hl_vfields(r4)[2] ? (*(int*)(hl_vfields(r4)[2])) : (int)hl_dyn_geti(r4->value,120/*x*/,&t$_i32);
+	r14 = hl_vfields(r4)[3] ? (*(int*)(hl_vfields(r4)[3])) : (int)hl_dyn_geti(r4->value,121/*y*/,&t$_i32);
+	components_managers_Grid_storeLine(r0,r1,r13,r14);
 	r6 = r1->start;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->x;
@@ -133,92 +144,92 @@ void components_managers_Grid_register(components__managers__Grid r0,components_
 	r16 = 1.;
 	r17 = r1->dy;
 	r16 = r16 / r17;
-	label$e6f4f97_1_75:
+	label$e6f4f97_1_79:
 	r18 = true;
-	if( !r18 ) goto label$e6f4f97_1_190;
+	if( !r18 ) goto label$e6f4f97_1_195;
 	if( r4 == NULL ) hl_null_access();
 	r13 = hl_vfields(r4)[2] ? (*(int*)(hl_vfields(r4)[2])) : (int)hl_dyn_geti(r4->value,120/*x*/,&t$_i32);
 	r14 = 0;
-	if( r13 >= r14 ) goto label$e6f4f97_1_95;
+	if( r13 >= r14 ) goto label$e6f4f97_1_99;
 	if( r1 == NULL ) hl_null_access();
 	r19 = r1->dx;
 	r20 = 0.;
-	if( !(r20 < r19) ) goto label$e6f4f97_1_90;
+	if( !(r20 < r19) ) goto label$e6f4f97_1_94;
 	r19 = 14.;
 	r20 = hl_vfields(r4)[0] ? (*(double*)(hl_vfields(r4)[0])) : (double)hl_dyn_getd(r4->value,23089/*gx*/);
 	r19 = r19 + r20;
-	goto label$e6f4f97_1_93;
-	label$e6f4f97_1_90:
+	goto label$e6f4f97_1_97;
+	label$e6f4f97_1_94:
 	r19 = -14.;
 	r20 = hl_vfields(r4)[0] ? (*(double*)(hl_vfields(r4)[0])) : (double)hl_dyn_getd(r4->value,23089/*gx*/);
 	r19 = r19 - r20;
-	label$e6f4f97_1_93:
+	label$e6f4f97_1_97:
 	r17 = r19;
-	goto label$e6f4f97_1_108;
-	label$e6f4f97_1_95:
+	goto label$e6f4f97_1_112;
+	label$e6f4f97_1_99:
 	if( r1 == NULL ) hl_null_access();
 	r19 = r1->dx;
 	r20 = 0.;
-	if( !(r20 < r19) ) goto label$e6f4f97_1_103;
+	if( !(r20 < r19) ) goto label$e6f4f97_1_107;
 	r19 = 14.;
 	r20 = hl_vfields(r4)[0] ? (*(double*)(hl_vfields(r4)[0])) : (double)hl_dyn_getd(r4->value,23089/*gx*/);
 	r19 = r19 - r20;
-	goto label$e6f4f97_1_107;
-	label$e6f4f97_1_103:
+	goto label$e6f4f97_1_111;
+	label$e6f4f97_1_107:
 	r19 = hl_vfields(r4)[0] ? (*(double*)(hl_vfields(r4)[0])) : (double)hl_dyn_getd(r4->value,23089/*gx*/);
 	r20 = 1.;
 	r19 = r19 + r20;
 	r19 = -r19;
-	label$e6f4f97_1_107:
+	label$e6f4f97_1_111:
 	r17 = r19;
-	label$e6f4f97_1_108:
+	label$e6f4f97_1_112:
 	r13 = hl_vfields(r4)[3] ? (*(int*)(hl_vfields(r4)[3])) : (int)hl_dyn_geti(r4->value,121/*y*/,&t$_i32);
 	r14 = 0;
-	if( r13 >= r14 ) goto label$e6f4f97_1_123;
+	if( r13 >= r14 ) goto label$e6f4f97_1_127;
 	r20 = r1->dy;
 	r21 = 0.;
-	if( !(r21 < r20) ) goto label$e6f4f97_1_118;
+	if( !(r21 < r20) ) goto label$e6f4f97_1_122;
 	r20 = 14.;
 	r21 = hl_vfields(r4)[1] ? (*(double*)(hl_vfields(r4)[1])) : (double)hl_dyn_getd(r4->value,23090/*gy*/);
 	r20 = r20 + r21;
-	goto label$e6f4f97_1_121;
-	label$e6f4f97_1_118:
+	goto label$e6f4f97_1_125;
+	label$e6f4f97_1_122:
 	r20 = -14.;
 	r21 = hl_vfields(r4)[1] ? (*(double*)(hl_vfields(r4)[1])) : (double)hl_dyn_getd(r4->value,23090/*gy*/);
 	r20 = r20 - r21;
-	label$e6f4f97_1_121:
+	label$e6f4f97_1_125:
 	r19 = r20;
-	goto label$e6f4f97_1_135;
-	label$e6f4f97_1_123:
+	goto label$e6f4f97_1_139;
+	label$e6f4f97_1_127:
 	r20 = r1->dy;
 	r21 = 0.;
-	if( !(r21 < r20) ) goto label$e6f4f97_1_130;
+	if( !(r21 < r20) ) goto label$e6f4f97_1_134;
 	r20 = 14.;
 	r21 = hl_vfields(r4)[1] ? (*(double*)(hl_vfields(r4)[1])) : (double)hl_dyn_getd(r4->value,23090/*gy*/);
 	r20 = r20 - r21;
-	goto label$e6f4f97_1_134;
-	label$e6f4f97_1_130:
+	goto label$e6f4f97_1_138;
+	label$e6f4f97_1_134:
 	r20 = hl_vfields(r4)[1] ? (*(double*)(hl_vfields(r4)[1])) : (double)hl_dyn_getd(r4->value,23090/*gy*/);
 	r21 = 1.;
 	r20 = r20 + r21;
 	r20 = -r20;
-	label$e6f4f97_1_134:
+	label$e6f4f97_1_138:
 	r19 = r20;
-	label$e6f4f97_1_135:
+	label$e6f4f97_1_139:
 	r20 = r1->dx;
 	r21 = 0.;
-	if( r20 != r21 ) goto label$e6f4f97_1_141;
+	if( r20 != r21 ) goto label$e6f4f97_1_145;
 	r20 = r7 + r19;
 	r7 = r20;
-	goto label$e6f4f97_1_175;
-	label$e6f4f97_1_141:
+	goto label$e6f4f97_1_179;
+	label$e6f4f97_1_145:
 	r20 = r1->dy;
 	r21 = 0.;
-	if( r20 != r21 ) goto label$e6f4f97_1_147;
+	if( r20 != r21 ) goto label$e6f4f97_1_151;
 	r20 = r5 + r17;
 	r5 = r20;
-	goto label$e6f4f97_1_175;
-	label$e6f4f97_1_147:
+	goto label$e6f4f97_1_179;
+	label$e6f4f97_1_151:
 	r21 = r1->dy;
 	r21 = r21 * r17;
 	r21 = r21 * r15;
@@ -226,22 +237,22 @@ void components_managers_Grid_register(components__managers__Grid r0,components_
 	r21 = r20 - r7;
 	r21 = hl_math_abs(r21);
 	r22 = hl_math_abs(r19);
-	if( !(r21 < r22) ) goto label$e6f4f97_1_159;
+	if( !(r21 < r22) ) goto label$e6f4f97_1_163;
 	r21 = r5 + r17;
 	r5 = r21;
 	r7 = r20;
-	goto label$e6f4f97_1_175;
-	label$e6f4f97_1_159:
+	goto label$e6f4f97_1_179;
+	label$e6f4f97_1_163:
 	r21 = r20 - r7;
 	r21 = hl_math_abs(r21);
 	r22 = hl_math_abs(r19);
-	if( r21 != r22 ) goto label$e6f4f97_1_168;
+	if( r21 != r22 ) goto label$e6f4f97_1_172;
 	r21 = r5 + r17;
 	r5 = r21;
 	r21 = r7 + r19;
 	r7 = r21;
-	goto label$e6f4f97_1_175;
-	label$e6f4f97_1_168:
+	goto label$e6f4f97_1_179;
+	label$e6f4f97_1_172:
 	r22 = r1->dx;
 	r22 = r22 * r19;
 	r22 = r22 * r16;
@@ -249,24 +260,25 @@ void components_managers_Grid_register(components__managers__Grid r0,components_
 	r5 = r21;
 	r21 = r7 + r19;
 	r7 = r21;
-	label$e6f4f97_1_175:
+	label$e6f4f97_1_179:
 	r9 = components_managers_Grid_registryPosition(r5,r7);
+	r4 = r9;
 	if( r9 == NULL ) hl_null_access();
 	r13 = hl_vfields(r9)[2] ? (*(int*)(hl_vfields(r9)[2])) : (int)hl_dyn_geti(r9->value,120/*x*/,&t$_i32);
-	if( r13 < r10 ) goto label$e6f4f97_1_189;
+	if( r13 < r10 ) goto label$e6f4f97_1_194;
 	r13 = hl_vfields(r9)[2] ? (*(int*)(hl_vfields(r9)[2])) : (int)hl_dyn_geti(r9->value,120/*x*/,&t$_i32);
-	if( r2 < r13 ) goto label$e6f4f97_1_189;
+	if( r2 < r13 ) goto label$e6f4f97_1_194;
 	r13 = hl_vfields(r9)[3] ? (*(int*)(hl_vfields(r9)[3])) : (int)hl_dyn_geti(r9->value,121/*y*/,&t$_i32);
-	if( r13 < r12 ) goto label$e6f4f97_1_189;
+	if( r13 < r12 ) goto label$e6f4f97_1_194;
 	r13 = hl_vfields(r9)[3] ? (*(int*)(hl_vfields(r9)[3])) : (int)hl_dyn_geti(r9->value,121/*y*/,&t$_i32);
-	if( r11 < r13 ) goto label$e6f4f97_1_189;
+	if( r11 < r13 ) goto label$e6f4f97_1_194;
 	r13 = hl_vfields(r9)[2] ? (*(int*)(hl_vfields(r9)[2])) : (int)hl_dyn_geti(r9->value,120/*x*/,&t$_i32);
 	r14 = hl_vfields(r9)[3] ? (*(int*)(hl_vfields(r9)[3])) : (int)hl_dyn_geti(r9->value,121/*y*/,&t$_i32);
 	components_managers_Grid_storeLine(r0,r1,r13,r14);
-	goto label$e6f4f97_1_75;
-	label$e6f4f97_1_189:
+	goto label$e6f4f97_1_79;
+	label$e6f4f97_1_194:
 	return;
-	label$e6f4f97_1_190:
+	label$e6f4f97_1_195:
 	return;
 }
 
@@ -318,20 +330,21 @@ void components_managers_Grid_addLine(components__managers__Grid r0,components__
 
 void components_managers_Grid_storeLine(components__managers__Grid r0,components__lines__LineBase r1,int r2,int r3) {
 	String r4, r8;
-	vvirtual *r14, *r15;
-	haxe__ds__StringMap r13;
-	hl__types__ArrayObj r11;
-	bool r10;
-	$Main r22;
-	h2d__col__Point r16;
-	components__managers__Simulation r24;
-	double r17, r19;
-	double *r18, *r20;
-	vdynamic *r12, *r23;
+	hl__types__ArrayObj r19;
+	vvirtual *r12, *r13;
+	haxe__ds__StringMap r11;
+	hl_type *r21;
+	$Main r23;
+	h2d__col__Point r14;
+	components__managers__Simulation r26;
+	double r15, r17;
+	double *r16, *r18;
+	vdynamic *r10, *r24;
 	int *r6;
-	components__stage__LRConsole r21;
+	components__stage__LRConsole r22;
+	varray *r20;
 	vbyte *r7;
-	int r5;
+	int r5, r25;
 	r4 = (String)s$x;
 	r5 = r2;
 	r6 = &r5;
@@ -345,102 +358,137 @@ void components_managers_Grid_storeLine(components__managers__Grid r0,components
 	r7 = hl_itos(r5,r6);
 	r8 = String___alloc__(r7,r5);
 	r4 = String___add__(r4,r8);
-	if( r1 == NULL ) hl_null_access();
-	r11 = r1->keyList;
+	r11 = r0->registry;
 	if( r11 == NULL ) hl_null_access();
-	r10 = hl_types_ArrayObj_contains(r11,((vdynamic*)r4));
-	if( !r10 ) goto label$e6f4f97_3_19;
-	return;
-	label$e6f4f97_3_19:
-	r13 = r0->registry;
-	if( r13 == NULL ) hl_null_access();
-	r12 = haxe_ds_StringMap_get(r13,r4);
-	r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r12);
-	if( r14 ) goto label$e6f4f97_3_42;
-	r15 = hl_alloc_virtual(&t$vrt_a2a1457);
-	r16 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r17 = (double)r2;
+	r10 = haxe_ds_StringMap_get(r11,r4);
+	r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+	if( r12 ) goto label$e6f4f97_3_45;
+	r13 = hl_alloc_virtual(&t$vrt_e998098);
+	r14 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	r15 = (double)r2;
+	r16 = &r15;
+	r17 = (double)r3;
 	r18 = &r17;
-	r19 = (double)r3;
-	r20 = &r19;
-	h2d_col_Point_new(r16,r18,r20);
-	if( hl_vfields(r15)[2] ) *(h2d__col__Point*)(hl_vfields(r15)[2]) = (h2d__col__Point)r16; else hl_dyn_setp(r15->value,-352673756/*position*/,&t$h2d_col_Point,r16);
-	r11 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r11);
-	if( hl_vfields(r15)[0] ) *(hl__types__ArrayObj*)(hl_vfields(r15)[0]) = (hl__types__ArrayObj)r11; else hl_dyn_setp(r15->value,-246583750/*colliders*/,&t$hl_types_ArrayObj,r11);
-	r11 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r11);
-	if( hl_vfields(r15)[1] ) *(hl__types__ArrayObj*)(hl_vfields(r15)[1]) = (hl__types__ArrayObj)r11; else hl_dyn_setp(r15->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj,r11);
-	r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r15);
-	r13 = r0->registry;
-	if( r13 == NULL ) hl_null_access();
-	haxe_ds_StringMap_set(r13,r4,((vdynamic*)r14));
-	label$e6f4f97_3_42:
+	h2d_col_Point_new(r14,r16,r18);
+	if( hl_vfields(r13)[3] ) *(h2d__col__Point*)(hl_vfields(r13)[3]) = (h2d__col__Point)r14; else hl_dyn_setp(r13->value,-352673756/*position*/,&t$h2d_col_Point,r14);
+	r21 = &t$components_lines_LineBase;
+	r5 = 0;
+	r20 = hl_alloc_array(r21,r5);
+	r19 = hl_types_ArrayObj_alloc(r20);
+	if( hl_vfields(r13)[0] ) *(hl__types__ArrayObj*)(hl_vfields(r13)[0]) = (hl__types__ArrayObj)r19; else hl_dyn_setp(r13->value,233152173/*allLines*/,&t$hl_types_ArrayObj,r19);
+	r21 = &t$components_lines_LineBase;
+	r5 = 0;
+	r20 = hl_alloc_array(r21,r5);
+	r19 = hl_types_ArrayObj_alloc(r20);
+	if( hl_vfields(r13)[1] ) *(hl__types__ArrayObj*)(hl_vfields(r13)[1]) = (hl__types__ArrayObj)r19; else hl_dyn_setp(r13->value,-246583750/*colliders*/,&t$hl_types_ArrayObj,r19);
+	r21 = &t$components_lines_LineBase;
+	r5 = 0;
+	r20 = hl_alloc_array(r21,r5);
+	r19 = hl_types_ArrayObj_alloc(r20);
+	if( hl_vfields(r13)[2] ) *(hl__types__ArrayObj*)(hl_vfields(r13)[2]) = (hl__types__ArrayObj)r19; else hl_dyn_setp(r13->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj,r19);
+	r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r13);
+	r11 = r0->registry;
+	if( r11 == NULL ) hl_null_access();
+	haxe_ds_StringMap_set(r11,r4,((vdynamic*)r12));
+	label$e6f4f97_3_45:
+	r11 = r0->registry;
+	if( r11 == NULL ) hl_null_access();
+	r10 = haxe_ds_StringMap_get(r11,r4);
+	r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+	if( r12 == NULL ) hl_null_access();
+	r19 = hl_vfields(r12)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r12)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r12->value,233152173/*allLines*/,&t$hl_types_ArrayObj);
+	if( r19 == NULL ) hl_null_access();
+	r5 = hl_types_ArrayObj_push(r19,((vdynamic*)r1));
+	if( r1 == NULL ) hl_null_access();
 	r5 = r1->type;
 	switch(r5) {
 		default:
-			r22 = ($Main)g$_Main;
-			r21 = r22->console;
-			if( r21 == NULL ) hl_null_access();
+			r23 = ($Main)g$_Main;
+			r22 = r23->console;
+			if( r22 == NULL ) hl_null_access();
 			r8 = (String)s$Error_registering_line;
 			r5 = 16711680;
-			r23 = hl_alloc_dynamic(&t$_i32);
-			r23->v.i = r5;
-			h2d_Console_log(((h2d__Console)r21),r8,r23);
-			goto label$e6f4f97_3_78;
+			r24 = hl_alloc_dynamic(&t$_i32);
+			r24->v.i = r5;
+			h2d_Console_log(((h2d__Console)r22),r8,r24);
+			goto label$e6f4f97_3_87;
 		case 0:
-			r13 = r0->registry;
-			if( r13 == NULL ) hl_null_access();
-			r12 = haxe_ds_StringMap_get(r13,r4);
-			r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r12);
-			if( r14 == NULL ) hl_null_access();
-			r11 = hl_vfields(r14)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
-			if( r11 == NULL ) hl_null_access();
-			r5 = hl_types_ArrayObj_push(r11,((vdynamic*)r1));
-			goto label$e6f4f97_3_78;
 		case 1:
-			r13 = r0->registry;
-			if( r13 == NULL ) hl_null_access();
-			r12 = haxe_ds_StringMap_get(r13,r4);
-			r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r12);
-			if( r14 == NULL ) hl_null_access();
-			r11 = hl_vfields(r14)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
+			r11 = r0->registry;
 			if( r11 == NULL ) hl_null_access();
-			r5 = hl_types_ArrayObj_push(r11,((vdynamic*)r1));
-			goto label$e6f4f97_3_78;
+			r10 = haxe_ds_StringMap_get(r11,r4);
+			r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+			if( r12 == NULL ) hl_null_access();
+			r19 = hl_vfields(r12)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r12)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r12->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
+			if( r19 == NULL ) hl_null_access();
+			r24 = r1->id;
+			r5 = r24 ? r24->v.i : 0;
+			r25 = r19->length;
+			if( ((unsigned)r5) < ((unsigned)r25) ) goto label$e6f4f97_3_76;
+			hl_types_ArrayObj___expand(r19,r5);
+			label$e6f4f97_3_76:
+			r20 = r19->array;
+			((components__lines__LineBase*)(r20 + 1))[r5] = r1;
+			goto label$e6f4f97_3_87;
 		case 2:
-			r13 = r0->registry;
-			if( r13 == NULL ) hl_null_access();
-			r12 = haxe_ds_StringMap_get(r13,r4);
-			r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r12);
-			if( r14 == NULL ) hl_null_access();
-			r11 = hl_vfields(r14)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj);
+			r11 = r0->registry;
 			if( r11 == NULL ) hl_null_access();
-			r5 = hl_types_ArrayObj_push(r11,((vdynamic*)r1));
+			r10 = haxe_ds_StringMap_get(r11,r4);
+			r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+			if( r12 == NULL ) hl_null_access();
+			r19 = hl_vfields(r12)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r12)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r12->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj);
+			if( r19 == NULL ) hl_null_access();
+			r5 = hl_types_ArrayObj_push(r19,((vdynamic*)r1));
 	}
-	label$e6f4f97_3_78:
-	r11 = r1->keyList;
+	label$e6f4f97_3_87:
+	r19 = r1->keyList;
+	if( r19 == NULL ) hl_null_access();
+	r5 = hl_types_ArrayObj_push(r19,((vdynamic*)r4));
+	r11 = r0->registry;
 	if( r11 == NULL ) hl_null_access();
-	r5 = hl_types_ArrayObj_push(r11,((vdynamic*)r4));
-	r13 = r0->registry;
-	if( r13 == NULL ) hl_null_access();
-	r12 = haxe_ds_StringMap_get(r13,r4);
-	r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r12);
-	if( r14 == NULL ) hl_null_access();
-	r23 = hl_vfields(r14)[1] ? (*(vdynamic**)(hl_vfields(r14)[1])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
-	if( !r23 ) goto label$e6f4f97_3_99;
-	r22 = ($Main)g$_Main;
-	r24 = r22->simulation;
-	if( r24 == NULL ) hl_null_access();
-	r13 = r0->registry;
-	if( r13 == NULL ) hl_null_access();
-	r12 = haxe_ds_StringMap_get(r13,r4);
-	r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r12);
-	if( r14 == NULL ) hl_null_access();
-	r23 = hl_vfields(r14)[1] ? (*(vdynamic**)(hl_vfields(r14)[1])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
-	r5 = r23 ? r23->v.i : 0;
-	components_managers_Simulation_updateSimHistory(r24,r5);
-	label$e6f4f97_3_99:
+	r10 = haxe_ds_StringMap_get(r11,r4);
+	r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+	if( r12 == NULL ) hl_null_access();
+	r24 = hl_vfields(r12)[2] ? (*(vdynamic**)(hl_vfields(r12)[2])) : (vdynamic*)hl_dyn_getp(r12->value,390036483/*lowFrame*/,&t$nul_i32);
+	if( !r24 ) goto label$e6f4f97_3_108;
+	r23 = ($Main)g$_Main;
+	r26 = r23->simulation;
+	if( r26 == NULL ) hl_null_access();
+	r11 = r0->registry;
+	if( r11 == NULL ) hl_null_access();
+	r10 = haxe_ds_StringMap_get(r11,r4);
+	r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+	if( r12 == NULL ) hl_null_access();
+	r24 = hl_vfields(r12)[2] ? (*(vdynamic**)(hl_vfields(r12)[2])) : (vdynamic*)hl_dyn_getp(r12->value,390036483/*lowFrame*/,&t$nul_i32);
+	r5 = r24 ? r24->v.i : 0;
+	components_managers_Simulation_updateSimHistory(r26,r5);
+	label$e6f4f97_3_108:
+	return;
+}
+
+void components_managers_Grid_deleteTrack(components__managers__Grid r0) {
+	vvirtual *r1, *r3;
+	bool r5;
+	haxe__ds__IntMap r2;
+	components__lines__LineBase r6;
+	r2 = r0->lines;
+	if( r2 == NULL ) hl_null_access();
+	r1 = haxe_ds_IntMap_iterator(r2);
+	r3 = hl_to_virtual(&t$vrt_366632b,(vdynamic*)r1);
+	label$e6f4f97_4_4:
+	if( r3 == NULL ) hl_null_access();
+	if( hl_vfields(r3)[0] ) r5 = ((bool (*)(vdynamic*))hl_vfields(r3)[0])(r3->value); else {
+		vdynamic ret;
+		hl_dyn_call_obj(r3->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
+		r5 = (bool)ret.v.i;
+	}
+	if( !r5 ) goto label$e6f4f97_4_11;
+	if( hl_vfields(r3)[1] ) r6 = ((components__lines__LineBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
+		r6 = (components__lines__LineBase)hl_dyn_call_obj(r3->value,&t$fun_4a57607,151160317/*next*/,NULL,NULL);
+	}
+	components_managers_Grid_unregister(r0,r6);
+	goto label$e6f4f97_4_4;
+	label$e6f4f97_4_11:
 	return;
 }
 
@@ -460,89 +508,98 @@ void components_managers_Grid_unregister(components__managers__Grid r0,component
 	r2 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r4 = r1->keyList;
-	label$e6f4f97_4_3:
+	label$e6f4f97_5_3:
 	if( r4 == NULL ) hl_null_access();
 	r7 = r4->length;
-	if( r2 >= r7 ) goto label$e6f4f97_4_55;
+	if( r2 >= r7 ) goto label$e6f4f97_5_63;
 	r7 = r4->length;
-	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$e6f4f97_4_11;
+	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$e6f4f97_5_11;
 	r9 = NULL;
-	goto label$e6f4f97_4_14;
-	label$e6f4f97_4_11:
+	goto label$e6f4f97_5_14;
+	label$e6f4f97_5_11:
 	r11 = r4->array;
 	r10 = ((vdynamic**)(r11 + 1))[r2];
 	r9 = (String)r10;
-	label$e6f4f97_4_14:
+	label$e6f4f97_5_14:
 	++r2;
+	r13 = r0->registry;
+	if( r13 == NULL ) hl_null_access();
+	r10 = haxe_ds_StringMap_get(r13,r9);
+	r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+	if( r14 == NULL ) hl_null_access();
+	r8 = hl_vfields(r14)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,233152173/*allLines*/,&t$hl_types_ArrayObj);
+	if( r8 == NULL ) hl_null_access();
+	r12 = hl_types_ArrayObj_remove(r8,((vdynamic*)r1));
 	if( r1 == NULL ) hl_null_access();
 	r6 = r1->type;
 	switch(r6) {
 		default:
-			goto label$e6f4f97_4_36;
+			goto label$e6f4f97_5_44;
 		case 0:
 		case 1:
 			r13 = r0->registry;
 			if( r13 == NULL ) hl_null_access();
 			r10 = haxe_ds_StringMap_get(r13,r9);
-			r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r10);
+			r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
 			if( r14 == NULL ) hl_null_access();
-			r8 = hl_vfields(r14)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
+			r8 = hl_vfields(r14)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
 			if( r8 == NULL ) hl_null_access();
 			r12 = hl_types_ArrayObj_remove(r8,((vdynamic*)r1));
-			goto label$e6f4f97_4_36;
+			goto label$e6f4f97_5_44;
 		case 2:
 			r13 = r0->registry;
 			if( r13 == NULL ) hl_null_access();
 			r10 = haxe_ds_StringMap_get(r13,r9);
-			r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r10);
+			r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
 			if( r14 == NULL ) hl_null_access();
-			r8 = hl_vfields(r14)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj);
+			r8 = hl_vfields(r14)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj);
 			if( r8 == NULL ) hl_null_access();
 			r12 = hl_types_ArrayObj_remove(r8,((vdynamic*)r1));
 	}
-	label$e6f4f97_4_36:
+	label$e6f4f97_5_44:
 	r13 = r0->registry;
 	if( r13 == NULL ) hl_null_access();
 	r10 = haxe_ds_StringMap_get(r13,r9);
-	r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r10);
+	r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
 	if( r14 == NULL ) hl_null_access();
-	r15 = hl_vfields(r14)[1] ? (*(vdynamic**)(hl_vfields(r14)[1])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
-	if( !r15 ) goto label$e6f4f97_4_54;
+	r15 = hl_vfields(r14)[2] ? (*(vdynamic**)(hl_vfields(r14)[2])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
+	if( !r15 ) goto label$e6f4f97_5_62;
 	r17 = ($Main)g$_Main;
 	r16 = r17->simulation;
 	if( r16 == NULL ) hl_null_access();
 	r13 = r0->registry;
 	if( r13 == NULL ) hl_null_access();
 	r10 = haxe_ds_StringMap_get(r13,r9);
-	r14 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r10);
+	r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
 	if( r14 == NULL ) hl_null_access();
-	r15 = hl_vfields(r14)[1] ? (*(vdynamic**)(hl_vfields(r14)[1])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
+	r15 = hl_vfields(r14)[2] ? (*(vdynamic**)(hl_vfields(r14)[2])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
 	r6 = r15 ? r15->v.i : 0;
 	components_managers_Simulation_updateSimHistory(r16,r6);
-	label$e6f4f97_4_54:
-	goto label$e6f4f97_4_3;
-	label$e6f4f97_4_55:
+	label$e6f4f97_5_62:
+	goto label$e6f4f97_5_3;
+	label$e6f4f97_5_63:
 	if( r1 == NULL ) hl_null_access();
 	r2 = r1->type;
 	switch(r2) {
 		default:
-			goto label$e6f4f97_4_70;
+			goto label$e6f4f97_5_78;
 		case 0:
 			r2 = r0->floorCount;
 			--r2;
 			r0->floorCount = r2;
-			goto label$e6f4f97_4_70;
+			goto label$e6f4f97_5_78;
 		case 1:
 			r2 = r0->accelCount;
 			--r2;
 			r0->accelCount = r2;
-			goto label$e6f4f97_4_70;
+			goto label$e6f4f97_5_78;
 		case 2:
 			r2 = r0->sceneCount;
 			--r2;
 			r0->sceneCount = r2;
 	}
-	label$e6f4f97_4_70:
+	label$e6f4f97_5_78:
+	components_lines_LineBase_clear(r1);
 	r2 = r0->lineCount;
 	--r2;
 	r0->lineCount = r2;

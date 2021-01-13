@@ -6,6 +6,7 @@ extern hxsl__$Tools g$_hxsl_Tools;
 extern hl_type t$hl_types_ArrayObj;
 extern hl_type t$String;
 extern hl_type t$hxsl_Type;
+int String___compare(String,vdynamic*);
 #include <hxsl/VecType.h>
 #include <hxsl/SizeDecl.h>
 String Type_enumConstructor(vdynamic*);
@@ -267,6 +268,52 @@ bool hxsl_Tools_hasQualifier(vvirtual* r0,venum* r1) {
 	return r8;
 }
 
+bool hxsl_Tools_hasBorrowQualifier(vvirtual* r0,String r1) {
+	String r9;
+	hl__types__ArrayObj r2;
+	venum *r6;
+	bool r10;
+	vdynamic *r7;
+	varray *r8;
+	int r3, r4, r5;
+	if( r0 == NULL ) hl_null_access();
+	r2 = hl_vfields(r0)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r0)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r0->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
+	if( !r2 ) goto label$125a773_6_28;
+	r3 = 0;
+	r2 = hl_vfields(r0)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r0)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r0->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
+	label$125a773_6_5:
+	if( r2 == NULL ) hl_null_access();
+	r5 = r2->length;
+	if( r3 >= r5 ) goto label$125a773_6_28;
+	r5 = r2->length;
+	if( ((unsigned)r3) < ((unsigned)r5) ) goto label$125a773_6_13;
+	r6 = NULL;
+	goto label$125a773_6_16;
+	label$125a773_6_13:
+	r8 = r2->array;
+	r7 = ((vdynamic**)(r8 + 1))[r3];
+	r6 = (venum*)r7;
+	label$125a773_6_16:
+	++r3;
+	if( r6 == NULL ) hl_null_access();
+	r4 = HL__ENUM_INDEX__(r6);
+	r5 = 11;
+	if( r4 != r5 ) goto label$125a773_6_27;
+	r9 = ((hxsl_VarQualifier_Borrow*)r6)->p0;
+	if( r1 == r9 || (r1 && r9 && String___compare(r1,(vdynamic*)r9) == 0) ) goto label$125a773_6_25;
+	r10 = false;
+	goto label$125a773_6_26;
+	label$125a773_6_25:
+	r10 = true;
+	label$125a773_6_26:
+	return r10;
+	label$125a773_6_27:
+	goto label$125a773_6_5;
+	label$125a773_6_28:
+	r10 = false;
+	return r10;
+}
+
 bool hxsl_Tools_isSampler(venum* r0) {
 	bool r2;
 	int r1;
@@ -342,20 +389,20 @@ String hxsl_Tools_toString(venum* r0) {
 			r7 = HL__ENUM_INDEX__(r6);
 			switch(r7) {
 				default:
-					goto label$125a773_7_23;
+					goto label$125a773_8_23;
 				case 0:
 					r8 = (String)s$I;
 					r3 = r8;
-					goto label$125a773_7_23;
+					goto label$125a773_8_23;
 				case 1:
 					r8 = (String)s$;
 					r3 = r8;
-					goto label$125a773_7_23;
+					goto label$125a773_8_23;
 				case 2:
 					r8 = (String)s$B;
 					r3 = r8;
 			}
-			label$125a773_7_23:
+			label$125a773_8_23:
 			r9 = (String)s$Vec;
 			r8 = String___add__(r3,r9);
 			r7 = r1;
@@ -380,19 +427,19 @@ String hxsl_Tools_toString(venum* r0) {
 			r14 = hl_alloc_array(r15,r1);
 			r13 = hl_types_ArrayObj_alloc(r14);
 			r1 = 0;
-			label$125a773_7_45:
+			label$125a773_8_45:
 			if( r12 == NULL ) hl_null_access();
 			r16 = r12->length;
-			if( r1 >= r16 ) goto label$125a773_7_67;
+			if( r1 >= r16 ) goto label$125a773_8_67;
 			r16 = r12->length;
-			if( ((unsigned)r1) < ((unsigned)r16) ) goto label$125a773_7_53;
+			if( ((unsigned)r1) < ((unsigned)r16) ) goto label$125a773_8_53;
 			r17 = NULL;
-			goto label$125a773_7_56;
-			label$125a773_7_53:
+			goto label$125a773_8_56;
+			label$125a773_8_53:
 			r14 = r12->array;
 			r5 = ((vdynamic**)(r14 + 1))[r1];
 			r17 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r5);
-			label$125a773_7_56:
+			label$125a773_8_56:
 			++r1;
 			if( r13 == NULL ) hl_null_access();
 			if( r17 == NULL ) hl_null_access();
@@ -403,8 +450,8 @@ String hxsl_Tools_toString(venum* r0) {
 			r8 = hxsl_Tools_toString(r2);
 			r3 = String___add__(r3,r8);
 			r7 = hl_types_ArrayObj_push(r13,((vdynamic*)r3));
-			goto label$125a773_7_45;
-			label$125a773_7_67:
+			goto label$125a773_8_45;
+			label$125a773_8_67:
 			r3 = (String)s$f95b70f;
 			if( r13 == NULL ) hl_null_access();
 			r8 = (String)s$c0cb5f0;
@@ -423,7 +470,7 @@ String hxsl_Tools_toString(venum* r0) {
 			r1 = HL__ENUM_INDEX__(r18);
 			switch(r1) {
 				default:
-					goto label$125a773_7_97;
+					goto label$125a773_8_97;
 				case 0:
 					r1 = ((hxsl_SizeDecl_SConst*)r18)->p0;
 					r9 = (String)s$;
@@ -433,14 +480,14 @@ String hxsl_Tools_toString(venum* r0) {
 					r19 = String___alloc__(r11,r7);
 					r9 = String___add__(r9,r19);
 					r8 = r9;
-					goto label$125a773_7_97;
+					goto label$125a773_8_97;
 				case 1:
 					r17 = ((hxsl_SizeDecl_SVar*)r18)->p0;
 					if( r17 == NULL ) hl_null_access();
 					r9 = hl_vfields(r17)[2] ? (*(String*)(hl_vfields(r17)[2])) : (String)hl_dyn_getp(r17->value,150958933/*name*/,&t$String);
 					r8 = r9;
 			}
-			label$125a773_7_97:
+			label$125a773_8_97:
 			r9 = String___add__(r3,r8);
 			r19 = (String)s$0fbd177;
 			r9 = String___add__(r9,r19);
@@ -457,7 +504,7 @@ String hxsl_Tools_toString(venum* r0) {
 			r1 = HL__ENUM_INDEX__(r18);
 			switch(r1) {
 				default:
-					goto label$125a773_7_125;
+					goto label$125a773_8_125;
 				case 0:
 					r1 = ((hxsl_SizeDecl_SConst*)r18)->p0;
 					r9 = (String)s$;
@@ -467,14 +514,14 @@ String hxsl_Tools_toString(venum* r0) {
 					r19 = String___alloc__(r11,r7);
 					r9 = String___add__(r9,r19);
 					r8 = r9;
-					goto label$125a773_7_125;
+					goto label$125a773_8_125;
 				case 1:
 					r17 = ((hxsl_SizeDecl_SVar*)r18)->p0;
 					if( r17 == NULL ) hl_null_access();
 					r9 = hl_vfields(r17)[2] ? (*(String*)(hl_vfields(r17)[2])) : (String)hl_dyn_getp(r17->value,150958933/*name*/,&t$String);
 					r8 = r9;
 			}
-			label$125a773_7_125:
+			label$125a773_8_125:
 			r9 = String___add__(r3,r8);
 			r19 = (String)s$0fbd177;
 			r9 = String___add__(r9,r19);
@@ -497,7 +544,7 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 	r3 = HL__ENUM_INDEX__(r1);
 	switch(r3) {
 		default:
-			goto label$125a773_8_226;
+			goto label$125a773_9_226;
 		case 0:
 			r5 = ((hxsl_TExprDef_TConst*)r1)->p0;
 			r6 = false;
@@ -517,27 +564,27 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 		case 4:
 			r11 = ((hxsl_TExprDef_TBlock*)r1)->p0;
 			r3 = 0;
-			label$125a773_8_20:
+			label$125a773_9_20:
 			if( r11 == NULL ) hl_null_access();
 			r13 = r11->length;
-			if( r3 >= r13 ) goto label$125a773_8_37;
+			if( r3 >= r13 ) goto label$125a773_9_37;
 			r13 = r11->length;
-			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_8_28;
+			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_9_28;
 			r2 = NULL;
-			goto label$125a773_8_31;
-			label$125a773_8_28:
+			goto label$125a773_9_31;
+			label$125a773_9_28:
 			r15 = r11->array;
 			r7 = ((vdynamic**)(r15 + 1))[r3];
 			r2 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r7);
-			label$125a773_8_31:
+			label$125a773_9_31:
 			++r3;
 			r6 = hxsl_Tools_hasSideEffect(r2);
-			if( !r6 ) goto label$125a773_8_36;
+			if( !r6 ) goto label$125a773_9_36;
 			r6 = true;
 			return r6;
-			label$125a773_8_36:
-			goto label$125a773_8_20;
-			label$125a773_8_37:
+			label$125a773_9_36:
+			goto label$125a773_9_20;
+			label$125a773_9_37:
 			r6 = false;
 			return r6;
 		case 5:
@@ -568,10 +615,10 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 				case 18:
 				case 19:
 					r6 = hxsl_Tools_hasSideEffect(r10);
-					if( r6 ) goto label$125a773_8_49;
+					if( r6 ) goto label$125a773_9_49;
 					r6 = hxsl_Tools_hasSideEffect(r2);
 					return r6;
-					label$125a773_8_49:
+					label$125a773_9_49:
 					r6 = true;
 					return r6;
 				case 4:
@@ -600,39 +647,39 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 			if( r4 == NULL ) hl_null_access();
 			r3 = HL__ENUM_INDEX__(r4);
 			r12 = 2;
-			if( r3 != r12 ) goto label$125a773_8_75;
+			if( r3 != r12 ) goto label$125a773_9_75;
 			r9 = ((hxsl_TExprDef_TGlobal*)r4)->p0;
 			r20 = true;
-			goto label$125a773_8_76;
-			label$125a773_8_75:
+			goto label$125a773_9_76;
+			label$125a773_9_75:
 			r20 = false;
-			label$125a773_8_76:
-			if( r20 ) goto label$125a773_8_79;
+			label$125a773_9_76:
+			if( r20 ) goto label$125a773_9_79;
 			r20 = true;
 			return r20;
-			label$125a773_8_79:
+			label$125a773_9_79:
 			r3 = 0;
-			label$125a773_8_80:
+			label$125a773_9_80:
 			if( r11 == NULL ) hl_null_access();
 			r13 = r11->length;
-			if( r3 >= r13 ) goto label$125a773_8_97;
+			if( r3 >= r13 ) goto label$125a773_9_97;
 			r13 = r11->length;
-			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_8_88;
+			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_9_88;
 			r10 = NULL;
-			goto label$125a773_8_91;
-			label$125a773_8_88:
+			goto label$125a773_9_91;
+			label$125a773_9_88:
 			r15 = r11->array;
 			r7 = ((vdynamic**)(r15 + 1))[r3];
 			r10 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r7);
-			label$125a773_8_91:
+			label$125a773_9_91:
 			++r3;
 			r20 = hxsl_Tools_hasSideEffect(r10);
-			if( !r20 ) goto label$125a773_8_96;
+			if( !r20 ) goto label$125a773_9_96;
 			r20 = true;
 			return r20;
-			label$125a773_8_96:
-			goto label$125a773_8_80;
-			label$125a773_8_97:
+			label$125a773_9_96:
+			goto label$125a773_9_80;
+			label$125a773_9_97:
 			r20 = false;
 			return r20;
 		case 9:
@@ -645,16 +692,16 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 			r10 = ((hxsl_TExprDef_TIf*)r1)->p1;
 			r18 = ((hxsl_TExprDef_TIf*)r1)->p0;
 			r6 = hxsl_Tools_hasSideEffect(r18);
-			if( r6 ) goto label$125a773_8_115;
+			if( r6 ) goto label$125a773_9_115;
 			r6 = hxsl_Tools_hasSideEffect(r10);
-			if( r6 ) goto label$125a773_8_115;
-			if( !r2 ) goto label$125a773_8_113;
+			if( r6 ) goto label$125a773_9_115;
+			if( !r2 ) goto label$125a773_9_113;
 			r6 = hxsl_Tools_hasSideEffect(r2);
 			return r6;
-			label$125a773_8_113:
+			label$125a773_9_113:
 			r6 = false;
 			return r6;
-			label$125a773_8_115:
+			label$125a773_9_115:
 			r6 = true;
 			return r6;
 		case 12:
@@ -666,10 +713,10 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 			r2 = ((hxsl_TExprDef_TFor*)r1)->p2;
 			r10 = ((hxsl_TExprDef_TFor*)r1)->p1;
 			r6 = hxsl_Tools_hasSideEffect(r10);
-			if( r6 ) goto label$125a773_8_127;
+			if( r6 ) goto label$125a773_9_127;
 			r6 = hxsl_Tools_hasSideEffect(r2);
 			return r6;
-			label$125a773_8_127:
+			label$125a773_9_127:
 			r6 = true;
 			return r6;
 		case 11:
@@ -681,36 +728,36 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 			r2 = ((hxsl_TExprDef_TArray*)r1)->p1;
 			r10 = ((hxsl_TExprDef_TArray*)r1)->p0;
 			r6 = hxsl_Tools_hasSideEffect(r10);
-			if( r6 ) goto label$125a773_8_137;
+			if( r6 ) goto label$125a773_9_137;
 			r6 = hxsl_Tools_hasSideEffect(r2);
 			return r6;
-			label$125a773_8_137:
+			label$125a773_9_137:
 			r6 = true;
 			return r6;
 		case 17:
 			r11 = ((hxsl_TExprDef_TArrayDecl*)r1)->p0;
 			r3 = 0;
-			label$125a773_8_141:
+			label$125a773_9_141:
 			if( r11 == NULL ) hl_null_access();
 			r13 = r11->length;
-			if( r3 >= r13 ) goto label$125a773_8_158;
+			if( r3 >= r13 ) goto label$125a773_9_158;
 			r13 = r11->length;
-			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_8_149;
+			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_9_149;
 			r2 = NULL;
-			goto label$125a773_8_152;
-			label$125a773_8_149:
+			goto label$125a773_9_152;
+			label$125a773_9_149:
 			r15 = r11->array;
 			r7 = ((vdynamic**)(r15 + 1))[r3];
 			r2 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r7);
-			label$125a773_8_152:
+			label$125a773_9_152:
 			++r3;
 			r6 = hxsl_Tools_hasSideEffect(r2);
-			if( !r6 ) goto label$125a773_8_157;
+			if( !r6 ) goto label$125a773_9_157;
 			r6 = true;
 			return r6;
-			label$125a773_8_157:
-			goto label$125a773_8_141;
-			label$125a773_8_158:
+			label$125a773_9_157:
+			goto label$125a773_9_141;
+			label$125a773_9_158:
 			r6 = false;
 			return r6;
 		case 18:
@@ -718,62 +765,62 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 			r11 = ((hxsl_TExprDef_TSwitch*)r1)->p1;
 			r10 = ((hxsl_TExprDef_TSwitch*)r1)->p0;
 			r3 = 0;
-			label$125a773_8_164:
+			label$125a773_9_164:
 			if( r11 == NULL ) hl_null_access();
 			r13 = r11->length;
-			if( r3 >= r13 ) goto label$125a773_8_203;
+			if( r3 >= r13 ) goto label$125a773_9_203;
 			r13 = r11->length;
-			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_8_172;
+			if( ((unsigned)r3) < ((unsigned)r13) ) goto label$125a773_9_172;
 			r21 = NULL;
-			goto label$125a773_8_175;
-			label$125a773_8_172:
+			goto label$125a773_9_175;
+			label$125a773_9_172:
 			r15 = r11->array;
 			r7 = ((vdynamic**)(r15 + 1))[r3];
 			r21 = hl_to_virtual(&t$vrt_15384e6,(vdynamic*)r7);
-			label$125a773_8_175:
+			label$125a773_9_175:
 			++r3;
 			r12 = 0;
 			if( r21 == NULL ) hl_null_access();
 			r14 = hl_vfields(r21)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r21)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r21->value,263652588/*values*/,&t$hl_types_ArrayObj);
-			label$125a773_8_179:
+			label$125a773_9_179:
 			if( r14 == NULL ) hl_null_access();
 			r22 = r14->length;
-			if( r12 >= r22 ) goto label$125a773_8_196;
+			if( r12 >= r22 ) goto label$125a773_9_196;
 			r22 = r14->length;
-			if( ((unsigned)r12) < ((unsigned)r22) ) goto label$125a773_8_187;
+			if( ((unsigned)r12) < ((unsigned)r22) ) goto label$125a773_9_187;
 			r18 = NULL;
-			goto label$125a773_8_190;
-			label$125a773_8_187:
+			goto label$125a773_9_190;
+			label$125a773_9_187:
 			r15 = r14->array;
 			r7 = ((vdynamic**)(r15 + 1))[r12];
 			r18 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r7);
-			label$125a773_8_190:
+			label$125a773_9_190:
 			++r12;
 			r6 = hxsl_Tools_hasSideEffect(r18);
-			if( !r6 ) goto label$125a773_8_195;
+			if( !r6 ) goto label$125a773_9_195;
 			r6 = true;
 			return r6;
-			label$125a773_8_195:
-			goto label$125a773_8_179;
-			label$125a773_8_196:
+			label$125a773_9_195:
+			goto label$125a773_9_179;
+			label$125a773_9_196:
 			if( r21 == NULL ) hl_null_access();
 			r18 = hl_vfields(r21)[0] ? (*(vvirtual**)(hl_vfields(r21)[0])) : (vvirtual*)hl_dyn_getp(r21->value,52297279/*expr*/,&t$vrt_6e3ace9);
 			r6 = hxsl_Tools_hasSideEffect(r18);
-			if( !r6 ) goto label$125a773_8_202;
+			if( !r6 ) goto label$125a773_9_202;
 			r6 = true;
 			return r6;
-			label$125a773_8_202:
-			goto label$125a773_8_164;
-			label$125a773_8_203:
+			label$125a773_9_202:
+			goto label$125a773_9_164;
+			label$125a773_9_203:
 			r6 = hxsl_Tools_hasSideEffect(r10);
-			if( r6 ) goto label$125a773_8_210;
-			if( !r2 ) goto label$125a773_8_208;
+			if( r6 ) goto label$125a773_9_210;
+			if( !r2 ) goto label$125a773_9_208;
 			r6 = hxsl_Tools_hasSideEffect(r2);
 			return r6;
-			label$125a773_8_208:
+			label$125a773_9_208:
 			r6 = false;
 			return r6;
-			label$125a773_8_210:
+			label$125a773_9_210:
 			r6 = true;
 			return r6;
 		case 19:
@@ -781,10 +828,10 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 			r2 = ((hxsl_TExprDef_TWhile*)r1)->p1;
 			r10 = ((hxsl_TExprDef_TWhile*)r1)->p0;
 			r20 = hxsl_Tools_hasSideEffect(r10);
-			if( r20 ) goto label$125a773_8_219;
+			if( r20 ) goto label$125a773_9_219;
 			r20 = hxsl_Tools_hasSideEffect(r2);
 			return r20;
-			label$125a773_8_219:
+			label$125a773_9_219:
 			r20 = true;
 			return r20;
 		case 20:
@@ -794,7 +841,7 @@ bool hxsl_Tools_hasSideEffect(vvirtual* r0) {
 			r6 = hxsl_Tools_hasSideEffect(r2);
 			return r6;
 	}
-	label$125a773_8_226:
+	label$125a773_9_226:
 	r6 = false;
 	return r6;
 }
@@ -814,43 +861,43 @@ void hxsl_Tools_iter(vvirtual* r0,vclosure* r1) {
 	r5 = HL__ENUM_INDEX__(r2);
 	switch(r5) {
 		default:
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 0:
 			r6 = ((hxsl_TExprDef_TConst*)r2)->p0;
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 1:
 			r7 = ((hxsl_TExprDef_TVar*)r2)->p0;
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 2:
 			r8 = ((hxsl_TExprDef_TGlobal*)r2)->p0;
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 3:
 			r3 = ((hxsl_TExprDef_TParenthesis*)r2)->p0;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 4:
 			r10 = ((hxsl_TExprDef_TBlock*)r2)->p0;
 			r5 = 0;
-			label$125a773_9_18:
+			label$125a773_10_18:
 			if( r10 == NULL ) hl_null_access();
 			r12 = r10->length;
-			if( r5 >= r12 ) goto label$125a773_9_33;
+			if( r5 >= r12 ) goto label$125a773_10_33;
 			r12 = r10->length;
-			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_9_26;
+			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_10_26;
 			r3 = NULL;
-			goto label$125a773_9_29;
-			label$125a773_9_26:
+			goto label$125a773_10_29;
+			label$125a773_10_26:
 			r15 = r10->array;
 			r14 = ((vdynamic**)(r15 + 1))[r5];
 			r3 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			label$125a773_9_29:
+			label$125a773_10_29:
 			++r5;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_18;
-			label$125a773_9_33:
-			goto label$125a773_9_181;
+			goto label$125a773_10_18;
+			label$125a773_10_33:
+			goto label$125a773_10_181;
 		case 5:
 			r16 = ((hxsl_TExprDef_TBinop*)r2)->p0;
 			r3 = ((hxsl_TExprDef_TBinop*)r2)->p2;
@@ -858,52 +905,52 @@ void hxsl_Tools_iter(vvirtual* r0,vclosure* r1) {
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r9) : ((void (*)(vvirtual*))r1->fun)(r9);
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 6:
 			r18 = ((hxsl_TExprDef_TUnop*)r2)->p0;
 			r3 = ((hxsl_TExprDef_TUnop*)r2)->p1;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 7:
 			r7 = ((hxsl_TExprDef_TVarDecl*)r2)->p0;
 			r3 = ((hxsl_TExprDef_TVarDecl*)r2)->p1;
-			if( !r3 ) goto label$125a773_9_51;
+			if( !r3 ) goto label$125a773_10_51;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			label$125a773_9_51:
-			goto label$125a773_9_181;
+			label$125a773_10_51:
+			goto label$125a773_10_181;
 		case 8:
 			r10 = ((hxsl_TExprDef_TCall*)r2)->p1;
 			r3 = ((hxsl_TExprDef_TCall*)r2)->p0;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
 			r5 = 0;
-			label$125a773_9_57:
+			label$125a773_10_57:
 			if( r10 == NULL ) hl_null_access();
 			r12 = r10->length;
-			if( r5 >= r12 ) goto label$125a773_9_72;
+			if( r5 >= r12 ) goto label$125a773_10_72;
 			r12 = r10->length;
-			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_9_65;
+			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_10_65;
 			r9 = NULL;
-			goto label$125a773_9_68;
-			label$125a773_9_65:
+			goto label$125a773_10_68;
+			label$125a773_10_65:
 			r15 = r10->array;
 			r14 = ((vdynamic**)(r15 + 1))[r5];
 			r9 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			label$125a773_9_68:
+			label$125a773_10_68:
 			++r5;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r9) : ((void (*)(vvirtual*))r1->fun)(r9);
-			goto label$125a773_9_57;
-			label$125a773_9_72:
-			goto label$125a773_9_181;
+			goto label$125a773_10_57;
+			label$125a773_10_72:
+			goto label$125a773_10_181;
 		case 9:
 			r10 = ((hxsl_TExprDef_TSwiz*)r2)->p1;
 			r3 = ((hxsl_TExprDef_TSwiz*)r2)->p0;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 10:
 			r3 = ((hxsl_TExprDef_TIf*)r2)->p2;
 			r9 = ((hxsl_TExprDef_TIf*)r2)->p1;
@@ -911,17 +958,17 @@ void hxsl_Tools_iter(vvirtual* r0,vclosure* r1) {
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r17) : ((void (*)(vvirtual*))r1->fun)(r17);
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r9) : ((void (*)(vvirtual*))r1->fun)(r9);
-			if( !r3 ) goto label$125a773_9_86;
+			if( !r3 ) goto label$125a773_10_86;
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			label$125a773_9_86:
-			goto label$125a773_9_181;
+			label$125a773_10_86:
+			goto label$125a773_10_181;
 		case 12:
 			r3 = ((hxsl_TExprDef_TReturn*)r2)->p0;
-			if( !r3 ) goto label$125a773_9_91;
+			if( !r3 ) goto label$125a773_10_91;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			label$125a773_9_91:
-			goto label$125a773_9_181;
+			label$125a773_10_91:
+			goto label$125a773_10_181;
 		case 13:
 			r7 = ((hxsl_TExprDef_TFor*)r2)->p0;
 			r3 = ((hxsl_TExprDef_TFor*)r2)->p2;
@@ -929,40 +976,40 @@ void hxsl_Tools_iter(vvirtual* r0,vclosure* r1) {
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r9) : ((void (*)(vvirtual*))r1->fun)(r9);
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 11:
 		case 14:
 		case 15:
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 16:
 			r3 = ((hxsl_TExprDef_TArray*)r2)->p1;
 			r9 = ((hxsl_TExprDef_TArray*)r2)->p0;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r9) : ((void (*)(vvirtual*))r1->fun)(r9);
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 17:
 			r10 = ((hxsl_TExprDef_TArrayDecl*)r2)->p0;
 			r5 = 0;
-			label$125a773_9_108:
+			label$125a773_10_108:
 			if( r10 == NULL ) hl_null_access();
 			r12 = r10->length;
-			if( r5 >= r12 ) goto label$125a773_9_123;
+			if( r5 >= r12 ) goto label$125a773_10_123;
 			r12 = r10->length;
-			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_9_116;
+			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_10_116;
 			r3 = NULL;
-			goto label$125a773_9_119;
-			label$125a773_9_116:
+			goto label$125a773_10_119;
+			label$125a773_10_116:
 			r15 = r10->array;
 			r14 = ((vdynamic**)(r15 + 1))[r5];
 			r3 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			label$125a773_9_119:
+			label$125a773_10_119:
 			++r5;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_108;
-			label$125a773_9_123:
-			goto label$125a773_9_181;
+			goto label$125a773_10_108;
+			label$125a773_10_123:
+			goto label$125a773_10_181;
 		case 18:
 			r3 = ((hxsl_TExprDef_TSwitch*)r2)->p2;
 			r10 = ((hxsl_TExprDef_TSwitch*)r2)->p1;
@@ -970,52 +1017,52 @@ void hxsl_Tools_iter(vvirtual* r0,vclosure* r1) {
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r9) : ((void (*)(vvirtual*))r1->fun)(r9);
 			r5 = 0;
-			label$125a773_9_130:
+			label$125a773_10_130:
 			if( r10 == NULL ) hl_null_access();
 			r12 = r10->length;
-			if( r5 >= r12 ) goto label$125a773_9_165;
+			if( r5 >= r12 ) goto label$125a773_10_165;
 			r12 = r10->length;
-			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_9_138;
+			if( ((unsigned)r5) < ((unsigned)r12) ) goto label$125a773_10_138;
 			r19 = NULL;
-			goto label$125a773_9_141;
-			label$125a773_9_138:
+			goto label$125a773_10_141;
+			label$125a773_10_138:
 			r15 = r10->array;
 			r14 = ((vdynamic**)(r15 + 1))[r5];
 			r19 = hl_to_virtual(&t$vrt_15384e6,(vdynamic*)r14);
-			label$125a773_9_141:
+			label$125a773_10_141:
 			++r5;
 			r11 = 0;
 			if( r19 == NULL ) hl_null_access();
 			r13 = hl_vfields(r19)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r19)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r19->value,263652588/*values*/,&t$hl_types_ArrayObj);
-			label$125a773_9_145:
+			label$125a773_10_145:
 			if( r13 == NULL ) hl_null_access();
 			r20 = r13->length;
-			if( r11 >= r20 ) goto label$125a773_9_160;
+			if( r11 >= r20 ) goto label$125a773_10_160;
 			r20 = r13->length;
-			if( ((unsigned)r11) < ((unsigned)r20) ) goto label$125a773_9_153;
+			if( ((unsigned)r11) < ((unsigned)r20) ) goto label$125a773_10_153;
 			r17 = NULL;
-			goto label$125a773_9_156;
-			label$125a773_9_153:
+			goto label$125a773_10_156;
+			label$125a773_10_153:
 			r15 = r13->array;
 			r14 = ((vdynamic**)(r15 + 1))[r11];
 			r17 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			label$125a773_9_156:
+			label$125a773_10_156:
 			++r11;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r17) : ((void (*)(vvirtual*))r1->fun)(r17);
-			goto label$125a773_9_145;
-			label$125a773_9_160:
+			goto label$125a773_10_145;
+			label$125a773_10_160:
 			if( r1 == NULL ) hl_null_access();
 			if( r19 == NULL ) hl_null_access();
 			r17 = hl_vfields(r19)[0] ? (*(vvirtual**)(hl_vfields(r19)[0])) : (vvirtual*)hl_dyn_getp(r19->value,52297279/*expr*/,&t$vrt_6e3ace9);
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r17) : ((void (*)(vvirtual*))r1->fun)(r17);
-			goto label$125a773_9_130;
-			label$125a773_9_165:
-			if( !r3 ) goto label$125a773_9_168;
+			goto label$125a773_10_130;
+			label$125a773_10_165:
+			if( !r3 ) goto label$125a773_10_168;
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			label$125a773_9_168:
-			goto label$125a773_9_181;
+			label$125a773_10_168:
+			goto label$125a773_10_181;
 		case 19:
 			r21 = ((hxsl_TExprDef_TWhile*)r2)->p2;
 			r3 = ((hxsl_TExprDef_TWhile*)r2)->p1;
@@ -1023,7 +1070,7 @@ void hxsl_Tools_iter(vvirtual* r0,vclosure* r1) {
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r9) : ((void (*)(vvirtual*))r1->fun)(r9);
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_9_181;
+			goto label$125a773_10_181;
 		case 20:
 			r10 = ((hxsl_TExprDef_TMeta*)r2)->p1;
 			r22 = ((hxsl_TExprDef_TMeta*)r2)->p0;
@@ -1031,7 +1078,7 @@ void hxsl_Tools_iter(vvirtual* r0,vclosure* r1) {
 			if( r1 == NULL ) hl_null_access();
 			r1->hasValue ? ((void (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((void (*)(vvirtual*))r1->fun)(r3);
 	}
-	label$125a773_9_181:
+	label$125a773_10_181:
 	return;
 }
 
@@ -1052,22 +1099,22 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 	r4 = HL__ENUM_INDEX__(r2);
 	switch(r4) {
 		default:
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 0:
 			r6 = ((hxsl_TExprDef_TConst*)r2)->p0;
 			r7 = hl_vfields(r0)[0] ? (*(venum**)(hl_vfields(r0)[0])) : (venum*)hl_dyn_getp(r0->value,101/*e*/,&t$hxsl_TExprDef);
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 1:
 			r8 = ((hxsl_TExprDef_TVar*)r2)->p0;
 			r7 = hl_vfields(r0)[0] ? (*(venum**)(hl_vfields(r0)[0])) : (venum*)hl_dyn_getp(r0->value,101/*e*/,&t$hxsl_TExprDef);
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 2:
 			r9 = ((hxsl_TExprDef_TGlobal*)r2)->p0;
 			r7 = hl_vfields(r0)[0] ? (*(venum**)(hl_vfields(r0)[0])) : (venum*)hl_dyn_getp(r0->value,101/*e*/,&t$hxsl_TExprDef);
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 3:
 			r3 = ((hxsl_TExprDef_TParenthesis*)r2)->p0;
 			if( r1 == NULL ) hl_null_access();
@@ -1075,7 +1122,7 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,3);
 			((hxsl_TExprDef_TParenthesis*)r7)->p0 = r10;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 4:
 			r11 = ((hxsl_TExprDef_TBlock*)r2)->p0;
 			r14 = &t$vrt_6e3ace9;
@@ -1083,30 +1130,30 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			r13 = hl_alloc_array(r14,r4);
 			r12 = hl_types_ArrayObj_alloc(r13);
 			r4 = 0;
-			label$125a773_10_31:
+			label$125a773_11_31:
 			if( r11 == NULL ) hl_null_access();
 			r16 = r11->length;
-			if( r4 >= r16 ) goto label$125a773_10_48;
+			if( r4 >= r16 ) goto label$125a773_11_48;
 			r16 = r11->length;
-			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_10_39;
+			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_11_39;
 			r3 = NULL;
-			goto label$125a773_10_42;
-			label$125a773_10_39:
+			goto label$125a773_11_42;
+			label$125a773_11_39:
 			r13 = r11->array;
 			r18 = ((vdynamic**)(r13 + 1))[r4];
 			r3 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r18);
-			label$125a773_10_42:
+			label$125a773_11_42:
 			++r4;
 			if( r12 == NULL ) hl_null_access();
 			if( r1 == NULL ) hl_null_access();
 			r10 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((vvirtual* (*)(vvirtual*))r1->fun)(r3);
 			r15 = hl_types_ArrayObj_push(r12,((vdynamic*)r10));
-			goto label$125a773_10_31;
-			label$125a773_10_48:
+			goto label$125a773_11_31;
+			label$125a773_11_48:
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,4);
 			((hxsl_TExprDef_TBlock*)r7)->p0 = r12;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 5:
 			r3 = ((hxsl_TExprDef_TBinop*)r2)->p2;
 			r10 = ((hxsl_TExprDef_TBinop*)r2)->p1;
@@ -1119,7 +1166,7 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			((hxsl_TExprDef_TBinop*)r7)->p1 = r20;
 			((hxsl_TExprDef_TBinop*)r7)->p2 = r21;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 6:
 			r3 = ((hxsl_TExprDef_TUnop*)r2)->p1;
 			r22 = ((hxsl_TExprDef_TUnop*)r2)->p0;
@@ -1129,22 +1176,22 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			((hxsl_TExprDef_TUnop*)r7)->p0 = r22;
 			((hxsl_TExprDef_TUnop*)r7)->p1 = r10;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 7:
 			r3 = ((hxsl_TExprDef_TVarDecl*)r2)->p1;
 			r8 = ((hxsl_TExprDef_TVarDecl*)r2)->p0;
-			if( !r3 ) goto label$125a773_10_73;
+			if( !r3 ) goto label$125a773_11_73;
 			if( r1 == NULL ) hl_null_access();
 			r10 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((vvirtual* (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_10_74;
-			label$125a773_10_73:
+			goto label$125a773_11_74;
+			label$125a773_11_73:
 			r10 = NULL;
-			label$125a773_10_74:
+			label$125a773_11_74:
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,7);
 			((hxsl_TExprDef_TVarDecl*)r7)->p0 = r8;
 			((hxsl_TExprDef_TVarDecl*)r7)->p1 = r10;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 8:
 			r11 = ((hxsl_TExprDef_TCall*)r2)->p1;
 			r3 = ((hxsl_TExprDef_TCall*)r2)->p0;
@@ -1155,31 +1202,31 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			r13 = hl_alloc_array(r14,r4);
 			r12 = hl_types_ArrayObj_alloc(r13);
 			r4 = 0;
-			label$125a773_10_86:
+			label$125a773_11_86:
 			if( r11 == NULL ) hl_null_access();
 			r16 = r11->length;
-			if( r4 >= r16 ) goto label$125a773_10_103;
+			if( r4 >= r16 ) goto label$125a773_11_103;
 			r16 = r11->length;
-			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_10_94;
+			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_11_94;
 			r20 = NULL;
-			goto label$125a773_10_97;
-			label$125a773_10_94:
+			goto label$125a773_11_97;
+			label$125a773_11_94:
 			r13 = r11->array;
 			r18 = ((vdynamic**)(r13 + 1))[r4];
 			r20 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r18);
-			label$125a773_10_97:
+			label$125a773_11_97:
 			++r4;
 			if( r12 == NULL ) hl_null_access();
 			if( r1 == NULL ) hl_null_access();
 			r21 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r20) : ((vvirtual* (*)(vvirtual*))r1->fun)(r20);
 			r15 = hl_types_ArrayObj_push(r12,((vdynamic*)r21));
-			goto label$125a773_10_86;
-			label$125a773_10_103:
+			goto label$125a773_11_86;
+			label$125a773_11_103:
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,8);
 			((hxsl_TExprDef_TCall*)r7)->p0 = r10;
 			((hxsl_TExprDef_TCall*)r7)->p1 = r12;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 9:
 			r11 = ((hxsl_TExprDef_TSwiz*)r2)->p1;
 			r3 = ((hxsl_TExprDef_TSwiz*)r2)->p0;
@@ -1189,7 +1236,7 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			((hxsl_TExprDef_TSwiz*)r7)->p0 = r10;
 			((hxsl_TExprDef_TSwiz*)r7)->p1 = r11;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 10:
 			r3 = ((hxsl_TExprDef_TIf*)r2)->p2;
 			r10 = ((hxsl_TExprDef_TIf*)r2)->p1;
@@ -1197,31 +1244,31 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			if( r1 == NULL ) hl_null_access();
 			r21 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r20) : ((vvirtual* (*)(vvirtual*))r1->fun)(r20);
 			r23 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r10) : ((vvirtual* (*)(vvirtual*))r1->fun)(r10);
-			if( !r3 ) goto label$125a773_10_122;
+			if( !r3 ) goto label$125a773_11_122;
 			r24 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((vvirtual* (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_10_123;
-			label$125a773_10_122:
+			goto label$125a773_11_123;
+			label$125a773_11_122:
 			r24 = NULL;
-			label$125a773_10_123:
+			label$125a773_11_123:
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,10);
 			((hxsl_TExprDef_TIf*)r7)->p0 = r21;
 			((hxsl_TExprDef_TIf*)r7)->p1 = r23;
 			((hxsl_TExprDef_TIf*)r7)->p2 = r24;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 12:
 			r3 = ((hxsl_TExprDef_TReturn*)r2)->p0;
-			if( !r3 ) goto label$125a773_10_131;
+			if( !r3 ) goto label$125a773_11_131;
 			if( r1 == NULL ) hl_null_access();
 			r10 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((vvirtual* (*)(vvirtual*))r1->fun)(r3);
-			goto label$125a773_10_132;
-			label$125a773_10_131:
+			goto label$125a773_11_132;
+			label$125a773_11_131:
 			r10 = NULL;
-			label$125a773_10_132:
+			label$125a773_11_132:
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,12);
 			((hxsl_TExprDef_TReturn*)r7)->p0 = r10;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 13:
 			r3 = ((hxsl_TExprDef_TFor*)r2)->p2;
 			r10 = ((hxsl_TExprDef_TFor*)r2)->p1;
@@ -1234,13 +1281,13 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			((hxsl_TExprDef_TFor*)r7)->p1 = r20;
 			((hxsl_TExprDef_TFor*)r7)->p2 = r21;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 11:
 		case 14:
 		case 15:
 			r7 = hl_vfields(r0)[0] ? (*(venum**)(hl_vfields(r0)[0])) : (venum*)hl_dyn_getp(r0->value,101/*e*/,&t$hxsl_TExprDef);
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 16:
 			r3 = ((hxsl_TExprDef_TArray*)r2)->p1;
 			r10 = ((hxsl_TExprDef_TArray*)r2)->p0;
@@ -1251,7 +1298,7 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			((hxsl_TExprDef_TArray*)r7)->p0 = r20;
 			((hxsl_TExprDef_TArray*)r7)->p1 = r21;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 17:
 			r11 = ((hxsl_TExprDef_TArrayDecl*)r2)->p0;
 			r14 = &t$vrt_6e3ace9;
@@ -1259,30 +1306,30 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			r13 = hl_alloc_array(r14,r4);
 			r12 = hl_types_ArrayObj_alloc(r13);
 			r4 = 0;
-			label$125a773_10_161:
+			label$125a773_11_161:
 			if( r11 == NULL ) hl_null_access();
 			r16 = r11->length;
-			if( r4 >= r16 ) goto label$125a773_10_178;
+			if( r4 >= r16 ) goto label$125a773_11_178;
 			r16 = r11->length;
-			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_10_169;
+			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_11_169;
 			r3 = NULL;
-			goto label$125a773_10_172;
-			label$125a773_10_169:
+			goto label$125a773_11_172;
+			label$125a773_11_169:
 			r13 = r11->array;
 			r18 = ((vdynamic**)(r13 + 1))[r4];
 			r3 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r18);
-			label$125a773_10_172:
+			label$125a773_11_172:
 			++r4;
 			if( r12 == NULL ) hl_null_access();
 			if( r1 == NULL ) hl_null_access();
 			r10 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((vvirtual* (*)(vvirtual*))r1->fun)(r3);
 			r15 = hl_types_ArrayObj_push(r12,((vdynamic*)r10));
-			goto label$125a773_10_161;
-			label$125a773_10_178:
+			goto label$125a773_11_161;
+			label$125a773_11_178:
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,17);
 			((hxsl_TExprDef_TArrayDecl*)r7)->p0 = r12;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 18:
 			r3 = ((hxsl_TExprDef_TSwitch*)r2)->p2;
 			r11 = ((hxsl_TExprDef_TSwitch*)r2)->p1;
@@ -1294,19 +1341,19 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			r13 = hl_alloc_array(r14,r4);
 			r12 = hl_types_ArrayObj_alloc(r13);
 			r4 = 0;
-			label$125a773_10_191:
+			label$125a773_11_191:
 			if( r11 == NULL ) hl_null_access();
 			r16 = r11->length;
-			if( r4 >= r16 ) goto label$125a773_10_237;
+			if( r4 >= r16 ) goto label$125a773_11_237;
 			r16 = r11->length;
-			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_10_199;
+			if( ((unsigned)r4) < ((unsigned)r16) ) goto label$125a773_11_199;
 			r25 = NULL;
-			goto label$125a773_10_202;
-			label$125a773_10_199:
+			goto label$125a773_11_202;
+			label$125a773_11_199:
 			r13 = r11->array;
 			r18 = ((vdynamic**)(r13 + 1))[r4];
 			r25 = hl_to_virtual(&t$vrt_15384e6,(vdynamic*)r18);
-			label$125a773_10_202:
+			label$125a773_11_202:
 			++r4;
 			r14 = &t$vrt_6e3ace9;
 			r15 = 0;
@@ -1315,26 +1362,26 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			r15 = 0;
 			if( r25 == NULL ) hl_null_access();
 			r26 = hl_vfields(r25)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r25)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r25->value,263652588/*values*/,&t$hl_types_ArrayObj);
-			label$125a773_10_210:
+			label$125a773_11_210:
 			if( r26 == NULL ) hl_null_access();
 			r28 = r26->length;
-			if( r15 >= r28 ) goto label$125a773_10_227;
+			if( r15 >= r28 ) goto label$125a773_11_227;
 			r28 = r26->length;
-			if( ((unsigned)r15) < ((unsigned)r28) ) goto label$125a773_10_218;
+			if( ((unsigned)r15) < ((unsigned)r28) ) goto label$125a773_11_218;
 			r21 = NULL;
-			goto label$125a773_10_221;
-			label$125a773_10_218:
+			goto label$125a773_11_221;
+			label$125a773_11_218:
 			r13 = r26->array;
 			r18 = ((vdynamic**)(r13 + 1))[r15];
 			r21 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r18);
-			label$125a773_10_221:
+			label$125a773_11_221:
 			++r15;
 			if( r17 == NULL ) hl_null_access();
 			if( r1 == NULL ) hl_null_access();
 			r23 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r21) : ((vvirtual* (*)(vvirtual*))r1->fun)(r21);
 			r16 = hl_types_ArrayObj_push(r17,((vdynamic*)r23));
-			goto label$125a773_10_210;
-			label$125a773_10_227:
+			goto label$125a773_11_210;
+			label$125a773_11_227:
 			if( r12 == NULL ) hl_null_access();
 			r27 = hl_alloc_virtual(&t$vrt_15384e6);
 			if( hl_vfields(r27)[1] ) *(hl__types__ArrayObj*)(hl_vfields(r27)[1]) = (hl__types__ArrayObj)r17; else hl_dyn_setp(r27->value,263652588/*values*/,&t$hl_types_ArrayObj,r17);
@@ -1344,21 +1391,21 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			r21 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r21) : ((vvirtual* (*)(vvirtual*))r1->fun)(r21);
 			if( hl_vfields(r27)[0] ) *(vvirtual**)(hl_vfields(r27)[0]) = (vvirtual*)r21; else hl_dyn_setp(r27->value,52297279/*expr*/,&t$vrt_6e3ace9,r21);
 			r15 = hl_types_ArrayObj_push(r12,((vdynamic*)r27));
-			goto label$125a773_10_191;
-			label$125a773_10_237:
-			if( r3 ) goto label$125a773_10_240;
+			goto label$125a773_11_191;
+			label$125a773_11_237:
+			if( r3 ) goto label$125a773_11_240;
 			r23 = NULL;
-			goto label$125a773_10_242;
-			label$125a773_10_240:
+			goto label$125a773_11_242;
+			label$125a773_11_240:
 			if( r1 == NULL ) hl_null_access();
 			r23 = r1->hasValue ? ((vvirtual* (*)(vdynamic*,vvirtual*))r1->fun)((vdynamic*)r1->value,r3) : ((vvirtual* (*)(vvirtual*))r1->fun)(r3);
-			label$125a773_10_242:
+			label$125a773_11_242:
 			r7 = hl_alloc_enum(&t$hxsl_TExprDef,18);
 			((hxsl_TExprDef_TSwitch*)r7)->p0 = r20;
 			((hxsl_TExprDef_TSwitch*)r7)->p1 = r12;
 			((hxsl_TExprDef_TSwitch*)r7)->p2 = r23;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 19:
 			r29 = ((hxsl_TExprDef_TWhile*)r2)->p2;
 			r3 = ((hxsl_TExprDef_TWhile*)r2)->p1;
@@ -1371,7 +1418,7 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			((hxsl_TExprDef_TWhile*)r7)->p1 = r21;
 			((hxsl_TExprDef_TWhile*)r7)->p2 = r29;
 			r5 = r7;
-			goto label$125a773_10_261;
+			goto label$125a773_11_261;
 		case 20:
 			r3 = ((hxsl_TExprDef_TMeta*)r2)->p2;
 			r11 = ((hxsl_TExprDef_TMeta*)r2)->p1;
@@ -1384,7 +1431,7 @@ vvirtual* hxsl_Tools_map(vvirtual* r0,vclosure* r1) {
 			((hxsl_TExprDef_TMeta*)r7)->p2 = r10;
 			r5 = r7;
 	}
-	label$125a773_10_261:
+	label$125a773_11_261:
 	r3 = hl_alloc_virtual(&t$vrt_6e3ace9);
 	if( hl_vfields(r3)[0] ) *(venum**)(hl_vfields(r3)[0]) = (venum*)r5; else hl_dyn_setp(r3->value,101/*e*/,&t$hxsl_TExprDef,r5);
 	if( r0 == NULL ) hl_null_access();
@@ -1406,7 +1453,7 @@ int hxsl_Tools_size(venum* r0) {
 	r1 = HL__ENUM_INDEX__(r0);
 	switch(r1) {
 		default:
-			goto label$125a773_11_76;
+			goto label$125a773_12_76;
 		case 0:
 			r1 = 0;
 			return r1;
@@ -1441,27 +1488,27 @@ int hxsl_Tools_size(venum* r0) {
 			r6 = ((hxsl_Type_TStruct*)r0)->p0;
 			r1 = 0;
 			r5 = 0;
-			label$125a773_11_24:
+			label$125a773_12_24:
 			if( r6 == NULL ) hl_null_access();
 			r8 = r6->length;
-			if( r5 >= r8 ) goto label$125a773_11_42;
+			if( r5 >= r8 ) goto label$125a773_12_42;
 			r8 = r6->length;
-			if( ((unsigned)r5) < ((unsigned)r8) ) goto label$125a773_11_32;
+			if( ((unsigned)r5) < ((unsigned)r8) ) goto label$125a773_12_32;
 			r9 = NULL;
-			goto label$125a773_11_35;
-			label$125a773_11_32:
+			goto label$125a773_12_35;
+			label$125a773_12_32:
 			r10 = r6->array;
 			r3 = ((vdynamic**)(r10 + 1))[r5];
 			r9 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r3);
-			label$125a773_11_35:
+			label$125a773_12_35:
 			++r5;
 			if( r9 == NULL ) hl_null_access();
 			r2 = hl_vfields(r9)[5] ? (*(venum**)(hl_vfields(r9)[5])) : (venum*)hl_dyn_getp(r9->value,218690500/*type*/,&t$hxsl_Type);
 			r8 = hxsl_Tools_size(r2);
 			r7 = r1 + r8;
 			r1 = r7;
-			goto label$125a773_11_24;
-			label$125a773_11_42:
+			goto label$125a773_12_24;
+			label$125a773_12_42:
 			return r1;
 		case 14:
 			r6 = ((hxsl_Type_TFun*)r0)->p0;
@@ -1474,7 +1521,7 @@ int hxsl_Tools_size(venum* r0) {
 			r1 = HL__ENUM_INDEX__(r11);
 			switch(r1) {
 				default:
-					goto label$125a773_11_59;
+					goto label$125a773_12_59;
 				case 0:
 					r1 = ((hxsl_SizeDecl_SConst*)r11)->p0;
 					r5 = hxsl_Tools_size(r2);
@@ -1485,20 +1532,20 @@ int hxsl_Tools_size(venum* r0) {
 					r1 = 0;
 					return r1;
 			}
-			label$125a773_11_59:
-			goto label$125a773_11_76;
+			label$125a773_12_59:
+			goto label$125a773_12_76;
 		case 16:
 			r11 = ((hxsl_Type_TBuffer*)r0)->p1;
 			if( r11 == NULL ) hl_null_access();
 			r1 = HL__ENUM_INDEX__(r11);
 			r5 = 0;
-			if( r1 != r5 ) goto label$125a773_11_70;
+			if( r1 != r5 ) goto label$125a773_12_70;
 			r2 = ((hxsl_Type_TBuffer*)r0)->p0;
 			r1 = ((hxsl_SizeDecl_SConst*)r11)->p0;
 			r5 = hxsl_Tools_size(r2);
 			r5 = r5 * r1;
 			return r5;
-			label$125a773_11_70:
+			label$125a773_12_70:
 			r1 = 0;
 			return r1;
 		case 17:
@@ -1508,7 +1555,7 @@ int hxsl_Tools_size(venum* r0) {
 			r1 = 4;
 			return r1;
 	}
-	label$125a773_11_76:
+	label$125a773_12_76:
 	r1 = 0;
 	return r1;
 }

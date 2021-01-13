@@ -834,7 +834,7 @@ vvirtual* hxsl_Serializer_readVar(hxsl__Serializer r0) {
 	if( r15 == NULL ) hl_null_access();
 	r3 = haxe_io_BytesInput_readByte(r15);
 	r18 = 0;
-	if( r18 >= r3 ) goto label$0d3d4b3_7_123;
+	if( r18 >= r3 ) goto label$0d3d4b3_7_126;
 	r19 = &t$hxsl_VarQualifier;
 	r4 = 0;
 	r16 = hl_alloc_array(r19,r4);
@@ -843,7 +843,7 @@ vvirtual* hxsl_Serializer_readVar(hxsl__Serializer r0) {
 	r4 = 0;
 	r18 = r3;
 	label$0d3d4b3_7_55:
-	if( r4 >= r18 ) goto label$0d3d4b3_7_123;
+	if( r4 >= r18 ) goto label$0d3d4b3_7_126;
 	++r4;
 	r15 = r0->input;
 	if( r15 == NULL ) hl_null_access();
@@ -867,24 +867,24 @@ vvirtual* hxsl_Serializer_readVar(hxsl__Serializer r0) {
 			label$0d3d4b3_7_73:
 			r22 = hl_alloc_enum(&t$hxsl_VarQualifier,0);
 			((hxsl_VarQualifier_Const*)r22)->p0 = r23;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 1:
 			r22 = (venum*)g$hxsl_VarQualifier_Private;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 2:
 			r22 = (venum*)g$hxsl_VarQualifier_Nullable;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 3:
 			r22 = (venum*)g$hxsl_VarQualifier_PerObject;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 4:
 			r10 = hxsl_Serializer_readString(r0);
 			r22 = hl_alloc_enum(&t$hxsl_VarQualifier,4);
 			((hxsl_VarQualifier_Name*)r22)->p0 = r10;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 5:
 			r22 = (venum*)g$hxsl_VarQualifier_Shared;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 6:
 			r14 = (hxsl__$Serializer)g$_hxsl_Serializer;
 			r13 = r14->PRECS;
@@ -903,7 +903,7 @@ vvirtual* hxsl_Serializer_readVar(hxsl__Serializer r0) {
 			label$0d3d4b3_7_99:
 			r22 = hl_alloc_enum(&t$hxsl_VarQualifier,6);
 			((hxsl_VarQualifier_Precision*)r22)->p0 = r26;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 7:
 			r15 = r0->input;
 			if( r15 == NULL ) hl_null_access();
@@ -914,29 +914,34 @@ vvirtual* hxsl_Serializer_readVar(hxsl__Serializer r0) {
 			r22 = hl_alloc_enum(&t$hxsl_VarQualifier,7);
 			((hxsl_VarQualifier_Range*)r22)->p0 = r27;
 			((hxsl_VarQualifier_Range*)r22)->p1 = r28;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 8:
 			r22 = (venum*)g$hxsl_VarQualifier_Ignore;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 9:
 			r15 = r0->input;
 			if( r15 == NULL ) hl_null_access();
 			r21 = haxe_io_Input_readInt32(((haxe__io__Input)r15));
 			r22 = hl_alloc_enum(&t$hxsl_VarQualifier,9);
 			((hxsl_VarQualifier_PerInstance*)r22)->p0 = r21;
-			goto label$0d3d4b3_7_118;
+			goto label$0d3d4b3_7_121;
 		case 10:
 			r10 = hxsl_Serializer_readString(r0);
 			r22 = hl_alloc_enum(&t$hxsl_VarQualifier,10);
 			((hxsl_VarQualifier_Doc*)r22)->p0 = r10;
+			goto label$0d3d4b3_7_121;
+		case 11:
+			r10 = hxsl_Serializer_readString(r0);
+			r22 = hl_alloc_enum(&t$hxsl_VarQualifier,11);
+			((hxsl_VarQualifier_Borrow*)r22)->p0 = r10;
 	}
-	label$0d3d4b3_7_118:
+	label$0d3d4b3_7_121:
 	if( r5 == NULL ) hl_null_access();
 	r13 = hl_vfields(r5)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r5)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r5->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
 	if( r13 == NULL ) hl_null_access();
 	r21 = hl_types_ArrayObj_push(r13,((vdynamic*)r22));
 	goto label$0d3d4b3_7_55;
-	label$0d3d4b3_7_123:
+	label$0d3d4b3_7_126:
 	return r5;
 }
 

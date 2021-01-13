@@ -9,8 +9,8 @@ String String___add__(String,String);
 vdynamic* haxe_Exception_thrown(vdynamic*);
 #include <h3d/Engine.h>
 extern String s$not_implemented;
+#include <h3d/impl/ManagedBuffer.h>
 #include <h3d/impl/MemoryManager.h>
-bool h3d_Buffer_isDisposed(h3d__Buffer);
 void h3d_Engine_renderBuffer(h3d__Engine,h3d__Buffer,h3d__Indexes,int,int*,int*);
 void h3d_Engine_renderIndexed(h3d__Engine,h3d__Buffer,h3d__Indexes,int*,int*);
 void h3d_Buffer_dispose(h3d__Buffer);
@@ -76,64 +76,79 @@ void h3d_prim_Primitive_selectMaterial(h3d__prim__Primitive r0,int r1) {
 }
 
 void h3d_prim_Primitive_render(h3d__prim__Primitive r0,h3d__Engine r1) {
+	vvirtual *r6;
 	bool r4;
-	h3d__impl__MemoryManager r8;
+	h3d__impl__MemoryManager r10;
 	h3d__Buffer r3;
-	int *r9, *r11;
-	int r6, r7, r10, r12, r13;
-	h3d__Indexes r5;
+	int *r11, *r13;
+	int r8, r9, r12, r14, r15;
+	h3d__Indexes r7;
+	h3d__impl__ManagedBuffer r5;
 	r3 = r0->buffer;
-	if( !r3 ) goto label$324c01e_7_6;
+	if( !r3 ) goto label$324c01e_7_14;
 	r3 = r0->buffer;
 	if( r3 == NULL ) hl_null_access();
-	r4 = h3d_Buffer_isDisposed(r3);
-	if( !r4 ) goto label$324c01e_7_7;
-	label$324c01e_7_6:
+	r5 = r3->buffer;
+	if( !r5 ) goto label$324c01e_7_12;
+	r5 = r3->buffer;
+	if( r5 == NULL ) hl_null_access();
+	r6 = r5->vbuf;
+	if( !r6 ) goto label$324c01e_7_12;
+	r4 = false;
+	goto label$324c01e_7_13;
+	label$324c01e_7_12:
+	r4 = true;
+	label$324c01e_7_13:
+	goto label$324c01e_7_15;
+	label$324c01e_7_14:
+	r4 = true;
+	label$324c01e_7_15:
+	if( !r4 ) goto label$324c01e_7_17;
 	((void (*)(h3d__prim__Primitive,h3d__Engine))r0->$type->vobj_proto[1])(r0,r1);
-	label$324c01e_7_7:
-	r5 = r0->indexes;
-	if( r5 ) goto label$324c01e_7_40;
+	label$324c01e_7_17:
+	r7 = r0->indexes;
+	if( r7 ) goto label$324c01e_7_50;
 	r3 = r0->buffer;
 	if( r3 == NULL ) hl_null_access();
-	r6 = r3->flags;
-	r7 = 4;
-	r6 = r6 & r7;
-	r7 = 0;
-	if( r6 == r7 ) goto label$324c01e_7_28;
+	r8 = r3->flags;
+	r9 = 4;
+	r8 = r8 & r9;
+	r9 = 0;
+	if( r8 == r9 ) goto label$324c01e_7_38;
 	if( r1 == NULL ) hl_null_access();
 	r3 = r0->buffer;
-	r8 = r1->mem;
-	if( r8 == NULL ) hl_null_access();
-	r5 = r8->quadIndexes;
-	r6 = 2;
-	r7 = 0;
-	r9 = &r7;
-	r10 = -1;
-	r11 = &r10;
-	h3d_Engine_renderBuffer(r1,r3,r5,r6,r9,r11);
-	goto label$324c01e_7_39;
-	label$324c01e_7_28:
+	r10 = r1->mem;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->quadIndexes;
+	r8 = 2;
+	r9 = 0;
+	r11 = &r9;
+	r12 = -1;
+	r13 = &r12;
+	h3d_Engine_renderBuffer(r1,r3,r7,r8,r11,r13);
+	goto label$324c01e_7_49;
+	label$324c01e_7_38:
 	if( r1 == NULL ) hl_null_access();
 	r3 = r0->buffer;
-	r8 = r1->mem;
-	if( r8 == NULL ) hl_null_access();
-	r5 = r8->triIndexes;
-	r6 = 3;
-	r12 = 0;
-	r9 = &r12;
-	r13 = -1;
-	r11 = &r13;
-	h3d_Engine_renderBuffer(r1,r3,r5,r6,r9,r11);
-	label$324c01e_7_39:
-	goto label$324c01e_7_46;
-	label$324c01e_7_40:
+	r10 = r1->mem;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->triIndexes;
+	r8 = 3;
+	r14 = 0;
+	r11 = &r14;
+	r15 = -1;
+	r13 = &r15;
+	h3d_Engine_renderBuffer(r1,r3,r7,r8,r11,r13);
+	label$324c01e_7_49:
+	goto label$324c01e_7_56;
+	label$324c01e_7_50:
 	if( r1 == NULL ) hl_null_access();
 	r3 = r0->buffer;
-	r5 = r0->indexes;
-	r9 = NULL;
+	r7 = r0->indexes;
 	r11 = NULL;
-	h3d_Engine_renderIndexed(r1,r3,r5,r9,r11);
-	label$324c01e_7_46:
+	r13 = NULL;
+	h3d_Engine_renderIndexed(r1,r3,r7,r11,r13);
+	label$324c01e_7_56:
 	return;
 }
 

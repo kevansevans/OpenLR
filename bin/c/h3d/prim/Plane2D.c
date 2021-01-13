@@ -17,8 +17,8 @@ extern venum* g$h3d_BufferFlag_Quads;
 extern venum* g$h3d_BufferFlag_RawFormat;
 hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 h3d__Buffer h3d_Buffer_ofFloats(hl__types__ArrayBytes_hl_F32,int,hl__types__ArrayObj);
+#include <h3d/impl/ManagedBuffer.h>
 #include <h3d/impl/MemoryManager.h>
-bool h3d_Buffer_isDisposed(h3d__Buffer);
 void h3d_Engine_renderBuffer(h3d__Engine,h3d__Buffer,h3d__Indexes,int,int*,int*);
 #include <haxe/ds/ObjectMap.h>
 extern h3d__$Engine g$_h3d_Engine;
@@ -128,32 +128,47 @@ void h3d_prim_Plane2D_alloc(h3d__prim__Plane2D r0,h3d__Engine r1) {
 }
 
 void h3d_prim_Plane2D_render(h3d__prim__Plane2D r0,h3d__Engine r1) {
+	vvirtual *r6;
 	bool r4;
-	h3d__impl__MemoryManager r6;
+	h3d__impl__MemoryManager r8;
 	h3d__Buffer r3;
-	int *r9, *r11;
-	int r7, r8, r10;
-	h3d__Indexes r5;
+	int *r11, *r13;
+	int r9, r10, r12;
+	h3d__Indexes r7;
+	h3d__impl__ManagedBuffer r5;
 	r3 = r0->buffer;
-	if( !r3 ) goto label$18e592e_3_6;
+	if( !r3 ) goto label$18e592e_3_14;
 	r3 = r0->buffer;
 	if( r3 == NULL ) hl_null_access();
-	r4 = h3d_Buffer_isDisposed(r3);
-	if( !r4 ) goto label$18e592e_3_7;
-	label$18e592e_3_6:
+	r5 = r3->buffer;
+	if( !r5 ) goto label$18e592e_3_12;
+	r5 = r3->buffer;
+	if( r5 == NULL ) hl_null_access();
+	r6 = r5->vbuf;
+	if( !r6 ) goto label$18e592e_3_12;
+	r4 = false;
+	goto label$18e592e_3_13;
+	label$18e592e_3_12:
+	r4 = true;
+	label$18e592e_3_13:
+	goto label$18e592e_3_15;
+	label$18e592e_3_14:
+	r4 = true;
+	label$18e592e_3_15:
+	if( !r4 ) goto label$18e592e_3_17;
 	h3d_prim_Plane2D_alloc(r0,r1);
-	label$18e592e_3_7:
+	label$18e592e_3_17:
 	if( r1 == NULL ) hl_null_access();
 	r3 = r0->buffer;
-	r6 = r1->mem;
-	if( r6 == NULL ) hl_null_access();
-	r5 = r6->quadIndexes;
-	r7 = 2;
-	r8 = 0;
-	r9 = &r8;
-	r10 = -1;
+	r8 = r1->mem;
+	if( r8 == NULL ) hl_null_access();
+	r7 = r8->quadIndexes;
+	r9 = 2;
+	r10 = 0;
 	r11 = &r10;
-	h3d_Engine_renderBuffer(r1,r3,r5,r7,r9,r11);
+	r12 = -1;
+	r13 = &r12;
+	h3d_Engine_renderBuffer(r1,r3,r7,r9,r11,r13);
 	return;
 }
 

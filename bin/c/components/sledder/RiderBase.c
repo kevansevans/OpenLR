@@ -34,7 +34,7 @@ String String___alloc__(vbyte*,int);
 String String___add__(String,String);
 extern String s$y;
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
-extern hl_type t$vrt_f730762;
+extern hl_type t$vrt_3d3bf19;
 extern hl_type t$hl_types_ArrayObj;
 extern hl_type t$nul_i32;
 String h2d_HtmlText_set_text(h2d__HtmlText,String);
@@ -433,7 +433,7 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	label$2a8c663_10_2:
 	if( r3 == NULL ) hl_null_access();
 	r5 = r3->length;
-	if( r1 >= r5 ) goto label$2a8c663_10_103;
+	if( r1 >= r5 ) goto label$2a8c663_10_105;
 	r5 = r3->length;
 	if( ((unsigned)r1) < ((unsigned)r5) ) goto label$2a8c663_10_10;
 	r7 = NULL;
@@ -455,13 +455,13 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	r4 = -1;
 	label$2a8c663_10_23:
 	r14 = 2;
-	if( r4 >= r14 ) goto label$2a8c663_10_102;
+	if( r4 >= r14 ) goto label$2a8c663_10_104;
 	r5 = r4;
 	++r4;
 	r14 = -1;
 	label$2a8c663_10_29:
 	r16 = 2;
-	if( r14 >= r16 ) goto label$2a8c663_10_101;
+	if( r14 >= r16 ) goto label$2a8c663_10_103;
 	r15 = r14;
 	++r14;
 	r17 = (String)s$x;
@@ -486,7 +486,7 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	r22 = r23->registry;
 	if( r22 == NULL ) hl_null_access();
 	r8 = haxe_ds_StringMap_get(r22,r17);
-	r25 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r8);
+	r25 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r8);
 	if( r25 ) goto label$2a8c663_10_59;
 	goto label$2a8c663_10_29;
 	label$2a8c663_10_59:
@@ -496,14 +496,14 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	r22 = r23->registry;
 	if( r22 == NULL ) hl_null_access();
 	r8 = haxe_ds_StringMap_get(r22,r17);
-	r25 = hl_to_virtual(&t$vrt_f730762,(vdynamic*)r8);
+	r25 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r8);
 	r16 = 0;
 	if( r25 == NULL ) hl_null_access();
-	r6 = hl_vfields(r25)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r25)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r25->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
+	r6 = hl_vfields(r25)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r25)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r25->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
 	label$2a8c663_10_69:
 	if( r6 == NULL ) hl_null_access();
 	r26 = r6->length;
-	if( r16 >= r26 ) goto label$2a8c663_10_84;
+	if( r16 >= r26 ) goto label$2a8c663_10_86;
 	r26 = r6->length;
 	if( ((unsigned)r16) < ((unsigned)r26) ) goto label$2a8c663_10_77;
 	r27 = NULL;
@@ -514,35 +514,38 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	r27 = (components__lines__LineBase)r8;
 	label$2a8c663_10_80:
 	++r16;
+	if( r27 ) goto label$2a8c663_10_83;
+	goto label$2a8c663_10_69;
+	label$2a8c663_10_83:
 	if( r27 == NULL ) hl_null_access();
 	((void (*)(components__lines__LineBase,components__physics__RidePoint))r27->$type->vobj_proto[2])(r27,r7);
 	goto label$2a8c663_10_69;
-	label$2a8c663_10_84:
+	label$2a8c663_10_86:
 	if( r25 == NULL ) hl_null_access();
-	r28 = hl_vfields(r25)[1] ? (*(vdynamic**)(hl_vfields(r25)[1])) : (vdynamic*)hl_dyn_getp(r25->value,390036483/*lowFrame*/,&t$nul_i32);
-	if( !r28 ) goto label$2a8c663_10_94;
+	r28 = hl_vfields(r25)[2] ? (*(vdynamic**)(hl_vfields(r25)[2])) : (vdynamic*)hl_dyn_getp(r25->value,390036483/*lowFrame*/,&t$nul_i32);
+	if( !r28 ) goto label$2a8c663_10_96;
 	r24 = ($Main)g$_Main;
 	r29 = r24->simulation;
 	if( r29 == NULL ) hl_null_access();
 	r16 = r29->frames;
-	r28 = hl_vfields(r25)[1] ? (*(vdynamic**)(hl_vfields(r25)[1])) : (vdynamic*)hl_dyn_getp(r25->value,390036483/*lowFrame*/,&t$nul_i32);
+	r28 = hl_vfields(r25)[2] ? (*(vdynamic**)(hl_vfields(r25)[2])) : (vdynamic*)hl_dyn_getp(r25->value,390036483/*lowFrame*/,&t$nul_i32);
 	r18 = r28 ? r28->v.i : 0;
-	if( r16 >= r18 ) goto label$2a8c663_10_100;
-	label$2a8c663_10_94:
+	if( r16 >= r18 ) goto label$2a8c663_10_102;
+	label$2a8c663_10_96:
 	r24 = ($Main)g$_Main;
 	r29 = r24->simulation;
 	if( r29 == NULL ) hl_null_access();
 	r16 = r29->frames;
 	r28 = hl_alloc_dynamic(&t$_i32);
 	r28->v.i = r16;
-	if( hl_vfields(r25)[1] ) *(vdynamic**)(hl_vfields(r25)[1]) = (vdynamic*)r28; else hl_dyn_setp(r25->value,390036483/*lowFrame*/,&t$nul_i32,r28);
-	label$2a8c663_10_100:
-	goto label$2a8c663_10_29;
-	label$2a8c663_10_101:
-	goto label$2a8c663_10_23;
+	if( hl_vfields(r25)[2] ) *(vdynamic**)(hl_vfields(r25)[2]) = (vdynamic*)r28; else hl_dyn_setp(r25->value,390036483/*lowFrame*/,&t$nul_i32,r28);
 	label$2a8c663_10_102:
-	goto label$2a8c663_10_2;
+	goto label$2a8c663_10_29;
 	label$2a8c663_10_103:
+	goto label$2a8c663_10_23;
+	label$2a8c663_10_104:
+	goto label$2a8c663_10_2;
+	label$2a8c663_10_105:
 	return;
 }
 

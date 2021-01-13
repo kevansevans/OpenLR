@@ -45,6 +45,7 @@ extern String s$b15835f;
 extern String s$3bd8640;
 String StringTools_replace(String,String,String);
 extern String s$149c4f8;
+extern String s$borrow_;
 extern String s$518ed29;
 extern String s$7215ee9;
 extern hl_type t$hxsl_VarKind;
@@ -258,13 +259,13 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 	label$1dc81bc_4_3:
 	if( r1 == NULL ) hl_null_access();
 	r7 = hl_vfields(r1)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
-	if( !r7 ) goto label$1dc81bc_4_115;
+	if( !r7 ) goto label$1dc81bc_4_122;
 	r9 = 0;
 	r7 = hl_vfields(r1)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,476822680/*qualifiers*/,&t$hl_types_ArrayObj);
 	label$1dc81bc_4_8:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r9 >= r11 ) goto label$1dc81bc_4_115;
+	if( r9 >= r11 ) goto label$1dc81bc_4_122;
 	r11 = r7->length;
 	if( ((unsigned)r9) < ((unsigned)r11) ) goto label$1dc81bc_4_16;
 	r12 = NULL;
@@ -279,7 +280,7 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 	r10 = HL__ENUM_INDEX__(r12);
 	switch(r10) {
 		default:
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 0:
 			r15 = ((hxsl_VarQualifier_Const*)r12)->p0;
 			r16 = (String)s$const;
@@ -300,19 +301,19 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 			label$1dc81bc_4_37:
 			r16 = String___add__(r16,r17);
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 1:
 			r16 = (String)s$private;
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 2:
 			r16 = (String)s$nullable;
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 3:
 			r16 = (String)s$perObject;
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 4:
 			r16 = ((hxsl_VarQualifier_Name*)r12)->p0;
 			r17 = (String)s$name_;
@@ -320,11 +321,11 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 			r18 = (String)s$0e6e759;
 			r17 = String___add__(r17,r18);
 			r5 = r17;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 5:
 			r16 = (String)s$shared;
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 6:
 			r19 = ((hxsl_VarQualifier_Precision*)r12)->p0;
 			r16 = Type_enumConstructor(((vdynamic*)r19));
@@ -333,7 +334,7 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 			r17 = (String)s$p;
 			r16 = String___add__(r16,r17);
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 7:
 			r20 = ((hxsl_VarQualifier_Range*)r12)->p1;
 			r21 = ((hxsl_VarQualifier_Range*)r12)->p0;
@@ -351,11 +352,11 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 			r17 = (String)s$9371d7a;
 			r16 = String___add__(r16,r17);
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 8:
 			r16 = (String)s$ignore;
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 9:
 			r10 = ((hxsl_VarQualifier_PerInstance*)r12)->p0;
 			r16 = (String)s$perInstance_;
@@ -367,7 +368,7 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 			r17 = (String)s$9371d7a;
 			r16 = String___add__(r16,r17);
 			r5 = r16;
-			goto label$1dc81bc_4_107;
+			goto label$1dc81bc_4_114;
 		case 10:
 			r16 = ((hxsl_VarQualifier_Doc*)r12)->p0;
 			r17 = (String)s$doc_;
@@ -378,8 +379,16 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 			r18 = (String)s$149c4f8;
 			r17 = String___add__(r17,r18);
 			r5 = r17;
+			goto label$1dc81bc_4_114;
+		case 11:
+			r16 = ((hxsl_VarQualifier_Borrow*)r12)->p0;
+			r17 = (String)s$borrow_;
+			r17 = String___add__(r17,r16);
+			r18 = (String)s$9371d7a;
+			r17 = String___add__(r17,r18);
+			r5 = r17;
 	}
-	label$1dc81bc_4_107:
+	label$1dc81bc_4_114:
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
 	r16 = (String)s$518ed29;
@@ -388,86 +397,86 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 	r16 = String___add__(r16,r17);
 	StringBuf_add(r26,((vdynamic*)r16));
 	goto label$1dc81bc_4_8;
-	label$1dc81bc_4_115:
+	label$1dc81bc_4_122:
 	if( r1 == NULL ) hl_null_access();
 	r27 = hl_vfields(r1)[1] ? (*(venum**)(hl_vfields(r1)[1])) : (venum*)hl_dyn_getp(r1->value,118088286/*kind*/,&t$hxsl_VarKind);
-	if( r27 == r2 ) goto label$1dc81bc_4_157;
+	if( r27 == r2 ) goto label$1dc81bc_4_164;
 	r27 = hl_vfields(r1)[1] ? (*(venum**)(hl_vfields(r1)[1])) : (venum*)hl_dyn_getp(r1->value,118088286/*kind*/,&t$hxsl_VarKind);
 	if( r27 == NULL ) hl_null_access();
 	r9 = HL__ENUM_INDEX__(r27);
 	switch(r9) {
 		default:
-			goto label$1dc81bc_4_157;
+			goto label$1dc81bc_4_164;
 		case 0:
 			r26 = r0->buffer;
 			if( r26 == NULL ) hl_null_access();
 			r5 = (String)s$_global_;
 			StringBuf_add(r26,((vdynamic*)r5));
-			goto label$1dc81bc_4_157;
+			goto label$1dc81bc_4_164;
 		case 1:
 			r26 = r0->buffer;
 			if( r26 == NULL ) hl_null_access();
 			r5 = (String)s$_input_;
 			StringBuf_add(r26,((vdynamic*)r5));
-			goto label$1dc81bc_4_157;
+			goto label$1dc81bc_4_164;
 		case 2:
 			r26 = r0->buffer;
 			if( r26 == NULL ) hl_null_access();
 			r5 = (String)s$_param_;
 			StringBuf_add(r26,((vdynamic*)r5));
-			goto label$1dc81bc_4_157;
+			goto label$1dc81bc_4_164;
 		case 3:
 			r26 = r0->buffer;
 			if( r26 == NULL ) hl_null_access();
 			r5 = (String)s$_varying_;
 			StringBuf_add(r26,((vdynamic*)r5));
-			goto label$1dc81bc_4_157;
+			goto label$1dc81bc_4_164;
 		case 4:
 			r26 = r0->buffer;
 			if( r26 == NULL ) hl_null_access();
 			r5 = (String)s$_local_;
 			StringBuf_add(r26,((vdynamic*)r5));
-			goto label$1dc81bc_4_157;
+			goto label$1dc81bc_4_164;
 		case 5:
 			r26 = r0->buffer;
 			if( r26 == NULL ) hl_null_access();
 			r5 = (String)s$_output_;
 			StringBuf_add(r26,((vdynamic*)r5));
-			goto label$1dc81bc_4_157;
+			goto label$1dc81bc_4_164;
 		case 6:
 			r26 = r0->buffer;
 			if( r26 == NULL ) hl_null_access();
 			r5 = (String)s$_function_;
 			StringBuf_add(r26,((vdynamic*)r5));
 	}
-	label$1dc81bc_4_157:
+	label$1dc81bc_4_164:
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
 	r5 = (String)s$var_;
 	StringBuf_add(r26,((vdynamic*)r5));
 	r8 = hl_vfields(r1)[3] ? (*(vvirtual**)(hl_vfields(r1)[3])) : (vvirtual*)hl_dyn_getp(r1->value,-310508246/*parent*/,&t$vrt_09f4a29);
-	if( r8 != r4 && (!r8 || !r4 || !r8->value || !r4->value || r8->value != r4->value) ) goto label$1dc81bc_4_179;
+	if( r8 != r4 && (!r8 || !r4 || !r8->value || !r4->value || r8->value != r4->value) ) goto label$1dc81bc_4_186;
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
 	r5 = hl_vfields(r1)[2] ? (*(String*)(hl_vfields(r1)[2])) : (String)hl_dyn_getp(r1->value,150958933/*name*/,&t$String);
 	r28 = r0->varId;
-	if( !r28 ) goto label$1dc81bc_4_175;
+	if( !r28 ) goto label$1dc81bc_4_182;
 	r16 = (String)s$518ed29;
 	r9 = hl_vfields(r1)[0] ? (*(int*)(hl_vfields(r1)[0])) : (int)hl_dyn_geti(r1->value,23515/*id*/,&t$_i32);
 	r22 = &r9;
 	r23 = hl_itos(r9,r22);
 	r17 = String___alloc__(r23,r9);
 	r16 = String___add__(r16,r17);
-	goto label$1dc81bc_4_176;
-	label$1dc81bc_4_175:
+	goto label$1dc81bc_4_183;
+	label$1dc81bc_4_182:
 	r16 = (String)s$;
-	label$1dc81bc_4_176:
+	label$1dc81bc_4_183:
 	r5 = String___add__(r5,r16);
 	StringBuf_add(r26,((vdynamic*)r5));
-	goto label$1dc81bc_4_180;
-	label$1dc81bc_4_179:
+	goto label$1dc81bc_4_187;
+	label$1dc81bc_4_186:
 	hxsl_Printer_addVarName(r0,r1);
-	label$1dc81bc_4_180:
+	label$1dc81bc_4_187:
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
 	r5 = (String)s$f910c9f;
@@ -476,7 +485,7 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 	if( r29 == NULL ) hl_null_access();
 	r9 = HL__ENUM_INDEX__(r29);
 	r10 = 13;
-	if( r9 != r10 ) goto label$1dc81bc_4_225;
+	if( r9 != r10 ) goto label$1dc81bc_4_232;
 	r7 = ((hxsl_Type_TStruct*)r29)->p0;
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
@@ -484,47 +493,47 @@ void hxsl_Printer_addVar(hxsl__Printer r0,vvirtual* r1,venum* r2,String r3,vvirt
 	StringBuf_add(r26,((vdynamic*)r5));
 	r28 = true;
 	r9 = 0;
-	label$1dc81bc_4_196:
+	label$1dc81bc_4_203:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r9 >= r11 ) goto label$1dc81bc_4_220;
+	if( r9 >= r11 ) goto label$1dc81bc_4_227;
 	r11 = r7->length;
-	if( ((unsigned)r9) < ((unsigned)r11) ) goto label$1dc81bc_4_204;
+	if( ((unsigned)r9) < ((unsigned)r11) ) goto label$1dc81bc_4_211;
 	r8 = NULL;
-	goto label$1dc81bc_4_207;
-	label$1dc81bc_4_204:
+	goto label$1dc81bc_4_214;
+	label$1dc81bc_4_211:
 	r14 = r7->array;
 	r13 = ((vdynamic**)(r14 + 1))[r9];
 	r8 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r13);
-	label$1dc81bc_4_207:
+	label$1dc81bc_4_214:
 	++r9;
-	if( !r28 ) goto label$1dc81bc_4_212;
+	if( !r28 ) goto label$1dc81bc_4_219;
 	r31 = false;
 	r28 = r31;
-	goto label$1dc81bc_4_216;
-	label$1dc81bc_4_212:
+	goto label$1dc81bc_4_223;
+	label$1dc81bc_4_219:
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
 	r5 = (String)s$fc763cb;
 	StringBuf_add(r26,((vdynamic*)r5));
-	label$1dc81bc_4_216:
+	label$1dc81bc_4_223:
 	if( r8 == NULL ) hl_null_access();
 	r27 = hl_vfields(r8)[1] ? (*(venum**)(hl_vfields(r8)[1])) : (venum*)hl_dyn_getp(r8->value,118088286/*kind*/,&t$hxsl_VarKind);
 	hxsl_Printer_addVar(r0,r8,r27,r3,r8);
-	goto label$1dc81bc_4_196;
-	label$1dc81bc_4_220:
+	goto label$1dc81bc_4_203;
+	label$1dc81bc_4_227:
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
 	r5 = (String)s$cbb184d;
 	StringBuf_add(r26,((vdynamic*)r5));
-	goto label$1dc81bc_4_230;
-	label$1dc81bc_4_225:
+	goto label$1dc81bc_4_237;
+	label$1dc81bc_4_232:
 	r30 = hl_vfields(r1)[5] ? (*(venum**)(hl_vfields(r1)[5])) : (venum*)hl_dyn_getp(r1->value,218690500/*type*/,&t$hxsl_Type);
 	r5 = hxsl_Tools_toString(r30);
 	r26 = r0->buffer;
 	if( r26 == NULL ) hl_null_access();
 	StringBuf_add(r26,((vdynamic*)r5));
-	label$1dc81bc_4_230:
+	label$1dc81bc_4_237:
 	return;
 }
 

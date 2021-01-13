@@ -20,12 +20,13 @@ struct _components__managers__$Simulation {
 struct _components__managers__Simulation {
 	hl_type *$type;
 	haxe__ds__ObjectMap frameStates;
-	haxe__ds__ObjectMap flagPoint;
 	int frames;
 	bool playing;
 	bool paused;
 	bool rewinding;
 	bool updating;
+	bool flagged;
+	int flagframe;
 	double desiredSimSpeed;
 	double timeDelta;
 	int rewindPoint;

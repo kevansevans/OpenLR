@@ -81,16 +81,6 @@
                 dot.y = dot.y - _loc4 * ny;
                 dot.vx = dot.vx + ny * dot.friction * _loc4 * (dot.vx < dot.x ? (1) : (-1));
                 dot.vy = dot.vy - nx * dot.friction * _loc4 * (dot.vy < dot.y ? (-1) : (1));
-                if (_root.globalFoolBool == true)
-                {
-                    poot = new Sound(this);
-                    poot.attachSound("pootis");
-                    poot.start(0, 99);
-                } // end if
-                if (_root.hitTestBool == true)
-                {
-                    this.renderLine("hit");
-                } // end if
                 return (true);
             } // end if
         } // end if

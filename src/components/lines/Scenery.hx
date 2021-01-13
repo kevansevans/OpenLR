@@ -27,8 +27,8 @@ class Scenery extends LineBase
 		rideLayer.x = colorLayer.x = start.x;
 		rideLayer.y = colorLayer.y = start.y;
 		
-		colorLayer.lineStyle(2, 0x00CC00);
-		colorLayer.moveTo(0, 0 );
+		colorLayer.lineStyle(2, 0x00CC00, 0.5);
+		colorLayer.moveTo(0, 0);
 		colorLayer.lineTo(gfxEnd.x, gfxEnd.y);
 		colorLayer.drawCircle(0, 0, lineCapRadius, lineCapSegment);
 		colorLayer.drawCircle(gfxEnd.x, gfxEnd.y, lineCapRadius, lineCapSegment);

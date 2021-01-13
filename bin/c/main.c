@@ -200,8 +200,10 @@ void fun$init(void);
 #  include <components/physics/ScarfPoint.c>
 #  include <hxd/res/Image.c>
 #  include <hxd/res/ImageInfo.c>
+#  include <h3d/col/Point.c>
 #  include <haxe/Log.c>
 #  include <hl/types/ArrayDyn.c>
+#  include <components/tool/ToolFunction.c>
 #  include <haxe/format/JsonParser.c>
 #  include <haxe/io/Input.c>
 #  include <format/gif/Reader.c>
@@ -217,7 +219,6 @@ void fun$init(void);
 #  include <format/tga/Reader.c>
 #  include <format/wav/Reader.c>
 #  include <hxd/impl/Allocator.c>
-#  include <h3d/col/Point.c>
 #  include <h3d/impl/_GlDriver/CompiledAttribute.c>
 #  include <h3d/impl/InputNames.c>
 #  include <h3d/impl/_GlDriver/CompiledShader.c>

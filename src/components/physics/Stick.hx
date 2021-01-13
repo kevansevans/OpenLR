@@ -22,8 +22,12 @@ class Stick
 	{
 		var xDist = a.pos.x - b.pos.x;
 		var yDist = a.pos.y - b.pos.y;
-		var dist = Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
-		var adjust = dist == 0 ? 0 : (dist - restLength) / dist * 0.5;
+		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
+		
+		var adjust:Null<Float> = null;
+		if (dist == 0) adjust = 0;
+		else adjust = (dist - restLength) / dist * 0.5;
+		
 		var xAdjust = xDist * adjust;
 		var yAdjust = yDist * adjust;
 		

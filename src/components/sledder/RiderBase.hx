@@ -161,6 +161,9 @@ class RiderBase
 				else {
 					var register = Main.grid.registry[key];
 					for (line in register.colliders) {
+						
+						if (line == null) continue;
+						
 						line.collide(point);
 					}
 					if (register.lowFrame == null || Main.simulation.frames < register.lowFrame) register.lowFrame = Main.simulation.frames;

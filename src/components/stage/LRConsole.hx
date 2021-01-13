@@ -33,9 +33,18 @@ class LRConsole extends Console
 		}
 	}
 	
+	override function show() {
+		bg.visible = true;
+		tf.text = "";
+		tf.focus();
+		tf.cursorIndex = tf.text.length;
+		bg.visible = true;
+		logTxt.visible = true;
+	}
+	
 	@:privateAccess override function handleCommand( command : String ) {
 		command = StringTools.trim(command);
-		if( command.charCodeAt(0) == "/".code ) command = command.substr(1);
+		if( command.charCodeAt(0) == shortKeyChar ) command = command.substr(1);
 		if( command == "" ) {
 			hide();
 			return;

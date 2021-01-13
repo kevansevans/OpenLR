@@ -18,10 +18,10 @@ void hl_types_ArrayBytes_hl_UI16___expand(hl__types__ArrayBytes_hl_UI16,int);
 void h3d_prim_Primitive_dispose(h3d__prim__Primitive);
 #include <h3d/Engine.h>
 #include <hxd/impl/Allocator.h>
+#include <h3d/impl/ManagedBuffer.h>
 hxd__impl__Allocator hxd_impl_Allocator_get(void);
 h3d__Buffer hxd_impl_Allocator_ofFloats(hxd__impl__Allocator,hl__types__ArrayBytes_hl_F32,int,int);
 h3d__Indexes hxd_impl_Allocator_ofIndexes(hxd__impl__Allocator,hl__types__ArrayBytes_hl_UI16,int*);
-bool h3d_Buffer_isDisposed(h3d__Buffer);
 bool h3d_Indexes_isDisposed(h3d__Indexes);
 void h2d__Graphics_GraphicsContent_flush(h2d___Graphics__GraphicsContent);
 void h3d_Engine_renderIndexed(h3d__Engine,h3d__Buffer,h3d__Indexes,int*,int*);
@@ -128,15 +128,16 @@ bool h2d__Graphics_GraphicsContent_next(h2d___Graphics__GraphicsContent r0) {
 }
 
 void h2d__Graphics_GraphicsContent_alloc(h2d___Graphics__GraphicsContent r0,h3d__Engine r1) {
-	vvirtual *r14;
+	vvirtual *r14, *r19;
 	hl__types__ArrayObj r12;
-	bool r16;
+	bool r16, r17;
 	hl__types__ArrayBytes_hl_F32 r9;
 	hl__types__ArrayBytes_hl_UI16 r4;
 	hxd__impl__Allocator r7;
 	h3d__Buffer r8;
 	int *r11;
 	vdynamic *r6;
+	h3d__impl__ManagedBuffer r18;
 	varray *r15;
 	h3d__Indexes r10;
 	int r3, r5, r13;
@@ -163,7 +164,7 @@ void h2d__Graphics_GraphicsContent_alloc(h2d___Graphics__GraphicsContent r0,h3d_
 	label$dc6e5fb_3_19:
 	if( r12 == NULL ) hl_null_access();
 	r13 = r12->length;
-	if( r3 >= r13 ) goto label$dc6e5fb_3_56;
+	if( r3 >= r13 ) goto label$dc6e5fb_3_66;
 	r13 = r12->length;
 	if( ((unsigned)r3) < ((unsigned)r13) ) goto label$dc6e5fb_3_27;
 	r14 = NULL;
@@ -176,34 +177,47 @@ void h2d__Graphics_GraphicsContent_alloc(h2d___Graphics__GraphicsContent r0,h3d_
 	++r3;
 	if( r14 == NULL ) hl_null_access();
 	r8 = hl_vfields(r14)[3] ? (*(h3d__Buffer*)(hl_vfields(r14)[3])) : (h3d__Buffer)hl_dyn_getp(r14->value,239726983/*vbuf*/,&t$h3d_Buffer);
-	if( !r8 ) goto label$dc6e5fb_3_38;
+	if( !r8 ) goto label$dc6e5fb_3_46;
 	r8 = hl_vfields(r14)[3] ? (*(h3d__Buffer*)(hl_vfields(r14)[3])) : (h3d__Buffer)hl_dyn_getp(r14->value,239726983/*vbuf*/,&t$h3d_Buffer);
 	if( r8 == NULL ) hl_null_access();
-	r16 = h3d_Buffer_isDisposed(r8);
-	if( !r16 ) goto label$dc6e5fb_3_44;
-	label$dc6e5fb_3_38:
+	r18 = r8->buffer;
+	if( !r18 ) goto label$dc6e5fb_3_44;
+	r18 = r8->buffer;
+	if( r18 == NULL ) hl_null_access();
+	r19 = r18->vbuf;
+	if( !r19 ) goto label$dc6e5fb_3_44;
+	r17 = false;
+	goto label$dc6e5fb_3_45;
+	label$dc6e5fb_3_44:
+	r17 = true;
+	label$dc6e5fb_3_45:
+	goto label$dc6e5fb_3_47;
+	label$dc6e5fb_3_46:
+	r17 = true;
+	label$dc6e5fb_3_47:
+	if( !r17 ) goto label$dc6e5fb_3_54;
 	if( r7 == NULL ) hl_null_access();
 	r9 = hl_vfields(r14)[0] ? (*(hl__types__ArrayBytes_hl_F32*)(hl_vfields(r14)[0])) : (hl__types__ArrayBytes_hl_F32)hl_dyn_getp(r14->value,4899635/*buf*/,&t$hl_types_ArrayBytes_hl_F32);
 	r5 = 8;
 	r13 = 2;
 	r8 = hxd_impl_Allocator_ofFloats(r7,r9,r5,r13);
 	if( hl_vfields(r14)[3] ) *(h3d__Buffer*)(hl_vfields(r14)[3]) = (h3d__Buffer)r8; else hl_dyn_setp(r14->value,239726983/*vbuf*/,&t$h3d_Buffer,r8);
-	label$dc6e5fb_3_44:
+	label$dc6e5fb_3_54:
 	r10 = hl_vfields(r14)[1] ? (*(h3d__Indexes*)(hl_vfields(r14)[1])) : (h3d__Indexes)hl_dyn_getp(r14->value,95562612/*ibuf*/,&t$h3d_Indexes);
-	if( !r10 ) goto label$dc6e5fb_3_50;
+	if( !r10 ) goto label$dc6e5fb_3_60;
 	r10 = hl_vfields(r14)[1] ? (*(h3d__Indexes*)(hl_vfields(r14)[1])) : (h3d__Indexes)hl_dyn_getp(r14->value,95562612/*ibuf*/,&t$h3d_Indexes);
 	if( r10 == NULL ) hl_null_access();
-	r16 = h3d_Indexes_isDisposed(r10);
-	if( !r16 ) goto label$dc6e5fb_3_55;
-	label$dc6e5fb_3_50:
+	r17 = h3d_Indexes_isDisposed(r10);
+	if( !r17 ) goto label$dc6e5fb_3_65;
+	label$dc6e5fb_3_60:
 	if( r7 == NULL ) hl_null_access();
 	r4 = hl_vfields(r14)[2] ? (*(hl__types__ArrayBytes_hl_UI16*)(hl_vfields(r14)[2])) : (hl__types__ArrayBytes_hl_UI16)hl_dyn_getp(r14->value,5243965/*idx*/,&t$hl_types_ArrayBytes_hl_UI16);
 	r11 = NULL;
 	r10 = hxd_impl_Allocator_ofIndexes(r7,r4,r11);
 	if( hl_vfields(r14)[1] ) *(h3d__Indexes*)(hl_vfields(r14)[1]) = (h3d__Indexes)r10; else hl_dyn_setp(r14->value,95562612/*ibuf*/,&t$h3d_Indexes,r10);
-	label$dc6e5fb_3_55:
+	label$dc6e5fb_3_65:
 	goto label$dc6e5fb_3_19;
-	label$dc6e5fb_3_56:
+	label$dc6e5fb_3_66:
 	r16 = false;
 	r0->bufferDirty = r16;
 	r16 = false;
@@ -259,54 +273,69 @@ void h2d__Graphics_GraphicsContent_render(h2d___Graphics__GraphicsContent r0,h3d
 }
 
 void h2d__Graphics_GraphicsContent_flush(h2d___Graphics__GraphicsContent r0) {
-	hl__types__ArrayBytes_hl_F32 r7;
+	vvirtual *r5;
+	hl__types__ArrayBytes_hl_F32 r9;
 	bool r3;
-	hl__types__ArrayBytes_hl_UI16 r11;
-	hxd__impl__Allocator r6;
-	h3d__Engine r4;
-	h3d__$Engine r5;
+	hl__types__ArrayBytes_hl_UI16 r13;
+	hxd__impl__Allocator r8;
+	h3d__Engine r6;
+	h3d__$Engine r7;
 	h3d__Buffer r2;
-	int *r12;
-	h3d__Indexes r10;
-	int r8, r9;
+	int *r14;
+	h3d__Indexes r12;
+	int r10, r11;
+	h3d__impl__ManagedBuffer r4;
 	r2 = r0->buffer;
-	if( !r2 ) goto label$dc6e5fb_5_6;
+	if( !r2 ) goto label$dc6e5fb_5_14;
 	r2 = r0->buffer;
 	if( r2 == NULL ) hl_null_access();
-	r3 = h3d_Buffer_isDisposed(r2);
-	if( !r3 ) goto label$dc6e5fb_5_10;
-	label$dc6e5fb_5_6:
-	r5 = (h3d__$Engine)g$_h3d_Engine;
-	r4 = r5->CURRENT;
-	h2d__Graphics_GraphicsContent_alloc(r0,r4);
-	goto label$dc6e5fb_5_34;
-	label$dc6e5fb_5_10:
-	r6 = hxd_impl_Allocator_get();
+	r4 = r2->buffer;
+	if( !r4 ) goto label$dc6e5fb_5_12;
+	r4 = r2->buffer;
+	if( r4 == NULL ) hl_null_access();
+	r5 = r4->vbuf;
+	if( !r5 ) goto label$dc6e5fb_5_12;
+	r3 = false;
+	goto label$dc6e5fb_5_13;
+	label$dc6e5fb_5_12:
+	r3 = true;
+	label$dc6e5fb_5_13:
+	goto label$dc6e5fb_5_15;
+	label$dc6e5fb_5_14:
+	r3 = true;
+	label$dc6e5fb_5_15:
+	if( !r3 ) goto label$dc6e5fb_5_20;
+	r7 = (h3d__$Engine)g$_h3d_Engine;
+	r6 = r7->CURRENT;
+	h2d__Graphics_GraphicsContent_alloc(r0,r6);
+	goto label$dc6e5fb_5_44;
+	label$dc6e5fb_5_20:
+	r8 = hxd_impl_Allocator_get();
 	r3 = r0->bufferDirty;
-	if( !r3 ) goto label$dc6e5fb_5_23;
-	if( r6 == NULL ) hl_null_access();
+	if( !r3 ) goto label$dc6e5fb_5_33;
+	if( r8 == NULL ) hl_null_access();
 	r2 = r0->buffer;
-	hxd_impl_Allocator_disposeBuffer(r6,r2);
-	r7 = r0->tmp;
-	r8 = 8;
-	r9 = 2;
-	r2 = hxd_impl_Allocator_ofFloats(r6,r7,r8,r9);
+	hxd_impl_Allocator_disposeBuffer(r8,r2);
+	r9 = r0->tmp;
+	r10 = 8;
+	r11 = 2;
+	r2 = hxd_impl_Allocator_ofFloats(r8,r9,r10,r11);
 	r0->buffer = r2;
 	r3 = false;
 	r0->bufferDirty = r3;
-	label$dc6e5fb_5_23:
+	label$dc6e5fb_5_33:
 	r3 = r0->indexDirty;
-	if( !r3 ) goto label$dc6e5fb_5_34;
-	if( r6 == NULL ) hl_null_access();
-	r10 = r0->indexes;
-	hxd_impl_Allocator_disposeIndexBuffer(r6,r10);
-	r11 = r0->index;
-	r12 = NULL;
-	r10 = hxd_impl_Allocator_ofIndexes(r6,r11,r12);
-	r0->indexes = r10;
+	if( !r3 ) goto label$dc6e5fb_5_44;
+	if( r8 == NULL ) hl_null_access();
+	r12 = r0->indexes;
+	hxd_impl_Allocator_disposeIndexBuffer(r8,r12);
+	r13 = r0->index;
+	r14 = NULL;
+	r12 = hxd_impl_Allocator_ofIndexes(r8,r13,r14);
+	r0->indexes = r12;
 	r3 = false;
 	r0->indexDirty = r3;
-	label$dc6e5fb_5_34:
+	label$dc6e5fb_5_44:
 	return;
 }
 

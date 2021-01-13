@@ -11,13 +11,15 @@ import haxe.PosInfos;
 class Simulation 
 {
 	public var frameStates:Map<RiderBase, Array<RiderState>>;
-	public var flagPoint:Map<RiderBase, RiderState>;
 	public var frames:Int = 0;
 	
 	public var playing:Bool = false;
 	public var paused:Bool = false;
 	public var rewinding:Bool = false;
 	public var updating:Bool = false;
+	
+	public var flagged:Bool = false;
+	public var flagframe:Int = 0;
 	
 	@:isVar public var desiredSimSpeed(get, set):Float;
 	public var fastForward:Int = 1;
@@ -44,7 +46,7 @@ class Simulation
 		playing = true;
 		paused = false;
 		timeDelta = 0;
-		if (flagPoint != null) restoreFlagPoint();
+		if (flagged) restoreState(flagframe);
 		else restoreState(0);
 		
 		#if hl
@@ -76,7 +78,7 @@ class Simulation
 		playing = false;
 		paused = false;
 		timeDelta = 0;
-		if (flagPoint != null) restoreFlagPoint();
+		if (flagged) restoreState(flagframe);
 		else restoreState(0);
 		
 		#if hl
@@ -114,6 +116,18 @@ class Simulation
 		stepSim();
 	}
 	
+	public function setFlagState() {
+		
+		flagged = (playing == true || paused == true) ? true : !flagged;
+		
+		if (flagged && (playing || paused)) {
+			flagframe = frames;
+		}
+		
+		Main.console.log(flagged == true ? 'Set flag on frame ${frames}' : 'Disabled flag');
+		
+	}
+	
 	public function restoreState(_frame:Int) {
 		var locframe = Std.int(Math.max(_frame, 0));
 		frames = locframe;
@@ -131,21 +145,6 @@ class Simulation
 				rider.scarfPoints[point].restoreState(state.scarves[point]);
 			}
 		}
-	}
-	
-	public function setFlagPoint() {
-		flagPoint = new Map();
-		for (rider in Main.riders.riders) {
-			flagPoint[rider] = frameStates[rider][frames];
-		}
-	}
-	
-	public function restoreFlagPoint() {
-		
-	}
-	
-	public function destroyFlagPoint() {
-		flagPoint = null;
 	}
 	
 	public function recordGlobalSimState() {

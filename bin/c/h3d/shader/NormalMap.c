@@ -2,15 +2,9 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/NormalMap.h>
-void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
-
-void h3d_shader_NormalMap_new(h3d__shader__NormalMap r0,h3d__mat__Texture r1) {
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	r0->texture__ = r1;
-	return;
-}
+void hxsl_Shader_new(hxsl__Shader);
 
 void h3d_shader_NormalMap_updateConstants(h3d__shader__NormalMap r0,hxsl__Globals r1) {
 	int r2;
@@ -25,10 +19,10 @@ vdynamic* h3d_shader_NormalMap_getParamValue(h3d__shader__NormalMap r0,int r1) {
 	h3d__mat__Texture r3;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$4efe39d_3_4;
+	if( r1 != r2 ) goto label$4efe39d_2_4;
 	r3 = r0->texture__;
 	return ((vdynamic*)r3);
-	label$4efe39d_3_4:
+	label$4efe39d_2_4:
 	r4 = NULL;
 	return r4;
 }
@@ -37,5 +31,11 @@ double h3d_shader_NormalMap_getParamFloatValue(h3d__shader__NormalMap r0,int r1)
 	double r2;
 	r2 = 0.;
 	return r2;
+}
+
+void h3d_shader_NormalMap_new(h3d__shader__NormalMap r0,h3d__mat__Texture r1) {
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	r0->texture__ = r1;
+	return;
 }
 
