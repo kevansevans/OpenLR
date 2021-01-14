@@ -323,7 +323,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		var arg29 = { t : h2d_ConsoleArg.AInt, opt : false, name : "Line Index"};
 		Main.console.addCommand("removeLine","remove specified line",[arg29],function(_index) {
 			if(_index != null) {
-				Main.canvas.removeLine(Main.grid.lines.h[_index]);
+				Main.grid.unregister(Main.grid.lines.h[_index]);
 			}
 		});
 		var arg10 = { t : h2d_ConsoleArg.AString, opt : false, name : "Tool"};
@@ -603,6 +603,10 @@ Main.prototype = $extend(hxd_App.prototype,{
 		});
 		Main.console.addCommand("disconnect","Disconnects from online session",[],function() {
 			Main.p2p.disconnect();
+		});
+		var argSpectate = { t : h2d_ConsoleArg.AString, opt : true, name : "Player to spectate"};
+		Main.console.addCommand("spectate","Allows user to watch other player as they see the canvas",[argSpectate],function(_name) {
+			var tmp = _name == null;
 		});
 	}
 	,update: function(dt) {
@@ -1647,6 +1651,46 @@ components_managers_Grid.prototype = {
 		}
 	}
 	,unregister: function(_line) {
+		var _g = 0;
+		var _g1 = _line.keyList;
+		while(_g < _g1.length) {
+			var key = _g1[_g];
+			++_g;
+			HxOverrides.remove(this.registry.h[key].allLines,_line);
+			switch(_line.type) {
+			case 0:case 1:
+				HxOverrides.remove(this.registry.h[key].colliders,_line);
+				break;
+			case 2:
+				HxOverrides.remove(this.registry.h[key].nonColliders,_line);
+				break;
+			default:
+			}
+			if(this.registry.h[key].lowFrame != null) {
+				Main.simulation.updateSimHistory(this.registry.h[key].lowFrame);
+			}
+		}
+		switch(_line.type) {
+		case 0:
+			--this.floorCount;
+			break;
+		case 1:
+			--this.accelCount;
+			break;
+		case 2:
+			--this.sceneCount;
+			break;
+		default:
+		}
+		if(Main.p2p.connected) {
+			Main.p2p.updateLineInfo("deleteLine",[_line.id]);
+		}
+		_line.clear();
+		--this.lineCount;
+		var v = null;
+		this.lines.h[_line.id] = v;
+	}
+	,P2Punregister: function(_line) {
 		var _g = 0;
 		var _g1 = _line.keyList;
 		while(_g < _g1.length) {
@@ -4592,15 +4636,6 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 			Main.p2p.updateLineInfo("lineDownload",[line.type,line.start.x,line.start.y,line.end.x,line.end.y,line.shifted,line.limType]);
 		}
 	}
-	,removeLine: function(_line) {
-		this.colorLayer.removeChild(_line.colorLayer);
-		this.sceneColorLayer.removeChild(_line.colorLayer);
-		this.scenePlaybackLayer.removeChild(_line.rideLayer);
-		this.rideLayer.removeChild(_line.rideLayer);
-		if(Main.p2p.connected) {
-			Main.p2p.updateLineInfo("deleteLine",[_line.id]);
-		}
-	}
 	,get_drawMode: function() {
 		return this.drawMode;
 	}
@@ -4685,14 +4720,6 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 		}
 		line.render();
 		Main.grid.register(line);
-	}
-	,P2PRemoveLine: function(_id) {
-		var _line = Main.grid.lines.h[_id];
-		Main.grid.unregister(_line);
-		this.colorLayer.removeChild(_line.colorLayer);
-		this.sceneColorLayer.removeChild(_line.colorLayer);
-		this.scenePlaybackLayer.removeChild(_line.rideLayer);
-		this.rideLayer.removeChild(_line.rideLayer);
 	}
 	,__class__: components_stage_Canvas
 });
@@ -5163,162 +5190,6 @@ components_stage_LRConsole.prototype = $extend(h2d_Console.prototype,{
 		this.tf.cursorIndex = this.tf.text.length;
 		this.bg.set_visible(true);
 		this.logTxt.set_visible(true);
-	}
-	,handleCommand: function(command) {
-		command = StringTools.trim(command);
-		if(HxOverrides.cca(command,0) == this.shortKeyChar) {
-			command = HxOverrides.substr(command,1,null);
-		}
-		if(command == "") {
-			this.hide();
-			return;
-		}
-		this.logs.push(command);
-		this.logIndex = -1;
-		var errorColor = 12582912;
-		var args = [];
-		var c = "";
-		var i = 0;
-		var readString = function(endChar) {
-			var string = "";
-			while(i < command.length) {
-				var c1 = i += 1;
-				c = command.charAt(c1);
-				if(c == endChar) {
-					i += 1;
-					return string;
-				}
-				string += c;
-			}
-			return null;
-		};
-		var last = "";
-		while(i < command.length) {
-			c = command.charAt(i);
-			switch(c) {
-			case "\t":case " ":
-				c = command.charAt(i);
-				while(c == " " || c == "\t") {
-					var c1 = i += 1;
-					c = command.charAt(c1);
-				}
-				i -= 1;
-				args.push(last);
-				last = "";
-				break;
-			case "\"":case "'":
-				var string = readString(c);
-				if(string == null) {
-					this.log("Bad formated string",errorColor);
-					return;
-				}
-				args.push(string);
-				last = "";
-				c = command.charAt(i);
-				while(c == " " || c == "\t") {
-					var c2 = i += 1;
-					c = command.charAt(c2);
-				}
-				i -= 1;
-				break;
-			default:
-				last += c;
-			}
-			i += 1;
-		}
-		args.push(last);
-		var cmdName = args[0];
-		if(Object.prototype.hasOwnProperty.call(this.aliases.h,cmdName)) {
-			cmdName = this.aliases.h[cmdName];
-		}
-		var cmd = this.commands.h[cmdName];
-		if(cmd == null) {
-			if(Main.p2p.connected) {
-				Main.p2p.relayChatMessage(command);
-				return;
-			}
-			this.log("Unknown command \"" + cmdName + "\"",errorColor);
-			return;
-		}
-		var vargs = [];
-		var _g = 0;
-		var _g1 = cmd.args.length;
-		while(_g < _g1) {
-			var i1 = _g++;
-			var a = cmd.args[i1];
-			var v = args[i1 + 1];
-			if(v == null) {
-				if(a.opt) {
-					vargs.push(null);
-					continue;
-				}
-				this.log("Missing argument " + a.name,errorColor);
-				return;
-			}
-			var _g2 = a.t;
-			switch(_g2._hx_index) {
-			case 0:
-				var i2 = Std.parseInt(v);
-				if(i2 == null) {
-					this.log("" + v + " should be Int for argument " + a.name,errorColor);
-					return;
-				}
-				vargs.push(i2);
-				break;
-			case 1:
-				var f = parseFloat(v);
-				if(isNaN(f)) {
-					this.log("" + v + " should be Float for argument " + a.name,errorColor);
-					return;
-				}
-				vargs.push(f);
-				break;
-			case 2:
-				vargs.push(cmd.args.length == 1 ? StringTools.trim(HxOverrides.substr(command,args[0].length,null)) : v);
-				break;
-			case 3:
-				switch(v) {
-				case "1":case "true":
-					vargs.push(true);
-					break;
-				case "0":case "false":
-					vargs.push(false);
-					break;
-				default:
-					this.log("" + v + " should be Bool for argument " + a.name,errorColor);
-					return;
-				}
-				break;
-			case 4:
-				var values = _g2.values;
-				var found = false;
-				var _g3 = 0;
-				while(_g3 < values.length) {
-					var v2 = values[_g3];
-					++_g3;
-					if(v == v2) {
-						found = true;
-						vargs.push(v2);
-					}
-				}
-				if(!found) {
-					this.log("" + v + " should be [" + values.join("|") + "] for argument " + a.name,errorColor);
-					return;
-				}
-				break;
-			}
-		}
-		try {
-			cmd.callb.apply(null,vargs);
-		} catch( _g ) {
-			var _g1 = haxe_Exception.caught(_g).unwrap();
-			if(typeof(_g1) == "string") {
-				var e = _g1;
-				this.log("ERROR " + e,errorColor);
-			} else {
-				throw _g;
-			}
-		}
 	}
 	,__class__: components_stage_LRConsole
 });
@@ -43148,6 +43019,13 @@ js_Boot.__downcastCheck = function(o,cl) {
 		return true;
 	}
 };
+js_Boot.__cast = function(o,t) {
+	if(o == null || js_Boot.__instanceof(o,t)) {
+		return o;
+	} else {
+		throw haxe_Exception.thrown("Cannot cast " + Std.string(o) + " to " + Std.string(t));
+	}
+};
 js_Boot.__nativeClassName = function(o) {
 	var name = js_Boot.__toStr.call(o).slice(8,-1);
 	if(name == "Object" || name == "Function" || name == "Math" || name == "JSON") {
@@ -46983,7 +46861,6 @@ network_WebRTC.prototype = {
 		var _gthis = this;
 		this.isHost = true;
 		this.connections = [];
-		this.namedConnections = new haxe_ds_StringMap();
 		var this1 = this.namedCursors;
 		var k = Main.authorName;
 		var v = new network_PeerCursor(Main.authorName);
@@ -46999,8 +46876,7 @@ network_WebRTC.prototype = {
 		});
 		this.peer.on("data",function(data) {
 		});
-		this.peer.on("error",function(err) {
-		});
+		this.peer.on("error",$bind(this,this.errorFunc));
 	}
 	,join: function(_name) {
 		var _gthis = this;
@@ -47012,13 +46888,10 @@ network_WebRTC.prototype = {
 			var dataB = JSON.stringify(packetCursor);
 			_gthis.conn.send(dataA);
 			_gthis.conn.send(dataB);
-			_gthis.attachFunctions(_gthis.conn);
 			_gthis.connected = true;
 		});
 		this.isHost = false;
 		this.needsToDownload = false;
-	}
-	,disconnect: function() {
 	}
 	,attachFunctions: function(_conn) {
 		var _gthis = this;
@@ -47037,7 +46910,7 @@ network_WebRTC.prototype = {
 				Main.riders.P2PAddRider(packet.data[0],packet.data[1],packet.data[2],packet.data[3],packet.data[4]);
 				break;
 			case "deleteLine":
-				Main.canvas.P2PRemoveLine(packet.data[0]);
+				Main.grid.P2Punregister(Main.grid.lines.h[packet.data[0]]);
 				break;
 			case "joinRequest":
 				_conn.name = packet.peername;
@@ -47088,13 +46961,56 @@ network_WebRTC.prototype = {
 				}
 			}
 		});
-		_conn.on("error",function(err) {
-		});
 		_conn.on("disconnected",function(_data) {
 			Main.console.log("" + _conn.name + " left the server");
 		});
 	}
-	,sendTrackData: function(conn) {
+	,errorFunc: function(err) {
+		var error = err;
+		var type = js_Boot.__cast(error.type , String);
+		Main.console.log(err);
+		Main.console.log(error.type);
+		switch(type) {
+		case "browser-incompatible":
+			Main.console.log("Your browser is currently unsupported, cannot use WebRTC.",16711680);
+			break;
+		case "disconnected":
+			Main.console.log("You have lost connection, please recreate the server...",16711680);
+			break;
+		case "invalid-id":
+			Main.console.log("The API key passed into the Peer constructor contains illegal characters or is not in the system (cloud server only).",16711680);
+			break;
+		case "network":
+			Main.console.log("Lost or cannot establish a connection to the signalling server.",16711680);
+			break;
+		case "peer-unavailable":
+			Main.console.log("The peer you're trying to connect to does not exist.",16711680);
+			break;
+		case "server-error":
+			Main.console.log("Unable to reach the server.",16711680);
+			break;
+		case "socket-closed":
+			Main.console.log("The underlying socket closed unexpectedly.",16711680);
+			break;
+		case "socket-error":
+			Main.console.log("An error from the underlying socket.",16711680);
+			break;
+		case "ssl-unavailable":
+			Main.console.log("PeerJS is being used securely, but the cloud server does not support SSL.",16711680);
+			break;
+		case "unavailable-id":
+			Main.console.log("TThe ID passed into the Peer constructor is already taken.",16711680);
+			break;
+		case "webrtc":
+			Main.console.log("Native WebRTC errors.",16711680);
+			break;
+		default:
+			Main.console.log("Unspecified network error!");
+		}
+	}
+	,disconnect: function() {
+	}
+	,sendTrackData: function(client) {
 		if(!this.isHost) {
 			return;
 		}
@@ -47107,7 +47023,7 @@ network_WebRTC.prototype = {
 			}
 			var packet = { action : "lineDownload", peername : Main.authorName, data : [Main.grid.lines.h[lineIndex].type,Main.grid.lines.h[lineIndex].start.x,Main.grid.lines.h[lineIndex].start.y,Main.grid.lines.h[lineIndex].end.x,Main.grid.lines.h[lineIndex].end.y,Main.grid.lines.h[lineIndex].shifted,Main.grid.lines.h[lineIndex].limType], localecho : true, globalecho : false, echoinfo : ["Downloaded line " + lineCount + " of " + Main.grid.lineCount + " from " + Main.authorName]};
 			var data = JSON.stringify(packet);
-			conn.send(data);
+			client.send(data);
 			++lineCount;
 			++lineIndex;
 		}
@@ -47116,14 +47032,14 @@ network_WebRTC.prototype = {
 			var cursor1 = cursor.next();
 			var packet = { action : "addNewCursor", peername : Main.authorName, data : [cursor1.peername,cursor1.x,cursor1.y], localecho : false, globalecho : false, echoinfo : []};
 			var data = JSON.stringify(packet);
-			conn.send(data);
+			client.send(data);
 		}
 		var rider = haxe_ds_StringMap.valueIterator(Main.riders.riders.h);
 		while(rider.hasNext()) {
 			var rider1 = rider.next();
 			var packet = { action : "addRider", peername : Main.authorName, data : [rider1.get_name(),rider1.startPos.x,rider1.startPos.y,rider1.enabledFrame,rider1.disableFrame], localecho : false, globalecho : false, echoinfo : []};
 			var data = JSON.stringify(packet);
-			conn.send(data);
+			client.send(data);
 		}
 		this.needsToDownload = false;
 	}
@@ -47139,22 +47055,23 @@ network_WebRTC.prototype = {
 		var packet = { action : _action, peername : Main.authorName, data : _data, localecho : false, globalecho : false, echoinfo : []};
 		this.sendGeneralPacketInfo(packet);
 	}
-	,relayChatMessage: function(_msg) {
-		var packet = { action : "relayChat", peername : Main.authorName, data : [_msg], localecho : false, globalecho : false, echoinfo : []};
-		this.sendGeneralPacketInfo(packet);
-	}
 	,sendGeneralPacketInfo: function(_packet) {
 		var data = JSON.stringify(_packet);
+		haxe_Log.trace(this.isHost,{ fileName : "src/network/WebRTC.hx", lineNumber : 431, className : "network.WebRTC", methodName : "sendGeneralPacketInfo"});
 		if(this.isHost) {
 			var _g = 0;
 			var _g1 = this.connections;
 			while(_g < _g1.length) {
-				var peer = _g1[_g];
+				var client = _g1[_g];
 				++_g;
-				if(peer.name == _packet.peername) {
+				haxe_Log.trace(client.name,{ fileName : "src/network/WebRTC.hx", lineNumber : 436, className : "network.WebRTC", methodName : "sendGeneralPacketInfo", customParams : [_packet.peername,client.name == _packet.peername]});
+				if(client.name == _packet.peername) {
+					haxe_Log.trace("Client same as source",{ fileName : "src/network/WebRTC.hx", lineNumber : 439, className : "network.WebRTC", methodName : "sendGeneralPacketInfo"});
 					continue;
+				} else {
+					haxe_Log.trace("AAAAAHHHHH",{ fileName : "src/network/WebRTC.hx", lineNumber : 443, className : "network.WebRTC", methodName : "sendGeneralPacketInfo"});
+					client.send(data);
 				}
-				peer.send(data);
 			}
 		} else {
 			this.conn.send(data);

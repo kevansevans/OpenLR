@@ -321,29 +321,6 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 	return;
 }
 
-void components_stage_Canvas_removeLine(components__stage__Canvas r0,components__lines__LineBase r1) {
-	h2d__Graphics r4;
-	h2d__Object r3;
-	r3 = r0->colorLayer;
-	if( r3 == NULL ) hl_null_access();
-	if( r1 == NULL ) hl_null_access();
-	r4 = r1->colorLayer;
-	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r4);
-	r3 = r0->sceneColorLayer;
-	if( r3 == NULL ) hl_null_access();
-	r4 = r1->colorLayer;
-	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r4);
-	r3 = r0->scenePlaybackLayer;
-	if( r3 == NULL ) hl_null_access();
-	r4 = r1->rideLayer;
-	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r4);
-	r3 = r0->rideLayer;
-	if( r3 == NULL ) hl_null_access();
-	r4 = r1->rideLayer;
-	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r4);
-	return;
-}
-
 venum* components_stage_Canvas_get_drawMode(components__stage__Canvas r0) {
 	venum *r1;
 	r1 = r0->drawMode;
@@ -362,7 +339,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 	r3 = HL__ENUM_INDEX__(r1);
 	switch(r3) {
 		default:
-			goto label$ae2bdbd_8_141;
+			goto label$ae2bdbd_7_141;
 		case 0:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -386,7 +363,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$Draw_mode_set_to_Edit;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_8_141;
+			goto label$ae2bdbd_7_141;
 		case 1:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -410,7 +387,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$Draw_mode_set_to_Playback;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_8_141;
+			goto label$ae2bdbd_7_141;
 		case 2:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -434,7 +411,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$Draw_mode_set_to_No_Scenery_Edit;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_8_141;
+			goto label$ae2bdbd_7_141;
 		case 3:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -458,7 +435,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$cb653d7;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_8_141;
+			goto label$ae2bdbd_7_141;
 		case 4:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -482,7 +459,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$2504e23;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_8_141;
+			goto label$ae2bdbd_7_141;
 		case 5:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -507,7 +484,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
 	}
-	label$ae2bdbd_8_141:
+	label$ae2bdbd_7_141:
 	r0->drawMode = r1;
 	return r1;
 }

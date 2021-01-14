@@ -13,4 +13,6 @@ enum abstract NetAction(String) from String {
 	var updateCursor:String;
 	var addRider:String;
 	var removeRider:String;
+	var spectateRequest:String;
+	var spectateData:String;
 }

@@ -3,11 +3,13 @@
 #define INC_h2d__Console
 typedef struct _h2d__$Console *h2d__$Console;
 typedef struct _h2d__Console *h2d__Console;
+#include <_std/String.h>
+#include <hl/types/ArrayObj.h>
+#include <hl/types/ArrayBytes_Int.h>
+#include <h2d/Console.h>
 #include <hl/Class.h>
 #include <hl/BaseType.h>
-#include <_std/String.h>
 #include <h2d/Object.h>
-#include <hl/types/ArrayObj.h>
 #include <h2d/filter/Filter.h>
 #include <h2d/BlendMode.h>
 #include <h2d/Bitmap.h>
@@ -17,6 +19,12 @@ typedef struct _h2d__Console *h2d__Console;
 #include <haxe/ds/StringMap.h>
 
 
+typedef struct {
+	HL__ENUM_CONSTRUCT__
+	String p0;
+	hl__types__ArrayObj p1;
+	hl__types__ArrayBytes_Int p2;
+} Enumt$ctx_c92cbb3;
 struct _h2d__$Console {
 	hl_type *$type;
 	hl_type* __type__;

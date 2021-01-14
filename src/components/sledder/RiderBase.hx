@@ -192,6 +192,13 @@ class RiderBase
 		nameField.text = value;
 		return name = value;
 	}
+	
+	public static var RiderNames = [
+		"Bosh", "Bish", "Chaz", "Finn", "Coco", "Essi", 
+		"Dorry", "Ella", "Blizzy", "Bailey", "Roh", "Sham", 
+		"Bo", "The Forbidden One", "<######>", "Ranger", "Flynn",
+		
+	];
 }
 
 class RiderScarf extends Object {

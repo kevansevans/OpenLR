@@ -13,6 +13,7 @@ extern hl_type t$vrt_a6bfc9e;
 extern hl_type t$hl_types_ArrayObj;
 extern hl_type t$_dyn;
 void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
+void h2d_Console_handleCommand(h2d__Console,String);
 #include <hxd/Window.h>
 #include <h2d/Scene.h>
 void h2d_Object_onAdd(h2d__Object);
@@ -67,8 +68,6 @@ bool h2d_Object_set_visible(h2d__Object,bool);
 String h2d_TextInput_set_text(h2d__TextInput,String);
 void h2d_TextInput_focus(h2d__TextInput);
 int String_indexOf(String,String,vdynamic*);
-#include <hl/ctx/2cbb3.h>
-#include <hl/types/ArrayBytes_Int.h>
 void hl_types_ArrayBytes_Int___expand(hl__types__ArrayBytes_Int,int);
 String String_charAt(String,int);
 void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
@@ -188,7 +187,7 @@ void h2d_Console_addAlias(h2d__Console r0,String r1,String r2) {
 }
 
 void h2d_Console_runCommand(h2d__Console r0,String r1) {
-	((void (*)(h2d__Console,String))r0->$type->vobj_proto[17])(r0,r1);
+	h2d_Console_handleCommand(r0,r1);
 	return;
 }
 
@@ -774,7 +773,7 @@ void h2d_Console_handleKey(h2d__Console r0,hxd__Event r1) {
 			if( r9 == r12 || (r9 && r12 && String___compare(r9,(vdynamic*)r12) == 0) ) goto label$40582a2_14_50;
 			r7 = r9;
 			label$40582a2_14_50:
-			((void (*)(h2d__Console,String))r0->$type->vobj_proto[17])(r0,r7);
+			h2d_Console_handleCommand(r0,r7);
 			r13 = r0->logTxt;
 			if( r13 == NULL ) hl_null_access();
 			r3 = r13->visible;

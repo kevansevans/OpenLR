@@ -1,4 +1,5 @@
 package network;
+
 import components.lines.LineBase;
 import h2d.Console;
 import haxe.ds.Map;
@@ -9,6 +10,7 @@ import haxe.Json;
 #if js
 import peerjs.DataConnection;
 import peerjs.Peer;
+
 
 /**
  * ...
@@ -23,8 +25,10 @@ class WebRTC
 	var option:Dynamic;
 	
 	var connections:Array<Dynamic>;
-	var namedConnections:Map<String, Dynamic>;
 	var namedCursors:Map<String, PeerCursor>;
+	
+	public var spectating:Bool = false;
+	public var spectatee:Null<String>;
 	
 	public var connected:Bool = false;
 	
@@ -44,7 +48,6 @@ class WebRTC
 		
 		isHost = true;
 		connections = new Array();
-		namedConnections = new Map();
 		namedCursors[Main.authorName] = new PeerCursor(Main.authorName);
 		
 		peer = new Peer(_name);
@@ -62,12 +65,11 @@ class WebRTC
 		peer.on('data', function(data) {
 			
 		});
-		peer.on('error', function(err){
-			
-		});
+		peer.on('error', errorFunc);
 	}
 	
 	public function join(_name) {
+		
 		conn = peer.connect(_name);
 		conn.on('open', function(data) {
 			
@@ -100,17 +102,14 @@ class WebRTC
 			conn.send(dataA);
 			conn.send(dataB);
 			
-			attachFunctions(conn);
-			
 			connected = true;
 			
 		});
+		
+		conn.on('error', errorFunc);
+		
 		isHost = false;
 		needsToDownload = false;
-	}
-	
-	public function disconnect() {
-		
 	}
 	
 	function attachFunctions(_conn):Void 
@@ -142,7 +141,7 @@ class WebRTC
 					
 				case deleteLine :
 					
-					Main.canvas.P2PRemoveLine(packet.data[0]);
+					Main.grid.P2Punregister(Main.grid.lines[packet.data[0]]);
 					
 				case addNewCursor :
 					
@@ -206,15 +205,77 @@ class WebRTC
 			}
 			
 		});
-		_conn.on('error', function(err){
-			
-		});
+		
+		//_conn.on('error', errorFunc);
+		
 		_conn.on('disconnected', function(_data) {
 			Main.console.log('${_conn.name} left the server');
 		});
 	}
 	
-	function sendTrackData(conn:Dynamic):Void 
+	public function errorFunc(err:Dynamic) {
+		
+		var error:Dynamic = err;
+		var type:String = cast(error.type, String);
+		
+		Main.console.log(err);
+		Main.console.log(error.type);
+			
+		switch (type) {
+			
+			case 'browser-incompatible' :
+				
+				Main.console.log('Your browser is currently unsupported, cannot use WebRTC.', 0xFF0000);
+				
+			case 'disconnected' :
+				
+				Main.console.log('You have lost connection, please recreate the server...', 0xFF0000);
+				
+			case 'invalid-id' :
+				
+				Main.console.log('The API key passed into the Peer constructor contains illegal characters or is not in the system (cloud server only).', 0xFF0000);
+				
+			case 'network' :
+				
+				Main.console.log('Lost or cannot establish a connection to the signalling server.', 0xFF0000);
+				
+			case 'peer-unavailable' :
+				
+				Main.console.log('The peer you\'re trying to connect to does not exist.', 0xFF0000);
+				
+			case 'ssl-unavailable' :
+				
+				Main.console.log('PeerJS is being used securely, but the cloud server does not support SSL.', 0xFF0000);
+				
+			case 'server-error' :
+				
+				Main.console.log('Unable to reach the server.', 0xFF0000);
+				
+			case 'socket-error' :
+				
+				Main.console.log('An error from the underlying socket.', 0xFF0000);
+				
+			case 'socket-closed' :
+				
+				Main.console.log('The underlying socket closed unexpectedly.', 0xFF0000);
+				
+			case 'unavailable-id' :
+				
+				Main.console.log('TThe ID passed into the Peer constructor is already taken.', 0xFF0000);
+				
+			case 'webrtc' :
+				
+				Main.console.log('Native WebRTC errors.', 0xFF0000);
+				
+			default :
+				
+				Main.console.log("Unspecified network error!");	
+		}
+	}
+	
+	public function disconnect() {}
+	
+	function sendTrackData(client:Dynamic):Void 
 	{
 		if (!isHost) return;
 		
@@ -247,7 +308,7 @@ class WebRTC
 			};
 			
 			var data = Json.stringify(packet);
-			conn.send(data);
+			client.send(data);
 			
 			++lineCount;
 			++lineIndex;
@@ -268,7 +329,7 @@ class WebRTC
 			}
 			
 			var data = Json.stringify(packet);
-			conn.send(data);
+			client.send(data);
 		}
 		
 		for (rider in Main.riders.riders) {
@@ -289,7 +350,7 @@ class WebRTC
 			}
 			
 			var data = Json.stringify(packet);
-			conn.send(data);
+			client.send(data);
 		}
 		
 		needsToDownload = false;
@@ -351,17 +412,36 @@ class WebRTC
 		
 	}
 	
+	public function spectateRequest(_name:String) {
+		var packet:OpenLRPacket = {
+			action : NetAction.spectateRequest,
+			peername : Main.authorName,
+			data : [_name],
+			localecho : false,
+			globalecho : false,
+			echoinfo : []
+		}
+		sendGeneralPacketInfo(packet);
+	}
+	
 	function sendGeneralPacketInfo(_packet:OpenLRPacket) {
 		
 		var data = Json.stringify(_packet);
+		
 		if (isHost) {
-			for (peer in connections) {
-				if (peer.name == _packet.peername) continue;
-				peer.send(data);
+			for (client in connections) {
+				
+				if (client.name == _packet.peername) {
+					continue;
+				}
+				else {
+					client.send(data);
+				}
 			}
 		} else {
 			conn.send(data);
 		}
+		
 	}
 	
 }

@@ -54,6 +54,7 @@ enum abstract Commands(String) from String
 	var showGrid:String; //true/false bool, display grid
 	var snapToGrid:String; //[distance, 0.0], enable snapping to grid. Distance determines how close to snap to, 0 disables. 
 	var snapToLines:String;
+	var spectate:String;
 	var stepSimForward:String; //advance the sim forward by 1 frame
 	var stepSimBackward:String; //rewind the sim by 1 frame
 	var stopTrack:String; //stops playback

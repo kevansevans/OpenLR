@@ -5,6 +5,7 @@ import h2d.col.Point;
 import components.tool.ToolBehavior.LineColor;
 import haxe.ds.ArraySort;
 import hxd.Key;
+import network.NetAction;
 
 /**
  * ...
@@ -15,6 +16,7 @@ class Grid
 	public var registry:Map<String, LineContainer>;
 	
 	public var lines:Map<Int, LineBase>;
+	public var networkLines:Map<String, LineBase>;
 	
 	public var lineCount:Int = 0;
 	public var lineIDCount:Int = 0;
@@ -166,10 +168,45 @@ class Grid
 				--sceneCount;
 			default :
 		}
+		
+		#if js
+		if (Main.p2p.connected) {
+			Main.p2p.updateLineInfo(NetAction.deleteLine, [_line.id]);
+		}
+		#end
+		
 		_line.clear();
 		--lineCount;
 		lines[_line.id] = null;
 	}
+	
+	#if js
+	public function P2Punregister(_line:LineBase) {
+		for (key in _line.keyList) {
+			registry[key].allLines.remove(_line);
+			switch (_line.type) {
+				case FLOOR | ACCEL :
+					registry[key].colliders.remove(_line);
+				case SCENE :
+					registry[key].nonColliders.remove(_line);
+				default :
+			}
+			if (registry[key].lowFrame != null) Main.simulation.updateSimHistory(registry[key].lowFrame);
+		}
+		switch (_line.type) {
+			case FLOOR :
+				--floorCount;
+			case ACCEL :
+				--accelCount;
+			case SCENE :
+				--sceneCount;
+			default :
+		}
+		_line.clear();
+		--lineCount;
+		lines[_line.id] = null;
+	}
+	#end
 	
 	static inline var GRIDSIZE:Int = 14;
 	public static function registryPosition(_x:Float, _y:Float):GridObject

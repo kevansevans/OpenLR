@@ -123,18 +123,6 @@ class Canvas extends Scene
 		#end
 	}
 	
-	public function removeLine(_line:LineBase) {
-		
-		colorLayer.removeChild(_line.colorLayer);
-		sceneColorLayer.removeChild(_line.colorLayer);
-		scenePlaybackLayer.removeChild(_line.rideLayer);
-		rideLayer.removeChild(_line.rideLayer);
-		
-		#if js
-		if (Main.p2p.connected) Main.p2p.updateLineInfo(NetAction.deleteLine, [_line.id]);
-		#end
-	}
-	
 	function get_drawMode():DrawMode 
 	{
 		return drawMode;
@@ -206,15 +194,6 @@ class Canvas extends Scene
 		}
 		line.render();
 		Main.grid.register(line);
-	}
-	
-	public function P2PRemoveLine(_id:Int) {
-		var _line = Main.grid.lines[_id];
-		Main.grid.unregister(_line);
-		colorLayer.removeChild(_line.colorLayer);
-		sceneColorLayer.removeChild(_line.colorLayer);
-		scenePlaybackLayer.removeChild(_line.rideLayer);
-		rideLayer.removeChild(_line.rideLayer);
 	}
 	#end
 }

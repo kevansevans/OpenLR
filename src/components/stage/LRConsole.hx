@@ -42,7 +42,7 @@ class LRConsole extends Console
 		logTxt.visible = true;
 	}
 	
-	@:privateAccess override function handleCommand( command : String ) {
+	/*@:privateAccess override function handleCommand( command : String ) {
 		command = StringTools.trim(command);
 		if( command.charCodeAt(0) == shortKeyChar ) command = command.substr(1);
 		if( command == "" ) {
@@ -183,7 +183,7 @@ class LRConsole extends Console
 		} catch( e : String ) {
 			log('ERROR $e', errorColor);
 		}
-	}
+	}*/
 	
 	//For engine calls the user DOES NOT call. Internal engine calls to the console should
 	//not clog up the history.

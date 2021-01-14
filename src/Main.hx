@@ -228,7 +228,7 @@ class Main extends App
 		var arg29:ConsoleArgDesc = {t: AInt, opt: false, name : "Line Index"};
 		console.addCommand(Commands.removeLine, "remove specified line", [arg29], function(?_index:Int) {
 			if (_index != null) {
-				canvas.removeLine(grid.lines[_index]);
+				grid.unregister(grid.lines[_index]);
 			}
 		});
 		var arg10:ConsoleArgDesc = {t: AString, opt: false, name : "Tool"};
@@ -498,6 +498,14 @@ class Main extends App
 		});
 		console.addCommand(Commands.disconnect, "Disconnects from online session", [], function() {
 			p2p.disconnect();
+		});
+		var argSpectate:ConsoleArgDesc = {t: AString, opt: true, name : "Player to spectate"};
+		console.addCommand(Commands.spectate, "Allows user to watch other player as they see the canvas", [argSpectate], function(_name:Null<String>) {
+			
+			if (_name == null) {
+				//p2p.s
+			}
+			
 		});
 		#end
 	}

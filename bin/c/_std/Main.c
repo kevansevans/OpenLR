@@ -89,7 +89,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double
 #include <haxe/ds/IntMap.h>
 #include <components/lines/LineBase.h>
 vdynamic* haxe_ds_IntMap_get(haxe__ds__IntMap,int);
-void components_stage_Canvas_removeLine(components__stage__Canvas,components__lines__LineBase);
+void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
 #include <components/tool/ToolMode.h>
 String String_toUpperCase(String);
 extern String s$;
@@ -847,16 +847,15 @@ void Main_setConsoleActions__$8(vdynamic* r0,vdynamic* r1,vdynamic* r2,vdynamic*
 }
 
 void Main_setConsoleActions__$9(vdynamic* r0) {
-	components__managers__Grid r6;
+	components__managers__Grid r2, r6;
 	haxe__ds__IntMap r5;
 	$Main r3;
 	components__lines__LineBase r8;
-	components__stage__Canvas r2;
 	vdynamic *r4;
 	int r7;
 	if( !r0 ) goto label$36888b6_12_13;
 	r3 = ($Main)g$_Main;
-	r2 = r3->canvas;
+	r2 = r3->grid;
 	if( r2 == NULL ) hl_null_access();
 	r3 = ($Main)g$_Main;
 	r6 = r3->grid;
@@ -866,7 +865,7 @@ void Main_setConsoleActions__$9(vdynamic* r0) {
 	r7 = r0 ? r0->v.i : 0;
 	r4 = haxe_ds_IntMap_get(r5,r7);
 	r8 = (components__lines__LineBase)r4;
-	components_stage_Canvas_removeLine(r2,r8);
+	components_managers_Grid_unregister(r2,r8);
 	label$36888b6_12_13:
 	return;
 }

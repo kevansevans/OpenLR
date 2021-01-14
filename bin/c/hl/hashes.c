@@ -1037,7 +1037,6 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("addCanvasPosition"));
 	hl_hash((vbyte*)USTR("zoomCanvas"));
 	hl_hash((vbyte*)USTR("addLine"));
-	hl_hash((vbyte*)USTR("removeLine"));
 	hl_hash((vbyte*)USTR("get_drawMode"));
 	hl_hash((vbyte*)USTR("set_drawMode"));
 	hl_hash((vbyte*)USTR("isEllipse"));
