@@ -35,12 +35,12 @@ struct _hxsl__GlslOut {
 	bool isVertex;
 	haxe__ds__StringMap allNames;
 	haxe__ds__IntMap outIndexes;
-	bool intelDriverFix;
 	int uniformBuffer;
 	int outIndex;
 	haxe__ds__IntMap varNames;
 	vdynamic* glES;
 	vdynamic* version;
+	bool intelDriverFix;
 };
 #endif
 

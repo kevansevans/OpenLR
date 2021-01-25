@@ -6,6 +6,7 @@ import components.lines.Accel;
 import components.lines.Scenery;
 import components.lines.LineBase;
 import components.tool.ToolFunction;
+import components.ui.Toolbar.Icon;
 import hxd.BitmapData;
 import h2d.col.Point;
 import hxd.Cursor;
@@ -76,6 +77,9 @@ class ToolBehavior
 		Main.canvas_interaction.onRelease = mouseUp;
 		Main.canvas_interaction.onMove = mouseMove;
 		Main.canvas_interaction.onWheel = mouseWheel;
+		Main.canvas_interaction.onOver = function(e:Event) {
+			Main.canvas_interaction.focus();
+		}
 		
 		bitmapPencilBlue = Res.tool.pencilBlue.toBitmap();
 		cursorPencilBlue = Cursor.Custom(new CustomCursor([bitmapPencilBlue], 0, 1, 25));
@@ -250,6 +254,8 @@ class ToolBehavior
 					
 					case PENCIL | LINE:
 						
+						if (mouseStart == null || mouseEnd == null) return;
+						
 						snap(mouseEnd);
 						
 						drawLine();
@@ -376,6 +382,7 @@ class ToolBehavior
 	{
 		switch (event.kind) {
 			case EKeyDown :
+				trace(event.keyCode);
 				switch (event.keyCode) {
 					case Key.QWERTY_BRACKET_RIGHT :
 						if (shifted) {
@@ -414,22 +421,14 @@ class ToolBehavior
 						}
 						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.Q:
-						tool = PENCIL;
-						updateCursor();
-						Main.console.log("Tool set to Pencil", 0x0000BB);
+						setToolPencil();
+						Main.toolbar.externalUpdate(Icon.PENCIL);
 					case Key.W:
-						tool = LINE;
-						updateCursor();
-						Main.console.log("Tool set to Line", 0x0000BB);
+						setToolPencil();
+						Main.toolbar.externalUpdate(Icon.ERASER);
 					case Key.E:
-						if (tool == ERASER) {
-							colorEraser = !colorEraser;
-							Main.console.log('Color eraser ' + (colorEraser == true ? 'on' : 'off'));
-						}
-						tool = ERASER;
-						updateCursor();
-						Main.console.log("Tool set to Eraser", 0x0000BB);
-						
+						setToolEraser();
+						Main.toolbar.externalUpdate(Icon.ERASER);
 					case Key.A :
 						Main.simulation.backSim();
 					case Key.D :
@@ -499,6 +498,29 @@ class ToolBehavior
 				}
 			default:
 		}
+	}
+	
+	public function setToolEraser():Void 
+	{
+		if (tool == ERASER) {
+			colorEraser = !colorEraser;
+			Main.console.log('Color eraser ' + (colorEraser == true ? 'on' : 'off'));
+		}
+		tool = ERASER;
+		updateCursor();
+		Main.console.log("Tool set to Eraser", 0x0000BB);
+	}
+	
+	public function setToolPencil() {
+		tool = PENCIL;
+		updateCursor();
+		Main.console.log("Tool set to Pencil", 0x0000BB);
+	}
+	
+	public function setToolLine() {
+		tool = LINE;
+		updateCursor();
+		Main.console.log("Tool set to Line", 0x0000BB);
 	}
 	
 	function updateCursor():Void 

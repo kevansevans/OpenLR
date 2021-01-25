@@ -87,6 +87,10 @@ venum* hxd_System_get_platform(void);
 extern venum* g$hxd_Platform_IOS;
 extern venum* g$hxd_Platform_Android;
 extern venum* g$hxd_Platform_PC;
+extern String s$xdg_open_;
+int Sys_command(String,hl__types__ArrayObj);
+extern String s$open_;
+extern String s$start_;
 void hl__UI_Sentinel_Impl__tick(ui_sentinel*);
 bool hl__UI_Sentinel_Impl__get_pause(ui_sentinel*);
 bool hl__UI_Sentinel_Impl__set_pause(ui_sentinel*,bool);
@@ -645,6 +649,95 @@ bool hxd_System_getValue(venum* r0) {
 	return r4;
 }
 
+void hxd_System_openURL(String r0) {
+	String r2;
+	hl__types__ArrayObj r7;
+	vbyte *r5, *r6;
+	int r3, r4;
+	r2 = Sys_systemName();
+	if( !r2 ) goto label$7609c18_13_10;
+	r3 = r2->length;
+	r4 = 5;
+	if( r3 != r4 ) goto label$7609c18_13_10;
+	r5 = r2->bytes;
+	r6 = (vbyte*)USTR("Linux");
+	r3 = hl_string_compare(r5,r6,r3);
+	r4 = 0;
+	if( r3 == r4 ) goto label$7609c18_13_56;
+	label$7609c18_13_10:
+	if( !r2 ) goto label$7609c18_13_19;
+	r3 = r2->length;
+	r4 = 3;
+	if( r3 != r4 ) goto label$7609c18_13_19;
+	r5 = r2->bytes;
+	r6 = (vbyte*)USTR("Mac");
+	r3 = hl_string_compare(r5,r6,r3);
+	r4 = 0;
+	if( r3 == r4 ) goto label$7609c18_13_61;
+	label$7609c18_13_19:
+	if( !r2 ) goto label$7609c18_13_28;
+	r3 = r2->length;
+	r4 = 7;
+	if( r3 != r4 ) goto label$7609c18_13_28;
+	r5 = r2->bytes;
+	r6 = (vbyte*)USTR("Windows");
+	r3 = hl_string_compare(r5,r6,r3);
+	r4 = 0;
+	if( r3 == r4 ) goto label$7609c18_13_66;
+	label$7609c18_13_28:
+	if( !r2 ) goto label$7609c18_13_37;
+	r3 = r2->length;
+	r4 = 7;
+	if( r3 != r4 ) goto label$7609c18_13_37;
+	r5 = r2->bytes;
+	r6 = (vbyte*)USTR("Android");
+	r3 = hl_string_compare(r5,r6,r3);
+	r4 = 0;
+	if( r3 == r4 ) goto label$7609c18_13_71;
+	label$7609c18_13_37:
+	if( !r2 ) goto label$7609c18_13_46;
+	r3 = r2->length;
+	r4 = 3;
+	if( r3 != r4 ) goto label$7609c18_13_46;
+	r5 = r2->bytes;
+	r6 = (vbyte*)USTR("iOS");
+	r3 = hl_string_compare(r5,r6,r3);
+	r4 = 0;
+	if( r3 == r4 ) goto label$7609c18_13_71;
+	label$7609c18_13_46:
+	if( !r2 ) goto label$7609c18_13_55;
+	r3 = r2->length;
+	r4 = 4;
+	if( r3 != r4 ) goto label$7609c18_13_55;
+	r5 = r2->bytes;
+	r6 = (vbyte*)USTR("tvOS");
+	r3 = hl_string_compare(r5,r6,r3);
+	r4 = 0;
+	if( r3 == r4 ) goto label$7609c18_13_71;
+	label$7609c18_13_55:
+	goto label$7609c18_13_71;
+	label$7609c18_13_56:
+	r2 = (String)s$xdg_open_;
+	r2 = String___add__(r2,r0);
+	r7 = NULL;
+	r3 = Sys_command(r2,r7);
+	goto label$7609c18_13_71;
+	label$7609c18_13_61:
+	r2 = (String)s$open_;
+	r2 = String___add__(r2,r0);
+	r7 = NULL;
+	r3 = Sys_command(r2,r7);
+	goto label$7609c18_13_71;
+	label$7609c18_13_66:
+	r2 = (String)s$start_;
+	r2 = String___add__(r2,r0);
+	r7 = NULL;
+	r3 = Sys_command(r2,r7);
+	goto label$7609c18_13_71;
+	label$7609c18_13_71:
+	return;
+}
+
 venum* hxd_System_get_platform() {
 	String r2;
 	venum *r0, *r7;
@@ -653,82 +746,82 @@ venum* hxd_System_get_platform() {
 	int r3, r4;
 	r1 = (hxd__$System)g$_hxd_System;
 	r0 = r1->platform;
-	if( r0 ) goto label$7609c18_13_67;
+	if( r0 ) goto label$7609c18_14_67;
 	r2 = Sys_systemName();
-	if( !r2 ) goto label$7609c18_13_13;
+	if( !r2 ) goto label$7609c18_14_13;
 	r3 = r2->length;
 	r4 = 7;
-	if( r3 != r4 ) goto label$7609c18_13_13;
+	if( r3 != r4 ) goto label$7609c18_14_13;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Android");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_13_60;
-	label$7609c18_13_13:
-	if( !r2 ) goto label$7609c18_13_22;
+	if( r3 == r4 ) goto label$7609c18_14_60;
+	label$7609c18_14_13:
+	if( !r2 ) goto label$7609c18_14_22;
 	r3 = r2->length;
 	r4 = 5;
-	if( r3 != r4 ) goto label$7609c18_13_22;
+	if( r3 != r4 ) goto label$7609c18_14_22;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Linux");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_13_62;
-	label$7609c18_13_22:
-	if( !r2 ) goto label$7609c18_13_31;
+	if( r3 == r4 ) goto label$7609c18_14_62;
+	label$7609c18_14_22:
+	if( !r2 ) goto label$7609c18_14_31;
 	r3 = r2->length;
 	r4 = 3;
-	if( r3 != r4 ) goto label$7609c18_13_31;
+	if( r3 != r4 ) goto label$7609c18_14_31;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Mac");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_13_62;
-	label$7609c18_13_31:
-	if( !r2 ) goto label$7609c18_13_40;
+	if( r3 == r4 ) goto label$7609c18_14_62;
+	label$7609c18_14_31:
+	if( !r2 ) goto label$7609c18_14_40;
 	r3 = r2->length;
 	r4 = 7;
-	if( r3 != r4 ) goto label$7609c18_13_40;
+	if( r3 != r4 ) goto label$7609c18_14_40;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("Windows");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_13_62;
-	label$7609c18_13_40:
-	if( !r2 ) goto label$7609c18_13_49;
+	if( r3 == r4 ) goto label$7609c18_14_62;
+	label$7609c18_14_40:
+	if( !r2 ) goto label$7609c18_14_49;
 	r3 = r2->length;
 	r4 = 3;
-	if( r3 != r4 ) goto label$7609c18_13_49;
+	if( r3 != r4 ) goto label$7609c18_14_49;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("iOS");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_13_64;
-	label$7609c18_13_49:
-	if( !r2 ) goto label$7609c18_13_58;
+	if( r3 == r4 ) goto label$7609c18_14_64;
+	label$7609c18_14_49:
+	if( !r2 ) goto label$7609c18_14_58;
 	r3 = r2->length;
 	r4 = 4;
-	if( r3 != r4 ) goto label$7609c18_13_58;
+	if( r3 != r4 ) goto label$7609c18_14_58;
 	r5 = r2->bytes;
 	r6 = (vbyte*)USTR("tvOS");
 	r3 = hl_string_compare(r5,r6,r3);
 	r4 = 0;
-	if( r3 == r4 ) goto label$7609c18_13_64;
-	label$7609c18_13_58:
+	if( r3 == r4 ) goto label$7609c18_14_64;
+	label$7609c18_14_58:
 	r7 = (venum*)g$hxd_Platform_PC;
-	goto label$7609c18_13_65;
-	label$7609c18_13_60:
+	goto label$7609c18_14_65;
+	label$7609c18_14_60:
 	r7 = (venum*)g$hxd_Platform_Android;
-	goto label$7609c18_13_65;
-	label$7609c18_13_62:
+	goto label$7609c18_14_65;
+	label$7609c18_14_62:
 	r7 = (venum*)g$hxd_Platform_PC;
-	goto label$7609c18_13_65;
-	label$7609c18_13_64:
+	goto label$7609c18_14_65;
+	label$7609c18_14_64:
 	r7 = (venum*)g$hxd_Platform_IOS;
-	label$7609c18_13_65:
+	label$7609c18_14_65:
 	r1 = (hxd__$System)g$_hxd_System;
 	r1->platform = r7;
-	label$7609c18_13_67:
+	label$7609c18_14_67:
 	r1 = (hxd__$System)g$_hxd_System;
 	r0 = r1->platform;
 	return r0;

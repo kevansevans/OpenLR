@@ -59,7 +59,6 @@ extern hl_type t$hxsl_FunctionKind;
 #include <hxsl/_Flatten/Alloc.h>
 #include <hxsl/ARead.h>
 #include <hxsl/Const.h>
-#include <hxsl/TGlobal.h>
 #include <hxsl/Error.h>
 #include <haxe/macro/Binop.h>
 vvirtual* hxsl_Tools_map(vvirtual*,vclosure*);
@@ -67,16 +66,16 @@ vdynamic* haxe_ds_ObjectMap_get(haxe__ds__ObjectMap,vdynamic*);
 extern hl_type t$hxsl_ARead;
 vvirtual* hxsl_Flatten_access(hxsl__Flatten,hxsl___Flatten__Alloc,venum*,vvirtual*,venum*);
 bool hxsl_Tools_isSampler(venum*);
-extern venum* g$hxsl_TGlobal_ToInt;
-extern hl_type t$vrt_d3744c2;
-extern venum* g$hxsl_Type_TInt;
+vvirtual* hxsl_Flatten_toInt(hxsl__Flatten,vvirtual*);
 int hxsl_Flatten_varSize(hxsl__Flatten,venum*,venum*);
 extern hl_type t$hxsl_Error;
 extern String s$12d631f;
 void hxsl_Error_new(hxsl__Error,String,vvirtual*);
 extern venum* g$haxe_macro_Binop_OpMult;
 extern hl_type t$hxsl_Const;
+extern venum* g$hxsl_Type_TInt;
 vvirtual* hxsl_Flatten_optimize(hxsl__Flatten,vvirtual*);
+#include <hxsl/TGlobal.h>
 #include <_std/Math.h>
 extern $Math g$_Math;
 vvirtual* hxsl_Flatten_allocConsts(hxsl__Flatten,hl__types__ArrayBytes_Float,vvirtual*);
@@ -98,6 +97,7 @@ extern hl_type t$hxsl_TGlobal;
 extern venum* g$hxsl_TGlobal_IVec2;
 extern venum* g$hxsl_TGlobal_IVec3;
 extern venum* g$hxsl_TGlobal_IVec4;
+extern hl_type t$vrt_d3744c2;
 extern venum* g$hxsl_Type_TMat3x4;
 extern venum* g$hxsl_TGlobal_Mat3;
 extern venum* g$hxsl_Type_TMat3;
@@ -106,6 +106,7 @@ extern venum* g$hxsl_Type_TMat4;
 extern venum* g$hxsl_TGlobal_Mat3x4;
 extern hl_type t$hxsl__Flatten_Alloc;
 void hxsl__Flatten_Alloc_new(hxsl___Flatten__Alloc,vvirtual*,venum*,int,int);
+extern venum* g$hxsl_TGlobal_ToInt;
 vdynamic* hl_types_ArrayObj_pop(hl__types__ArrayObj);
 extern String s$Reading_outside_array_bounds;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
@@ -417,19 +418,16 @@ vvirtual* hxsl_Flatten_mapFun(hxsl__Flatten r0,vvirtual* r1,vclosure* r2) {
 }
 
 vvirtual* hxsl_Flatten_mapExpr(hxsl__Flatten r0,vvirtual* r1) {
-	String r36;
+	String r29;
 	haxe__ds__ObjectMap r10;
-	hl__types__ArrayObj r28;
-	vvirtual *r3, *r8, *r13, *r15, *r18, *r26, *r31, *r39;
-	hl_type *r30;
-	venum *r2, *r6, *r12, *r14, *r16, *r19, *r20, *r22, *r23, *r24, *r25, *r27, *r32, *r33, *r38, *r40;
+	vvirtual *r3, *r8, *r13, *r15, *r18, *r25, *r32;
+	venum *r2, *r6, *r12, *r14, *r16, *r19, *r20, *r22, *r23, *r24, *r26, *r31, *r33;
 	bool r21;
-	hxsl__Error r35;
+	hxsl__Error r28;
 	hxsl___Flatten__Alloc r11;
 	vclosure *r7;
 	vdynamic *r9;
-	varray *r29;
-	int r5, r17, r34, r37;
+	int r5, r17, r27, r30;
 	if( r1 == NULL ) hl_null_access();
 	r2 = hl_vfields(r1)[0] ? (*(venum**)(hl_vfields(r1)[0])) : (venum*)hl_dyn_getp(r1->value,101/*e*/,&t$hxsl_TExprDef);
 	if( r2 == NULL ) hl_null_access();
@@ -454,7 +452,7 @@ vvirtual* hxsl_Flatten_mapExpr(hxsl__Flatten r0,vvirtual* r1) {
 			r7 = hl_alloc_closure_ptr(&t$fun_2c1c853,hxsl_Flatten_mapExpr,r0);
 			r3 = hxsl_Tools_map(r1,r7);
 			r1 = r3;
-			goto label$784a7c9_4_172;
+			goto label$784a7c9_4_125;
 		case 1:
 			r8 = ((hxsl_TExprDef_TVar*)r2)->p0;
 			r10 = r0->varMap;
@@ -470,7 +468,7 @@ vvirtual* hxsl_Flatten_mapExpr(hxsl__Flatten r0,vvirtual* r1) {
 			r3 = hxsl_Flatten_access(r0,r11,r12,r13,r14);
 			r1 = r3;
 			label$784a7c9_4_21:
-			goto label$784a7c9_4_172;
+			goto label$784a7c9_4_125;
 		case 16:
 			r3 = ((hxsl_TExprDef_TArray*)r2)->p0;
 			if( r3 == NULL ) hl_null_access();
@@ -479,7 +477,7 @@ vvirtual* hxsl_Flatten_mapExpr(hxsl__Flatten r0,vvirtual* r1) {
 			if( r6 == NULL ) hl_null_access();
 			r5 = HL__ENUM_INDEX__(r6);
 			r17 = 1;
-			if( r5 != r17 ) goto label$784a7c9_4_169;
+			if( r5 != r17 ) goto label$784a7c9_4_122;
 			r15 = ((hxsl_TExprDef_TArray*)r2)->p1;
 			r13 = hl_vfields(r3)[1] ? (*(vvirtual**)(hl_vfields(r3)[1])) : (vvirtual*)hl_dyn_getp(r3->value,112/*p*/,&t$vrt_379f5a4);
 			r8 = ((hxsl_TExprDef_TVar*)r6)->p0;
@@ -504,160 +502,105 @@ vvirtual* hxsl_Flatten_mapExpr(hxsl__Flatten r0,vvirtual* r1) {
 			label$784a7c9_4_49:
 			r21 = false;
 			label$784a7c9_4_50:
-			if( r21 ) goto label$784a7c9_4_165;
+			if( r21 ) goto label$784a7c9_4_118;
 			r10 = r0->varMap;
 			if( r10 == NULL ) hl_null_access();
 			r9 = haxe_ds_ObjectMap_get(r10,((vdynamic*)r8));
 			r11 = (hxsl___Flatten__Alloc)r9;
-			if( !r11 ) goto label$784a7c9_4_164;
+			if( !r11 ) goto label$784a7c9_4_117;
 			if( r8 == NULL ) hl_null_access();
 			r22 = hl_vfields(r8)[5] ? (*(venum**)(hl_vfields(r8)[5])) : (venum*)hl_dyn_getp(r8->value,218690500/*type*/,&t$hxsl_Type);
 			if( r22 == NULL ) hl_null_access();
 			r5 = HL__ENUM_INDEX__(r22);
 			r17 = 15;
-			if( r5 != r17 ) goto label$784a7c9_4_161;
+			if( r5 != r17 ) goto label$784a7c9_4_114;
 			r24 = ((hxsl_Type_TArray*)r22)->p1;
 			r23 = ((hxsl_Type_TArray*)r22)->p0;
 			r21 = hxsl_Tools_isSampler(r23);
-			if( !r21 ) goto label$784a7c9_4_96;
+			if( !r21 ) goto label$784a7c9_4_73;
 			r18 = hxsl_Flatten_mapExpr(r0,r15);
-			r15 = r18;
-			r18 = hl_alloc_virtual(&t$vrt_6e3ace9);
-			r26 = hl_alloc_virtual(&t$vrt_6e3ace9);
-			r27 = (venum*)g$hxsl_TGlobal_ToInt;
-			r19 = hl_alloc_enum(&t$hxsl_TExprDef,2);
-			((hxsl_TExprDef_TGlobal*)r19)->p0 = r27;
-			if( hl_vfields(r26)[0] ) *(venum**)(hl_vfields(r26)[0]) = (venum*)r19; else hl_dyn_setp(r26->value,101/*e*/,&t$hxsl_TExprDef,r19);
-			r30 = &t$vrt_d3744c2;
-			r5 = 0;
-			r29 = hl_alloc_array(r30,r5);
-			r28 = hl_types_ArrayObj_alloc(r29);
-			r25 = hl_alloc_enum(&t$hxsl_Type,14);
-			((hxsl_Type_TFun*)r25)->p0 = r28;
-			if( hl_vfields(r26)[2] ) *(venum**)(hl_vfields(r26)[2]) = (venum*)r25; else hl_dyn_setp(r26->value,116/*t*/,&t$hxsl_Type,r25);
-			if( hl_vfields(r26)[1] ) *(vvirtual**)(hl_vfields(r26)[1]) = (vvirtual*)r13; else hl_dyn_setp(r26->value,112/*p*/,&t$vrt_379f5a4,r13);
-			r30 = &t$vrt_6e3ace9;
-			r5 = 1;
-			r29 = hl_alloc_array(r30,r5);
-			r5 = 0;
-			((vvirtual**)(r29 + 1))[r5] = r15;
-			r28 = hl_types_ArrayObj_alloc(r29);
-			r19 = hl_alloc_enum(&t$hxsl_TExprDef,8);
-			((hxsl_TExprDef_TCall*)r19)->p0 = r26;
-			((hxsl_TExprDef_TCall*)r19)->p1 = r28;
-			if( hl_vfields(r18)[0] ) *(venum**)(hl_vfields(r18)[0]) = (venum*)r19; else hl_dyn_setp(r18->value,101/*e*/,&t$hxsl_TExprDef,r19);
-			r25 = (venum*)g$hxsl_Type_TInt;
-			if( hl_vfields(r18)[2] ) *(venum**)(hl_vfields(r18)[2]) = (venum*)r25; else hl_dyn_setp(r18->value,116/*t*/,&t$hxsl_Type,r25);
-			if( hl_vfields(r18)[1] ) *(vvirtual**)(hl_vfields(r18)[1]) = (vvirtual*)r13; else hl_dyn_setp(r18->value,112/*p*/,&t$vrt_379f5a4,r13);
+			r18 = hxsl_Flatten_toInt(r0,r18);
 			r5 = 1;
 			r14 = hl_alloc_enum(&t$hxsl_ARead,1);
 			((hxsl_ARead_AOffset*)r14)->p0 = r11;
 			((hxsl_ARead_AOffset*)r14)->p1 = r5;
 			((hxsl_ARead_AOffset*)r14)->p2 = r18;
-			r26 = hxsl_Flatten_access(r0,r11,r23,r13,r14);
-			r1 = r26;
-			goto label$784a7c9_4_160;
-			label$784a7c9_4_96:
+			r18 = hxsl_Flatten_access(r0,r11,r23,r13,r14);
+			r1 = r18;
+			goto label$784a7c9_4_113;
+			label$784a7c9_4_73:
 			if( r11 == NULL ) hl_null_access();
-			r33 = r11->_t;
-			r5 = hxsl_Flatten_varSize(r0,r23,r33);
-			r34 = 0;
-			if( r5 == r34 ) goto label$784a7c9_4_105;
-			r34 = 3;
-			r17 = r5 & r34;
-			r34 = 0;
-			if( r17 == r34 ) goto label$784a7c9_4_111;
-			label$784a7c9_4_105:
-			r35 = (hxsl__Error)hl_alloc_obj(&t$hxsl_Error);
-			r36 = (String)s$12d631f;
-			r31 = hl_vfields(r1)[1] ? (*(vvirtual**)(hl_vfields(r1)[1])) : (vvirtual*)hl_dyn_getp(r1->value,112/*p*/,&t$vrt_379f5a4);
-			hxsl_Error_new(r35,r36,r31);
-			r9 = haxe_Exception_thrown(((vdynamic*)r35));
+			r26 = r11->_t;
+			r5 = hxsl_Flatten_varSize(r0,r23,r26);
+			r27 = 0;
+			if( r5 == r27 ) goto label$784a7c9_4_82;
+			r27 = 3;
+			r17 = r5 & r27;
+			r27 = 0;
+			if( r17 == r27 ) goto label$784a7c9_4_88;
+			label$784a7c9_4_82:
+			r28 = (hxsl__Error)hl_alloc_obj(&t$hxsl_Error);
+			r29 = (String)s$12d631f;
+			r25 = hl_vfields(r1)[1] ? (*(vvirtual**)(hl_vfields(r1)[1])) : (vvirtual*)hl_dyn_getp(r1->value,112/*p*/,&t$vrt_379f5a4);
+			hxsl_Error_new(r28,r29,r25);
+			r9 = haxe_Exception_thrown(((vdynamic*)r28));
 			hl_throw((vdynamic*)r9);
-			label$784a7c9_4_111:
-			r34 = 2;
-			r17 = r5 >> r34;
-			r5 = r17;
+			label$784a7c9_4_88:
+			r27 = 2;
+			r17 = r5 >> r27;
 			r18 = hxsl_Flatten_mapExpr(r0,r15);
+			r18 = hxsl_Flatten_toInt(r0,r18);
 			r15 = r18;
+			r30 = 1;
+			if( r17 != r30 ) goto label$784a7c9_4_96;
+			goto label$784a7c9_4_110;
+			label$784a7c9_4_96:
 			r18 = hl_alloc_virtual(&t$vrt_6e3ace9);
-			r26 = hl_alloc_virtual(&t$vrt_6e3ace9);
-			r27 = (venum*)g$hxsl_TGlobal_ToInt;
-			r19 = hl_alloc_enum(&t$hxsl_TExprDef,2);
-			((hxsl_TExprDef_TGlobal*)r19)->p0 = r27;
-			if( hl_vfields(r26)[0] ) *(venum**)(hl_vfields(r26)[0]) = (venum*)r19; else hl_dyn_setp(r26->value,101/*e*/,&t$hxsl_TExprDef,r19);
-			r30 = &t$vrt_d3744c2;
-			r17 = 0;
-			r29 = hl_alloc_array(r30,r17);
-			r28 = hl_types_ArrayObj_alloc(r29);
-			r32 = hl_alloc_enum(&t$hxsl_Type,14);
-			((hxsl_Type_TFun*)r32)->p0 = r28;
-			if( hl_vfields(r26)[2] ) *(venum**)(hl_vfields(r26)[2]) = (venum*)r32; else hl_dyn_setp(r26->value,116/*t*/,&t$hxsl_Type,r32);
-			if( hl_vfields(r26)[1] ) *(vvirtual**)(hl_vfields(r26)[1]) = (vvirtual*)r13; else hl_dyn_setp(r26->value,112/*p*/,&t$vrt_379f5a4,r13);
-			r30 = &t$vrt_6e3ace9;
-			r17 = 1;
-			r29 = hl_alloc_array(r30,r17);
-			r17 = 0;
-			((vvirtual**)(r29 + 1))[r17] = r15;
-			r28 = hl_types_ArrayObj_alloc(r29);
-			r19 = hl_alloc_enum(&t$hxsl_TExprDef,8);
-			((hxsl_TExprDef_TCall*)r19)->p0 = r26;
-			((hxsl_TExprDef_TCall*)r19)->p1 = r28;
-			if( hl_vfields(r18)[0] ) *(venum**)(hl_vfields(r18)[0]) = (venum*)r19; else hl_dyn_setp(r18->value,101/*e*/,&t$hxsl_TExprDef,r19);
-			r32 = (venum*)g$hxsl_Type_TInt;
-			if( hl_vfields(r18)[2] ) *(venum**)(hl_vfields(r18)[2]) = (venum*)r32; else hl_dyn_setp(r18->value,116/*t*/,&t$hxsl_Type,r32);
-			if( hl_vfields(r18)[1] ) *(vvirtual**)(hl_vfields(r18)[1]) = (vvirtual*)r13; else hl_dyn_setp(r18->value,112/*p*/,&t$vrt_379f5a4,r13);
-			r37 = 1;
-			if( r5 != r37 ) goto label$784a7c9_4_143;
-			r26 = r18;
-			goto label$784a7c9_4_157;
-			label$784a7c9_4_143:
-			r26 = hl_alloc_virtual(&t$vrt_6e3ace9);
-			r38 = (venum*)g$haxe_macro_Binop_OpMult;
-			r39 = hl_alloc_virtual(&t$vrt_6e3ace9);
+			r31 = (venum*)g$haxe_macro_Binop_OpMult;
+			r32 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r20 = hl_alloc_enum(&t$hxsl_Const,2);
-			((hxsl_Const_CInt*)r20)->p0 = r5;
+			((hxsl_Const_CInt*)r20)->p0 = r17;
 			r19 = hl_alloc_enum(&t$hxsl_TExprDef,0);
 			((hxsl_TExprDef_TConst*)r19)->p0 = r20;
-			if( hl_vfields(r39)[0] ) *(venum**)(hl_vfields(r39)[0]) = (venum*)r19; else hl_dyn_setp(r39->value,101/*e*/,&t$hxsl_TExprDef,r19);
-			r40 = (venum*)g$hxsl_Type_TInt;
-			if( hl_vfields(r39)[2] ) *(venum**)(hl_vfields(r39)[2]) = (venum*)r40; else hl_dyn_setp(r39->value,116/*t*/,&t$hxsl_Type,r40);
-			if( hl_vfields(r39)[1] ) *(vvirtual**)(hl_vfields(r39)[1]) = (vvirtual*)r13; else hl_dyn_setp(r39->value,112/*p*/,&t$vrt_379f5a4,r13);
+			if( hl_vfields(r32)[0] ) *(venum**)(hl_vfields(r32)[0]) = (venum*)r19; else hl_dyn_setp(r32->value,101/*e*/,&t$hxsl_TExprDef,r19);
+			r33 = (venum*)g$hxsl_Type_TInt;
+			if( hl_vfields(r32)[2] ) *(venum**)(hl_vfields(r32)[2]) = (venum*)r33; else hl_dyn_setp(r32->value,116/*t*/,&t$hxsl_Type,r33);
+			if( hl_vfields(r32)[1] ) *(vvirtual**)(hl_vfields(r32)[1]) = (vvirtual*)r13; else hl_dyn_setp(r32->value,112/*p*/,&t$vrt_379f5a4,r13);
 			r19 = hl_alloc_enum(&t$hxsl_TExprDef,5);
-			((hxsl_TExprDef_TBinop*)r19)->p0 = r38;
-			((hxsl_TExprDef_TBinop*)r19)->p1 = r18;
-			((hxsl_TExprDef_TBinop*)r19)->p2 = r39;
-			if( hl_vfields(r26)[0] ) *(venum**)(hl_vfields(r26)[0]) = (venum*)r19; else hl_dyn_setp(r26->value,101/*e*/,&t$hxsl_TExprDef,r19);
-			r40 = (venum*)g$hxsl_Type_TInt;
-			if( hl_vfields(r26)[2] ) *(venum**)(hl_vfields(r26)[2]) = (venum*)r40; else hl_dyn_setp(r26->value,116/*t*/,&t$hxsl_Type,r40);
-			if( hl_vfields(r26)[1] ) *(vvirtual**)(hl_vfields(r26)[1]) = (vvirtual*)r13; else hl_dyn_setp(r26->value,112/*p*/,&t$vrt_379f5a4,r13);
-			label$784a7c9_4_157:
+			((hxsl_TExprDef_TBinop*)r19)->p0 = r31;
+			((hxsl_TExprDef_TBinop*)r19)->p1 = r15;
+			((hxsl_TExprDef_TBinop*)r19)->p2 = r32;
+			if( hl_vfields(r18)[0] ) *(venum**)(hl_vfields(r18)[0]) = (venum*)r19; else hl_dyn_setp(r18->value,101/*e*/,&t$hxsl_TExprDef,r19);
+			r33 = (venum*)g$hxsl_Type_TInt;
+			if( hl_vfields(r18)[2] ) *(venum**)(hl_vfields(r18)[2]) = (venum*)r33; else hl_dyn_setp(r18->value,116/*t*/,&t$hxsl_Type,r33);
+			if( hl_vfields(r18)[1] ) *(vvirtual**)(hl_vfields(r18)[1]) = (vvirtual*)r13; else hl_dyn_setp(r18->value,112/*p*/,&t$vrt_379f5a4,r13);
+			label$784a7c9_4_110:
 			r14 = hl_alloc_enum(&t$hxsl_ARead,1);
 			((hxsl_ARead_AOffset*)r14)->p0 = r11;
-			((hxsl_ARead_AOffset*)r14)->p1 = r5;
-			((hxsl_ARead_AOffset*)r14)->p2 = r26;
-			r26 = hxsl_Flatten_access(r0,r11,r23,r13,r14);
-			r1 = r26;
-			label$784a7c9_4_160:
-			goto label$784a7c9_4_164;
-			label$784a7c9_4_161:
-			r36 = (String)s$assert;
-			r9 = haxe_Exception_thrown(((vdynamic*)r36));
+			((hxsl_ARead_AOffset*)r14)->p1 = r17;
+			((hxsl_ARead_AOffset*)r14)->p2 = r18;
+			r18 = hxsl_Flatten_access(r0,r11,r23,r13,r14);
+			r1 = r18;
+			label$784a7c9_4_113:
+			goto label$784a7c9_4_117;
+			label$784a7c9_4_114:
+			r29 = (String)s$assert;
+			r9 = haxe_Exception_thrown(((vdynamic*)r29));
 			hl_throw((vdynamic*)r9);
-			label$784a7c9_4_164:
-			goto label$784a7c9_4_168;
-			label$784a7c9_4_165:
+			label$784a7c9_4_117:
+			goto label$784a7c9_4_121;
+			label$784a7c9_4_118:
 			r7 = hl_alloc_closure_ptr(&t$fun_2c1c853,hxsl_Flatten_mapExpr,r0);
 			r18 = hxsl_Tools_map(r1,r7);
 			r1 = r18;
-			label$784a7c9_4_168:
-			goto label$784a7c9_4_172;
-			label$784a7c9_4_169:
+			label$784a7c9_4_121:
+			goto label$784a7c9_4_125;
+			label$784a7c9_4_122:
 			r7 = hl_alloc_closure_ptr(&t$fun_2c1c853,hxsl_Flatten_mapExpr,r0);
 			r15 = hxsl_Tools_map(r1,r7);
 			r1 = r15;
 	}
-	label$784a7c9_4_172:
+	label$784a7c9_4_125:
 	r3 = hxsl_Flatten_optimize(r0,r1);
 	return r3;
 }
@@ -2077,45 +2020,20 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 				case 2:
 				case 3:
 				case 4:
-					goto label$784a7c9_8_323;
+					goto label$784a7c9_8_302;
 				case 1:
 					if( r13 == NULL ) hl_null_access();
 					r7 = (venum*)g$hxsl_Type_TFloat;
 					if( hl_vfields(r13)[2] ) *(venum**)(hl_vfields(r13)[2]) = (venum*)r7; else hl_dyn_setp(r13->value,116/*t*/,&t$hxsl_Type,r7);
-					r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
-					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
-					r38 = (venum*)g$hxsl_TGlobal_ToInt;
-					r15 = hl_alloc_enum(&t$hxsl_TExprDef,2);
-					((hxsl_TExprDef_TGlobal*)r15)->p0 = r38;
-					if( hl_vfields(r16)[0] ) *(venum**)(hl_vfields(r16)[0]) = (venum*)r15; else hl_dyn_setp(r16->value,101/*e*/,&t$hxsl_TExprDef,r15);
-					r32 = &t$vrt_d3744c2;
-					r12 = 0;
-					r31 = hl_alloc_array(r32,r12);
-					r30 = hl_types_ArrayObj_alloc(r31);
-					r7 = hl_alloc_enum(&t$hxsl_Type,14);
-					((hxsl_Type_TFun*)r7)->p0 = r30;
-					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r7; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r7);
-					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
-					r32 = &t$vrt_6e3ace9;
-					r12 = 1;
-					r31 = hl_alloc_array(r32,r12);
-					r12 = 0;
-					((vvirtual**)(r31 + 1))[r12] = r13;
-					r30 = hl_types_ArrayObj_alloc(r31);
-					r15 = hl_alloc_enum(&t$hxsl_TExprDef,8);
-					((hxsl_TExprDef_TCall*)r15)->p0 = r16;
-					((hxsl_TExprDef_TCall*)r15)->p1 = r30;
-					if( hl_vfields(r14)[0] ) *(venum**)(hl_vfields(r14)[0]) = (venum*)r15; else hl_dyn_setp(r14->value,101/*e*/,&t$hxsl_TExprDef,r15);
-					if( hl_vfields(r14)[2] ) *(venum**)(hl_vfields(r14)[2]) = (venum*)r2; else hl_dyn_setp(r14->value,116/*t*/,&t$hxsl_Type,r2);
-					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
+					r14 = hxsl_Flatten_toInt(r0,r13);
 					r13 = r14;
-					goto label$784a7c9_8_323;
+					goto label$784a7c9_8_302;
 				case 5:
 					r11 = ((hxsl_Type_TVec*)r2)->p1;
 					if( r11 == NULL ) hl_null_access();
 					r12 = HL__ENUM_INDEX__(r11);
 					r21 = 0;
-					if( r12 != r21 ) goto label$784a7c9_8_323;
+					if( r12 != r21 ) goto label$784a7c9_8_302;
 					r12 = ((hxsl_Type_TVec*)r2)->p0;
 					if( r13 == NULL ) hl_null_access();
 					r11 = (venum*)g$hxsl_VecType_VFloat;
@@ -2142,14 +2060,14 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r22 = 2;
 					r21 = r12 - r22;
 					r22 = r30->length;
-					if( ((unsigned)r21) < ((unsigned)r22) ) goto label$784a7c9_8_300;
+					if( ((unsigned)r21) < ((unsigned)r22) ) goto label$784a7c9_8_279;
 					r38 = NULL;
-					goto label$784a7c9_8_303;
-					label$784a7c9_8_300:
+					goto label$784a7c9_8_282;
+					label$784a7c9_8_279:
 					r31 = r30->array;
 					r26 = ((vdynamic**)(r31 + 1))[r21];
 					r38 = (venum*)r26;
-					label$784a7c9_8_303:
+					label$784a7c9_8_282:
 					r15 = hl_alloc_enum(&t$hxsl_TExprDef,2);
 					((hxsl_TExprDef_TGlobal*)r15)->p0 = r38;
 					if( hl_vfields(r16)[0] ) *(venum**)(hl_vfields(r16)[0]) = (venum*)r15; else hl_dyn_setp(r16->value,101/*e*/,&t$hxsl_TExprDef,r15);
@@ -2175,7 +2093,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r14;
 			}
-			label$784a7c9_8_323:
+			label$784a7c9_8_302:
 			return r13;
 		case 6:
 			r7 = (venum*)g$hxsl_Type_TMat3x4;
@@ -2222,19 +2140,19 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_443;
+					goto label$784a7c9_8_422;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_367;
+					if( r11 ) goto label$784a7c9_8_346;
 					r6 = r10->pos;
-					goto label$784a7c9_8_370;
-					label$784a7c9_8_367:
+					goto label$784a7c9_8_349;
+					label$784a7c9_8_346:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_370:
+					label$784a7c9_8_349:
 					r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2267,26 +2185,26 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r14)[2] ) *(venum**)(hl_vfields(r14)[2]) = (venum*)r40; else hl_dyn_setp(r14->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r14;
-					goto label$784a7c9_8_443;
+					goto label$784a7c9_8_422;
 				case 1:
 					r14 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_404;
+					if( r11 ) goto label$784a7c9_8_383;
 					r12 = r10->pos;
-					goto label$784a7c9_8_407;
-					label$784a7c9_8_404:
+					goto label$784a7c9_8_386;
+					label$784a7c9_8_383:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_407:
+					label$784a7c9_8_386:
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_411;
+					if( r12 != r22 ) goto label$784a7c9_8_390;
 					r16 = r14;
-					goto label$784a7c9_8_425;
-					label$784a7c9_8_411:
+					goto label$784a7c9_8_404;
+					label$784a7c9_8_390:
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -2306,7 +2224,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r40 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r40; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_425:
+					label$784a7c9_8_404:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2331,23 +2249,23 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r19;
 			}
-			label$784a7c9_8_443:
+			label$784a7c9_8_422:
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_532;
+					goto label$784a7c9_8_511;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_452;
+					if( r11 ) goto label$784a7c9_8_431;
 					r6 = r10->pos;
-					goto label$784a7c9_8_455;
-					label$784a7c9_8_452:
+					goto label$784a7c9_8_434;
+					label$784a7c9_8_431:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_455:
+					label$784a7c9_8_434:
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2382,28 +2300,28 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r40; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r14 = r16;
-					goto label$784a7c9_8_532;
+					goto label$784a7c9_8_511;
 				case 1:
 					r16 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_491;
+					if( r11 ) goto label$784a7c9_8_470;
 					r12 = r10->pos;
-					goto label$784a7c9_8_494;
-					label$784a7c9_8_491:
+					goto label$784a7c9_8_473;
+					label$784a7c9_8_470:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_494:
+					label$784a7c9_8_473:
 					r21 = 1;
 					r12 = r12 + r21;
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_500;
+					if( r12 != r22 ) goto label$784a7c9_8_479;
 					r19 = r16;
-					goto label$784a7c9_8_514;
-					label$784a7c9_8_500:
+					goto label$784a7c9_8_493;
+					label$784a7c9_8_479:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -2423,7 +2341,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r40 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r19)[2] ) *(venum**)(hl_vfields(r19)[2]) = (venum*)r40; else hl_dyn_setp(r19->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_514:
+					label$784a7c9_8_493:
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2448,23 +2366,23 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r24)[1] ) *(vvirtual**)(hl_vfields(r24)[1]) = (vvirtual*)r3; else hl_dyn_setp(r24->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r14 = r24;
 			}
-			label$784a7c9_8_532:
+			label$784a7c9_8_511:
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_621;
+					goto label$784a7c9_8_600;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_541;
+					if( r11 ) goto label$784a7c9_8_520;
 					r6 = r10->pos;
-					goto label$784a7c9_8_544;
-					label$784a7c9_8_541:
+					goto label$784a7c9_8_523;
+					label$784a7c9_8_520:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_544:
+					label$784a7c9_8_523:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2499,28 +2417,28 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r19)[2] ) *(venum**)(hl_vfields(r19)[2]) = (venum*)r40; else hl_dyn_setp(r19->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r16 = r19;
-					goto label$784a7c9_8_621;
+					goto label$784a7c9_8_600;
 				case 1:
 					r19 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_580;
+					if( r11 ) goto label$784a7c9_8_559;
 					r12 = r10->pos;
-					goto label$784a7c9_8_583;
-					label$784a7c9_8_580:
+					goto label$784a7c9_8_562;
+					label$784a7c9_8_559:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_583:
+					label$784a7c9_8_562:
 					r21 = 2;
 					r12 = r12 + r21;
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_589;
+					if( r12 != r22 ) goto label$784a7c9_8_568;
 					r24 = r19;
-					goto label$784a7c9_8_603;
-					label$784a7c9_8_589:
+					goto label$784a7c9_8_582;
+					label$784a7c9_8_568:
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r41 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -2540,7 +2458,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r40 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r24)[2] ) *(venum**)(hl_vfields(r24)[2]) = (venum*)r40; else hl_dyn_setp(r24->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r24)[1] ) *(vvirtual**)(hl_vfields(r24)[1]) = (vvirtual*)r3; else hl_dyn_setp(r24->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_603:
+					label$784a7c9_8_582:
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r41 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2565,23 +2483,23 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r25)[1] ) *(vvirtual**)(hl_vfields(r25)[1]) = (vvirtual*)r3; else hl_dyn_setp(r25->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r16 = r25;
 			}
-			label$784a7c9_8_621:
+			label$784a7c9_8_600:
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_710;
+					goto label$784a7c9_8_689;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_630;
+					if( r11 ) goto label$784a7c9_8_609;
 					r6 = r10->pos;
-					goto label$784a7c9_8_633;
-					label$784a7c9_8_630:
+					goto label$784a7c9_8_612;
+					label$784a7c9_8_609:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_633:
+					label$784a7c9_8_612:
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2616,28 +2534,28 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r24)[2] ) *(venum**)(hl_vfields(r24)[2]) = (venum*)r40; else hl_dyn_setp(r24->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r24)[1] ) *(vvirtual**)(hl_vfields(r24)[1]) = (vvirtual*)r3; else hl_dyn_setp(r24->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r19 = r24;
-					goto label$784a7c9_8_710;
+					goto label$784a7c9_8_689;
 				case 1:
 					r24 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_669;
+					if( r11 ) goto label$784a7c9_8_648;
 					r12 = r10->pos;
-					goto label$784a7c9_8_672;
-					label$784a7c9_8_669:
+					goto label$784a7c9_8_651;
+					label$784a7c9_8_648:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_672:
+					label$784a7c9_8_651:
 					r21 = 3;
 					r12 = r12 + r21;
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_678;
+					if( r12 != r22 ) goto label$784a7c9_8_657;
 					r25 = r24;
-					goto label$784a7c9_8_692;
-					label$784a7c9_8_678:
+					goto label$784a7c9_8_671;
+					label$784a7c9_8_657:
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r42 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -2657,7 +2575,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r40 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r25)[2] ) *(venum**)(hl_vfields(r25)[2]) = (venum*)r40; else hl_dyn_setp(r25->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r25)[1] ) *(vvirtual**)(hl_vfields(r25)[1]) = (vvirtual*)r3; else hl_dyn_setp(r25->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_692:
+					label$784a7c9_8_671:
 					r41 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r42 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2682,7 +2600,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r41)[1] ) *(vvirtual**)(hl_vfields(r41)[1]) = (vvirtual*)r3; else hl_dyn_setp(r41->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r19 = r41;
 			}
-			label$784a7c9_8_710:
+			label$784a7c9_8_689:
 			r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			if( hl_vfields(r25)[0] ) *(venum**)(hl_vfields(r25)[0]) = (venum*)r15; else hl_dyn_setp(r25->value,101/*e*/,&t$hxsl_TExprDef,r15);
@@ -2722,19 +2640,19 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_826;
+					goto label$784a7c9_8_805;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_750;
+					if( r11 ) goto label$784a7c9_8_729;
 					r6 = r10->pos;
-					goto label$784a7c9_8_753;
-					label$784a7c9_8_750:
+					goto label$784a7c9_8_732;
+					label$784a7c9_8_729:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_753:
+					label$784a7c9_8_732:
 					r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2767,26 +2685,26 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r14)[2] ) *(venum**)(hl_vfields(r14)[2]) = (venum*)r40; else hl_dyn_setp(r14->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r14;
-					goto label$784a7c9_8_826;
+					goto label$784a7c9_8_805;
 				case 1:
 					r14 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_787;
+					if( r11 ) goto label$784a7c9_8_766;
 					r12 = r10->pos;
-					goto label$784a7c9_8_790;
-					label$784a7c9_8_787:
+					goto label$784a7c9_8_769;
+					label$784a7c9_8_766:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_790:
+					label$784a7c9_8_769:
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_794;
+					if( r12 != r22 ) goto label$784a7c9_8_773;
 					r16 = r14;
-					goto label$784a7c9_8_808;
-					label$784a7c9_8_794:
+					goto label$784a7c9_8_787;
+					label$784a7c9_8_773:
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -2806,7 +2724,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r40 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r40; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_808:
+					label$784a7c9_8_787:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2831,23 +2749,23 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r19;
 			}
-			label$784a7c9_8_826:
+			label$784a7c9_8_805:
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_915;
+					goto label$784a7c9_8_894;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_835;
+					if( r11 ) goto label$784a7c9_8_814;
 					r6 = r10->pos;
-					goto label$784a7c9_8_838;
-					label$784a7c9_8_835:
+					goto label$784a7c9_8_817;
+					label$784a7c9_8_814:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_838:
+					label$784a7c9_8_817:
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2882,28 +2800,28 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r40; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r14 = r16;
-					goto label$784a7c9_8_915;
+					goto label$784a7c9_8_894;
 				case 1:
 					r16 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_874;
+					if( r11 ) goto label$784a7c9_8_853;
 					r12 = r10->pos;
-					goto label$784a7c9_8_877;
-					label$784a7c9_8_874:
+					goto label$784a7c9_8_856;
+					label$784a7c9_8_853:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_877:
+					label$784a7c9_8_856:
 					r21 = 1;
 					r12 = r12 + r21;
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_883;
+					if( r12 != r22 ) goto label$784a7c9_8_862;
 					r19 = r16;
-					goto label$784a7c9_8_897;
-					label$784a7c9_8_883:
+					goto label$784a7c9_8_876;
+					label$784a7c9_8_862:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -2923,7 +2841,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r40 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r19)[2] ) *(venum**)(hl_vfields(r19)[2]) = (venum*)r40; else hl_dyn_setp(r19->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_897:
+					label$784a7c9_8_876:
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2948,23 +2866,23 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r24)[1] ) *(vvirtual**)(hl_vfields(r24)[1]) = (vvirtual*)r3; else hl_dyn_setp(r24->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r14 = r24;
 			}
-			label$784a7c9_8_915:
+			label$784a7c9_8_894:
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_1004;
+					goto label$784a7c9_8_983;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_924;
+					if( r11 ) goto label$784a7c9_8_903;
 					r6 = r10->pos;
-					goto label$784a7c9_8_927;
-					label$784a7c9_8_924:
+					goto label$784a7c9_8_906;
+					label$784a7c9_8_903:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_927:
+					label$784a7c9_8_906:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -2999,28 +2917,28 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r19)[2] ) *(venum**)(hl_vfields(r19)[2]) = (venum*)r40; else hl_dyn_setp(r19->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r16 = r19;
-					goto label$784a7c9_8_1004;
+					goto label$784a7c9_8_983;
 				case 1:
 					r19 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_963;
+					if( r11 ) goto label$784a7c9_8_942;
 					r12 = r10->pos;
-					goto label$784a7c9_8_966;
-					label$784a7c9_8_963:
+					goto label$784a7c9_8_945;
+					label$784a7c9_8_942:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_966:
+					label$784a7c9_8_945:
 					r21 = 2;
 					r12 = r12 + r21;
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_972;
+					if( r12 != r22 ) goto label$784a7c9_8_951;
 					r24 = r19;
-					goto label$784a7c9_8_986;
-					label$784a7c9_8_972:
+					goto label$784a7c9_8_965;
+					label$784a7c9_8_951:
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r41 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -3040,7 +2958,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r40 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r24)[2] ) *(venum**)(hl_vfields(r24)[2]) = (venum*)r40; else hl_dyn_setp(r24->value,116/*t*/,&t$hxsl_Type,r40);
 					if( hl_vfields(r24)[1] ) *(vvirtual**)(hl_vfields(r24)[1]) = (vvirtual*)r3; else hl_dyn_setp(r24->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_986:
+					label$784a7c9_8_965:
 					r25 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r41 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -3065,7 +2983,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r25)[1] ) *(vvirtual**)(hl_vfields(r25)[1]) = (vvirtual*)r3; else hl_dyn_setp(r25->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r16 = r25;
 			}
-			label$784a7c9_8_1004:
+			label$784a7c9_8_983:
 			r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			if( hl_vfields(r24)[0] ) *(venum**)(hl_vfields(r24)[0]) = (venum*)r15; else hl_dyn_setp(r24->value,101/*e*/,&t$hxsl_TExprDef,r15);
@@ -3094,7 +3012,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			if( r43 == NULL ) hl_null_access();
 			r6 = HL__ENUM_INDEX__(r43);
 			r12 = 0;
-			if( r6 != r12 ) goto label$784a7c9_8_1067;
+			if( r6 != r12 ) goto label$784a7c9_8_1046;
 			r7 = ((hxsl_Type_TArray*)r2)->p0;
 			r6 = ((hxsl_SizeDecl_SConst*)r43)->p0;
 			if( r1 == NULL ) hl_null_access();
@@ -3109,8 +3027,8 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			r30 = hl_types_ArrayObj_alloc(r31);
 			r21 = 0;
 			r22 = r6;
-			label$784a7c9_8_1044:
-			if( r21 >= r22 ) goto label$784a7c9_8_1061;
+			label$784a7c9_8_1023:
+			if( r21 >= r22 ) goto label$784a7c9_8_1040;
 			r29 = r21;
 			++r21;
 			r10 = (hxsl___Flatten__Alloc)hl_alloc_obj(&t$hxsl__Flatten_Alloc);
@@ -3126,8 +3044,8 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			((hxsl_ARead_AIndex*)r9)->p0 = r10;
 			r13 = hxsl_Flatten_access(r0,r10,r7,r3,r9);
 			r35 = hl_types_ArrayObj_push(r30,((vdynamic*)r13));
-			goto label$784a7c9_8_1044;
-			label$784a7c9_8_1061:
+			goto label$784a7c9_8_1023;
+			label$784a7c9_8_1040:
 			r13 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r15 = hl_alloc_enum(&t$hxsl_TExprDef,17);
 			((hxsl_TExprDef_TArrayDecl*)r15)->p0 = r30;
@@ -3135,26 +3053,26 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			if( hl_vfields(r13)[2] ) *(venum**)(hl_vfields(r13)[2]) = (venum*)r7; else hl_dyn_setp(r13->value,116/*t*/,&t$hxsl_Type,r7);
 			if( hl_vfields(r13)[1] ) *(vvirtual**)(hl_vfields(r13)[1]) = (vvirtual*)r3; else hl_dyn_setp(r13->value,112/*p*/,&t$vrt_379f5a4,r3);
 			return r13;
-			label$784a7c9_8_1067:
+			label$784a7c9_8_1046:
 			r8 = hxsl_Tools_isSampler(r2);
-			if( !r8 ) goto label$784a7c9_8_1158;
+			if( !r8 ) goto label$784a7c9_8_1137;
 			if( r4 == NULL ) hl_null_access();
 			r6 = HL__ENUM_INDEX__(r4);
 			switch(r6) {
 				default:
-					goto label$784a7c9_8_1155;
+					goto label$784a7c9_8_1134;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_1079;
+					if( r11 ) goto label$784a7c9_8_1058;
 					r6 = r10->pos;
-					goto label$784a7c9_8_1082;
-					label$784a7c9_8_1079:
+					goto label$784a7c9_8_1061;
+					label$784a7c9_8_1058:
 					r6 = r10->pos;
 					r12 = 2;
 					r6 = r6 >> r12;
-					label$784a7c9_8_1082:
+					label$784a7c9_8_1061:
 					r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -3187,26 +3105,26 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r14)[2] ) *(venum**)(hl_vfields(r14)[2]) = (venum*)r7; else hl_dyn_setp(r14->value,116/*t*/,&t$hxsl_Type,r7);
 					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r14;
-					goto label$784a7c9_8_1155;
+					goto label$784a7c9_8_1134;
 				case 1:
 					r14 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r6 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_1116;
+					if( r11 ) goto label$784a7c9_8_1095;
 					r12 = r10->pos;
-					goto label$784a7c9_8_1119;
-					label$784a7c9_8_1116:
+					goto label$784a7c9_8_1098;
+					label$784a7c9_8_1095:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_1119:
+					label$784a7c9_8_1098:
 					r22 = 0;
-					if( r12 != r22 ) goto label$784a7c9_8_1123;
+					if( r12 != r22 ) goto label$784a7c9_8_1102;
 					r16 = r14;
-					goto label$784a7c9_8_1137;
-					label$784a7c9_8_1123:
+					goto label$784a7c9_8_1116;
+					label$784a7c9_8_1102:
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -3226,7 +3144,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r7 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r7; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r7);
 					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_1137:
+					label$784a7c9_8_1116:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -3251,16 +3169,16 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r19;
 			}
-			label$784a7c9_8_1155:
+			label$784a7c9_8_1134:
 			if( r13 == NULL ) hl_null_access();
 			if( hl_vfields(r13)[2] ) *(venum**)(hl_vfields(r13)[2]) = (venum*)r2; else hl_dyn_setp(r13->value,116/*t*/,&t$hxsl_Type,r2);
 			return r13;
-			label$784a7c9_8_1158:
+			label$784a7c9_8_1137:
 			if( r1 == NULL ) hl_null_access();
 			r11 = r1->_t;
 			r6 = hxsl_Flatten_varSize(r0,r2,r11);
 			r21 = 4;
-			if( r21 >= r6 ) goto label$784a7c9_8_1170;
+			if( r21 >= r6 ) goto label$784a7c9_8_1149;
 			r27 = (String)s$Access_not_supported_for_;
 			r28 = hxsl_Tools_toString(r2);
 			r27 = String___add__(r27,r28);
@@ -3268,24 +3186,24 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			r26 = hxsl_Error_t(r27,r18);
 			r13 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r26);
 			return r13;
-			label$784a7c9_8_1170:
+			label$784a7c9_8_1149:
 			if( r4 == NULL ) hl_null_access();
 			r12 = HL__ENUM_INDEX__(r4);
 			switch(r12) {
 				default:
-					goto label$784a7c9_8_1256;
+					goto label$784a7c9_8_1235;
 				case 0:
 					r10 = ((hxsl_ARead_AIndex*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_1180;
+					if( r11 ) goto label$784a7c9_8_1159;
 					r12 = r10->pos;
-					goto label$784a7c9_8_1183;
-					label$784a7c9_8_1180:
+					goto label$784a7c9_8_1162;
+					label$784a7c9_8_1159:
 					r12 = r10->pos;
 					r21 = 2;
 					r12 = r12 >> r21;
-					label$784a7c9_8_1183:
+					label$784a7c9_8_1162:
 					r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -3318,26 +3236,26 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r14)[2] ) *(venum**)(hl_vfields(r14)[2]) = (venum*)r7; else hl_dyn_setp(r14->value,116/*t*/,&t$hxsl_Type,r7);
 					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r14;
-					goto label$784a7c9_8_1256;
+					goto label$784a7c9_8_1235;
 				case 1:
 					r14 = ((hxsl_ARead_AOffset*)r4)->p2;
 					r12 = ((hxsl_ARead_AOffset*)r4)->p1;
 					r10 = ((hxsl_ARead_AOffset*)r4)->p0;
 					if( r10 == NULL ) hl_null_access();
 					r11 = r10->_t;
-					if( r11 ) goto label$784a7c9_8_1217;
+					if( r11 ) goto label$784a7c9_8_1196;
 					r21 = r10->pos;
-					goto label$784a7c9_8_1220;
-					label$784a7c9_8_1217:
+					goto label$784a7c9_8_1199;
+					label$784a7c9_8_1196:
 					r21 = r10->pos;
 					r22 = 2;
 					r21 = r21 >> r22;
-					label$784a7c9_8_1220:
+					label$784a7c9_8_1199:
 					r29 = 0;
-					if( r21 != r29 ) goto label$784a7c9_8_1224;
+					if( r21 != r29 ) goto label$784a7c9_8_1203;
 					r16 = r14;
-					goto label$784a7c9_8_1238;
-					label$784a7c9_8_1224:
+					goto label$784a7c9_8_1217;
+					label$784a7c9_8_1203:
 					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r23 = (venum*)g$haxe_macro_Binop_OpAdd;
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
@@ -3357,7 +3275,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r7 = (venum*)g$hxsl_Type_TInt;
 					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r7; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r7);
 					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
-					label$784a7c9_8_1238:
+					label$784a7c9_8_1217:
 					r19 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r24 = hl_alloc_virtual(&t$vrt_6e3ace9);
 					r17 = r10->g;
@@ -3382,28 +3300,28 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r19)[1] ) *(vvirtual**)(hl_vfields(r19)[1]) = (vvirtual*)r3; else hl_dyn_setp(r19->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r19;
 			}
-			label$784a7c9_8_1256:
+			label$784a7c9_8_1235:
 			r21 = 4;
-			if( r6 != r21 ) goto label$784a7c9_8_1267;
+			if( r6 != r21 ) goto label$784a7c9_8_1246;
 			r12 = r1->pos;
 			r21 = 3;
 			r12 = r12 & r21;
 			r21 = 0;
-			if( r12 == r21 ) goto label$784a7c9_8_1266;
+			if( r12 == r21 ) goto label$784a7c9_8_1245;
 			r27 = (String)s$assert;
 			r26 = haxe_Exception_thrown(((vdynamic*)r27));
 			hl_throw((vdynamic*)r26);
-			label$784a7c9_8_1266:
-			goto label$784a7c9_8_1301;
-			label$784a7c9_8_1267:
+			label$784a7c9_8_1245:
+			goto label$784a7c9_8_1280;
+			label$784a7c9_8_1246:
 			r32 = &t$hxsl_Component;
 			r12 = 0;
 			r31 = hl_alloc_array(r32,r12);
 			r30 = hl_types_ArrayObj_alloc(r31);
 			r12 = 0;
 			r21 = r6;
-			label$784a7c9_8_1273:
-			if( r12 >= r21 ) goto label$784a7c9_8_1295;
+			label$784a7c9_8_1252:
+			if( r12 >= r21 ) goto label$784a7c9_8_1274;
 			r22 = r12;
 			++r12;
 			if( r30 == NULL ) hl_null_access();
@@ -3416,17 +3334,17 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			r35 = r35 & r36;
 			r29 = r22 + r35;
 			r35 = r33->length;
-			if( ((unsigned)r29) < ((unsigned)r35) ) goto label$784a7c9_8_1290;
+			if( ((unsigned)r29) < ((unsigned)r35) ) goto label$784a7c9_8_1269;
 			r37 = NULL;
-			goto label$784a7c9_8_1293;
-			label$784a7c9_8_1290:
+			goto label$784a7c9_8_1272;
+			label$784a7c9_8_1269:
 			r31 = r33->array;
 			r26 = ((vdynamic**)(r31 + 1))[r29];
 			r37 = (venum*)r26;
-			label$784a7c9_8_1293:
+			label$784a7c9_8_1272:
 			r29 = hl_types_ArrayObj_push(r30,((vdynamic*)r37));
-			goto label$784a7c9_8_1273;
-			label$784a7c9_8_1295:
+			goto label$784a7c9_8_1252;
+			label$784a7c9_8_1274:
 			r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r15 = hl_alloc_enum(&t$hxsl_TExprDef,9);
 			((hxsl_TExprDef_TSwiz*)r15)->p0 = r13;
@@ -3435,7 +3353,7 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 			if( hl_vfields(r14)[2] ) *(venum**)(hl_vfields(r14)[2]) = (venum*)r2; else hl_dyn_setp(r14->value,116/*t*/,&t$hxsl_Type,r2);
 			if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
 			r13 = r14;
-			label$784a7c9_8_1301:
+			label$784a7c9_8_1280:
 			if( r2 == NULL ) hl_null_access();
 			r12 = HL__ENUM_INDEX__(r2);
 			switch(r12) {
@@ -3444,45 +3362,20 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 				case 2:
 				case 3:
 				case 4:
-					goto label$784a7c9_8_1387;
+					goto label$784a7c9_8_1345;
 				case 1:
 					if( r13 == NULL ) hl_null_access();
 					r7 = (venum*)g$hxsl_Type_TFloat;
 					if( hl_vfields(r13)[2] ) *(venum**)(hl_vfields(r13)[2]) = (venum*)r7; else hl_dyn_setp(r13->value,116/*t*/,&t$hxsl_Type,r7);
-					r14 = hl_alloc_virtual(&t$vrt_6e3ace9);
-					r16 = hl_alloc_virtual(&t$vrt_6e3ace9);
-					r38 = (venum*)g$hxsl_TGlobal_ToInt;
-					r15 = hl_alloc_enum(&t$hxsl_TExprDef,2);
-					((hxsl_TExprDef_TGlobal*)r15)->p0 = r38;
-					if( hl_vfields(r16)[0] ) *(venum**)(hl_vfields(r16)[0]) = (venum*)r15; else hl_dyn_setp(r16->value,101/*e*/,&t$hxsl_TExprDef,r15);
-					r32 = &t$vrt_d3744c2;
-					r12 = 0;
-					r31 = hl_alloc_array(r32,r12);
-					r30 = hl_types_ArrayObj_alloc(r31);
-					r7 = hl_alloc_enum(&t$hxsl_Type,14);
-					((hxsl_Type_TFun*)r7)->p0 = r30;
-					if( hl_vfields(r16)[2] ) *(venum**)(hl_vfields(r16)[2]) = (venum*)r7; else hl_dyn_setp(r16->value,116/*t*/,&t$hxsl_Type,r7);
-					if( hl_vfields(r16)[1] ) *(vvirtual**)(hl_vfields(r16)[1]) = (vvirtual*)r3; else hl_dyn_setp(r16->value,112/*p*/,&t$vrt_379f5a4,r3);
-					r32 = &t$vrt_6e3ace9;
-					r12 = 1;
-					r31 = hl_alloc_array(r32,r12);
-					r12 = 0;
-					((vvirtual**)(r31 + 1))[r12] = r13;
-					r30 = hl_types_ArrayObj_alloc(r31);
-					r15 = hl_alloc_enum(&t$hxsl_TExprDef,8);
-					((hxsl_TExprDef_TCall*)r15)->p0 = r16;
-					((hxsl_TExprDef_TCall*)r15)->p1 = r30;
-					if( hl_vfields(r14)[0] ) *(venum**)(hl_vfields(r14)[0]) = (venum*)r15; else hl_dyn_setp(r14->value,101/*e*/,&t$hxsl_TExprDef,r15);
-					if( hl_vfields(r14)[2] ) *(venum**)(hl_vfields(r14)[2]) = (venum*)r2; else hl_dyn_setp(r14->value,116/*t*/,&t$hxsl_Type,r2);
-					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
+					r14 = hxsl_Flatten_toInt(r0,r13);
 					r13 = r14;
-					goto label$784a7c9_8_1387;
+					goto label$784a7c9_8_1345;
 				case 5:
 					r11 = ((hxsl_Type_TVec*)r2)->p1;
 					if( r11 == NULL ) hl_null_access();
 					r12 = HL__ENUM_INDEX__(r11);
 					r21 = 0;
-					if( r12 != r21 ) goto label$784a7c9_8_1387;
+					if( r12 != r21 ) goto label$784a7c9_8_1345;
 					r12 = ((hxsl_Type_TVec*)r2)->p0;
 					if( r13 == NULL ) hl_null_access();
 					r11 = (venum*)g$hxsl_VecType_VFloat;
@@ -3509,14 +3402,14 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					r22 = 2;
 					r21 = r12 - r22;
 					r22 = r30->length;
-					if( ((unsigned)r21) < ((unsigned)r22) ) goto label$784a7c9_8_1364;
+					if( ((unsigned)r21) < ((unsigned)r22) ) goto label$784a7c9_8_1322;
 					r38 = NULL;
-					goto label$784a7c9_8_1367;
-					label$784a7c9_8_1364:
+					goto label$784a7c9_8_1325;
+					label$784a7c9_8_1322:
 					r31 = r30->array;
 					r26 = ((vdynamic**)(r31 + 1))[r21];
 					r38 = (venum*)r26;
-					label$784a7c9_8_1367:
+					label$784a7c9_8_1325:
 					r15 = hl_alloc_enum(&t$hxsl_TExprDef,2);
 					((hxsl_TExprDef_TGlobal*)r15)->p0 = r38;
 					if( hl_vfields(r16)[0] ) *(venum**)(hl_vfields(r16)[0]) = (venum*)r15; else hl_dyn_setp(r16->value,101/*e*/,&t$hxsl_TExprDef,r15);
@@ -3542,9 +3435,54 @@ vvirtual* hxsl_Flatten_access(hxsl__Flatten r0,hxsl___Flatten__Alloc r1,venum* r
 					if( hl_vfields(r14)[1] ) *(vvirtual**)(hl_vfields(r14)[1]) = (vvirtual*)r3; else hl_dyn_setp(r14->value,112/*p*/,&t$vrt_379f5a4,r3);
 					r13 = r14;
 			}
-			label$784a7c9_8_1387:
+			label$784a7c9_8_1345:
 			return r13;
 	}
+}
+
+vvirtual* hxsl_Flatten_toInt(hxsl__Flatten r0,vvirtual* r1) {
+	hl__types__ArrayObj r8;
+	vvirtual *r3, *r6, *r12;
+	hl_type *r10;
+	venum *r2, *r4, *r5, *r7;
+	int r11;
+	varray *r9;
+	if( r1 == NULL ) hl_null_access();
+	r2 = hl_vfields(r1)[2] ? (*(venum**)(hl_vfields(r1)[2])) : (venum*)hl_dyn_getp(r1->value,116/*t*/,&t$hxsl_Type);
+	r4 = (venum*)g$hxsl_Type_TInt;
+	if( r2 != r4 ) goto label$784a7c9_9_5;
+	return r1;
+	label$784a7c9_9_5:
+	r3 = hl_alloc_virtual(&t$vrt_6e3ace9);
+	r6 = hl_alloc_virtual(&t$vrt_6e3ace9);
+	r7 = (venum*)g$hxsl_TGlobal_ToInt;
+	r5 = hl_alloc_enum(&t$hxsl_TExprDef,2);
+	((hxsl_TExprDef_TGlobal*)r5)->p0 = r7;
+	if( hl_vfields(r6)[0] ) *(venum**)(hl_vfields(r6)[0]) = (venum*)r5; else hl_dyn_setp(r6->value,101/*e*/,&t$hxsl_TExprDef,r5);
+	r10 = &t$vrt_d3744c2;
+	r11 = 0;
+	r9 = hl_alloc_array(r10,r11);
+	r8 = hl_types_ArrayObj_alloc(r9);
+	r2 = hl_alloc_enum(&t$hxsl_Type,14);
+	((hxsl_Type_TFun*)r2)->p0 = r8;
+	if( hl_vfields(r6)[2] ) *(venum**)(hl_vfields(r6)[2]) = (venum*)r2; else hl_dyn_setp(r6->value,116/*t*/,&t$hxsl_Type,r2);
+	r12 = hl_vfields(r1)[1] ? (*(vvirtual**)(hl_vfields(r1)[1])) : (vvirtual*)hl_dyn_getp(r1->value,112/*p*/,&t$vrt_379f5a4);
+	if( hl_vfields(r6)[1] ) *(vvirtual**)(hl_vfields(r6)[1]) = (vvirtual*)r12; else hl_dyn_setp(r6->value,112/*p*/,&t$vrt_379f5a4,r12);
+	r10 = &t$vrt_6e3ace9;
+	r11 = 1;
+	r9 = hl_alloc_array(r10,r11);
+	r11 = 0;
+	((vvirtual**)(r9 + 1))[r11] = r1;
+	r8 = hl_types_ArrayObj_alloc(r9);
+	r5 = hl_alloc_enum(&t$hxsl_TExprDef,8);
+	((hxsl_TExprDef_TCall*)r5)->p0 = r6;
+	((hxsl_TExprDef_TCall*)r5)->p1 = r8;
+	if( hl_vfields(r3)[0] ) *(venum**)(hl_vfields(r3)[0]) = (venum*)r5; else hl_dyn_setp(r3->value,101/*e*/,&t$hxsl_TExprDef,r5);
+	r2 = (venum*)g$hxsl_Type_TInt;
+	if( hl_vfields(r3)[2] ) *(venum**)(hl_vfields(r3)[2]) = (venum*)r2; else hl_dyn_setp(r3->value,116/*t*/,&t$hxsl_Type,r2);
+	r12 = hl_vfields(r1)[1] ? (*(vvirtual**)(hl_vfields(r1)[1])) : (vvirtual*)hl_dyn_getp(r1->value,112/*p*/,&t$vrt_379f5a4);
+	if( hl_vfields(r3)[1] ) *(vvirtual**)(hl_vfields(r3)[1]) = (vvirtual*)r12; else hl_dyn_setp(r3->value,112/*p*/,&t$vrt_379f5a4,r12);
+	return r3;
 }
 
 vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
@@ -3576,7 +3514,7 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 		case 13:
 		case 14:
 		case 15:
-			goto label$784a7c9_9_155;
+			goto label$784a7c9_10_155;
 		case 8:
 			r6 = ((hxsl_TExprDef_TCall*)r2)->p1;
 			r3 = ((hxsl_TExprDef_TCall*)r2)->p0;
@@ -3587,26 +3525,26 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 			if( r5 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r5);
 			r11 = 2;
-			if( r4 != r11 ) goto label$784a7c9_9_113;
+			if( r4 != r11 ) goto label$784a7c9_10_113;
 			r12 = ((hxsl_TExprDef_TGlobal*)r5)->p0;
 			if( r12 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r12);
 			r11 = 52;
-			if( r4 != r11 ) goto label$784a7c9_9_113;
+			if( r4 != r11 ) goto label$784a7c9_10_113;
 			if( r6 == NULL ) hl_null_access();
 			r4 = r6->length;
 			r11 = 1;
-			if( r4 != r11 ) goto label$784a7c9_9_113;
+			if( r4 != r11 ) goto label$784a7c9_10_113;
 			r4 = 0;
 			r11 = r6->length;
-			if( ((unsigned)r4) < ((unsigned)r11) ) goto label$784a7c9_9_30;
+			if( ((unsigned)r4) < ((unsigned)r11) ) goto label$784a7c9_10_30;
 			r8 = NULL;
-			goto label$784a7c9_9_33;
-			label$784a7c9_9_30:
+			goto label$784a7c9_10_33;
+			label$784a7c9_10_30:
 			r15 = r6->array;
 			r14 = ((vdynamic**)(r15 + 1))[r4];
 			r8 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			label$784a7c9_9_33:
+			label$784a7c9_10_33:
 			if( r8 == NULL ) hl_null_access();
 			r16 = hl_vfields(r8)[2] ? (*(venum**)(hl_vfields(r8)[2])) : (venum*)hl_dyn_getp(r8->value,116/*t*/,&t$hxsl_Type);
 			r18 = hl_vfields(r8)[1] ? (*(vvirtual**)(hl_vfields(r8)[1])) : (vvirtual*)hl_dyn_getp(r8->value,112/*p*/,&t$vrt_379f5a4);
@@ -3614,7 +3552,7 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 			if( r10 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r10);
 			r11 = 8;
-			if( r4 != r11 ) goto label$784a7c9_9_113;
+			if( r4 != r11 ) goto label$784a7c9_10_113;
 			r17 = ((hxsl_TExprDef_TCall*)r10)->p0;
 			if( r17 == NULL ) hl_null_access();
 			r20 = hl_vfields(r17)[2] ? (*(venum**)(hl_vfields(r17)[2])) : (venum*)hl_dyn_getp(r17->value,116/*t*/,&t$hxsl_Type);
@@ -3623,32 +3561,32 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 			if( r19 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r19);
 			r11 = 2;
-			if( r4 != r11 ) goto label$784a7c9_9_113;
+			if( r4 != r11 ) goto label$784a7c9_10_113;
 			r12 = ((hxsl_TExprDef_TGlobal*)r19)->p0;
 			if( r12 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r12);
 			r11 = 51;
-			if( r4 != r11 ) goto label$784a7c9_9_113;
+			if( r4 != r11 ) goto label$784a7c9_10_113;
 			r13 = ((hxsl_TExprDef_TCall*)r10)->p1;
 			r4 = 0;
 			r11 = 0;
-			label$784a7c9_9_58:
+			label$784a7c9_10_58:
 			r25 = 4;
-			if( r11 >= r25 ) goto label$784a7c9_9_81;
+			if( r11 >= r25 ) goto label$784a7c9_10_81;
 			if( r13 == NULL ) hl_null_access();
 			r24 = r13->length;
 			r25 = 1;
 			r24 = r24 - r25;
 			r24 = r24 - r4;
 			r25 = r13->length;
-			if( ((unsigned)r24) < ((unsigned)r25) ) goto label$784a7c9_9_70;
+			if( ((unsigned)r24) < ((unsigned)r25) ) goto label$784a7c9_10_70;
 			r21 = NULL;
-			goto label$784a7c9_9_73;
-			label$784a7c9_9_70:
+			goto label$784a7c9_10_73;
+			label$784a7c9_10_70:
 			r15 = r13->array;
 			r14 = ((vdynamic**)(r15 + 1))[r24];
 			r21 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			label$784a7c9_9_73:
+			label$784a7c9_10_73:
 			if( r21 == NULL ) hl_null_access();
 			r26 = hl_vfields(r21)[2] ? (*(venum**)(hl_vfields(r21)[2])) : (venum*)hl_dyn_getp(r21->value,116/*t*/,&t$hxsl_Type);
 			r28 = (venum*)g$hxsl_VecType_VFloat;
@@ -3656,35 +3594,35 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 			r24 = r11 + r25;
 			r11 = r24;
 			++r4;
-			goto label$784a7c9_9_58;
-			label$784a7c9_9_81:
+			goto label$784a7c9_10_58;
+			label$784a7c9_10_81:
 			r25 = 4;
-			if( r11 != r25 ) goto label$784a7c9_9_113;
+			if( r11 != r25 ) goto label$784a7c9_10_113;
 			r24 = 0;
 			r25 = r4;
-			label$784a7c9_9_85:
-			if( r24 >= r25 ) goto label$784a7c9_9_92;
+			label$784a7c9_10_85:
+			if( r24 >= r25 ) goto label$784a7c9_10_92;
 			++r24;
 			if( r13 == NULL ) hl_null_access();
 			r14 = hl_types_ArrayObj_pop(r13);
 			r21 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			goto label$784a7c9_9_85;
-			label$784a7c9_9_92:
+			goto label$784a7c9_10_85;
+			label$784a7c9_10_92:
 			if( r1 == NULL ) hl_null_access();
 			r23 = hl_vfields(r1)[0] ? (*(venum**)(hl_vfields(r1)[0])) : (venum*)hl_dyn_getp(r1->value,101/*e*/,&t$hxsl_TExprDef);
 			if( r23 == NULL ) hl_null_access();
 			r24 = HL__ENUM_INDEX__(r23);
 			r25 = 8;
-			if( r24 != r25 ) goto label$784a7c9_9_102;
+			if( r24 != r25 ) goto label$784a7c9_10_102;
 			r27 = ((hxsl_TExprDef_TCall*)r23)->p1;
 			r21 = ((hxsl_TExprDef_TCall*)r23)->p0;
 			r30 = r21;
-			goto label$784a7c9_9_105;
-			label$784a7c9_9_102:
+			goto label$784a7c9_10_105;
+			label$784a7c9_10_102:
 			r31 = (String)s$assert;
 			r14 = haxe_Exception_thrown(((vdynamic*)r31));
 			hl_throw((vdynamic*)r14);
-			label$784a7c9_9_105:
+			label$784a7c9_10_105:
 			r21 = hl_alloc_virtual(&t$vrt_6e3ace9);
 			r29 = hl_alloc_enum(&t$hxsl_TExprDef,8);
 			((hxsl_TExprDef_TCall*)r29)->p0 = r30;
@@ -3695,8 +3633,8 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 			r32 = hl_vfields(r1)[1] ? (*(vvirtual**)(hl_vfields(r1)[1])) : (vvirtual*)hl_dyn_getp(r1->value,112/*p*/,&t$vrt_379f5a4);
 			if( hl_vfields(r21)[1] ) *(vvirtual**)(hl_vfields(r21)[1]) = (vvirtual*)r32; else hl_dyn_setp(r21->value,112/*p*/,&t$vrt_379f5a4,r32);
 			return r21;
-			label$784a7c9_9_113:
-			goto label$784a7c9_9_155;
+			label$784a7c9_10_113:
+			goto label$784a7c9_10_155;
 		case 16:
 			r3 = ((hxsl_TExprDef_TArray*)r2)->p1;
 			r8 = ((hxsl_TExprDef_TArray*)r2)->p0;
@@ -3707,7 +3645,7 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 			if( r5 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r5);
 			r11 = 17;
-			if( r4 != r11 ) goto label$784a7c9_9_155;
+			if( r4 != r11 ) goto label$784a7c9_10_155;
 			if( r3 == NULL ) hl_null_access();
 			r16 = hl_vfields(r3)[2] ? (*(venum**)(hl_vfields(r3)[2])) : (venum*)hl_dyn_getp(r3->value,116/*t*/,&t$hxsl_Type);
 			r18 = hl_vfields(r3)[1] ? (*(vvirtual**)(hl_vfields(r3)[1])) : (vvirtual*)hl_dyn_getp(r3->value,112/*p*/,&t$vrt_379f5a4);
@@ -3715,35 +3653,35 @@ vvirtual* hxsl_Flatten_optimize(hxsl__Flatten r0,vvirtual* r1) {
 			if( r10 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r10);
 			r11 = 0;
-			if( r4 != r11 ) goto label$784a7c9_9_155;
+			if( r4 != r11 ) goto label$784a7c9_10_155;
 			r33 = ((hxsl_TExprDef_TConst*)r10)->p0;
 			if( r33 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r33);
 			r11 = 2;
-			if( r4 != r11 ) goto label$784a7c9_9_155;
+			if( r4 != r11 ) goto label$784a7c9_10_155;
 			r6 = ((hxsl_TExprDef_TArrayDecl*)r5)->p0;
 			r4 = ((hxsl_Const_CInt*)r33)->p0;
 			r24 = 0;
-			if( r4 < r24 ) goto label$784a7c9_9_152;
+			if( r4 < r24 ) goto label$784a7c9_10_152;
 			if( r6 == NULL ) hl_null_access();
 			r24 = r6->length;
-			if( r4 >= r24 ) goto label$784a7c9_9_152;
+			if( r4 >= r24 ) goto label$784a7c9_10_152;
 			r24 = r6->length;
-			if( ((unsigned)r4) < ((unsigned)r24) ) goto label$784a7c9_9_148;
+			if( ((unsigned)r4) < ((unsigned)r24) ) goto label$784a7c9_10_148;
 			r17 = NULL;
-			goto label$784a7c9_9_151;
-			label$784a7c9_9_148:
+			goto label$784a7c9_10_151;
+			label$784a7c9_10_148:
 			r15 = r6->array;
 			r14 = ((vdynamic**)(r15 + 1))[r4];
 			r17 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r14);
-			label$784a7c9_9_151:
+			label$784a7c9_10_151:
 			return r17;
-			label$784a7c9_9_152:
+			label$784a7c9_10_152:
 			r31 = (String)s$Reading_outside_array_bounds;
 			r22 = hl_vfields(r1)[1] ? (*(vvirtual**)(hl_vfields(r1)[1])) : (vvirtual*)hl_dyn_getp(r1->value,112/*p*/,&t$vrt_379f5a4);
 			r14 = hxsl_Error_t(r31,r22);
 	}
-	label$784a7c9_9_155:
+	label$784a7c9_10_155:
 	return r1;
 }
 
@@ -3768,24 +3706,24 @@ hl__types__ArrayObj hxsl_Flatten_packTextures(hxsl__Flatten r0,String r1,hl__typ
 	r11 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r6);
 	r7 = 0;
 	r12 = 0;
-	label$784a7c9_10_12:
+	label$784a7c9_11_12:
 	if( r2 == NULL ) hl_null_access();
 	r14 = r2->length;
-	if( r12 >= r14 ) goto label$784a7c9_10_63;
+	if( r12 >= r14 ) goto label$784a7c9_11_63;
 	r14 = r2->length;
-	if( ((unsigned)r12) < ((unsigned)r14) ) goto label$784a7c9_10_20;
+	if( ((unsigned)r12) < ((unsigned)r14) ) goto label$784a7c9_11_20;
 	r16 = NULL;
-	goto label$784a7c9_10_23;
-	label$784a7c9_10_20:
+	goto label$784a7c9_11_23;
+	label$784a7c9_11_20:
 	r17 = r2->array;
 	r10 = ((vdynamic**)(r17 + 1))[r12];
 	r16 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r10);
-	label$784a7c9_10_23:
+	label$784a7c9_11_23:
 	++r12;
 	r13 = 1;
 	if( r16 == NULL ) hl_null_access();
 	r8 = hl_vfields(r16)[5] ? (*(venum**)(hl_vfields(r16)[5])) : (venum*)hl_dyn_getp(r16->value,218690500/*type*/,&t$hxsl_Type);
-	if( r8 == r3 ) goto label$784a7c9_10_51;
+	if( r8 == r3 ) goto label$784a7c9_11_51;
 	r8 = hl_vfields(r16)[5] ? (*(venum**)(hl_vfields(r16)[5])) : (venum*)hl_dyn_getp(r16->value,218690500/*type*/,&t$hxsl_Type);
 	if( r8 == NULL ) hl_null_access();
 	r14 = HL__ENUM_INDEX__(r8);
@@ -3807,33 +3745,33 @@ hl__types__ArrayObj hxsl_Flatten_packTextures(hxsl__Flatten r0,String r1,hl__typ
 		case 13:
 		case 14:
 		case 16:
-			goto label$784a7c9_10_12;
+			goto label$784a7c9_11_12;
 		case 15:
 			r19 = ((hxsl_Type_TArray*)r8)->p1;
 			if( r19 == NULL ) hl_null_access();
 			r14 = HL__ENUM_INDEX__(r19);
 			r20 = 0;
-			if( r14 != r20 ) goto label$784a7c9_10_45;
+			if( r14 != r20 ) goto label$784a7c9_11_45;
 			r18 = ((hxsl_Type_TArray*)r8)->p0;
 			r14 = ((hxsl_SizeDecl_SConst*)r19)->p0;
-			if( r18 != r3 ) goto label$784a7c9_10_43;
+			if( r18 != r3 ) goto label$784a7c9_11_43;
 			r13 = r14;
-			goto label$784a7c9_10_44;
-			label$784a7c9_10_43:
-			goto label$784a7c9_10_12;
-			label$784a7c9_10_44:
-			goto label$784a7c9_10_46;
-			label$784a7c9_10_45:
-			goto label$784a7c9_10_12;
-			label$784a7c9_10_46:
-			goto label$784a7c9_10_51;
+			goto label$784a7c9_11_44;
+			label$784a7c9_11_43:
+			goto label$784a7c9_11_12;
+			label$784a7c9_11_44:
+			goto label$784a7c9_11_46;
+			label$784a7c9_11_45:
+			goto label$784a7c9_11_12;
+			label$784a7c9_11_46:
+			goto label$784a7c9_11_51;
 		case 17:
 			r14 = ((hxsl_Type_TChannel*)r8)->p0;
 			r21 = (venum*)g$hxsl_Type_TSampler2D;
-			if( r3 == r21 ) goto label$784a7c9_10_51;
-			goto label$784a7c9_10_12;
+			if( r3 == r21 ) goto label$784a7c9_11_51;
+			goto label$784a7c9_11_12;
 	}
-	label$784a7c9_10_51:
+	label$784a7c9_11_51:
 	r22 = (hxsl___Flatten__Alloc)hl_alloc_obj(&t$hxsl__Flatten_Alloc);
 	r23 = NULL;
 	hxsl__Flatten_Alloc_new(r22,r11,r23,r7,r13);
@@ -3845,8 +3783,8 @@ hl__types__ArrayObj hxsl_Flatten_packTextures(hxsl__Flatten r0,String r1,hl__typ
 	r14 = hl_types_ArrayObj_push(r4,((vdynamic*)r22));
 	r14 = r7 + r13;
 	r7 = r14;
-	goto label$784a7c9_10_12;
-	label$784a7c9_10_63:
+	goto label$784a7c9_11_12;
+	label$784a7c9_11_63:
 	if( r11 == NULL ) hl_null_access();
 	r19 = hl_alloc_enum(&t$hxsl_SizeDecl,0);
 	((hxsl_SizeDecl_SConst*)r19)->p0 = r7;
@@ -3857,14 +3795,14 @@ hl__types__ArrayObj hxsl_Flatten_packTextures(hxsl__Flatten r0,String r1,hl__typ
 	if( r4 == NULL ) hl_null_access();
 	r12 = r4->length;
 	r13 = 0;
-	if( r13 >= r12 ) goto label$784a7c9_10_77;
+	if( r13 >= r12 ) goto label$784a7c9_11_77;
 	r15 = r0->outVars;
 	if( r15 == NULL ) hl_null_access();
 	r12 = hl_types_ArrayObj_push(r15,((vdynamic*)r11));
 	r24 = r0->allocData;
 	if( r24 == NULL ) hl_null_access();
 	haxe_ds_ObjectMap_set(r24,((vdynamic*)r11),((vdynamic*)r4));
-	label$784a7c9_10_77:
+	label$784a7c9_11_77:
 	return r4;
 }
 
@@ -3892,34 +3830,34 @@ void hxsl_Flatten_packBuffers(hxsl__Flatten r0,hl__types__ArrayObj r1) {
 	if( hl_vfields(r4)[1] ) *(venum**)(hl_vfields(r4)[1]) = (venum*)r8; else hl_dyn_setp(r4->value,118088286/*kind*/,&t$hxsl_VarKind,r8);
 	r10 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r4);
 	r5 = 0;
-	label$784a7c9_11_13:
+	label$784a7c9_12_13:
 	if( r1 == NULL ) hl_null_access();
 	r12 = r1->length;
-	if( r5 >= r12 ) goto label$784a7c9_11_49;
+	if( r5 >= r12 ) goto label$784a7c9_12_49;
 	r12 = r1->length;
-	if( ((unsigned)r5) < ((unsigned)r12) ) goto label$784a7c9_11_21;
+	if( ((unsigned)r5) < ((unsigned)r12) ) goto label$784a7c9_12_21;
 	r14 = NULL;
-	goto label$784a7c9_11_24;
-	label$784a7c9_11_21:
+	goto label$784a7c9_12_24;
+	label$784a7c9_12_21:
 	r15 = r1->array;
 	r9 = ((vdynamic**)(r15 + 1))[r5];
 	r14 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r9);
-	label$784a7c9_11_24:
+	label$784a7c9_12_24:
 	++r5;
 	if( r14 == NULL ) hl_null_access();
 	r7 = hl_vfields(r14)[5] ? (*(venum**)(hl_vfields(r14)[5])) : (venum*)hl_dyn_getp(r14->value,218690500/*type*/,&t$hxsl_Type);
 	if( r7 == NULL ) hl_null_access();
 	r11 = HL__ENUM_INDEX__(r7);
 	r12 = 16;
-	if( r11 != r12 ) goto label$784a7c9_11_35;
+	if( r11 != r12 ) goto label$784a7c9_12_35;
 	r17 = ((hxsl_Type_TBuffer*)r7)->p1;
 	r16 = ((hxsl_Type_TBuffer*)r7)->p0;
 	r18 = true;
-	goto label$784a7c9_11_36;
-	label$784a7c9_11_35:
+	goto label$784a7c9_12_36;
+	label$784a7c9_12_35:
 	r18 = false;
-	label$784a7c9_11_36:
-	if( !r18 ) goto label$784a7c9_11_48;
+	label$784a7c9_12_36:
+	if( !r18 ) goto label$784a7c9_12_48;
 	r19 = (hxsl___Flatten__Alloc)hl_alloc_obj(&t$hxsl__Flatten_Alloc);
 	r20 = NULL;
 	if( r2 == NULL ) hl_null_access();
@@ -3931,9 +3869,9 @@ void hxsl_Flatten_packBuffers(hxsl__Flatten r0,hl__types__ArrayObj r1) {
 	r13 = r0->outVars;
 	if( r13 == NULL ) hl_null_access();
 	r11 = hl_types_ArrayObj_push(r13,((vdynamic*)r14));
-	label$784a7c9_11_48:
-	goto label$784a7c9_11_13;
-	label$784a7c9_11_49:
+	label$784a7c9_12_48:
+	goto label$784a7c9_12_13;
+	label$784a7c9_12_49:
 	if( r10 == NULL ) hl_null_access();
 	r7 = (venum*)g$hxsl_Type_TVoid;
 	r5 = 0;
@@ -3985,93 +3923,93 @@ vvirtual* hxsl_Flatten_pack(hxsl__Flatten r0,String r1,venum* r2,hl__types__Arra
 	if( hl_vfields(r8)[1] ) *(venum**)(hl_vfields(r8)[1]) = (venum*)r2; else hl_dyn_setp(r8->value,118088286/*kind*/,&t$hxsl_VarKind,r2);
 	r12 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r8);
 	r9 = 0;
-	label$784a7c9_12_13:
+	label$784a7c9_13_13:
 	if( r3 == NULL ) hl_null_access();
 	r14 = r3->length;
-	if( r9 >= r14 ) goto label$784a7c9_12_125;
+	if( r9 >= r14 ) goto label$784a7c9_13_125;
 	r14 = r3->length;
-	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$784a7c9_12_21;
+	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$784a7c9_13_21;
 	r16 = NULL;
-	goto label$784a7c9_12_24;
-	label$784a7c9_12_21:
+	goto label$784a7c9_13_24;
+	label$784a7c9_13_21:
 	r17 = r3->array;
 	r11 = ((vdynamic**)(r17 + 1))[r9];
 	r16 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r11);
-	label$784a7c9_12_24:
+	label$784a7c9_13_24:
 	++r9;
 	if( r16 == NULL ) hl_null_access();
 	r10 = hl_vfields(r16)[5] ? (*(venum**)(hl_vfields(r16)[5])) : (venum*)hl_dyn_getp(r16->value,218690500/*type*/,&t$hxsl_Type);
 	r18 = hxsl_Tools_isSampler(r10);
-	if( r18 ) goto label$784a7c9_12_40;
+	if( r18 ) goto label$784a7c9_13_40;
 	r10 = hl_vfields(r16)[5] ? (*(venum**)(hl_vfields(r16)[5])) : (venum*)hl_dyn_getp(r16->value,218690500/*type*/,&t$hxsl_Type);
 	if( r10 == NULL ) hl_null_access();
 	r13 = HL__ENUM_INDEX__(r10);
 	r14 = 16;
-	if( r13 != r14 ) goto label$784a7c9_12_38;
+	if( r13 != r14 ) goto label$784a7c9_13_38;
 	r21 = ((hxsl_Type_TBuffer*)r10)->p1;
 	r20 = ((hxsl_Type_TBuffer*)r10)->p0;
 	r22 = true;
-	goto label$784a7c9_12_39;
-	label$784a7c9_12_38:
+	goto label$784a7c9_13_39;
+	label$784a7c9_13_38:
 	r22 = false;
-	label$784a7c9_12_39:
-	goto label$784a7c9_12_41;
-	label$784a7c9_12_40:
+	label$784a7c9_13_39:
+	goto label$784a7c9_13_41;
+	label$784a7c9_13_40:
 	r22 = true;
-	label$784a7c9_12_41:
-	if( !r22 ) goto label$784a7c9_12_43;
-	goto label$784a7c9_12_13;
-	label$784a7c9_12_43:
+	label$784a7c9_13_41:
+	if( !r22 ) goto label$784a7c9_13_43;
+	goto label$784a7c9_13_13;
+	label$784a7c9_13_43:
 	r10 = hl_vfields(r16)[5] ? (*(venum**)(hl_vfields(r16)[5])) : (venum*)hl_dyn_getp(r16->value,218690500/*type*/,&t$hxsl_Type);
 	if( r10 == NULL ) hl_null_access();
 	r13 = HL__ENUM_INDEX__(r10);
 	r14 = 15;
-	if( r13 != r14 ) goto label$784a7c9_12_53;
+	if( r13 != r14 ) goto label$784a7c9_13_53;
 	r21 = ((hxsl_Type_TArray*)r10)->p1;
 	r20 = ((hxsl_Type_TArray*)r10)->p0;
 	r22 = hxsl_Tools_isSampler(r20);
-	if( !r22 ) goto label$784a7c9_12_53;
-	goto label$784a7c9_12_13;
-	label$784a7c9_12_53:
+	if( !r22 ) goto label$784a7c9_13_53;
+	goto label$784a7c9_13_13;
+	label$784a7c9_13_53:
 	r10 = hl_vfields(r16)[5] ? (*(venum**)(hl_vfields(r16)[5])) : (venum*)hl_dyn_getp(r16->value,218690500/*type*/,&t$hxsl_Type);
 	r13 = hxsl_Flatten_varSize(r0,r10,r4);
 	r23 = NULL;
 	r14 = 0;
-	label$784a7c9_12_57:
+	label$784a7c9_13_57:
 	if( r5 == NULL ) hl_null_access();
 	r25 = r5->length;
-	if( r14 >= r25 ) goto label$784a7c9_12_81;
+	if( r14 >= r25 ) goto label$784a7c9_13_81;
 	r25 = r5->length;
-	if( ((unsigned)r14) < ((unsigned)r25) ) goto label$784a7c9_12_65;
+	if( ((unsigned)r14) < ((unsigned)r25) ) goto label$784a7c9_13_65;
 	r26 = NULL;
-	goto label$784a7c9_12_68;
-	label$784a7c9_12_65:
+	goto label$784a7c9_13_68;
+	label$784a7c9_13_65:
 	r17 = r5->array;
 	r11 = ((vdynamic**)(r17 + 1))[r14];
 	r26 = (hxsl___Flatten__Alloc)r11;
-	label$784a7c9_12_68:
+	label$784a7c9_13_68:
 	++r14;
 	if( r26 == NULL ) hl_null_access();
 	r19 = r26->v;
-	if( r19 ) goto label$784a7c9_12_80;
+	if( r19 ) goto label$784a7c9_13_80;
 	r24 = r26->size;
-	if( r24 < r13 ) goto label$784a7c9_12_80;
-	if( !r23 ) goto label$784a7c9_12_79;
+	if( r24 < r13 ) goto label$784a7c9_13_80;
+	if( !r23 ) goto label$784a7c9_13_79;
 	if( r23 == NULL ) hl_null_access();
 	r24 = r23->size;
 	r25 = r26->size;
-	if( r25 >= r24 ) goto label$784a7c9_12_80;
-	label$784a7c9_12_79:
+	if( r25 >= r24 ) goto label$784a7c9_13_80;
+	label$784a7c9_13_79:
 	r23 = r26;
-	label$784a7c9_12_80:
-	goto label$784a7c9_12_57;
-	label$784a7c9_12_81:
-	if( !r23 ) goto label$784a7c9_12_102;
+	label$784a7c9_13_80:
+	goto label$784a7c9_13_57;
+	label$784a7c9_13_81:
+	if( !r23 ) goto label$784a7c9_13_102;
 	if( r23 == NULL ) hl_null_access();
 	r14 = r23->size;
 	r14 = r14 - r13;
 	r25 = 0;
-	if( r25 >= r14 ) goto label$784a7c9_12_97;
+	if( r25 >= r14 ) goto label$784a7c9_13_97;
 	r28 = NULL;
 	r24 = hl_types_ArrayObj_indexOf(r5,((vdynamic*)r23),r28);
 	r26 = (hxsl___Flatten__Alloc)hl_alloc_obj(&t$hxsl__Flatten_Alloc);
@@ -4082,13 +4020,13 @@ vvirtual* hxsl_Flatten_pack(hxsl__Flatten r0,String r1,venum* r2,hl__types__Arra
 	r25 = r24 + r29;
 	hl_types_ArrayObj_insert(r5,r25,((vdynamic*)r26));
 	r23->size = r13;
-	label$784a7c9_12_97:
+	label$784a7c9_13_97:
 	r23->v = r16;
 	r30 = r0->varMap;
 	if( r30 == NULL ) hl_null_access();
 	haxe_ds_ObjectMap_set(r30,((vdynamic*)r16),((vdynamic*)r23));
-	goto label$784a7c9_12_124;
-	label$784a7c9_12_102:
+	goto label$784a7c9_13_124;
+	label$784a7c9_13_102:
 	r26 = (hxsl___Flatten__Alloc)hl_alloc_obj(&t$hxsl__Flatten_Alloc);
 	hxsl__Flatten_Alloc_new(r26,r12,r4,r7,r13);
 	r14 = r7 + r13;
@@ -4105,15 +4043,15 @@ vvirtual* hxsl_Flatten_pack(hxsl__Flatten r0,String r1,venum* r2,hl__types__Arra
 	r24 = 4;
 	r14 = r24 == 0 ? 0 : r14 % r24;
 	r25 = 0;
-	if( r25 >= r14 ) goto label$784a7c9_12_124;
+	if( r25 >= r14 ) goto label$784a7c9_13_124;
 	r27 = (hxsl___Flatten__Alloc)hl_alloc_obj(&t$hxsl__Flatten_Alloc);
 	hxsl__Flatten_Alloc_new(r27,r12,r4,r7,r14);
 	r24 = r7 + r14;
 	r7 = r24;
 	r24 = hl_types_ArrayObj_push(r5,((vdynamic*)r27));
-	label$784a7c9_12_124:
-	goto label$784a7c9_12_13;
-	label$784a7c9_12_125:
+	label$784a7c9_13_124:
+	goto label$784a7c9_13_13;
+	label$784a7c9_13_125:
 	if( r12 == NULL ) hl_null_access();
 	r9 = 4;
 	r10 = hl_alloc_enum(&t$hxsl_Type,5);
@@ -4130,14 +4068,14 @@ vvirtual* hxsl_Flatten_pack(hxsl__Flatten r0,String r1,venum* r2,hl__types__Arra
 	r10 = tmp; };
 	if( hl_vfields(r12)[5] ) *(venum**)(hl_vfields(r12)[5]) = (venum*)r10; else hl_dyn_setp(r12->value,218690500/*type*/,&t$hxsl_Type,r10);
 	r13 = 0;
-	if( r13 >= r7 ) goto label$784a7c9_12_141;
+	if( r13 >= r7 ) goto label$784a7c9_13_141;
 	r15 = r0->outVars;
 	if( r15 == NULL ) hl_null_access();
 	r9 = hl_types_ArrayObj_push(r15,((vdynamic*)r12));
 	r30 = r0->allocData;
 	if( r30 == NULL ) hl_null_access();
 	haxe_ds_ObjectMap_set(r30,((vdynamic*)r12),((vdynamic*)r5));
-	label$784a7c9_12_141:
+	label$784a7c9_13_141:
 	return r12;
 }
 
@@ -4169,10 +4107,10 @@ int hxsl_Flatten_varSize(hxsl__Flatten r0,venum* r1,venum* r2) {
 		case 1:
 		case 3:
 			r9 = (venum*)g$hxsl_VecType_VFloat;
-			if( r2 != r9 ) goto label$784a7c9_13_14;
+			if( r2 != r9 ) goto label$784a7c9_14_14;
 			r3 = 1;
 			return r3;
-			label$784a7c9_13_14:
+			label$784a7c9_14_14:
 			r6 = hxsl_Tools_toString(r1);
 			r7 = (String)s$_size_unknown_for_type_;
 			r6 = String___add__(r6,r7);
@@ -4183,9 +4121,9 @@ int hxsl_Flatten_varSize(hxsl__Flatten r0,venum* r1,venum* r2) {
 		case 5:
 			r8 = ((hxsl_Type_TVec*)r1)->p1;
 			r3 = ((hxsl_Type_TVec*)r1)->p0;
-			if( r2 != r8 ) goto label$784a7c9_13_25;
+			if( r2 != r8 ) goto label$784a7c9_14_25;
 			return r3;
-			label$784a7c9_13_25:
+			label$784a7c9_14_25:
 			r6 = hxsl_Tools_toString(r1);
 			r7 = (String)s$_size_unknown_for_type_;
 			r6 = String___add__(r6,r7);
@@ -4195,10 +4133,10 @@ int hxsl_Flatten_varSize(hxsl__Flatten r0,venum* r1,venum* r2) {
 			hl_throw((vdynamic*)r5);
 		case 7:
 			r9 = (venum*)g$hxsl_VecType_VFloat;
-			if( r2 != r9 ) goto label$784a7c9_13_36;
+			if( r2 != r9 ) goto label$784a7c9_14_36;
 			r3 = 16;
 			return r3;
-			label$784a7c9_13_36:
+			label$784a7c9_14_36:
 			r6 = hxsl_Tools_toString(r1);
 			r7 = (String)s$_size_unknown_for_type_;
 			r6 = String___add__(r6,r7);
@@ -4209,10 +4147,10 @@ int hxsl_Flatten_varSize(hxsl__Flatten r0,venum* r1,venum* r2) {
 		case 6:
 		case 8:
 			r9 = (venum*)g$hxsl_VecType_VFloat;
-			if( r2 != r9 ) goto label$784a7c9_13_47;
+			if( r2 != r9 ) goto label$784a7c9_14_47;
 			r3 = 12;
 			return r3;
-			label$784a7c9_13_47:
+			label$784a7c9_14_47:
 			r6 = hxsl_Tools_toString(r1);
 			r7 = (String)s$_size_unknown_for_type_;
 			r6 = String___add__(r6,r7);
@@ -4225,13 +4163,13 @@ int hxsl_Flatten_varSize(hxsl__Flatten r0,venum* r1,venum* r2) {
 			if( r11 == NULL ) hl_null_access();
 			r3 = HL__ENUM_INDEX__(r11);
 			r10 = 0;
-			if( r3 != r10 ) goto label$784a7c9_13_64;
+			if( r3 != r10 ) goto label$784a7c9_14_64;
 			r4 = ((hxsl_Type_TArray*)r1)->p0;
 			r3 = ((hxsl_SizeDecl_SConst*)r11)->p0;
 			r10 = hxsl_Flatten_varSize(r0,r4,r2);
 			r10 = r10 * r3;
 			return r10;
-			label$784a7c9_13_64:
+			label$784a7c9_14_64:
 			r6 = hxsl_Tools_toString(r1);
 			r7 = (String)s$_size_unknown_for_type_;
 			r6 = String___add__(r6,r7);
@@ -4255,28 +4193,28 @@ void hxsl_Flatten_gatherVar(hxsl__Flatten r0,vvirtual* r1) {
 	if( r2 == NULL ) hl_null_access();
 	r5 = HL__ENUM_INDEX__(r2);
 	r6 = 13;
-	if( r5 != r6 ) goto label$784a7c9_14_23;
+	if( r5 != r6 ) goto label$784a7c9_15_23;
 	r7 = ((hxsl_Type_TStruct*)r2)->p0;
 	r5 = 0;
-	label$784a7c9_14_8:
+	label$784a7c9_15_8:
 	if( r7 == NULL ) hl_null_access();
 	r8 = r7->length;
-	if( r5 >= r8 ) goto label$784a7c9_14_22;
+	if( r5 >= r8 ) goto label$784a7c9_15_22;
 	r8 = r7->length;
-	if( ((unsigned)r5) < ((unsigned)r8) ) goto label$784a7c9_14_16;
+	if( ((unsigned)r5) < ((unsigned)r8) ) goto label$784a7c9_15_16;
 	r3 = NULL;
-	goto label$784a7c9_14_19;
-	label$784a7c9_14_16:
+	goto label$784a7c9_15_19;
+	label$784a7c9_15_16:
 	r10 = r7->array;
 	r9 = ((vdynamic**)(r10 + 1))[r5];
 	r3 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r9);
-	label$784a7c9_14_19:
+	label$784a7c9_15_19:
 	++r5;
 	hxsl_Flatten_gatherVar(r0,r3);
-	goto label$784a7c9_14_8;
-	label$784a7c9_14_22:
-	goto label$784a7c9_14_45;
-	label$784a7c9_14_23:
+	goto label$784a7c9_15_8;
+	label$784a7c9_15_22:
+	goto label$784a7c9_15_45;
+	label$784a7c9_15_23:
 	r11 = hl_vfields(r1)[1] ? (*(venum**)(hl_vfields(r1)[1])) : (venum*)hl_dyn_getp(r1->value,118088286/*kind*/,&t$hxsl_VarKind);
 	if( r11 == NULL ) hl_null_access();
 	r5 = HL__ENUM_INDEX__(r11);
@@ -4286,27 +4224,27 @@ void hxsl_Flatten_gatherVar(hxsl__Flatten r0,vvirtual* r1) {
 			r7 = r0->outVars;
 			if( r7 == NULL ) hl_null_access();
 			r5 = hl_types_ArrayObj_push(r7,((vdynamic*)r1));
-			goto label$784a7c9_14_45;
+			goto label$784a7c9_15_45;
 		case 0:
 			r13 = (venum*)g$hxsl_VarQualifier_PerObject;
 			r12 = hxsl_Tools_hasQualifier(r1,r13);
-			if( !r12 ) goto label$784a7c9_14_38;
+			if( !r12 ) goto label$784a7c9_15_38;
 			r7 = r0->params;
 			if( r7 == NULL ) hl_null_access();
 			r5 = hl_types_ArrayObj_push(r7,((vdynamic*)r1));
-			goto label$784a7c9_14_41;
-			label$784a7c9_14_38:
+			goto label$784a7c9_15_41;
+			label$784a7c9_15_38:
 			r7 = r0->globals;
 			if( r7 == NULL ) hl_null_access();
 			r5 = hl_types_ArrayObj_push(r7,((vdynamic*)r1));
-			label$784a7c9_14_41:
-			goto label$784a7c9_14_45;
+			label$784a7c9_15_41:
+			goto label$784a7c9_15_45;
 		case 2:
 			r7 = r0->params;
 			if( r7 == NULL ) hl_null_access();
 			r5 = hl_types_ArrayObj_push(r7,((vdynamic*)r1));
 	}
-	label$784a7c9_14_45:
+	label$784a7c9_15_45:
 	return;
 }
 

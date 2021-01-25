@@ -157,6 +157,9 @@ void fun$init(void);
 #  include <components/managers/Simulation.c>
 #  include <components/managers/Riders.c>
 #  include <components/managers/Grid.c>
+#  include <h2d/Bitmap.c>
+#  include <components/ui/UIButton.c>
+#  include <components/ui/Toolbar.c>
 #  include <h2d/GPoint.c>
 #  include <h2d/_Graphics/GraphicsContent.c>
 #  include <hxd/earcut/EarNode.c>
@@ -169,7 +172,6 @@ void fun$init(void);
 #  include <_std/Xml.c>
 #  include <h2d/HtmlText.c>
 #  include <h2d/TextInput.c>
-#  include <h2d/Bitmap.c>
 #  include <components/stage/LRConsole.c>
 #  include <components/stage/Canvas.c>
 #  include <_std/Main.c>

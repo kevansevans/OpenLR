@@ -4,7 +4,7 @@
 #include <h3d/mat/Texture.h>
 extern h3d__mat__$Texture g$_h3d_mat_Texture;
 void h3d_impl_MemoryManager_allocTexture(h3d__impl__MemoryManager,h3d__mat__Texture);
-extern String s$Texture_;
+extern String s$a0b3e07;
 #include <hl/natives.h>
 String String___alloc__(vbyte*,int);
 String String___add__(String,String);
@@ -152,7 +152,7 @@ String h3d_mat_Texture_toString(h3d__mat__Texture r0) {
 	r1 = r0->name;
 	r2 = r0->name;
 	if( r2 ) goto label$3bd692e_8_10;
-	r2 = (String)s$Texture_;
+	r2 = (String)s$a0b3e07;
 	r3 = r0->id;
 	r4 = &r3;
 	r5 = hl_itos(r3,r4);

@@ -2,6 +2,7 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/SignedDistanceField.h>
+void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 extern String s$channel;
 extern String s$_is_out_of_range_;
@@ -13,7 +14,19 @@ vdynamic* haxe_Exception_thrown(vdynamic*);
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_i32;
 extern hl_type t$_f64;
-void hxsl_Shader_new(hxsl__Shader);
+
+void h3d_shader_SignedDistanceField_new(h3d__shader__SignedDistanceField r0) {
+	double r1;
+	int r2;
+	r1 = 0.041666666666666664;
+	r0->smoothing__ = r1;
+	r1 = 0.5;
+	r0->alphaCutoff__ = r1;
+	r2 = 0;
+	r0->channel__ = r2;
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	return;
+}
 
 void h3d_shader_SignedDistanceField_updateConstants(h3d__shader__SignedDistanceField r0,hxsl__Globals r1) {
 	String r7, r8;
@@ -27,7 +40,7 @@ void h3d_shader_SignedDistanceField_updateConstants(h3d__shader__SignedDistanceF
 	r5 = 8;
 	r4 = ((unsigned)r2) >> r5;
 	r5 = 0;
-	if( r4 == r5 ) goto label$5673ede_1_24;
+	if( r4 == r5 ) goto label$5673ede_2_24;
 	r7 = (String)s$channel;
 	r8 = (String)s$_is_out_of_range_;
 	r7 = String___add__(r7,r8);
@@ -45,7 +58,7 @@ void h3d_shader_SignedDistanceField_updateConstants(h3d__shader__SignedDistanceF
 	r7 = String___add__(r7,r8);
 	r6 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r6);
-	label$5673ede_1_24:
+	label$5673ede_2_24:
 	r4 = r0->constBits;
 	r4 = r4 | r2;
 	r0->constBits = r4;
@@ -59,7 +72,7 @@ vdynamic* h3d_shader_SignedDistanceField_getParamValue(h3d__shader__SignedDistan
 	int r2;
 	switch(r1) {
 		default:
-			goto label$5673ede_2_11;
+			goto label$5673ede_3_11;
 		case 0:
 			r2 = r0->channel__;
 			r3 = hl_alloc_dynamic(&t$_i32);
@@ -76,7 +89,7 @@ vdynamic* h3d_shader_SignedDistanceField_getParamValue(h3d__shader__SignedDistan
 			r3->v.d = r4;
 			return r3;
 	}
-	label$5673ede_2_11:
+	label$5673ede_3_11:
 	r3 = NULL;
 	return r3;
 }
@@ -86,7 +99,7 @@ double h3d_shader_SignedDistanceField_getParamFloatValue(h3d__shader__SignedDist
 	switch(r1) {
 		default:
 		case 0:
-			goto label$5673ede_3_6;
+			goto label$5673ede_4_6;
 		case 1:
 			r2 = r0->alphaCutoff__;
 			return r2;
@@ -94,21 +107,8 @@ double h3d_shader_SignedDistanceField_getParamFloatValue(h3d__shader__SignedDist
 			r2 = r0->smoothing__;
 			return r2;
 	}
-	label$5673ede_3_6:
+	label$5673ede_4_6:
 	r2 = 0.;
 	return r2;
-}
-
-void h3d_shader_SignedDistanceField_new(h3d__shader__SignedDistanceField r0) {
-	double r1;
-	int r2;
-	r1 = 0.041666666666666664;
-	r0->smoothing__ = r1;
-	r1 = 0.5;
-	r0->alphaCutoff__ = r1;
-	r2 = 0;
-	r0->channel__ = r2;
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	return;
 }
 

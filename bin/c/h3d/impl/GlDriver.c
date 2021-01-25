@@ -38,9 +38,12 @@ String hl_types_ArrayObj_join(hl__types__ArrayObj,String);
 vdynamic* haxe_Exception_thrown(vdynamic*);
 extern hl_type t$h3d_impl__GlDriver_CompiledShader;
 void h3d_impl__GlDriver_CompiledShader_new(h3d__impl___GlDriver__CompiledShader,vdynamic*,bool,hxsl__RuntimeShaderData);
+#include <hxsl/RuntimeShader.h>
 #include <hxsl/Type.h>
 #include <hxsl/AllocParam.h>
 #include <hxsl/SizeDecl.h>
+#include <hxsl/SharedShader.h>
+#include <hxsl/ShaderInstanceDesc.h>
 extern String s$vertex;
 extern String s$fragment;
 extern String s$Globals;
@@ -54,13 +57,16 @@ extern String s$TexturesArray;
 extern String s$TexturesCube;
 extern String s$8154172;
 extern String s$0fbd177;
+extern String s$368af7a;
+extern String s$5058f1a;
+extern String s$_is_missing_from_shader_output;
 extern hl_type t$nul_i32;
 extern hl_type t$hxsl_Type;
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 hl__types__ArrayBytes_Int hl_types_ArrayBase_allocI32(vbyte*,int);
+extern String s$vertex_;
 extern String s$uniform_buffer;
 int hl_types_ArrayBytes_Int_push(hl__types__ArrayBytes_Int,int);
-#include <hxsl/RuntimeShader.h>
 #include <hxsl/VarKind.h>
 #include <haxe/Exception.h>
 #include <hxsl/VecType.h>
@@ -392,58 +398,61 @@ h3d__impl___GlDriver__CompiledShader h3d_impl_GlDriver_compileShader(h3d__impl__
 	return r25;
 }
 
-void h3d_impl_GlDriver_initShader(h3d__impl__GlDriver r0,h3d__impl___GlDriver__CompiledProgram r1,h3d__impl___GlDriver__CompiledShader r2,hxsl__RuntimeShaderData r3) {
-	String r4, r8, r9, r25;
-	vvirtual *r28;
-	hl__types__ArrayObj r10;
-	venum *r14, *r18, *r21, *r22;
-	hl_type *r12;
-	bool r5;
-	hl__types__ArrayBytes_Int r31, r32;
-	hxsl__AllocParam r16, r17;
-	int *r29;
-	vdynamic *r7, *r24;
-	vbyte *r30;
-	int r13, r15, r19, r20, r23, r26, r27;
-	varray *r11;
+void h3d_impl_GlDriver_initShader(h3d__impl__GlDriver r0,h3d__impl___GlDriver__CompiledProgram r1,h3d__impl___GlDriver__CompiledShader r2,hxsl__RuntimeShaderData r3,hxsl__RuntimeShader r4) {
+	String r5, r9, r10, r27;
+	vvirtual *r32, *r34, *r37;
+	hl__types__ArrayObj r11;
+	hxsl__RuntimeShaderData r18;
+	venum *r15, *r20, *r23, *r24;
+	hl_type *r13;
+	bool r6;
+	hxsl__SharedShader r33;
+	hl__types__ArrayBytes_Int r38, r39;
+	hxsl__AllocParam r17, r19;
+	hxsl__ShaderInstanceDesc r36;
+	int *r30;
+	vdynamic *r8, *r26;
+	vbyte *r31;
+	int r14, r16, r21, r22, r25, r28, r29, r35;
+	varray *r12;
 	if( r2 == NULL ) hl_null_access();
-	r5 = r2->vertex;
-	if( !r5 ) goto label$8f388d3_6_5;
-	r4 = (String)s$vertex;
+	r6 = r2->vertex;
+	if( !r6 ) goto label$8f388d3_6_5;
+	r5 = (String)s$vertex;
 	goto label$8f388d3_6_6;
 	label$8f388d3_6_5:
-	r4 = (String)s$fragment;
+	r5 = (String)s$fragment;
 	label$8f388d3_6_6:
 	if( r1 == NULL ) hl_null_access();
-	r7 = r1->p;
-	r9 = (String)s$Globals;
-	r8 = String___add__(r4,r9);
-	r7 = sdl_gl_get_uniform_location(r7,r8);
-	r2->globals = r7;
-	r7 = r1->p;
-	r9 = (String)s$Params;
-	r8 = String___add__(r4,r9);
-	r7 = sdl_gl_get_uniform_location(r7,r8);
-	r2->params = r7;
-	r12 = &t$vrt_76f0bb9;
-	r13 = 0;
-	r11 = hl_alloc_array(r12,r13);
-	r10 = hl_types_ArrayObj_alloc(r11);
-	r2->textures = r10;
-	r13 = 0;
-	r14 = NULL;
-	r15 = 0;
-	r8 = (String)s$;
+	r8 = r1->p;
+	r10 = (String)s$Globals;
+	r9 = String___add__(r5,r10);
+	r8 = sdl_gl_get_uniform_location(r8,r9);
+	r2->globals = r8;
+	r8 = r1->p;
+	r10 = (String)s$Params;
+	r9 = String___add__(r5,r10);
+	r8 = sdl_gl_get_uniform_location(r8,r9);
+	r2->params = r8;
+	r13 = &t$vrt_76f0bb9;
+	r14 = 0;
+	r12 = hl_alloc_array(r13,r14);
+	r11 = hl_types_ArrayObj_alloc(r12);
+	r2->textures = r11;
+	r14 = 0;
+	r15 = NULL;
+	r16 = 0;
+	r9 = (String)s$;
 	if( r3 == NULL ) hl_null_access();
-	r16 = r3->textures;
+	r17 = r3->textures;
 	label$8f388d3_6_28:
-	if( !r16 ) goto label$8f388d3_6_108;
-	if( r16 == NULL ) hl_null_access();
-	r18 = r16->type;
-	r19 = 1;
-	if( r18 == NULL ) hl_null_access();
-	r20 = HL__ENUM_INDEX__(r18);
-	switch(r20) {
+	if( !r17 ) goto label$8f388d3_6_139;
+	if( r17 == NULL ) hl_null_access();
+	r20 = r17->type;
+	r21 = 1;
+	if( r20 == NULL ) hl_null_access();
+	r22 = HL__ENUM_INDEX__(r20);
+	switch(r22) {
 		default:
 		case 0:
 		case 1:
@@ -463,28 +472,28 @@ void h3d_impl_GlDriver_initShader(h3d__impl__GlDriver r0,h3d__impl___GlDriver__C
 		case 16:
 			goto label$8f388d3_6_50;
 		case 15:
-			r22 = ((hxsl_Type_TArray*)r18)->p1;
-			if( r22 == NULL ) hl_null_access();
-			r20 = HL__ENUM_INDEX__(r22);
-			r23 = 0;
-			if( r20 != r23 ) goto label$8f388d3_6_46;
-			r21 = ((hxsl_Type_TArray*)r18)->p0;
-			r20 = ((hxsl_SizeDecl_SConst*)r22)->p0;
-			r18 = r21;
-			r19 = r20;
+			r24 = ((hxsl_Type_TArray*)r20)->p1;
+			if( r24 == NULL ) hl_null_access();
+			r22 = HL__ENUM_INDEX__(r24);
+			r25 = 0;
+			if( r22 != r25 ) goto label$8f388d3_6_46;
+			r23 = ((hxsl_Type_TArray*)r20)->p0;
+			r22 = ((hxsl_SizeDecl_SConst*)r24)->p0;
+			r20 = r23;
+			r21 = r22;
 			label$8f388d3_6_46:
 			goto label$8f388d3_6_50;
 		case 17:
-			r20 = ((hxsl_Type_TChannel*)r18)->p0;
-			r21 = (venum*)g$hxsl_Type_TSampler2D;
-			r18 = r21;
+			r22 = ((hxsl_Type_TChannel*)r20)->p0;
+			r23 = (venum*)g$hxsl_Type_TSampler2D;
+			r20 = r23;
 	}
 	label$8f388d3_6_50:
-	if( r18 == r14 ) goto label$8f388d3_6_76;
-	r14 = r18;
-	if( r18 == NULL ) hl_null_access();
-	r20 = HL__ENUM_INDEX__(r18);
-	switch(r20) {
+	if( r20 == r15 ) goto label$8f388d3_6_76;
+	r15 = r20;
+	if( r20 == NULL ) hl_null_access();
+	r22 = HL__ENUM_INDEX__(r20);
+	switch(r22) {
 		default:
 		case 0:
 		case 1:
@@ -496,122 +505,175 @@ void h3d_impl_GlDriver_initShader(h3d__impl__GlDriver r0,h3d__impl___GlDriver__C
 		case 7:
 		case 8:
 		case 9:
-			r9 = (String)s$Unsupported_texture_type_;
-			r25 = Std_string(((vdynamic*)r18));
-			r9 = String___add__(r9,r25);
-			r24 = haxe_Exception_thrown(((vdynamic*)r9));
-			hl_throw((vdynamic*)r24);
+			r10 = (String)s$Unsupported_texture_type_;
+			r27 = Std_string(((vdynamic*)r20));
+			r10 = String___add__(r10,r27);
+			r26 = haxe_Exception_thrown(((vdynamic*)r10));
+			hl_throw((vdynamic*)r26);
 		case 10:
-			r20 = 3553;
-			r15 = r20;
-			r9 = (String)s$Textures;
-			r8 = r9;
+			r22 = 3553;
+			r16 = r22;
+			r10 = (String)s$Textures;
+			r9 = r10;
 			goto label$8f388d3_6_74;
 		case 11:
-			r20 = 35866;
-			r15 = r20;
-			r9 = (String)s$TexturesArray;
-			r8 = r9;
+			r22 = 35866;
+			r16 = r22;
+			r10 = (String)s$TexturesArray;
+			r9 = r10;
 			goto label$8f388d3_6_74;
 		case 12:
-			r20 = 34067;
-			r15 = r20;
-			r9 = (String)s$TexturesCube;
-			r8 = r9;
+			r22 = 34067;
+			r16 = r22;
+			r10 = (String)s$TexturesCube;
+			r9 = r10;
 	}
 	label$8f388d3_6_74:
-	r20 = 0;
-	r13 = r20;
+	r22 = 0;
+	r14 = r22;
 	label$8f388d3_6_76:
-	r20 = 0;
-	r23 = r19;
+	r22 = 0;
+	r25 = r21;
 	label$8f388d3_6_78:
-	if( r20 >= r23 ) goto label$8f388d3_6_104;
-	++r20;
-	if( r2 == NULL ) hl_null_access();
-	r10 = r2->textures;
-	if( r10 == NULL ) hl_null_access();
-	r28 = hl_alloc_virtual(&t$vrt_76f0bb9);
+	if( r22 >= r25 ) goto label$8f388d3_6_135;
+	++r22;
 	if( r1 == NULL ) hl_null_access();
-	r7 = r1->p;
-	r9 = String___add__(r4,r8);
-	r25 = (String)s$8154172;
-	r9 = String___add__(r9,r25);
-	r27 = r13;
-	r29 = &r27;
-	r30 = hl_itos(r27,r29);
-	r25 = String___alloc__(r30,r27);
-	r9 = String___add__(r9,r25);
-	r25 = (String)s$0fbd177;
-	r9 = String___add__(r9,r25);
-	r7 = sdl_gl_get_uniform_location(r7,r9);
-	if( hl_vfields(r28)[2] ) *(vdynamic**)(hl_vfields(r28)[2]) = (vdynamic*)r7; else hl_dyn_setp(r28->value,117/*u*/,&t$nul_i32,r7);
-	if( hl_vfields(r28)[1] ) *(venum**)(hl_vfields(r28)[1]) = (venum*)r14; else hl_dyn_setp(r28->value,116/*t*/,&t$hxsl_Type,r14);
-	if( hl_vfields(r28)[0] ) *(int*)(hl_vfields(r28)[0]) = (int)r15; else hl_dyn_seti(r28->value,140563565/*mode*/,&t$_i32,r15);
-	r27 = hl_types_ArrayObj_push(r10,((vdynamic*)r28));
-	++r13;
-	goto label$8f388d3_6_78;
-	label$8f388d3_6_104:
-	if( r16 == NULL ) hl_null_access();
-	r17 = r16->next;
-	r16 = r17;
-	goto label$8f388d3_6_28;
-	label$8f388d3_6_108:
-	if( r3 == NULL ) hl_null_access();
-	r19 = r3->bufferCount;
-	r20 = 0;
-	if( r20 >= r19 ) goto label$8f388d3_6_159;
-	r19 = 0;
-	r30 = hl_alloc_bytes(r19);
-	r19 = 0;
-	r19 = 0;
-	r31 = hl_types_ArrayBase_allocI32(r30,r19);
-	r19 = 0;
-	r20 = r3->bufferCount;
-	label$8f388d3_6_119:
-	if( r19 >= r20 ) goto label$8f388d3_6_135;
-	r23 = r19;
-	++r19;
-	if( r31 == NULL ) hl_null_access();
-	if( r1 == NULL ) hl_null_access();
-	r7 = r1->p;
-	r9 = (String)s$uniform_buffer;
-	r26 = r23;
-	r29 = &r26;
-	r30 = hl_itos(r26,r29);
-	r25 = String___alloc__(r30,r26);
-	r9 = String___add__(r9,r25);
-	r26 = sdl_gl_get_uniform_block_index(r7,r9);
-	r26 = hl_types_ArrayBytes_Int_push(r31,r26);
-	goto label$8f388d3_6_119;
-	label$8f388d3_6_135:
-	if( r2 == NULL ) hl_null_access();
-	r2->buffers = r31;
-	r19 = 0;
-	if( r3 == NULL ) hl_null_access();
-	r20 = r3->bufferCount;
-	label$8f388d3_6_140:
-	if( r19 >= r20 ) goto label$8f388d3_6_159;
-	r23 = r19;
-	++r19;
-	if( r1 == NULL ) hl_null_access();
-	r7 = r1->p;
-	if( r2 == NULL ) hl_null_access();
-	r32 = r2->buffers;
+	r8 = r1->p;
+	r10 = String___add__(r5,r9);
+	r27 = (String)s$8154172;
+	r10 = String___add__(r10,r27);
+	r29 = r14;
+	r30 = &r29;
+	r31 = hl_itos(r29,r30);
+	r27 = String___alloc__(r31,r29);
+	r10 = String___add__(r10,r27);
+	r27 = (String)s$0fbd177;
+	r10 = String___add__(r10,r27);
+	r8 = sdl_gl_get_uniform_location(r8,r10);
+	if( r8 ) goto label$8f388d3_6_125;
+	r10 = (String)s$368af7a;
+	if( r4 == NULL ) hl_null_access();
+	r34 = r4->spec;
+	if( r34 == NULL ) hl_null_access();
+	r11 = hl_vfields(r34)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r34)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r34->value,186287176/*instances*/,&t$hl_types_ArrayObj);
+	if( r11 == NULL ) hl_null_access();
+	if( r17 == NULL ) hl_null_access();
+	r29 = r17->instance;
+	r35 = r11->length;
+	if( ((unsigned)r29) < ((unsigned)r35) ) goto label$8f388d3_6_107;
+	r36 = NULL;
+	goto label$8f388d3_6_110;
+	label$8f388d3_6_107:
+	r12 = r11->array;
+	r26 = ((vdynamic**)(r12 + 1))[r29];
+	r36 = (hxsl__ShaderInstanceDesc)r26;
+	label$8f388d3_6_110:
+	if( r36 == NULL ) hl_null_access();
+	r33 = r36->shader;
+	if( r33 == NULL ) hl_null_access();
+	r32 = r33->data;
 	if( r32 == NULL ) hl_null_access();
-	r27 = r32->length;
-	if( ((unsigned)r23) < ((unsigned)r27) ) goto label$8f388d3_6_153;
-	r26 = 0;
-	goto label$8f388d3_6_157;
-	label$8f388d3_6_153:
-	r30 = r32->bytes;
-	r27 = 2;
-	r27 = r23 << r27;
-	r26 = *(int*)(r30 + r27);
-	label$8f388d3_6_157:
-	sdl_gl_uniform_block_binding(r7,r26,r23);
-	goto label$8f388d3_6_140;
-	label$8f388d3_6_159:
+	r27 = hl_vfields(r32)[1] ? (*(String*)(hl_vfields(r32)[1])) : (String)hl_dyn_getp(r32->value,150958933/*name*/,&t$String);
+	r10 = String___add__(r10,r27);
+	r27 = (String)s$5058f1a;
+	r10 = String___add__(r10,r27);
+	r27 = r17->name;
+	r10 = String___add__(r10,r27);
+	r27 = (String)s$_is_missing_from_shader_output;
+	r10 = String___add__(r10,r27);
+	r26 = haxe_Exception_thrown(((vdynamic*)r10));
+	hl_throw((vdynamic*)r26);
+	label$8f388d3_6_125:
+	if( r2 == NULL ) hl_null_access();
+	r11 = r2->textures;
+	if( r11 == NULL ) hl_null_access();
+	r37 = hl_alloc_virtual(&t$vrt_76f0bb9);
+	if( hl_vfields(r37)[2] ) *(vdynamic**)(hl_vfields(r37)[2]) = (vdynamic*)r8; else hl_dyn_setp(r37->value,117/*u*/,&t$nul_i32,r8);
+	if( hl_vfields(r37)[1] ) *(venum**)(hl_vfields(r37)[1]) = (venum*)r15; else hl_dyn_setp(r37->value,116/*t*/,&t$hxsl_Type,r15);
+	if( hl_vfields(r37)[0] ) *(int*)(hl_vfields(r37)[0]) = (int)r16; else hl_dyn_seti(r37->value,140563565/*mode*/,&t$_i32,r16);
+	r29 = hl_types_ArrayObj_push(r11,((vdynamic*)r37));
+	++r14;
+	goto label$8f388d3_6_78;
+	label$8f388d3_6_135:
+	if( r17 == NULL ) hl_null_access();
+	r19 = r17->next;
+	r17 = r19;
+	goto label$8f388d3_6_28;
+	label$8f388d3_6_139:
+	if( r3 == NULL ) hl_null_access();
+	r21 = r3->bufferCount;
+	r22 = 0;
+	if( r22 >= r21 ) goto label$8f388d3_6_206;
+	r21 = 0;
+	r31 = hl_alloc_bytes(r21);
+	r21 = 0;
+	r21 = 0;
+	r38 = hl_types_ArrayBase_allocI32(r31,r21);
+	r21 = 0;
+	r22 = r3->bufferCount;
+	label$8f388d3_6_150:
+	if( r21 >= r22 ) goto label$8f388d3_6_173;
+	r25 = r21;
+	++r21;
+	if( r38 == NULL ) hl_null_access();
+	if( r1 == NULL ) hl_null_access();
+	r8 = r1->p;
+	if( r3 == NULL ) hl_null_access();
+	r6 = r3->vertex;
+	if( !r6 ) goto label$8f388d3_6_162;
+	r10 = (String)s$vertex_;
+	goto label$8f388d3_6_163;
+	label$8f388d3_6_162:
+	r10 = (String)s$;
+	label$8f388d3_6_163:
+	r27 = (String)s$uniform_buffer;
+	r10 = String___add__(r10,r27);
+	r28 = r25;
+	r30 = &r28;
+	r31 = hl_itos(r28,r30);
+	r27 = String___alloc__(r31,r28);
+	r10 = String___add__(r10,r27);
+	r28 = sdl_gl_get_uniform_block_index(r8,r10);
+	r28 = hl_types_ArrayBytes_Int_push(r38,r28);
+	goto label$8f388d3_6_150;
+	label$8f388d3_6_173:
+	if( r2 == NULL ) hl_null_access();
+	r2->buffers = r38;
+	r21 = 0;
+	r6 = r2->vertex;
+	if( r6 ) goto label$8f388d3_6_183;
+	if( r4 == NULL ) hl_null_access();
+	r18 = r4->vertex;
+	if( r18 == NULL ) hl_null_access();
+	r22 = r18->bufferCount;
+	r21 = r22;
+	label$8f388d3_6_183:
+	r22 = 0;
+	if( r3 == NULL ) hl_null_access();
+	r25 = r3->bufferCount;
+	label$8f388d3_6_186:
+	if( r22 >= r25 ) goto label$8f388d3_6_206;
+	r28 = r22;
+	++r22;
+	if( r1 == NULL ) hl_null_access();
+	r8 = r1->p;
+	if( r2 == NULL ) hl_null_access();
+	r39 = r2->buffers;
+	if( r39 == NULL ) hl_null_access();
+	r35 = r39->length;
+	if( ((unsigned)r28) < ((unsigned)r35) ) goto label$8f388d3_6_199;
+	r29 = 0;
+	goto label$8f388d3_6_203;
+	label$8f388d3_6_199:
+	r31 = r39->bytes;
+	r35 = 2;
+	r35 = r28 << r35;
+	r29 = *(int*)(r31 + r35);
+	label$8f388d3_6_203:
+	r35 = r28 + r21;
+	sdl_gl_uniform_block_binding(r8,r29,r35);
+	goto label$8f388d3_6_186;
+	label$8f388d3_6_206:
 	return;
 }
 
@@ -806,10 +868,10 @@ bool h3d_impl_GlDriver_selectShader(h3d__impl__GlDriver r0,hxsl__RuntimeShader r
 	r11 = r5->vertex;
 	if( r1 == NULL ) hl_null_access();
 	r12 = r1->vertex;
-	h3d_impl_GlDriver_initShader(r0,r5,r11,r12);
+	h3d_impl_GlDriver_initShader(r0,r5,r11,r12,r1);
 	r11 = r5->fragment;
 	r12 = r1->fragment;
-	h3d_impl_GlDriver_initShader(r0,r5,r11,r12);
+	h3d_impl_GlDriver_initShader(r0,r5,r11,r12,r1);
 	r30 = &t$String;
 	r4 = 0;
 	r20 = hl_alloc_array(r30,r4);
@@ -1189,7 +1251,7 @@ void h3d_impl_GlDriver_uploadBuffer(h3d__impl__GlDriver r0,h3d__shader__Buffers 
 	int r6, r12, r13, r14, r15, r16, r18, r31, r42, r43, r44, r47, r49, r50;
 	switch(r4) {
 		default:
-			goto label$8f388d3_10_352;
+			goto label$8f388d3_10_370;
 		case 0:
 			if( r2 == NULL ) hl_null_access();
 			r7 = r2->globals;
@@ -1234,7 +1296,7 @@ void h3d_impl_GlDriver_uploadBuffer(h3d__impl__GlDriver r0,h3d__shader__Buffers 
 			r16 = r16 * r18;
 			sdl_gl_uniform4fv(r7,r17,r15,r16);
 			label$8f388d3_10_43:
-			goto label$8f388d3_10_352;
+			goto label$8f388d3_10_370;
 		case 1:
 			if( r2 == NULL ) hl_null_access();
 			r7 = r2->params;
@@ -1279,7 +1341,7 @@ void h3d_impl_GlDriver_uploadBuffer(h3d__impl__GlDriver r0,h3d__shader__Buffers 
 			r16 = r16 * r18;
 			sdl_gl_uniform4fv(r7,r17,r15,r16);
 			label$8f388d3_10_85:
-			goto label$8f388d3_10_352;
+			goto label$8f388d3_10_370;
 		case 2:
 			if( r2 == NULL ) hl_null_access();
 			r19 = r2->textures;
@@ -1560,42 +1622,61 @@ void h3d_impl_GlDriver_uploadBuffer(h3d__impl__GlDriver r0,h3d__shader__Buffers 
 			label$8f388d3_10_320:
 			goto label$8f388d3_10_94;
 			label$8f388d3_10_321:
-			goto label$8f388d3_10_352;
+			goto label$8f388d3_10_370;
 		case 3:
 			if( r2 == NULL ) hl_null_access();
 			r46 = r2->buffers;
-			if( !r46 ) goto label$8f388d3_10_352;
+			if( !r46 ) goto label$8f388d3_10_370;
 			r6 = 0;
-			r46 = r2->buffers;
+			r36 = r2->vertex;
+			if( r36 ) goto label$8f388d3_10_342;
+			r34 = r0->curShader;
+			if( r34 == NULL ) hl_null_access();
+			r8 = r34->vertex;
+			if( r8 == NULL ) hl_null_access();
+			r46 = r8->buffers;
+			if( !r46 ) goto label$8f388d3_10_342;
+			r34 = r0->curShader;
+			if( r34 == NULL ) hl_null_access();
+			r8 = r34->vertex;
+			if( r8 == NULL ) hl_null_access();
+			r46 = r8->buffers;
 			if( r46 == NULL ) hl_null_access();
 			r12 = r46->length;
-			label$8f388d3_10_329:
-			if( r6 >= r12 ) goto label$8f388d3_10_352;
-			r13 = r6;
-			++r6;
-			r14 = 35345;
+			r6 = r12;
+			label$8f388d3_10_342:
+			r12 = 0;
+			r46 = r2->buffers;
+			if( r46 == NULL ) hl_null_access();
+			r13 = r46->length;
+			label$8f388d3_10_346:
+			if( r12 >= r13 ) goto label$8f388d3_10_370;
+			r14 = r12;
+			++r12;
+			r15 = 35345;
+			r16 = r14 + r6;
 			if( r3 == NULL ) hl_null_access();
 			r19 = r3->buffers;
 			if( r19 == NULL ) hl_null_access();
-			r18 = r19->length;
-			if( ((unsigned)r13) < ((unsigned)r18) ) goto label$8f388d3_10_341;
+			r31 = r19->length;
+			if( ((unsigned)r14) < ((unsigned)r31) ) goto label$8f388d3_10_359;
 			r54 = NULL;
-			goto label$8f388d3_10_344;
-			label$8f388d3_10_341:
+			goto label$8f388d3_10_362;
+			label$8f388d3_10_359:
 			r22 = r19->array;
-			r21 = ((vdynamic**)(r22 + 1))[r13];
+			r21 = ((vdynamic**)(r22 + 1))[r14];
 			r54 = (h3d__Buffer)r21;
-			label$8f388d3_10_344:
+			label$8f388d3_10_362:
 			if( r54 == NULL ) hl_null_access();
 			r53 = r54->buffer;
 			if( r53 == NULL ) hl_null_access();
 			r52 = r53->vbuf;
 			if( r52 == NULL ) hl_null_access();
 			r7 = hl_vfields(r52)[0] ? (*(vdynamic**)(hl_vfields(r52)[0])) : (vdynamic*)hl_dyn_getp(r52->value,98/*b*/,&t$nul_i32);
-			sdl_gl_bind_buffer_base(r14,r13,r7);
-			goto label$8f388d3_10_329;
+			sdl_gl_bind_buffer_base(r15,r16,r7);
+			goto label$8f388d3_10_346;
 	}
-	label$8f388d3_10_352:
+	label$8f388d3_10_370:
 	return;
 }
 

@@ -46,6 +46,8 @@ String String___add__(String,String);
 extern String s$mat2;
 extern hl_type t$hxsl_Type;
 extern String s$7215ee9;
+extern String s$vertex_;
+extern String s$;
 extern String s$uniform_buffer;
 extern String s$4f65a8d;
 extern String s$979e1f7;
@@ -61,7 +63,6 @@ extern hl_type t$vrt_6e3ace9;
 extern hl_type t$vrt_379f5a4;
 void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
 extern venum* g$hxsl_Type_TVoid;
-extern String s$;
 String StringBuf_toString(StringBuf);
 extern String s$bcd8b0c;
 extern String s$aa8ad34;
@@ -527,14 +528,14 @@ void hxsl_GlslOut_addType(hxsl__GlslOut r0,venum* r1) {
 }
 
 void hxsl_GlslOut_addVar(hxsl__GlslOut r0,vvirtual* r1) {
-	String r8, r17;
+	String r8, r15;
 	vvirtual *r3;
 	venum *r2, *r6, *r10, *r11;
 	bool r14;
 	StringBuf r7;
-	int *r15;
+	int *r16;
 	vdynamic *r9;
-	vbyte *r16;
+	vbyte *r17;
 	int r5, r12, r13;
 	if( r1 == NULL ) hl_null_access();
 	r2 = hl_vfields(r1)[5] ? (*(venum**)(hl_vfields(r1)[5])) : (venum*)hl_dyn_getp(r1->value,218690500/*type*/,&t$hxsl_Type);
@@ -567,7 +568,7 @@ void hxsl_GlslOut_addVar(hxsl__GlslOut r0,vvirtual* r1) {
 			r7 = r0->buf;
 			if( r7 == NULL ) hl_null_access();
 			StringBuf_add(r7,((vdynamic*)r8));
-			goto label$a13586a_3_88;
+			goto label$a13586a_3_94;
 		case 15:
 			r10 = ((hxsl_Type_TArray*)r2)->p1;
 			r6 = ((hxsl_Type_TArray*)r2)->p0;
@@ -625,21 +626,29 @@ void hxsl_GlslOut_addVar(hxsl__GlslOut r0,vvirtual* r1) {
 			if( r7 == NULL ) hl_null_access();
 			r8 = (String)s$0fbd177;
 			StringBuf_add(r7,((vdynamic*)r8));
-			goto label$a13586a_3_88;
+			goto label$a13586a_3_94;
 		case 16:
 			r10 = ((hxsl_Type_TBuffer*)r2)->p1;
 			r6 = ((hxsl_Type_TBuffer*)r2)->p0;
 			r7 = r0->buf;
 			if( r7 == NULL ) hl_null_access();
-			r8 = (String)s$uniform_buffer;
+			r14 = r0->isVertex;
+			if( !r14 ) goto label$a13586a_3_69;
+			r8 = (String)s$vertex_;
+			goto label$a13586a_3_70;
+			label$a13586a_3_69:
+			r8 = (String)s$;
+			label$a13586a_3_70:
+			r15 = (String)s$uniform_buffer;
+			r8 = String___add__(r8,r15);
 			r5 = r0->uniformBuffer;
 			r12 = r5;
 			++r5;
 			r0->uniformBuffer = r5;
-			r15 = &r5;
-			r16 = hl_itos(r12,r15);
-			r17 = String___alloc__(r16,r5);
-			r8 = String___add__(r8,r17);
+			r16 = &r5;
+			r17 = hl_itos(r12,r16);
+			r15 = String___alloc__(r17,r5);
+			r8 = String___add__(r8,r15);
 			StringBuf_add(r7,((vdynamic*)r8));
 			r7 = r0->buf;
 			if( r7 == NULL ) hl_null_access();
@@ -659,7 +668,7 @@ void hxsl_GlslOut_addVar(hxsl__GlslOut r0,vvirtual* r1) {
 			r8 = (String)s$979e1f7;
 			StringBuf_add(r7,((vdynamic*)r8));
 	}
-	label$a13586a_3_88:
+	label$a13586a_3_94:
 	return;
 }
 
@@ -3683,18 +3692,18 @@ int hxsl_GlslOut_run__$1(vvirtual* r0,vvirtual* r1) {
 }
 
 String hxsl_GlslOut_run(hxsl__GlslOut r0,vvirtual* r1) {
-	String r10, r27;
-	vvirtual *r13, *r18, *r22, *r23, *r26;
+	String r9, r27;
+	vvirtual *r12, *r18, *r22, *r23, *r26;
 	hl__types__ArrayObj r4, r20;
 	venum *r14, *r15, *r17;
 	hl_type *r6;
-	bool r9;
+	bool r13;
 	haxe__ds__IntMap r2;
 	StringBuf r8, r16;
 	vclosure *r24, *r25;
 	hl__types__ArrayDyn r21;
-	vdynamic *r12, *r28, *r29;
-	int r7, r11, r19;
+	vdynamic *r11, *r28, *r29;
+	int r7, r10, r19;
 	varray *r5;
 	static vclosure cl$0 = { &t$fun_0f67304, hxsl_GlslOut_run__$1, 0 };
 	r2 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
@@ -3713,42 +3722,40 @@ String hxsl_GlslOut_run(hxsl__GlslOut r0,vvirtual* r1) {
 	r5 = hl_alloc_array(r6,r7);
 	r4 = hl_types_ArrayObj_alloc(r5);
 	r0->exprValues = r4;
-	r9 = true;
-	r0->intelDriverFix = r9;
-	r10 = (String)s$precision_mediump_float_;
-	hxsl_GlslOut_decl(r0,r10);
+	r9 = (String)s$precision_mediump_float_;
+	hxsl_GlslOut_decl(r0,r9);
 	if( r1 == NULL ) hl_null_access();
 	r4 = hl_vfields(r1)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,63237214/*funs*/,&t$hl_types_ArrayObj);
 	if( r4 == NULL ) hl_null_access();
 	r7 = r4->length;
-	r11 = 1;
-	if( r7 == r11 ) goto label$a13586a_14_29;
-	r10 = (String)s$assert;
-	r12 = haxe_Exception_thrown(((vdynamic*)r10));
-	hl_throw((vdynamic*)r12);
-	label$a13586a_14_29:
+	r10 = 1;
+	if( r7 == r10 ) goto label$a13586a_14_27;
+	r9 = (String)s$assert;
+	r11 = haxe_Exception_thrown(((vdynamic*)r9));
+	hl_throw((vdynamic*)r11);
+	label$a13586a_14_27:
 	r4 = hl_vfields(r1)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,63237214/*funs*/,&t$hl_types_ArrayObj);
 	if( r4 == NULL ) hl_null_access();
 	r7 = 0;
-	r11 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r11) ) goto label$a13586a_14_36;
-	r13 = NULL;
-	goto label$a13586a_14_39;
-	label$a13586a_14_36:
+	r10 = r4->length;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$a13586a_14_34;
+	r12 = NULL;
+	goto label$a13586a_14_37;
+	label$a13586a_14_34:
 	r5 = r4->array;
-	r12 = ((vdynamic**)(r5 + 1))[r7];
-	r13 = hl_to_virtual(&t$vrt_ab557b2,(vdynamic*)r12);
-	label$a13586a_14_39:
-	if( r13 == NULL ) hl_null_access();
-	r14 = hl_vfields(r13)[2] ? (*(venum**)(hl_vfields(r13)[2])) : (venum*)hl_dyn_getp(r13->value,118088286/*kind*/,&t$hxsl_FunctionKind);
+	r11 = ((vdynamic**)(r5 + 1))[r7];
+	r12 = hl_to_virtual(&t$vrt_ab557b2,(vdynamic*)r11);
+	label$a13586a_14_37:
+	if( r12 == NULL ) hl_null_access();
+	r14 = hl_vfields(r12)[2] ? (*(venum**)(hl_vfields(r12)[2])) : (venum*)hl_dyn_getp(r12->value,118088286/*kind*/,&t$hxsl_FunctionKind);
 	r15 = (venum*)g$hxsl_FunctionKind_Vertex;
-	if( r14 == r15 ) goto label$a13586a_14_45;
-	r9 = false;
-	goto label$a13586a_14_46;
-	label$a13586a_14_45:
-	r9 = true;
-	label$a13586a_14_46:
-	r0->isVertex = r9;
+	if( r14 == r15 ) goto label$a13586a_14_43;
+	r13 = false;
+	goto label$a13586a_14_44;
+	label$a13586a_14_43:
+	r13 = true;
+	label$a13586a_14_44:
+	r0->isVertex = r13;
 	hxsl_GlslOut_initVars(r0,r1);
 	r8 = r0->buf;
 	r16 = (StringBuf)hl_alloc_obj(&t$StringBuf);
@@ -3756,56 +3763,56 @@ String hxsl_GlslOut_run(hxsl__GlslOut r0,vvirtual* r1) {
 	r0->buf = r16;
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	r10 = (String)s$void_main_void_;
-	StringBuf_add(r16,((vdynamic*)r10));
-	r18 = hl_vfields(r13)[1] ? (*(vvirtual**)(hl_vfields(r13)[1])) : (vvirtual*)hl_dyn_getp(r13->value,52297279/*expr*/,&t$vrt_6e3ace9);
+	r9 = (String)s$void_main_void_;
+	StringBuf_add(r16,((vdynamic*)r9));
+	r18 = hl_vfields(r12)[1] ? (*(vvirtual**)(hl_vfields(r12)[1])) : (vvirtual*)hl_dyn_getp(r12->value,52297279/*expr*/,&t$vrt_6e3ace9);
 	if( r18 == NULL ) hl_null_access();
 	r17 = hl_vfields(r18)[0] ? (*(venum**)(hl_vfields(r18)[0])) : (venum*)hl_dyn_getp(r18->value,101/*e*/,&t$hxsl_TExprDef);
 	if( r17 == NULL ) hl_null_access();
 	r7 = HL__ENUM_INDEX__(r17);
-	r11 = 4;
-	if( r7 != r11 ) goto label$a13586a_14_86;
+	r10 = 4;
+	if( r7 != r10 ) goto label$a13586a_14_84;
 	r4 = ((hxsl_TExprDef_TBlock*)r17)->p0;
 	r7 = 0;
-	label$a13586a_14_65:
+	label$a13586a_14_63:
 	if( r4 == NULL ) hl_null_access();
 	r19 = r4->length;
-	if( r7 >= r19 ) goto label$a13586a_14_85;
+	if( r7 >= r19 ) goto label$a13586a_14_83;
 	r19 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r19) ) goto label$a13586a_14_73;
+	if( ((unsigned)r7) < ((unsigned)r19) ) goto label$a13586a_14_71;
 	r18 = NULL;
-	goto label$a13586a_14_76;
-	label$a13586a_14_73:
+	goto label$a13586a_14_74;
+	label$a13586a_14_71:
 	r5 = r4->array;
-	r12 = ((vdynamic**)(r5 + 1))[r7];
-	r18 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r12);
-	label$a13586a_14_76:
+	r11 = ((vdynamic**)(r5 + 1))[r7];
+	r18 = hl_to_virtual(&t$vrt_6e3ace9,(vdynamic*)r11);
+	label$a13586a_14_74:
 	++r7;
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	r10 = (String)s$5e732a1;
-	StringBuf_add(r16,((vdynamic*)r10));
-	r10 = (String)s$5e732a1;
-	hxsl_GlslOut_addExpr(r0,r18,r10);
+	r9 = (String)s$5e732a1;
+	StringBuf_add(r16,((vdynamic*)r9));
+	r9 = (String)s$5e732a1;
+	hxsl_GlslOut_addExpr(r0,r18,r9);
 	hxsl_GlslOut_newLine(r0,r18);
-	goto label$a13586a_14_65;
-	label$a13586a_14_85:
-	goto label$a13586a_14_89;
-	label$a13586a_14_86:
-	r18 = hl_vfields(r13)[1] ? (*(vvirtual**)(hl_vfields(r13)[1])) : (vvirtual*)hl_dyn_getp(r13->value,52297279/*expr*/,&t$vrt_6e3ace9);
-	r10 = (String)s$;
-	hxsl_GlslOut_addExpr(r0,r18,r10);
-	label$a13586a_14_89:
+	goto label$a13586a_14_63;
+	label$a13586a_14_83:
+	goto label$a13586a_14_87;
+	label$a13586a_14_84:
+	r18 = hl_vfields(r12)[1] ? (*(vvirtual**)(hl_vfields(r12)[1])) : (vvirtual*)hl_dyn_getp(r12->value,52297279/*expr*/,&t$vrt_6e3ace9);
+	r9 = (String)s$;
+	hxsl_GlslOut_addExpr(r0,r18,r9);
+	label$a13586a_14_87:
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	r10 = (String)s$cbb184d;
-	StringBuf_add(r16,((vdynamic*)r10));
+	r9 = (String)s$cbb184d;
+	StringBuf_add(r16,((vdynamic*)r9));
 	r4 = r0->exprValues;
 	if( r4 == NULL ) hl_null_access();
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	r10 = StringBuf_toString(r16);
-	r7 = hl_types_ArrayObj_push(r4,((vdynamic*)r10));
+	r9 = StringBuf_toString(r16);
+	r7 = hl_types_ArrayObj_push(r4,((vdynamic*)r9));
 	r0->buf = r8;
 	r2 = r0->locals;
 	r22 = hl_to_virtual(&t$vrt_add69af,(vdynamic*)r2);
@@ -3814,138 +3821,138 @@ String hxsl_GlslOut_run(hxsl__GlslOut r0,vvirtual* r1) {
 	r4 = (hl__types__ArrayObj)hl_dyn_castp(&r21,&t$hl_types_ArrayDyn,&t$hl_types_ArrayObj);
 	if( r4 == NULL ) hl_null_access();
 	r24 = &cl$0;
-	if( r24 ) goto label$a13586a_14_110;
+	if( r24 ) goto label$a13586a_14_108;
 	r25 = NULL;
-	goto label$a13586a_14_111;
-	label$a13586a_14_110:
+	goto label$a13586a_14_109;
+	label$a13586a_14_108:
 	r25 = hl_alloc_closure_ptr(&t$fun_04ada85,wrapt$fun_04ada85,r24);
-	label$a13586a_14_111:
+	label$a13586a_14_109:
 	hl_types_ArrayObj_sort(r4,r25);
 	r7 = 0;
-	label$a13586a_14_113:
+	label$a13586a_14_111:
 	if( r4 == NULL ) hl_null_access();
 	r19 = r4->length;
-	if( r7 >= r19 ) goto label$a13586a_14_131;
+	if( r7 >= r19 ) goto label$a13586a_14_129;
 	r19 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r19) ) goto label$a13586a_14_121;
+	if( ((unsigned)r7) < ((unsigned)r19) ) goto label$a13586a_14_119;
 	r26 = NULL;
-	goto label$a13586a_14_124;
-	label$a13586a_14_121:
+	goto label$a13586a_14_122;
+	label$a13586a_14_119:
 	r5 = r4->array;
-	r12 = ((vdynamic**)(r5 + 1))[r7];
-	r26 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r12);
-	label$a13586a_14_124:
+	r11 = ((vdynamic**)(r5 + 1))[r7];
+	r26 = hl_to_virtual(&t$vrt_09f4a29,(vdynamic*)r11);
+	label$a13586a_14_122:
 	++r7;
 	hxsl_GlslOut_addVar(r0,r26);
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	r10 = (String)s$56f7852;
-	StringBuf_add(r16,((vdynamic*)r10));
-	goto label$a13586a_14_113;
-	label$a13586a_14_131:
+	r9 = (String)s$56f7852;
+	StringBuf_add(r16,((vdynamic*)r9));
+	goto label$a13586a_14_111;
+	label$a13586a_14_129:
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	r10 = (String)s$68b329d;
-	StringBuf_add(r16,((vdynamic*)r10));
+	r9 = (String)s$68b329d;
+	StringBuf_add(r16,((vdynamic*)r9));
 	r7 = 0;
 	r20 = r0->exprValues;
-	label$a13586a_14_137:
+	label$a13586a_14_135:
 	if( r20 == NULL ) hl_null_access();
 	r19 = r20->length;
-	if( r7 >= r19 ) goto label$a13586a_14_157;
+	if( r7 >= r19 ) goto label$a13586a_14_155;
 	r19 = r20->length;
-	if( ((unsigned)r7) < ((unsigned)r19) ) goto label$a13586a_14_145;
-	r10 = NULL;
-	goto label$a13586a_14_148;
-	label$a13586a_14_145:
+	if( ((unsigned)r7) < ((unsigned)r19) ) goto label$a13586a_14_143;
+	r9 = NULL;
+	goto label$a13586a_14_146;
+	label$a13586a_14_143:
 	r5 = r20->array;
-	r12 = ((vdynamic**)(r5 + 1))[r7];
-	r10 = (String)r12;
-	label$a13586a_14_148:
+	r11 = ((vdynamic**)(r5 + 1))[r7];
+	r9 = (String)r11;
+	label$a13586a_14_146:
 	++r7;
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	StringBuf_add(r16,((vdynamic*)r10));
+	StringBuf_add(r16,((vdynamic*)r9));
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
 	r27 = (String)s$e1c06d8;
 	StringBuf_add(r16,((vdynamic*)r27));
-	goto label$a13586a_14_137;
-	label$a13586a_14_157:
+	goto label$a13586a_14_135;
+	label$a13586a_14_155:
 	r28 = r0->glES;
-	if( !r28 ) goto label$a13586a_14_183;
-	r10 = (String)s$_version_;
+	if( !r28 ) goto label$a13586a_14_181;
+	r9 = (String)s$_version_;
 	r29 = r0->version;
 	r7 = r29 ? r29->v.i : 0;
-	r11 = 100;
-	if( r7 >= r11 ) goto label$a13586a_14_167;
+	r10 = 100;
+	if( r7 >= r10 ) goto label$a13586a_14_165;
 	r7 = 100;
 	r29 = hl_alloc_dynamic(&t$_i32);
 	r29->v.i = r7;
-	goto label$a13586a_14_168;
-	label$a13586a_14_167:
+	goto label$a13586a_14_166;
+	label$a13586a_14_165:
 	r29 = r0->version;
-	label$a13586a_14_168:
-	if( r29 ) goto label$a13586a_14_171;
+	label$a13586a_14_166:
+	if( r29 ) goto label$a13586a_14_169;
 	r27 = NULL;
-	goto label$a13586a_14_172;
-	label$a13586a_14_171:
+	goto label$a13586a_14_170;
+	label$a13586a_14_169:
 	r27 = Std_string(((vdynamic*)r29));
-	label$a13586a_14_172:
-	r10 = String___add__(r10,r27);
+	label$a13586a_14_170:
+	r9 = String___add__(r9,r27);
 	r29 = r0->version;
 	r7 = r29 ? r29->v.i : 0;
-	r11 = 150;
-	if( r11 >= r7 ) goto label$a13586a_14_179;
+	r10 = 150;
+	if( r10 >= r7 ) goto label$a13586a_14_177;
 	r27 = (String)s$_es;
-	goto label$a13586a_14_180;
-	label$a13586a_14_179:
+	goto label$a13586a_14_178;
+	label$a13586a_14_177:
 	r27 = (String)s$;
-	label$a13586a_14_180:
-	r10 = String___add__(r10,r27);
-	hxsl_GlslOut_decl(r0,r10);
-	goto label$a13586a_14_203;
-	label$a13586a_14_183:
+	label$a13586a_14_178:
+	r9 = String___add__(r9,r27);
+	hxsl_GlslOut_decl(r0,r9);
+	goto label$a13586a_14_201;
+	label$a13586a_14_181:
 	r29 = r0->version;
-	if( !r29 ) goto label$a13586a_14_201;
-	r10 = (String)s$_version_;
+	if( !r29 ) goto label$a13586a_14_199;
+	r9 = (String)s$_version_;
 	r29 = r0->version;
 	r7 = r29 ? r29->v.i : 0;
-	r11 = 150;
-	if( r11 >= r7 ) goto label$a13586a_14_193;
+	r10 = 150;
+	if( r10 >= r7 ) goto label$a13586a_14_191;
 	r7 = 150;
 	r29 = hl_alloc_dynamic(&t$_i32);
 	r29->v.i = r7;
-	goto label$a13586a_14_194;
-	label$a13586a_14_193:
+	goto label$a13586a_14_192;
+	label$a13586a_14_191:
 	r29 = r0->version;
-	label$a13586a_14_194:
-	if( r29 ) goto label$a13586a_14_197;
+	label$a13586a_14_192:
+	if( r29 ) goto label$a13586a_14_195;
 	r27 = NULL;
-	goto label$a13586a_14_198;
-	label$a13586a_14_197:
+	goto label$a13586a_14_196;
+	label$a13586a_14_195:
 	r27 = Std_string(((vdynamic*)r29));
-	label$a13586a_14_198:
-	r10 = String___add__(r10,r27);
-	hxsl_GlslOut_decl(r0,r10);
-	goto label$a13586a_14_203;
+	label$a13586a_14_196:
+	r9 = String___add__(r9,r27);
+	hxsl_GlslOut_decl(r0,r9);
+	goto label$a13586a_14_201;
+	label$a13586a_14_199:
+	r9 = (String)s$_version_130;
+	hxsl_GlslOut_decl(r0,r9);
 	label$a13586a_14_201:
-	r10 = (String)s$_version_130;
-	hxsl_GlslOut_decl(r0,r10);
-	label$a13586a_14_203:
 	r20 = r0->decls;
 	if( r20 == NULL ) hl_null_access();
 	r16 = r0->buf;
 	if( r16 == NULL ) hl_null_access();
-	r10 = StringBuf_toString(r16);
-	r7 = hl_types_ArrayObj_push(r20,((vdynamic*)r10));
+	r9 = StringBuf_toString(r16);
+	r7 = hl_types_ArrayObj_push(r20,((vdynamic*)r9));
 	r16 = NULL;
 	r0->buf = r16;
 	r20 = r0->decls;
 	if( r20 == NULL ) hl_null_access();
-	r10 = (String)s$68b329d;
-	r10 = hl_types_ArrayObj_join(r20,r10);
-	return r10;
+	r9 = (String)s$68b329d;
+	r9 = hl_types_ArrayObj_join(r20,r9);
+	return r9;
 }
 
 void hxsl_GlslOut_new(hxsl__GlslOut r0) {

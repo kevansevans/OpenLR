@@ -2,10 +2,34 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/LineShader.h>
+void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
-void hxsl_Shader_new(hxsl__Shader);
+
+void h3d_shader_LineShader_new(h3d__shader__LineShader r0,double* r1,double* r2) {
+	double r3, r4, r5;
+	if( r1 ) goto label$6fc5ece_1_3;
+	r3 = 1.5;
+	goto label$6fc5ece_1_4;
+	label$6fc5ece_1_3:
+	r3 = *r1;
+	label$6fc5ece_1_4:
+	if( r2 ) goto label$6fc5ece_1_7;
+	r4 = 1.;
+	goto label$6fc5ece_1_8;
+	label$6fc5ece_1_7:
+	r4 = *r2;
+	label$6fc5ece_1_8:
+	r5 = 0.;
+	r0->width__ = r5;
+	r5 = 0.;
+	r0->lengthScale__ = r5;
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	r0->width__ = r3;
+	r0->lengthScale__ = r4;
+	return;
+}
 
 void h3d_shader_LineShader_updateConstants(h3d__shader__LineShader r0,hxsl__Globals r1) {
 	int r2;
@@ -20,7 +44,7 @@ vdynamic* h3d_shader_LineShader_getParamValue(h3d__shader__LineShader r0,int r1)
 	vdynamic *r3;
 	switch(r1) {
 		default:
-			goto label$6fc5ece_2_8;
+			goto label$6fc5ece_3_8;
 		case 0:
 			r2 = r0->lengthScale__;
 			r3 = hl_alloc_dynamic(&t$_f64);
@@ -32,7 +56,7 @@ vdynamic* h3d_shader_LineShader_getParamValue(h3d__shader__LineShader r0,int r1)
 			r3->v.d = r2;
 			return r3;
 	}
-	label$6fc5ece_2_8:
+	label$6fc5ece_3_8:
 	r3 = NULL;
 	return r3;
 }
@@ -41,7 +65,7 @@ double h3d_shader_LineShader_getParamFloatValue(h3d__shader__LineShader r0,int r
 	double r2;
 	switch(r1) {
 		default:
-			goto label$6fc5ece_3_6;
+			goto label$6fc5ece_4_6;
 		case 0:
 			r2 = r0->lengthScale__;
 			return r2;
@@ -49,32 +73,8 @@ double h3d_shader_LineShader_getParamFloatValue(h3d__shader__LineShader r0,int r
 			r2 = r0->width__;
 			return r2;
 	}
-	label$6fc5ece_3_6:
+	label$6fc5ece_4_6:
 	r2 = 0.;
 	return r2;
-}
-
-void h3d_shader_LineShader_new(h3d__shader__LineShader r0,double* r1,double* r2) {
-	double r3, r4, r5;
-	if( r1 ) goto label$6fc5ece_4_3;
-	r3 = 1.5;
-	goto label$6fc5ece_4_4;
-	label$6fc5ece_4_3:
-	r3 = *r1;
-	label$6fc5ece_4_4:
-	if( r2 ) goto label$6fc5ece_4_7;
-	r4 = 1.;
-	goto label$6fc5ece_4_8;
-	label$6fc5ece_4_7:
-	r4 = *r2;
-	label$6fc5ece_4_8:
-	r5 = 0.;
-	r0->width__ = r5;
-	r5 = 0.;
-	r0->lengthScale__ = r5;
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	r0->width__ = r3;
-	r0->lengthScale__ = r4;
-	return;
 }
 

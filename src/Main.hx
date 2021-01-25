@@ -7,20 +7,13 @@ import components.managers.Simulation;
 import components.stage.PolyCanvas;
 import components.stage.TextInfo;
 import components.tool.ToolBehavior;
+import components.ui.Toolbar;
 import enums.Commands;
 import file.SaveLoad;
 import h2d.Mask;
 import h2d.col.Point;
-import h3d.Vector;
-import h3d.col.Point;
 import components.stage.Canvas;
 import h3d.Engine;
-import h3d.mat.Material;
-import h3d.mat.Texture;
-import h3d.prim.Cube;
-import h3d.prim.UV;
-import h3d.prim.Polygon;
-import h3d.scene.Mesh;
 import haxe.io.Bytes;
 import hxd.res.DefaultFont;
 import hxd.File;
@@ -30,8 +23,8 @@ import h2d.Graphics;
 import h2d.Interactive;
 import hxd.App;
 import hxd.Res;
-import network.PeerCursor;
 import utils.TableRNG;
+import hxd.System;
 
 #if js
 import network.WebRTC;
@@ -77,6 +70,7 @@ class Main extends App
 	public static var console:LRConsole;
 	
 	public static var toolControl:ToolBehavior;
+	public static var toolbar:Toolbar;
 	
 	public static var build:String;
 	
@@ -158,7 +152,6 @@ class Main extends App
 		
 		toolControl = new ToolBehavior();
 		
-		Console.HIDE_LOG_TIMEOUT = 25;
 		console = new LRConsole(DefaultFont.get(), s2d);
 		setConsoleActions();
 		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
@@ -190,13 +183,17 @@ class Main extends App
 		#if js
 		p2p = new WebRTC();
 		#end
+		
+		toolbar = new Toolbar(s2d);
+		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
+		toolbar.y = 3;
 	}
 	
 	//EVERYTHING is a console command if and when possible.
 	//You can gleam the order I added everything through this function, haha
 	function setConsoleActions():Void 
 	{
-		console.addCommand(Commands.github, "Link to github page", [], function() {console.log('https://github.com/kevansevans/OpenLR'); } );
+		console.addCommand(Commands.github, "Link to github page", [], function() {System.openURL('https://github.com/kevansevans/OpenLR'); } );
 		var arg1:ConsoleArgDesc = {t: AFloat, opt: false, name : "x value"};
 		var arg2:ConsoleArgDesc = {t: AFloat, opt: false, name : "y value"};
 		console.addCommand(Commands.setCanvasPosition, "Sets the position of the canvas", [arg1, arg2], function(_x:Float, _y:Float){
@@ -547,6 +544,9 @@ class Main extends App
 		mask.height = engine.height;
 		
 		textinfo.info.x = textinfo.info.y = 5;
+		
+		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
+		toolbar.y = 3;
 	}
 	
 	//this function needs to be improved

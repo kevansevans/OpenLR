@@ -1013,6 +1013,7 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("canvas_interaction"));
 	hl_hash((vbyte*)USTR("console"));
 	hl_hash((vbyte*)USTR("toolControl"));
+	hl_hash((vbyte*)USTR("toolbar"));
 	hl_hash((vbyte*)USTR("build"));
 	hl_hash((vbyte*)USTR("grid"));
 	hl_hash((vbyte*)USTR("riders"));
@@ -1232,6 +1233,9 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("get_gridSnapDistance"));
 	hl_hash((vbyte*)USTR("drawLine"));
 	hl_hash((vbyte*)USTR("keyInputDown"));
+	hl_hash((vbyte*)USTR("setToolEraser"));
+	hl_hash((vbyte*)USTR("setToolPencil"));
+	hl_hash((vbyte*)USTR("setToolLine"));
 	hl_hash((vbyte*)USTR("updateEraserCursor"));
 	hl_hash((vbyte*)USTR("updateLineCursor"));
 	hl_hash((vbyte*)USTR("updatePencilCursor"));
@@ -1285,6 +1289,20 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("addVertex"));
 	hl_hash((vbyte*)USTR("bufferDirty"));
 	hl_hash((vbyte*)USTR("indexDirty"));
+	hl_hash((vbyte*)USTR("icons"));
+	hl_hash((vbyte*)USTR("pencil"));
+	hl_hash((vbyte*)USTR("line"));
+	hl_hash((vbyte*)USTR("eraser"));
+	hl_hash((vbyte*)USTR("activetool"));
+	hl_hash((vbyte*)USTR("externalUpdate"));
+	hl_hash((vbyte*)USTR("btn_up"));
+	hl_hash((vbyte*)USTR("btn_over"));
+	hl_hash((vbyte*)USTR("btn_down"));
+	hl_hash((vbyte*)USTR("btn_selected"));
+	hl_hash((vbyte*)USTR("btn_icon"));
+	hl_hash((vbyte*)USTR("clicky"));
+	hl_hash((vbyte*)USTR("selected"));
+	hl_hash((vbyte*)USTR("set_selected"));
 	hl_hash((vbyte*)USTR("registry"));
 	hl_hash((vbyte*)USTR("lines"));
 	hl_hash((vbyte*)USTR("lineCount"));
@@ -1564,6 +1582,7 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("setNativeCursor"));
 	hl_hash((vbyte*)USTR("getDefaultFrameRate"));
 	hl_hash((vbyte*)USTR("getValue"));
+	hl_hash((vbyte*)USTR("openURL"));
 	hl_hash((vbyte*)USTR("get_platform"));
 	hl_hash((vbyte*)USTR("timeoutTick"));
 	hl_hash((vbyte*)USTR("get_allowTimeout"));
@@ -2239,10 +2258,10 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("isVertex"));
 	hl_hash((vbyte*)USTR("allNames"));
 	hl_hash((vbyte*)USTR("outIndexes"));
-	hl_hash((vbyte*)USTR("intelDriverFix"));
 	hl_hash((vbyte*)USTR("uniformBuffer"));
 	hl_hash((vbyte*)USTR("outIndex"));
 	hl_hash((vbyte*)USTR("varNames"));
+	hl_hash((vbyte*)USTR("intelDriverFix"));
 	hl_hash((vbyte*)USTR("decl"));
 	hl_hash((vbyte*)USTR("addType"));
 	hl_hash((vbyte*)USTR("addVar"));
@@ -2531,7 +2550,6 @@ void hl_init_hashes() {
 	hl_hash((vbyte*)USTR("transpos"));
 	hl_hash((vbyte*)USTR("materialIndex"));
 	hl_hash((vbyte*)USTR("dataPosition"));
-	hl_hash((vbyte*)USTR("line"));
 	hl_hash((vbyte*)USTR("token"));
 	hl_hash((vbyte*)USTR("binary"));
 	hl_hash((vbyte*)USTR("fbxVersion"));

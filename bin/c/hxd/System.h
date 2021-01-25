@@ -36,6 +36,7 @@ struct _hxd__$System {
 	vclosure* setNativeCursor;
 	vclosure* getDefaultFrameRate;
 	vclosure* getValue;
+	vclosure* openURL;
 	vclosure* get_platform;
 	vclosure* timeoutTick;
 	vclosure* get_allowTimeout;
