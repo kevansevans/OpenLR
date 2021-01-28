@@ -274,6 +274,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		var _this = Main.toolbar;
 		_this.posChanged = true;
 		_this.y = 3;
+		Main.camera = new components_stage_Camera();
 	}
 	,setConsoleActions: function() {
 		var _gthis = this;
@@ -615,6 +616,20 @@ Main.prototype = $extend(hxd_App.prototype,{
 		Main.console.addCommand("spectate","Allows user to watch other player as they see the canvas",[argSpectate],function(_name) {
 			var tmp = _name == null;
 		});
+		var argCamToggle = { t : h2d_ConsoleArg.ABool, opt : false, name : "True/False"};
+		var argCamFollow = { t : h2d_ConsoleArg.AString, opt : true, name : "Rider name"};
+		Main.console.addCommand("enableCamera","Toggle camera on or off, and set rider to follow",[argCamToggle,argCamFollow],function(_enabled,_name) {
+			if(_enabled) {
+				if(_name == null && Main.camera.riderFollow == null) {
+					Main.console.log("A rider to follow has not been set, please specify a name.",16711680);
+				} else if(_name == null && Main.camera.riderFollow != null) {
+					Main.camera.enabled = true;
+				} else if(_name != null) {
+					Main.camera.set_riderFollow(_name);
+					Main.camera.enabled = true;
+				}
+			}
+		});
 	}
 	,update: function(dt) {
 		hxd_App.prototype.update.call(this,dt);
@@ -627,6 +642,9 @@ Main.prototype = $extend(hxd_App.prototype,{
 		}
 		Main.canvas.drawRiders();
 		Main.textinfo.update();
+		if(Main.camera.running) {
+			Main.camera.follow();
+		}
 		if(Main.p2p.connected) {
 			Main.p2p.updateCursor();
 		}
@@ -1829,7 +1847,6 @@ components_managers_Riders.prototype = {
 		}
 	}
 	,resetPositions: function() {
-		components_physics_BindStick.crash = false;
 		var rider = haxe_ds_StringMap.valueIterator(this.riders.h);
 		while(rider.hasNext()) {
 			var rider1 = rider.next();
@@ -1886,6 +1903,7 @@ components_managers_Simulation.prototype = {
 		} else {
 			this.restoreState(0);
 		}
+		Main.camera.start();
 	}
 	,pauseSim: function() {
 		if(!this.playing && !this.paused) {
@@ -1900,6 +1918,9 @@ components_managers_Simulation.prototype = {
 		this.paused = false;
 	}
 	,endSim: function() {
+		if(this.playing) {
+			Main.camera.stop();
+		}
 		this.playing = false;
 		this.paused = false;
 		this.timeDelta = 0;
@@ -1951,7 +1972,7 @@ components_managers_Simulation.prototype = {
 				this.recordRiderState(rider1,this.frames);
 				continue;
 			}
-			rider1.crashed = state.crashed;
+			rider1.set_crashed(state.crashed);
 			var _g = 0;
 			var _g1 = rider1.ridePoints.length;
 			while(_g < _g1) {
@@ -2024,94 +2045,6 @@ components_managers_Simulation.prototype = {
 	}
 	,__class__: components_managers_Simulation
 };
-var components_physics_Stick = function(_a,_b) {
-	this.a = _a;
-	this.b = _b;
-	this.restLength = Math.sqrt(Math.pow(_a.pos.x - this.b.pos.x,2) + Math.pow(this.a.pos.y - this.b.pos.y,2));
-};
-$hxClasses["components.physics.Stick"] = components_physics_Stick;
-components_physics_Stick.__name__ = "components.physics.Stick";
-components_physics_Stick.prototype = {
-	satisfy: function(_crashed) {
-		var xDist = this.a.pos.x - this.b.pos.x;
-		var yDist = this.a.pos.y - this.b.pos.y;
-		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
-		var adjust = null;
-		if(dist == 0) {
-			adjust = 0;
-		} else {
-			adjust = (dist - this.restLength) / dist * 0.5;
-		}
-		var xAdjust = xDist * adjust;
-		var yAdjust = yDist * adjust;
-		this.a.pos.x -= xAdjust;
-		this.a.pos.y -= yAdjust;
-		this.b.pos.x += xAdjust;
-		this.b.pos.y += yAdjust;
-		return _crashed;
-	}
-	,__class__: components_physics_Stick
-};
-var components_physics_BindStick = function(_a,_b,_endurance) {
-	components_physics_Stick.call(this,_a,_b);
-	this.endurance = _endurance * this.restLength * 0.5;
-};
-$hxClasses["components.physics.BindStick"] = components_physics_BindStick;
-components_physics_BindStick.__name__ = "components.physics.BindStick";
-components_physics_BindStick.__super__ = components_physics_Stick;
-components_physics_BindStick.prototype = $extend(components_physics_Stick.prototype,{
-	satisfy: function(_crashed) {
-		var xDist = this.a.pos.x - this.b.pos.x;
-		var yDist = this.a.pos.y - this.b.pos.y;
-		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
-		var adjust = null;
-		if(dist == 0) {
-			adjust = 0;
-		} else {
-			adjust = (dist - this.restLength) / dist * 0.5;
-		}
-		if(adjust > this.endurance || _crashed) {
-			return true;
-		}
-		var xAdjust = xDist * adjust;
-		var yAdjust = yDist * adjust;
-		this.a.pos.x -= xAdjust;
-		this.a.pos.y -= yAdjust;
-		this.b.pos.x += xAdjust;
-		this.b.pos.y += yAdjust;
-		return _crashed;
-	}
-	,__class__: components_physics_BindStick
-});
-var components_physics_RepellStick = function(_a,_b) {
-	components_physics_Stick.call(this,_a,_b);
-};
-$hxClasses["components.physics.RepellStick"] = components_physics_RepellStick;
-components_physics_RepellStick.__name__ = "components.physics.RepellStick";
-components_physics_RepellStick.__super__ = components_physics_Stick;
-components_physics_RepellStick.prototype = $extend(components_physics_Stick.prototype,{
-	satisfy: function(_crashed) {
-		var xDist = this.a.pos.x - this.b.pos.x;
-		var yDist = this.a.pos.y - this.b.pos.y;
-		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
-		if(dist < this.restLength) {
-			var adjust = null;
-			if(dist == 0) {
-				adjust = 0;
-			} else {
-				adjust = (dist - this.restLength) / dist * 0.5;
-			}
-			var xAdjust = xDist * adjust;
-			var yAdjust = yDist * adjust;
-			this.a.pos.x -= xAdjust;
-			this.a.pos.y -= yAdjust;
-			this.b.pos.x += xAdjust;
-			this.b.pos.y += yAdjust;
-		}
-		return _crashed;
-	}
-	,__class__: components_physics_RepellStick
-});
 var components_physics_RidePoint = function(_x,_y,_fric) {
 	if(_fric == null) {
 		_fric = 0.0;
@@ -2185,14 +2118,115 @@ components_physics_ScarfPoint.prototype = $extend(components_physics_RidePoint.p
 	}
 	,__class__: components_physics_ScarfPoint
 });
-var components_physics_ScarfStick = function(_a,_b) {
-	components_physics_Stick.call(this,_a,_b);
+var components_physics_Stick = function(_a,_b,_type,_rider) {
+	this.crashable = false;
+	this.broken = false;
+	this.breakable = false;
+	this.enabled = true;
+	this.a = _a;
+	this.b = _b;
+	this.set_type(_type);
+	this.rider = _rider;
+	this.endurance = 0.057 * this.restLength * 0.5;
+};
+$hxClasses["components.physics.Stick"] = components_physics_Stick;
+components_physics_Stick.__name__ = "components.physics.Stick";
+components_physics_Stick.prototype = {
+	satisfy: function(_crashed) {
+		if(!this.enabled) {
+			return;
+		}
+		var result = this.constrain(_crashed);
+		if(this.breakable) {
+			this.broken = result;
+		}
+		if(this.crashable) {
+			this.rider.set_crashed(result);
+		}
+	}
+	,noConstrain: function(_crashed) {
+		return _crashed;
+	}
+	,standard: function(_crashed) {
+		var xDist = this.a.pos.x - this.b.pos.x;
+		var yDist = this.a.pos.y - this.b.pos.y;
+		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
+		var adjust = null;
+		if(dist == 0) {
+			adjust = 0;
+		} else {
+			adjust = (dist - this.restLength) / dist * 0.5;
+		}
+		if(this.crashable || this.breakable) {
+			if(!this.rider.invincible) {
+				if(adjust > this.endurance || _crashed || this.broken) {
+					return true;
+				}
+			}
+		}
+		var xAdjust = xDist * adjust;
+		var yAdjust = yDist * adjust;
+		this.a.pos.x -= xAdjust;
+		this.a.pos.y -= yAdjust;
+		this.b.pos.x += xAdjust;
+		this.b.pos.y += yAdjust;
+		return _crashed;
+	}
+	,repell: function(_crashed) {
+		var xDist = this.a.pos.x - this.b.pos.x;
+		var yDist = this.a.pos.y - this.b.pos.y;
+		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
+		if(dist < this.restLength) {
+			var adjust = null;
+			if(dist == 0) {
+				adjust = 0;
+			} else {
+				adjust = (dist - this.restLength) / dist * 0.5;
+			}
+			if(this.crashable || this.breakable) {
+				if(!this.rider.invincible) {
+					if(adjust > this.endurance || _crashed || this.broken) {
+						return true;
+					}
+				}
+			}
+			var xAdjust = xDist * adjust;
+			var yAdjust = yDist * adjust;
+			this.a.pos.x -= xAdjust;
+			this.a.pos.y -= yAdjust;
+			this.b.pos.x += xAdjust;
+			this.b.pos.y += yAdjust;
+		}
+		return _crashed;
+	}
+	,set_type: function(value) {
+		this.restLength = Math.sqrt(Math.pow(this.a.pos.x - this.b.pos.x,2) + Math.pow(this.a.pos.y - this.b.pos.y,2));
+		if(value == components_physics_StickType.REPELL || value == components_physics_StickType.ATTRACT) {
+			this.restLength *= 0.5;
+		}
+		switch(value._hx_index) {
+		case 0:
+			this.constrain = $bind(this,this.standard);
+			break;
+		case 1:
+			this.constrain = $bind(this,this.repell);
+			break;
+		default:
+			this.constrain = $bind(this,this.noConstrain);
+		}
+		return this.type = value;
+	}
+	,__class__: components_physics_Stick
+};
+var components_physics_ScarfStick = function(_a,_b,_rider) {
+	components_physics_Stick.call(this,_a,_b,components_physics_StickType.STANDARD,_rider);
+	this.constrain = $bind(this,this.scarf);
 };
 $hxClasses["components.physics.ScarfStick"] = components_physics_ScarfStick;
 components_physics_ScarfStick.__name__ = "components.physics.ScarfStick";
 components_physics_ScarfStick.__super__ = components_physics_Stick;
 components_physics_ScarfStick.prototype = $extend(components_physics_Stick.prototype,{
-	satisfy: function(_crashed) {
+	scarf: function(_crashed) {
 		var xDist = this.a.pos.x - this.b.pos.x;
 		var yDist = this.a.pos.y - this.b.pos.y;
 		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
@@ -2210,6 +2244,13 @@ components_physics_ScarfStick.prototype = $extend(components_physics_Stick.proto
 	}
 	,__class__: components_physics_ScarfStick
 });
+var components_physics_StickType = $hxEnums["components.physics.StickType"] = { __ename__ : "components.physics.StickType", __constructs__ : ["STANDARD","REPELL","ATTRACT","FLOPPY"]
+	,STANDARD: {_hx_index:0,__enum__:"components.physics.StickType",toString:$estr}
+	,REPELL: {_hx_index:1,__enum__:"components.physics.StickType",toString:$estr}
+	,ATTRACT: {_hx_index:2,__enum__:"components.physics.StickType",toString:$estr}
+	,FLOPPY: {_hx_index:3,__enum__:"components.physics.StickType",toString:$estr}
+};
+components_physics_StickType.__empty_constructs__ = [components_physics_StickType.STANDARD,components_physics_StickType.REPELL,components_physics_StickType.ATTRACT,components_physics_StickType.FLOPPY];
 var h3d_Vector = function(x,y,z,w) {
 	if(w == null) {
 		w = 1.;
@@ -2246,8 +2287,9 @@ var components_sledder_RiderBase = function(_x,_y,_name,_enable,_disable) {
 	this.enabled = true;
 	this.drawContactPoints = true;
 	this.startPos = new h2d_col_Point();
+	this.undead = false;
 	this.crashed = false;
-	this.ENDURANCE = 0.057;
+	this.invincible = false;
 	this.gravity = new h2d_col_Point(0,0.175);
 	this.startPos = new h2d_col_Point(_x,_y);
 	this.gfx = new h2d_Graphics();
@@ -2362,7 +2404,7 @@ components_sledder_RiderBase.prototype = {
 		while(_g < _g1.length) {
 			var edge = _g1[_g];
 			++_g;
-			this.crashed = edge.satisfy(this.crashed);
+			edge.satisfy(this.crashed);
 		}
 	}
 	,setColor: function(_a,_b) {
@@ -2416,6 +2458,12 @@ components_sledder_RiderBase.prototype = {
 	,set_name: function(value) {
 		this.nameField.set_text(value);
 		return this.name = value;
+	}
+	,set_crashed: function(value) {
+		if(this.invincible) {
+			return this.crashed = null;
+		}
+		return this.crashed = value;
 	}
 	,__class__: components_sledder_RiderBase
 };
@@ -2475,7 +2523,7 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 		var fakiex = this.ridePoints[3].pos.x - this.ridePoints[0].pos.x;
 		var fakiey = this.ridePoints[3].pos.y - this.ridePoints[0].pos.y;
 		if(fakiex * (this.ridePoints[1].pos.y - this.ridePoints[0].pos.y) - fakiey * (this.ridePoints[1].pos.x - this.ridePoints[0].pos.x) < 0) {
-			this.crashed = true;
+			this.set_crashed(true);
 		}
 	}
 	,renderRider: function() {
@@ -2547,19 +2595,28 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 		this.gfx.clear();
 		if(!this.crashed) {
 			this.gfx.lineStyle(0.25);
-			var _this = this.gfx;
-			var x = this.ridePoints[6].pos.x;
-			var y = this.ridePoints[6].pos.y;
-			_this.flush();
-			_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
-			var _this = this.gfx;
-			var x = this.ridePoints[3].pos.x;
-			var y = this.ridePoints[3].pos.y;
-			_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
-			var _this = this.gfx;
-			var x = this.ridePoints[7].pos.x;
-			var y = this.ridePoints[7].pos.y;
-			_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+			if(this.bones[16].enabled) {
+				var _this = this.gfx;
+				var x = this.ridePoints[6].pos.x;
+				var y = this.ridePoints[6].pos.y;
+				_this.flush();
+				_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+				var _this = this.gfx;
+				var x = this.ridePoints[3].pos.x;
+				var y = this.ridePoints[3].pos.y;
+				_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+			}
+			if(this.bones[17].enabled) {
+				var _this = this.gfx;
+				var x = this.ridePoints[7].pos.x;
+				var y = this.ridePoints[7].pos.y;
+				_this.flush();
+				_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+				var _this = this.gfx;
+				var x = this.ridePoints[3].pos.x;
+				var y = this.ridePoints[3].pos.y;
+				_this.addVertex(x,y,_this.curR,_this.curG,_this.curB,_this.curA,x * _this.ma + y * _this.mc + _this.mx,x * _this.mb + y * _this.md + _this.my);
+			}
 		}
 		this.gfx.lineStyle(2,this.neckscarf.colorB);
 		var _this = this.gfx;
@@ -2647,7 +2704,7 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 		if(_frame == this.prevFrame) {
 			return;
 		}
-		if(this.crashed) {
+		if(this.crashed || this.undead) {
 			this.eye.anim.set_currentFrame(2);
 		} else {
 			var rngValue = 0;
@@ -2712,37 +2769,38 @@ components_sledder_Bosh.prototype = $extend(components_sledder_RiderBase.prototy
 			point.vel.x = point.pos.x - 0.4;
 			point.vel.y = point.pos.y;
 		}
-		this.bones.push(new components_physics_Stick(this.ridePoints[0],this.ridePoints[1]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[1],this.ridePoints[2]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[2],this.ridePoints[3]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[3],this.ridePoints[0]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[0],this.ridePoints[2]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[3],this.ridePoints[1]));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[0],this.ridePoints[4],this.ENDURANCE));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[1],this.ridePoints[4],this.ENDURANCE));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[2],this.ridePoints[4],this.ENDURANCE));
-		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[4]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[6]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[7]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[4],this.ridePoints[8]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[4],this.ridePoints[9]));
-		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[7]));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[5],this.ridePoints[0],this.ENDURANCE));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[3],this.ridePoints[6],this.ENDURANCE));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[3],this.ridePoints[7],this.ENDURANCE));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[8],this.ridePoints[2],this.ENDURANCE));
-		this.bones.push(new components_physics_BindStick(this.ridePoints[9],this.ridePoints[2],this.ENDURANCE));
-		this.bones.push(new components_physics_RepellStick(this.ridePoints[5],this.ridePoints[8]));
-		this.bones.push(new components_physics_RepellStick(this.ridePoints[5],this.ridePoints[9]));
-		this.scarves.push(new components_physics_ScarfStick(this.ridePoints[5],this.scarfPoints[0]));
-		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[0],this.scarfPoints[1]));
-		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[1],this.scarfPoints[2]));
-		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[2],this.scarfPoints[3]));
-		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[3],this.scarfPoints[4]));
-		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[4],this.scarfPoints[5]));
-		this.bones[20].restLength *= 0.5;
-		this.bones[21].restLength *= 0.5;
-		this.crashed = false;
+		this.bones.push(new components_physics_Stick(this.ridePoints[0],this.ridePoints[1],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[1],this.ridePoints[2],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[2],this.ridePoints[3],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[3],this.ridePoints[0],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[0],this.ridePoints[2],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[3],this.ridePoints[1],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[0],this.ridePoints[4],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[1],this.ridePoints[4],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[2],this.ridePoints[4],components_physics_StickType.STANDARD,this));
+		this.bones[6].crashable = this.bones[7].crashable = this.bones[8].crashable = true;
+		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[4],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[6],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[7],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[4],this.ridePoints[8],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[4],this.ridePoints[9],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[7],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[0],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[3],this.ridePoints[6],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[3],this.ridePoints[7],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[8],this.ridePoints[2],components_physics_StickType.STANDARD,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[9],this.ridePoints[2],components_physics_StickType.STANDARD,this));
+		this.bones[15].crashable = this.bones[16].crashable = this.bones[17].crashable = this.bones[18].crashable = this.bones[19].crashable = true;
+		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[8],components_physics_StickType.REPELL,this));
+		this.bones.push(new components_physics_Stick(this.ridePoints[5],this.ridePoints[9],components_physics_StickType.REPELL,this));
+		this.scarves.push(new components_physics_ScarfStick(this.ridePoints[5],this.scarfPoints[0],this));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[0],this.scarfPoints[1],this));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[1],this.scarfPoints[2],this));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[2],this.scarfPoints[3],this));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[3],this.scarfPoints[4],this));
+		this.scarves.push(new components_physics_ScarfStick(this.scarfPoints[4],this.scarfPoints[5],this));
+		this.set_crashed(false);
+		this.cameraPoint = this.ridePoints[4];
 	}
 	,__class__: components_sledder_Bosh
 });
@@ -3819,6 +3877,70 @@ var components_sledder_BodyPart = $hxEnums["components.sledder.BodyPart"] = { __
 	,EYE: {_hx_index:4,__enum__:"components.sledder.BodyPart",toString:$estr}
 };
 components_sledder_BodyPart.__empty_constructs__ = [components_sledder_BodyPart.BODY,components_sledder_BodyPart.ARM,components_sledder_BodyPart.LEG,components_sledder_BodyPart.SLED,components_sledder_BodyPart.EYE];
+var components_stage_Camera = function(_name) {
+	this.cameraScale = 6;
+	this.running = false;
+	this.enabled = false;
+	this.set_riderFollow(_name);
+};
+$hxClasses["components.stage.Camera"] = components_stage_Camera;
+components_stage_Camera.__name__ = "components.stage.Camera";
+components_stage_Camera.prototype = {
+	start: function() {
+		if(!this.enabled && this.riderFollow == null) {
+			return;
+		}
+		this.lastPosition = new h2d_col_Point(Main.canvas.x,Main.canvas.y);
+		this.lastScale = Main.canvas.scaleX;
+		var _this = Main.canvas;
+		var v = this.cameraScale;
+		_this.posChanged = true;
+		_this.scaleX = v;
+		_this.posChanged = true;
+		_this.scaleY = v;
+		var _this = Main.canvas;
+		_this.posChanged = true;
+		_this.x = this.rider.cameraPoint.pos.x + Main.locengine.width / 2;
+		var _this = Main.canvas;
+		_this.posChanged = true;
+		_this.y = this.rider.cameraPoint.pos.y + Main.locengine.height / 2;
+		this.running = true;
+	}
+	,follow: function() {
+		var _this = this.rider.cameraPoint.pos;
+		var position = Main.canvas.localToGlobal(new h2d_col_Point(_this.x,_this.y));
+		var right = Main.locengine.width * 0.6;
+		var left = Main.locengine.width * 0.3;
+		var top = Main.locengine.height * 0.3;
+		var bottom = Main.locengine.height * 0.6;
+		var xAdjust = 0.0;
+		var yAdjust = 0.0;
+		if(position.x > right) {
+			xAdjust = right - position.x;
+		} else if(position.x < left) {
+			xAdjust = left - position.x;
+		}
+		if(position.y > bottom) {
+			yAdjust = bottom - position.y;
+		} else if(position.y < top) {
+			yAdjust = top - position.y;
+		}
+		var _g = Main.canvas;
+		_g.posChanged = true;
+		_g.x += xAdjust;
+		var _g = Main.canvas;
+		_g.posChanged = true;
+		_g.y += yAdjust;
+	}
+	,stop: function() {
+		this.running = false;
+	}
+	,set_riderFollow: function(value) {
+		this.rider = Main.riders.riders.h[value];
+		return this.riderFollow = value;
+	}
+	,__class__: components_stage_Camera
+};
 var components_stage_DrawMode = $hxEnums["components.stage.DrawMode"] = { __ename__ : "components.stage.DrawMode", __constructs__ : ["FULL_EDIT","PLAYBACK","NO_SCENERY_EDIT","NO_SCENERY_PLAYBACK","SCENERY_EDIT","SCENERY_PLAYBACK"]
 	,FULL_EDIT: {_hx_index:0,__enum__:"components.stage.DrawMode",toString:$estr}
 	,PLAYBACK: {_hx_index:1,__enum__:"components.stage.DrawMode",toString:$estr}
@@ -6408,7 +6530,7 @@ components_tool_ToolBehavior.prototype = {
 	,keyInputDown: function(event) {
 		switch(event.kind._hx_index) {
 		case 8:
-			haxe_Log.trace(event.keyCode,{ fileName : "src/components/tool/ToolBehavior.hx", lineNumber : 385, className : "components.tool.ToolBehavior", methodName : "keyInputDown"});
+			haxe_Log.trace(event.keyCode,{ fileName : "src/components/tool/ToolBehavior.hx", lineNumber : 387, className : "components.tool.ToolBehavior", methodName : "keyInputDown"});
 			switch(event.keyCode) {
 			case 9:
 				switch(Main.canvas.get_drawMode()._hx_index) {
@@ -6431,6 +6553,9 @@ components_tool_ToolBehavior.prototype = {
 					Main.canvas.set_drawMode(components_stage_DrawMode.FULL_EDIT);
 					break;
 				}
+				break;
+			case 16:
+				this.shifted = true;
 				break;
 			case 17:
 				Main.simulation.rewinding = true;
@@ -6478,8 +6603,8 @@ components_tool_ToolBehavior.prototype = {
 				Main.simulation.startSim();
 				break;
 			case 87:
-				this.setToolPencil();
-				Main.toolbar.externalUpdate(components_ui_Icon.ERASER);
+				this.setToolLine();
+				Main.toolbar.externalUpdate(components_ui_Icon.LINE);
 				break;
 			case 88:
 				Main.simulation.endSim();
@@ -6521,9 +6646,6 @@ components_tool_ToolBehavior.prototype = {
 				}
 				Main.console.log("Ruler width set to: " + Main.viewGridSize,26367);
 				break;
-			case 272:
-				this.shifted = true;
-				break;
 			case 528:
 				Main.simulation.updateSim();
 				break;
@@ -6531,11 +6653,40 @@ components_tool_ToolBehavior.prototype = {
 			break;
 		case 9:
 			switch(event.keyCode) {
+			case 16:
+				this.shifted = false;
+				break;
 			case 17:
 				Main.simulation.rewinding = false;
 				break;
-			case 272:
-				this.shifted = false;
+			case 35:
+				if(this.lastViewedPosition != null) {
+					var _this = Main.canvas;
+					_this.posChanged = true;
+					_this.x = this.lastViewedPosition.x;
+					var _this = Main.canvas;
+					_this.posChanged = true;
+					_this.y = this.lastViewedPosition.y;
+				}
+				break;
+			case 36:
+				this.lastViewedPosition = new h2d_col_Point(Main.canvas.x,Main.canvas.y);
+				if(Main.camera.riderFollow == null) {
+					var _this = Main.canvas;
+					_this.posChanged = true;
+					_this.x = Main.locengine.width / 2;
+					var _this = Main.canvas;
+					_this.posChanged = true;
+					_this.y = Main.locengine.height / 2;
+				} else {
+					var position = Main.canvas.localToGlobal(Main.camera.rider.startPos);
+					var _this = Main.canvas;
+					_this.posChanged = true;
+					_this.x = position.x + Main.locengine.width / 2;
+					var _this = Main.canvas;
+					_this.posChanged = true;
+					_this.y = position.y + Main.locengine.height / 2;
+				}
 				break;
 			}
 			break;
@@ -6658,15 +6809,32 @@ components_tool_ToolFunction.eraseDefault = function(_x,_y) {
 				if(_loc12 < components_tool_ToolFunction.eraserSize * _loc9 || _loc13 < components_tool_ToolFunction.eraserSize * _loc9 || _loc11 < components_tool_ToolFunction.eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1) {
 					if(Main.toolControl.colorEraser) {
 						if(line.type == Main.toolControl.color) {
-							Main.grid.unregister(line);
+							components_tool_ToolFunction.tryDispose(line);
 						}
 					} else {
-						Main.grid.unregister(line);
+						components_tool_ToolFunction.tryDispose(line);
 					}
 					continue;
 				}
 			}
 		}
+	}
+};
+components_tool_ToolFunction.tryDispose = function(_line) {
+	switch(Main.canvas.get_drawMode()._hx_index) {
+	case 0:case 1:
+		Main.grid.unregister(_line);
+		break;
+	case 2:case 3:
+		if(_line.type != 2) {
+			Main.grid.unregister(_line);
+		}
+		break;
+	case 4:case 5:
+		if(_line.type == 2) {
+			Main.grid.unregister(_line);
+		}
+		break;
 	}
 };
 var components_ui_Icon = $hxEnums["components.ui.Icon"] = { __ename__ : "components.ui.Icon", __constructs__ : ["PENCIL","LINE","ERASER","PLAY","PAUSE","STOP","SWATCH_BLUE","SWATCH_RED","SWATCH_GREEN"]
@@ -47460,7 +47628,6 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
-components_physics_BindStick.crash = false;
 components_sledder_RiderBase.WHITE = new h3d_Vector(1,1,1,1);
 components_sledder_RiderBase.RED = new h3d_Vector(1,0,0,1);
 h2d_Console.HIDE_LOG_TIMEOUT = 3.;

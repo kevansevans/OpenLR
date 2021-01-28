@@ -56,6 +56,7 @@ struct _components__tool__ToolBehavior {
 	bool middleIsDown;
 	bool shifted;
 	components__lines__LineBase tempLine;
+	h2d__col__Point lastViewedPosition;
 };
 #endif
 

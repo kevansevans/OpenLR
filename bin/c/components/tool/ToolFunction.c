@@ -8,7 +8,6 @@
 #include <components/managers/Grid.h>
 #include <hl/types/ArrayObj.h>
 #include <h2d/col/Point.h>
-#include <components/lines/LineBase.h>
 #include <components/tool/ToolBehavior.h>
 vvirtual* components_managers_Grid_registryPosition(double,double);
 extern String s$;
@@ -23,6 +22,9 @@ vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 extern hl_type t$vrt_3d3bf19;
 extern hl_type t$hl_types_ArrayObj;
 extern components__tool__$ToolFunction g$_components_tool_ToolFunction;
+void components_tool_ToolFunction_tryDispose(components__lines__LineBase);
+#include <components/stage/DrawMode.h>
+venum* components_stage_Canvas_get_drawMode(components__stage__Canvas);
 void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
 
 void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
@@ -55,13 +57,13 @@ void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
 	r9 = -1;
 	label$24f39e4_1_9:
 	r11 = 2;
-	if( r9 >= r11 ) goto label$24f39e4_1_149;
+	if( r9 >= r11 ) goto label$24f39e4_1_143;
 	r10 = r9;
 	++r9;
 	r11 = -1;
 	label$24f39e4_1_15:
 	r13 = 2;
-	if( r11 >= r13 ) goto label$24f39e4_1_148;
+	if( r11 >= r13 ) goto label$24f39e4_1_142;
 	r12 = r11;
 	++r11;
 	r14 = (String)s$x;
@@ -103,7 +105,7 @@ void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
 	label$24f39e4_1_55:
 	if( r23 == NULL ) hl_null_access();
 	r24 = r23->length;
-	if( r13 >= r24 ) goto label$24f39e4_1_147;
+	if( r13 >= r24 ) goto label$24f39e4_1_141;
 	r24 = r23->length;
 	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$24f39e4_1_63;
 	r25 = NULL;
@@ -167,43 +169,86 @@ void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
 	r36 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
 	r35 = r36->eraserSize;
 	r35 = r35 * r3;
-	if( !(r32 < r35) ) goto label$24f39e4_1_146;
+	if( !(r32 < r35) ) goto label$24f39e4_1_140;
 	r35 = 0.;
-	if( !(r33 >= r35) ) goto label$24f39e4_1_146;
+	if( !(r33 >= r35) ) goto label$24f39e4_1_140;
 	r35 = 1.;
-	if( !(r35 >= r33) ) goto label$24f39e4_1_146;
+	if( !(r35 >= r33) ) goto label$24f39e4_1_140;
 	label$24f39e4_1_125:
 	r8 = ($Main)g$_Main;
 	r38 = r8->toolControl;
 	if( r38 == NULL ) hl_null_access();
 	r37 = r38->colorEraser;
-	if( !r37 ) goto label$24f39e4_1_141;
+	if( !r37 ) goto label$24f39e4_1_138;
 	r15 = r25->type;
 	r8 = ($Main)g$_Main;
 	r38 = r8->toolControl;
 	if( r38 == NULL ) hl_null_access();
 	r24 = r38->color;
-	if( r15 != r24 ) goto label$24f39e4_1_140;
-	r8 = ($Main)g$_Main;
-	r21 = r8->grid;
-	if( r21 == NULL ) hl_null_access();
-	components_managers_Grid_unregister(r21,r25);
+	if( r15 != r24 ) goto label$24f39e4_1_137;
+	components_tool_ToolFunction_tryDispose(r25);
+	label$24f39e4_1_137:
+	goto label$24f39e4_1_139;
+	label$24f39e4_1_138:
+	components_tool_ToolFunction_tryDispose(r25);
+	label$24f39e4_1_139:
+	goto label$24f39e4_1_55;
 	label$24f39e4_1_140:
-	goto label$24f39e4_1_145;
+	goto label$24f39e4_1_55;
 	label$24f39e4_1_141:
-	r8 = ($Main)g$_Main;
-	r21 = r8->grid;
-	if( r21 == NULL ) hl_null_access();
-	components_managers_Grid_unregister(r21,r25);
-	label$24f39e4_1_145:
-	goto label$24f39e4_1_55;
-	label$24f39e4_1_146:
-	goto label$24f39e4_1_55;
-	label$24f39e4_1_147:
 	goto label$24f39e4_1_15;
-	label$24f39e4_1_148:
+	label$24f39e4_1_142:
 	goto label$24f39e4_1_9;
-	label$24f39e4_1_149:
+	label$24f39e4_1_143:
+	return;
+}
+
+void components_tool_ToolFunction_tryDispose(components__lines__LineBase r0) {
+	components__managers__Grid r6;
+	venum *r3;
+	$Main r5;
+	components__stage__Canvas r4;
+	int r2, r7;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas;
+	if( r4 == NULL ) hl_null_access();
+	r3 = components_stage_Canvas_get_drawMode(r4);
+	if( r3 == NULL ) hl_null_access();
+	r2 = HL__ENUM_INDEX__(r3);
+	switch(r2) {
+		default:
+			goto label$24f39e4_2_30;
+		case 0:
+		case 1:
+			r5 = ($Main)g$_Main;
+			r6 = r5->grid;
+			if( r6 == NULL ) hl_null_access();
+			components_managers_Grid_unregister(r6,r0);
+			goto label$24f39e4_2_30;
+		case 2:
+		case 3:
+			if( r0 == NULL ) hl_null_access();
+			r2 = r0->type;
+			r7 = 2;
+			if( r2 == r7 ) goto label$24f39e4_2_21;
+			r5 = ($Main)g$_Main;
+			r6 = r5->grid;
+			if( r6 == NULL ) hl_null_access();
+			components_managers_Grid_unregister(r6,r0);
+			label$24f39e4_2_21:
+			goto label$24f39e4_2_30;
+		case 4:
+		case 5:
+			if( r0 == NULL ) hl_null_access();
+			r2 = r0->type;
+			r7 = 2;
+			if( r2 != r7 ) goto label$24f39e4_2_30;
+			r5 = ($Main)g$_Main;
+			r6 = r5->grid;
+			if( r6 == NULL ) hl_null_access();
+			components_managers_Grid_unregister(r6,r0);
+	}
+	label$24f39e4_2_30:
 	return;
 }
 

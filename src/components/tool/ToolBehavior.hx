@@ -113,7 +113,7 @@ class ToolBehavior
 	var leftIsDown:Bool = false;
 	var middleIsDown:Bool = false;
 	
-	var shifted:Bool = false;
+	public var shifted:Bool = false;
 	
 	function mouseDown(event:Event):Void 
 	{
@@ -378,6 +378,8 @@ class ToolBehavior
 		Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
 	}
 	
+	var lastViewedPosition:Point;
+	
 	function keyInputDown(event:Event):Void 
 	{
 		switch (event.kind) {
@@ -424,8 +426,8 @@ class ToolBehavior
 						setToolPencil();
 						Main.toolbar.externalUpdate(Icon.PENCIL);
 					case Key.W:
-						setToolPencil();
-						Main.toolbar.externalUpdate(Icon.ERASER);
+						setToolLine();
+						Main.toolbar.externalUpdate(Icon.LINE);
 					case Key.E:
 						setToolEraser();
 						Main.toolbar.externalUpdate(Icon.ERASER);
@@ -467,7 +469,11 @@ class ToolBehavior
 						
 					case Key.RSHIFT :
 						Main.simulation.updateSim();
+					#if js
+					case 16 :
+					#else
 					case Key.LSHIFT :
+					#end
 						shifted = true;
 						
 					case Key.TAB :
@@ -493,8 +499,38 @@ class ToolBehavior
 						#if hl
 						Main.audio.playMusic(Main.simulation.frames);
 						#end
+					#if js
+					case 16 :
+					#else
 					case Key.LSHIFT :
+					#end
 						shifted = false;
+						
+					case Key.HOME :
+						
+						lastViewedPosition = new Point(Main.canvas.x, Main.canvas.y);
+						
+						if (Main.camera.riderFollow == null) {
+							
+							Main.canvas.x = Main.locengine.width / 2;
+							Main.canvas.y = Main.locengine.height / 2;
+							
+						} else {
+							
+							var position = Main.canvas.localToGlobal(Main.camera.rider.startPos);
+							
+							Main.canvas.x = position.x + (Main.locengine.width / 2);
+							Main.canvas.y = position.y + (Main.locengine.height / 2);
+							
+						}
+					case Key.END :
+						
+						if (lastViewedPosition != null) {
+							
+							Main.canvas.x = lastViewedPosition.x;
+							Main.canvas.y = lastViewedPosition.y;
+							
+						}
 				}
 			default:
 		}

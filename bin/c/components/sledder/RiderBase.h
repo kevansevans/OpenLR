@@ -12,6 +12,7 @@ typedef struct _components__sledder__RiderBase *components__sledder__RiderBase;
 #include <h2d/Graphics.h>
 #include <h2d/HtmlText.h>
 #include <h2d/col/Point.h>
+#include <components/physics/RidePoint.h>
 
 
 struct _components__sledder__$RiderBase {
@@ -36,14 +37,16 @@ struct _components__sledder__RiderBase {
 	h2d__Graphics gfx;
 	h2d__HtmlText nameField;
 	h2d__col__Point gravity;
-	double ENDURANCE;
-	bool crashed;
+	bool invincible;
+	vdynamic* crashed;
+	bool undead;
 	h2d__col__Point startPos;
 	String name;
 	bool drawContactPoints;
 	vdynamic* enabledFrame;
 	vdynamic* disableFrame;
 	bool enabled;
+	components__physics__RidePoint cameraPoint;
 };
 #endif
 

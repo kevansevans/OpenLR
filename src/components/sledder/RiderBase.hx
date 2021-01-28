@@ -40,9 +40,9 @@ class RiderBase
 	
 	public var gravity:Point = new Point(0, 0.175);
 	
-	public var ENDURANCE = 0.057;
-	
-	public var crashed:Bool = false;
+	public var invincible:Bool = false;
+	public var crashed(default, set):Null<Bool> = false;
+	public var undead:Bool = false;
 	
 	public var startPos:Point = new Point();
 	
@@ -53,6 +53,8 @@ class RiderBase
 	public var enabledFrame:Null<Int>;
 	public var disableFrame:Null<Int>;
 	public var enabled:Bool = true;
+	
+	public var cameraPoint:RidePoint;
 	
 	static public var WHITE:Vector = new Vector(1, 1, 1, 1);
 	static public var BLACK:Vector = new Vector(0, 0, 0, 1);
@@ -142,7 +144,7 @@ class RiderBase
 	public function constrainBones() 
 	{
 		for (edge in bones) {
-			crashed = edge.satisfy(crashed);
+			edge.satisfy(crashed);
 		}
 	}
 	
@@ -191,6 +193,12 @@ class RiderBase
 	{
 		nameField.text = value;
 		return name = value;
+	}
+	
+	function set_crashed(value:Bool):Bool 
+	{
+		if (invincible) return crashed = null;
+		return crashed = value;
 	}
 	
 	public static var RiderNames = [

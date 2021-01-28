@@ -23,6 +23,8 @@ struct _components__physics__RepellStick {
 	components__physics__RidePoint a;
 	components__physics__RidePoint b;
 	double restLength;
+	bool enabled;
+	bool relaxed;
 };
 #endif
 

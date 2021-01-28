@@ -7,6 +7,8 @@ typedef struct _components__physics__Stick *components__physics__Stick;
 #include <hl/BaseType.h>
 #include <_std/String.h>
 #include <components/physics/RidePoint.h>
+#include <components/physics/StickType.h>
+#include <components/sledder/RiderBase.h>
 
 
 struct _components__physics__$Stick {
@@ -22,6 +24,14 @@ struct _components__physics__Stick {
 	components__physics__RidePoint a;
 	components__physics__RidePoint b;
 	double restLength;
+	bool enabled;
+	bool breakable;
+	bool broken;
+	bool crashable;
+	double endurance;
+	vclosure* constrain;
+	venum* type;
+	components__sledder__RiderBase rider;
 };
 #endif
 

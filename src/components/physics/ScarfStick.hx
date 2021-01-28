@@ -1,4 +1,6 @@
 package components.physics;
+import components.physics.Stick.StickType;
+import components.sledder.RiderBase;
 
 /**
  * ...
@@ -7,12 +9,14 @@ package components.physics;
 class ScarfStick extends Stick 
 {
 
-	public function new(_a:RidePoint, _b:RidePoint) 
+	public function new(_a:RidePoint, _b:RidePoint, _rider:RiderBase) 
 	{
-		super(_a, _b);
+		super(_a, _b, STANDARD, _rider);
+		
+		constrain = scarf;
 	}
 	
-	override public function satisfy(?_crashed:Bool):Bool 
+	public function scarf(?_crashed:Bool):Bool 
 	{
 		var xDist = a.pos.x - b.pos.x;
 		var yDist = a.pos.y - b.pos.y;

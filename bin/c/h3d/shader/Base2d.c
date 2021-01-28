@@ -2,12 +2,127 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/Base2d.h>
-extern hl_type t$h3d_Vector;
-void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
-void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
+extern hl_type t$h3d_Vector;
+void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
+void hxsl_Shader_new(hxsl__Shader);
+
+void h3d_shader_Base2d_updateConstants(h3d__shader__Base2d r0,hxsl__Globals r1) {
+	bool r4;
+	int r2, r5;
+	r2 = 0;
+	r0->constBits = r2;
+	r4 = r0->isRelative__;
+	if( !r4 ) goto label$1e03ac5_1_8;
+	r2 = r0->constBits;
+	r5 = 1;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	label$1e03ac5_1_8:
+	r4 = r0->hasUVPos__;
+	if( !r4 ) goto label$1e03ac5_1_14;
+	r2 = r0->constBits;
+	r5 = 2;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	label$1e03ac5_1_14:
+	r4 = r0->killAlpha__;
+	if( !r4 ) goto label$1e03ac5_1_20;
+	r2 = r0->constBits;
+	r5 = 4;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	label$1e03ac5_1_20:
+	r4 = r0->pixelAlign__;
+	if( !r4 ) goto label$1e03ac5_1_26;
+	r2 = r0->constBits;
+	r5 = 8;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	label$1e03ac5_1_26:
+	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
+	return;
+}
+
+vdynamic* h3d_shader_Base2d_getParamValue(h3d__shader__Base2d r0,int r1) {
+	bool r5;
+	h3d__Vector r6;
+	double r2;
+	vdynamic *r3;
+	h3d__mat__Texture r4;
+	switch(r1) {
+		default:
+			goto label$1e03ac5_2_37;
+		case 0:
+			r2 = r0->zValue__;
+			r3 = hl_alloc_dynamic(&t$_f64);
+			r3->v.d = r2;
+			return r3;
+		case 1:
+			r4 = r0->texture__;
+			return ((vdynamic*)r4);
+		case 2:
+			r5 = r0->isRelative__;
+			r3 = hl_alloc_dynbool(r5);
+			return r3;
+		case 3:
+			r6 = r0->color__;
+			return ((vdynamic*)r6);
+		case 4:
+			r6 = r0->absoluteMatrixA__;
+			return ((vdynamic*)r6);
+		case 5:
+			r6 = r0->absoluteMatrixB__;
+			return ((vdynamic*)r6);
+		case 6:
+			r6 = r0->filterMatrixA__;
+			return ((vdynamic*)r6);
+		case 7:
+			r6 = r0->filterMatrixB__;
+			return ((vdynamic*)r6);
+		case 8:
+			r5 = r0->hasUVPos__;
+			r3 = hl_alloc_dynbool(r5);
+			return r3;
+		case 9:
+			r6 = r0->uvPos__;
+			return ((vdynamic*)r6);
+		case 10:
+			r5 = r0->killAlpha__;
+			r3 = hl_alloc_dynbool(r5);
+			return r3;
+		case 11:
+			r5 = r0->pixelAlign__;
+			r3 = hl_alloc_dynbool(r5);
+			return r3;
+		case 12:
+			r6 = r0->halfPixelInverse__;
+			return ((vdynamic*)r6);
+		case 13:
+			r6 = r0->viewportA__;
+			return ((vdynamic*)r6);
+		case 14:
+			r6 = r0->viewportB__;
+			return ((vdynamic*)r6);
+	}
+	label$1e03ac5_2_37:
+	r3 = NULL;
+	return r3;
+}
+
+double h3d_shader_Base2d_getParamFloatValue(h3d__shader__Base2d r0,int r1) {
+	double r3;
+	int r2;
+	r2 = 0;
+	if( r1 != r2 ) goto label$1e03ac5_3_4;
+	r3 = r0->zValue__;
+	return r3;
+	label$1e03ac5_3_4:
+	r3 = 0.;
+	return r3;
+}
 
 void h3d_shader_Base2d_new(h3d__shader__Base2d r0) {
 	h3d__Vector r1;
@@ -80,120 +195,5 @@ void h3d_shader_Base2d_new(h3d__shader__Base2d r0) {
 	r0->zValue__ = r7;
 	hxsl_Shader_new(((hxsl__Shader)r0));
 	return;
-}
-
-void h3d_shader_Base2d_updateConstants(h3d__shader__Base2d r0,hxsl__Globals r1) {
-	bool r4;
-	int r2, r5;
-	r2 = 0;
-	r0->constBits = r2;
-	r4 = r0->isRelative__;
-	if( !r4 ) goto label$1e03ac5_2_8;
-	r2 = r0->constBits;
-	r5 = 1;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	label$1e03ac5_2_8:
-	r4 = r0->hasUVPos__;
-	if( !r4 ) goto label$1e03ac5_2_14;
-	r2 = r0->constBits;
-	r5 = 2;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	label$1e03ac5_2_14:
-	r4 = r0->killAlpha__;
-	if( !r4 ) goto label$1e03ac5_2_20;
-	r2 = r0->constBits;
-	r5 = 4;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	label$1e03ac5_2_20:
-	r4 = r0->pixelAlign__;
-	if( !r4 ) goto label$1e03ac5_2_26;
-	r2 = r0->constBits;
-	r5 = 8;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	label$1e03ac5_2_26:
-	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
-	return;
-}
-
-vdynamic* h3d_shader_Base2d_getParamValue(h3d__shader__Base2d r0,int r1) {
-	bool r5;
-	h3d__Vector r6;
-	double r2;
-	vdynamic *r3;
-	h3d__mat__Texture r4;
-	switch(r1) {
-		default:
-			goto label$1e03ac5_3_37;
-		case 0:
-			r2 = r0->zValue__;
-			r3 = hl_alloc_dynamic(&t$_f64);
-			r3->v.d = r2;
-			return r3;
-		case 1:
-			r4 = r0->texture__;
-			return ((vdynamic*)r4);
-		case 2:
-			r5 = r0->isRelative__;
-			r3 = hl_alloc_dynbool(r5);
-			return r3;
-		case 3:
-			r6 = r0->color__;
-			return ((vdynamic*)r6);
-		case 4:
-			r6 = r0->absoluteMatrixA__;
-			return ((vdynamic*)r6);
-		case 5:
-			r6 = r0->absoluteMatrixB__;
-			return ((vdynamic*)r6);
-		case 6:
-			r6 = r0->filterMatrixA__;
-			return ((vdynamic*)r6);
-		case 7:
-			r6 = r0->filterMatrixB__;
-			return ((vdynamic*)r6);
-		case 8:
-			r5 = r0->hasUVPos__;
-			r3 = hl_alloc_dynbool(r5);
-			return r3;
-		case 9:
-			r6 = r0->uvPos__;
-			return ((vdynamic*)r6);
-		case 10:
-			r5 = r0->killAlpha__;
-			r3 = hl_alloc_dynbool(r5);
-			return r3;
-		case 11:
-			r5 = r0->pixelAlign__;
-			r3 = hl_alloc_dynbool(r5);
-			return r3;
-		case 12:
-			r6 = r0->halfPixelInverse__;
-			return ((vdynamic*)r6);
-		case 13:
-			r6 = r0->viewportA__;
-			return ((vdynamic*)r6);
-		case 14:
-			r6 = r0->viewportB__;
-			return ((vdynamic*)r6);
-	}
-	label$1e03ac5_3_37:
-	r3 = NULL;
-	return r3;
-}
-
-double h3d_shader_Base2d_getParamFloatValue(h3d__shader__Base2d r0,int r1) {
-	double r3;
-	int r2;
-	r2 = 0;
-	if( r1 != r2 ) goto label$1e03ac5_4_4;
-	r3 = r0->zValue__;
-	return r3;
-	label$1e03ac5_4_4:
-	r3 = 0.;
-	return r3;
 }
 

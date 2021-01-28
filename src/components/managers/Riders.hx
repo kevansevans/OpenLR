@@ -93,7 +93,6 @@ class Riders
 	}
 	
 	public function resetPositions() {
-		BindStick.crash = false;
 		for (rider in riders) {
 			rider.reset();
 		}

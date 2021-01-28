@@ -4,11 +4,8 @@ import components.physics.RidePoint;
 import components.physics.ScarfPoint;
 import components.physics.ScarfStick;
 import components.physics.Stick;
-import components.physics.BindStick;
-import components.physics.RepellStick;
 import components.sledder.RiderBase;
 import components.sledder.RiderBase.RiderPart;
-import format.gif.Data.Frame;
 
 /**
  * ...
@@ -107,10 +104,19 @@ class Bosh extends RiderBase
 		
 		gfx.clear();
 		if (!crashed) {
+			
 			gfx.lineStyle(0.25);
-			gfx.moveTo(ridePoints[6].pos.x, ridePoints[6].pos.y);
-			gfx.lineTo(ridePoints[3].pos.x, ridePoints[3].pos.y);
-			gfx.lineTo(ridePoints[7].pos.x, ridePoints[7].pos.y);
+			
+			if (bones[16].enabled) {
+				gfx.moveTo(ridePoints[6].pos.x, ridePoints[6].pos.y);
+				gfx.lineTo(ridePoints[3].pos.x, ridePoints[3].pos.y);
+			}
+			
+			if (bones[17].enabled) {
+				gfx.moveTo(ridePoints[7].pos.x, ridePoints[7].pos.y);
+				gfx.lineTo(ridePoints[3].pos.x, ridePoints[3].pos.y);
+			}
+			
 		}
 		
 		gfx.lineStyle(2, neckscarf.colorB);
@@ -148,7 +154,7 @@ class Bosh extends RiderBase
 	public function updateEyeball(_frame:Int):Void 
 	{
 		if (_frame == prevFrame) return;
-		if (crashed) {
+		if (crashed || undead) {
 			eye.anim.currentFrame = 2;
 		} else {
 			var rngValue:Float = 0;
@@ -166,7 +172,11 @@ class Bosh extends RiderBase
 		}
 	}
 	
-	override public function reset() { init(); };
+	override public function reset() {
+		
+		init(); 
+		
+	};
 	
 	override public function init():Void 
 	{
@@ -175,16 +185,16 @@ class Bosh extends RiderBase
 		bones = new Array();
 		scarves = new Array();
 		
-		ridePoints.push(new RidePoint(0, 0, 0.8));
-		ridePoints.push(new RidePoint(0, 10));
-		ridePoints.push(new RidePoint(30, 10));
-		ridePoints.push(new RidePoint(35, 0));
-		ridePoints.push(new RidePoint(10, 0, 0.8));
-		ridePoints.push(new RidePoint(10, -11, 0.8));
-		ridePoints.push(new RidePoint(23, -10, 0.1));
-		ridePoints.push(new RidePoint(23, -10, 0.1));
-		ridePoints.push(new RidePoint(23, 10, 0));
-		ridePoints.push(new RidePoint(23, 10, 0));
+		ridePoints.push(new RidePoint(0, 0, 0.8));  	//Second Peg	0
+		ridePoints.push(new RidePoint(0, 10));			//Tail			1
+		ridePoints.push(new RidePoint(30, 10));			//Nose			2
+		ridePoints.push(new RidePoint(35, 0));			//String		3
+		ridePoints.push(new RidePoint(10, 0, 0.8));		//Butt			4
+		ridePoints.push(new RidePoint(10, -11, 0.8));	//Shoulder		5
+		ridePoints.push(new RidePoint(23, -10, 0.1));	//Hand			6
+		ridePoints.push(new RidePoint(23, -10, 0.1));	//Hand			7
+		ridePoints.push(new RidePoint(23, 10, 0));		//Foot			8
+		ridePoints.push(new RidePoint(23, 10, 0));		//Foot			9
 		
 		scarfPoints.push(new ScarfPoint(7, -10));
 		scarfPoints.push(new ScarfPoint(3, -10));
@@ -211,40 +221,47 @@ class Bosh extends RiderBase
 			point.vel.y = point.pos.y;
 		}
 		
-		bones.push(new Stick(ridePoints[0], ridePoints[1]));
-		bones.push(new Stick(ridePoints[1], ridePoints[2]));
-		bones.push(new Stick(ridePoints[2], ridePoints[3]));
-		bones.push(new Stick(ridePoints[3], ridePoints[0]));
-		bones.push(new Stick(ridePoints[0], ridePoints[2]));
-		bones.push(new Stick(ridePoints[3], ridePoints[1]));
-		bones.push(new BindStick(ridePoints[0], ridePoints[4], ENDURANCE));
-		bones.push(new BindStick(ridePoints[1], ridePoints[4], ENDURANCE));
-		bones.push(new BindStick(ridePoints[2], ridePoints[4], ENDURANCE));
-		bones.push(new Stick(ridePoints[5], ridePoints[4]));
-		bones.push(new Stick(ridePoints[5], ridePoints[6]));
-		bones.push(new Stick(ridePoints[5], ridePoints[7]));
-		bones.push(new Stick(ridePoints[4], ridePoints[8]));
-		bones.push(new Stick(ridePoints[4], ridePoints[9]));
-		bones.push(new Stick(ridePoints[5], ridePoints[7]));
-		bones.push(new BindStick(ridePoints[5], ridePoints[0], ENDURANCE));
-		bones.push(new BindStick(ridePoints[3], ridePoints[6], ENDURANCE));
-		bones.push(new BindStick(ridePoints[3], ridePoints[7], ENDURANCE));
-		bones.push(new BindStick(ridePoints[8], ridePoints[2], ENDURANCE));
-		bones.push(new BindStick(ridePoints[9], ridePoints[2], ENDURANCE));
-		bones.push(new RepellStick(ridePoints[5], ridePoints[8]));
-		bones.push(new RepellStick(ridePoints[5], ridePoints[9]));
+		bones.push(new Stick(ridePoints[0], ridePoints[1], STANDARD, this));			//Second to Tail			0
+		bones.push(new Stick(ridePoints[1], ridePoints[2], STANDARD, this));			//Tail to Nose				1
+		bones.push(new Stick(ridePoints[2], ridePoints[3], STANDARD, this));			//Nose to String			2
+		bones.push(new Stick(ridePoints[3], ridePoints[0], STANDARD, this));			//String to Second			3
+		bones.push(new Stick(ridePoints[0], ridePoints[2], STANDARD, this));			//Second to nose			4
+		bones.push(new Stick(ridePoints[3], ridePoints[1], STANDARD, this));			//String to Tail			5
 		
-		scarves.push(new ScarfStick(ridePoints[5], scarfPoints[0]));
-		scarves.push(new ScarfStick(scarfPoints[0], scarfPoints[1]));
-		scarves.push(new ScarfStick(scarfPoints[1], scarfPoints[2]));
-		scarves.push(new ScarfStick(scarfPoints[2], scarfPoints[3]));
-		scarves.push(new ScarfStick(scarfPoints[3], scarfPoints[4]));
-		scarves.push(new ScarfStick(scarfPoints[4], scarfPoints[5]));
+		bones.push(new Stick(ridePoints[0], ridePoints[4], STANDARD, this));			//Second to butt			6
+		bones.push(new Stick(ridePoints[1], ridePoints[4], STANDARD, this));			//Tail to butt				7
+		bones.push(new Stick(ridePoints[2], ridePoints[4], STANDARD, this));			//Nose to butt				8
 		
-		bones[20].restLength = bones[20].restLength * 0.5;
-		bones[21].restLength = bones[21].restLength * 0.5;
+		bones[6].crashable = bones[7].crashable = bones[8].crashable = true;
+		
+		bones.push(new Stick(ridePoints[5], ridePoints[4], STANDARD, this));			//Shoulder to butt			9
+		bones.push(new Stick(ridePoints[5], ridePoints[6], STANDARD, this));			//Shoulder to hand			10
+		bones.push(new Stick(ridePoints[5], ridePoints[7], STANDARD, this));			//Shoulder to hand			11
+		bones.push(new Stick(ridePoints[4], ridePoints[8], STANDARD, this));			//Butt to foot				12
+		bones.push(new Stick(ridePoints[4], ridePoints[9], STANDARD, this));			//Butt to foot				13
+		bones.push(new Stick(ridePoints[5], ridePoints[7], STANDARD, this));			//Shoulder to hand, again	14
+		
+		bones.push(new Stick(ridePoints[5], ridePoints[0], STANDARD, this));			//Shoulder to second		15
+		bones.push(new Stick(ridePoints[3], ridePoints[6], STANDARD, this));			//String to hand			16
+		bones.push(new Stick(ridePoints[3], ridePoints[7], STANDARD, this));			//String to hand			17
+		bones.push(new Stick(ridePoints[8], ridePoints[2], STANDARD, this));			//Foot to nose				18
+		bones.push(new Stick(ridePoints[9], ridePoints[2], STANDARD, this));			//Foot to nose				19
+		
+		bones[15].crashable = bones[16].crashable = bones[17].crashable = bones[18].crashable = bones[19].crashable = true;
+		
+		bones.push(new Stick(ridePoints[5], ridePoints[8], REPELL, this));			//Shoulder to foot			20
+		bones.push(new Stick(ridePoints[5], ridePoints[9], REPELL, this));			//Shoulder to foot			21
+		
+		scarves.push(new ScarfStick(ridePoints[5], scarfPoints[0], this));
+		scarves.push(new ScarfStick(scarfPoints[0], scarfPoints[1], this));
+		scarves.push(new ScarfStick(scarfPoints[1], scarfPoints[2], this));
+		scarves.push(new ScarfStick(scarfPoints[2], scarfPoints[3], this));
+		scarves.push(new ScarfStick(scarfPoints[3], scarfPoints[4], this));
+		scarves.push(new ScarfStick(scarfPoints[4], scarfPoints[5], this));
 		
 		crashed = false;
+		
+		cameraPoint = ridePoints[4];
 	}
 	
 }

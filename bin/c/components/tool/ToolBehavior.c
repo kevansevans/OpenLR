@@ -71,6 +71,9 @@ void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double
 #include <components/ui/Toolbar.h>
 #include <components/ui/Icon.h>
 #include <components/managers/Riders.h>
+#include <components/stage/Camera.h>
+#include <h3d/Engine.h>
+#include <components/sledder/RiderBase.h>
 extern String s$keyInputDown;
 venum* components_stage_Canvas_get_drawMode(components__stage__Canvas);
 extern venum* g$994fdec;
@@ -96,6 +99,8 @@ void components_managers_Simulation_setFlagState(components__managers__Simulatio
 void components_tool_ToolBehavior_setToolPencil(components__tool__ToolBehavior);
 extern venum* g$components_ui_Icon_PENCIL;
 void components_managers_Simulation_startSim(components__managers__Simulation);
+void components_tool_ToolBehavior_setToolLine(components__tool__ToolBehavior);
+extern venum* g$components_ui_Icon_LINE;
 void components_managers_Simulation_endSim(components__managers__Simulation);
 void components_managers_Riders_resetPositions(components__managers__Riders);
 double Math_max(double,double);
@@ -103,6 +108,7 @@ extern String s$Ruler_width_set_to_;
 extern String s$Max_left_bitshift_reached;
 void components_managers_Simulation_updateSim(components__managers__Simulation);
 void components_managers_Musicplayer_playMusic(components__managers__Musicplayer,int);
+h2d__col__Point h2d_Object_localToGlobal(h2d__Object,h2d__col__Point);
 extern venum* g$components_tool_ToolMode_ERASER;
 extern String s$Color_eraser_;
 extern String s$on;
@@ -1112,14 +1118,19 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 	bool r16;
 	components__managers__Musicplayer r17;
 	haxe__$Log r6;
+	components__sledder__RiderBase r36;
 	$Main r14;
+	h3d__Engine r34;
+	h2d__col__Point r29;
 	components__stage__Canvas r13;
-	double r24, r25;
+	double r24, r25, r33, r35, r37;
 	components__ui__Toolbar r20;
 	components__managers__Simulation r15;
 	vclosure *r5;
+	double *r30, *r31;
 	int *r26;
 	vdynamic *r7, *r19;
+	components__stage__Camera r32;
 	vbyte *r27;
 	components__stage__LRConsole r18;
 	int r3, r11, r23;
@@ -1137,7 +1148,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 		case 5:
 		case 6:
 		case 7:
-			goto label$80df762_10_345;
+			goto label$80df762_10_457;
 		case 8:
 			r6 = (haxe__$Log)g$_haxe_Log;
 			r5 = r6->trace;
@@ -1148,7 +1159,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			r8 = hl_alloc_virtual(&t$vrt_329ffa8);
 			r9 = (String)s$3b33a12;
 			if( hl_vfields(r8)[1] ) *(String*)(hl_vfields(r8)[1]) = (String)r9; else hl_dyn_setp(r8->value,37969014/*fileName*/,&t$String,r9);
-			r3 = 385;
+			r3 = 387;
 			if( hl_vfields(r8)[2] ) *(int*)(hl_vfields(r8)[2]) = (int)r3; else hl_dyn_seti(r8->value,371360620/*lineNumber*/,&t$_i32,r3);
 			r9 = (String)s$components_tool_ToolBehavior;
 			if( hl_vfields(r8)[0] ) *(String*)(hl_vfields(r8)[0]) = (String)r9; else hl_dyn_setp(r8->value,-63073762/*className*/,&t$String,r9);
@@ -1362,11 +1373,11 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			components_managers_Simulation_startSim(r15);
 			goto label$80df762_10_322;
 			label$80df762_10_201:
-			components_tool_ToolBehavior_setToolPencil(r0);
+			components_tool_ToolBehavior_setToolLine(r0);
 			r14 = ($Main)g$_Main;
 			r20 = r14->toolbar;
 			if( r20 == NULL ) hl_null_access();
-			r21 = (venum*)g$components_ui_Icon_ERASER;
+			r21 = (venum*)g$components_ui_Icon_LINE;
 			components_ui_Toolbar_externalUpdate(r20,r21);
 			goto label$80df762_10_322;
 			label$80df762_10_208:
@@ -1503,15 +1514,19 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			if( r15 == NULL ) hl_null_access();
 			components_managers_Simulation_updateSim(r15);
 			label$80df762_10_322:
-			goto label$80df762_10_345;
+			goto label$80df762_10_457;
 		case 9:
 			r3 = r1->keyCode;
 			r11 = 17;
-			if( r11 == r3 ) goto label$80df762_10_329;
+			if( r11 == r3 ) goto label$80df762_10_333;
+			r11 = 35;
+			if( r11 == r3 ) goto label$80df762_10_347;
+			r11 = 36;
+			if( r11 == r3 ) goto label$80df762_10_368;
 			r11 = 272;
-			if( r11 == r3 ) goto label$80df762_10_343;
-			goto label$80df762_10_345;
-			label$80df762_10_329:
+			if( r11 == r3 ) goto label$80df762_10_455;
+			goto label$80df762_10_457;
+			label$80df762_10_333:
 			r14 = ($Main)g$_Main;
 			r15 = r14->simulation;
 			if( r15 == NULL ) hl_null_access();
@@ -1525,12 +1540,125 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 			if( r15 == NULL ) hl_null_access();
 			r3 = r15->frames;
 			components_managers_Musicplayer_playMusic(r17,r3);
-			goto label$80df762_10_345;
-			label$80df762_10_343:
+			goto label$80df762_10_457;
+			label$80df762_10_347:
+			r29 = r0->lastViewedPosition;
+			if( !r29 ) goto label$80df762_10_367;
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r16 = true;
+			r13->posChanged = r16;
+			r29 = r0->lastViewedPosition;
+			if( r29 == NULL ) hl_null_access();
+			r24 = r29->x;
+			r13->x = r24;
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r16 = true;
+			r13->posChanged = r16;
+			r29 = r0->lastViewedPosition;
+			if( r29 == NULL ) hl_null_access();
+			r24 = r29->y;
+			r13->y = r24;
+			label$80df762_10_367:
+			goto label$80df762_10_457;
+			label$80df762_10_368:
+			r29 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r24 = r13->x;
+			r30 = &r24;
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r25 = r13->y;
+			r31 = &r25;
+			h2d_col_Point_new(r29,r30,r31);
+			r0->lastViewedPosition = r29;
+			r14 = ($Main)g$_Main;
+			r32 = r14->camera;
+			if( r32 == NULL ) hl_null_access();
+			r9 = r32->riderFollow;
+			if( r9 ) goto label$80df762_10_413;
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r16 = true;
+			r13->posChanged = r16;
+			r14 = ($Main)g$_Main;
+			r34 = r14->locengine;
+			if( r34 == NULL ) hl_null_access();
+			r3 = r34->width;
+			r33 = (double)r3;
+			r35 = 2.;
+			r33 = r33 / r35;
+			r13->x = r33;
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r16 = true;
+			r13->posChanged = r16;
+			r14 = ($Main)g$_Main;
+			r34 = r14->locengine;
+			if( r34 == NULL ) hl_null_access();
+			r3 = r34->height;
+			r33 = (double)r3;
+			r35 = 2.;
+			r33 = r33 / r35;
+			r13->y = r33;
+			goto label$80df762_10_454;
+			label$80df762_10_413:
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r14 = ($Main)g$_Main;
+			r32 = r14->camera;
+			if( r32 == NULL ) hl_null_access();
+			r36 = r32->rider;
+			if( r36 == NULL ) hl_null_access();
+			r29 = r36->startPos;
+			r29 = h2d_Object_localToGlobal(((h2d__Object)r13),r29);
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r16 = true;
+			r13->posChanged = r16;
+			if( r29 == NULL ) hl_null_access();
+			r33 = r29->x;
+			r14 = ($Main)g$_Main;
+			r34 = r14->locengine;
+			if( r34 == NULL ) hl_null_access();
+			r3 = r34->width;
+			r35 = (double)r3;
+			r37 = 2.;
+			r35 = r35 / r37;
+			r33 = r33 + r35;
+			r13->x = r33;
+			r14 = ($Main)g$_Main;
+			r13 = r14->canvas;
+			if( r13 == NULL ) hl_null_access();
+			r16 = true;
+			r13->posChanged = r16;
+			r33 = r29->y;
+			r14 = ($Main)g$_Main;
+			r34 = r14->locengine;
+			if( r34 == NULL ) hl_null_access();
+			r3 = r34->height;
+			r35 = (double)r3;
+			r37 = 2.;
+			r35 = r35 / r37;
+			r33 = r33 + r35;
+			r13->y = r33;
+			label$80df762_10_454:
+			goto label$80df762_10_457;
+			label$80df762_10_455:
 			r16 = false;
 			r0->shifted = r16;
 	}
-	label$80df762_10_345:
+	label$80df762_10_457:
 	return;
 }
 

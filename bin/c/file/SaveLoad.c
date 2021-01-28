@@ -104,7 +104,6 @@ extern String s$Bosh;
 extern hl_type t$ref_f64;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
 extern hl_type t$hl_types_ArrayDyn;
-void hl_types_ArrayDyn_reverse(hl__types__ArrayDyn);
 int hl_types_ArrayDyn_get_length(hl__types__ArrayDyn);
 extern hl_type t$nul_bool;
 extern hl_type t$vrt_45af8a6;
@@ -710,56 +709,54 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 	components_managers_Riders_addNewRider(r11,r5,r12,r15,r16);
 	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r6,352444302/*lines*/,&t$_dyn);
 	r17 = (hl__types__ArrayDyn)hl_dyn_castp(&r9,&t$_dyn,&t$hl_types_ArrayDyn);
-	if( r17 == NULL ) hl_null_access();
-	hl_types_ArrayDyn_reverse(r17);
 	r18 = 0;
-	label$eb91429_5_48:
+	label$eb91429_5_46:
 	if( r17 == NULL ) hl_null_access();
 	r20 = hl_types_ArrayDyn_get_length(r17);
-	if( r18 >= r20 ) goto label$eb91429_5_109;
+	if( r18 >= r20 ) goto label$eb91429_5_107;
 	r9 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r17->$type->vobj_proto[0])(r17,r18);
 	++r18;
 	r19 = -1;
 	if( r9 == NULL ) hl_null_access();
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_65;
+	if( r3 ) goto label$eb91429_5_63;
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_65;
+	if( r3 ) goto label$eb91429_5_63;
 	r20 = 0;
 	r19 = r20;
-	goto label$eb91429_5_91;
-	label$eb91429_5_65:
+	goto label$eb91429_5_89;
+	label$eb91429_5_63:
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_74;
+	if( !r3 ) goto label$eb91429_5_72;
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_74;
+	if( r3 ) goto label$eb91429_5_72;
 	r20 = 1;
 	r19 = r20;
-	goto label$eb91429_5_91;
-	label$eb91429_5_74:
+	goto label$eb91429_5_89;
+	label$eb91429_5_72:
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_83;
+	if( r3 ) goto label$eb91429_5_81;
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_83;
+	if( !r3 ) goto label$eb91429_5_81;
 	r20 = 2;
 	r19 = r20;
-	goto label$eb91429_5_91;
-	label$eb91429_5_83:
+	goto label$eb91429_5_89;
+	label$eb91429_5_81:
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_91;
+	if( !r3 ) goto label$eb91429_5_89;
 	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
 	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_91;
+	if( !r3 ) goto label$eb91429_5_89;
 	r20 = 3;
 	r19 = r20;
-	label$eb91429_5_91:
+	label$eb91429_5_89:
 	r10 = ($Main)g$_Main;
 	r22 = r10->canvas;
 	if( r22 == NULL ) hl_null_access();
@@ -778,8 +775,8 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 	r15 = hl_alloc_dynamic(&t$_i32);
 	r15->v.i = r19;
 	components_stage_Canvas_addLine(r22,r20,r23,r24,r25,r26,r27,r15);
-	goto label$eb91429_5_48;
-	label$eb91429_5_109:
+	goto label$eb91429_5_46;
+	label$eb91429_5_107:
 	return;
 }
 

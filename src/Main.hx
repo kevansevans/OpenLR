@@ -1,5 +1,6 @@
 package;
 
+import components.stage.Camera;
 import components.managers.Grid;
 import components.managers.Musicplayer;
 import components.managers.Riders;
@@ -91,6 +92,8 @@ class Main extends App
 	public static var audio:Musicplayer;
 	
 	public static var rng:TableRNG;
+	
+	public static var camera:Camera;
 	
 	#if js
 	public static var p2p:WebRTC;
@@ -187,6 +190,8 @@ class Main extends App
 		toolbar = new Toolbar(s2d);
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 3;
+		
+		camera = new Camera();
 	}
 	
 	//EVERYTHING is a console command if and when possible.
@@ -505,6 +510,24 @@ class Main extends App
 			
 		});
 		#end
+		var argCamToggle:ConsoleArgDesc = {t: ABool, opt: false, name : "True/False"};
+		var argCamFollow:ConsoleArgDesc = {t: AString, opt: true, name : "Rider name"};
+		console.addCommand(Commands.enableCamera, "Toggle camera on or off, and set rider to follow", [argCamToggle, argCamFollow], function(_enabled:Bool, ?_name:String ) {
+			
+			if (!_enabled) {
+				camera.enabled == false;
+			} else {
+				if (_name == null && camera.riderFollow == null) {
+					console.log('A rider to follow has not been set, please specify a name.', 0xFF0000);
+				} else if (_name == null && camera.riderFollow != null) {
+					camera.enabled = true;
+				} else if (_name != null) {
+					camera.riderFollow = _name;
+					camera.enabled = true;
+				}
+			}
+			
+		});
 	}
 	
 	var networkDelta:Float = 0.0;
@@ -527,6 +550,8 @@ class Main extends App
 		canvas.drawRiders();
 		
 		textinfo.update();
+		
+		if (camera.running) camera.follow();
 		
 		#if js
 		if (p2p.connected) p2p.updateCursor();

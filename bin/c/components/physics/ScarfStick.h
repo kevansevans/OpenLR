@@ -8,6 +8,8 @@ typedef struct _components__physics__ScarfStick *components__physics__ScarfStick
 #include <_std/String.h>
 #include <components/physics/Stick.h>
 #include <components/physics/RidePoint.h>
+#include <components/physics/StickType.h>
+#include <components/sledder/RiderBase.h>
 
 
 struct _components__physics__$ScarfStick {
@@ -23,6 +25,14 @@ struct _components__physics__ScarfStick {
 	components__physics__RidePoint a;
 	components__physics__RidePoint b;
 	double restLength;
+	bool enabled;
+	bool breakable;
+	bool broken;
+	bool crashable;
+	double endurance;
+	vclosure* constrain;
+	venum* type;
+	components__sledder__RiderBase rider;
 };
 #endif
 

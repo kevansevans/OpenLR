@@ -2,8 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxd/earcut/Earcut.h>
-extern hl_type t$hxd_earcut_EarNode;
-extern hl_type t$_dyn;
 #include <hl/types/ArrayObj.h>
 #include <hl/types/ArrayDyn.h>
 #include <hl/natives.h>
@@ -15,6 +13,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_eliminateHoles_triangulate_T(hxd__earcut_
 hl__types__ArrayBytes_Int hxd_earcut_Earcut_triangulateNode(hxd__earcut__Earcut,hxd__earcut__EarNode,bool);
 hxd__earcut__EarNode hxd_earcut_Earcut_filterPoints(hxd__earcut__Earcut,hxd__earcut__EarNode,hxd__earcut__EarNode);
 void hxd_earcut_Earcut_earcutLinked(hxd__earcut__Earcut,hxd__earcut__EarNode,int*);
+extern hl_type t$hxd_earcut_EarNode;
 void hxd_earcut_EarNode_new(hxd__earcut__EarNode);
 hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 int hl_types_ArrayDyn_get_length(hl__types__ArrayDyn);
@@ -22,6 +21,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_getLeftmost(hxd__earcut__Earcut,hxd__earc
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 int hxd_earcut_Earcut_compareX(hxd__earcut__Earcut,hxd__earcut__EarNode,hxd__earcut__EarNode);
 extern hl_type t$fun_f99e0ff;
+int hxd_earcut_Earcut_eliminateHoles_triangulate_T__$1(vclosure*,vdynamic*,vdynamic*);
 extern hl_type t$fun_f511180;
 void hl_types_ArrayObj_sort(hl__types__ArrayObj,vclosure*);
 void hxd_earcut_Earcut_eliminateHole(hxd__earcut__Earcut,hxd__earcut__EarNode,hxd__earcut__EarNode);
@@ -39,15 +39,7 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut,hxd__earcut__EarNode,
 bool hxd_earcut_Earcut_intersectsPolygon(hxd__earcut__Earcut,hxd__earcut__EarNode,hxd__earcut__EarNode);
 bool hxd_earcut_Earcut_middleInside(hxd__earcut__Earcut,hxd__earcut__EarNode,hxd__earcut__EarNode);
 hxd__earcut__EarNode hxd_earcut_Earcut_sortLinked(hxd__earcut__Earcut,hxd__earcut__EarNode);
-
-int hxd_earcut_Earcut_eliminateHoles_triangulate_T__$1(vclosure* r0,vdynamic* r1,vdynamic* r2) {
-	hxd__earcut__EarNode r3, r4;
-	int r5;
-	r3 = (hxd__earcut__EarNode)hl_dyn_castp(&r1,&t$_dyn,&t$hxd_earcut_EarNode);
-	r4 = (hxd__earcut__EarNode)hl_dyn_castp(&r2,&t$_dyn,&t$hxd_earcut_EarNode);
-	r5 = r0->hasValue ? ((int (*)(vdynamic*,hxd__earcut__EarNode,hxd__earcut__EarNode))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(hxd__earcut__EarNode,hxd__earcut__EarNode))r0->fun)(r3,r4);
-	return r5;
-}
+extern hl_type t$_dyn;
 
 void hxd_earcut_Earcut_new(hxd__earcut__Earcut r0) {
 	return;
@@ -60,61 +52,61 @@ hl__types__ArrayBytes_Int hxd_earcut_Earcut_triangulate_h2d_GPoint(hxd__earcut__
 	hl__types__ArrayDyn r11;
 	vbyte *r8;
 	int r5, r6, r9;
-	if( !r2 ) goto label$0be2704_3_7;
+	if( !r2 ) goto label$0be2704_2_7;
 	if( r2 == NULL ) hl_null_access();
 	r5 = r2->length;
 	r6 = 0;
-	if( r6 >= r5 ) goto label$0be2704_3_7;
+	if( r6 >= r5 ) goto label$0be2704_2_7;
 	r3 = true;
-	goto label$0be2704_3_8;
-	label$0be2704_3_7:
+	goto label$0be2704_2_8;
+	label$0be2704_2_7:
 	r3 = false;
-	label$0be2704_3_8:
-	if( !r3 ) goto label$0be2704_3_20;
+	label$0be2704_2_8:
+	if( !r3 ) goto label$0be2704_2_20;
 	if( r2 == NULL ) hl_null_access();
 	r5 = 0;
 	r6 = r2->length;
-	if( ((unsigned)r5) < ((unsigned)r6) ) goto label$0be2704_3_15;
+	if( ((unsigned)r5) < ((unsigned)r6) ) goto label$0be2704_2_15;
 	r5 = 0;
-	goto label$0be2704_3_19;
-	label$0be2704_3_15:
+	goto label$0be2704_2_19;
+	label$0be2704_2_15:
 	r8 = r2->bytes;
 	r6 = 2;
 	r6 = r5 << r6;
 	r5 = *(int*)(r8 + r6);
-	label$0be2704_3_19:
-	goto label$0be2704_3_22;
-	label$0be2704_3_20:
+	label$0be2704_2_19:
+	goto label$0be2704_2_22;
+	label$0be2704_2_20:
 	if( r1 == NULL ) hl_null_access();
 	r5 = r1->length;
-	label$0be2704_3_22:
+	label$0be2704_2_22:
 	r9 = 3;
-	if( r5 >= r9 ) goto label$0be2704_3_30;
+	if( r5 >= r9 ) goto label$0be2704_2_30;
 	r6 = 0;
 	r8 = hl_alloc_bytes(r6);
 	r6 = 0;
 	r6 = 0;
 	r4 = hl_types_ArrayBase_allocI32(r8,r6);
 	return r4;
-	label$0be2704_3_30:
+	label$0be2704_2_30:
 	r11 = (hl__types__ArrayDyn)hl_dyn_castp(&r1,&t$hl_types_ArrayObj,&t$hl_types_ArrayDyn);
 	r6 = 0;
 	r7 = true;
 	r10 = hxd_earcut_Earcut_setLinkedList_triangulate_T(r0,r11,r6,r5,r7);
-	if( !r2 ) goto label$0be2704_3_38;
+	if( !r2 ) goto label$0be2704_2_38;
 	r11 = (hl__types__ArrayDyn)hl_dyn_castp(&r1,&t$hl_types_ArrayObj,&t$hl_types_ArrayDyn);
 	r12 = hxd_earcut_Earcut_eliminateHoles_triangulate_T(r0,r11,r2,r10);
 	r10 = r12;
-	label$0be2704_3_38:
+	label$0be2704_2_38:
 	if( r1 == NULL ) hl_null_access();
 	r6 = r1->length;
 	r9 = 80;
-	if( r6 > r9 ) goto label$0be2704_3_44;
+	if( r6 > r9 ) goto label$0be2704_2_44;
 	r7 = false;
-	goto label$0be2704_3_45;
-	label$0be2704_3_44:
+	goto label$0be2704_2_45;
+	label$0be2704_2_44:
 	r7 = true;
-	label$0be2704_3_45:
+	label$0be2704_2_45:
 	r4 = hxd_earcut_Earcut_triangulateNode(r0,r10,r7);
 	return r4;
 }
@@ -136,55 +128,55 @@ hl__types__ArrayBytes_Int hxd_earcut_Earcut_triangulateNode(hxd__earcut__Earcut 
 	r7 = NULL;
 	r6 = hxd_earcut_Earcut_filterPoints(r0,r1,r7);
 	r1 = r6;
-	if( !r2 ) goto label$0be2704_4_47;
-	if( !r6 ) goto label$0be2704_4_47;
+	if( !r2 ) goto label$0be2704_3_47;
+	if( !r6 ) goto label$0be2704_3_47;
 	if( r6 == NULL ) hl_null_access();
 	r10 = r6->x;
 	r0->minX = r10;
 	r11 = r6->y;
 	r0->minY = r11;
 	r6 = r6->next;
-	label$0be2704_4_17:
-	if( r6 == r1 ) goto label$0be2704_4_35;
+	label$0be2704_3_17:
+	if( r6 == r1 ) goto label$0be2704_3_35;
 	if( r6 == NULL ) hl_null_access();
 	r12 = r6->x;
 	r14 = r6->y;
 	r16 = r0->minX;
-	if( !(r12 < r16) ) goto label$0be2704_4_25;
+	if( !(r12 < r16) ) goto label$0be2704_3_25;
 	r0->minX = r12;
-	label$0be2704_4_25:
+	label$0be2704_3_25:
 	r16 = r0->minY;
-	if( !(r14 < r16) ) goto label$0be2704_4_28;
+	if( !(r14 < r16) ) goto label$0be2704_3_28;
 	r0->minY = r14;
-	label$0be2704_4_28:
-	if( !(r10 < r12) ) goto label$0be2704_4_30;
+	label$0be2704_3_28:
+	if( !(r10 < r12) ) goto label$0be2704_3_30;
 	r10 = r12;
-	label$0be2704_4_30:
-	if( !(r11 < r14) ) goto label$0be2704_4_32;
+	label$0be2704_3_30:
+	if( !(r11 < r14) ) goto label$0be2704_3_32;
 	r11 = r14;
-	label$0be2704_4_32:
+	label$0be2704_3_32:
 	r7 = r6->next;
 	r6 = r7;
-	goto label$0be2704_4_17;
-	label$0be2704_4_35:
+	goto label$0be2704_3_17;
+	label$0be2704_3_35:
 	r14 = r0->minX;
 	r12 = r10 - r14;
 	r15 = r0->minY;
 	r14 = r11 - r15;
-	if( !(r12 < r14) ) goto label$0be2704_4_42;
+	if( !(r12 < r14) ) goto label$0be2704_3_42;
 	r15 = r14;
-	goto label$0be2704_4_43;
-	label$0be2704_4_42:
+	goto label$0be2704_3_43;
+	label$0be2704_3_42:
 	r15 = r12;
-	label$0be2704_4_43:
+	label$0be2704_3_43:
 	r0->size = r15;
 	r9 = true;
 	r0->hasSize = r9;
-	goto label$0be2704_4_49;
-	label$0be2704_4_47:
+	goto label$0be2704_3_49;
+	label$0be2704_3_47:
 	r9 = false;
 	r0->hasSize = r9;
-	label$0be2704_4_49:
+	label$0be2704_3_49:
 	r17 = NULL;
 	hxd_earcut_Earcut_earcutLinked(r0,r1,r17);
 	r3 = r0->triangles;
@@ -192,32 +184,217 @@ hl__types__ArrayBytes_Int hxd_earcut_Earcut_triangulateNode(hxd__earcut__Earcut 
 	r0->triangles = r18;
 	r6 = r0->allocated;
 	r7 = r0->cache;
-	if( !r7 ) goto label$0be2704_4_67;
-	label$0be2704_4_57:
+	if( !r7 ) goto label$0be2704_3_67;
+	label$0be2704_3_57:
 	r13 = r0->cache;
-	if( r6 == r13 ) goto label$0be2704_4_64;
+	if( r6 == r13 ) goto label$0be2704_3_64;
 	if( r6 == NULL ) hl_null_access();
 	r7 = r6->allocNext;
 	r6 = r7;
-	goto label$0be2704_4_57;
-	label$0be2704_4_64:
+	goto label$0be2704_3_57;
+	label$0be2704_3_64:
 	if( r6 == NULL ) hl_null_access();
 	r7 = r6->allocNext;
 	r6 = r7;
-	label$0be2704_4_67:
-	if( !r6 ) goto label$0be2704_4_76;
+	label$0be2704_3_67:
+	if( !r6 ) goto label$0be2704_3_76;
 	if( r6 == NULL ) hl_null_access();
 	r13 = r0->cache;
 	r6->next = r13;
 	r0->cache = r6;
 	r7 = r6->allocNext;
 	r6 = r7;
-	goto label$0be2704_4_67;
-	label$0be2704_4_76:
+	goto label$0be2704_3_67;
+	label$0be2704_3_76:
 	return r3;
 }
 
 hxd__earcut__EarNode hxd_earcut_Earcut_setLinkedList_eliminateHoles_T(hxd__earcut__Earcut r0,hl__types__ArrayDyn r1,int r2,int r3,bool r4) {
+	hxd__earcut__EarNode r17, r18, r19, r20, r23, r24, r25;
+	bool r21, r22;
+	double r5, r12, r13, r15, r16;
+	vdynamic *r14;
+	int r7, r8, r9, r10, r11;
+	r5 = 0.;
+	r8 = 1;
+	r7 = r3 - r8;
+	r8 = r2;
+	r9 = r3;
+	label$0be2704_4_5:
+	if( r8 >= r9 ) goto label$0be2704_4_29;
+	r10 = r8;
+	++r8;
+	if( r1 == NULL ) hl_null_access();
+	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r7);
+	if( r14 == NULL ) hl_null_access();
+	r13 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
+	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r10);
+	if( r14 == NULL ) hl_null_access();
+	r15 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
+	r13 = r13 - r15;
+	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r10);
+	if( r14 == NULL ) hl_null_access();
+	r15 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
+	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r7);
+	if( r14 == NULL ) hl_null_access();
+	r16 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
+	r15 = r15 + r16;
+	r13 = r13 * r15;
+	r12 = r5 + r13;
+	r5 = r12;
+	r7 = r10;
+	goto label$0be2704_4_5;
+	label$0be2704_4_29:
+	r17 = NULL;
+	r18 = r0->cache;
+	if( r18 ) goto label$0be2704_4_39;
+	r19 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
+	hxd_earcut_EarNode_new(r19);
+	r18 = r19;
+	r20 = r0->allocated;
+	r19->allocNext = r20;
+	r0->allocated = r19;
+	goto label$0be2704_4_42;
+	label$0be2704_4_39:
+	if( r18 == NULL ) hl_null_access();
+	r19 = r18->next;
+	r0->cache = r19;
+	label$0be2704_4_42:
+	r8 = -1;
+	r18->i = r8;
+	r8 = -1;
+	r18->z = r8;
+	r12 = 0.;
+	r18->x = r12;
+	r12 = 0.;
+	r18->y = r12;
+	r20 = NULL;
+	r18->next = r20;
+	r18->prev = r17;
+	r21 = false;
+	r18->steiner = r21;
+	r20 = NULL;
+	r18->prevZ = r20;
+	r20 = NULL;
+	r18->nextZ = r20;
+	if( !r17 ) goto label$0be2704_4_62;
+	if( r17 == NULL ) hl_null_access();
+	r17->next = r18;
+	label$0be2704_4_62:
+	r19 = r18;
+	r20 = r18;
+	r13 = 0.;
+	if( r5 > r13 ) goto label$0be2704_4_68;
+	r22 = false;
+	goto label$0be2704_4_69;
+	label$0be2704_4_68:
+	r22 = true;
+	label$0be2704_4_69:
+	if( r4 != r22 ) goto label$0be2704_4_113;
+	r8 = r2;
+	r9 = r3;
+	label$0be2704_4_72:
+	if( r8 >= r9 ) goto label$0be2704_4_112;
+	r10 = r8;
+	++r8;
+	if( r1 == NULL ) hl_null_access();
+	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r10);
+	if( r14 == NULL ) hl_null_access();
+	r12 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
+	r13 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
+	r23 = r0->cache;
+	if( r23 ) goto label$0be2704_4_90;
+	r24 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
+	hxd_earcut_EarNode_new(r24);
+	r23 = r24;
+	r25 = r0->allocated;
+	r24->allocNext = r25;
+	r0->allocated = r24;
+	goto label$0be2704_4_93;
+	label$0be2704_4_90:
+	if( r23 == NULL ) hl_null_access();
+	r24 = r23->next;
+	r0->cache = r24;
+	label$0be2704_4_93:
+	r23->i = r10;
+	r11 = -1;
+	r23->z = r11;
+	r23->x = r12;
+	r23->y = r13;
+	r25 = NULL;
+	r23->next = r25;
+	r23->prev = r19;
+	r21 = false;
+	r23->steiner = r21;
+	r25 = NULL;
+	r23->prevZ = r25;
+	r25 = NULL;
+	r23->nextZ = r25;
+	if( !r19 ) goto label$0be2704_4_110;
+	if( r19 == NULL ) hl_null_access();
+	r19->next = r23;
+	label$0be2704_4_110:
+	r19 = r23;
+	goto label$0be2704_4_72;
+	label$0be2704_4_112:
+	goto label$0be2704_4_154;
+	label$0be2704_4_113:
+	r9 = 1;
+	r8 = r3 - r9;
+	label$0be2704_4_115:
+	if( r8 < r2 ) goto label$0be2704_4_154;
+	if( r1 == NULL ) hl_null_access();
+	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r8);
+	if( r14 == NULL ) hl_null_access();
+	r12 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
+	r13 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
+	r23 = r0->cache;
+	if( r23 ) goto label$0be2704_4_131;
+	r24 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
+	hxd_earcut_EarNode_new(r24);
+	r23 = r24;
+	r25 = r0->allocated;
+	r24->allocNext = r25;
+	r0->allocated = r24;
+	goto label$0be2704_4_134;
+	label$0be2704_4_131:
+	if( r23 == NULL ) hl_null_access();
+	r24 = r23->next;
+	r0->cache = r24;
+	label$0be2704_4_134:
+	r23->i = r8;
+	r9 = -1;
+	r23->z = r9;
+	r23->x = r12;
+	r23->y = r13;
+	r25 = NULL;
+	r23->next = r25;
+	r23->prev = r19;
+	r21 = false;
+	r23->steiner = r21;
+	r25 = NULL;
+	r23->prevZ = r25;
+	r25 = NULL;
+	r23->nextZ = r25;
+	if( !r19 ) goto label$0be2704_4_151;
+	if( r19 == NULL ) hl_null_access();
+	r19->next = r23;
+	label$0be2704_4_151:
+	r19 = r23;
+	--r8;
+	goto label$0be2704_4_115;
+	label$0be2704_4_154:
+	if( r19 == NULL ) hl_null_access();
+	if( r20 == NULL ) hl_null_access();
+	r24 = r20->next;
+	r19->next = r24;
+	r23 = r19->next;
+	if( r23 == NULL ) hl_null_access();
+	r23->prev = r19;
+	return r19;
+}
+
+hxd__earcut__EarNode hxd_earcut_Earcut_setLinkedList_triangulate_T(hxd__earcut__Earcut r0,hl__types__ArrayDyn r1,int r2,int r3,bool r4) {
 	hxd__earcut__EarNode r17, r18, r19, r20, r23, r24, r25;
 	bool r21, r22;
 	double r5, r12, r13, r15, r16;
@@ -402,191 +579,6 @@ hxd__earcut__EarNode hxd_earcut_Earcut_setLinkedList_eliminateHoles_T(hxd__earcu
 	return r19;
 }
 
-hxd__earcut__EarNode hxd_earcut_Earcut_setLinkedList_triangulate_T(hxd__earcut__Earcut r0,hl__types__ArrayDyn r1,int r2,int r3,bool r4) {
-	hxd__earcut__EarNode r17, r18, r19, r20, r23, r24, r25;
-	bool r21, r22;
-	double r5, r12, r13, r15, r16;
-	vdynamic *r14;
-	int r7, r8, r9, r10, r11;
-	r5 = 0.;
-	r8 = 1;
-	r7 = r3 - r8;
-	r8 = r2;
-	r9 = r3;
-	label$0be2704_6_5:
-	if( r8 >= r9 ) goto label$0be2704_6_29;
-	r10 = r8;
-	++r8;
-	if( r1 == NULL ) hl_null_access();
-	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r7);
-	if( r14 == NULL ) hl_null_access();
-	r13 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
-	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r10);
-	if( r14 == NULL ) hl_null_access();
-	r15 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
-	r13 = r13 - r15;
-	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r10);
-	if( r14 == NULL ) hl_null_access();
-	r15 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
-	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r7);
-	if( r14 == NULL ) hl_null_access();
-	r16 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
-	r15 = r15 + r16;
-	r13 = r13 * r15;
-	r12 = r5 + r13;
-	r5 = r12;
-	r7 = r10;
-	goto label$0be2704_6_5;
-	label$0be2704_6_29:
-	r17 = NULL;
-	r18 = r0->cache;
-	if( r18 ) goto label$0be2704_6_39;
-	r19 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
-	hxd_earcut_EarNode_new(r19);
-	r18 = r19;
-	r20 = r0->allocated;
-	r19->allocNext = r20;
-	r0->allocated = r19;
-	goto label$0be2704_6_42;
-	label$0be2704_6_39:
-	if( r18 == NULL ) hl_null_access();
-	r19 = r18->next;
-	r0->cache = r19;
-	label$0be2704_6_42:
-	r8 = -1;
-	r18->i = r8;
-	r8 = -1;
-	r18->z = r8;
-	r12 = 0.;
-	r18->x = r12;
-	r12 = 0.;
-	r18->y = r12;
-	r20 = NULL;
-	r18->next = r20;
-	r18->prev = r17;
-	r21 = false;
-	r18->steiner = r21;
-	r20 = NULL;
-	r18->prevZ = r20;
-	r20 = NULL;
-	r18->nextZ = r20;
-	if( !r17 ) goto label$0be2704_6_62;
-	if( r17 == NULL ) hl_null_access();
-	r17->next = r18;
-	label$0be2704_6_62:
-	r19 = r18;
-	r20 = r18;
-	r13 = 0.;
-	if( r5 > r13 ) goto label$0be2704_6_68;
-	r22 = false;
-	goto label$0be2704_6_69;
-	label$0be2704_6_68:
-	r22 = true;
-	label$0be2704_6_69:
-	if( r4 != r22 ) goto label$0be2704_6_113;
-	r8 = r2;
-	r9 = r3;
-	label$0be2704_6_72:
-	if( r8 >= r9 ) goto label$0be2704_6_112;
-	r10 = r8;
-	++r8;
-	if( r1 == NULL ) hl_null_access();
-	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r10);
-	if( r14 == NULL ) hl_null_access();
-	r12 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
-	r13 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
-	r23 = r0->cache;
-	if( r23 ) goto label$0be2704_6_90;
-	r24 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
-	hxd_earcut_EarNode_new(r24);
-	r23 = r24;
-	r25 = r0->allocated;
-	r24->allocNext = r25;
-	r0->allocated = r24;
-	goto label$0be2704_6_93;
-	label$0be2704_6_90:
-	if( r23 == NULL ) hl_null_access();
-	r24 = r23->next;
-	r0->cache = r24;
-	label$0be2704_6_93:
-	r23->i = r10;
-	r11 = -1;
-	r23->z = r11;
-	r23->x = r12;
-	r23->y = r13;
-	r25 = NULL;
-	r23->next = r25;
-	r23->prev = r19;
-	r21 = false;
-	r23->steiner = r21;
-	r25 = NULL;
-	r23->prevZ = r25;
-	r25 = NULL;
-	r23->nextZ = r25;
-	if( !r19 ) goto label$0be2704_6_110;
-	if( r19 == NULL ) hl_null_access();
-	r19->next = r23;
-	label$0be2704_6_110:
-	r19 = r23;
-	goto label$0be2704_6_72;
-	label$0be2704_6_112:
-	goto label$0be2704_6_154;
-	label$0be2704_6_113:
-	r9 = 1;
-	r8 = r3 - r9;
-	label$0be2704_6_115:
-	if( r8 < r2 ) goto label$0be2704_6_154;
-	if( r1 == NULL ) hl_null_access();
-	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r8);
-	if( r14 == NULL ) hl_null_access();
-	r12 = (double)hl_dyn_getd((vdynamic*)r14,120/*x*/);
-	r13 = (double)hl_dyn_getd((vdynamic*)r14,121/*y*/);
-	r23 = r0->cache;
-	if( r23 ) goto label$0be2704_6_131;
-	r24 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
-	hxd_earcut_EarNode_new(r24);
-	r23 = r24;
-	r25 = r0->allocated;
-	r24->allocNext = r25;
-	r0->allocated = r24;
-	goto label$0be2704_6_134;
-	label$0be2704_6_131:
-	if( r23 == NULL ) hl_null_access();
-	r24 = r23->next;
-	r0->cache = r24;
-	label$0be2704_6_134:
-	r23->i = r8;
-	r9 = -1;
-	r23->z = r9;
-	r23->x = r12;
-	r23->y = r13;
-	r25 = NULL;
-	r23->next = r25;
-	r23->prev = r19;
-	r21 = false;
-	r23->steiner = r21;
-	r25 = NULL;
-	r23->prevZ = r25;
-	r25 = NULL;
-	r23->nextZ = r25;
-	if( !r19 ) goto label$0be2704_6_151;
-	if( r19 == NULL ) hl_null_access();
-	r19->next = r23;
-	label$0be2704_6_151:
-	r19 = r23;
-	--r8;
-	goto label$0be2704_6_115;
-	label$0be2704_6_154:
-	if( r19 == NULL ) hl_null_access();
-	if( r20 == NULL ) hl_null_access();
-	r24 = r20->next;
-	r19->next = r24;
-	r23 = r19->next;
-	if( r23 == NULL ) hl_null_access();
-	r23->prev = r19;
-	return r19;
-}
-
 hxd__earcut__EarNode hxd_earcut_Earcut_eliminateHoles_triangulate_T(hxd__earcut__Earcut r0,hl__types__ArrayDyn r1,hl__types__ArrayBytes_Int r2,hxd__earcut__EarNode r3) {
 	hxd__earcut__EarNode r16, r18, r19;
 	hl__types__ArrayObj r4;
@@ -604,97 +596,97 @@ hxd__earcut__EarNode hxd_earcut_Earcut_eliminateHoles_triangulate_T(hxd__earcut_
 	r7 = 0;
 	if( r2 == NULL ) hl_null_access();
 	r9 = r2->length;
-	label$0be2704_7_7:
-	if( r7 >= r9 ) goto label$0be2704_7_48;
+	label$0be2704_6_7:
+	if( r7 >= r9 ) goto label$0be2704_6_48;
 	r10 = r7;
 	++r7;
 	if( r2 == NULL ) hl_null_access();
 	r12 = r2->length;
-	if( ((unsigned)r10) < ((unsigned)r12) ) goto label$0be2704_7_16;
+	if( ((unsigned)r10) < ((unsigned)r12) ) goto label$0be2704_6_16;
 	r11 = 0;
-	goto label$0be2704_7_20;
-	label$0be2704_7_16:
+	goto label$0be2704_6_20;
+	label$0be2704_6_16:
 	r13 = r2->bytes;
 	r12 = 2;
 	r12 = r10 << r12;
 	r11 = *(int*)(r13 + r12);
-	label$0be2704_7_20:
+	label$0be2704_6_20:
 	r14 = r2->length;
 	r15 = 1;
 	r14 = r14 - r15;
-	if( r10 != r14 ) goto label$0be2704_7_27;
+	if( r10 != r14 ) goto label$0be2704_6_27;
 	if( r1 == NULL ) hl_null_access();
 	r12 = hl_types_ArrayDyn_get_length(r1);
-	goto label$0be2704_7_37;
-	label$0be2704_7_27:
+	goto label$0be2704_6_37;
+	label$0be2704_6_27:
 	r14 = 1;
 	r12 = r10 + r14;
 	r14 = r2->length;
-	if( ((unsigned)r12) < ((unsigned)r14) ) goto label$0be2704_7_33;
+	if( ((unsigned)r12) < ((unsigned)r14) ) goto label$0be2704_6_33;
 	r12 = 0;
-	goto label$0be2704_7_37;
-	label$0be2704_7_33:
+	goto label$0be2704_6_37;
+	label$0be2704_6_33:
 	r13 = r2->bytes;
 	r14 = 2;
 	r14 = r12 << r14;
 	r12 = *(int*)(r13 + r14);
-	label$0be2704_7_37:
+	label$0be2704_6_37:
 	r17 = false;
 	r16 = hxd_earcut_Earcut_setLinkedList_eliminateHoles_T(r0,r1,r11,r12,r17);
 	if( r16 == NULL ) hl_null_access();
 	r19 = r16->next;
-	if( r16 != r19 ) goto label$0be2704_7_44;
+	if( r16 != r19 ) goto label$0be2704_6_44;
 	r17 = true;
 	r16->steiner = r17;
-	label$0be2704_7_44:
+	label$0be2704_6_44:
 	if( r4 == NULL ) hl_null_access();
 	r18 = hxd_earcut_Earcut_getLeftmost(r0,r16);
 	r14 = hl_types_ArrayObj_push(r4,((vdynamic*)r18));
-	goto label$0be2704_7_7;
-	label$0be2704_7_48:
+	goto label$0be2704_6_7;
+	label$0be2704_6_48:
 	if( r4 == NULL ) hl_null_access();
 	r20 = hl_alloc_closure_ptr(&t$fun_f99e0ff,hxd_earcut_Earcut_compareX,r0);
-	if( r20 ) goto label$0be2704_7_53;
+	if( r20 ) goto label$0be2704_6_53;
 	r21 = NULL;
-	goto label$0be2704_7_54;
-	label$0be2704_7_53:
+	goto label$0be2704_6_54;
+	label$0be2704_6_53:
 	r21 = hl_alloc_closure_ptr(&t$fun_f511180,hxd_earcut_Earcut_eliminateHoles_triangulate_T__$1,r20);
-	label$0be2704_7_54:
+	label$0be2704_6_54:
 	hl_types_ArrayObj_sort(r4,r21);
 	r7 = 0;
-	label$0be2704_7_56:
+	label$0be2704_6_56:
 	if( r4 == NULL ) hl_null_access();
 	r10 = r4->length;
-	if( r7 >= r10 ) goto label$0be2704_7_74;
+	if( r7 >= r10 ) goto label$0be2704_6_74;
 	r10 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$0be2704_7_64;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$0be2704_6_64;
 	r16 = NULL;
-	goto label$0be2704_7_67;
-	label$0be2704_7_64:
+	goto label$0be2704_6_67;
+	label$0be2704_6_64:
 	r5 = r4->array;
 	r22 = ((vdynamic**)(r5 + 1))[r7];
 	r16 = (hxd__earcut__EarNode)r22;
-	label$0be2704_7_67:
+	label$0be2704_6_67:
 	++r7;
 	hxd_earcut_Earcut_eliminateHole(r0,r16,r3);
 	if( r3 == NULL ) hl_null_access();
 	r19 = r3->next;
 	r18 = hxd_earcut_Earcut_filterPoints(r0,r3,r19);
 	r3 = r18;
-	goto label$0be2704_7_56;
-	label$0be2704_7_74:
+	goto label$0be2704_6_56;
+	label$0be2704_6_74:
 	return r3;
 }
 
 void hxd_earcut_Earcut_eliminateHole(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1,hxd__earcut__EarNode r2) {
 	hxd__earcut__EarNode r3, r4, r6;
 	r3 = hxd_earcut_Earcut_findHoleBridge(r0,r1,r2);
-	if( !r3 ) goto label$0be2704_8_6;
+	if( !r3 ) goto label$0be2704_7_6;
 	r3 = hxd_earcut_Earcut_splitPolygon(r0,r3,r1);
 	if( r3 == NULL ) hl_null_access();
 	r6 = r3->next;
 	r4 = hxd_earcut_Earcut_filterPoints(r0,r3,r6);
-	label$0be2704_8_6:
+	label$0be2704_7_6:
 	return;
 }
 
@@ -710,16 +702,16 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r8 = ($Math)g$_Math;
 	r7 = r8->NEGATIVE_INFINITY;
 	r5 = NULL;
-	label$0be2704_9_7:
+	label$0be2704_8_7:
 	r9 = true;
-	if( !r9 ) goto label$0be2704_9_50;
+	if( !r9 ) goto label$0be2704_8_50;
 	if( r3 == NULL ) hl_null_access();
 	r11 = r3->y;
-	if( !(r11 >= r6) ) goto label$0be2704_9_45;
+	if( !(r11 >= r6) ) goto label$0be2704_8_45;
 	r12 = r3->next;
 	if( r12 == NULL ) hl_null_access();
 	r11 = r12->y;
-	if( !(r6 >= r11) ) goto label$0be2704_9_45;
+	if( !(r6 >= r11) ) goto label$0be2704_8_45;
 	r10 = r3->x;
 	r13 = r3->y;
 	r11 = r6 - r13;
@@ -736,63 +728,63 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r13 = r13 - r14;
 	r11 = r11 / r13;
 	r10 = r10 + r11;
-	if( !(r4 >= r10) ) goto label$0be2704_9_45;
-	if( !(r7 < r10) ) goto label$0be2704_9_45;
+	if( !(r4 >= r10) ) goto label$0be2704_8_45;
+	if( !(r7 < r10) ) goto label$0be2704_8_45;
 	r7 = r10;
 	r11 = r3->x;
 	r12 = r3->next;
 	if( r12 == NULL ) hl_null_access();
 	r13 = r12->x;
-	if( !(r11 < r13) ) goto label$0be2704_9_43;
+	if( !(r11 < r13) ) goto label$0be2704_8_43;
 	r12 = r3;
-	goto label$0be2704_9_44;
-	label$0be2704_9_43:
+	goto label$0be2704_8_44;
+	label$0be2704_8_43:
 	r12 = r3->next;
-	label$0be2704_9_44:
+	label$0be2704_8_44:
 	r5 = r12;
-	label$0be2704_9_45:
+	label$0be2704_8_45:
 	r12 = r3->next;
 	r3 = r12;
-	if( r12 != r2 ) goto label$0be2704_9_49;
-	goto label$0be2704_9_50;
-	label$0be2704_9_49:
-	goto label$0be2704_9_7;
-	label$0be2704_9_50:
-	if( r5 ) goto label$0be2704_9_53;
+	if( r12 != r2 ) goto label$0be2704_8_49;
+	goto label$0be2704_8_50;
+	label$0be2704_8_49:
+	goto label$0be2704_8_7;
+	label$0be2704_8_50:
+	if( r5 ) goto label$0be2704_8_53;
 	r12 = NULL;
 	return r12;
-	label$0be2704_9_53:
+	label$0be2704_8_53:
 	r12 = r5;
 	r8 = ($Math)g$_Math;
 	r10 = r8->POSITIVE_INFINITY;
 	if( r5 == NULL ) hl_null_access();
 	r15 = r5->next;
 	r3 = r15;
-	label$0be2704_9_59:
-	if( r3 == r12 ) goto label$0be2704_9_250;
+	label$0be2704_8_59:
+	if( r3 == r12 ) goto label$0be2704_8_250;
 	if( r3 == NULL ) hl_null_access();
 	r13 = r3->x;
-	if( !(r4 >= r13) ) goto label$0be2704_9_113;
+	if( !(r4 >= r13) ) goto label$0be2704_8_113;
 	r11 = r3->x;
 	if( r5 == NULL ) hl_null_access();
 	r13 = r5->x;
-	if( !(r11 >= r13) ) goto label$0be2704_9_113;
+	if( !(r11 >= r13) ) goto label$0be2704_8_113;
 	r13 = r5->y;
-	if( !(r6 < r13) ) goto label$0be2704_9_72;
+	if( !(r6 < r13) ) goto label$0be2704_8_72;
 	r11 = r4;
-	goto label$0be2704_9_73;
-	label$0be2704_9_72:
+	goto label$0be2704_8_73;
+	label$0be2704_8_72:
 	r11 = r7;
-	label$0be2704_9_73:
+	label$0be2704_8_73:
 	r13 = r5->x;
 	r14 = r5->y;
 	r18 = r5->y;
-	if( !(r6 < r18) ) goto label$0be2704_9_79;
+	if( !(r6 < r18) ) goto label$0be2704_8_79;
 	r17 = r7;
-	goto label$0be2704_9_80;
-	label$0be2704_9_79:
+	goto label$0be2704_8_80;
+	label$0be2704_8_79:
 	r17 = r4;
-	label$0be2704_9_80:
+	label$0be2704_8_80:
 	r18 = r3->x;
 	r19 = r3->y;
 	r21 = r17 - r18;
@@ -803,7 +795,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r22 = r22 * r23;
 	r21 = r21 - r22;
 	r22 = 0.;
-	if( !(r21 >= r22) ) goto label$0be2704_9_111;
+	if( !(r21 >= r22) ) goto label$0be2704_8_111;
 	r21 = r11 - r18;
 	r22 = r14 - r19;
 	r21 = r21 * r22;
@@ -812,7 +804,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r22 = r22 * r23;
 	r21 = r21 - r22;
 	r22 = 0.;
-	if( !(r21 >= r22) ) goto label$0be2704_9_111;
+	if( !(r21 >= r22) ) goto label$0be2704_8_111;
 	r21 = r13 - r18;
 	r22 = r6 - r19;
 	r21 = r21 * r22;
@@ -821,37 +813,37 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r22 = r22 * r23;
 	r21 = r21 - r22;
 	r22 = 0.;
-	if( !(r21 >= r22) ) goto label$0be2704_9_111;
+	if( !(r21 >= r22) ) goto label$0be2704_8_111;
 	r20 = true;
-	goto label$0be2704_9_112;
-	label$0be2704_9_111:
+	goto label$0be2704_8_112;
+	label$0be2704_8_111:
 	r20 = false;
-	label$0be2704_9_112:
-	goto label$0be2704_9_114;
-	label$0be2704_9_113:
+	label$0be2704_8_112:
+	goto label$0be2704_8_114;
+	label$0be2704_8_113:
 	r20 = false;
-	label$0be2704_9_114:
-	if( !r20 ) goto label$0be2704_9_247;
+	label$0be2704_8_114:
+	if( !r20 ) goto label$0be2704_8_247;
 	r13 = r3->y;
 	r11 = r6 - r13;
 	r17 = 0.;
-	if( !(r11 < r17) ) goto label$0be2704_9_121;
+	if( !(r11 < r17) ) goto label$0be2704_8_121;
 	r14 = -r11;
-	goto label$0be2704_9_122;
-	label$0be2704_9_121:
+	goto label$0be2704_8_122;
+	label$0be2704_8_121:
 	r14 = r11;
-	label$0be2704_9_122:
+	label$0be2704_8_122:
 	r18 = r3->x;
 	r17 = r4 - r18;
 	r14 = r14 / r17;
 	r13 = r14;
-	if( r14 < r10 ) goto label$0be2704_9_132;
-	if( r14 != r10 ) goto label$0be2704_9_243;
+	if( r14 < r10 ) goto label$0be2704_8_132;
+	if( r14 != r10 ) goto label$0be2704_8_243;
 	r14 = r3->x;
 	if( r5 == NULL ) hl_null_access();
 	r17 = r5->x;
-	if( !(r17 < r14) ) goto label$0be2704_9_243;
-	label$0be2704_9_132:
+	if( !(r17 < r14) ) goto label$0be2704_8_243;
+	label$0be2704_8_132:
 	r15 = r3->prev;
 	r16 = r3->next;
 	r14 = r3->y;
@@ -872,7 +864,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r17 = r17 * r18;
 	r14 = r14 - r17;
 	r17 = 0.;
-	if( !(r14 < r17) ) goto label$0be2704_9_198;
+	if( !(r14 < r17) ) goto label$0be2704_8_198;
 	r24 = r3->next;
 	if( r1 == NULL ) hl_null_access();
 	r14 = r1->y;
@@ -892,7 +884,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r17 = r17 * r18;
 	r14 = r14 - r17;
 	r17 = 0.;
-	if( !(r14 >= r17) ) goto label$0be2704_9_196;
+	if( !(r14 >= r17) ) goto label$0be2704_8_196;
 	r25 = r3->prev;
 	if( r25 == NULL ) hl_null_access();
 	r14 = r25->y;
@@ -911,18 +903,18 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r17 = r17 * r18;
 	r14 = r14 - r17;
 	r17 = 0.;
-	if( r14 >= r17 ) goto label$0be2704_9_194;
+	if( r14 >= r17 ) goto label$0be2704_8_194;
 	r26 = false;
-	goto label$0be2704_9_195;
-	label$0be2704_9_194:
+	goto label$0be2704_8_195;
+	label$0be2704_8_194:
 	r26 = true;
-	label$0be2704_9_195:
-	goto label$0be2704_9_197;
-	label$0be2704_9_196:
+	label$0be2704_8_195:
+	goto label$0be2704_8_197;
+	label$0be2704_8_196:
 	r26 = false;
-	label$0be2704_9_197:
-	goto label$0be2704_9_242;
-	label$0be2704_9_198:
+	label$0be2704_8_197:
+	goto label$0be2704_8_242;
+	label$0be2704_8_198:
 	r24 = r3->prev;
 	if( r1 == NULL ) hl_null_access();
 	r14 = r1->y;
@@ -942,7 +934,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r17 = r17 * r18;
 	r14 = r14 - r17;
 	r17 = 0.;
-	if( r14 < r17 ) goto label$0be2704_9_241;
+	if( r14 < r17 ) goto label$0be2704_8_241;
 	r25 = r3->next;
 	if( r25 == NULL ) hl_null_access();
 	r14 = r25->y;
@@ -961,28 +953,28 @@ hxd__earcut__EarNode hxd_earcut_Earcut_findHoleBridge(hxd__earcut__Earcut r0,hxd
 	r17 = r17 * r18;
 	r14 = r14 - r17;
 	r17 = 0.;
-	if( r14 < r17 ) goto label$0be2704_9_239;
+	if( r14 < r17 ) goto label$0be2704_8_239;
 	r26 = false;
-	goto label$0be2704_9_240;
-	label$0be2704_9_239:
+	goto label$0be2704_8_240;
+	label$0be2704_8_239:
 	r26 = true;
-	label$0be2704_9_240:
-	goto label$0be2704_9_242;
-	label$0be2704_9_241:
+	label$0be2704_8_240:
+	goto label$0be2704_8_242;
+	label$0be2704_8_241:
 	r26 = true;
-	label$0be2704_9_242:
-	goto label$0be2704_9_244;
-	label$0be2704_9_243:
+	label$0be2704_8_242:
+	goto label$0be2704_8_244;
+	label$0be2704_8_243:
 	r26 = false;
-	label$0be2704_9_244:
-	if( !r26 ) goto label$0be2704_9_247;
+	label$0be2704_8_244:
+	if( !r26 ) goto label$0be2704_8_247;
 	r5 = r3;
 	r10 = r13;
-	label$0be2704_9_247:
+	label$0be2704_8_247:
 	r15 = r3->next;
 	r3 = r15;
-	goto label$0be2704_9_59;
-	label$0be2704_9_250:
+	goto label$0be2704_8_59;
+	label$0be2704_8_250:
 	return r5;
 }
 
@@ -992,23 +984,23 @@ hxd__earcut__EarNode hxd_earcut_Earcut_getLeftmost(hxd__earcut__Earcut r0,hxd__e
 	double r5, r7;
 	r2 = r1;
 	r3 = r1;
-	label$0be2704_10_2:
+	label$0be2704_9_2:
 	r4 = true;
-	if( !r4 ) goto label$0be2704_10_16;
+	if( !r4 ) goto label$0be2704_9_16;
 	if( r2 == NULL ) hl_null_access();
 	r5 = r2->x;
 	if( r3 == NULL ) hl_null_access();
 	r7 = r3->x;
-	if( !(r5 < r7) ) goto label$0be2704_10_11;
+	if( !(r5 < r7) ) goto label$0be2704_9_11;
 	r3 = r2;
-	label$0be2704_10_11:
+	label$0be2704_9_11:
 	r6 = r2->next;
 	r2 = r6;
-	if( r6 != r1 ) goto label$0be2704_10_15;
-	goto label$0be2704_10_16;
-	label$0be2704_10_15:
-	goto label$0be2704_10_2;
-	label$0be2704_10_16:
+	if( r6 != r1 ) goto label$0be2704_9_15;
+	goto label$0be2704_9_16;
+	label$0be2704_9_15:
+	goto label$0be2704_9_2;
+	label$0be2704_9_16:
 	return r3;
 }
 
@@ -1021,10 +1013,10 @@ int hxd_earcut_Earcut_compareX(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1,hx
 	r4 = r2->x;
 	r3 = r3 - r4;
 	r4 = 0.;
-	if( !(r4 < r3) ) goto label$0be2704_11_9;
+	if( !(r4 < r3) ) goto label$0be2704_10_9;
 	r5 = 1;
 	return r5;
-	label$0be2704_11_9:
+	label$0be2704_10_9:
 	r5 = -1;
 	return r5;
 }
@@ -1033,30 +1025,30 @@ hxd__earcut__EarNode hxd_earcut_Earcut_filterPoints(hxd__earcut__Earcut r0,hxd__
 	hxd__earcut__EarNode r3, r6, r8, r10;
 	bool r4, r5, r11;
 	double r7, r9, r12, r13;
-	if( r1 ) goto label$0be2704_12_2;
+	if( r1 ) goto label$0be2704_11_2;
 	return r1;
-	label$0be2704_12_2:
-	if( r2 ) goto label$0be2704_12_4;
+	label$0be2704_11_2:
+	if( r2 ) goto label$0be2704_11_4;
 	r2 = r1;
-	label$0be2704_12_4:
+	label$0be2704_11_4:
 	r3 = r1;
-	label$0be2704_12_5:
+	label$0be2704_11_5:
 	r4 = true;
-	if( !r4 ) goto label$0be2704_12_87;
+	if( !r4 ) goto label$0be2704_11_87;
 	r5 = false;
 	r4 = r5;
 	if( r3 == NULL ) hl_null_access();
 	r5 = r3->steiner;
-	if( r5 ) goto label$0be2704_12_48;
+	if( r5 ) goto label$0be2704_11_48;
 	r6 = r3->next;
 	r7 = r3->x;
 	if( r6 == NULL ) hl_null_access();
 	r9 = r6->x;
-	if( r7 != r9 ) goto label$0be2704_12_21;
+	if( r7 != r9 ) goto label$0be2704_11_21;
 	r7 = r3->y;
 	r9 = r6->y;
-	if( r7 == r9 ) goto label$0be2704_12_46;
-	label$0be2704_12_21:
+	if( r7 == r9 ) goto label$0be2704_11_46;
+	label$0be2704_11_21:
 	r8 = r3->prev;
 	r10 = r3->next;
 	r7 = r3->y;
@@ -1077,21 +1069,21 @@ hxd__earcut__EarNode hxd_earcut_Earcut_filterPoints(hxd__earcut__Earcut r0,hxd__
 	r9 = r9 * r12;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 == r9 ) goto label$0be2704_12_44;
+	if( r7 == r9 ) goto label$0be2704_11_44;
 	r11 = false;
-	goto label$0be2704_12_45;
-	label$0be2704_12_44:
+	goto label$0be2704_11_45;
+	label$0be2704_11_44:
 	r11 = true;
-	label$0be2704_12_45:
-	goto label$0be2704_12_47;
-	label$0be2704_12_46:
+	label$0be2704_11_45:
+	goto label$0be2704_11_47;
+	label$0be2704_11_46:
 	r11 = true;
-	label$0be2704_12_47:
-	goto label$0be2704_12_49;
-	label$0be2704_12_48:
+	label$0be2704_11_47:
+	goto label$0be2704_11_49;
+	label$0be2704_11_48:
 	r11 = false;
-	label$0be2704_12_49:
-	if( !r11 ) goto label$0be2704_12_81;
+	label$0be2704_11_49:
+	if( !r11 ) goto label$0be2704_11_81;
 	r6 = r3->next;
 	if( r6 == NULL ) hl_null_access();
 	r8 = r3->prev;
@@ -1101,41 +1093,41 @@ hxd__earcut__EarNode hxd_earcut_Earcut_filterPoints(hxd__earcut__Earcut r0,hxd__
 	r8 = r3->next;
 	r6->next = r8;
 	r6 = r3->prevZ;
-	if( !r6 ) goto label$0be2704_12_64;
+	if( !r6 ) goto label$0be2704_11_64;
 	r6 = r3->prevZ;
 	if( r6 == NULL ) hl_null_access();
 	r8 = r3->nextZ;
 	r6->nextZ = r8;
-	label$0be2704_12_64:
+	label$0be2704_11_64:
 	r6 = r3->nextZ;
-	if( !r6 ) goto label$0be2704_12_70;
+	if( !r6 ) goto label$0be2704_11_70;
 	r6 = r3->nextZ;
 	if( r6 == NULL ) hl_null_access();
 	r8 = r3->prevZ;
 	r6->prevZ = r8;
-	label$0be2704_12_70:
+	label$0be2704_11_70:
 	r6 = r3->prev;
 	r2 = r6;
 	r3 = r6;
 	if( r6 == NULL ) hl_null_access();
 	r8 = r6->next;
-	if( r6 != r8 ) goto label$0be2704_12_78;
+	if( r6 != r8 ) goto label$0be2704_11_78;
 	r6 = NULL;
 	return r6;
-	label$0be2704_12_78:
+	label$0be2704_11_78:
 	r11 = true;
 	r4 = r11;
-	goto label$0be2704_12_83;
-	label$0be2704_12_81:
+	goto label$0be2704_11_83;
+	label$0be2704_11_81:
 	r6 = r3->next;
 	r3 = r6;
-	label$0be2704_12_83:
-	if( r4 ) goto label$0be2704_12_86;
-	if( r6 != r2 ) goto label$0be2704_12_86;
-	goto label$0be2704_12_87;
-	label$0be2704_12_86:
-	goto label$0be2704_12_5;
-	label$0be2704_12_87:
+	label$0be2704_11_83:
+	if( r4 ) goto label$0be2704_11_86;
+	if( r6 != r2 ) goto label$0be2704_11_86;
+	goto label$0be2704_11_87;
+	label$0be2704_11_86:
+	goto label$0be2704_11_5;
+	label$0be2704_11_87:
 	return r2;
 }
 
@@ -1144,39 +1136,39 @@ void hxd_earcut_Earcut_earcutLinked(hxd__earcut__Earcut r0,hxd__earcut__EarNode 
 	bool r8;
 	hl__types__ArrayBytes_Int r12;
 	int r3, r6, r7;
-	if( r2 ) goto label$0be2704_13_3;
+	if( r2 ) goto label$0be2704_12_3;
 	r3 = 0;
-	goto label$0be2704_13_4;
-	label$0be2704_13_3:
+	goto label$0be2704_12_4;
+	label$0be2704_12_3:
 	r3 = *r2;
-	label$0be2704_13_4:
-	if( r1 ) goto label$0be2704_13_6;
+	label$0be2704_12_4:
+	if( r1 ) goto label$0be2704_12_6;
 	return;
-	label$0be2704_13_6:
+	label$0be2704_12_6:
 	r7 = 0;
-	if( r3 != r7 ) goto label$0be2704_13_11;
+	if( r3 != r7 ) goto label$0be2704_12_11;
 	r8 = r0->hasSize;
-	if( !r8 ) goto label$0be2704_13_11;
+	if( !r8 ) goto label$0be2704_12_11;
 	hxd_earcut_Earcut_indexCurve(r0,r1);
-	label$0be2704_13_11:
+	label$0be2704_12_11:
 	r5 = r1;
-	label$0be2704_13_12:
+	label$0be2704_12_12:
 	if( r1 == NULL ) hl_null_access();
 	r9 = r1->prev;
 	r10 = r1->next;
-	if( r9 == r10 ) goto label$0be2704_13_84;
+	if( r9 == r10 ) goto label$0be2704_12_84;
 	r10 = r1->prev;
 	r9 = r10;
 	r11 = r1->next;
 	r10 = r11;
 	r8 = r0->hasSize;
-	if( !r8 ) goto label$0be2704_13_25;
+	if( !r8 ) goto label$0be2704_12_25;
 	r8 = hxd_earcut_Earcut_isEarHashed(r0,r1);
-	goto label$0be2704_13_26;
-	label$0be2704_13_25:
+	goto label$0be2704_12_26;
+	label$0be2704_12_25:
 	r8 = hxd_earcut_Earcut_isEar(r0,r1);
-	label$0be2704_13_26:
-	if( !r8 ) goto label$0be2704_13_66;
+	label$0be2704_12_26:
+	if( !r8 ) goto label$0be2704_12_66;
 	r12 = r0->triangles;
 	if( r12 == NULL ) hl_null_access();
 	if( r9 == NULL ) hl_null_access();
@@ -1200,51 +1192,51 @@ void hxd_earcut_Earcut_earcutLinked(hxd__earcut__Earcut r0,hxd__earcut__EarNode 
 	r13 = r1->next;
 	r11->next = r13;
 	r11 = r1->prevZ;
-	if( !r11 ) goto label$0be2704_13_55;
+	if( !r11 ) goto label$0be2704_12_55;
 	r11 = r1->prevZ;
 	if( r11 == NULL ) hl_null_access();
 	r13 = r1->nextZ;
 	r11->nextZ = r13;
-	label$0be2704_13_55:
+	label$0be2704_12_55:
 	r11 = r1->nextZ;
-	if( !r11 ) goto label$0be2704_13_61;
+	if( !r11 ) goto label$0be2704_12_61;
 	r11 = r1->nextZ;
 	if( r11 == NULL ) hl_null_access();
 	r13 = r1->prevZ;
 	r11->prevZ = r13;
-	label$0be2704_13_61:
+	label$0be2704_12_61:
 	r11 = r10->next;
 	r1 = r11;
 	r11 = r10->next;
 	r5 = r11;
-	goto label$0be2704_13_12;
-	label$0be2704_13_66:
+	goto label$0be2704_12_12;
+	label$0be2704_12_66:
 	r1 = r10;
-	if( r10 != r5 ) goto label$0be2704_13_83;
+	if( r10 != r5 ) goto label$0be2704_12_83;
 	switch(r3) {
 		default:
-			goto label$0be2704_13_82;
+			goto label$0be2704_12_82;
 		case 0:
 			r13 = NULL;
 			r11 = hxd_earcut_Earcut_filterPoints(r0,r10,r13);
 			r6 = 1;
 			r2 = &r6;
 			hxd_earcut_Earcut_earcutLinked(r0,r11,r2);
-			goto label$0be2704_13_82;
+			goto label$0be2704_12_82;
 		case 1:
 			r11 = hxd_earcut_Earcut_cureLocalIntersections(r0,r10);
 			r7 = 2;
 			r2 = &r7;
 			hxd_earcut_Earcut_earcutLinked(r0,r11,r2);
-			goto label$0be2704_13_82;
+			goto label$0be2704_12_82;
 		case 2:
 			hxd_earcut_Earcut_splitEarcut(r0,r10);
 	}
-	label$0be2704_13_82:
-	goto label$0be2704_13_84;
-	label$0be2704_13_83:
-	goto label$0be2704_13_12;
-	label$0be2704_13_84:
+	label$0be2704_12_82:
+	goto label$0be2704_12_84;
+	label$0be2704_12_83:
+	goto label$0be2704_12_12;
+	label$0be2704_12_84:
 	return;
 }
 
@@ -1274,17 +1266,17 @@ bool hxd_earcut_Earcut_isEar(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1) {
 	r7 = r7 * r8;
 	r5 = r5 - r7;
 	r7 = 0.;
-	if( !(r5 >= r7) ) goto label$0be2704_14_25;
+	if( !(r5 >= r7) ) goto label$0be2704_13_25;
 	r10 = false;
 	return r10;
-	label$0be2704_14_25:
+	label$0be2704_13_25:
 	r6 = r1->next;
 	if( r6 == NULL ) hl_null_access();
 	r6 = r6->next;
-	label$0be2704_14_28:
+	label$0be2704_13_28:
 	if( r1 == NULL ) hl_null_access();
 	r12 = r1->prev;
-	if( r6 == r12 ) goto label$0be2704_14_103;
+	if( r6 == r12 ) goto label$0be2704_13_103;
 	if( r2 == NULL ) hl_null_access();
 	r5 = r2->x;
 	r7 = r2->y;
@@ -1305,7 +1297,7 @@ bool hxd_earcut_Earcut_isEar(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1) {
 	r18 = r18 * r19;
 	r17 = r17 - r18;
 	r18 = 0.;
-	if( !(r17 >= r18) ) goto label$0be2704_14_96;
+	if( !(r17 >= r18) ) goto label$0be2704_13_96;
 	r17 = r5 - r15;
 	r18 = r9 - r16;
 	r17 = r17 * r18;
@@ -1314,7 +1306,7 @@ bool hxd_earcut_Earcut_isEar(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1) {
 	r18 = r18 * r19;
 	r17 = r17 - r18;
 	r18 = 0.;
-	if( !(r17 >= r18) ) goto label$0be2704_14_96;
+	if( !(r17 >= r18) ) goto label$0be2704_13_96;
 	r17 = r8 - r15;
 	r18 = r14 - r16;
 	r17 = r17 * r18;
@@ -1323,7 +1315,7 @@ bool hxd_earcut_Earcut_isEar(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1) {
 	r18 = r18 * r19;
 	r17 = r17 - r18;
 	r18 = 0.;
-	if( !(r17 >= r18) ) goto label$0be2704_14_96;
+	if( !(r17 >= r18) ) goto label$0be2704_13_96;
 	r11 = r6->prev;
 	r12 = r6->next;
 	r17 = r6->y;
@@ -1344,24 +1336,24 @@ bool hxd_earcut_Earcut_isEar(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1) {
 	r18 = r18 * r19;
 	r17 = r17 - r18;
 	r18 = 0.;
-	if( r17 >= r18 ) goto label$0be2704_14_94;
+	if( r17 >= r18 ) goto label$0be2704_13_94;
 	r21 = false;
-	goto label$0be2704_14_95;
-	label$0be2704_14_94:
+	goto label$0be2704_13_95;
+	label$0be2704_13_94:
 	r21 = true;
-	label$0be2704_14_95:
-	goto label$0be2704_14_97;
-	label$0be2704_14_96:
+	label$0be2704_13_95:
+	goto label$0be2704_13_97;
+	label$0be2704_13_96:
 	r21 = false;
-	label$0be2704_14_97:
-	if( !r21 ) goto label$0be2704_14_100;
+	label$0be2704_13_97:
+	if( !r21 ) goto label$0be2704_13_100;
 	r21 = false;
 	return r21;
-	label$0be2704_14_100:
+	label$0be2704_13_100:
 	r11 = r6->next;
 	r6 = r11;
-	goto label$0be2704_14_28;
-	label$0be2704_14_103:
+	goto label$0be2704_13_28;
+	label$0be2704_13_103:
 	r10 = true;
 	return r10;
 }
@@ -1393,94 +1385,94 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r7 = r7 * r8;
 	r5 = r5 - r7;
 	r7 = 0.;
-	if( !(r5 >= r7) ) goto label$0be2704_15_25;
+	if( !(r5 >= r7) ) goto label$0be2704_14_25;
 	r10 = false;
 	return r10;
-	label$0be2704_15_25:
+	label$0be2704_14_25:
 	r5 = r2->x;
 	r7 = r1->x;
-	if( !(r5 < r7) ) goto label$0be2704_15_35;
+	if( !(r5 < r7) ) goto label$0be2704_14_35;
 	r5 = r2->x;
 	r7 = r4->x;
-	if( !(r5 < r7) ) goto label$0be2704_15_33;
+	if( !(r5 < r7) ) goto label$0be2704_14_33;
 	r5 = r2->x;
-	goto label$0be2704_15_34;
-	label$0be2704_15_33:
+	goto label$0be2704_14_34;
+	label$0be2704_14_33:
 	r5 = r4->x;
-	label$0be2704_15_34:
-	goto label$0be2704_15_41;
-	label$0be2704_15_35:
+	label$0be2704_14_34:
+	goto label$0be2704_14_41;
+	label$0be2704_14_35:
 	r5 = r1->x;
 	r7 = r4->x;
-	if( !(r5 < r7) ) goto label$0be2704_15_40;
+	if( !(r5 < r7) ) goto label$0be2704_14_40;
 	r5 = r1->x;
-	goto label$0be2704_15_41;
-	label$0be2704_15_40:
+	goto label$0be2704_14_41;
+	label$0be2704_14_40:
 	r5 = r4->x;
-	label$0be2704_15_41:
+	label$0be2704_14_41:
 	r7 = r2->y;
 	r8 = r1->y;
-	if( !(r7 < r8) ) goto label$0be2704_15_51;
+	if( !(r7 < r8) ) goto label$0be2704_14_51;
 	r7 = r2->y;
 	r8 = r4->y;
-	if( !(r7 < r8) ) goto label$0be2704_15_49;
+	if( !(r7 < r8) ) goto label$0be2704_14_49;
 	r7 = r2->y;
-	goto label$0be2704_15_50;
-	label$0be2704_15_49:
+	goto label$0be2704_14_50;
+	label$0be2704_14_49:
 	r7 = r4->y;
-	label$0be2704_15_50:
-	goto label$0be2704_15_57;
-	label$0be2704_15_51:
+	label$0be2704_14_50:
+	goto label$0be2704_14_57;
+	label$0be2704_14_51:
 	r7 = r1->y;
 	r8 = r4->y;
-	if( !(r7 < r8) ) goto label$0be2704_15_56;
+	if( !(r7 < r8) ) goto label$0be2704_14_56;
 	r7 = r1->y;
-	goto label$0be2704_15_57;
-	label$0be2704_15_56:
+	goto label$0be2704_14_57;
+	label$0be2704_14_56:
 	r7 = r4->y;
-	label$0be2704_15_57:
+	label$0be2704_14_57:
 	r8 = r2->x;
 	r9 = r1->x;
-	if( !(r9 < r8) ) goto label$0be2704_15_67;
+	if( !(r9 < r8) ) goto label$0be2704_14_67;
 	r8 = r2->x;
 	r9 = r4->x;
-	if( !(r9 < r8) ) goto label$0be2704_15_65;
+	if( !(r9 < r8) ) goto label$0be2704_14_65;
 	r8 = r2->x;
-	goto label$0be2704_15_66;
-	label$0be2704_15_65:
+	goto label$0be2704_14_66;
+	label$0be2704_14_65:
 	r8 = r4->x;
-	label$0be2704_15_66:
-	goto label$0be2704_15_73;
-	label$0be2704_15_67:
+	label$0be2704_14_66:
+	goto label$0be2704_14_73;
+	label$0be2704_14_67:
 	r8 = r1->x;
 	r9 = r4->x;
-	if( !(r9 < r8) ) goto label$0be2704_15_72;
+	if( !(r9 < r8) ) goto label$0be2704_14_72;
 	r8 = r1->x;
-	goto label$0be2704_15_73;
-	label$0be2704_15_72:
+	goto label$0be2704_14_73;
+	label$0be2704_14_72:
 	r8 = r4->x;
-	label$0be2704_15_73:
+	label$0be2704_14_73:
 	r9 = r2->y;
 	r11 = r1->y;
-	if( !(r11 < r9) ) goto label$0be2704_15_83;
+	if( !(r11 < r9) ) goto label$0be2704_14_83;
 	r9 = r2->y;
 	r11 = r4->y;
-	if( !(r11 < r9) ) goto label$0be2704_15_81;
+	if( !(r11 < r9) ) goto label$0be2704_14_81;
 	r9 = r2->y;
-	goto label$0be2704_15_82;
-	label$0be2704_15_81:
+	goto label$0be2704_14_82;
+	label$0be2704_14_81:
 	r9 = r4->y;
-	label$0be2704_15_82:
-	goto label$0be2704_15_89;
-	label$0be2704_15_83:
+	label$0be2704_14_82:
+	goto label$0be2704_14_89;
+	label$0be2704_14_83:
 	r9 = r1->y;
 	r11 = r4->y;
-	if( !(r11 < r9) ) goto label$0be2704_15_88;
+	if( !(r11 < r9) ) goto label$0be2704_14_88;
 	r9 = r1->y;
-	goto label$0be2704_15_89;
-	label$0be2704_15_88:
+	goto label$0be2704_14_89;
+	label$0be2704_14_88:
 	r9 = r4->y;
-	label$0be2704_15_89:
+	label$0be2704_14_89:
 	r11 = 32767.;
 	r13 = r0->minX;
 	r12 = r5 - r13;
@@ -1600,16 +1592,16 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r23 = r19 << r24;
 	r22 = r18 | r23;
 	r6 = r1->nextZ;
-	label$0be2704_15_208:
-	if( !r6 ) goto label$0be2704_15_294;
+	label$0be2704_14_208:
+	if( !r6 ) goto label$0be2704_14_294;
 	if( r6 == NULL ) hl_null_access();
 	r23 = r6->z;
-	if( r22 < r23 ) goto label$0be2704_15_294;
+	if( r22 < r23 ) goto label$0be2704_14_294;
 	if( r1 == NULL ) hl_null_access();
 	r26 = r1->prev;
-	if( r6 == r26 ) goto label$0be2704_15_260;
+	if( r6 == r26 ) goto label$0be2704_14_260;
 	r26 = r1->next;
-	if( r6 == r26 ) goto label$0be2704_15_260;
+	if( r6 == r26 ) goto label$0be2704_14_260;
 	if( r2 == NULL ) hl_null_access();
 	r20 = r2->x;
 	r21 = r2->y;
@@ -1629,7 +1621,7 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r35 = r35 * r36;
 	r34 = r34 - r35;
 	r35 = 0.;
-	if( !(r34 >= r35) ) goto label$0be2704_15_258;
+	if( !(r34 >= r35) ) goto label$0be2704_14_258;
 	r34 = r20 - r31;
 	r35 = r28 - r32;
 	r34 = r34 * r35;
@@ -1638,7 +1630,7 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r35 = r35 * r36;
 	r34 = r34 - r35;
 	r35 = 0.;
-	if( !(r34 >= r35) ) goto label$0be2704_15_258;
+	if( !(r34 >= r35) ) goto label$0be2704_14_258;
 	r34 = r27 - r31;
 	r35 = r30 - r32;
 	r34 = r34 * r35;
@@ -1647,17 +1639,17 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r35 = r35 * r36;
 	r34 = r34 - r35;
 	r35 = 0.;
-	if( !(r34 >= r35) ) goto label$0be2704_15_258;
+	if( !(r34 >= r35) ) goto label$0be2704_14_258;
 	r33 = true;
-	goto label$0be2704_15_259;
-	label$0be2704_15_258:
+	goto label$0be2704_14_259;
+	label$0be2704_14_258:
 	r33 = false;
-	label$0be2704_15_259:
-	goto label$0be2704_15_261;
-	label$0be2704_15_260:
+	label$0be2704_14_259:
+	goto label$0be2704_14_261;
+	label$0be2704_14_260:
 	r33 = false;
-	label$0be2704_15_261:
-	if( !r33 ) goto label$0be2704_15_287;
+	label$0be2704_14_261:
+	if( !r33 ) goto label$0be2704_14_287;
 	r25 = r6->prev;
 	r26 = r6->next;
 	r20 = r6->y;
@@ -1678,37 +1670,37 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r21 = r21 * r27;
 	r20 = r20 - r21;
 	r21 = 0.;
-	if( r20 >= r21 ) goto label$0be2704_15_285;
+	if( r20 >= r21 ) goto label$0be2704_14_285;
 	r37 = false;
-	goto label$0be2704_15_286;
-	label$0be2704_15_285:
+	goto label$0be2704_14_286;
+	label$0be2704_14_285:
 	r37 = true;
-	label$0be2704_15_286:
-	goto label$0be2704_15_288;
-	label$0be2704_15_287:
+	label$0be2704_14_286:
+	goto label$0be2704_14_288;
+	label$0be2704_14_287:
 	r37 = false;
-	label$0be2704_15_288:
-	if( !r37 ) goto label$0be2704_15_291;
+	label$0be2704_14_288:
+	if( !r37 ) goto label$0be2704_14_291;
 	r37 = false;
 	return r37;
-	label$0be2704_15_291:
+	label$0be2704_14_291:
 	r25 = r6->nextZ;
 	r6 = r25;
-	goto label$0be2704_15_208;
-	label$0be2704_15_294:
+	goto label$0be2704_14_208;
+	label$0be2704_14_294:
 	if( r1 == NULL ) hl_null_access();
 	r25 = r1->prevZ;
 	r6 = r25;
-	label$0be2704_15_297:
-	if( !r6 ) goto label$0be2704_15_383;
+	label$0be2704_14_297:
+	if( !r6 ) goto label$0be2704_14_383;
 	if( r6 == NULL ) hl_null_access();
 	r23 = r6->z;
-	if( r23 < r17 ) goto label$0be2704_15_383;
+	if( r23 < r17 ) goto label$0be2704_14_383;
 	if( r1 == NULL ) hl_null_access();
 	r26 = r1->prev;
-	if( r6 == r26 ) goto label$0be2704_15_349;
+	if( r6 == r26 ) goto label$0be2704_14_349;
 	r26 = r1->next;
-	if( r6 == r26 ) goto label$0be2704_15_349;
+	if( r6 == r26 ) goto label$0be2704_14_349;
 	if( r2 == NULL ) hl_null_access();
 	r20 = r2->x;
 	r21 = r2->y;
@@ -1728,7 +1720,7 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r35 = r35 * r36;
 	r34 = r34 - r35;
 	r35 = 0.;
-	if( !(r34 >= r35) ) goto label$0be2704_15_347;
+	if( !(r34 >= r35) ) goto label$0be2704_14_347;
 	r34 = r20 - r31;
 	r35 = r28 - r32;
 	r34 = r34 * r35;
@@ -1737,7 +1729,7 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r35 = r35 * r36;
 	r34 = r34 - r35;
 	r35 = 0.;
-	if( !(r34 >= r35) ) goto label$0be2704_15_347;
+	if( !(r34 >= r35) ) goto label$0be2704_14_347;
 	r34 = r27 - r31;
 	r35 = r30 - r32;
 	r34 = r34 * r35;
@@ -1746,17 +1738,17 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r35 = r35 * r36;
 	r34 = r34 - r35;
 	r35 = 0.;
-	if( !(r34 >= r35) ) goto label$0be2704_15_347;
+	if( !(r34 >= r35) ) goto label$0be2704_14_347;
 	r33 = true;
-	goto label$0be2704_15_348;
-	label$0be2704_15_347:
+	goto label$0be2704_14_348;
+	label$0be2704_14_347:
 	r33 = false;
-	label$0be2704_15_348:
-	goto label$0be2704_15_350;
-	label$0be2704_15_349:
+	label$0be2704_14_348:
+	goto label$0be2704_14_350;
+	label$0be2704_14_349:
 	r33 = false;
-	label$0be2704_15_350:
-	if( !r33 ) goto label$0be2704_15_376;
+	label$0be2704_14_350:
+	if( !r33 ) goto label$0be2704_14_376;
 	r25 = r6->prev;
 	r26 = r6->next;
 	r20 = r6->y;
@@ -1777,24 +1769,24 @@ bool hxd_earcut_Earcut_isEarHashed(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r21 = r21 * r27;
 	r20 = r20 - r21;
 	r21 = 0.;
-	if( r20 >= r21 ) goto label$0be2704_15_374;
+	if( r20 >= r21 ) goto label$0be2704_14_374;
 	r37 = false;
-	goto label$0be2704_15_375;
-	label$0be2704_15_374:
+	goto label$0be2704_14_375;
+	label$0be2704_14_374:
 	r37 = true;
-	label$0be2704_15_375:
-	goto label$0be2704_15_377;
-	label$0be2704_15_376:
+	label$0be2704_14_375:
+	goto label$0be2704_14_377;
+	label$0be2704_14_376:
 	r37 = false;
-	label$0be2704_15_377:
-	if( !r37 ) goto label$0be2704_15_380;
+	label$0be2704_14_377:
+	if( !r37 ) goto label$0be2704_14_380;
 	r37 = false;
 	return r37;
-	label$0be2704_15_380:
+	label$0be2704_14_380:
 	r25 = r6->prevZ;
 	r6 = r25;
-	goto label$0be2704_15_297;
-	label$0be2704_15_383:
+	goto label$0be2704_14_297;
+	label$0be2704_14_383:
 	r10 = true;
 	return r10;
 }
@@ -1806,9 +1798,9 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	double r7, r9, r10, r11;
 	int r17;
 	r2 = r1;
-	label$0be2704_16_1:
+	label$0be2704_15_1:
 	r3 = true;
-	if( !r3 ) goto label$0be2704_16_378;
+	if( !r3 ) goto label$0be2704_15_378;
 	if( r2 == NULL ) hl_null_access();
 	r4 = r2->prev;
 	r5 = r2->next;
@@ -1833,12 +1825,12 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 > r9 ) goto label$0be2704_16_31;
+	if( r7 > r9 ) goto label$0be2704_15_31;
 	r3 = false;
-	goto label$0be2704_16_32;
-	label$0be2704_16_31:
+	goto label$0be2704_15_32;
+	label$0be2704_15_31:
 	r3 = true;
-	label$0be2704_16_32:
+	label$0be2704_15_32:
 	r7 = r2->y;
 	r9 = r4->y;
 	r7 = r7 - r9;
@@ -1856,13 +1848,13 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 > r9 ) goto label$0be2704_16_52;
+	if( r7 > r9 ) goto label$0be2704_15_52;
 	r12 = false;
-	goto label$0be2704_16_53;
-	label$0be2704_16_52:
+	goto label$0be2704_15_53;
+	label$0be2704_15_52:
 	r12 = true;
-	label$0be2704_16_53:
-	if( r3 == r12 ) goto label$0be2704_16_204;
+	label$0be2704_15_53:
+	if( r3 == r12 ) goto label$0be2704_15_204;
 	r7 = r5->y;
 	r9 = r6->y;
 	r7 = r7 - r9;
@@ -1879,12 +1871,12 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 > r9 ) goto label$0be2704_16_73;
+	if( r7 > r9 ) goto label$0be2704_15_73;
 	r3 = false;
-	goto label$0be2704_16_74;
-	label$0be2704_16_73:
+	goto label$0be2704_15_74;
+	label$0be2704_15_73:
 	r3 = true;
-	label$0be2704_16_74:
+	label$0be2704_15_74:
 	r7 = r5->y;
 	r9 = r6->y;
 	r7 = r7 - r9;
@@ -1901,13 +1893,13 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 > r9 ) goto label$0be2704_16_93;
+	if( r7 > r9 ) goto label$0be2704_15_93;
 	r12 = false;
-	goto label$0be2704_16_94;
-	label$0be2704_16_93:
+	goto label$0be2704_15_94;
+	label$0be2704_15_93:
 	r12 = true;
-	label$0be2704_16_94:
-	if( r3 == r12 ) goto label$0be2704_16_204;
+	label$0be2704_15_94:
+	if( r3 == r12 ) goto label$0be2704_15_204;
 	r8 = r4->prev;
 	r13 = r4->next;
 	r7 = r4->y;
@@ -1928,7 +1920,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( !(r7 < r9) ) goto label$0be2704_16_160;
+	if( !(r7 < r9) ) goto label$0be2704_15_160;
 	r14 = r4->next;
 	r7 = r5->y;
 	r9 = r4->y;
@@ -1947,7 +1939,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( !(r7 >= r9) ) goto label$0be2704_16_158;
+	if( !(r7 >= r9) ) goto label$0be2704_15_158;
 	r15 = r4->prev;
 	if( r15 == NULL ) hl_null_access();
 	r7 = r15->y;
@@ -1966,18 +1958,18 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 >= r9 ) goto label$0be2704_16_156;
+	if( r7 >= r9 ) goto label$0be2704_15_156;
 	r12 = false;
-	goto label$0be2704_16_157;
-	label$0be2704_16_156:
+	goto label$0be2704_15_157;
+	label$0be2704_15_156:
 	r12 = true;
-	label$0be2704_16_157:
-	goto label$0be2704_16_159;
-	label$0be2704_16_158:
+	label$0be2704_15_157:
+	goto label$0be2704_15_159;
+	label$0be2704_15_158:
 	r12 = false;
-	label$0be2704_16_159:
-	goto label$0be2704_16_203;
-	label$0be2704_16_160:
+	label$0be2704_15_159:
+	goto label$0be2704_15_203;
+	label$0be2704_15_160:
 	r14 = r4->prev;
 	r7 = r5->y;
 	r9 = r4->y;
@@ -1996,7 +1988,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 < r9 ) goto label$0be2704_16_202;
+	if( r7 < r9 ) goto label$0be2704_15_202;
 	r15 = r4->next;
 	if( r15 == NULL ) hl_null_access();
 	r7 = r15->y;
@@ -2015,21 +2007,21 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 < r9 ) goto label$0be2704_16_200;
+	if( r7 < r9 ) goto label$0be2704_15_200;
 	r12 = false;
-	goto label$0be2704_16_201;
-	label$0be2704_16_200:
+	goto label$0be2704_15_201;
+	label$0be2704_15_200:
 	r12 = true;
-	label$0be2704_16_201:
-	goto label$0be2704_16_203;
-	label$0be2704_16_202:
+	label$0be2704_15_201:
+	goto label$0be2704_15_203;
+	label$0be2704_15_202:
 	r12 = true;
-	label$0be2704_16_203:
-	goto label$0be2704_16_205;
-	label$0be2704_16_204:
+	label$0be2704_15_203:
+	goto label$0be2704_15_205;
+	label$0be2704_15_204:
 	r12 = false;
-	label$0be2704_16_205:
-	if( !r12 ) goto label$0be2704_16_315;
+	label$0be2704_15_205:
+	if( !r12 ) goto label$0be2704_15_315;
 	r8 = r5->prev;
 	r13 = r5->next;
 	r7 = r5->y;
@@ -2050,7 +2042,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( !(r7 < r9) ) goto label$0be2704_16_271;
+	if( !(r7 < r9) ) goto label$0be2704_15_271;
 	r14 = r5->next;
 	r7 = r4->y;
 	r9 = r5->y;
@@ -2069,7 +2061,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( !(r7 >= r9) ) goto label$0be2704_16_269;
+	if( !(r7 >= r9) ) goto label$0be2704_15_269;
 	r15 = r5->prev;
 	if( r15 == NULL ) hl_null_access();
 	r7 = r15->y;
@@ -2088,18 +2080,18 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 >= r9 ) goto label$0be2704_16_267;
+	if( r7 >= r9 ) goto label$0be2704_15_267;
 	r16 = false;
-	goto label$0be2704_16_268;
-	label$0be2704_16_267:
+	goto label$0be2704_15_268;
+	label$0be2704_15_267:
 	r16 = true;
-	label$0be2704_16_268:
-	goto label$0be2704_16_270;
-	label$0be2704_16_269:
+	label$0be2704_15_268:
+	goto label$0be2704_15_270;
+	label$0be2704_15_269:
 	r16 = false;
-	label$0be2704_16_270:
-	goto label$0be2704_16_314;
-	label$0be2704_16_271:
+	label$0be2704_15_270:
+	goto label$0be2704_15_314;
+	label$0be2704_15_271:
 	r14 = r5->prev;
 	r7 = r4->y;
 	r9 = r5->y;
@@ -2118,7 +2110,7 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 < r9 ) goto label$0be2704_16_313;
+	if( r7 < r9 ) goto label$0be2704_15_313;
 	r15 = r5->next;
 	if( r15 == NULL ) hl_null_access();
 	r7 = r15->y;
@@ -2137,21 +2129,21 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r9 = r9 * r10;
 	r7 = r7 - r9;
 	r9 = 0.;
-	if( r7 < r9 ) goto label$0be2704_16_311;
+	if( r7 < r9 ) goto label$0be2704_15_311;
 	r16 = false;
-	goto label$0be2704_16_312;
-	label$0be2704_16_311:
+	goto label$0be2704_15_312;
+	label$0be2704_15_311:
 	r16 = true;
-	label$0be2704_16_312:
-	goto label$0be2704_16_314;
-	label$0be2704_16_313:
+	label$0be2704_15_312:
+	goto label$0be2704_15_314;
+	label$0be2704_15_313:
 	r16 = true;
-	label$0be2704_16_314:
-	goto label$0be2704_16_316;
-	label$0be2704_16_315:
+	label$0be2704_15_314:
+	goto label$0be2704_15_316;
+	label$0be2704_15_315:
 	r16 = false;
-	label$0be2704_16_316:
-	if( !r16 ) goto label$0be2704_16_373;
+	label$0be2704_15_316:
+	if( !r16 ) goto label$0be2704_15_373;
 	r18 = r0->triangles;
 	if( r18 == NULL ) hl_null_access();
 	r17 = r4->i;
@@ -2173,19 +2165,19 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r13 = r2->next;
 	r8->next = r13;
 	r8 = r2->prevZ;
-	if( !r8 ) goto label$0be2704_16_343;
+	if( !r8 ) goto label$0be2704_15_343;
 	r8 = r2->prevZ;
 	if( r8 == NULL ) hl_null_access();
 	r13 = r2->nextZ;
 	r8->nextZ = r13;
-	label$0be2704_16_343:
+	label$0be2704_15_343:
 	r8 = r2->nextZ;
-	if( !r8 ) goto label$0be2704_16_349;
+	if( !r8 ) goto label$0be2704_15_349;
 	r8 = r2->nextZ;
 	if( r8 == NULL ) hl_null_access();
 	r13 = r2->prevZ;
 	r8->prevZ = r13;
-	label$0be2704_16_349:
+	label$0be2704_15_349:
 	r8 = r2->next;
 	if( r8 == NULL ) hl_null_access();
 	r13 = r8->next;
@@ -2197,29 +2189,29 @@ hxd__earcut__EarNode hxd_earcut_Earcut_cureLocalIntersections(hxd__earcut__Earcu
 	r14 = r8->next;
 	r13->next = r14;
 	r13 = r8->prevZ;
-	if( !r13 ) goto label$0be2704_16_365;
+	if( !r13 ) goto label$0be2704_15_365;
 	r13 = r8->prevZ;
 	if( r13 == NULL ) hl_null_access();
 	r14 = r8->nextZ;
 	r13->nextZ = r14;
-	label$0be2704_16_365:
+	label$0be2704_15_365:
 	r13 = r8->nextZ;
-	if( !r13 ) goto label$0be2704_16_371;
+	if( !r13 ) goto label$0be2704_15_371;
 	r13 = r8->nextZ;
 	if( r13 == NULL ) hl_null_access();
 	r14 = r8->prevZ;
 	r13->prevZ = r14;
-	label$0be2704_16_371:
+	label$0be2704_15_371:
 	r1 = r5;
 	r2 = r5;
-	label$0be2704_16_373:
+	label$0be2704_15_373:
 	r8 = r2->next;
 	r2 = r8;
-	if( r8 != r1 ) goto label$0be2704_16_377;
-	goto label$0be2704_16_378;
-	label$0be2704_16_377:
-	goto label$0be2704_16_1;
-	label$0be2704_16_378:
+	if( r8 != r1 ) goto label$0be2704_15_377;
+	goto label$0be2704_15_378;
+	label$0be2704_15_377:
+	goto label$0be2704_15_1;
+	label$0be2704_15_378:
 	return r2;
 }
 
@@ -2229,23 +2221,23 @@ void hxd_earcut_Earcut_splitEarcut(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	int *r11;
 	int r8, r9;
 	r2 = r1;
-	label$0be2704_17_1:
+	label$0be2704_16_1:
 	r4 = true;
-	if( !r4 ) goto label$0be2704_17_39;
+	if( !r4 ) goto label$0be2704_16_39;
 	if( r2 == NULL ) hl_null_access();
 	r5 = r2->next;
 	if( r5 == NULL ) hl_null_access();
 	r5 = r5->next;
-	label$0be2704_17_8:
+	label$0be2704_16_8:
 	if( r2 == NULL ) hl_null_access();
 	r7 = r2->prev;
-	if( r5 == r7 ) goto label$0be2704_17_34;
+	if( r5 == r7 ) goto label$0be2704_16_34;
 	r8 = r2->i;
 	if( r5 == NULL ) hl_null_access();
 	r9 = r5->i;
-	if( r8 == r9 ) goto label$0be2704_17_31;
+	if( r8 == r9 ) goto label$0be2704_16_31;
 	r4 = hxd_earcut_Earcut_isValidDiagonal(r0,r2,r5);
-	if( !r4 ) goto label$0be2704_17_31;
+	if( !r4 ) goto label$0be2704_16_31;
 	r6 = hxd_earcut_Earcut_splitPolygon(r0,r2,r5);
 	r10 = r2->next;
 	r7 = hxd_earcut_Earcut_filterPoints(r0,r2,r10);
@@ -2259,18 +2251,18 @@ void hxd_earcut_Earcut_splitEarcut(hxd__earcut__Earcut r0,hxd__earcut__EarNode r
 	r11 = NULL;
 	hxd_earcut_Earcut_earcutLinked(r0,r6,r11);
 	return;
-	label$0be2704_17_31:
+	label$0be2704_16_31:
 	r6 = r5->next;
 	r5 = r6;
-	goto label$0be2704_17_8;
-	label$0be2704_17_34:
+	goto label$0be2704_16_8;
+	label$0be2704_16_34:
 	r6 = r2->next;
 	r2 = r6;
-	if( r6 != r1 ) goto label$0be2704_17_38;
-	goto label$0be2704_17_39;
-	label$0be2704_17_38:
-	goto label$0be2704_17_1;
-	label$0be2704_17_39:
+	if( r6 != r1 ) goto label$0be2704_16_38;
+	goto label$0be2704_16_39;
+	label$0be2704_16_38:
+	goto label$0be2704_16_1;
+	label$0be2704_16_39:
 	return;
 }
 
@@ -2285,19 +2277,19 @@ hxd__earcut__EarNode hxd_earcut_Earcut_splitPolygon(hxd__earcut__Earcut r0,hxd__
 	r7 = r1->y;
 	r4 = NULL;
 	r8 = r0->cache;
-	if( r8 ) goto label$0be2704_18_14;
+	if( r8 ) goto label$0be2704_17_14;
 	r9 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
 	hxd_earcut_EarNode_new(r9);
 	r8 = r9;
 	r10 = r0->allocated;
 	r9->allocNext = r10;
 	r0->allocated = r9;
-	goto label$0be2704_18_17;
-	label$0be2704_18_14:
+	goto label$0be2704_17_17;
+	label$0be2704_17_14:
 	if( r8 == NULL ) hl_null_access();
 	r9 = r8->next;
 	r0->cache = r9;
-	label$0be2704_18_17:
+	label$0be2704_17_17:
 	r8->i = r3;
 	r11 = -1;
 	r8->z = r11;
@@ -2312,29 +2304,29 @@ hxd__earcut__EarNode hxd_earcut_Earcut_splitPolygon(hxd__earcut__Earcut r0,hxd__
 	r8->prevZ = r10;
 	r10 = NULL;
 	r8->nextZ = r10;
-	if( !r4 ) goto label$0be2704_18_34;
+	if( !r4 ) goto label$0be2704_17_34;
 	if( r4 == NULL ) hl_null_access();
 	r4->next = r8;
-	label$0be2704_18_34:
+	label$0be2704_17_34:
 	if( r2 == NULL ) hl_null_access();
 	r11 = r2->i;
 	r12 = r2->x;
 	r14 = r2->y;
 	r10 = NULL;
 	r15 = r0->cache;
-	if( r15 ) goto label$0be2704_18_48;
+	if( r15 ) goto label$0be2704_17_48;
 	r16 = (hxd__earcut__EarNode)hl_alloc_obj(&t$hxd_earcut_EarNode);
 	hxd_earcut_EarNode_new(r16);
 	r15 = r16;
 	r17 = r0->allocated;
 	r16->allocNext = r17;
 	r0->allocated = r16;
-	goto label$0be2704_18_51;
-	label$0be2704_18_48:
+	goto label$0be2704_17_51;
+	label$0be2704_17_48:
 	if( r15 == NULL ) hl_null_access();
 	r16 = r15->next;
 	r0->cache = r16;
-	label$0be2704_18_51:
+	label$0be2704_17_51:
 	r15->i = r11;
 	r18 = -1;
 	r15->z = r18;
@@ -2349,10 +2341,10 @@ hxd__earcut__EarNode hxd_earcut_Earcut_splitPolygon(hxd__earcut__Earcut r0,hxd__
 	r15->prevZ = r17;
 	r17 = NULL;
 	r15->nextZ = r17;
-	if( !r10 ) goto label$0be2704_18_68;
+	if( !r10 ) goto label$0be2704_17_68;
 	if( r10 == NULL ) hl_null_access();
 	r10->next = r15;
-	label$0be2704_18_68:
+	label$0be2704_17_68:
 	r17 = r1->next;
 	r19 = r2->prev;
 	r1->next = r2;
@@ -2377,23 +2369,23 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r3 = r1->x;
 	if( r2 == NULL ) hl_null_access();
 	r5 = r2->x;
-	if( r3 != r5 ) goto label$0be2704_19_8;
+	if( r3 != r5 ) goto label$0be2704_18_8;
 	r3 = r1->y;
 	r5 = r2->y;
-	if( r3 == r5 ) goto label$0be2704_19_246;
-	label$0be2704_19_8:
+	if( r3 == r5 ) goto label$0be2704_18_246;
+	label$0be2704_18_8:
 	r4 = r1->next;
 	if( r4 == NULL ) hl_null_access();
 	r6 = r4->i;
 	r7 = r2->i;
-	if( r6 == r7 ) goto label$0be2704_19_129;
+	if( r6 == r7 ) goto label$0be2704_18_129;
 	r4 = r1->prev;
 	if( r4 == NULL ) hl_null_access();
 	r6 = r4->i;
 	r7 = r2->i;
-	if( r6 == r7 ) goto label$0be2704_19_129;
+	if( r6 == r7 ) goto label$0be2704_18_129;
 	r8 = hxd_earcut_Earcut_intersectsPolygon(r0,r1,r2);
-	if( r8 ) goto label$0be2704_19_129;
+	if( r8 ) goto label$0be2704_18_129;
 	r4 = r1->prev;
 	r9 = r1->next;
 	r3 = r1->y;
@@ -2414,7 +2406,7 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( !(r3 < r5) ) goto label$0be2704_19_85;
+	if( !(r3 < r5) ) goto label$0be2704_18_85;
 	r10 = r1->next;
 	r3 = r2->y;
 	r5 = r1->y;
@@ -2433,7 +2425,7 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( !(r3 >= r5) ) goto label$0be2704_19_83;
+	if( !(r3 >= r5) ) goto label$0be2704_18_83;
 	r13 = r1->prev;
 	if( r13 == NULL ) hl_null_access();
 	r3 = r13->y;
@@ -2452,18 +2444,18 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( r3 >= r5 ) goto label$0be2704_19_81;
+	if( r3 >= r5 ) goto label$0be2704_18_81;
 	r14 = false;
-	goto label$0be2704_19_82;
-	label$0be2704_19_81:
+	goto label$0be2704_18_82;
+	label$0be2704_18_81:
 	r14 = true;
-	label$0be2704_19_82:
-	goto label$0be2704_19_84;
-	label$0be2704_19_83:
+	label$0be2704_18_82:
+	goto label$0be2704_18_84;
+	label$0be2704_18_83:
 	r14 = false;
-	label$0be2704_19_84:
-	goto label$0be2704_19_128;
-	label$0be2704_19_85:
+	label$0be2704_18_84:
+	goto label$0be2704_18_128;
+	label$0be2704_18_85:
 	r10 = r1->prev;
 	r3 = r2->y;
 	r5 = r1->y;
@@ -2482,7 +2474,7 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( r3 < r5 ) goto label$0be2704_19_127;
+	if( r3 < r5 ) goto label$0be2704_18_127;
 	r13 = r1->next;
 	if( r13 == NULL ) hl_null_access();
 	r3 = r13->y;
@@ -2501,21 +2493,21 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( r3 < r5 ) goto label$0be2704_19_125;
+	if( r3 < r5 ) goto label$0be2704_18_125;
 	r14 = false;
-	goto label$0be2704_19_126;
-	label$0be2704_19_125:
+	goto label$0be2704_18_126;
+	label$0be2704_18_125:
 	r14 = true;
-	label$0be2704_19_126:
-	goto label$0be2704_19_128;
-	label$0be2704_19_127:
+	label$0be2704_18_126:
+	goto label$0be2704_18_128;
+	label$0be2704_18_127:
 	r14 = true;
-	label$0be2704_19_128:
-	goto label$0be2704_19_130;
-	label$0be2704_19_129:
+	label$0be2704_18_128:
+	goto label$0be2704_18_130;
+	label$0be2704_18_129:
 	r14 = false;
-	label$0be2704_19_130:
-	if( !r14 ) goto label$0be2704_19_240;
+	label$0be2704_18_130:
+	if( !r14 ) goto label$0be2704_18_240;
 	r4 = r2->prev;
 	r9 = r2->next;
 	r3 = r2->y;
@@ -2536,7 +2528,7 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( !(r3 < r5) ) goto label$0be2704_19_196;
+	if( !(r3 < r5) ) goto label$0be2704_18_196;
 	r10 = r2->next;
 	r3 = r1->y;
 	r5 = r2->y;
@@ -2555,7 +2547,7 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( !(r3 >= r5) ) goto label$0be2704_19_194;
+	if( !(r3 >= r5) ) goto label$0be2704_18_194;
 	r13 = r2->prev;
 	if( r13 == NULL ) hl_null_access();
 	r3 = r13->y;
@@ -2574,18 +2566,18 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( r3 >= r5 ) goto label$0be2704_19_192;
+	if( r3 >= r5 ) goto label$0be2704_18_192;
 	r15 = false;
-	goto label$0be2704_19_193;
-	label$0be2704_19_192:
+	goto label$0be2704_18_193;
+	label$0be2704_18_192:
 	r15 = true;
-	label$0be2704_19_193:
-	goto label$0be2704_19_195;
-	label$0be2704_19_194:
+	label$0be2704_18_193:
+	goto label$0be2704_18_195;
+	label$0be2704_18_194:
 	r15 = false;
-	label$0be2704_19_195:
-	goto label$0be2704_19_239;
-	label$0be2704_19_196:
+	label$0be2704_18_195:
+	goto label$0be2704_18_239;
+	label$0be2704_18_196:
 	r10 = r2->prev;
 	r3 = r1->y;
 	r5 = r2->y;
@@ -2604,7 +2596,7 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( r3 < r5 ) goto label$0be2704_19_238;
+	if( r3 < r5 ) goto label$0be2704_18_238;
 	r13 = r2->next;
 	if( r13 == NULL ) hl_null_access();
 	r3 = r13->y;
@@ -2623,27 +2615,27 @@ bool hxd_earcut_Earcut_isValidDiagonal(hxd__earcut__Earcut r0,hxd__earcut__EarNo
 	r5 = r5 * r11;
 	r3 = r3 - r5;
 	r5 = 0.;
-	if( r3 < r5 ) goto label$0be2704_19_236;
+	if( r3 < r5 ) goto label$0be2704_18_236;
 	r15 = false;
-	goto label$0be2704_19_237;
-	label$0be2704_19_236:
+	goto label$0be2704_18_237;
+	label$0be2704_18_236:
 	r15 = true;
-	label$0be2704_19_237:
-	goto label$0be2704_19_239;
-	label$0be2704_19_238:
+	label$0be2704_18_237:
+	goto label$0be2704_18_239;
+	label$0be2704_18_238:
 	r15 = true;
-	label$0be2704_19_239:
-	goto label$0be2704_19_241;
-	label$0be2704_19_240:
+	label$0be2704_18_239:
+	goto label$0be2704_18_241;
+	label$0be2704_18_240:
 	r15 = false;
-	label$0be2704_19_241:
-	if( !r15 ) goto label$0be2704_19_244;
+	label$0be2704_18_241:
+	if( !r15 ) goto label$0be2704_18_244;
 	r15 = hxd_earcut_Earcut_middleInside(r0,r1,r2);
 	return r15;
-	label$0be2704_19_244:
+	label$0be2704_18_244:
 	r15 = false;
 	return r15;
-	label$0be2704_19_246:
+	label$0be2704_18_246:
 	r8 = true;
 	return r8;
 }
@@ -2666,27 +2658,27 @@ bool hxd_earcut_Earcut_middleInside(hxd__earcut__Earcut r0,hxd__earcut__EarNode 
 	r7 = r7 + r8;
 	r8 = 2.;
 	r7 = r7 / r8;
-	label$0be2704_20_14:
+	label$0be2704_19_14:
 	r9 = true;
-	if( !r9 ) goto label$0be2704_20_55;
+	if( !r9 ) goto label$0be2704_19_55;
 	if( r3 == NULL ) hl_null_access();
 	r8 = r3->y;
-	if( r8 > r7 ) goto label$0be2704_20_22;
+	if( r8 > r7 ) goto label$0be2704_19_22;
 	r9 = false;
-	goto label$0be2704_20_23;
-	label$0be2704_20_22:
+	goto label$0be2704_19_23;
+	label$0be2704_19_22:
 	r9 = true;
-	label$0be2704_20_23:
+	label$0be2704_19_23:
 	r6 = r3->next;
 	if( r6 == NULL ) hl_null_access();
 	r8 = r6->y;
-	if( r8 > r7 ) goto label$0be2704_20_29;
+	if( r8 > r7 ) goto label$0be2704_19_29;
 	r11 = false;
-	goto label$0be2704_20_30;
-	label$0be2704_20_29:
+	goto label$0be2704_19_30;
+	label$0be2704_19_29:
 	r11 = true;
-	label$0be2704_20_30:
-	if( r9 == r11 ) goto label$0be2704_20_50;
+	label$0be2704_19_30:
+	if( r9 == r11 ) goto label$0be2704_19_50;
 	r6 = r3->next;
 	if( r6 == NULL ) hl_null_access();
 	r10 = r6->x;
@@ -2703,17 +2695,17 @@ bool hxd_earcut_Earcut_middleInside(hxd__earcut__Earcut r0,hxd__earcut__EarNode 
 	r10 = r10 / r12;
 	r12 = r3->x;
 	r10 = r10 + r12;
-	if( !(r5 < r10) ) goto label$0be2704_20_50;
+	if( !(r5 < r10) ) goto label$0be2704_19_50;
 	r9 = !r4;
 	r4 = r9;
-	label$0be2704_20_50:
+	label$0be2704_19_50:
 	r6 = r3->next;
 	r3 = r6;
-	if( r6 != r1 ) goto label$0be2704_20_54;
-	goto label$0be2704_20_55;
-	label$0be2704_20_54:
-	goto label$0be2704_20_14;
-	label$0be2704_20_55:
+	if( r6 != r1 ) goto label$0be2704_19_54;
+	goto label$0be2704_19_55;
+	label$0be2704_19_54:
+	goto label$0be2704_19_14;
+	label$0be2704_19_55:
 	return r4;
 }
 
@@ -2723,28 +2715,28 @@ bool hxd_earcut_Earcut_intersectsPolygon(hxd__earcut__Earcut r0,hxd__earcut__Ear
 	double r9, r10, r11, r12;
 	int r5, r7;
 	r3 = r1;
-	label$0be2704_21_1:
+	label$0be2704_20_1:
 	r4 = true;
-	if( !r4 ) goto label$0be2704_21_120;
+	if( !r4 ) goto label$0be2704_20_120;
 	if( r3 == NULL ) hl_null_access();
 	r5 = r3->i;
 	if( r1 == NULL ) hl_null_access();
 	r7 = r1->i;
-	if( r5 == r7 ) goto label$0be2704_21_111;
+	if( r5 == r7 ) goto label$0be2704_20_111;
 	r6 = r3->next;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->i;
 	r7 = r1->i;
-	if( r5 == r7 ) goto label$0be2704_21_111;
+	if( r5 == r7 ) goto label$0be2704_20_111;
 	r5 = r3->i;
 	if( r2 == NULL ) hl_null_access();
 	r7 = r2->i;
-	if( r5 == r7 ) goto label$0be2704_21_111;
+	if( r5 == r7 ) goto label$0be2704_20_111;
 	r6 = r3->next;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->i;
 	r7 = r2->i;
-	if( r5 == r7 ) goto label$0be2704_21_111;
+	if( r5 == r7 ) goto label$0be2704_20_111;
 	r6 = r3->next;
 	if( r6 == NULL ) hl_null_access();
 	r9 = r6->y;
@@ -2763,12 +2755,12 @@ bool hxd_earcut_Earcut_intersectsPolygon(hxd__earcut__Earcut r0,hxd__earcut__Ear
 	r10 = r10 * r11;
 	r9 = r9 - r10;
 	r10 = 0.;
-	if( r9 > r10 ) goto label$0be2704_21_44;
+	if( r9 > r10 ) goto label$0be2704_20_44;
 	r8 = false;
-	goto label$0be2704_21_45;
-	label$0be2704_21_44:
+	goto label$0be2704_20_45;
+	label$0be2704_20_44:
 	r8 = true;
-	label$0be2704_21_45:
+	label$0be2704_20_45:
 	r9 = r6->y;
 	r10 = r3->y;
 	r9 = r9 - r10;
@@ -2785,13 +2777,13 @@ bool hxd_earcut_Earcut_intersectsPolygon(hxd__earcut__Earcut r0,hxd__earcut__Ear
 	r10 = r10 * r11;
 	r9 = r9 - r10;
 	r10 = 0.;
-	if( r9 > r10 ) goto label$0be2704_21_64;
+	if( r9 > r10 ) goto label$0be2704_20_64;
 	r13 = false;
-	goto label$0be2704_21_65;
-	label$0be2704_21_64:
+	goto label$0be2704_20_65;
+	label$0be2704_20_64:
 	r13 = true;
-	label$0be2704_21_65:
-	if( r8 == r13 ) goto label$0be2704_21_109;
+	label$0be2704_20_65:
+	if( r8 == r13 ) goto label$0be2704_20_109;
 	r9 = r2->y;
 	r10 = r1->y;
 	r9 = r9 - r10;
@@ -2808,12 +2800,12 @@ bool hxd_earcut_Earcut_intersectsPolygon(hxd__earcut__Earcut r0,hxd__earcut__Ear
 	r10 = r10 * r11;
 	r9 = r9 - r10;
 	r10 = 0.;
-	if( r9 > r10 ) goto label$0be2704_21_85;
+	if( r9 > r10 ) goto label$0be2704_20_85;
 	r8 = false;
-	goto label$0be2704_21_86;
-	label$0be2704_21_85:
+	goto label$0be2704_20_86;
+	label$0be2704_20_85:
 	r8 = true;
-	label$0be2704_21_86:
+	label$0be2704_20_86:
 	r9 = r2->y;
 	r10 = r1->y;
 	r9 = r9 - r10;
@@ -2830,33 +2822,33 @@ bool hxd_earcut_Earcut_intersectsPolygon(hxd__earcut__Earcut r0,hxd__earcut__Ear
 	r10 = r10 * r11;
 	r9 = r9 - r10;
 	r10 = 0.;
-	if( r9 > r10 ) goto label$0be2704_21_105;
+	if( r9 > r10 ) goto label$0be2704_20_105;
 	r13 = false;
-	goto label$0be2704_21_106;
-	label$0be2704_21_105:
+	goto label$0be2704_20_106;
+	label$0be2704_20_105:
 	r13 = true;
-	label$0be2704_21_106:
-	if( r8 == r13 ) goto label$0be2704_21_109;
+	label$0be2704_20_106:
+	if( r8 == r13 ) goto label$0be2704_20_109;
 	r8 = true;
-	goto label$0be2704_21_110;
-	label$0be2704_21_109:
+	goto label$0be2704_20_110;
+	label$0be2704_20_109:
 	r8 = false;
-	label$0be2704_21_110:
-	goto label$0be2704_21_112;
-	label$0be2704_21_111:
+	label$0be2704_20_110:
+	goto label$0be2704_20_112;
+	label$0be2704_20_111:
 	r8 = false;
-	label$0be2704_21_112:
-	if( !r8 ) goto label$0be2704_21_115;
+	label$0be2704_20_112:
+	if( !r8 ) goto label$0be2704_20_115;
 	r8 = true;
 	return r8;
-	label$0be2704_21_115:
+	label$0be2704_20_115:
 	r6 = r3->next;
 	r3 = r6;
-	if( r6 != r1 ) goto label$0be2704_21_119;
-	goto label$0be2704_21_120;
-	label$0be2704_21_119:
-	goto label$0be2704_21_1;
-	label$0be2704_21_120:
+	if( r6 != r1 ) goto label$0be2704_20_119;
+	goto label$0be2704_20_120;
+	label$0be2704_20_119:
+	goto label$0be2704_20_1;
+	label$0be2704_20_120:
 	r4 = false;
 	return r4;
 }
@@ -2867,13 +2859,13 @@ void hxd_earcut_Earcut_indexCurve(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1
 	double r8, r9, r10, r11, r12;
 	int r5, r7, r13, r14, r15;
 	r2 = r1;
-	label$0be2704_22_1:
+	label$0be2704_21_1:
 	r4 = true;
-	if( !r4 ) goto label$0be2704_22_79;
+	if( !r4 ) goto label$0be2704_21_79;
 	if( r2 == NULL ) hl_null_access();
 	r5 = r2->z;
 	r7 = 0;
-	if( r5 >= r7 ) goto label$0be2704_22_70;
+	if( r5 >= r7 ) goto label$0be2704_21_70;
 	r8 = r2->y;
 	r9 = 32767.;
 	r10 = r2->x;
@@ -2936,18 +2928,18 @@ void hxd_earcut_Earcut_indexCurve(hxd__earcut__Earcut r0,hxd__earcut__EarNode r1
 	r14 = r7 << r15;
 	r13 = r5 | r14;
 	r2->z = r13;
-	label$0be2704_22_70:
+	label$0be2704_21_70:
 	r16 = r2->prev;
 	r2->prevZ = r16;
 	r16 = r2->next;
 	r2->nextZ = r16;
 	r6 = r2->next;
 	r2 = r6;
-	if( r6 != r1 ) goto label$0be2704_22_78;
-	goto label$0be2704_22_79;
-	label$0be2704_22_78:
-	goto label$0be2704_22_1;
-	label$0be2704_22_79:
+	if( r6 != r1 ) goto label$0be2704_21_78;
+	goto label$0be2704_21_79;
+	label$0be2704_21_78:
+	goto label$0be2704_21_1;
+	label$0be2704_21_79:
 	if( r2 == NULL ) hl_null_access();
 	r6 = r2->prevZ;
 	if( r6 == NULL ) hl_null_access();
@@ -2964,9 +2956,9 @@ hxd__earcut__EarNode hxd_earcut_Earcut_sortLinked(hxd__earcut__Earcut r0,hxd__ea
 	bool r3;
 	int r2, r7, r8, r10, r11, r12;
 	r2 = 1;
-	label$0be2704_23_1:
+	label$0be2704_22_1:
 	r3 = true;
-	if( !r3 ) goto label$0be2704_23_88;
+	if( !r3 ) goto label$0be2704_22_88;
 	r4 = r1;
 	r5 = NULL;
 	r1 = r5;
@@ -2974,85 +2966,85 @@ hxd__earcut__EarNode hxd_earcut_Earcut_sortLinked(hxd__earcut__Earcut r0,hxd__ea
 	r5 = r6;
 	r8 = 0;
 	r7 = r8;
-	label$0be2704_23_11:
-	if( !r4 ) goto label$0be2704_23_78;
+	label$0be2704_22_11:
+	if( !r4 ) goto label$0be2704_22_78;
 	++r7;
 	r6 = r4;
 	r10 = 0;
 	r8 = r10;
 	r10 = 0;
 	r11 = r2;
-	label$0be2704_23_19:
-	if( r10 >= r11 ) goto label$0be2704_23_29;
+	label$0be2704_22_19:
+	if( r10 >= r11 ) goto label$0be2704_22_29;
 	++r10;
 	++r8;
 	if( r6 == NULL ) hl_null_access();
 	r9 = r6->nextZ;
 	r6 = r9;
-	if( r9 ) goto label$0be2704_23_28;
-	goto label$0be2704_23_29;
-	label$0be2704_23_28:
-	goto label$0be2704_23_19;
-	label$0be2704_23_29:
+	if( r9 ) goto label$0be2704_22_28;
+	goto label$0be2704_22_29;
+	label$0be2704_22_28:
+	goto label$0be2704_22_19;
+	label$0be2704_22_29:
 	r10 = r2;
-	label$0be2704_23_30:
+	label$0be2704_22_30:
 	r12 = 0;
-	if( r12 < r8 ) goto label$0be2704_23_36;
+	if( r12 < r8 ) goto label$0be2704_22_36;
 	r12 = 0;
-	if( r12 >= r10 ) goto label$0be2704_23_76;
-	if( !r6 ) goto label$0be2704_23_76;
-	label$0be2704_23_36:
+	if( r12 >= r10 ) goto label$0be2704_22_76;
+	if( !r6 ) goto label$0be2704_22_76;
+	label$0be2704_22_36:
 	r12 = 0;
-	if( r8 != r12 ) goto label$0be2704_23_44;
+	if( r8 != r12 ) goto label$0be2704_22_44;
 	r9 = r6;
 	if( r6 == NULL ) hl_null_access();
 	r13 = r6->nextZ;
 	r6 = r13;
 	--r10;
-	goto label$0be2704_23_67;
-	label$0be2704_23_44:
+	goto label$0be2704_22_67;
+	label$0be2704_22_44:
 	r12 = 0;
-	if( r10 == r12 ) goto label$0be2704_23_47;
-	if( r6 ) goto label$0be2704_23_53;
-	label$0be2704_23_47:
+	if( r10 == r12 ) goto label$0be2704_22_47;
+	if( r6 ) goto label$0be2704_22_53;
+	label$0be2704_22_47:
 	r9 = r4;
 	if( r4 == NULL ) hl_null_access();
 	r13 = r4->nextZ;
 	r4 = r13;
 	--r8;
-	goto label$0be2704_23_67;
-	label$0be2704_23_53:
+	goto label$0be2704_22_67;
+	label$0be2704_22_53:
 	if( r4 == NULL ) hl_null_access();
 	r11 = r4->z;
 	if( r6 == NULL ) hl_null_access();
 	r12 = r6->z;
-	if( r12 < r11 ) goto label$0be2704_23_63;
+	if( r12 < r11 ) goto label$0be2704_22_63;
 	r9 = r4;
 	r13 = r4->nextZ;
 	r4 = r13;
 	--r8;
-	goto label$0be2704_23_67;
-	label$0be2704_23_63:
+	goto label$0be2704_22_67;
+	label$0be2704_22_63:
 	r9 = r6;
 	r13 = r6->nextZ;
 	r6 = r13;
 	--r10;
-	label$0be2704_23_67:
-	if( !r5 ) goto label$0be2704_23_71;
+	label$0be2704_22_67:
+	if( !r5 ) goto label$0be2704_22_71;
 	if( r5 == NULL ) hl_null_access();
 	r5->nextZ = r9;
-	goto label$0be2704_23_72;
-	label$0be2704_23_71:
+	goto label$0be2704_22_72;
+	label$0be2704_22_71:
 	r1 = r9;
-	label$0be2704_23_72:
+	label$0be2704_22_72:
 	if( r9 == NULL ) hl_null_access();
 	r9->prevZ = r5;
 	r5 = r9;
-	goto label$0be2704_23_30;
-	label$0be2704_23_76:
+	goto label$0be2704_22_30;
+	label$0be2704_22_76:
 	r4 = r6;
-	goto label$0be2704_23_11;
-	label$0be2704_23_78:
+	goto label$0be2704_22_11;
+	label$0be2704_22_78:
 	if( r5 == NULL ) hl_null_access();
 	r14 = NULL;
 	r5->nextZ = r14;
@@ -3060,11 +3052,20 @@ hxd__earcut__EarNode hxd_earcut_Earcut_sortLinked(hxd__earcut__Earcut r0,hxd__ea
 	r11 = r2 * r12;
 	r2 = r11;
 	r12 = 1;
-	if( r12 < r7 ) goto label$0be2704_23_87;
-	goto label$0be2704_23_88;
-	label$0be2704_23_87:
-	goto label$0be2704_23_1;
-	label$0be2704_23_88:
+	if( r12 < r7 ) goto label$0be2704_22_87;
+	goto label$0be2704_22_88;
+	label$0be2704_22_87:
+	goto label$0be2704_22_1;
+	label$0be2704_22_88:
 	return r1;
+}
+
+int hxd_earcut_Earcut_eliminateHoles_triangulate_T__$1(vclosure* r0,vdynamic* r1,vdynamic* r2) {
+	hxd__earcut__EarNode r3, r4;
+	int r5;
+	r3 = (hxd__earcut__EarNode)hl_dyn_castp(&r1,&t$_dyn,&t$hxd_earcut_EarNode);
+	r4 = (hxd__earcut__EarNode)hl_dyn_castp(&r2,&t$_dyn,&t$hxd_earcut_EarNode);
+	r5 = r0->hasValue ? ((int (*)(vdynamic*,hxd__earcut__EarNode,hxd__earcut__EarNode))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(hxd__earcut__EarNode,hxd__earcut__EarNode))r0->fun)(r3,r4);
+	return r5;
 }
 

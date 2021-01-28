@@ -4,7 +4,6 @@ import hxd.fs.BytesFileSystem.BytesFileEntry;
 import haxe.io.Bytes;
 import hxd.File;
 import hxd.res.Sound;
-import hxd.Res;
 import hxd.snd.Channel;
 import hxd.snd.effect.Pitch;
 
@@ -31,19 +30,13 @@ class Musicplayer
 	public function loadAudio(_name:String) {
 		
 		#if hl
-		if (!FileSystem.isDirectory("./music")) {
-			Main.console.log("Music directory not found. One has been created for you...", 0xFF0000);
-			FileSystem.createDirectory("./music");
+		if (!FileSystem.exists('${_name}')) {
+			Main.console.log('${_name} is not present...', 0xFF0000);
 			return;
 		}
 		
-		if (!FileSystem.exists('./music/${_name}.ogg')) {
-			Main.console.log("./music/${_name}.ogg is not present...", 0xFF0000);
-			return;
-		}
-		
-		var bytes:Bytes = File.getBytes('./music/${_name}.ogg');
-		var bFileEntry = new BytesFileEntry('./music/${_name}.ogg', bytes);
+		var bytes:Bytes = File.getBytes('${_name}');
+		var bFileEntry = new BytesFileEntry('${_name}', bytes);
 		bFileEntry.load( function() {
 			sound = new Sound(bFileEntry);
 		});
@@ -65,6 +58,7 @@ class Musicplayer
 		if (sound == null) return;
 		if (!Main.simulation.playing) return;
 		mixer = sound.play();
+		mixer.volume = 0.25;
 		mixer.addEffect(speedfilter);
 		mixer.position = (_offset / 40) + offset;
 		mixer.onEnd = function() {

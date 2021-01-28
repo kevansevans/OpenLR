@@ -2,52 +2,55 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/physics/Stick.h>
+bool components_sledder_RiderBase_set_crashed(components__sledder__RiderBase,bool);
 #include <h2d/col/Point.h>
 #include <hl/natives.h>
 extern hl_type t$_f64;
+extern venum* g$8c042a7;
+extern venum* g$b72f6d6;
+extern hl_type t$fun_76f0ed9;
+bool wrapt$fun_a94e020(vclosure*,bool);
+extern hl_type t$fun_a94e020;
 
-void components_physics_Stick_new(components__physics__Stick r0,components__physics__RidePoint r1,components__physics__RidePoint r2) {
-	h2d__col__Point r5;
-	components__physics__RidePoint r3;
-	double r4, r6, r7;
-	r0->a = r1;
-	r0->b = r2;
-	if( r1 == NULL ) hl_null_access();
-	r5 = r1->pos;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->x;
-	r3 = r0->b;
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->pos;
-	if( r5 == NULL ) hl_null_access();
-	r6 = r5->x;
-	r4 = r4 - r6;
-	r6 = 2.;
-	r4 = hl_math_pow(r4,r6);
-	r3 = r0->a;
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->pos;
-	if( r5 == NULL ) hl_null_access();
-	r6 = r5->y;
-	r3 = r0->b;
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->pos;
-	if( r5 == NULL ) hl_null_access();
-	r7 = r5->y;
-	r6 = r6 - r7;
-	r7 = 2.;
-	r6 = hl_math_pow(r6,r7);
-	r4 = r4 + r6;
-	r4 = hl_math_sqrt(r4);
-	r0->restLength = r4;
+void components_physics_Stick_satisfy(components__physics__Stick r0,vdynamic* r1) {
+	bool r3, r6;
+	components__sledder__RiderBase r7;
+	vclosure *r4;
+	vdynamic *r5;
+	r3 = r0->enabled;
+	if( r3 ) goto label$3c34fd1_1_3;
+	return;
+	label$3c34fd1_1_3:
+	r4 = r0->constrain;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r1 ? r1->v.b : 0;
+	r3 = r4->hasValue ? ((bool (*)(vdynamic*,bool))r4->fun)((vdynamic*)r4->value,r3) : ((bool (*)(bool))r4->fun)(r3);
+	r6 = r0->breakable;
+	if( !r6 ) goto label$3c34fd1_1_10;
+	r0->broken = r3;
+	label$3c34fd1_1_10:
+	r6 = r0->crashable;
+	if( !r6 ) goto label$3c34fd1_1_16;
+	r7 = r0->rider;
+	if( r7 == NULL ) hl_null_access();
+	r6 = components_sledder_RiderBase_set_crashed(r7,r3);
+	r5 = hl_alloc_dynbool(r6);
+	label$3c34fd1_1_16:
 	return;
 }
 
-bool components_physics_Stick_satisfy(components__physics__Stick r0,vdynamic* r1) {
-	bool r13;
+bool components_physics_Stick_noConstrain(components__physics__Stick r0,vdynamic* r1) {
+	bool r2;
+	r2 = r1 ? r1->v.b : 0;
+	return r2;
+}
+
+bool components_physics_Stick_standard(components__physics__Stick r0,vdynamic* r1) {
+	bool r12;
+	components__sledder__RiderBase r13;
 	h2d__col__Point r3;
 	components__physics__RidePoint r4;
-	double r2, r5, r6, r7, r8, r12;
+	double r2, r5, r6, r7, r8, r14;
 	vdynamic *r9, *r11;
 	int r10;
 	r4 = r0->a;
@@ -78,13 +81,13 @@ bool components_physics_Stick_satisfy(components__physics__Stick r0,vdynamic* r1
 	r6 = hl_math_sqrt(r6);
 	r9 = NULL;
 	r8 = 0.;
-	if( r6 != r8 ) goto label$3c34fd1_2_33;
+	if( r6 != r8 ) goto label$3c34fd1_3_33;
 	r10 = 0;
 	r7 = (double)r10;
 	r11 = hl_alloc_dynamic(&t$_f64);
 	r11->v.d = r7;
-	goto label$3c34fd1_2_39;
-	label$3c34fd1_2_33:
+	goto label$3c34fd1_3_39;
+	label$3c34fd1_3_33:
 	r8 = r0->restLength;
 	r7 = r6 - r8;
 	r7 = r7 / r6;
@@ -92,40 +95,279 @@ bool components_physics_Stick_satisfy(components__physics__Stick r0,vdynamic* r1
 	r7 = r7 * r8;
 	r11 = hl_alloc_dynamic(&t$_f64);
 	r11->v.d = r7;
-	label$3c34fd1_2_39:
+	label$3c34fd1_3_39:
+	r12 = r0->crashable;
+	if( r12 ) goto label$3c34fd1_3_43;
+	r12 = r0->breakable;
+	if( !r12 ) goto label$3c34fd1_3_56;
+	label$3c34fd1_3_43:
+	r13 = r0->rider;
+	if( r13 == NULL ) hl_null_access();
+	r12 = r13->invincible;
+	if( r12 ) goto label$3c34fd1_3_56;
+	r7 = r11 ? r11->v.d : 0;
+	r8 = r0->endurance;
+	if( r8 < r7 ) goto label$3c34fd1_3_54;
+	r12 = r1 ? r1->v.b : 0;
+	if( r12 ) goto label$3c34fd1_3_54;
+	r12 = r0->broken;
+	if( !r12 ) goto label$3c34fd1_3_56;
+	label$3c34fd1_3_54:
+	r12 = true;
+	return r12;
+	label$3c34fd1_3_56:
 	r8 = r11 ? r11->v.d : 0;
 	r7 = r2 * r8;
-	r12 = r11 ? r11->v.d : 0;
-	r8 = r5 * r12;
+	r14 = r11 ? r11->v.d : 0;
+	r8 = r5 * r14;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r12 = r3->x;
-	r12 = r12 - r7;
-	r3->x = r12;
+	r14 = r3->x;
+	r14 = r14 - r7;
+	r3->x = r14;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r12 = r3->y;
-	r12 = r12 - r8;
-	r3->y = r12;
+	r14 = r3->y;
+	r14 = r14 - r8;
+	r3->y = r14;
 	r4 = r0->b;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r12 = r3->x;
-	r12 = r12 + r7;
-	r3->x = r12;
+	r14 = r3->x;
+	r14 = r14 + r7;
+	r3->x = r14;
 	r4 = r0->b;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->pos;
 	if( r3 == NULL ) hl_null_access();
-	r12 = r3->y;
-	r12 = r12 + r8;
-	r3->y = r12;
-	r13 = r1 ? r1->v.b : 0;
-	return r13;
+	r14 = r3->y;
+	r14 = r14 + r8;
+	r3->y = r14;
+	r12 = r1 ? r1->v.b : 0;
+	return r12;
+}
+
+bool components_physics_Stick_repell(components__physics__Stick r0,vdynamic* r1) {
+	bool r12;
+	components__sledder__RiderBase r13;
+	h2d__col__Point r3;
+	components__physics__RidePoint r4;
+	double r2, r5, r6, r7, r8, r14;
+	vdynamic *r9, *r11;
+	int r10;
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r2 = r3->x;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->x;
+	r2 = r2 - r5;
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->y;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r6 = r3->y;
+	r5 = r5 - r6;
+	r6 = r2 * r2;
+	r7 = r5 * r5;
+	r6 = r6 + r7;
+	r6 = hl_math_sqrt(r6);
+	r8 = r0->restLength;
+	if( !(r6 < r8) ) goto label$3c34fd1_4_90;
+	r9 = NULL;
+	r8 = 0.;
+	if( r6 != r8 ) goto label$3c34fd1_4_35;
+	r10 = 0;
+	r7 = (double)r10;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	goto label$3c34fd1_4_41;
+	label$3c34fd1_4_35:
+	r8 = r0->restLength;
+	r7 = r6 - r8;
+	r7 = r7 / r6;
+	r8 = 0.5;
+	r7 = r7 * r8;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	label$3c34fd1_4_41:
+	r12 = r0->crashable;
+	if( r12 ) goto label$3c34fd1_4_45;
+	r12 = r0->breakable;
+	if( !r12 ) goto label$3c34fd1_4_58;
+	label$3c34fd1_4_45:
+	r13 = r0->rider;
+	if( r13 == NULL ) hl_null_access();
+	r12 = r13->invincible;
+	if( r12 ) goto label$3c34fd1_4_58;
+	r7 = r11 ? r11->v.d : 0;
+	r8 = r0->endurance;
+	if( r8 < r7 ) goto label$3c34fd1_4_56;
+	r12 = r1 ? r1->v.b : 0;
+	if( r12 ) goto label$3c34fd1_4_56;
+	r12 = r0->broken;
+	if( !r12 ) goto label$3c34fd1_4_58;
+	label$3c34fd1_4_56:
+	r12 = true;
+	return r12;
+	label$3c34fd1_4_58:
+	r8 = r11 ? r11->v.d : 0;
+	r7 = r2 * r8;
+	r14 = r11 ? r11->v.d : 0;
+	r8 = r5 * r14;
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r14 = r3->x;
+	r14 = r14 - r7;
+	r3->x = r14;
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r14 = r3->y;
+	r14 = r14 - r8;
+	r3->y = r14;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r14 = r3->x;
+	r14 = r14 + r7;
+	r3->x = r14;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r14 = r3->y;
+	r14 = r14 + r8;
+	r3->y = r14;
+	label$3c34fd1_4_90:
+	r12 = r1 ? r1->v.b : 0;
+	return r12;
+}
+
+venum* components_physics_Stick_set_type(components__physics__Stick r0,venum* r1) {
+	venum *r7;
+	h2d__col__Point r3;
+	components__physics__RidePoint r4;
+	vclosure *r9, *r10;
+	double r2, r5, r6;
+	int r8;
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r2 = r3->x;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->x;
+	r2 = r2 - r5;
+	r5 = 2.;
+	r2 = hl_math_pow(r2,r5);
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->y;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r6 = r3->y;
+	r5 = r5 - r6;
+	r6 = 2.;
+	r5 = hl_math_pow(r5,r6);
+	r2 = r2 + r5;
+	r2 = hl_math_sqrt(r2);
+	r0->restLength = r2;
+	r7 = (venum*)g$8c042a7;
+	if( r1 == r7 ) goto label$3c34fd1_5_33;
+	r7 = (venum*)g$b72f6d6;
+	if( r1 != r7 ) goto label$3c34fd1_5_37;
+	label$3c34fd1_5_33:
+	r2 = r0->restLength;
+	r5 = 0.5;
+	r2 = r2 * r5;
+	r0->restLength = r2;
+	label$3c34fd1_5_37:
+	if( r1 == NULL ) hl_null_access();
+	r8 = HL__ENUM_INDEX__(r1);
+	switch(r8) {
+		default:
+			r9 = hl_alloc_closure_ptr(&t$fun_76f0ed9,components_physics_Stick_noConstrain,r0);
+			if( r9 ) goto label$3c34fd1_5_44;
+			r10 = NULL;
+			goto label$3c34fd1_5_45;
+			label$3c34fd1_5_44:
+			r10 = hl_alloc_closure_ptr(&t$fun_a94e020,wrapt$fun_a94e020,r9);
+			label$3c34fd1_5_45:
+			r0->constrain = r10;
+			goto label$3c34fd1_5_60;
+		case 0:
+			r9 = hl_alloc_closure_ptr(&t$fun_76f0ed9,components_physics_Stick_standard,r0);
+			if( r9 ) goto label$3c34fd1_5_51;
+			r10 = NULL;
+			goto label$3c34fd1_5_52;
+			label$3c34fd1_5_51:
+			r10 = hl_alloc_closure_ptr(&t$fun_a94e020,wrapt$fun_a94e020,r9);
+			label$3c34fd1_5_52:
+			r0->constrain = r10;
+			goto label$3c34fd1_5_60;
+		case 1:
+			r9 = hl_alloc_closure_ptr(&t$fun_76f0ed9,components_physics_Stick_repell,r0);
+			if( r9 ) goto label$3c34fd1_5_58;
+			r10 = NULL;
+			goto label$3c34fd1_5_59;
+			label$3c34fd1_5_58:
+			r10 = hl_alloc_closure_ptr(&t$fun_a94e020,wrapt$fun_a94e020,r9);
+			label$3c34fd1_5_59:
+			r0->constrain = r10;
+	}
+	label$3c34fd1_5_60:
+	r0->type = r1;
+	return r1;
+}
+
+void components_physics_Stick_new(components__physics__Stick r0,components__physics__RidePoint r1,components__physics__RidePoint r2,venum* r3,components__sledder__RiderBase r4) {
+	venum *r6;
+	bool r5;
+	double r7, r8;
+	r5 = false;
+	r0->crashable = r5;
+	r5 = false;
+	r0->broken = r5;
+	r5 = false;
+	r0->breakable = r5;
+	r5 = true;
+	r0->enabled = r5;
+	r0->a = r1;
+	r0->b = r2;
+	r6 = components_physics_Stick_set_type(r0,r3);
+	r0->rider = r4;
+	r7 = 0.057000000000000002;
+	r8 = r0->restLength;
+	r7 = r7 * r8;
+	r8 = 0.5;
+	r7 = r7 * r8;
+	r0->endurance = r7;
+	return;
 }
 

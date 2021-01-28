@@ -13,6 +13,8 @@ enum abstract Commands(String) from String
 	var disconnect:String; //Leave current server;
 	var drawLine:String; //[type, current active color], [x1, mouse x], [y1, mouse y], [x2, x1 + 10], [y2, same as y1], [shifted, false], [limmode], creates a new line
 	
+	var enableCamera:String; //toggle camera
+	
 	var github:String; //Print github page
 	var gridSizeDec:String; //Change the ruler dimensions by -1
 	var gridSizeInc:String; //Change the ruler dimensions by +1

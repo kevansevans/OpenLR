@@ -144,6 +144,37 @@
 #include <haxe/MainEvent.h>
 #include <haxe/Timer.h>
 #include <hxd/Timer.h>
+#include <components/physics/RidePoint.h>
+#include <h2d/Text.h>
+#include <h2d/Kerning.h>
+#include <h2d/Tile.h>
+#include <h2d/FontChar.h>
+#include <hxd/Charset.h>
+#include <h2d/FontType.h>
+#include <h2d/Font.h>
+#include <h3d/shader/ColorMatrix.h>
+#include <_std/Xml.h>
+#include <h2d/ImageVerticalAlign.h>
+#include <h2d/LineHeightMode.h>
+#include <h3d/shader/SignedDistanceField.h>
+#include <h2d/impl/_BatchDrawState/StateEntry.h>
+#include <h2d/impl/BatchDrawState.h>
+#include <h2d/TileLayerContent.h>
+#include <h2d/TileGroup.h>
+#include <h2d/Align.h>
+#include <h2d/HtmlText.h>
+#include <h2d/GPoint.h>
+#include <h2d/_Graphics/GraphicsContent.h>
+#include <hxd/earcut/EarNode.h>
+#include <hxd/earcut/Earcut.h>
+#include <h2d/Graphics.h>
+#include <components/physics/Stick.h>
+#include <components/physics/StickType.h>
+#include <components/physics/ScarfStick.h>
+#include <h2d/Bitmap.h>
+#include <components/sledder/RiderScarf.h>
+#include <components/sledder/RiderBase.h>
+#include <components/stage/Camera.h>
 #include <utils/TableRNG.h>
 #include <hxd/snd/ChannelBase.h>
 #include <hxd/res/Resource.h>
@@ -165,41 +196,17 @@
 #include <hxd/snd/Channel.h>
 #include <hxd/snd/effect/Pitch.h>
 #include <components/managers/Musicplayer.h>
-#include <h3d/shader/SignedDistanceField.h>
-#include <h2d/Tile.h>
-#include <h2d/impl/_BatchDrawState/StateEntry.h>
-#include <h2d/impl/BatchDrawState.h>
-#include <h2d/TileLayerContent.h>
-#include <h2d/TileGroup.h>
-#include <h2d/Align.h>
-#include <h2d/Kerning.h>
-#include <h2d/FontChar.h>
-#include <hxd/Charset.h>
-#include <h2d/FontType.h>
-#include <h2d/Font.h>
-#include <h2d/Text.h>
 #include <components/stage/TextInfo.h>
 #include <file/SaveLoad.h>
 #include <components/managers/Simulation.h>
 #include <components/managers/Riders.h>
 #include <components/managers/Grid.h>
-#include <h2d/Bitmap.h>
 #include <components/ui/UIButton.h>
 #include <components/ui/Toolbar.h>
-#include <h2d/GPoint.h>
-#include <h2d/_Graphics/GraphicsContent.h>
-#include <hxd/earcut/EarNode.h>
-#include <hxd/earcut/Earcut.h>
-#include <h2d/Graphics.h>
 #include <components/lines/LineBase.h>
 #include <components/tool/ToolMode.h>
 #include <components/tool/ToolBehavior.h>
 #include <h2d/Console.h>
-#include <h3d/shader/ColorMatrix.h>
-#include <_std/Xml.h>
-#include <h2d/ImageVerticalAlign.h>
-#include <h2d/LineHeightMode.h>
-#include <h2d/HtmlText.h>
 #include <h2d/TextInput.h>
 #include <components/stage/LRConsole.h>
 #include <components/stage/DrawMode.h>
@@ -208,11 +215,6 @@
 #include <hxd/res/Loader.h>
 #include <hxd/fs/EmbedFileSystem.h>
 #include <h2d/ConsoleArg.h>
-#include <components/physics/Stick.h>
-#include <components/physics/RidePoint.h>
-#include <components/physics/ScarfStick.h>
-#include <components/sledder/RiderScarf.h>
-#include <components/sledder/RiderBase.h>
 #include <_std/Math.h>
 #include <haxe/SysTools.h>
 #include <_std/SysError.h>
@@ -230,8 +232,6 @@
 #include <h2d/Anim.h>
 #include <components/sledder/RiderPart.h>
 #include <components/sledder/Bosh.h>
-#include <components/physics/BindStick.h>
-#include <components/physics/RepellStick.h>
 #include <components/physics/ScarfPoint.h>
 #include <components/sledder/BodyPart.h>
 #include <hxd/res/Image.h>
@@ -725,6 +725,37 @@ hxd__$App g$_hxd_App = 0;
 haxe__$MainEvent g$_haxe_MainEvent = 0;
 haxe__$Timer g$_haxe_Timer = 0;
 hxd__$Timer g$_hxd_Timer = 0;
+components__physics__$RidePoint g$_components_physics_RidePoint = 0;
+h2d__$Text g$_h2d_Text = 0;
+h2d__$Kerning g$_h2d_Kerning = 0;
+h2d__$Tile g$_h2d_Tile = 0;
+h2d__$FontChar g$_h2d_FontChar = 0;
+hxd__$Charset g$_hxd_Charset = 0;
+h2d__$FontType g$h2d_FontType = 0;
+h2d__$Font g$_h2d_Font = 0;
+h3d__shader__$ColorMatrix g$_h3d_shader_ColorMatrix = 0;
+$Xml g$_Xml = 0;
+h2d__$ImageVerticalAlign g$h2d_ImageVerticalAlign = 0;
+h2d__$LineHeightMode g$h2d_LineHeightMode = 0;
+h3d__shader__$SignedDistanceField g$_h3d_shader_SignedDistanceField = 0;
+h2d__impl___BatchDrawState__$StateEntry g$b62e2cb = 0;
+h2d__impl__$BatchDrawState g$_h2d_impl_BatchDrawState = 0;
+h2d__$TileLayerContent g$_h2d_TileLayerContent = 0;
+h2d__$TileGroup g$_h2d_TileGroup = 0;
+h2d__$Align g$h2d_Align = 0;
+h2d__$HtmlText g$_h2d_HtmlText = 0;
+h2d__$GPoint g$_h2d_GPoint = 0;
+h2d___Graphics__$GraphicsContent g$_h2d__Graphics_GraphicsContent = 0;
+hxd__earcut__$EarNode g$_hxd_earcut_EarNode = 0;
+hxd__earcut__$Earcut g$_hxd_earcut_Earcut = 0;
+h2d__$Graphics g$_h2d_Graphics = 0;
+components__physics__$Stick g$_components_physics_Stick = 0;
+components__physics__$StickType g$components_physics_StickType = 0;
+components__physics__$ScarfStick g$_components_physics_ScarfStick = 0;
+h2d__$Bitmap g$_h2d_Bitmap = 0;
+components__sledder__$RiderScarf g$_components_sledder_RiderScarf = 0;
+components__sledder__$RiderBase g$_components_sledder_RiderBase = 0;
+components__stage__$Camera g$_components_stage_Camera = 0;
 utils__$TableRNG g$_utils_TableRNG = 0;
 hxd__snd__$ChannelBase g$_hxd_snd_ChannelBase = 0;
 hxd__res__$Resource g$_hxd_res_Resource = 0;
@@ -746,41 +777,17 @@ hxd__snd__$Manager g$_hxd_snd_Manager = 0;
 hxd__snd__$Channel g$_hxd_snd_Channel = 0;
 hxd__snd__effect__$Pitch g$_hxd_snd_effect_Pitch = 0;
 components__managers__$Musicplayer g$_components_managers_Musicplayer = 0;
-h3d__shader__$SignedDistanceField g$_h3d_shader_SignedDistanceField = 0;
-h2d__$Tile g$_h2d_Tile = 0;
-h2d__impl___BatchDrawState__$StateEntry g$b62e2cb = 0;
-h2d__impl__$BatchDrawState g$_h2d_impl_BatchDrawState = 0;
-h2d__$TileLayerContent g$_h2d_TileLayerContent = 0;
-h2d__$TileGroup g$_h2d_TileGroup = 0;
-h2d__$Align g$h2d_Align = 0;
-h2d__$Kerning g$_h2d_Kerning = 0;
-h2d__$FontChar g$_h2d_FontChar = 0;
-hxd__$Charset g$_hxd_Charset = 0;
-h2d__$FontType g$h2d_FontType = 0;
-h2d__$Font g$_h2d_Font = 0;
-h2d__$Text g$_h2d_Text = 0;
 components__stage__$TextInfo g$_components_stage_TextInfo = 0;
 file__$SaveLoad g$_file_SaveLoad = 0;
 components__managers__$Simulation g$_components_managers_Simulation = 0;
 components__managers__$Riders g$_components_managers_Riders = 0;
 components__managers__$Grid g$_components_managers_Grid = 0;
-h2d__$Bitmap g$_h2d_Bitmap = 0;
 components__ui__$UIButton g$_components_ui_UIButton = 0;
 components__ui__$Toolbar g$_components_ui_Toolbar = 0;
-h2d__$GPoint g$_h2d_GPoint = 0;
-h2d___Graphics__$GraphicsContent g$_h2d__Graphics_GraphicsContent = 0;
-hxd__earcut__$EarNode g$_hxd_earcut_EarNode = 0;
-hxd__earcut__$Earcut g$_hxd_earcut_Earcut = 0;
-h2d__$Graphics g$_h2d_Graphics = 0;
 components__lines__$LineBase g$_components_lines_LineBase = 0;
 components__tool__$ToolMode g$components_tool_ToolMode = 0;
 components__tool__$ToolBehavior g$_components_tool_ToolBehavior = 0;
 h2d__$Console g$_h2d_Console = 0;
-h3d__shader__$ColorMatrix g$_h3d_shader_ColorMatrix = 0;
-$Xml g$_Xml = 0;
-h2d__$ImageVerticalAlign g$h2d_ImageVerticalAlign = 0;
-h2d__$LineHeightMode g$h2d_LineHeightMode = 0;
-h2d__$HtmlText g$_h2d_HtmlText = 0;
 h2d__$TextInput g$_h2d_TextInput = 0;
 components__stage__$LRConsole g$_components_stage_LRConsole = 0;
 components__stage__$DrawMode g$components_stage_DrawMode = 0;
@@ -877,11 +884,6 @@ String s$x_position = 0;
 String s$y_position = 0;
 String s$setRiderStart = 0;
 String s$Set_rider_start_position = 0;
-components__physics__$Stick g$_components_physics_Stick = 0;
-components__physics__$RidePoint g$_components_physics_RidePoint = 0;
-components__physics__$ScarfStick g$_components_physics_ScarfStick = 0;
-components__sledder__$RiderScarf g$_components_sledder_RiderScarf = 0;
-components__sledder__$RiderBase g$_components_sledder_RiderBase = 0;
 String s$Enable_frame = 0;
 String s$End_frame = 0;
 String s$addNewRider = 0;
@@ -949,6 +951,9 @@ String s$ogg = 0;
 String s$setAudioOffset = 0;
 String s$Changes_start_position_of_song = 0;
 String s$fbf0612 = 0;
+String s$enableCamera = 0;
+String s$15ecc9d = 0;
+String s$581a16d = 0;
 String s$Invalid_function_ = 0;
 $Math g$_Math = 0;
 String s$Can_t_add_ = 0;
@@ -1019,11 +1024,7 @@ components__lines__$Floor g$_components_lines_Floor = 0;
 components__lines__$Scenery g$_components_lines_Scenery = 0;
 components__lines__$Undefined g$_components_lines_Undefined = 0;
 String s$Error_registering_line = 0;
-String s$_music = 0;
-String s$f1e7e73 = 0;
-String s$_music_ = 0;
-String s$_ogg = 0;
-String s$9ea6359 = 0;
+String s$_is_not_present_ = 0;
 hxd__fs__$BytesFileEntry g$_hxd_fs_BytesFileEntry = 0;
 String s$Audio_has_ended_ = 0;
 h2d__$Anim g$_h2d_Anim = 0;
@@ -1032,12 +1033,13 @@ components__sledder__$Bosh g$_components_sledder_Bosh = 0;
 String s$Rider_name_ = 0;
 String s$_already_occupied_renaming_to_ = 0;
 String s$_does_not_exist = 0;
-components__physics__$BindStick g$_components_physics_BindStick = 0;
 String s$No_riders_in_current_track = 0;
 String s$Set_flag_on_frame_ = 0;
 String s$Disabled_flag = 0;
-components__physics__$RepellStick g$_components_physics_RepellStick = 0;
 components__physics__$ScarfPoint g$_components_physics_ScarfPoint = 0;
+venum* g$8c042a7 = 0;
+venum* g$b72f6d6 = 0;
+venum* g$7bcd604 = 0;
 components__sledder__$BodyPart g$components_sledder_BodyPart = 0;
 venum* g$components_sledder_BodyPart_ARM = 0;
 venum* g$components_sledder_BodyPart_LEG = 0;
@@ -1140,6 +1142,7 @@ String s$Line_type_set_to_Scenery = 0;
 components__ui__$Icon g$components_ui_Icon = 0;
 venum* g$components_ui_Icon_ERASER = 0;
 venum* g$components_ui_Icon_PENCIL = 0;
+venum* g$components_ui_Icon_LINE = 0;
 String s$Ruler_width_set_to_ = 0;
 String s$Max_left_bitshift_reached = 0;
 String s$Color_eraser_ = 0;
@@ -1149,7 +1152,6 @@ String s$Tool_set_to_Eraser = 0;
 String s$Tool_set_to_Pencil = 0;
 String s$Tool_set_to_Line = 0;
 venum* g$hxd_Cursor_Default = 0;
-venum* g$components_ui_Icon_LINE = 0;
 String s$icon_pencil_png = 0;
 String s$icon_line_png = 0;
 String s$icon_eraser_png = 0;
@@ -2439,6 +2441,7 @@ hl___Bytes__$Bytes_Impl_ g$_hl__Bytes_Bytes_Impl_ = 0;
 sys__$FileSystem g$_sys_FileSystem = 0;
 $Type g$_Type = 0;
 _Xml__$XmlType_Impl_ g$__Xml_XmlType_Impl_ = 0;
+venum* g$8693a09 = 0;
 hxd__$InteractiveScene g$_hxd_InteractiveScene = 0;
 hxd__impl___Serializable__$NoSerializeSupport g$29a4c6e = 0;
 venum* g$components_ui_Icon_PLAY = 0;
@@ -2968,6 +2971,9 @@ static struct _String const_s$ogg = {&t$String,(vbyte*)USTR("ogg"),3};
 static struct _String const_s$setAudioOffset = {&t$String,(vbyte*)USTR("setAudioOffset"),14};
 static struct _String const_s$Changes_start_position_of_song = {&t$String,(vbyte*)USTR("Changes start position of song"),30};
 static struct _String const_s$fbf0612 = {&t$String,(vbyte*)USTR("Offset needs to be zero or greater, ${_offset} is not valid..."),62};
+static struct _String const_s$enableCamera = {&t$String,(vbyte*)USTR("enableCamera"),12};
+static struct _String const_s$15ecc9d = {&t$String,(vbyte*)USTR("Toggle camera on or off, and set rider to follow"),48};
+static struct _String const_s$581a16d = {&t$String,(vbyte*)USTR("A rider to follow has not been set, please specify a name."),58};
 static struct _String const_s$Invalid_function_ = {&t$String,(vbyte*)USTR("Invalid function "),17};
 static struct _String const_s$Can_t_add_ = {&t$String,(vbyte*)USTR("Can't add "),10};
 static struct _String const_s$84c4047 = {&t$String,(vbyte*)USTR("("),1};
@@ -3018,11 +3024,7 @@ static struct _String const_s$63ec124 = {&t$String,(vbyte*)USTR("Bad node type, 
 static struct _String const_s$Bad_node_type_unexpected_ = {&t$String,(vbyte*)USTR("Bad node type, unexpected "),26};
 static struct _String const_s$925902a = {&t$String,(vbyte*)USTR("Bad node type, expected Element or Document but found "),54};
 static struct _String const_s$Error_registering_line = {&t$String,(vbyte*)USTR("Error registering line"),22};
-static struct _String const_s$_music = {&t$String,(vbyte*)USTR("./music"),7};
-static struct _String const_s$f1e7e73 = {&t$String,(vbyte*)USTR("Music directory not found. One has been created for you..."),58};
-static struct _String const_s$_music_ = {&t$String,(vbyte*)USTR("./music/"),8};
-static struct _String const_s$_ogg = {&t$String,(vbyte*)USTR(".ogg"),4};
-static struct _String const_s$9ea6359 = {&t$String,(vbyte*)USTR("./music/${_name}.ogg is not present..."),38};
+static struct _String const_s$_is_not_present_ = {&t$String,(vbyte*)USTR(" is not present..."),18};
 static struct _String const_s$Audio_has_ended_ = {&t$String,(vbyte*)USTR("Audio has ended..."),18};
 static struct _String const_s$Rider_name_ = {&t$String,(vbyte*)USTR("Rider name "),11};
 static struct _String const_s$_already_occupied_renaming_to_ = {&t$String,(vbyte*)USTR(" already occupied, renaming to "),31};
@@ -4228,6 +4230,9 @@ void hl_init_roots() {
 	s$setAudioOffset = &const_s$setAudioOffset;
 	s$Changes_start_position_of_song = &const_s$Changes_start_position_of_song;
 	s$fbf0612 = &const_s$fbf0612;
+	s$enableCamera = &const_s$enableCamera;
+	s$15ecc9d = &const_s$15ecc9d;
+	s$581a16d = &const_s$581a16d;
 	s$Invalid_function_ = &const_s$Invalid_function_;
 	s$Can_t_add_ = &const_s$Can_t_add_;
 	s$84c4047 = &const_s$84c4047;
@@ -4278,11 +4283,7 @@ void hl_init_roots() {
 	s$Bad_node_type_unexpected_ = &const_s$Bad_node_type_unexpected_;
 	s$925902a = &const_s$925902a;
 	s$Error_registering_line = &const_s$Error_registering_line;
-	s$_music = &const_s$_music;
-	s$f1e7e73 = &const_s$f1e7e73;
-	s$_music_ = &const_s$_music_;
-	s$_ogg = &const_s$_ogg;
-	s$9ea6359 = &const_s$9ea6359;
+	s$_is_not_present_ = &const_s$_is_not_present_;
 	s$Audio_has_ended_ = &const_s$Audio_has_ended_;
 	s$Rider_name_ = &const_s$Rider_name_;
 	s$_already_occupied_renaming_to_ = &const_s$_already_occupied_renaming_to_;
@@ -5479,6 +5480,37 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_haxe_MainEvent);
 	hl_add_root((void**)&g$_haxe_Timer);
 	hl_add_root((void**)&g$_hxd_Timer);
+	hl_add_root((void**)&g$_components_physics_RidePoint);
+	hl_add_root((void**)&g$_h2d_Text);
+	hl_add_root((void**)&g$_h2d_Kerning);
+	hl_add_root((void**)&g$_h2d_Tile);
+	hl_add_root((void**)&g$_h2d_FontChar);
+	hl_add_root((void**)&g$_hxd_Charset);
+	hl_add_root((void**)&g$h2d_FontType);
+	hl_add_root((void**)&g$_h2d_Font);
+	hl_add_root((void**)&g$_h3d_shader_ColorMatrix);
+	hl_add_root((void**)&g$_Xml);
+	hl_add_root((void**)&g$h2d_ImageVerticalAlign);
+	hl_add_root((void**)&g$h2d_LineHeightMode);
+	hl_add_root((void**)&g$_h3d_shader_SignedDistanceField);
+	hl_add_root((void**)&g$b62e2cb);
+	hl_add_root((void**)&g$_h2d_impl_BatchDrawState);
+	hl_add_root((void**)&g$_h2d_TileLayerContent);
+	hl_add_root((void**)&g$_h2d_TileGroup);
+	hl_add_root((void**)&g$h2d_Align);
+	hl_add_root((void**)&g$_h2d_HtmlText);
+	hl_add_root((void**)&g$_h2d_GPoint);
+	hl_add_root((void**)&g$_h2d__Graphics_GraphicsContent);
+	hl_add_root((void**)&g$_hxd_earcut_EarNode);
+	hl_add_root((void**)&g$_hxd_earcut_Earcut);
+	hl_add_root((void**)&g$_h2d_Graphics);
+	hl_add_root((void**)&g$_components_physics_Stick);
+	hl_add_root((void**)&g$components_physics_StickType);
+	hl_add_root((void**)&g$_components_physics_ScarfStick);
+	hl_add_root((void**)&g$_h2d_Bitmap);
+	hl_add_root((void**)&g$_components_sledder_RiderScarf);
+	hl_add_root((void**)&g$_components_sledder_RiderBase);
+	hl_add_root((void**)&g$_components_stage_Camera);
 	hl_add_root((void**)&g$_utils_TableRNG);
 	hl_add_root((void**)&g$_hxd_snd_ChannelBase);
 	hl_add_root((void**)&g$_hxd_res_Resource);
@@ -5500,41 +5532,17 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hxd_snd_Channel);
 	hl_add_root((void**)&g$_hxd_snd_effect_Pitch);
 	hl_add_root((void**)&g$_components_managers_Musicplayer);
-	hl_add_root((void**)&g$_h3d_shader_SignedDistanceField);
-	hl_add_root((void**)&g$_h2d_Tile);
-	hl_add_root((void**)&g$b62e2cb);
-	hl_add_root((void**)&g$_h2d_impl_BatchDrawState);
-	hl_add_root((void**)&g$_h2d_TileLayerContent);
-	hl_add_root((void**)&g$_h2d_TileGroup);
-	hl_add_root((void**)&g$h2d_Align);
-	hl_add_root((void**)&g$_h2d_Kerning);
-	hl_add_root((void**)&g$_h2d_FontChar);
-	hl_add_root((void**)&g$_hxd_Charset);
-	hl_add_root((void**)&g$h2d_FontType);
-	hl_add_root((void**)&g$_h2d_Font);
-	hl_add_root((void**)&g$_h2d_Text);
 	hl_add_root((void**)&g$_components_stage_TextInfo);
 	hl_add_root((void**)&g$_file_SaveLoad);
 	hl_add_root((void**)&g$_components_managers_Simulation);
 	hl_add_root((void**)&g$_components_managers_Riders);
 	hl_add_root((void**)&g$_components_managers_Grid);
-	hl_add_root((void**)&g$_h2d_Bitmap);
 	hl_add_root((void**)&g$_components_ui_UIButton);
 	hl_add_root((void**)&g$_components_ui_Toolbar);
-	hl_add_root((void**)&g$_h2d_GPoint);
-	hl_add_root((void**)&g$_h2d__Graphics_GraphicsContent);
-	hl_add_root((void**)&g$_hxd_earcut_EarNode);
-	hl_add_root((void**)&g$_hxd_earcut_Earcut);
-	hl_add_root((void**)&g$_h2d_Graphics);
 	hl_add_root((void**)&g$_components_lines_LineBase);
 	hl_add_root((void**)&g$components_tool_ToolMode);
 	hl_add_root((void**)&g$_components_tool_ToolBehavior);
 	hl_add_root((void**)&g$_h2d_Console);
-	hl_add_root((void**)&g$_h3d_shader_ColorMatrix);
-	hl_add_root((void**)&g$_Xml);
-	hl_add_root((void**)&g$h2d_ImageVerticalAlign);
-	hl_add_root((void**)&g$h2d_LineHeightMode);
-	hl_add_root((void**)&g$_h2d_HtmlText);
 	hl_add_root((void**)&g$_h2d_TextInput);
 	hl_add_root((void**)&g$_components_stage_LRConsole);
 	hl_add_root((void**)&g$components_stage_DrawMode);
@@ -5551,11 +5559,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$components_tool_ToolMode_LINE);
 	hl_add_root((void**)&g$components_tool_ToolMode_NONE);
 	hl_add_root((void**)&g$components_tool_ToolMode_PENCIL);
-	hl_add_root((void**)&g$_components_physics_Stick);
-	hl_add_root((void**)&g$_components_physics_RidePoint);
-	hl_add_root((void**)&g$_components_physics_ScarfStick);
-	hl_add_root((void**)&g$_components_sledder_RiderScarf);
-	hl_add_root((void**)&g$_components_sledder_RiderBase);
 	hl_add_root((void**)&g$_Math);
 	hl_add_root((void**)&g$_haxe_SysTools);
 	hl_add_root((void**)&g$_SysError);
@@ -5580,9 +5583,10 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_h2d_Anim);
 	hl_add_root((void**)&g$_components_sledder_RiderPart);
 	hl_add_root((void**)&g$_components_sledder_Bosh);
-	hl_add_root((void**)&g$_components_physics_BindStick);
-	hl_add_root((void**)&g$_components_physics_RepellStick);
 	hl_add_root((void**)&g$_components_physics_ScarfPoint);
+	hl_add_root((void**)&g$8c042a7);
+	hl_add_root((void**)&g$b72f6d6);
+	hl_add_root((void**)&g$7bcd604);
 	hl_add_root((void**)&g$components_sledder_BodyPart);
 	hl_add_root((void**)&g$components_sledder_BodyPart_ARM);
 	hl_add_root((void**)&g$components_sledder_BodyPart_LEG);
@@ -5607,8 +5611,8 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$components_ui_Icon);
 	hl_add_root((void**)&g$components_ui_Icon_ERASER);
 	hl_add_root((void**)&g$components_ui_Icon_PENCIL);
-	hl_add_root((void**)&g$hxd_Cursor_Default);
 	hl_add_root((void**)&g$components_ui_Icon_LINE);
+	hl_add_root((void**)&g$hxd_Cursor_Default);
 	hl_add_root((void**)&g$_haxe_format_JsonParser);
 	hl_add_root((void**)&g$_haxe_io_Input);
 	hl_add_root((void**)&g$_format_gif_Reader);
@@ -6055,6 +6059,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_sys_FileSystem);
 	hl_add_root((void**)&g$_Type);
 	hl_add_root((void**)&g$__Xml_XmlType_Impl_);
+	hl_add_root((void**)&g$8693a09);
 	hl_add_root((void**)&g$_hxd_InteractiveScene);
 	hl_add_root((void**)&g$29a4c6e);
 	hl_add_root((void**)&g$components_ui_Icon_PLAY);

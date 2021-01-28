@@ -2,17 +2,33 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/physics/ScarfStick.h>
-void components_physics_Stick_new(components__physics__Stick,components__physics__RidePoint,components__physics__RidePoint);
+extern venum* g$7bcd604;
+void components_physics_Stick_new(components__physics__Stick,components__physics__RidePoint,components__physics__RidePoint,venum*,components__sledder__RiderBase);
+bool components_physics_ScarfStick_scarf(components__physics__ScarfStick,vdynamic*);
+extern hl_type t$fun_9c82c53;
+bool wrapt$fun_a94e020(vclosure*,bool);
+extern hl_type t$fun_a94e020;
 #include <h2d/col/Point.h>
 #include <hl/natives.h>
 extern hl_type t$_f64;
 
-void components_physics_ScarfStick_new(components__physics__ScarfStick r0,components__physics__RidePoint r1,components__physics__RidePoint r2) {
-	components_physics_Stick_new(((components__physics__Stick)r0),r1,r2);
+void components_physics_ScarfStick_new(components__physics__ScarfStick r0,components__physics__RidePoint r1,components__physics__RidePoint r2,components__sledder__RiderBase r3) {
+	venum *r5;
+	vclosure *r6, *r7;
+	r5 = (venum*)g$7bcd604;
+	components_physics_Stick_new(((components__physics__Stick)r0),r1,r2,r5,r3);
+	r6 = hl_alloc_closure_ptr(&t$fun_9c82c53,components_physics_ScarfStick_scarf,r0);
+	if( r6 ) goto label$e5dd32e_1_6;
+	r7 = NULL;
+	goto label$e5dd32e_1_7;
+	label$e5dd32e_1_6:
+	r7 = hl_alloc_closure_ptr(&t$fun_a94e020,wrapt$fun_a94e020,r6);
+	label$e5dd32e_1_7:
+	r0->constrain = r7;
 	return;
 }
 
-bool components_physics_ScarfStick_satisfy(components__physics__ScarfStick r0,vdynamic* r1) {
+bool components_physics_ScarfStick_scarf(components__physics__ScarfStick r0,vdynamic* r1) {
 	bool r13;
 	h2d__col__Point r3;
 	components__physics__RidePoint r4;

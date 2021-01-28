@@ -2,11 +2,43 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/pass/_HardwarePick/FixedColor.h>
+#include <hxsl/Globals.h>
+void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$h3d_Vector;
 void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
 void hxsl_Shader_new(hxsl__Shader);
-#include <hxsl/Globals.h>
-void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
+
+void h3d_pass__HardwarePick_FixedColor_updateConstants(h3d__pass___HardwarePick__FixedColor r0,hxsl__Globals r1) {
+	int r2;
+	r2 = 0;
+	r0->constBits = r2;
+	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
+	return;
+}
+
+vdynamic* h3d_pass__HardwarePick_FixedColor_getParamValue(h3d__pass___HardwarePick__FixedColor r0,int r1) {
+	h3d__Vector r2;
+	vdynamic *r3;
+	switch(r1) {
+		default:
+			goto label$0841a30_2_6;
+		case 0:
+			r2 = r0->colorID__;
+			return ((vdynamic*)r2);
+		case 1:
+			r2 = r0->viewport__;
+			return ((vdynamic*)r2);
+	}
+	label$0841a30_2_6:
+	r3 = NULL;
+	return r3;
+}
+
+double h3d_pass__HardwarePick_FixedColor_getParamFloatValue(h3d__pass___HardwarePick__FixedColor r0,int r1) {
+	double r2;
+	r2 = 0.;
+	return r2;
+}
 
 void h3d_pass__HardwarePick_FixedColor_new(h3d__pass___HardwarePick__FixedColor r0) {
 	h3d__Vector r1;
@@ -27,37 +59,5 @@ void h3d_pass__HardwarePick_FixedColor_new(h3d__pass___HardwarePick__FixedColor 
 	r0->colorID__ = r1;
 	hxsl_Shader_new(((hxsl__Shader)r0));
 	return;
-}
-
-void h3d_pass__HardwarePick_FixedColor_updateConstants(h3d__pass___HardwarePick__FixedColor r0,hxsl__Globals r1) {
-	int r2;
-	r2 = 0;
-	r0->constBits = r2;
-	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
-	return;
-}
-
-vdynamic* h3d_pass__HardwarePick_FixedColor_getParamValue(h3d__pass___HardwarePick__FixedColor r0,int r1) {
-	h3d__Vector r2;
-	vdynamic *r3;
-	switch(r1) {
-		default:
-			goto label$0841a30_3_6;
-		case 0:
-			r2 = r0->colorID__;
-			return ((vdynamic*)r2);
-		case 1:
-			r2 = r0->viewport__;
-			return ((vdynamic*)r2);
-	}
-	label$0841a30_3_6:
-	r3 = NULL;
-	return r3;
-}
-
-double h3d_pass__HardwarePick_FixedColor_getParamFloatValue(h3d__pass___HardwarePick__FixedColor r0,int r1) {
-	double r2;
-	r2 = 0.;
-	return r2;
 }
 

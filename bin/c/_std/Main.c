@@ -79,6 +79,8 @@ void components_stage_TextInfo_new(components__stage__TextInfo);
 extern hl_type t$components_ui_Toolbar;
 void components_ui_Toolbar_new(components__ui__Toolbar,h2d__Object);
 double components_ui_Toolbar_get_width(components__ui__Toolbar);
+extern hl_type t$components_stage_Camera;
+void components_stage_Camera_new(components__stage__Camera,String);
 void hxd_System_openURL(String);
 void components_stage_Canvas_setCanvasPosition(components__stage__Canvas,double,double,vdynamic*);
 extern String s$Set_grid_size_to_;
@@ -173,6 +175,8 @@ extern hl_type t$hl_types_ArrayObj;
 extern hl_type t$vrt_9e5fd38;
 void hxd_File_browse(vclosure*,vvirtual*);
 extern String s$fbf0612;
+extern String s$581a16d;
+String components_stage_Camera_set_riderFollow(components__stage__Camera,String);
 #include <h2d/ConsoleArg.h>
 extern hl_type t$fun_7b48b4f;
 extern hl_type t$fun_a01f396;
@@ -186,6 +190,7 @@ extern hl_type t$fun_9e11b6b;
 extern hl_type t$fun_3e86885;
 extern hl_type t$fun_3968150;
 extern hl_type t$fun_0a89fd7;
+extern hl_type t$fun_ad6559a;
 extern String s$github;
 extern String s$Link_to_github_page;
 extern hl_type t$vrt_6b9bbd4;
@@ -301,12 +306,15 @@ extern String s$loadAudio;
 extern String s$02e4d9c;
 extern String s$setAudioOffset;
 extern String s$Changes_start_position_of_song;
+extern String s$enableCamera;
+extern String s$15ecc9d;
 void hxd_App_update(hxd__App,double);
 void Main_updateGridLines(Main);
 void components_managers_Simulation_playSim(components__managers__Simulation,double);
 void components_managers_Simulation_rewindSim(components__managers__Simulation,double);
 void components_stage_Canvas_drawRiders(components__stage__Canvas);
 void components_stage_TextInfo_update(components__stage__TextInfo);
+void components_stage_Camera_follow(components__stage__Camera);
 void hxd_App_onResize(hxd__App);
 void h2d_Graphics_clear(h2d__Graphics);
 void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
@@ -404,6 +412,7 @@ void Main_init(Main r0) {
 	h2d__Interactive r23;
 	h2d__Scene r14;
 	vdynamic *r6, *r12;
+	components__stage__Camera r39;
 	components__stage__LRConsole r26;
 	int r11, r19;
 	hxd_App_init(((hxd__App)r0));
@@ -651,6 +660,11 @@ void Main_init(Main r0) {
 	r36->posChanged = r15;
 	r21 = 3.;
 	r36->y = r21;
+	r39 = (components__stage__Camera)hl_alloc_obj(&t$components_stage_Camera);
+	r7 = NULL;
+	components_stage_Camera_new(r39,r7);
+	r3 = ($Main)g$_Main;
+	r3->camera = r39;
 	return;
 }
 
@@ -2251,15 +2265,67 @@ void Main_setConsoleActions__$42(double r0) {
 	return;
 }
 
+void Main_setConsoleActions__$43(bool r0,String r1) {
+	String r4;
+	bool r3;
+	$Main r6;
+	vdynamic *r9;
+	int r8;
+	components__stage__LRConsole r7;
+	components__stage__Camera r5;
+	if( !r0 ) goto label$36888b6_46_37;
+	if( r1 ) goto label$36888b6_46_15;
+	r6 = ($Main)g$_Main;
+	r5 = r6->camera;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->riderFollow;
+	if( r4 ) goto label$36888b6_46_15;
+	r6 = ($Main)g$_Main;
+	r7 = r6->console;
+	if( r7 == NULL ) hl_null_access();
+	r4 = (String)s$581a16d;
+	r8 = 16711680;
+	r9 = hl_alloc_dynamic(&t$_i32);
+	r9->v.i = r8;
+	h2d_Console_log(((h2d__Console)r7),r4,r9);
+	goto label$36888b6_46_37;
+	label$36888b6_46_15:
+	if( r1 ) goto label$36888b6_46_27;
+	r6 = ($Main)g$_Main;
+	r5 = r6->camera;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->riderFollow;
+	if( !r4 ) goto label$36888b6_46_27;
+	r6 = ($Main)g$_Main;
+	r5 = r6->camera;
+	if( r5 == NULL ) hl_null_access();
+	r3 = true;
+	r5->enabled = r3;
+	goto label$36888b6_46_37;
+	label$36888b6_46_27:
+	if( !r1 ) goto label$36888b6_46_37;
+	r6 = ($Main)g$_Main;
+	r5 = r6->camera;
+	if( r5 == NULL ) hl_null_access();
+	r4 = components_stage_Camera_set_riderFollow(r5,r1);
+	r6 = ($Main)g$_Main;
+	r5 = r6->camera;
+	if( r5 == NULL ) hl_null_access();
+	r3 = true;
+	r5->enabled = r3;
+	label$36888b6_46_37:
+	return;
+}
+
 void Main_setConsoleActions(Main r0) {
 	String r4, r5;
-	vvirtual *r11, *r15, *r16, *r18, *r20, *r21, *r22, *r23, *r24, *r25, *r26, *r28, *r29, *r31, *r33, *r34, *r35, *r37, *r38, *r39, *r41, *r42, *r45, *r46, *r47, *r48, *r49, *r50, *r51, *r52;
+	vvirtual *r11, *r15, *r16, *r18, *r20, *r21, *r22, *r23, *r24, *r25, *r26, *r28, *r29, *r31, *r33, *r34, *r35, *r37, *r38, *r39, *r41, *r42, *r45, *r46, *r47, *r48, *r49, *r50, *r51, *r52, *r53, *r56;
 	hl__types__ArrayObj r6;
 	venum *r12;
 	hl_type *r8;
 	bool r13;
 	$Main r3;
-	vclosure *r10, *r17, *r19, *r27, *r30, *r32, *r36, *r40, *r43, *r44, *r53, *r54;
+	vclosure *r10, *r17, *r19, *r27, *r30, *r32, *r36, *r40, *r43, *r44, *r54, *r55, *r57;
 	vdynamic *r14;
 	int r9;
 	varray *r7;
@@ -2303,6 +2369,7 @@ void Main_setConsoleActions(Main r0) {
 	static vclosure cl$36 = { &t$fun_6047e2e, Main_setConsoleActions__$38, 0 };
 	static vclosure cl$37 = { &t$fun_3968150, Main_setConsoleActions__$39, 0 };
 	static vclosure cl$38 = { &t$fun_0a89fd7, Main_setConsoleActions__$42, 0 };
+	static vclosure cl$39 = { &t$fun_ad6559a, Main_setConsoleActions__$43, 0 };
 	r3 = ($Main)g$_Main;
 	r2 = r3->console;
 	if( r2 == NULL ) hl_null_access();
@@ -3056,8 +3123,8 @@ void Main_setConsoleActions(Main r0) {
 	r9 = 0;
 	((vvirtual**)(r7 + 1))[r9] = r52;
 	r6 = hl_types_ArrayObj_alloc(r7);
-	r53 = &cl$37;
-	h2d_Console_addCommand(((h2d__Console)r2),r4,r5,r6,((vdynamic*)r53));
+	r54 = &cl$37;
+	h2d_Console_addCommand(((h2d__Console)r2),r4,r5,r6,((vdynamic*)r54));
 	r3 = ($Main)g$_Main;
 	r2 = r3->console;
 	if( r2 == NULL ) hl_null_access();
@@ -3069,8 +3136,39 @@ void Main_setConsoleActions(Main r0) {
 	r9 = 0;
 	((vvirtual**)(r7 + 1))[r9] = r52;
 	r6 = hl_types_ArrayObj_alloc(r7);
-	r54 = &cl$38;
-	h2d_Console_addCommand(((h2d__Console)r2),r4,r5,r6,((vdynamic*)r54));
+	r55 = &cl$38;
+	h2d_Console_addCommand(((h2d__Console)r2),r4,r5,r6,((vdynamic*)r55));
+	r53 = hl_alloc_virtual(&t$vrt_6b9bbd4);
+	r12 = (venum*)g$h2d_ConsoleArg_ABool;
+	if( hl_vfields(r53)[2] ) *(venum**)(hl_vfields(r53)[2]) = (venum*)r12; else hl_dyn_setp(r53->value,116/*t*/,&t$h2d_ConsoleArg,r12);
+	r13 = false;
+	r14 = hl_alloc_dynbool(r13);
+	if( hl_vfields(r53)[1] ) *(vdynamic**)(hl_vfields(r53)[1]) = (vdynamic*)r14; else hl_dyn_setp(r53->value,5545011/*opt*/,&t$nul_bool,r14);
+	r4 = (String)s$True_False;
+	if( hl_vfields(r53)[0] ) *(String*)(hl_vfields(r53)[0]) = (String)r4; else hl_dyn_setp(r53->value,150958933/*name*/,&t$String,r4);
+	r56 = hl_alloc_virtual(&t$vrt_6b9bbd4);
+	r12 = (venum*)g$h2d_ConsoleArg_AString;
+	if( hl_vfields(r56)[2] ) *(venum**)(hl_vfields(r56)[2]) = (venum*)r12; else hl_dyn_setp(r56->value,116/*t*/,&t$h2d_ConsoleArg,r12);
+	r13 = true;
+	r14 = hl_alloc_dynbool(r13);
+	if( hl_vfields(r56)[1] ) *(vdynamic**)(hl_vfields(r56)[1]) = (vdynamic*)r14; else hl_dyn_setp(r56->value,5545011/*opt*/,&t$nul_bool,r14);
+	r4 = (String)s$Rider_name;
+	if( hl_vfields(r56)[0] ) *(String*)(hl_vfields(r56)[0]) = (String)r4; else hl_dyn_setp(r56->value,150958933/*name*/,&t$String,r4);
+	r3 = ($Main)g$_Main;
+	r2 = r3->console;
+	if( r2 == NULL ) hl_null_access();
+	r4 = (String)s$enableCamera;
+	r5 = (String)s$15ecc9d;
+	r8 = &t$vrt_6b9bbd4;
+	r9 = 2;
+	r7 = hl_alloc_array(r8,r9);
+	r9 = 0;
+	((vvirtual**)(r7 + 1))[r9] = r53;
+	r9 = 1;
+	((vvirtual**)(r7 + 1))[r9] = r56;
+	r6 = hl_types_ArrayObj_alloc(r7);
+	r57 = &cl$39;
+	h2d_Console_addCommand(((h2d__Console)r2),r4,r5,r6,((vdynamic*)r57));
 	return;
 }
 
@@ -3080,6 +3178,7 @@ void Main_update(Main r0,double r1) {
 	components__stage__TextInfo r3;
 	components__stage__Canvas r7;
 	components__managers__Simulation r6;
+	components__stage__Camera r8;
 	hxd_App_update(((hxd__App)r0),r1);
 	r4 = ($Main)g$_Main;
 	r3 = r4->textinfo;
@@ -3090,28 +3189,28 @@ void Main_update(Main r0,double r1) {
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->playing;
-	if( !r5 ) goto label$36888b6_47_21;
+	if( !r5 ) goto label$36888b6_48_21;
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->rewinding;
-	if( r5 ) goto label$36888b6_47_21;
+	if( r5 ) goto label$36888b6_48_21;
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	components_managers_Simulation_playSim(r6,r1);
-	goto label$36888b6_47_30;
-	label$36888b6_47_21:
+	goto label$36888b6_48_30;
+	label$36888b6_48_21:
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->rewinding;
-	if( !r5 ) goto label$36888b6_47_30;
+	if( !r5 ) goto label$36888b6_48_30;
 	r4 = ($Main)g$_Main;
 	r6 = r4->simulation;
 	if( r6 == NULL ) hl_null_access();
 	components_managers_Simulation_rewindSim(r6,r1);
-	label$36888b6_47_30:
+	label$36888b6_48_30:
 	r4 = ($Main)g$_Main;
 	r7 = r4->canvas;
 	if( r7 == NULL ) hl_null_access();
@@ -3120,6 +3219,16 @@ void Main_update(Main r0,double r1) {
 	r3 = r4->textinfo;
 	if( r3 == NULL ) hl_null_access();
 	components_stage_TextInfo_update(r3);
+	r4 = ($Main)g$_Main;
+	r8 = r4->camera;
+	if( r8 == NULL ) hl_null_access();
+	r5 = r8->running;
+	if( !r5 ) goto label$36888b6_48_47;
+	r4 = ($Main)g$_Main;
+	r8 = r4->camera;
+	if( r8 == NULL ) hl_null_access();
+	components_stage_Camera_follow(r8);
+	label$36888b6_48_47:
 	return;
 }
 
@@ -3251,8 +3360,8 @@ void Main_updateGridLines(Main r0) {
 	r12 = r13->width;
 	r14 = 10;
 	r12 = r12 * r14;
-	label$36888b6_49_32:
-	if( r7 >= r12 ) goto label$36888b6_49_123;
+	label$36888b6_50_32:
+	if( r7 >= r12 ) goto label$36888b6_50_123;
 	r14 = r7;
 	++r7;
 	r11 = r0->ruler;
@@ -3266,7 +3375,7 @@ void Main_updateGridLines(Main r0) {
 	h2d_Graphics_lineStyle(r11,r16,r17,r18);
 	r19 = r1 == 0 ? 0 : r14 % r1;
 	r20 = 0;
-	if( r19 != r20 ) goto label$36888b6_49_122;
+	if( r19 != r20 ) goto label$36888b6_50_122;
 	r21 = (double)r14;
 	r21 = r21 + r2;
 	r3 = ($Main)g$_Main;
@@ -3275,17 +3384,17 @@ void Main_updateGridLines(Main r0) {
 	r22 = r5->x;
 	r21 = r21 - r22;
 	r22 = 0.;
-	if( r21 != r22 ) goto label$36888b6_49_61;
+	if( r21 != r22 ) goto label$36888b6_50_61;
 	r21 = (double)r14;
 	r23 = hl_alloc_dynamic(&t$_f64);
 	r23->v.d = r21;
 	r9 = r23;
-	goto label$36888b6_49_32;
-	label$36888b6_49_61:
+	goto label$36888b6_50_32;
+	label$36888b6_50_61:
 	r20 = 3;
-	if( r20 < r1 ) goto label$36888b6_49_64;
-	goto label$36888b6_49_32;
-	label$36888b6_49_64:
+	if( r20 < r1 ) goto label$36888b6_50_64;
+	goto label$36888b6_50_32;
+	label$36888b6_50_64:
 	r11 = r0->ruler;
 	r21 = (double)r14;
 	r21 = r21 + r2;
@@ -3344,17 +3453,17 @@ void Main_updateGridLines(Main r0) {
 	r33 = r33 + r34;
 	r18 = &r33;
 	h2d_Graphics_addVertex(r11,r21,r22,r26,r27,r28,r31,r16,r18);
-	label$36888b6_49_122:
-	goto label$36888b6_49_32;
-	label$36888b6_49_123:
+	label$36888b6_50_122:
+	goto label$36888b6_50_32;
+	label$36888b6_50_123:
 	r7 = 0;
 	r13 = r0->engine;
 	if( r13 == NULL ) hl_null_access();
 	r12 = r13->height;
 	r14 = 10;
 	r12 = r12 * r14;
-	label$36888b6_49_129:
-	if( r7 >= r12 ) goto label$36888b6_49_220;
+	label$36888b6_50_129:
+	if( r7 >= r12 ) goto label$36888b6_50_220;
 	r14 = r7;
 	++r7;
 	r11 = r0->ruler;
@@ -3368,7 +3477,7 @@ void Main_updateGridLines(Main r0) {
 	h2d_Graphics_lineStyle(r11,r16,r17,r18);
 	r20 = r1 == 0 ? 0 : r14 % r1;
 	r36 = 0;
-	if( r20 != r36 ) goto label$36888b6_49_219;
+	if( r20 != r36 ) goto label$36888b6_50_219;
 	r22 = (double)r14;
 	r22 = r22 + r4;
 	r3 = ($Main)g$_Main;
@@ -3377,17 +3486,17 @@ void Main_updateGridLines(Main r0) {
 	r24 = r5->y;
 	r22 = r22 - r24;
 	r24 = 0.;
-	if( r22 != r24 ) goto label$36888b6_49_158;
+	if( r22 != r24 ) goto label$36888b6_50_158;
 	r22 = (double)r14;
 	r23 = hl_alloc_dynamic(&t$_f64);
 	r23->v.d = r22;
 	r10 = r23;
-	goto label$36888b6_49_129;
-	label$36888b6_49_158:
+	goto label$36888b6_50_129;
+	label$36888b6_50_158:
 	r36 = 3;
-	if( r36 < r1 ) goto label$36888b6_49_161;
-	goto label$36888b6_49_129;
-	label$36888b6_49_161:
+	if( r36 < r1 ) goto label$36888b6_50_161;
+	goto label$36888b6_50_129;
+	label$36888b6_50_161:
 	r11 = r0->ruler;
 	r22 = (double)r14;
 	r22 = r22 + r4;
@@ -3446,9 +3555,9 @@ void Main_updateGridLines(Main r0) {
 	r39 = r39 + r40;
 	r18 = &r39;
 	h2d_Graphics_addVertex(r11,r22,r24,r27,r28,r31,r37,r16,r18);
-	label$36888b6_49_219:
-	goto label$36888b6_49_129;
-	label$36888b6_49_220:
+	label$36888b6_50_219:
+	goto label$36888b6_50_129;
+	label$36888b6_50_220:
 	r11 = r0->ruler;
 	if( r11 == NULL ) hl_null_access();
 	r7 = 2;
@@ -3459,7 +3568,7 @@ void Main_updateGridLines(Main r0) {
 	r24 = 0.25;
 	r18 = &r24;
 	h2d_Graphics_lineStyle(r11,r16,r17,r18);
-	if( !r9 ) goto label$36888b6_49_289;
+	if( !r9 ) goto label$36888b6_50_289;
 	r11 = r0->ruler;
 	r25 = r9 ? r9->v.d : 0;
 	r25 = r25 + r2;
@@ -3518,8 +3627,8 @@ void Main_updateGridLines(Main r0) {
 	r45 = r45 + r46;
 	r18 = &r45;
 	h2d_Graphics_addVertex(r11,r25,r26,r31,r37,r40,r43,r16,r18);
-	label$36888b6_49_289:
-	if( !r10 ) goto label$36888b6_49_348;
+	label$36888b6_50_289:
+	if( !r10 ) goto label$36888b6_50_348;
 	r11 = r0->ruler;
 	r25 = r10 ? r10->v.d : 0;
 	r25 = r25 + r4;
@@ -3578,7 +3687,7 @@ void Main_updateGridLines(Main r0) {
 	r49 = r49 + r50;
 	r18 = &r49;
 	h2d_Graphics_addVertex(r11,r25,r26,r31,r37,r40,r47,r16,r18);
-	label$36888b6_49_348:
+	label$36888b6_50_348:
 	return;
 }
 

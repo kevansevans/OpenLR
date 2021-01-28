@@ -19,6 +19,7 @@ typedef struct _Main *Main;
 #include <components/stage/TextInfo.h>
 #include <components/managers/Musicplayer.h>
 #include <utils/TableRNG.h>
+#include <components/stage/Camera.h>
 #include <hxd/App.h>
 #include <h3d/scene/Scene.h>
 #include <h2d/Scene.h>
@@ -52,6 +53,7 @@ struct _$Main {
 	components__stage__TextInfo textinfo;
 	components__managers__Musicplayer audio;
 	utils__TableRNG rng;
+	components__stage__Camera camera;
 	vclosure* main;
 };
 struct _Main {

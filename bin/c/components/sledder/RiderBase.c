@@ -10,7 +10,6 @@
 extern $Main g$_Main;
 String components_sledder_RiderBase_get_name(components__sledder__RiderBase);
 bool haxe_ds_StringMap_remove(haxe__ds__StringMap,String);
-#include <components/physics/RidePoint.h>
 extern components__sledder__$RiderBase g$_components_sledder_RiderBase;
 void h2d_Graphics_clear(h2d__Graphics);
 void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
@@ -21,8 +20,8 @@ void components_sledder_RiderBase_constrainBones(components__sledder__RiderBase)
 void components_sledder_RiderBase_collision(components__sledder__RiderBase);
 void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase);
 #include <components/physics/ScarfStick.h>
-bool components_physics_ScarfStick_satisfy(components__physics__ScarfStick,vdynamic*);
 #include <components/physics/Stick.h>
+void components_physics_Stick_satisfy(components__physics__Stick,vdynamic*);
 void components_sledder_RiderScarf_setColor(components__sledder__RiderScarf,vdynamic*,vdynamic*);
 #include <components/managers/Grid.h>
 #include <components/lines/LineBase.h>
@@ -102,21 +101,21 @@ void components_sledder_RiderBase_delete(components__sledder__RiderBase r0) {
 
 void components_sledder_RiderBase_renderRider(components__sledder__RiderBase r0) {
 	hl__types__ArrayObj r10;
-	h2d__Graphics r18;
+	h2d__Graphics r19;
 	bool r4;
 	h2d__HtmlText r1, r3;
 	$Main r8;
 	h2d__col__Point r9;
-	h3d__Vector r16;
+	h3d__Vector r17;
 	components__physics__RidePoint r13;
-	components__sledder__$RiderBase r17;
+	components__sledder__$RiderBase r18;
 	components__stage__Canvas r7;
-	double r5, r6, r24, r25;
-	int *r20;
-	double *r19, *r21;
-	vdynamic *r14;
+	double r5, r6, r25, r26;
+	int *r21;
+	double *r20, *r22;
+	vdynamic *r14, *r16;
 	varray *r15;
-	int r11, r12, r22, r23;
+	int r11, r12, r23, r24;
 	r1 = r0->nameField;
 	r3 = r0->nameField;
 	if( r3 == NULL ) hl_null_access();
@@ -175,68 +174,69 @@ void components_sledder_RiderBase_renderRider(components__sledder__RiderBase r0)
 	r4 = true;
 	r1->posChanged = r4;
 	r1->y = r5;
-	r4 = r0->crashed;
-	if( !r4 ) goto label$2a8c663_4_62;
+	r16 = r0->crashed;
+	r4 = r16 ? r16->v.b : 0;
+	if( !r4 ) goto label$2a8c663_4_63;
 	r1 = r0->nameField;
 	if( r1 == NULL ) hl_null_access();
-	r17 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
-	r16 = r17->RED;
-	r1->color = r16;
-	goto label$2a8c663_4_67;
-	label$2a8c663_4_62:
+	r18 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
+	r17 = r18->RED;
+	r1->color = r17;
+	goto label$2a8c663_4_68;
+	label$2a8c663_4_63:
 	r1 = r0->nameField;
 	if( r1 == NULL ) hl_null_access();
-	r17 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
-	r16 = r17->WHITE;
-	r1->color = r16;
-	label$2a8c663_4_67:
+	r18 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
+	r17 = r18->WHITE;
+	r1->color = r17;
+	label$2a8c663_4_68:
 	r4 = r0->drawContactPoints;
-	if( r4 ) goto label$2a8c663_4_70;
+	if( r4 ) goto label$2a8c663_4_71;
 	return;
-	label$2a8c663_4_70:
-	r18 = r0->gfx;
-	if( r18 == NULL ) hl_null_access();
-	h2d_Graphics_clear(r18);
-	r18 = r0->gfx;
-	if( r18 == NULL ) hl_null_access();
+	label$2a8c663_4_71:
+	r19 = r0->gfx;
+	if( r19 == NULL ) hl_null_access();
+	h2d_Graphics_clear(r19);
+	r19 = r0->gfx;
+	if( r19 == NULL ) hl_null_access();
 	r11 = 1;
 	r5 = (double)r11;
-	r19 = &r5;
+	r20 = &r5;
 	r11 = 13369548;
-	r20 = &r11;
-	r21 = NULL;
-	h2d_Graphics_lineStyle(r18,r19,r20,r21);
+	r21 = &r11;
+	r22 = NULL;
+	h2d_Graphics_lineStyle(r19,r20,r21,r22);
 	r12 = 0;
 	r10 = r0->ridePoints;
-	label$2a8c663_4_84:
+	label$2a8c663_4_85:
 	if( r10 == NULL ) hl_null_access();
-	r23 = r10->length;
-	if( r12 >= r23 ) goto label$2a8c663_4_110;
-	r23 = r10->length;
-	if( ((unsigned)r12) < ((unsigned)r23) ) goto label$2a8c663_4_92;
+	r24 = r10->length;
+	if( r12 >= r24 ) goto label$2a8c663_4_111;
+	r24 = r10->length;
+	if( ((unsigned)r12) < ((unsigned)r24) ) goto label$2a8c663_4_93;
 	r13 = NULL;
-	goto label$2a8c663_4_95;
-	label$2a8c663_4_92:
+	goto label$2a8c663_4_96;
+	label$2a8c663_4_93:
 	r15 = r10->array;
 	r14 = ((vdynamic**)(r15 + 1))[r12];
 	r13 = (components__physics__RidePoint)r14;
-	label$2a8c663_4_95:
+	label$2a8c663_4_96:
 	++r12;
-	r18 = r0->gfx;
-	if( r18 == NULL ) hl_null_access();
+	r19 = r0->gfx;
+	if( r19 == NULL ) hl_null_access();
 	if( r13 == NULL ) hl_null_access();
 	r9 = r13->pos;
 	if( r9 == NULL ) hl_null_access();
 	r6 = r9->x;
 	r9 = r13->pos;
 	if( r9 == NULL ) hl_null_access();
-	r24 = r9->y;
-	r25 = 0.10000000000000001;
-	r22 = 5;
-	r20 = &r22;
-	h2d_Graphics_drawCircle(r18,r6,r24,r25,r20);
-	goto label$2a8c663_4_84;
-	label$2a8c663_4_110:
+	r25 = r9->y;
+	r26 = 0.10000000000000001;
+	r23 = 5;
+	r21 = &r23;
+	h2d_Graphics_drawCircle(r19,r6,r25,r26,r21);
+	goto label$2a8c663_4_85;
+	label$2a8c663_4_111:
 	return;
 }
 
@@ -288,9 +288,8 @@ void components_sledder_RiderBase_stepRider(components__sledder__RiderBase r0) {
 
 void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase r0) {
 	hl__types__ArrayObj r3;
-	bool r8;
 	components__physics__ScarfStick r5;
-	vdynamic *r6, *r9;
+	vdynamic *r6, *r8;
 	varray *r7;
 	int r1, r4;
 	r1 = 0;
@@ -298,7 +297,7 @@ void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase 
 	label$2a8c663_6_2:
 	if( r3 == NULL ) hl_null_access();
 	r4 = r3->length;
-	if( r1 >= r4 ) goto label$2a8c663_6_19;
+	if( r1 >= r4 ) goto label$2a8c663_6_18;
 	r4 = r3->length;
 	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_6_10;
 	r5 = NULL;
@@ -311,10 +310,9 @@ void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase 
 	++r1;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r0->crashed;
-	r9 = hl_alloc_dynbool(r8);
-	r8 = components_physics_ScarfStick_satisfy(r5,r9);
+	components_physics_Stick_satisfy(((components__physics__Stick)r5),r8);
 	goto label$2a8c663_6_2;
-	label$2a8c663_6_19:
+	label$2a8c663_6_18:
 	return;
 }
 
@@ -372,9 +370,8 @@ void components_sledder_RiderBase_iterate(components__sledder__RiderBase r0) {
 
 void components_sledder_RiderBase_constrainBones(components__sledder__RiderBase r0) {
 	hl__types__ArrayObj r3;
-	bool r8;
 	components__physics__Stick r5;
-	vdynamic *r6, *r9;
+	vdynamic *r6, *r8;
 	varray *r7;
 	int r1, r4;
 	r1 = 0;
@@ -382,7 +379,7 @@ void components_sledder_RiderBase_constrainBones(components__sledder__RiderBase 
 	label$2a8c663_8_2:
 	if( r3 == NULL ) hl_null_access();
 	r4 = r3->length;
-	if( r1 >= r4 ) goto label$2a8c663_8_20;
+	if( r1 >= r4 ) goto label$2a8c663_8_18;
 	r4 = r3->length;
 	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_8_10;
 	r5 = NULL;
@@ -395,11 +392,9 @@ void components_sledder_RiderBase_constrainBones(components__sledder__RiderBase 
 	++r1;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r0->crashed;
-	r9 = hl_alloc_dynbool(r8);
-	r8 = ((bool (*)(components__physics__Stick,vdynamic*))r5->$type->vobj_proto[0])(r5,r9);
-	r0->crashed = r8;
+	components_physics_Stick_satisfy(r5,r8);
 	goto label$2a8c663_8_2;
-	label$2a8c663_8_20:
+	label$2a8c663_8_18:
 	return;
 }
 
@@ -587,34 +582,51 @@ String components_sledder_RiderBase_set_name(components__sledder__RiderBase r0,S
 	return r1;
 }
 
+bool components_sledder_RiderBase_set_crashed(components__sledder__RiderBase r0,bool r1) {
+	bool r2;
+	vdynamic *r3;
+	r2 = r0->invincible;
+	if( !r2 ) goto label$2a8c663_15_6;
+	r3 = NULL;
+	r0->crashed = r3;
+	r2 = r3 ? r3->v.b : 0;
+	return r2;
+	label$2a8c663_15_6:
+	r3 = hl_alloc_dynbool(r1);
+	r0->crashed = r3;
+	r2 = r3 ? r3->v.b : 0;
+	return r2;
+}
+
 void components_sledder_RiderBase_new(components__sledder__RiderBase r0,vdynamic* r1,vdynamic* r2,String r3,vdynamic* r4,vdynamic* r5) {
 	String r7;
-	hl__types__ArrayObj r23;
-	h2d__Graphics r17;
+	hl__types__ArrayObj r24;
+	h2d__Graphics r18;
 	bool r8;
-	h2d__Object r18;
-	h2d__HtmlText r21;
-	h2d__Font r22;
-	$Main r20;
+	h2d__Object r19;
+	h2d__HtmlText r22;
+	h2d__Font r23;
+	$Main r21;
 	h2d__col__Point r9;
-	components__stage__Canvas r19;
-	double r6, r14, r15, r16;
+	components__stage__Canvas r20;
+	double r6, r15, r16, r17;
+	vdynamic *r13;
 	double *r10, *r11;
-	int r13;
-	if( r1 ) goto label$2a8c663_15_3;
+	int r14;
+	if( r1 ) goto label$2a8c663_16_3;
 	r6 = 0.;
 	r1 = hl_alloc_dynamic(&t$_f64);
 	r1->v.d = r6;
-	label$2a8c663_15_3:
-	if( r2 ) goto label$2a8c663_15_6;
+	label$2a8c663_16_3:
+	if( r2 ) goto label$2a8c663_16_6;
 	r6 = 0.;
 	r2 = hl_alloc_dynamic(&t$_f64);
 	r2->v.d = r6;
-	label$2a8c663_15_6:
-	if( r3 ) goto label$2a8c663_15_9;
+	label$2a8c663_16_6:
+	if( r3 ) goto label$2a8c663_16_9;
 	r7 = (String)s$Bosh;
 	r3 = r7;
-	label$2a8c663_15_9:
+	label$2a8c663_16_9:
 	r8 = true;
 	r0->enabled = r8;
 	r8 = true;
@@ -625,67 +637,70 @@ void components_sledder_RiderBase_new(components__sledder__RiderBase r0,vdynamic
 	h2d_col_Point_new(r9,r10,r11);
 	r0->startPos = r9;
 	r8 = false;
-	r0->crashed = r8;
-	r6 = 0.057000000000000002;
-	r0->ENDURANCE = r6;
+	r0->undead = r8;
+	r8 = false;
+	r13 = hl_alloc_dynbool(r8);
+	r0->crashed = r13;
+	r8 = false;
+	r0->invincible = r8;
 	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r13 = 0;
-	r6 = (double)r13;
+	r14 = 0;
+	r6 = (double)r14;
 	r10 = &r6;
-	r14 = 0.17499999999999999;
-	r11 = &r14;
+	r15 = 0.17499999999999999;
+	r11 = &r15;
 	h2d_col_Point_new(r9,r10,r11);
 	r0->gravity = r9;
 	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	if( r1 ) goto label$2a8c663_15_34;
+	if( r1 ) goto label$2a8c663_16_37;
 	r10 = NULL;
-	goto label$2a8c663_15_36;
-	label$2a8c663_15_34:
-	r15 = r1 ? r1->v.d : 0;
-	r10 = &r15;
-	label$2a8c663_15_36:
-	if( r2 ) goto label$2a8c663_15_39;
+	goto label$2a8c663_16_39;
+	label$2a8c663_16_37:
+	r16 = r1 ? r1->v.d : 0;
+	r10 = &r16;
+	label$2a8c663_16_39:
+	if( r2 ) goto label$2a8c663_16_42;
 	r11 = NULL;
-	goto label$2a8c663_15_41;
-	label$2a8c663_15_39:
-	r16 = r2 ? r2->v.d : 0;
-	r11 = &r16;
-	label$2a8c663_15_41:
+	goto label$2a8c663_16_44;
+	label$2a8c663_16_42:
+	r17 = r2 ? r2->v.d : 0;
+	r11 = &r17;
+	label$2a8c663_16_44:
 	h2d_col_Point_new(r9,r10,r11);
 	r0->startPos = r9;
-	r17 = (h2d__Graphics)hl_alloc_obj(&t$h2d_Graphics);
-	r18 = NULL;
-	h2d_Graphics_new(r17,r18);
-	r0->gfx = r17;
-	r20 = ($Main)g$_Main;
-	r19 = r20->canvas;
+	r18 = (h2d__Graphics)hl_alloc_obj(&t$h2d_Graphics);
+	r19 = NULL;
+	h2d_Graphics_new(r18,r19);
+	r0->gfx = r18;
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
+	if( r20 == NULL ) hl_null_access();
+	r19 = r20->sledderLayer;
 	if( r19 == NULL ) hl_null_access();
-	r18 = r19->sledderLayer;
-	if( r18 == NULL ) hl_null_access();
-	r17 = r0->gfx;
-	((void (*)(h2d__Object,h2d__Graphics))r18->$type->vobj_proto[1])(r18,r17);
-	r21 = (h2d__HtmlText)hl_alloc_obj(&t$h2d_HtmlText);
-	r22 = hxd_res_DefaultFont_get();
-	r18 = NULL;
-	h2d_HtmlText_new(r21,r22,r18);
-	r0->nameField = r21;
-	r20 = ($Main)g$_Main;
-	r19 = r20->canvas;
+	r18 = r0->gfx;
+	((void (*)(h2d__Object,h2d__Graphics))r19->$type->vobj_proto[1])(r19,r18);
+	r22 = (h2d__HtmlText)hl_alloc_obj(&t$h2d_HtmlText);
+	r23 = hxd_res_DefaultFont_get();
+	r19 = NULL;
+	h2d_HtmlText_new(r22,r23,r19);
+	r0->nameField = r22;
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
+	if( r20 == NULL ) hl_null_access();
+	r19 = r20->sledderLayer;
 	if( r19 == NULL ) hl_null_access();
-	r18 = r19->sledderLayer;
-	if( r18 == NULL ) hl_null_access();
-	r21 = r0->nameField;
-	((void (*)(h2d__Object,h2d__HtmlText))r18->$type->vobj_proto[1])(r18,r21);
+	r22 = r0->nameField;
+	((void (*)(h2d__Object,h2d__HtmlText))r19->$type->vobj_proto[1])(r19,r22);
 	r7 = components_sledder_RiderBase_set_name(r0,r3);
-	r23 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r23);
-	r0->ridePoints = r23;
-	r23 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r23);
-	r0->bones = r23;
-	r23 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r23);
-	r0->scarves = r23;
+	r24 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r24);
+	r0->ridePoints = r24;
+	r24 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r24);
+	r0->bones = r24;
+	r24 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r24);
+	r0->scarves = r24;
 	r0->enabledFrame = r4;
 	r0->disableFrame = r5;
 	return;

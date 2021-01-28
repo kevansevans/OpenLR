@@ -1,7 +1,10 @@
 package components.tool;
 
+import components.lines.LineBase;
 import h2d.col.Point;
 import components.managers.Grid;
+import components.stage.Canvas.DrawMode;
+import components.tool.ToolBehavior.LineColor;
 
 /**
  * ...
@@ -41,16 +44,33 @@ class ToolFunction
 					if (Main.toolControl.colorEraser) {
 						
 						if (line.type == Main.toolControl.color) {
-							Main.grid.unregister(line);
+							tryDispose(line);
 						}
 						
 					} else {
-						Main.grid.unregister(line);
+						tryDispose(line);
 					}
 					continue;
 				}
 				
 			}
 		}
+	}
+	
+	public static function tryDispose(_line:LineBase) {
+		
+		switch (Main.canvas.drawMode) {
+			case FULL_EDIT | PLAYBACK :
+				Main.grid.unregister(_line);
+			case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+				if (_line.type != LineColor.SCENE) {
+					Main.grid.unregister(_line);
+				}
+			case SCENERY_EDIT | SCENERY_PLAYBACK :
+				if (_line.type == LineColor.SCENE) {
+					Main.grid.unregister(_line);
+				}
+		}
+		
 	}
 }

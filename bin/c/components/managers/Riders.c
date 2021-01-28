@@ -35,8 +35,6 @@ extern String s$Rider_;
 extern String s$_does_not_exist;
 bool haxe_ds_StringMap_remove(haxe__ds__StringMap,String);
 String components_sledder_RiderBase_set_name(components__sledder__RiderBase,String);
-#include <components/physics/BindStick.h>
-extern components__physics__$BindStick g$_components_physics_BindStick;
 void haxe_ds_StringMap_new(haxe__ds__StringMap);
 String components_sledder_RiderBase_get_name(components__sledder__RiderBase);
 
@@ -286,33 +284,29 @@ void components_managers_Riders_stepRiders(components__managers__Riders r0) {
 }
 
 void components_managers_Riders_resetPositions(components__managers__Riders r0) {
-	haxe__ds__StringMap r4;
-	vvirtual *r3, *r5;
-	bool r1;
-	components__physics__$BindStick r2;
-	components__sledder__RiderBase r7;
-	r1 = false;
-	r2 = (components__physics__$BindStick)g$_components_physics_BindStick;
-	r2->crash = r1;
-	r4 = r0->riders;
-	if( r4 == NULL ) hl_null_access();
-	r3 = haxe_ds_StringMap_iterator(r4);
-	r5 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r3);
-	label$fbc84c5_5_7:
-	if( r5 == NULL ) hl_null_access();
-	if( hl_vfields(r5)[0] ) r1 = ((bool (*)(vdynamic*))hl_vfields(r5)[0])(r5->value); else {
+	haxe__ds__StringMap r2;
+	vvirtual *r1, *r3;
+	bool r5;
+	components__sledder__RiderBase r6;
+	r2 = r0->riders;
+	if( r2 == NULL ) hl_null_access();
+	r1 = haxe_ds_StringMap_iterator(r2);
+	r3 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r1);
+	label$fbc84c5_5_4:
+	if( r3 == NULL ) hl_null_access();
+	if( hl_vfields(r3)[0] ) r5 = ((bool (*)(vdynamic*))hl_vfields(r3)[0])(r3->value); else {
 		vdynamic ret;
-		hl_dyn_call_obj(r5->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
-		r1 = (bool)ret.v.i;
+		hl_dyn_call_obj(r3->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
+		r5 = (bool)ret.v.i;
 	}
-	if( !r1 ) goto label$fbc84c5_5_15;
-	if( hl_vfields(r5)[1] ) r7 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r5)[1])(r5->value); else {
-		r7 = (components__sledder__RiderBase)hl_dyn_call_obj(r5->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
+	if( !r5 ) goto label$fbc84c5_5_12;
+	if( hl_vfields(r3)[1] ) r6 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
+		r6 = (components__sledder__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
 	}
-	if( r7 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r7->$type->vobj_proto[1])(r7);
-	goto label$fbc84c5_5_7;
-	label$fbc84c5_5_15:
+	if( r6 == NULL ) hl_null_access();
+	((void (*)(components__sledder__RiderBase))r6->$type->vobj_proto[1])(r6);
+	goto label$fbc84c5_5_4;
+	label$fbc84c5_5_12:
 	return;
 }
 

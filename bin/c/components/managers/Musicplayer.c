@@ -8,26 +8,20 @@ void hxd_res_Sound_new(hxd__res__Sound,hxd__fs__FileEntry);
 #include <components/stage/LRConsole.h>
 #include <_std/Main.h>
 #include <haxe/io/Bytes.h>
-extern String s$_music;
-bool sys_FileSystem_isDirectory(String);
+extern String s$;
+String String___add__(String,String);
+bool sys_FileSystem_exists(String);
 extern $Main g$_Main;
-extern String s$f1e7e73;
+extern String s$_is_not_present_;
 extern hl_type t$_i32;
 #include <h2d/Console.h>
 void h2d_Console_log(h2d__Console,String,vdynamic*);
-void sys_FileSystem_createDirectory(String);
-extern String s$_music_;
-String String___add__(String,String);
-extern String s$_ogg;
-bool sys_FileSystem_exists(String);
-extern String s$9ea6359;
 haxe__io__Bytes hxd_File_getBytes(String);
 extern hl_type t$hxd_fs_BytesFileEntry;
 void hxd_fs_BytesFileEntry_new(hxd__fs__BytesFileEntry,String,haxe__io__Bytes);
 extern hl_type t$ctx_69acb46;
 extern hl_type t$fun_13e5d39;
 void hxd_fs_BytesFileEntry_load(hxd__fs__BytesFileEntry,vclosure*);
-extern String s$;
 extern String s$Audio_has_ended_;
 #include <components/managers/Simulation.h>
 #include <hxd/snd/ChannelGroup.h>
@@ -36,6 +30,7 @@ extern String s$Audio_has_ended_;
 extern hl_type t$fun_7b48b4f;
 hxd__snd__Channel hxd_res_Sound_play(hxd__res__Sound,vdynamic*,vdynamic*,hxd__snd__ChannelGroup,hxd__snd__SoundGroup);
 #include <hxd/snd/ChannelBase.h>
+double hxd_snd_ChannelBase_set_volume(hxd__snd__ChannelBase,double);
 hxd__snd__Effect hxd_snd_ChannelBase_addEffect(hxd__snd__ChannelBase,hxd__snd__Effect);
 double hxd_snd_Channel_set_position(hxd__snd__Channel,double);
 void hxd_snd_Channel_stop(hxd__snd__Channel);
@@ -56,65 +51,47 @@ void components_managers_Musicplayer_loadAudio__$1(venum* r0) {
 }
 
 void components_managers_Musicplayer_loadAudio(components__managers__Musicplayer r0,String r1) {
-	String r4, r9;
+	String r4, r5;
 	venum *r13;
 	haxe__io__Bytes r10;
 	bool r3;
 	hxd__fs__BytesFileEntry r11;
-	$Main r6;
+	$Main r7;
 	vclosure *r12;
-	vdynamic *r8;
-	int r7;
-	components__stage__LRConsole r5;
-	r4 = (String)s$_music;
-	r3 = sys_FileSystem_isDirectory(r4);
-	if( r3 ) goto label$22fe1bd_2_13;
-	r6 = ($Main)g$_Main;
-	r5 = r6->console;
-	if( r5 == NULL ) hl_null_access();
-	r4 = (String)s$f1e7e73;
-	r7 = 16711680;
-	r8 = hl_alloc_dynamic(&t$_i32);
-	r8->v.i = r7;
-	h2d_Console_log(((h2d__Console)r5),r4,r8);
-	r4 = (String)s$_music;
-	sys_FileSystem_createDirectory(r4);
-	return;
-	label$22fe1bd_2_13:
-	r4 = (String)s$_music_;
+	vdynamic *r9;
+	int r8;
+	components__stage__LRConsole r6;
+	r4 = (String)s$;
 	r4 = String___add__(r4,r1);
-	r9 = (String)s$_ogg;
-	r4 = String___add__(r4,r9);
 	r3 = sys_FileSystem_exists(r4);
-	if( r3 ) goto label$22fe1bd_2_27;
-	r6 = ($Main)g$_Main;
-	r5 = r6->console;
-	if( r5 == NULL ) hl_null_access();
-	r4 = (String)s$9ea6359;
-	r7 = 16711680;
-	r8 = hl_alloc_dynamic(&t$_i32);
-	r8->v.i = r7;
-	h2d_Console_log(((h2d__Console)r5),r4,r8);
-	return;
-	label$22fe1bd_2_27:
-	r4 = (String)s$_music_;
+	if( r3 ) goto label$22fe1bd_2_15;
+	r7 = ($Main)g$_Main;
+	r6 = r7->console;
+	if( r6 == NULL ) hl_null_access();
+	r4 = (String)s$;
 	r4 = String___add__(r4,r1);
-	r9 = (String)s$_ogg;
-	r4 = String___add__(r4,r9);
+	r5 = (String)s$_is_not_present_;
+	r4 = String___add__(r4,r5);
+	r8 = 16711680;
+	r9 = hl_alloc_dynamic(&t$_i32);
+	r9->v.i = r8;
+	h2d_Console_log(((h2d__Console)r6),r4,r9);
+	return;
+	label$22fe1bd_2_15:
+	r4 = (String)s$;
+	r4 = String___add__(r4,r1);
 	r10 = hxd_File_getBytes(r4);
 	r11 = (hxd__fs__BytesFileEntry)hl_alloc_obj(&t$hxd_fs_BytesFileEntry);
-	r4 = (String)s$_music_;
+	r4 = (String)s$;
 	r4 = String___add__(r4,r1);
-	r9 = (String)s$_ogg;
-	r4 = String___add__(r4,r9);
 	hxd_fs_BytesFileEntry_new(r11,r4,r10);
 	r13 = hl_alloc_enum(&t$ctx_69acb46,0);
 	((Enumt$ctx_69acb46*)r13)->p0 = (hxd__fs__BytesFileEntry)r11;
 	((Enumt$ctx_69acb46*)r13)->p1 = (components__managers__Musicplayer)r0;
 	r12 = hl_alloc_closure_ptr(&t$fun_13e5d39,components_managers_Musicplayer_loadAudio__$1,r13);
 	hxd_fs_BytesFileEntry_load(r11,r12);
-	r6 = ($Main)g$_Main;
-	r6->songName = r1;
+	r7 = ($Main)g$_Main;
+	r7->songName = r1;
 	return;
 }
 
@@ -165,14 +142,14 @@ void components_managers_Musicplayer_playMusic__$1() {
 }
 
 void components_managers_Musicplayer_playMusic(components__managers__Musicplayer r0,int r1) {
-	hxd__snd__effect__Pitch r13;
+	hxd__snd__effect__Pitch r14;
 	bool r4;
-	hxd__snd__Effect r12;
+	hxd__snd__Effect r13;
 	hxd__res__Sound r3;
 	$Main r6;
 	hxd__snd__Channel r7;
 	vclosure *r16;
-	double r14, r15;
+	double r12, r15;
 	hxd__snd__SoundGroup r11;
 	components__managers__Simulation r5;
 	vdynamic *r8, *r9;
@@ -199,17 +176,21 @@ void components_managers_Musicplayer_playMusic(components__managers__Musicplayer
 	r0->mixer = r7;
 	r7 = r0->mixer;
 	if( r7 == NULL ) hl_null_access();
-	r13 = r0->speedfilter;
-	r12 = hxd_snd_ChannelBase_addEffect(((hxd__snd__ChannelBase)r7),((hxd__snd__Effect)r13));
-	r13 = (hxd__snd__effect__Pitch)r12;
+	r12 = 0.25;
+	r12 = hxd_snd_ChannelBase_set_volume(((hxd__snd__ChannelBase)r7),r12);
 	r7 = r0->mixer;
 	if( r7 == NULL ) hl_null_access();
-	r14 = (double)r1;
+	r14 = r0->speedfilter;
+	r13 = hxd_snd_ChannelBase_addEffect(((hxd__snd__ChannelBase)r7),((hxd__snd__Effect)r14));
+	r14 = (hxd__snd__effect__Pitch)r13;
+	r7 = r0->mixer;
+	if( r7 == NULL ) hl_null_access();
+	r12 = (double)r1;
 	r15 = 40.;
-	r14 = r14 / r15;
+	r12 = r12 / r15;
 	r15 = r0->offset;
-	r14 = r14 + r15;
-	r14 = hxd_snd_Channel_set_position(r7,r14);
+	r12 = r12 + r15;
+	r12 = hxd_snd_Channel_set_position(r7,r12);
 	r7 = r0->mixer;
 	if( r7 == NULL ) hl_null_access();
 	r16 = &cl$0;

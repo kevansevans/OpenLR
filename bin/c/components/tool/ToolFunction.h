@@ -6,6 +6,7 @@ typedef struct _components__tool__ToolFunction *components__tool__ToolFunction;
 #include <hl/Class.h>
 #include <hl/BaseType.h>
 #include <_std/String.h>
+#include <components/lines/LineBase.h>
 
 
 struct _components__tool__$ToolFunction {
@@ -18,6 +19,7 @@ struct _components__tool__$ToolFunction {
 	double eraserSize;
 	vclosure* erase;
 	vclosure* eraseDefault;
+	vclosure* tryDispose;
 };
 struct _components__tool__ToolFunction {
 	hl_type *$type;

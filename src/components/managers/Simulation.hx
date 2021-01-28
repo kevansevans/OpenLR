@@ -53,6 +53,8 @@ class Simulation
 		Main.audio.stopMusic();
 		Main.audio.playMusic(frames);
 		#end
+		
+		Main.camera.start();
 	}
 	
 	public function pauseSim() {
@@ -75,6 +77,9 @@ class Simulation
 	}
 	
 	public function endSim() {
+		
+		if (playing) Main.camera.stop();
+		
 		playing = false;
 		paused = false;
 		timeDelta = 0;

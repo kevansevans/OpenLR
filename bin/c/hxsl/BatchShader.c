@@ -2,7 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxsl/BatchShader.h>
-void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 extern String s$Batch_Count;
 extern String s$_is_out_of_range_;
@@ -13,14 +12,7 @@ extern String s$cedf8da;
 vdynamic* haxe_Exception_thrown(vdynamic*);
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_i32;
-
-void hxsl_BatchShader_new(hxsl__BatchShader r0) {
-	int r1;
-	r1 = 0;
-	r0->Batch_Count__ = r1;
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	return;
-}
+void hxsl_Shader_new(hxsl__Shader);
 
 void hxsl_BatchShader_updateConstants(hxsl__BatchShader r0,hxsl__Globals r1) {
 	String r7, r8;
@@ -34,7 +26,7 @@ void hxsl_BatchShader_updateConstants(hxsl__BatchShader r0,hxsl__Globals r1) {
 	r5 = 17;
 	r4 = ((unsigned)r2) >> r5;
 	r5 = 0;
-	if( r4 == r5 ) goto label$8834cf2_2_24;
+	if( r4 == r5 ) goto label$8834cf2_1_24;
 	r7 = (String)s$Batch_Count;
 	r8 = (String)s$_is_out_of_range_;
 	r7 = String___add__(r7,r8);
@@ -52,7 +44,7 @@ void hxsl_BatchShader_updateConstants(hxsl__BatchShader r0,hxsl__Globals r1) {
 	r7 = String___add__(r7,r8);
 	r6 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r6);
-	label$8834cf2_2_24:
+	label$8834cf2_1_24:
 	r4 = r0->constBits;
 	r4 = r4 | r2;
 	r0->constBits = r4;
@@ -66,7 +58,7 @@ vdynamic* hxsl_BatchShader_getParamValue(hxsl__BatchShader r0,int r1) {
 	int r2;
 	switch(r1) {
 		default:
-			goto label$8834cf2_3_7;
+			goto label$8834cf2_2_7;
 		case 0:
 			r2 = r0->Batch_Count__;
 			r3 = hl_alloc_dynamic(&t$_i32);
@@ -76,7 +68,7 @@ vdynamic* hxsl_BatchShader_getParamValue(hxsl__BatchShader r0,int r1) {
 			r4 = r0->Batch_Buffer__;
 			return ((vdynamic*)r4);
 	}
-	label$8834cf2_3_7:
+	label$8834cf2_2_7:
 	r3 = NULL;
 	return r3;
 }
@@ -85,5 +77,13 @@ double hxsl_BatchShader_getParamFloatValue(hxsl__BatchShader r0,int r1) {
 	double r2;
 	r2 = 0.;
 	return r2;
+}
+
+void hxsl_BatchShader_new(hxsl__BatchShader r0) {
+	int r1;
+	r1 = 0;
+	r0->Batch_Count__ = r1;
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	return;
 }
 
