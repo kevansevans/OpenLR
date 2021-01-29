@@ -114,6 +114,8 @@ class Grid
 				++sceneCount;
 			default :
 		}
+		
+		Main.simulation.updateSim();
 	}
 	
 	var updateFrame:Int = 0;
@@ -140,7 +142,6 @@ class Grid
 				Main.console.log("Error registering line", 0xFF0000);
 		}
 		_line.keyList.push(key);
-		if (registry[key].lowFrame != null) Main.simulation.updateSimHistory(registry[key].lowFrame);
 	}
 	
 	public function deleteTrack() {
@@ -148,6 +149,9 @@ class Grid
 	}
 	
 	public function unregister(_line:LineBase) {
+		
+		if (_line == null) return;
+		
 		for (key in _line.keyList) {
 			registry[key].allLines.remove(_line);
 			switch (_line.type) {
@@ -157,8 +161,9 @@ class Grid
 					registry[key].nonColliders.remove(_line);
 				default :
 			}
-			if (registry[key].lowFrame != null) Main.simulation.updateSimHistory(registry[key].lowFrame);
 		}
+		
+		--lineCount;
 		switch (_line.type) {
 			case FLOOR :
 				--floorCount;
@@ -169,6 +174,7 @@ class Grid
 			default :
 		}
 		
+		
 		#if js
 		if (Main.p2p.connected) {
 			Main.p2p.updateLineInfo(NetAction.deleteLine, [_line.id]);
@@ -176,8 +182,10 @@ class Grid
 		#end
 		
 		_line.clear();
-		--lineCount;
 		lines[_line.id] = null;
+		
+		Main.simulation.updateSim();
+		Main.canvas.redrawLines();
 	}
 	
 	#if js
@@ -191,7 +199,6 @@ class Grid
 					registry[key].nonColliders.remove(_line);
 				default :
 			}
-			if (registry[key].lowFrame != null) Main.simulation.updateSimHistory(registry[key].lowFrame);
 		}
 		switch (_line.type) {
 			case FLOOR :

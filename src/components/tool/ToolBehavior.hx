@@ -112,12 +112,14 @@ class ToolBehavior
 	
 	var leftIsDown:Bool = false;
 	var middleIsDown:Bool = false;
+	var rightIsDown:Bool = false;
 	
 	public var shifted:Bool = false;
 	
 	function mouseDown(event:Event):Void 
 	{
 		switch (event.button) {
+			
 			case 0:
 				
 				leftIsDown = true;
@@ -136,6 +138,21 @@ class ToolBehavior
 						
 					default :
 						
+				}
+			case 1 :
+				
+				rightIsDown = true;
+				mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+				mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+				
+				switch (tool) {
+					
+					case PENCIL | LINE :
+						
+						snap(mouseStart);
+						
+					default :
+					
 				}
 			case 2 :
 				middleIsDown = true;
@@ -163,15 +180,16 @@ class ToolBehavior
 		
 		Main.canvas.preview.removeChildren();
 		
-		if (!leftIsDown) {
-			//actions that may need the mose to not be held?
-		} else {
-			switch (tool) {
-				case NONE :
-					
-				case PENCIL :
+		switch (tool) {
+			
+			case NONE :
+				
+			case PENCIL :
+				
+				if (leftIsDown || rightIsDown) {
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+					
 					if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2)) > 10 * (1 / Main.canvas.scaleX)) {
 						drawLine();
 						mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
@@ -180,7 +198,11 @@ class ToolBehavior
 					
 					updatePreview();
 					
-				case LINE :
+				}
+				
+			case LINE :
+				
+				if (leftIsDown || rightIsDown) {
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 					
@@ -188,13 +210,17 @@ class ToolBehavior
 					
 					updatePreview();
 					
-				case ERASER :
+				}
+				
+			case ERASER :
+				
+				if (leftIsDown) {
 					
 					ToolFunction.erase(Main.canvas.mouseX, Main.canvas.mouseY);
 					
-				default :
-					
-			}
+				}
+				
+			default :	
 		}
 		
 		if (middleIsDown) {
@@ -212,6 +238,13 @@ class ToolBehavior
 	public var tempLine:LineBase;
 	
 	function updatePreview() {
+		
+		//if (tempLine != null) Main.grid.unregister(tempLine);
+		tempLine = null;
+		
+		if (!leftIsDown && !rightIsDown) return;
+		
+		if (tool == ERASER) return;
 		
 		var preview = Main.canvas.preview;
 		
@@ -231,7 +264,11 @@ class ToolBehavior
 					
 				case ACCEL :
 					
-					tempLine = new Accel(mouseStart, mouseEnd, shifted);
+					if (leftIsDown) {
+						tempLine = new Accel(mouseStart, mouseEnd, shifted);
+					} else if (rightIsDown) {
+						tempLine = new Accel(mouseEnd, mouseStart, !shifted);
+					}
 					preview.addChild(tempLine.colorLayer);
 					preview.addChild(tempLine.rideLayer);
 					
@@ -242,13 +279,17 @@ class ToolBehavior
 			}
 		}
 		tempLine.render();
+		
+		//Main.grid.register(tempLine);
 	}
 	
 	function mouseUp(event:Event):Void 
 	{
+		
 		switch (event.button) {
-			case 0:
-				leftIsDown = false;
+			
+			case 0 | 1:
+				
 				switch (tool) {
 					case NONE :
 					
@@ -256,7 +297,7 @@ class ToolBehavior
 						
 						if (mouseStart == null || mouseEnd == null) return;
 						
-						snap(mouseEnd);
+						if (tool == LINE) snap(mouseEnd);
 						
 						drawLine();
 						
@@ -269,7 +310,11 @@ class ToolBehavior
 			default:
 		}
 		
+		leftIsDown = false;
+		rightIsDown = false;
+		
 		Main.canvas.preview.removeChildren();
+		updatePreview();
 	}
 	
 	public function snap(_pos:Point):Void 
@@ -375,7 +420,11 @@ class ToolBehavior
 	{
 		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10 && color != LineColor.SCENE) return;
 		
-		Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
+		if (leftIsDown) {
+			Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
+		} else if (rightIsDown) {
+			Main.canvas.addLine(color, mouseEnd.x, mouseEnd.y, mouseStart.x, mouseStart.y, !shifted);
+		}
 	}
 	
 	var lastViewedPosition:Point;

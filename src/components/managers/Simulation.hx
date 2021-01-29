@@ -16,7 +16,6 @@ class Simulation
 	public var playing:Bool = false;
 	public var paused:Bool = false;
 	public var rewinding:Bool = false;
-	public var updating:Bool = false;
 	
 	public var flagged:Bool = false;
 	public var flagframe:Int = 0;
@@ -74,6 +73,29 @@ class Simulation
 		#if hl
 		Main.audio.playMusic(frames);
 		#end
+	}
+	
+	public var returnframe:Int = 0;
+	public var updating:Bool = false;
+	public function updateSim() {
+		
+		return;
+		
+		if (updating) return;
+		
+		updating = true;
+		returnframe = frames;
+		restoreState(0);
+	}
+	
+	public function liveUpdateTick() {
+		for (tic in 0...40) {
+			if (frames == returnframe) {
+				updating = false;
+				break;
+			}
+			else stepSim();
+		}
 	}
 	
 	public function endSim() {
@@ -176,29 +198,6 @@ class Simulation
 		}
 		frameStates[_rider][_frame].points = _points;
 		frameStates[_rider][_frame].scarves = _scarves;
-	}
-	
-	var rewindPoint:Int = 0;
-	var returnPoint:Int = 0;
-	public function updateSimHistory(_minFrame:Int) {
-		return;
-		if (updating) return;
-		updating = true;
-		playing = false;
-		returnPoint = Std.int(Math.max(frames - 1, 0));
-		rewindPoint = Std.int(Math.max(_minFrame - 1, 0));
-		restoreState(rewindPoint);
-	}
-	public function updateSim() {
-		for (a in 0...40) {
-			stepSim();
-			if (frames >= returnPoint) {
-				updating = false;
-				frames = rewindPoint;
-				restoreState(rewindPoint);
-				return ;
-			}
-		}
 	}
 	
 	var localRiderFrame:Int = 0;

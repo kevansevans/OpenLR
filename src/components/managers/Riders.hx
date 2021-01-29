@@ -1,9 +1,8 @@
 package components.managers;
-import components.physics.BindStick;
 import components.sledder.Bosh;
 import components.sledder.RiderBase;
-import h2d.col.Point;
 import network.NetAction;
+import h2d.col.Point;
 
 /**
  * ...

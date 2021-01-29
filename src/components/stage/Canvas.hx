@@ -27,7 +27,7 @@ enum DrawMode {
 }
 class Canvas extends Scene
 {
-	var rideLayer:Object;
+	var rideLayer:Graphics;
 	var sceneColorLayer:Object;
 	var scenePlaybackLayer:Object;
 	var colorLayer:Object;
@@ -50,7 +50,8 @@ class Canvas extends Scene
 		scenePlaybackLayer = new Object(this);
 		scenePlaybackLayer.visible = false;
 		colorLayer = new Object(this);
-		rideLayer = new Object(this);
+		
+		rideLayer = new Graphics(this);
 		
 		sledderLayer = new Object(this);
 		
@@ -85,27 +86,35 @@ class Canvas extends Scene
 		y += -(oldMouseY * (newScale - oldScale));
 	}
 	
+	public function redrawLines() {
+		rideLayer.clear();
+		for (line in Main.grid.lines) {
+			if (line == null) continue;
+			rideLayer.lineStyle(2, 0);
+			rideLayer.moveTo(line.start.x, line.start.y);
+			rideLayer.lineTo(line.end.x, line.end.y);
+		}
+	}
+	
 	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
+		
+		
+		rideLayer.lineStyle(2, 0);
+		rideLayer.moveTo(_x1, _y1);
+		rideLayer.lineTo(_x2, _y2);
+		
 		var line:LineBase = null;
 		switch (_type) {
 			case 0:
 				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-				if (_limMode != -1) line.setLim(_limMode);
-				colorLayer.addChild(line.colorLayer);
-				rideLayer.addChild(line.rideLayer);
 			case 1 :
 				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-				if (_limMode != -1) line.setLim(_limMode);
-				colorLayer.addChild(line.colorLayer);
-				rideLayer.addChild(line.rideLayer);
 			case 2 :
 				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-				sceneColorLayer.addChild(line.colorLayer);
-				scenePlaybackLayer.addChild(line.rideLayer);
 			default :
 			
 		}
-		line.render();
+		
 		Main.grid.register(line);
 		
 		#if js
@@ -130,7 +139,10 @@ class Canvas extends Scene
 	
 	function set_drawMode(_mode:DrawMode):DrawMode 
 	{
-		switch (_mode) {
+		
+		/*switch (_mode) {
+			
+			
 			case FULL_EDIT :
 				colorLayer.visible = true;
 				sceneColorLayer.visible = true;
@@ -167,7 +179,7 @@ class Canvas extends Scene
 				scenePlaybackLayer.visible = true;
 				rideLayer.visible = false;
 				Main.console.log("Draw mode set to Scenery Playback Only");
-		}
+		}*/
 		return drawMode = _mode;
 	}
 	
