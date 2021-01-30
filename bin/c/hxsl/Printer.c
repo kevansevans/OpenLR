@@ -723,22 +723,22 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 	r6 = HL__ENUM_INDEX__(r3);
 	switch(r6) {
 		default:
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 0:
 			r7 = ((hxsl_TExprDef_TConst*)r3)->p0;
 			hxsl_Printer_addConst(r0,r7);
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 1:
 			r8 = ((hxsl_TExprDef_TVar*)r3)->p0;
 			hxsl_Printer_addVarName(r0,r8);
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 2:
 			r9 = ((hxsl_TExprDef_TGlobal*)r3)->p0;
 			r10 = hxsl_Tools2_toString(r9);
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 3:
 			r4 = ((hxsl_TExprDef_TParenthesis*)r3)->p0;
 			r12 = r0->buffer;
@@ -750,7 +750,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$9371d7a;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 4:
 			r14 = ((hxsl_TExprDef_TBlock*)r3)->p0;
 			r12 = r0->buffer;
@@ -805,7 +805,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$cbb184d;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 5:
 			r4 = ((hxsl_TExprDef_TBinop*)r3)->p2;
 			r13 = ((hxsl_TExprDef_TBinop*)r3)->p1;
@@ -820,7 +820,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			if( r12 == NULL ) hl_null_access();
 			StringBuf_add(r12,((vdynamic*)r10));
 			hxsl_Printer_addExpr(r0,r4,r2);
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 6:
 			r4 = ((hxsl_TExprDef_TUnop*)r3)->p1;
 			r23 = ((hxsl_TExprDef_TUnop*)r3)->p0;
@@ -854,7 +854,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			if( r12 == NULL ) hl_null_access();
 			StringBuf_add(r12,r11);
 			hxsl_Printer_addExpr(r0,r4,r2);
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 7:
 			r4 = ((hxsl_TExprDef_TVarDecl*)r3)->p1;
 			r8 = ((hxsl_TExprDef_TVarDecl*)r3)->p0;
@@ -868,7 +868,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			StringBuf_add(r12,((vdynamic*)r10));
 			hxsl_Printer_addExpr(r0,r4,r2);
 			label$1dc81bc_8_129:
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 8:
 			r14 = ((hxsl_TExprDef_TCall*)r3)->p1;
 			r4 = ((hxsl_TExprDef_TCall*)r3)->p0;
@@ -910,7 +910,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$9371d7a;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 9:
 			r14 = ((hxsl_TExprDef_TSwiz*)r3)->p1;
 			r4 = ((hxsl_TExprDef_TSwiz*)r3)->p0;
@@ -953,7 +953,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			StringBuf_add(r12,((vdynamic*)r10));
 			goto label$1dc81bc_8_174;
 			label$1dc81bc_8_202:
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 10:
 			r4 = ((hxsl_TExprDef_TIf*)r3)->p2;
 			r13 = ((hxsl_TExprDef_TIf*)r3)->p1;
@@ -975,13 +975,13 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			StringBuf_add(r12,((vdynamic*)r10));
 			hxsl_Printer_addExpr(r0,r4,r2);
 			label$1dc81bc_8_222:
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 11:
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$discard;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 12:
 			r4 = ((hxsl_TExprDef_TReturn*)r3)->p0;
 			r12 = r0->buffer;
@@ -995,7 +995,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			StringBuf_add(r12,((vdynamic*)r10));
 			hxsl_Printer_addExpr(r0,r4,r2);
 			label$1dc81bc_8_239:
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 13:
 			r4 = ((hxsl_TExprDef_TFor*)r3)->p2;
 			r13 = ((hxsl_TExprDef_TFor*)r3)->p1;
@@ -1015,19 +1015,19 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			r10 = (String)s$0dc5686;
 			StringBuf_add(r12,((vdynamic*)r10));
 			hxsl_Printer_addExpr(r0,r4,r2);
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 14:
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$continue;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 15:
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$break;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 16:
 			r4 = ((hxsl_TExprDef_TArray*)r3)->p1;
 			r13 = ((hxsl_TExprDef_TArray*)r3)->p0;
@@ -1041,7 +1041,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$0fbd177;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 17:
 			r14 = ((hxsl_TExprDef_TArrayDecl*)r3)->p0;
 			r12 = r0->buffer;
@@ -1081,7 +1081,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			if( r12 == NULL ) hl_null_access();
 			r10 = (String)s$0fbd177;
 			StringBuf_add(r12,((vdynamic*)r10));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 18:
 			r4 = ((hxsl_TExprDef_TSwitch*)r3)->p2;
 			r14 = ((hxsl_TExprDef_TSwitch*)r3)->p1;
@@ -1189,7 +1189,7 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			r31 = (String)s$cbb184d;
 			r15 = String___add__(r15,r31);
 			StringBuf_add(r12,((vdynamic*)r15));
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 19:
 			r4 = ((hxsl_TExprDef_TWhile*)r3)->p1;
 			r13 = ((hxsl_TExprDef_TWhile*)r3)->p0;
@@ -1243,63 +1243,67 @@ void hxsl_Printer_addExpr(hxsl__Printer r0,vvirtual* r1,String r2) {
 			r15 = String___add__(r15,r31);
 			StringBuf_add(r12,((vdynamic*)r15));
 			label$1dc81bc_8_464:
-			goto label$1dc81bc_8_512;
+			goto label$1dc81bc_8_516;
 		case 20:
 			r4 = ((hxsl_TExprDef_TMeta*)r3)->p2;
 			r14 = ((hxsl_TExprDef_TMeta*)r3)->p1;
 			r10 = ((hxsl_TExprDef_TMeta*)r3)->p0;
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
+			r15 = (String)s$518ed29;
+			StringBuf_add(r12,((vdynamic*)r15));
+			r12 = r0->buffer;
+			if( r12 == NULL ) hl_null_access();
 			StringBuf_add(r12,((vdynamic*)r10));
 			if( r14 == NULL ) hl_null_access();
 			r6 = r14->length;
 			r16 = 0;
-			if( r16 >= r6 ) goto label$1dc81bc_8_507;
+			if( r16 >= r6 ) goto label$1dc81bc_8_511;
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			r15 = (String)s$84c4047;
 			StringBuf_add(r12,((vdynamic*)r15));
 			r26 = true;
 			r6 = 0;
-			label$1dc81bc_8_481:
+			label$1dc81bc_8_485:
 			if( r14 == NULL ) hl_null_access();
 			r17 = r14->length;
-			if( r6 >= r17 ) goto label$1dc81bc_8_503;
+			if( r6 >= r17 ) goto label$1dc81bc_8_507;
 			r17 = r14->length;
-			if( ((unsigned)r6) < ((unsigned)r17) ) goto label$1dc81bc_8_489;
+			if( ((unsigned)r6) < ((unsigned)r17) ) goto label$1dc81bc_8_493;
 			r7 = NULL;
-			goto label$1dc81bc_8_492;
-			label$1dc81bc_8_489:
+			goto label$1dc81bc_8_496;
+			label$1dc81bc_8_493:
 			r19 = r14->array;
 			r11 = ((vdynamic**)(r19 + 1))[r6];
 			r7 = (venum*)r11;
-			label$1dc81bc_8_492:
+			label$1dc81bc_8_496:
 			++r6;
-			if( !r26 ) goto label$1dc81bc_8_497;
+			if( !r26 ) goto label$1dc81bc_8_501;
 			r27 = false;
 			r26 = r27;
-			goto label$1dc81bc_8_501;
-			label$1dc81bc_8_497:
+			goto label$1dc81bc_8_505;
+			label$1dc81bc_8_501:
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			r15 = (String)s$fc763cb;
 			StringBuf_add(r12,((vdynamic*)r15));
-			label$1dc81bc_8_501:
+			label$1dc81bc_8_505:
 			hxsl_Printer_addConst(r0,r7);
-			goto label$1dc81bc_8_481;
-			label$1dc81bc_8_503:
+			goto label$1dc81bc_8_485;
+			label$1dc81bc_8_507:
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			r15 = (String)s$9371d7a;
 			StringBuf_add(r12,((vdynamic*)r15));
-			label$1dc81bc_8_507:
+			label$1dc81bc_8_511:
 			r12 = r0->buffer;
 			if( r12 == NULL ) hl_null_access();
 			r15 = (String)s$7215ee9;
 			StringBuf_add(r12,((vdynamic*)r15));
 			hxsl_Printer_addExpr(r0,r4,r2);
 	}
-	label$1dc81bc_8_512:
+	label$1dc81bc_8_516:
 	return;
 }
 

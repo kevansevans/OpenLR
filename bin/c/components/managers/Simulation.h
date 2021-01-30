@@ -24,13 +24,12 @@ struct _components__managers__Simulation {
 	bool playing;
 	bool paused;
 	bool rewinding;
-	bool updating;
 	bool flagged;
 	int flagframe;
 	double desiredSimSpeed;
 	double timeDelta;
-	int rewindPoint;
-	int returnPoint;
+	int returnframe;
+	bool updating;
 };
 #endif
 

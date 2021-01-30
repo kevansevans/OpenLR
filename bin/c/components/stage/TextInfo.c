@@ -5,11 +5,14 @@
 #include <h2d/Font.h>
 #include <h2d/Object.h>
 #include <h3d/Vector.h>
+#include <h2d/Align.h>
 extern hl_type t$h2d_Text;
 h2d__Font hxd_res_DefaultFont_get(void);
 void h2d_Text_new(h2d__Text,h2d__Font,h2d__Object);
 extern hl_type t$h3d_Vector;
 void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
+extern venum* g$h2d_Align_MultilineRight;
+venum* h2d_Text_set_textAlign(h2d__Text,venum*);
 #include <_std/Main.h>
 #include <h3d/Engine.h>
 #include <components/managers/Simulation.h>
@@ -28,7 +31,6 @@ String components_stage_TextInfo_timeStamp(components__stage__TextInfo,int);
 String components_stage_TextInfo_getSimState(components__stage__TextInfo);
 extern String s$ee59caa;
 extern String s$b26fc71;
-extern String s$7215ee9;
 String components_stage_TextInfo_getLineVisibility(components__stage__TextInfo,int);
 extern String s$95bfd39;
 extern String s$f6e44bc;
@@ -48,6 +50,7 @@ extern String s$Paused;
 extern String s$lousy_smarch_weather;
 
 void components_stage_TextInfo_new(components__stage__TextInfo r0) {
+	venum *r13;
 	h2d__Object r3;
 	h2d__Font r2;
 	h2d__Text r1;
@@ -71,6 +74,10 @@ void components_stage_TextInfo_new(components__stage__TextInfo r0) {
 	r12 = NULL;
 	h3d_Vector_new(r5,r7,r9,r11,r12);
 	r1->color = r5;
+	r1 = r0->info;
+	if( r1 == NULL ) hl_null_access();
+	r13 = (venum*)g$h2d_Align_MultilineRight;
+	r13 = h2d_Text_set_textAlign(r1,r13);
 	return;
 }
 
@@ -171,8 +178,6 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);
 	r4 = String___add__(r4,r10);
-	r10 = (String)s$7215ee9;
-	r4 = String___add__(r4,r10);
 	r5 = 0;
 	r10 = components_stage_TextInfo_getLineVisibility(r0,r5);
 	r4 = String___add__(r4,r10);
@@ -192,8 +197,6 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);
 	r4 = String___add__(r4,r10);
-	r10 = (String)s$7215ee9;
-	r4 = String___add__(r4,r10);
 	r5 = 1;
 	r10 = components_stage_TextInfo_getLineVisibility(r0,r5);
 	r4 = String___add__(r4,r10);
@@ -212,8 +215,6 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);
-	r4 = String___add__(r4,r10);
-	r10 = (String)s$7215ee9;
 	r4 = String___add__(r4,r10);
 	r5 = 2;
 	r10 = components_stage_TextInfo_getLineVisibility(r0,r5);

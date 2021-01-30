@@ -27,10 +27,11 @@ enum DrawMode {
 }
 class Canvas extends Scene
 {
+	public var previewLayer:Graphics;
 	var rideLayer:Graphics;
-	var sceneColorLayer:Object;
-	var scenePlaybackLayer:Object;
-	var colorLayer:Object;
+	var sceneColorLayer:Graphics;
+	var scenePlaybackLayer:Graphics;
+	var colorLayer:Graphics;
 	
 	public var preview:Object;
 	
@@ -46,12 +47,12 @@ class Canvas extends Scene
 		
 		_parent.addChild(this);
 		
-		sceneColorLayer = new Object(this);
-		scenePlaybackLayer = new Object(this);
+		sceneColorLayer = new Graphics(this);
+		scenePlaybackLayer = new Graphics(this);
 		scenePlaybackLayer.visible = false;
-		colorLayer = new Object(this);
-		
+		colorLayer = new Graphics(this);
 		rideLayer = new Graphics(this);
+		previewLayer = new Graphics(this);
 		
 		sledderLayer = new Object(this);
 		
@@ -86,25 +87,145 @@ class Canvas extends Scene
 		y += -(oldMouseY * (newScale - oldScale));
 	}
 	
-	public function redrawLines() {
-		rideLayer.clear();
+	public function redrawLines(_type:Int) {
+		
+		switch (_type) {
+			case 0 | 1 :
+				rideLayer.clear();
+				colorLayer.clear();
+			case 2 :
+				sceneColorLayer.clear();
+				scenePlaybackLayer.clear();
+		}
+		
 		for (line in Main.grid.lines) {
 			if (line == null) continue;
-			rideLayer.lineStyle(2, 0);
-			rideLayer.moveTo(line.start.x, line.start.y);
-			rideLayer.lineTo(line.end.x, line.end.y);
+			drawLineGraphic(line);
 		}
+	}
+	
+	public function drawPreviewLine(_line:LineBase) {
+		
+		previewLayer.clear();
+		
+		var lineCapRadius:Float = 0.0025;
+		var lineCapSegment:Int = 15;
+		
+		switch (_line.type) {
+			
+			case 0 :
+				
+				previewLayer.lineStyle(2, 0x0066FF);
+				previewLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
+				previewLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
+				
+				previewLayer.lineStyle(2, 0);
+				previewLayer.moveTo(_line.start.x, _line.start.y);
+				previewLayer.lineTo(_line.end.x, _line.end.y);
+				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+			case 1 :
+				
+				previewLayer.lineStyle(2, 0xCC0000);
+				previewLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
+				previewLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
+				previewLayer.lineTo(_line.end.x + (_line.nx * 4 - _line.dx * _line.invDistance * 5), _line.end.y + (_line.ny * 4 - _line.dy * _line.invDistance * 5));
+				previewLayer.lineTo(_line.end.x - _line.dx * _line.invDistance * 5, _line.end.y - _line.dy * _line.invDistance * 5);
+				
+				previewLayer.lineStyle(2, 0);
+				previewLayer.moveTo(_line.start.x, _line.start.y);
+				previewLayer.lineTo(_line.end.x, _line.end.y);
+				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+			case 2 :
+				
+				previewLayer.lineStyle(2, 0);
+				previewLayer.moveTo(_line.start.x, _line.start.y);
+				previewLayer.lineTo(_line.end.x, _line.end.y);
+				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+				previewLayer.lineStyle(2, 0x00CC00);
+				previewLayer.moveTo(_line.start.x, _line.start.y);
+				previewLayer.lineTo(_line.end.x, _line.end.y);
+				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+			default :
+				
+				previewLayer.lineStyle(1, 0xFF0000);
+				previewLayer.moveTo(_line.start.x, _line.start.y);
+				previewLayer.lineTo(_line.end.x, _line.end.y);
+			
+		}
+		
+	}
+	
+	public function drawLineGraphic(_line:LineBase) {
+		
+		var lineCapRadius:Float = 0.0025;
+		var lineCapSegment:Int = 15;
+		
+		switch (_line.type) {
+			
+			case 0 :
+				
+				rideLayer.lineStyle(2, 0);
+				rideLayer.moveTo(_line.start.x, _line.start.y);
+				rideLayer.lineTo(_line.end.x, _line.end.y);
+				rideLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				rideLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+				colorLayer.lineStyle(2, 0x0066FF);
+				colorLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
+				colorLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
+				
+			case 1 :
+				
+				rideLayer.lineStyle(2, 0);
+				rideLayer.moveTo(_line.start.x, _line.start.y);
+				rideLayer.lineTo(_line.end.x, _line.end.y);
+				rideLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				rideLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+				colorLayer.lineStyle(2, 0xCC0000);
+				colorLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
+				colorLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
+				colorLayer.lineTo(_line.end.x + (_line.nx * 4 - _line.dx * _line.invDistance * 5), _line.end.y + (_line.ny * 4 - _line.dy * _line.invDistance * 5));
+				colorLayer.lineTo(_line.end.x - _line.dx * _line.invDistance * 5, _line.end.y - _line.dy * _line.invDistance * 5);
+				
+				
+			case 2 :
+				
+				sceneColorLayer.lineStyle(2, 0x00CC00);
+				sceneColorLayer.moveTo(_line.start.x, _line.start.y);
+				sceneColorLayer.lineTo(_line.end.x, _line.end.y);
+				sceneColorLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				sceneColorLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+				scenePlaybackLayer.lineStyle(2, 0);
+				scenePlaybackLayer.moveTo(_line.start.x, _line.start.y);
+				scenePlaybackLayer.lineTo(_line.end.x, _line.end.y);
+				scenePlaybackLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
+				scenePlaybackLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
+				
+			default :
+				
+				rideLayer.lineStyle(1, 0xFF0000);
+				rideLayer.moveTo(_line.start.x, _line.start.y);
+				rideLayer.lineTo(_line.end.x, _line.end.y);
+			
+		}
+		
 	}
 	
 	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
 		
-		
-		rideLayer.lineStyle(2, 0);
-		rideLayer.moveTo(_x1, _y1);
-		rideLayer.lineTo(_x2, _y2);
-		
 		var line:LineBase = null;
 		switch (_type) {
+			
 			case 0:
 				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
 			case 1 :
@@ -114,6 +235,8 @@ class Canvas extends Scene
 			default :
 			
 		}
+		
+		drawLineGraphic(line);
 		
 		Main.grid.register(line);
 		
@@ -140,8 +263,7 @@ class Canvas extends Scene
 	function set_drawMode(_mode:DrawMode):DrawMode 
 	{
 		
-		/*switch (_mode) {
-			
+		switch (_mode) {
 			
 			case FULL_EDIT :
 				colorLayer.visible = true;
@@ -179,7 +301,8 @@ class Canvas extends Scene
 				scenePlaybackLayer.visible = true;
 				rideLayer.visible = false;
 				Main.console.log("Draw mode set to Scenery Playback Only");
-		}*/
+		}
+		
 		return drawMode = _mode;
 	}
 	
@@ -190,21 +313,15 @@ class Canvas extends Scene
 			case 0:
 				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
 				if (_limMode != -1) line.setLim(_limMode);
-				colorLayer.addChild(line.colorLayer);
-				rideLayer.addChild(line.rideLayer);
 			case 1 :
 				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
 				if (_limMode != -1) line.setLim(_limMode);
-				colorLayer.addChild(line.colorLayer);
-				rideLayer.addChild(line.rideLayer);
 			case 2 :
 				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-				sceneColorLayer.addChild(line.colorLayer);
-				scenePlaybackLayer.addChild(line.rideLayer);
 			default :
 			
 		}
-		line.render();
+		drawLineGraphic(line);
 		Main.grid.register(line);
 	}
 	#end

@@ -200,10 +200,10 @@
 #include <file/SaveLoad.h>
 #include <components/managers/Simulation.h>
 #include <components/managers/Riders.h>
+#include <components/lines/LineBase.h>
 #include <components/managers/Grid.h>
 #include <components/ui/UIButton.h>
 #include <components/ui/Toolbar.h>
-#include <components/lines/LineBase.h>
 #include <components/tool/ToolMode.h>
 #include <components/tool/ToolBehavior.h>
 #include <h2d/Console.h>
@@ -520,7 +520,7 @@
 #include <sdl/GL.h>
 #include <sys/io/File.h>
 extern hl_type t$String;
-extern vbyte string$790a13f[];
+extern vbyte string$a26344f[];
 extern vbyte string$520de12[];
 extern vbyte string$71b4f2d[];
 extern vbyte string$652b44f[];
@@ -781,10 +781,10 @@ components__stage__$TextInfo g$_components_stage_TextInfo = 0;
 file__$SaveLoad g$_file_SaveLoad = 0;
 components__managers__$Simulation g$_components_managers_Simulation = 0;
 components__managers__$Riders g$_components_managers_Riders = 0;
+components__lines__$LineBase g$_components_lines_LineBase = 0;
 components__managers__$Grid g$_components_managers_Grid = 0;
 components__ui__$UIButton g$_components_ui_UIButton = 0;
 components__ui__$Toolbar g$_components_ui_Toolbar = 0;
-components__lines__$LineBase g$_components_lines_LineBase = 0;
 components__tool__$ToolMode g$components_tool_ToolMode = 0;
 components__tool__$ToolBehavior g$_components_tool_ToolBehavior = 0;
 h2d__$Console g$_h2d_Console = 0;
@@ -796,7 +796,7 @@ $Main g$_Main = 0;
 String s$Release = 0;
 hxd__res__$Loader g$_hxd_res_Loader = 0;
 hxd__fs__$EmbedFileSystem g$_hxd_fs_EmbedFileSystem = 0;
-String s$790a13f = 0;
+String s$a26344f = 0;
 String s$OpenLR_ = 0;
 String s$Welcome_to_OpenLR_ = 0;
 String s$Press_to_toggle_console_ = 0;
@@ -1099,6 +1099,7 @@ String s$490d6e0 = 0;
 String s$_font_br_ = 0;
 h3d__col__$Point g$_h3d_col_Point = 0;
 String s$_is_not_a_Mesh = 0;
+venum* g$h2d_Align_MultilineRight = 0;
 String s$Untitled = 0;
 String s$FPS_ = 0;
 String s$Draw_calls_ = 0;
@@ -1289,7 +1290,6 @@ String s$not_implemented = 0;
 hxd__impl__$Allocator g$_hxd_impl_Allocator = 0;
 venum* g$h2d_Align_Left = 0;
 venum* g$h2d_Align_MultilineCenter = 0;
-venum* g$h2d_Align_MultilineRight = 0;
 venum* g$h2d_Align_Center = 0;
 venum* g$h2d_ImageVerticalAlign_Bottom = 0;
 venum* g$h2d_LineHeightMode_Accurate = 0;
@@ -2825,7 +2825,7 @@ static struct _String const_s$g = {&t$String,(vbyte*)USTR("g"),1};
 static struct _String const_s$ = {&t$String,(vbyte*)USTR(""),0};
 static struct _String const_s$c3e97dd = {&t$String,(vbyte*)USTR("$"),1};
 static struct _String const_s$Release = {&t$String,(vbyte*)USTR("Release"),7};
-static struct _String const_s$790a13f = {&t$String,(vbyte*)string$790a13f,435};
+static struct _String const_s$a26344f = {&t$String,(vbyte*)string$a26344f,420};
 static struct _String const_s$OpenLR_ = {&t$String,(vbyte*)USTR("OpenLR - "),9};
 static struct _String const_s$Welcome_to_OpenLR_ = {&t$String,(vbyte*)USTR("Welcome to OpenLR: "),19};
 static struct _String const_s$Press_to_toggle_console_ = {&t$String,(vbyte*)USTR("Press / to toggle console..."),28};
@@ -4084,7 +4084,7 @@ void hl_init_roots() {
 	s$ = &const_s$;
 	s$c3e97dd = &const_s$c3e97dd;
 	s$Release = &const_s$Release;
-	s$790a13f = &const_s$790a13f;
+	s$a26344f = &const_s$a26344f;
 	s$OpenLR_ = &const_s$OpenLR_;
 	s$Welcome_to_OpenLR_ = &const_s$Welcome_to_OpenLR_;
 	s$Press_to_toggle_console_ = &const_s$Press_to_toggle_console_;
@@ -5536,10 +5536,10 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_file_SaveLoad);
 	hl_add_root((void**)&g$_components_managers_Simulation);
 	hl_add_root((void**)&g$_components_managers_Riders);
+	hl_add_root((void**)&g$_components_lines_LineBase);
 	hl_add_root((void**)&g$_components_managers_Grid);
 	hl_add_root((void**)&g$_components_ui_UIButton);
 	hl_add_root((void**)&g$_components_ui_Toolbar);
-	hl_add_root((void**)&g$_components_lines_LineBase);
 	hl_add_root((void**)&g$components_tool_ToolMode);
 	hl_add_root((void**)&g$_components_tool_ToolBehavior);
 	hl_add_root((void**)&g$_h2d_Console);
@@ -5601,6 +5601,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$h2d_ScaleModeAlign_Center);
 	hl_add_root((void**)&g$6537d82);
 	hl_add_root((void**)&g$_h3d_col_Point);
+	hl_add_root((void**)&g$h2d_Align_MultilineRight);
 	hl_add_root((void**)&g$_haxe_Log);
 	hl_add_root((void**)&g$_components_tool_ToolFunction);
 	hl_add_root((void**)&g$994fdec);
@@ -5689,7 +5690,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hxd_impl_Allocator);
 	hl_add_root((void**)&g$h2d_Align_Left);
 	hl_add_root((void**)&g$h2d_Align_MultilineCenter);
-	hl_add_root((void**)&g$h2d_Align_MultilineRight);
 	hl_add_root((void**)&g$h2d_Align_Center);
 	hl_add_root((void**)&g$h2d_ImageVerticalAlign_Bottom);
 	hl_add_root((void**)&g$h2d_LineHeightMode_Accurate);
@@ -6324,13 +6324,13 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_sys_io_File);
 }
 // oy5:soundoy11:connect.oggty14:disconnect.oggtgy4:tooloy15:pe...
-vbyte string$790a13f[] = {111,0,121,0,53,0,58,0,115,0,111,0,117,0,110,0,100,0,111,0,121,0,49,0,49,0,58,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,121,0,49,0,52,0,58,0,100,0,105,0,115,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,103,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108\
+vbyte string$a26344f[] = {111,0,121,0,53,0,58,0,115,0,111,0,117,0,110,0,100,0,111,0,121,0,49,0,49,0,58,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,121,0,49,0,52,0,58,0,100,0,105,0,115,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,103,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108\
 	,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,108,0,105,0,110,0,101,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103\
 	,0,116,0,121,0,49,0,51,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,108,0,105,0,110,0,101,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,50,0,58,0,108,0,105,0,110,0,101,0,66,0,108\
 	,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,50,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,109,0,112,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,53,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,48,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,52,0,58,0,105\
 	,0,99,0,111,0,110,0,111,0,121,0,56,0,58,0,108,0,105,0,110,0,101,0,46,0,112,0,110,0,103,0,116,0,82,0,49,0,52,0,116,0,121,0,49,0,48,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,114,0,105,0,100,0,101,0,114,0,111,0,121,0,55,0,58,0,108,0,101,0,103,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48\
 	,0,48,0,48,0,51,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,50,0,46,0,112,0,110,0,103,0,116,0,121,0,56,0,58,0,115,0,108,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,49,0,46,0,112,0,110,0,103,0,116,0,121,0,55,0,58,0,97,0,114,0,109,0,46,0,112,0,110,0,103,0,116,0,121\
-	,0,56,0,58,0,98,0,111,0,100,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,108,0,105,0,110,0,101,0,115,0,111,0,121,0,57,0,58,0,98,0,108,0,97,0,99,0,107,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,48,0,58,0,97,0,110,0,103,0,101,0,114,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,103,0,0,0};
+	,0,56,0,58,0,98,0,111,0,100,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,108,0,105,0,110,0,101,0,115,0,111,0,121,0,57,0,58,0,98,0,108,0,97,0,99,0,107,0,46,0,112,0,110,0,103,0,116,0,103,0,103,0,0,0};
 // Enable frame can not be greater than or equal to it's disabl...
 vbyte string$520de12[] = {69,0,110,0,97,0,98,0,108,0,101,0,32,0,102,0,114,0,97,0,109,0,101,0,32,0,99,0,97,0,110,0,32,0,110,0,111,0,116,0,32,0,98,0,101,0,32,0,103,0,114,0,101,0,97,0,116,0,101,0,114,0,32,0,116,0,104,0,97,0,110,0,32,0,111,0,114,0,32,0,101,0,113,0,117,0,97,0,108,0,32,0,116,0,111,0,32,0,105,0,116,0,39,0,115,0,32,0,100,0,105,0,115,0,97,0,98,0,108,0,101,0,100,0,32,0,102\
 	,0,114,0,97,0,109,0,101,0,44,0,32,0,0,0};
@@ -7102,9 +7102,6 @@ vbyte bytes$51ca67f[] = {
 };
 vbyte bytes$c31077b[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,19,0,0,0,28,8,6,0,0,0,131,6,132,25,0,0,0,188,73,68,65,84,72,137,237,148,93,13,194,48,20,133,63,64,192,230,160,56,152,21,28,12,7,72,152,4,112,80,9,224,96,56,32,40,152,4,134,130,241,210,146,27,104,179,155,182,129,151,157,228,60,52,233,253,122,110,255,96,209,95,181,81,204,49,192,14,24,129,103,202,34,6,56,0,55,96,18,62,3,45,80,105,32,33,64,204,22,104\
 	,98,160,70,9,145,238,99,176,99,2,108,114,91,242,165,33,17,102,75,180,232,253,192,29,200,218,193,246,177,222,21,170,63,235,83,91,244,30,100,178,58,35,217,187,222,195,46,153,176,147,28,20,57,0,169,98,87,3,160,75,132,5,47,173,113,145,179,83,121,85,232,31,122,143,242,247,232,102,82,218,16,104,53,3,109,129,173,24,143,192,21,184,107,18,45,250,177,94,103,204,171,67,149,130,144,100,0,0,0,0,73,69,78,68,174,66,96,130};
-vbyte bytes$60e0e02[] = {
-#  include "hl/bytes_0f60a9885e6781b7086f01d243f66e77.h"
-};
 vbyte bytes$2014610[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,23,0,0,0,23,8,6,0,0,0,224,42,212,160,0,0,0,188,73,68,65,84,72,137,237,148,93,13,194,48,20,70,79,129,247,205,65,113,176,132,76,0,18,144,50,7,88,24,10,144,0,18,16,80,26,44,224,96,8,128,203,195,88,2,132,173,183,252,5,146,157,167,166,249,238,233,77,218,91,67,4,14,150,2,213,16,202,9,236,67,121,19,41,151,203,50,205,225,16,202,15,98,228,13,26,241,211,114\
 	,45,189,252,251,242,145,54,232,193,30,161,52,48,254,96,63,63,130,113,176,2,102,29,153,34,135,197,253,230,22,230,2,5,144,182,212,173,53,23,58,125,180,41,80,117,136,235,58,15,214,131,85,28,114,131,131,196,67,22,91,215,138,135,204,65,162,205,71,189,243,19,108,128,234,173,29,55,56,144,171,111,55,200,255,142,127,47,127,77,238,193,10,236,168,39,83,197,25,69,98,37,85,110,81,55,248,0,0,0,0,73,69,78,68,174,66,96,130};
 vbyte bytes$b58ce6b[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,23,0,0,0,23,8,6,0,0,0,224,42,212,160,0,0,0,190,73,68,65,84,72,137,237,149,177,13,194,48,16,69,223,1,125,216,32,108,144,21,50,2,35,32,69,56,109,54,96,133,80,2,66,140,0,35,48,2,140,192,6,102,0,56,138,136,10,153,248,36,130,82,228,149,214,191,231,147,207,178,5,11,75,61,32,120,30,212,236,229,214,22,31,153,228,194,2,168,24,227,99,226,54,249,155,173,220,187\

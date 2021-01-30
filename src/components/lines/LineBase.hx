@@ -15,9 +15,6 @@ import h2d.col.Point;
  */
 class LineBase
 {
-	public var rideLayer:Graphics;
-	public var colorLayer:Graphics;
-	
 	public var id:Null<Int>;
 	
 	public var start:Point;
@@ -30,7 +27,7 @@ class LineBase
 	var gfxEnd:Point;
 	
 	public var shifted:Bool;
-		
+	
 	public var dx:Float;
 	public var dy:Float;
 	public var C:Float;
@@ -51,9 +48,6 @@ class LineBase
 	
 	public var scripts:LineScript;
 	
-	var lineCapRadius:Float = 0.0025;
-	var lineCapSegment:Int = 15;
-	
 	public function new(_start:Point, _end:Point, _shift:Bool, ?_lim:Int = 0)
 	{
 		start = _start;
@@ -62,9 +56,6 @@ class LineBase
 		gfxEnd = new Point(end.x - start.x, end.y - start.y);
 		
 		shifted = _shift;
-		
-		rideLayer = new Graphics();
-		colorLayer = new Graphics();
 		
 		keyList = new Array();
 		
@@ -103,19 +94,6 @@ class LineBase
 				limEnd = 1 + limValue;
 		}
 		limType = _limMode;
-	}
-	
-	public function render() {
-		colorLayer.clear();
-		colorLayer.lineStyle(1, 0xFF0000);
-		colorLayer.moveTo(0, 0);
-		colorLayer.lineTo(gfxEnd.x, gfxEnd.y);
-	}
-	
-	public function clear()
-	{
-		colorLayer.remove();
-		rideLayer.remove();
 	}
 	
 	public function collide(_point:RidePoint) {

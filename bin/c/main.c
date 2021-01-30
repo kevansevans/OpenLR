@@ -171,10 +171,10 @@ void fun$init(void);
 #  include <file/SaveLoad.c>
 #  include <components/managers/Simulation.c>
 #  include <components/managers/Riders.c>
+#  include <components/lines/LineBase.c>
 #  include <components/managers/Grid.c>
 #  include <components/ui/UIButton.c>
 #  include <components/ui/Toolbar.c>
-#  include <components/lines/LineBase.c>
 #  include <components/tool/ToolBehavior.c>
 #  include <h2d/Console.c>
 #  include <h2d/TextInput.c>

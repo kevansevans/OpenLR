@@ -69,6 +69,7 @@ class Main extends App
 	public static var canvas_interaction:Interactive;
 	
 	public static var console:LRConsole;
+	public var consoleMask:Mask;
 	
 	public static var toolControl:ToolBehavior;
 	public static var toolbar:Toolbar;
@@ -181,7 +182,8 @@ class Main extends App
 		
 		textinfo = new TextInfo();
 		s2d.addChild(textinfo.info);
-		textinfo.info.x = textinfo.info.y = 5;
+		textinfo.info.x = engine.width - textinfo.info.textWidth - 5;
+		textinfo.info.y = 5;
 		
 		#if js
 		p2p = new WebRTC();
@@ -547,15 +549,24 @@ class Main extends App
 			simulation.rewindSim(dt);
 		}
 		
-		canvas.drawRiders();
-		
-		textinfo.update();
-		
-		if (camera.running) camera.follow();
+		if (simulation.updating) {
+			simulation.liveUpdateTick();
+		}
 		
 		#if js
 		if (p2p.connected) p2p.updateCursor();
 		#end
+	}
+	
+	override public function render(e:h3d.Engine):Void 
+	{
+		super.render(e);
+		
+		canvas.drawRiders();
+			
+		textinfo.update();
+			
+		if (camera.running && simulation.playing) camera.follow();
 	}
 	
 	override function onResize():Void 
@@ -568,10 +579,12 @@ class Main extends App
 		mask.width = engine.width;
 		mask.height = engine.height;
 		
-		textinfo.info.x = textinfo.info.y = 5;
+		textinfo.info.x = engine.width - textinfo.info.textWidth - 5;
+		textinfo.info.y = 5;
 		
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 3;
+		
 	}
 	
 	//this function needs to be improved

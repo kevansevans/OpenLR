@@ -7,7 +7,6 @@ typedef struct _components__lines__Accel *components__lines__Accel;
 #include <hl/BaseType.h>
 #include <_std/String.h>
 #include <components/lines/LineBase.h>
-#include <h2d/Graphics.h>
 #include <h2d/col/Point.h>
 #include <hl/types/ArrayObj.h>
 
@@ -22,8 +21,6 @@ struct _components__lines__$Accel {
 };
 struct _components__lines__Accel {
 	hl_type *$type;
-	h2d__Graphics rideLayer;
-	h2d__Graphics colorLayer;
 	vdynamic* id;
 	h2d__col__Point start;
 	h2d__col__Point end;
@@ -44,8 +41,6 @@ struct _components__lines__Accel {
 	double limStart;
 	double limEnd;
 	double limValue;
-	double lineCapRadius;
-	int lineCapSegment;
 	double accConst;
 	double accx;
 	double accy;

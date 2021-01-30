@@ -250,7 +250,7 @@ void hxd_App_setup__$2(venum* r0) {
 	((vdynamic**)(r6 + 1))[r2] = r7;
 	r8 = ((Enumt$ctx_9f59bf0*)r0)->p1;
 	if( r8 == NULL ) hl_null_access();
-	((void (*)(hxd__App))r8->$type->vobj_proto[1])(r8);
+	((void (*)(hxd__App))r8->$type->vobj_proto[2])(r8);
 	hxd_Timer_skip();
 	r8 = ((Enumt$ctx_9f59bf0*)r0)->p1;
 	if( r8 == NULL ) hl_null_access();
@@ -375,7 +375,7 @@ void hxd_App_mainLoop(hxd__App r0) {
 	label$fffc6b7_10_7:
 	r5 = (hxd__$Timer)g$_hxd_Timer;
 	r4 = r5->dt;
-	((void (*)(hxd__App,double))r0->$type->vobj_proto[2])(r0,r4);
+	((void (*)(hxd__App,double))r0->$type->vobj_proto[3])(r0,r4);
 	r3 = r0->isDisposed;
 	if( !r3 ) goto label$fffc6b7_10_13;
 	return;

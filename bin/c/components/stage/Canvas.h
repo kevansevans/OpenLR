@@ -21,6 +21,7 @@ typedef struct _components__stage__Canvas *components__stage__Canvas;
 #include <h2d/col/Point.h>
 #include <hxd/Event.h>
 #include <hxd/Cursor.h>
+#include <h2d/Graphics.h>
 #include <components/stage/DrawMode.h>
 
 
@@ -80,10 +81,11 @@ struct _components__stage__Canvas {
 	h2d__col__Point shapePoint;
 	vvirtual* f$44;
 	vvirtual* f$45;
-	h2d__Object rideLayer;
-	h2d__Object sceneColorLayer;
-	h2d__Object scenePlaybackLayer;
-	h2d__Object colorLayer;
+	h2d__Graphics previewLayer;
+	h2d__Graphics rideLayer;
+	h2d__Graphics sceneColorLayer;
+	h2d__Graphics scenePlaybackLayer;
+	h2d__Graphics colorLayer;
 	h2d__Object preview;
 	venum* drawMode;
 	h2d__Object sledderLayer;

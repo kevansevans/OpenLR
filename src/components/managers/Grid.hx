@@ -15,7 +15,7 @@ class Grid
 {
 	public var registry:Map<String, LineContainer>;
 	
-	public var lines:Map<Int, LineBase>;
+	public var lines:Array<LineBase>;
 	public var networkLines:Map<String, LineBase>;
 	
 	public var lineCount:Int = 0;
@@ -27,7 +27,7 @@ class Grid
 	public function new() 
 	{
 		registry = new Map();
-		lines = new Map();
+		lines = new Array();
 	}
 	
 	public function register(_line:LineBase)
@@ -181,11 +181,10 @@ class Grid
 		}
 		#end
 		
-		_line.clear();
 		lines[_line.id] = null;
 		
 		Main.simulation.updateSim();
-		Main.canvas.redrawLines();
+		Main.canvas.redrawLines(_line.type);
 	}
 	
 	#if js
@@ -209,7 +208,6 @@ class Grid
 				--sceneCount;
 			default :
 		}
-		_line.clear();
 		--lineCount;
 		lines[_line.id] = null;
 	}

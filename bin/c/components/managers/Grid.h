@@ -7,7 +7,7 @@ typedef struct _components__managers__Grid *components__managers__Grid;
 #include <hl/BaseType.h>
 #include <_std/String.h>
 #include <haxe/ds/StringMap.h>
-#include <haxe/ds/IntMap.h>
+#include <hl/types/ArrayObj.h>
 
 
 struct _components__managers__$Grid {
@@ -22,7 +22,7 @@ struct _components__managers__$Grid {
 struct _components__managers__Grid {
 	hl_type *$type;
 	haxe__ds__StringMap registry;
-	haxe__ds__IntMap lines;
+	hl__types__ArrayObj lines;
 	int lineCount;
 	int lineIDCount;
 	int floorCount;

@@ -9,11 +9,12 @@ vvirtual* components_managers_Grid_registryPosition(double,double);
 extern hl_type t$_i32;
 void components_managers_Grid_storeLine(components__managers__Grid,components__lines__LineBase,int,int);
 #include <hl/natives.h>
-void haxe_ds_IntMap_set(haxe__ds__IntMap,int,vdynamic*);
-#include <hl/types/ArrayObj.h>
-#include <components/stage/LRConsole.h>
-#include <_std/Main.h>
 #include <components/managers/Simulation.h>
+#include <_std/Main.h>
+void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
+extern $Main g$_Main;
+void components_managers_Simulation_updateSim(components__managers__Simulation);
+#include <components/stage/LRConsole.h>
 extern String s$x;
 String String___alloc__(vbyte*,int);
 String String___add__(String,String);
@@ -28,25 +29,17 @@ hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 extern hl_type t$hl_types_ArrayObj;
 void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
-extern $Main g$_Main;
 extern String s$Error_registering_line;
 #include <h2d/Console.h>
 void h2d_Console_log(h2d__Console,String,vdynamic*);
-void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
-extern hl_type t$nul_i32;
-void components_managers_Simulation_updateSimHistory(components__managers__Simulation,int);
-vvirtual* haxe_ds_IntMap_iterator(haxe__ds__IntMap);
-extern hl_type t$vrt_366632b;
-extern hl_type t$fun_bf7849e;
-extern hl_type t$fun_4a57607;
 void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
+#include <components/stage/Canvas.h>
 bool hl_types_ArrayObj_remove(hl__types__ArrayObj,vdynamic*);
-void components_lines_LineBase_clear(components__lines__LineBase);
+void components_stage_Canvas_redrawLines(components__stage__Canvas,int);
 extern hl_type t$vrt_689169c;
 extern hl_type t$haxe_ds_StringMap;
 void haxe_ds_StringMap_new(haxe__ds__StringMap);
-extern hl_type t$haxe_ds_IntMap;
-void haxe_ds_IntMap_new(haxe__ds__IntMap);
+void hl_types_ArrayObj_new(hl__types__ArrayObj);
 
 void components_managers_Grid_register(components__managers__Grid r0,components__lines__LineBase r1) {
 	vvirtual *r4, *r8, *r9;
@@ -283,9 +276,12 @@ void components_managers_Grid_register(components__managers__Grid r0,components_
 }
 
 void components_managers_Grid_addLine(components__managers__Grid r0,components__lines__LineBase r1) {
-	haxe__ds__IntMap r5;
+	hl__types__ArrayObj r5;
+	$Main r9;
+	components__managers__Simulation r8;
 	vdynamic *r3;
-	int r4;
+	varray *r7;
+	int r4, r6;
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->id;
 	if( r3 ) goto label$e6f4f97_2_6;
@@ -298,7 +294,12 @@ void components_managers_Grid_addLine(components__managers__Grid r0,components__
 	if( r5 == NULL ) hl_null_access();
 	r3 = r1->id;
 	r4 = r3 ? r3->v.i : 0;
-	haxe_ds_IntMap_set(r5,r4,((vdynamic*)r1));
+	r6 = r5->length;
+	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$e6f4f97_2_13;
+	hl_types_ArrayObj___expand(r5,r4);
+	label$e6f4f97_2_13:
+	r7 = r5->array;
+	((components__lines__LineBase*)(r7 + 1))[r4] = r1;
 	r4 = r0->lineCount;
 	++r4;
 	r0->lineCount = r4;
@@ -308,23 +309,27 @@ void components_managers_Grid_addLine(components__managers__Grid r0,components__
 	r4 = r1->type;
 	switch(r4) {
 		default:
-			goto label$e6f4f97_2_31;
+			goto label$e6f4f97_2_35;
 		case 0:
 			r4 = r0->floorCount;
 			++r4;
 			r0->floorCount = r4;
-			goto label$e6f4f97_2_31;
+			goto label$e6f4f97_2_35;
 		case 1:
 			r4 = r0->accelCount;
 			++r4;
 			r0->accelCount = r4;
-			goto label$e6f4f97_2_31;
+			goto label$e6f4f97_2_35;
 		case 2:
 			r4 = r0->sceneCount;
 			++r4;
 			r0->sceneCount = r4;
 	}
-	label$e6f4f97_2_31:
+	label$e6f4f97_2_35:
+	r9 = ($Main)g$_Main;
+	r8 = r9->simulation;
+	if( r8 == NULL ) hl_null_access();
+	components_managers_Simulation_updateSim(r8);
 	return;
 }
 
@@ -336,7 +341,6 @@ void components_managers_Grid_storeLine(components__managers__Grid r0,components
 	hl_type *r21;
 	$Main r23;
 	h2d__col__Point r14;
-	components__managers__Simulation r26;
 	double r15, r17;
 	double *r16, *r18;
 	vdynamic *r10, *r24;
@@ -444,171 +448,151 @@ void components_managers_Grid_storeLine(components__managers__Grid r0,components
 	r19 = r1->keyList;
 	if( r19 == NULL ) hl_null_access();
 	r5 = hl_types_ArrayObj_push(r19,((vdynamic*)r4));
-	r11 = r0->registry;
-	if( r11 == NULL ) hl_null_access();
-	r10 = haxe_ds_StringMap_get(r11,r4);
-	r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
-	if( r12 == NULL ) hl_null_access();
-	r24 = hl_vfields(r12)[2] ? (*(vdynamic**)(hl_vfields(r12)[2])) : (vdynamic*)hl_dyn_getp(r12->value,390036483/*lowFrame*/,&t$nul_i32);
-	if( !r24 ) goto label$e6f4f97_3_108;
-	r23 = ($Main)g$_Main;
-	r26 = r23->simulation;
-	if( r26 == NULL ) hl_null_access();
-	r11 = r0->registry;
-	if( r11 == NULL ) hl_null_access();
-	r10 = haxe_ds_StringMap_get(r11,r4);
-	r12 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
-	if( r12 == NULL ) hl_null_access();
-	r24 = hl_vfields(r12)[2] ? (*(vdynamic**)(hl_vfields(r12)[2])) : (vdynamic*)hl_dyn_getp(r12->value,390036483/*lowFrame*/,&t$nul_i32);
-	r5 = r24 ? r24->v.i : 0;
-	components_managers_Simulation_updateSimHistory(r26,r5);
-	label$e6f4f97_3_108:
 	return;
 }
 
 void components_managers_Grid_deleteTrack(components__managers__Grid r0) {
-	vvirtual *r1, *r3;
-	bool r5;
-	haxe__ds__IntMap r2;
-	components__lines__LineBase r6;
-	r2 = r0->lines;
-	if( r2 == NULL ) hl_null_access();
-	r1 = haxe_ds_IntMap_iterator(r2);
-	r3 = hl_to_virtual(&t$vrt_366632b,(vdynamic*)r1);
-	label$e6f4f97_4_4:
+	hl__types__ArrayObj r3;
+	components__lines__LineBase r5;
+	vdynamic *r6;
+	varray *r7;
+	int r1, r4;
+	r1 = 0;
+	r3 = r0->lines;
+	label$e6f4f97_4_2:
 	if( r3 == NULL ) hl_null_access();
-	if( hl_vfields(r3)[0] ) r5 = ((bool (*)(vdynamic*))hl_vfields(r3)[0])(r3->value); else {
-		vdynamic ret;
-		hl_dyn_call_obj(r3->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
-		r5 = (bool)ret.v.i;
-	}
-	if( !r5 ) goto label$e6f4f97_4_11;
-	if( hl_vfields(r3)[1] ) r6 = ((components__lines__LineBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
-		r6 = (components__lines__LineBase)hl_dyn_call_obj(r3->value,&t$fun_4a57607,151160317/*next*/,NULL,NULL);
-	}
-	components_managers_Grid_unregister(r0,r6);
-	goto label$e6f4f97_4_4;
-	label$e6f4f97_4_11:
+	r4 = r3->length;
+	if( r1 >= r4 ) goto label$e6f4f97_4_16;
+	r4 = r3->length;
+	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$e6f4f97_4_10;
+	r5 = NULL;
+	goto label$e6f4f97_4_13;
+	label$e6f4f97_4_10:
+	r7 = r3->array;
+	r6 = ((vdynamic**)(r7 + 1))[r1];
+	r5 = (components__lines__LineBase)r6;
+	label$e6f4f97_4_13:
+	++r1;
+	components_managers_Grid_unregister(r0,r5);
+	goto label$e6f4f97_4_2;
+	label$e6f4f97_4_16:
 	return;
 }
 
 void components_managers_Grid_unregister(components__managers__Grid r0,components__lines__LineBase r1) {
-	String r9;
+	String r10;
 	vvirtual *r14;
 	haxe__ds__StringMap r13;
-	hl__types__ArrayObj r4, r8;
+	hl__types__ArrayObj r6, r9;
 	bool r12;
-	haxe__ds__IntMap r18;
 	$Main r17;
-	components__lines__LineBase r5;
+	components__lines__LineBase r3;
+	components__stage__Canvas r18;
 	components__managers__Simulation r16;
-	vdynamic *r10, *r15;
+	vdynamic *r4, *r15;
 	varray *r11;
-	int r2, r6, r7;
-	r2 = 0;
+	int r5, r7, r8;
+	if( r1 ) goto label$e6f4f97_5_2;
+	return;
+	label$e6f4f97_5_2:
+	r5 = 0;
 	if( r1 == NULL ) hl_null_access();
-	r4 = r1->keyList;
-	label$e6f4f97_5_3:
-	if( r4 == NULL ) hl_null_access();
-	r7 = r4->length;
-	if( r2 >= r7 ) goto label$e6f4f97_5_63;
-	r7 = r4->length;
-	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$e6f4f97_5_11;
-	r9 = NULL;
-	goto label$e6f4f97_5_14;
-	label$e6f4f97_5_11:
-	r11 = r4->array;
-	r10 = ((vdynamic**)(r11 + 1))[r2];
-	r9 = (String)r10;
-	label$e6f4f97_5_14:
-	++r2;
+	r6 = r1->keyList;
+	label$e6f4f97_5_5:
+	if( r6 == NULL ) hl_null_access();
+	r8 = r6->length;
+	if( r5 >= r8 ) goto label$e6f4f97_5_47;
+	r8 = r6->length;
+	if( ((unsigned)r5) < ((unsigned)r8) ) goto label$e6f4f97_5_13;
+	r10 = NULL;
+	goto label$e6f4f97_5_16;
+	label$e6f4f97_5_13:
+	r11 = r6->array;
+	r4 = ((vdynamic**)(r11 + 1))[r5];
+	r10 = (String)r4;
+	label$e6f4f97_5_16:
+	++r5;
 	r13 = r0->registry;
 	if( r13 == NULL ) hl_null_access();
-	r10 = haxe_ds_StringMap_get(r13,r9);
-	r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+	r4 = haxe_ds_StringMap_get(r13,r10);
+	r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r4);
 	if( r14 == NULL ) hl_null_access();
-	r8 = hl_vfields(r14)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,233152173/*allLines*/,&t$hl_types_ArrayObj);
-	if( r8 == NULL ) hl_null_access();
-	r12 = hl_types_ArrayObj_remove(r8,((vdynamic*)r1));
+	r9 = hl_vfields(r14)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,233152173/*allLines*/,&t$hl_types_ArrayObj);
+	if( r9 == NULL ) hl_null_access();
+	r12 = hl_types_ArrayObj_remove(r9,((vdynamic*)r1));
 	if( r1 == NULL ) hl_null_access();
-	r6 = r1->type;
-	switch(r6) {
+	r7 = r1->type;
+	switch(r7) {
 		default:
-			goto label$e6f4f97_5_44;
+			goto label$e6f4f97_5_46;
 		case 0:
 		case 1:
 			r13 = r0->registry;
 			if( r13 == NULL ) hl_null_access();
-			r10 = haxe_ds_StringMap_get(r13,r9);
-			r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+			r4 = haxe_ds_StringMap_get(r13,r10);
+			r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r4);
 			if( r14 == NULL ) hl_null_access();
-			r8 = hl_vfields(r14)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
-			if( r8 == NULL ) hl_null_access();
-			r12 = hl_types_ArrayObj_remove(r8,((vdynamic*)r1));
-			goto label$e6f4f97_5_44;
+			r9 = hl_vfields(r14)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,-246583750/*colliders*/,&t$hl_types_ArrayObj);
+			if( r9 == NULL ) hl_null_access();
+			r12 = hl_types_ArrayObj_remove(r9,((vdynamic*)r1));
+			goto label$e6f4f97_5_46;
 		case 2:
 			r13 = r0->registry;
 			if( r13 == NULL ) hl_null_access();
-			r10 = haxe_ds_StringMap_get(r13,r9);
-			r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
+			r4 = haxe_ds_StringMap_get(r13,r10);
+			r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r4);
 			if( r14 == NULL ) hl_null_access();
-			r8 = hl_vfields(r14)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj);
-			if( r8 == NULL ) hl_null_access();
-			r12 = hl_types_ArrayObj_remove(r8,((vdynamic*)r1));
+			r9 = hl_vfields(r14)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r14)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r14->value,332491895/*nonColliders*/,&t$hl_types_ArrayObj);
+			if( r9 == NULL ) hl_null_access();
+			r12 = hl_types_ArrayObj_remove(r9,((vdynamic*)r1));
 	}
-	label$e6f4f97_5_44:
-	r13 = r0->registry;
-	if( r13 == NULL ) hl_null_access();
-	r10 = haxe_ds_StringMap_get(r13,r9);
-	r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
-	if( r14 == NULL ) hl_null_access();
-	r15 = hl_vfields(r14)[2] ? (*(vdynamic**)(hl_vfields(r14)[2])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
-	if( !r15 ) goto label$e6f4f97_5_62;
+	label$e6f4f97_5_46:
+	goto label$e6f4f97_5_5;
+	label$e6f4f97_5_47:
+	r5 = r0->lineCount;
+	--r5;
+	r0->lineCount = r5;
+	if( r1 == NULL ) hl_null_access();
+	r5 = r1->type;
+	switch(r5) {
+		default:
+			goto label$e6f4f97_5_65;
+		case 0:
+			r5 = r0->floorCount;
+			--r5;
+			r0->floorCount = r5;
+			goto label$e6f4f97_5_65;
+		case 1:
+			r5 = r0->accelCount;
+			--r5;
+			r0->accelCount = r5;
+			goto label$e6f4f97_5_65;
+		case 2:
+			r5 = r0->sceneCount;
+			--r5;
+			r0->sceneCount = r5;
+	}
+	label$e6f4f97_5_65:
+	r6 = r0->lines;
+	if( r6 == NULL ) hl_null_access();
+	r15 = r1->id;
+	r5 = r15 ? r15->v.i : 0;
+	r3 = NULL;
+	r7 = r6->length;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$e6f4f97_5_73;
+	hl_types_ArrayObj___expand(r6,r5);
+	label$e6f4f97_5_73:
+	r11 = r6->array;
+	((components__lines__LineBase*)(r11 + 1))[r5] = r3;
 	r17 = ($Main)g$_Main;
 	r16 = r17->simulation;
 	if( r16 == NULL ) hl_null_access();
-	r13 = r0->registry;
-	if( r13 == NULL ) hl_null_access();
-	r10 = haxe_ds_StringMap_get(r13,r9);
-	r14 = hl_to_virtual(&t$vrt_3d3bf19,(vdynamic*)r10);
-	if( r14 == NULL ) hl_null_access();
-	r15 = hl_vfields(r14)[2] ? (*(vdynamic**)(hl_vfields(r14)[2])) : (vdynamic*)hl_dyn_getp(r14->value,390036483/*lowFrame*/,&t$nul_i32);
-	r6 = r15 ? r15->v.i : 0;
-	components_managers_Simulation_updateSimHistory(r16,r6);
-	label$e6f4f97_5_62:
-	goto label$e6f4f97_5_3;
-	label$e6f4f97_5_63:
-	if( r1 == NULL ) hl_null_access();
-	r2 = r1->type;
-	switch(r2) {
-		default:
-			goto label$e6f4f97_5_78;
-		case 0:
-			r2 = r0->floorCount;
-			--r2;
-			r0->floorCount = r2;
-			goto label$e6f4f97_5_78;
-		case 1:
-			r2 = r0->accelCount;
-			--r2;
-			r0->accelCount = r2;
-			goto label$e6f4f97_5_78;
-		case 2:
-			r2 = r0->sceneCount;
-			--r2;
-			r0->sceneCount = r2;
-	}
-	label$e6f4f97_5_78:
-	components_lines_LineBase_clear(r1);
-	r2 = r0->lineCount;
-	--r2;
-	r0->lineCount = r2;
-	r5 = NULL;
-	r18 = r0->lines;
+	components_managers_Simulation_updateSim(r16);
+	r17 = ($Main)g$_Main;
+	r18 = r17->canvas;
 	if( r18 == NULL ) hl_null_access();
-	r15 = r1->id;
-	r2 = r15 ? r15->v.i : 0;
-	haxe_ds_IntMap_set(r18,r2,((vdynamic*)r5));
+	r5 = r1->type;
+	components_stage_Canvas_redrawLines(r18,r5);
 	return;
 }
 
@@ -649,8 +633,8 @@ vvirtual* components_managers_Grid_registryPosition(double r0,double r1) {
 }
 
 void components_managers_Grid_new(components__managers__Grid r0) {
+	hl__types__ArrayObj r4;
 	haxe__ds__StringMap r2;
-	haxe__ds__IntMap r4;
 	int r1;
 	r1 = 0;
 	r0->updateFrame = r1;
@@ -667,8 +651,8 @@ void components_managers_Grid_new(components__managers__Grid r0) {
 	r2 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
 	haxe_ds_StringMap_new(r2);
 	r0->registry = r2;
-	r4 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
-	haxe_ds_IntMap_new(r4);
+	r4 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r4);
 	r0->lines = r4;
 	return;
 }

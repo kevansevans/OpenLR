@@ -513,7 +513,7 @@ void components_sledder_RiderBase_collision(components__sledder__RiderBase r0) {
 	goto label$2a8c663_10_69;
 	label$2a8c663_10_83:
 	if( r27 == NULL ) hl_null_access();
-	((void (*)(components__lines__LineBase,components__physics__RidePoint))r27->$type->vobj_proto[2])(r27,r7);
+	((void (*)(components__lines__LineBase,components__physics__RidePoint))r27->$type->vobj_proto[1])(r27,r7);
 	goto label$2a8c663_10_69;
 	label$2a8c663_10_86:
 	if( r25 == NULL ) hl_null_access();

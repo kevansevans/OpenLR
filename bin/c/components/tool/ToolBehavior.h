@@ -54,6 +54,7 @@ struct _components__tool__ToolBehavior {
 	h2d__col__Point mouseEnd;
 	bool leftIsDown;
 	bool middleIsDown;
+	bool rightIsDown;
 	bool shifted;
 	components__lines__LineBase tempLine;
 	h2d__col__Point lastViewedPosition;

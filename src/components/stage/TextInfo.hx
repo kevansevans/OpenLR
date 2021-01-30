@@ -21,7 +21,7 @@ class TextInfo
 	{
 		info = new Text(DefaultFont.get());
 		info.color = new Vector(0.2, 0.2, 0.2);
-		//info.dropShadow = {dx : 1, dy : 1, color : 0xFFFFFF, alpha : 1};
+		info.textAlign = Align.MultilineRight;
 	}
 	
 	public function update() {
@@ -30,9 +30,9 @@ class TextInfo
 		info.text += 'Draw calls: ${Main.locengine.drawCalls}\n';
 		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
 		info.text += 'Lines: ${Main.grid.lineCount}\n';
-		info.text += 'Floor: ${Main.grid.floorCount} ${getLineVisibility(FLOOR)}\n';
-		info.text += 'Accel: ${Main.grid.accelCount} ${getLineVisibility(ACCEL)}\n';
-		info.text += 'Scene: ${Main.grid.sceneCount} ${getLineVisibility(SCENE)}\n';
+		info.text += 'Floor: ${Main.grid.floorCount}${getLineVisibility(FLOOR)}\n';
+		info.text += 'Accel: ${Main.grid.accelCount}${getLineVisibility(ACCEL)}\n';
+		info.text += 'Scene: ${Main.grid.sceneCount}${getLineVisibility(SCENE)}\n';
 		
 	}
 	

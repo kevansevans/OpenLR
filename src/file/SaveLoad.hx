@@ -4,7 +4,6 @@ import components.lines.Floor;
 import components.lines.LineBase;
 import components.lines.LineBase.LineSave;
 import components.sledder.RiderBase;
-import format.abc.Data.Name;
 import haxe.Json;
 import h2d.col.Point;
 

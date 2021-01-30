@@ -4,19 +4,12 @@
 #include <components/lines/LineBase.h>
 #include <hl/natives.h>
 double Math_min(double,double);
-void h2d_Graphics_clear(h2d__Graphics);
-void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
-void h2d_Graphics_flush(h2d__Graphics);
-void h2d_Graphics_addVertex(h2d__Graphics,double,double,double,double,double,double,double*,double*);
-#include <h2d/Object.h>
 #include <components/physics/RidePoint.h>
 extern hl_type t$vrt_f776906;
 extern hl_type t$_i32;
 extern hl_type t$h2d_col_Point;
 extern hl_type t$_bool;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
-extern hl_type t$h2d_Graphics;
-void h2d_Graphics_new(h2d__Graphics,h2d__Object);
 extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 
@@ -145,111 +138,6 @@ void components_lines_LineBase_setLim(components__lines__LineBase r0,int r1) {
 	return;
 }
 
-void components_lines_LineBase_render(components__lines__LineBase r0) {
-	h2d__Graphics r2;
-	h2d__col__Point r18;
-	double r4, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r19, r20, r21, r22;
-	int *r6;
-	double *r5, *r7;
-	int r3;
-	r2 = r0->colorLayer;
-	if( r2 == NULL ) hl_null_access();
-	h2d_Graphics_clear(r2);
-	r2 = r0->colorLayer;
-	if( r2 == NULL ) hl_null_access();
-	r3 = 1;
-	r4 = (double)r3;
-	r5 = &r4;
-	r3 = 16711680;
-	r6 = &r3;
-	r7 = NULL;
-	h2d_Graphics_lineStyle(r2,r5,r6,r7);
-	r2 = r0->colorLayer;
-	if( r2 == NULL ) hl_null_access();
-	h2d_Graphics_flush(r2);
-	r8 = 0.;
-	r9 = 0.;
-	r10 = r2->curR;
-	r11 = r2->curG;
-	r12 = r2->curB;
-	r13 = r2->curA;
-	r14 = 0.;
-	r15 = r2->ma;
-	r14 = r14 * r15;
-	r15 = 0.;
-	r16 = r2->mc;
-	r15 = r15 * r16;
-	r14 = r14 + r15;
-	r15 = r2->mx;
-	r14 = r14 + r15;
-	r5 = &r14;
-	r15 = 0.;
-	r16 = r2->mb;
-	r15 = r15 * r16;
-	r16 = 0.;
-	r17 = r2->md;
-	r16 = r16 * r17;
-	r15 = r15 + r16;
-	r16 = r2->my;
-	r15 = r15 + r16;
-	r7 = &r15;
-	h2d_Graphics_addVertex(r2,r8,r9,r10,r11,r12,r13,r5,r7);
-	r2 = r0->colorLayer;
-	r18 = r0->gfxEnd;
-	if( r18 == NULL ) hl_null_access();
-	r8 = r18->x;
-	r18 = r0->gfxEnd;
-	if( r18 == NULL ) hl_null_access();
-	r9 = r18->y;
-	if( r2 == NULL ) hl_null_access();
-	r12 = r2->curR;
-	r13 = r2->curG;
-	r16 = r2->curB;
-	r17 = r2->curA;
-	r20 = r2->ma;
-	r19 = r8 * r20;
-	r21 = r2->mc;
-	r20 = r9 * r21;
-	r19 = r19 + r20;
-	r20 = r2->mx;
-	r19 = r19 + r20;
-	r5 = &r19;
-	r21 = r2->mb;
-	r20 = r8 * r21;
-	r22 = r2->md;
-	r21 = r9 * r22;
-	r20 = r20 + r21;
-	r21 = r2->my;
-	r20 = r20 + r21;
-	r7 = &r20;
-	h2d_Graphics_addVertex(r2,r8,r9,r12,r13,r16,r17,r5,r7);
-	return;
-}
-
-void components_lines_LineBase_clear(components__lines__LineBase r0) {
-	h2d__Graphics r1;
-	h2d__Object r3;
-	r1 = r0->colorLayer;
-	if( !r1 ) goto label$eaddf6e_4_8;
-	if( r1 == NULL ) hl_null_access();
-	r3 = r1->parent;
-	if( !r3 ) goto label$eaddf6e_4_8;
-	r3 = r1->parent;
-	if( r3 == NULL ) hl_null_access();
-	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r1);
-	label$eaddf6e_4_8:
-	r1 = r0->rideLayer;
-	if( !r1 ) goto label$eaddf6e_4_16;
-	if( r1 == NULL ) hl_null_access();
-	r3 = r1->parent;
-	if( !r3 ) goto label$eaddf6e_4_16;
-	r3 = r1->parent;
-	if( r3 == NULL ) hl_null_access();
-	((void (*)(h2d__Object,h2d__Graphics))r3->$type->vobj_proto[6])(r3,r1);
-	label$eaddf6e_4_16:
-	return;
-}
-
 void components_lines_LineBase_collide(components__lines__LineBase r0,components__physics__RidePoint r1) {
 	return;
 }
@@ -274,22 +162,16 @@ vvirtual* components_lines_LineBase_toSaveObject(components__lines__LineBase r0)
 }
 
 void components_lines_LineBase_new(components__lines__LineBase r0,h2d__col__Point r1,h2d__col__Point r2,bool r3,vdynamic* r4) {
-	hl__types__ArrayObj r16;
-	h2d__Graphics r14;
-	h2d__Object r15;
+	hl__types__ArrayObj r14;
 	h2d__col__Point r7, r8;
 	double r6, r9, r11;
 	double *r10, *r12;
 	int r5;
-	if( r4 ) goto label$eaddf6e_7_3;
+	if( r4 ) goto label$eaddf6e_5_3;
 	r5 = 0;
 	r4 = hl_alloc_dynamic(&t$_i32);
 	r4->v.i = r5;
-	label$eaddf6e_7_3:
-	r5 = 15;
-	r0->lineCapSegment = r5;
-	r6 = 0.0025000000000000001;
-	r0->lineCapRadius = r6;
+	label$eaddf6e_5_3:
 	r6 = 0.;
 	r0->limValue = r6;
 	r6 = 0.;
@@ -322,17 +204,9 @@ void components_lines_LineBase_new(components__lines__LineBase r0,h2d__col__Poin
 	h2d_col_Point_new(r7,r10,r12);
 	r0->gfxEnd = r7;
 	r0->shifted = r3;
-	r14 = (h2d__Graphics)hl_alloc_obj(&t$h2d_Graphics);
-	r15 = NULL;
-	h2d_Graphics_new(r14,r15);
-	r0->rideLayer = r14;
-	r14 = (h2d__Graphics)hl_alloc_obj(&t$h2d_Graphics);
-	r15 = NULL;
-	h2d_Graphics_new(r14,r15);
-	r0->colorLayer = r14;
-	r16 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r16);
-	r0->keyList = r16;
+	r14 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r14);
+	r0->keyList = r14;
 	((void (*)(components__lines__LineBase))r0->$type->vobj_proto[0])(r0);
 	r5 = r4 ? r4->v.i : 0;
 	components_lines_LineBase_setLim(r0,r5);

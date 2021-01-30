@@ -239,10 +239,11 @@ class ToolBehavior
 	
 	function updatePreview() {
 		
-		//if (tempLine != null) Main.grid.unregister(tempLine);
-		tempLine = null;
 		
-		if (!leftIsDown && !rightIsDown) return;
+		if (!leftIsDown && !rightIsDown) {
+			Main.canvas.previewLayer.clear();
+			return;
+		}
 		
 		if (tool == ERASER) return;
 		
@@ -251,16 +252,17 @@ class ToolBehavior
 		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10) {
 			
 			tempLine = new Undefined(mouseStart, mouseEnd, shifted);
-			preview.addChild(tempLine.colorLayer);
 			
 		} else {
 		
 			switch (color) {
 				case FLOOR :
 					
-					tempLine = new Floor(mouseStart, mouseEnd, shifted);
-					preview.addChild(tempLine.colorLayer);
-					preview.addChild(tempLine.rideLayer);
+					if (leftIsDown) {
+						tempLine = new Floor(mouseStart, mouseEnd, shifted);
+					} else if (rightIsDown) {
+						tempLine = new Floor(mouseEnd, mouseStart, !shifted);
+					}
 					
 				case ACCEL :
 					
@@ -269,18 +271,14 @@ class ToolBehavior
 					} else if (rightIsDown) {
 						tempLine = new Accel(mouseEnd, mouseStart, !shifted);
 					}
-					preview.addChild(tempLine.colorLayer);
-					preview.addChild(tempLine.rideLayer);
 					
 				case SCENE :
 					
 					tempLine = new Scenery(mouseStart, mouseEnd, shifted);
-					preview.addChild(tempLine.colorLayer);
 			}
 		}
-		tempLine.render();
 		
-		//Main.grid.register(tempLine);
+		Main.canvas.drawPreviewLine(tempLine);
 	}
 	
 	function mouseUp(event:Event):Void 

@@ -16,9 +16,9 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 void components_managers_Musicplayer_stopMusic(components__managers__Musicplayer);
 void components_managers_Musicplayer_playMusic(components__managers__Musicplayer,int);
 void components_stage_Camera_start(components__stage__Camera);
+void components_managers_Simulation_stepSim(components__managers__Simulation);
 void components_stage_Camera_stop(components__stage__Camera);
 double components_managers_Simulation_get_desiredSimSpeed(components__managers__Simulation);
-void components_managers_Simulation_stepSim(components__managers__Simulation);
 void components_managers_Riders_stepRiders(components__managers__Riders);
 void components_managers_Simulation_recordGlobalSimState(components__managers__Simulation);
 extern String s$Set_flag_on_frame_;
@@ -153,6 +153,31 @@ void components_managers_Simulation_resumeSim(components__managers__Simulation r
 	return;
 }
 
+void components_managers_Simulation_updateSim(components__managers__Simulation r0) {
+	return;
+}
+
+void components_managers_Simulation_liveUpdateTick(components__managers__Simulation r0) {
+	bool r5;
+	int r1, r3, r4;
+	r1 = 0;
+	label$d8284df_5_1:
+	r3 = 40;
+	if( r1 >= r3 ) goto label$d8284df_5_13;
+	++r1;
+	r3 = r0->frames;
+	r4 = r0->returnframe;
+	if( r3 != r4 ) goto label$d8284df_5_11;
+	r5 = false;
+	r0->updating = r5;
+	goto label$d8284df_5_13;
+	label$d8284df_5_11:
+	components_managers_Simulation_stepSim(r0);
+	goto label$d8284df_5_1;
+	label$d8284df_5_13:
+	return;
+}
+
 void components_managers_Simulation_endSim(components__managers__Simulation r0) {
 	bool r2;
 	components__managers__Musicplayer r7;
@@ -161,12 +186,12 @@ void components_managers_Simulation_endSim(components__managers__Simulation r0) 
 	int r6;
 	components__stage__Camera r3;
 	r2 = r0->playing;
-	if( !r2 ) goto label$d8284df_4_6;
+	if( !r2 ) goto label$d8284df_6_6;
 	r4 = ($Main)g$_Main;
 	r3 = r4->camera;
 	if( r3 == NULL ) hl_null_access();
 	components_stage_Camera_stop(r3);
-	label$d8284df_4_6:
+	label$d8284df_6_6:
 	r2 = false;
 	r0->playing = r2;
 	r2 = false;
@@ -174,14 +199,14 @@ void components_managers_Simulation_endSim(components__managers__Simulation r0) 
 	r5 = 0.;
 	r0->timeDelta = r5;
 	r2 = r0->flagged;
-	if( !r2 ) goto label$d8284df_4_17;
+	if( !r2 ) goto label$d8284df_6_17;
 	r6 = r0->flagframe;
 	components_managers_Simulation_restoreState(r0,r6);
-	goto label$d8284df_4_19;
-	label$d8284df_4_17:
+	goto label$d8284df_6_19;
+	label$d8284df_6_17:
 	r6 = 0;
 	components_managers_Simulation_restoreState(r0,r6);
-	label$d8284df_4_19:
+	label$d8284df_6_19:
 	r4 = ($Main)g$_Main;
 	r7 = r4->audio;
 	if( r7 == NULL ) hl_null_access();
@@ -194,17 +219,17 @@ void components_managers_Simulation_playSim(components__managers__Simulation r0,
 	r2 = r0->timeDelta;
 	r2 = r2 + r1;
 	r0->timeDelta = r2;
-	label$d8284df_5_3:
+	label$d8284df_7_3:
 	r2 = r0->timeDelta;
 	r3 = components_managers_Simulation_get_desiredSimSpeed(r0);
-	if( !(r2 >= r3) ) goto label$d8284df_5_13;
+	if( !(r2 >= r3) ) goto label$d8284df_7_13;
 	components_managers_Simulation_stepSim(r0);
 	r2 = r0->timeDelta;
 	r3 = components_managers_Simulation_get_desiredSimSpeed(r0);
 	r2 = r2 - r3;
 	r0->timeDelta = r2;
-	goto label$d8284df_5_3;
-	label$d8284df_5_13:
+	goto label$d8284df_7_3;
+	label$d8284df_7_13:
 	return;
 }
 
@@ -214,10 +239,10 @@ void components_managers_Simulation_rewindSim(components__managers__Simulation r
 	r2 = r0->timeDelta;
 	r2 = r2 + r1;
 	r0->timeDelta = r2;
-	label$d8284df_6_3:
+	label$d8284df_8_3:
 	r2 = r0->timeDelta;
 	r3 = components_managers_Simulation_get_desiredSimSpeed(r0);
-	if( !(r2 >= r3) ) goto label$d8284df_6_18;
+	if( !(r2 >= r3) ) goto label$d8284df_8_18;
 	if( r0 == NULL ) hl_null_access();
 	r5 = r0->frames;
 	r6 = 1;
@@ -228,8 +253,8 @@ void components_managers_Simulation_rewindSim(components__managers__Simulation r
 	r3 = components_managers_Simulation_get_desiredSimSpeed(r0);
 	r2 = r2 - r3;
 	r0->timeDelta = r2;
-	goto label$d8284df_6_3;
-	label$d8284df_6_18:
+	goto label$d8284df_8_3;
+	label$d8284df_8_18:
 	return;
 }
 
@@ -270,44 +295,44 @@ void components_managers_Simulation_setFlagState(components__managers__Simulatio
 	int r4;
 	r1 = r0->playing;
 	r2 = true;
-	if( r1 == r2 ) goto label$d8284df_9_6;
+	if( r1 == r2 ) goto label$d8284df_11_6;
 	r1 = r0->paused;
 	r2 = true;
-	if( r1 != r2 ) goto label$d8284df_9_8;
-	label$d8284df_9_6:
+	if( r1 != r2 ) goto label$d8284df_11_8;
+	label$d8284df_11_6:
 	r1 = true;
-	goto label$d8284df_9_10;
-	label$d8284df_9_8:
+	goto label$d8284df_11_10;
+	label$d8284df_11_8:
 	r1 = r0->flagged;
 	r1 = !r1;
-	label$d8284df_9_10:
+	label$d8284df_11_10:
 	r0->flagged = r1;
 	r1 = r0->flagged;
-	if( !r1 ) goto label$d8284df_9_19;
+	if( !r1 ) goto label$d8284df_11_19;
 	r1 = r0->playing;
-	if( r1 ) goto label$d8284df_9_17;
+	if( r1 ) goto label$d8284df_11_17;
 	r1 = r0->paused;
-	if( !r1 ) goto label$d8284df_9_19;
-	label$d8284df_9_17:
+	if( !r1 ) goto label$d8284df_11_19;
+	label$d8284df_11_17:
 	r4 = r0->frames;
 	r0->flagframe = r4;
-	label$d8284df_9_19:
+	label$d8284df_11_19:
 	r6 = ($Main)g$_Main;
 	r5 = r6->console;
 	if( r5 == NULL ) hl_null_access();
 	r1 = r0->flagged;
 	r2 = true;
-	if( r1 != r2 ) goto label$d8284df_9_32;
+	if( r1 != r2 ) goto label$d8284df_11_32;
 	r7 = (String)s$Set_flag_on_frame_;
 	r4 = r0->frames;
 	r8 = &r4;
 	r9 = hl_itos(r4,r8);
 	r10 = String___alloc__(r9,r4);
 	r7 = String___add__(r7,r10);
-	goto label$d8284df_9_33;
-	label$d8284df_9_32:
+	goto label$d8284df_11_33;
+	label$d8284df_11_32:
 	r7 = (String)s$Disabled_flag;
-	label$d8284df_9_33:
+	label$d8284df_11_33:
 	r11 = NULL;
 	h2d_Console_log(((h2d__Console)r5),r7,r11);
 	return;
@@ -339,14 +364,14 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	if( r8 == NULL ) hl_null_access();
 	r7 = haxe_ds_StringMap_iterator(r8);
 	r12 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r7);
-	label$d8284df_10_12:
+	label$d8284df_12_12:
 	if( r12 == NULL ) hl_null_access();
 	if( hl_vfields(r12)[0] ) r13 = ((bool (*)(vdynamic*))hl_vfields(r12)[0])(r12->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r12->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r13 = (bool)ret.v.i;
 	}
-	if( !r13 ) goto label$d8284df_10_102;
+	if( !r13 ) goto label$d8284df_12_102;
 	if( hl_vfields(r12)[1] ) r14 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r12)[1])(r12->value); else {
 		r14 = (components__sledder__RiderBase)hl_dyn_call_obj(r12->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
 	}
@@ -356,19 +381,19 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	r16 = (hl__types__ArrayObj)hl_dyn_castp(&r11,&t$_dyn,&t$hl_types_ArrayObj);
 	if( r16 == NULL ) hl_null_access();
 	r17 = r16->length;
-	if( ((unsigned)r3) < ((unsigned)r17) ) goto label$d8284df_10_26;
+	if( ((unsigned)r3) < ((unsigned)r17) ) goto label$d8284df_12_26;
 	r18 = NULL;
-	goto label$d8284df_10_29;
-	label$d8284df_10_26:
+	goto label$d8284df_12_29;
+	label$d8284df_12_26:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r3];
 	r18 = hl_to_virtual(&t$vrt_5caddc6,(vdynamic*)r11);
-	label$d8284df_10_29:
-	if( r18 ) goto label$d8284df_10_33;
+	label$d8284df_12_29:
+	if( r18 ) goto label$d8284df_12_33;
 	r6 = r0->frames;
 	components_managers_Simulation_recordRiderState(r0,r14,r6);
-	goto label$d8284df_10_12;
-	label$d8284df_10_33:
+	goto label$d8284df_12_12;
+	label$d8284df_12_33:
 	if( r14 == NULL ) hl_null_access();
 	if( r18 == NULL ) hl_null_access();
 	r13 = hl_vfields(r18)[0] ? (*(bool*)(hl_vfields(r18)[0])) : (bool)hl_dyn_geti(r18->value,-273866879/*crashed*/,&t$_bool);
@@ -378,77 +403,77 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	r16 = r14->ridePoints;
 	if( r16 == NULL ) hl_null_access();
 	r17 = r16->length;
-	label$d8284df_10_42:
-	if( r6 >= r17 ) goto label$d8284df_10_69;
+	label$d8284df_12_42:
+	if( r6 >= r17 ) goto label$d8284df_12_69;
 	r21 = r6;
 	++r6;
 	if( r14 == NULL ) hl_null_access();
 	r16 = r14->ridePoints;
 	if( r16 == NULL ) hl_null_access();
 	r22 = r16->length;
-	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_10_53;
+	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_12_53;
 	r23 = NULL;
-	goto label$d8284df_10_56;
-	label$d8284df_10_53:
+	goto label$d8284df_12_56;
+	label$d8284df_12_53:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r21];
 	r23 = (components__physics__RidePoint)r11;
-	label$d8284df_10_56:
+	label$d8284df_12_56:
 	if( r23 == NULL ) hl_null_access();
 	if( r18 == NULL ) hl_null_access();
 	r16 = hl_vfields(r18)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r18)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r18->value,-147975645/*points*/,&t$hl_types_ArrayObj);
 	if( r16 == NULL ) hl_null_access();
 	r22 = r16->length;
-	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_10_64;
+	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_12_64;
 	r24 = NULL;
-	goto label$d8284df_10_67;
-	label$d8284df_10_64:
+	goto label$d8284df_12_67;
+	label$d8284df_12_64:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r21];
 	r24 = hl_to_virtual(&t$vrt_6c2da0f,(vdynamic*)r11);
-	label$d8284df_10_67:
+	label$d8284df_12_67:
 	components_physics_RidePoint_restoreState(r23,r24);
-	goto label$d8284df_10_42;
-	label$d8284df_10_69:
+	goto label$d8284df_12_42;
+	label$d8284df_12_69:
 	r6 = 0;
 	if( r14 == NULL ) hl_null_access();
 	r16 = r14->scarfPoints;
 	if( r16 == NULL ) hl_null_access();
 	r17 = r16->length;
-	label$d8284df_10_74:
-	if( r6 >= r17 ) goto label$d8284df_10_101;
+	label$d8284df_12_74:
+	if( r6 >= r17 ) goto label$d8284df_12_101;
 	r21 = r6;
 	++r6;
 	if( r14 == NULL ) hl_null_access();
 	r16 = r14->scarfPoints;
 	if( r16 == NULL ) hl_null_access();
 	r22 = r16->length;
-	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_10_85;
+	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_12_85;
 	r23 = NULL;
-	goto label$d8284df_10_88;
-	label$d8284df_10_85:
+	goto label$d8284df_12_88;
+	label$d8284df_12_85:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r21];
 	r23 = (components__physics__RidePoint)r11;
-	label$d8284df_10_88:
+	label$d8284df_12_88:
 	if( r23 == NULL ) hl_null_access();
 	if( r18 == NULL ) hl_null_access();
 	r16 = hl_vfields(r18)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r18)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r18->value,151751954/*scarves*/,&t$hl_types_ArrayObj);
 	if( r16 == NULL ) hl_null_access();
 	r22 = r16->length;
-	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_10_96;
+	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_12_96;
 	r24 = NULL;
-	goto label$d8284df_10_99;
-	label$d8284df_10_96:
+	goto label$d8284df_12_99;
+	label$d8284df_12_96:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r21];
 	r24 = hl_to_virtual(&t$vrt_6c2da0f,(vdynamic*)r11);
-	label$d8284df_10_99:
+	label$d8284df_12_99:
 	components_physics_RidePoint_restoreState(r23,r24);
-	goto label$d8284df_10_74;
-	label$d8284df_10_101:
-	goto label$d8284df_10_12;
-	label$d8284df_10_102:
+	goto label$d8284df_12_74;
+	label$d8284df_12_101:
+	goto label$d8284df_12_12;
+	label$d8284df_12_102:
 	return;
 }
 
@@ -467,21 +492,21 @@ void components_managers_Simulation_recordGlobalSimState(components__managers__S
 	if( r2 == NULL ) hl_null_access();
 	r1 = haxe_ds_StringMap_iterator(r2);
 	r5 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r1);
-	label$d8284df_11_7:
+	label$d8284df_13_7:
 	if( r5 == NULL ) hl_null_access();
 	if( hl_vfields(r5)[0] ) r7 = ((bool (*)(vdynamic*))hl_vfields(r5)[0])(r5->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r5->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r7 = (bool)ret.v.i;
 	}
-	if( !r7 ) goto label$d8284df_11_15;
+	if( !r7 ) goto label$d8284df_13_15;
 	if( hl_vfields(r5)[1] ) r8 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r5)[1])(r5->value); else {
 		r8 = (components__sledder__RiderBase)hl_dyn_call_obj(r5->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
 	}
 	r9 = r0->frames;
 	components_managers_Simulation_recordRiderState(r0,r8,r9);
-	goto label$d8284df_11_7;
-	label$d8284df_11_15:
+	goto label$d8284df_13_7;
+	label$d8284df_13_15:
 	return;
 }
 
@@ -497,23 +522,23 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_ObjectMap_get(r5,((vdynamic*)r1));
 	r6 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
-	if( r6 ) goto label$d8284df_12_18;
+	if( r6 ) goto label$d8284df_14_18;
 	r5 = r0->frameStates;
-	if( r5 ) goto label$d8284df_12_9;
+	if( r5 ) goto label$d8284df_14_9;
 	r7 = NULL;
-	goto label$d8284df_12_13;
-	label$d8284df_12_9:
+	goto label$d8284df_14_13;
+	label$d8284df_14_9:
 	r7 = r5->f$1;
-	if( r7 ) goto label$d8284df_12_13;
+	if( r7 ) goto label$d8284df_14_13;
 	r7 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r5);
 	r5->f$1 = r7;
-	label$d8284df_12_13:
+	label$d8284df_14_13:
 	r6 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r6);
 	r5 = (haxe__ds__ObjectMap)hl_dyn_castp(&r7,&t$vrt_b840ca7,&t$haxe_ds_ObjectMap);
 	if( r5 == NULL ) hl_null_access();
 	haxe_ds_ObjectMap_set(r5,((vdynamic*)r1),((vdynamic*)r6));
-	label$d8284df_12_18:
+	label$d8284df_14_18:
 	r9 = hl_alloc_virtual(&t$vrt_b67f353);
 	if( r1 == NULL ) hl_null_access();
 	r10 = r1->crashed;
@@ -531,9 +556,9 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	r6 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
 	if( r6 == NULL ) hl_null_access();
 	r14 = r6->length;
-	if( ((unsigned)r2) < ((unsigned)r14) ) goto label$d8284df_12_37;
+	if( ((unsigned)r2) < ((unsigned)r14) ) goto label$d8284df_14_37;
 	hl_types_ArrayObj___expand(r6,r2);
-	label$d8284df_12_37:
+	label$d8284df_14_37:
 	r15 = r6->array;
 	((vvirtual**)(r15 + 1))[r2] = r11;
 	r6 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
@@ -542,63 +567,63 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	hl_types_ArrayObj_new(r8);
 	r12 = 0;
 	r16 = r1->ridePoints;
-	label$d8284df_12_45:
+	label$d8284df_14_45:
 	if( r16 == NULL ) hl_null_access();
 	r17 = r16->length;
-	if( r12 >= r17 ) goto label$d8284df_12_62;
+	if( r12 >= r17 ) goto label$d8284df_14_62;
 	r17 = r16->length;
-	if( ((unsigned)r12) < ((unsigned)r17) ) goto label$d8284df_12_53;
+	if( ((unsigned)r12) < ((unsigned)r17) ) goto label$d8284df_14_53;
 	r18 = NULL;
-	goto label$d8284df_12_56;
-	label$d8284df_12_53:
+	goto label$d8284df_14_56;
+	label$d8284df_14_53:
 	r15 = r16->array;
 	r4 = ((vdynamic**)(r15 + 1))[r12];
 	r18 = (components__physics__RidePoint)r4;
-	label$d8284df_12_56:
+	label$d8284df_14_56:
 	++r12;
 	if( r6 == NULL ) hl_null_access();
 	if( r18 == NULL ) hl_null_access();
 	r19 = components_physics_RidePoint_saveState(r18);
 	r14 = hl_types_ArrayObj_push(r6,((vdynamic*)r19));
-	goto label$d8284df_12_45;
-	label$d8284df_12_62:
+	goto label$d8284df_14_45;
+	label$d8284df_14_62:
 	r12 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r16 = r1->scarfPoints;
-	label$d8284df_12_65:
+	label$d8284df_14_65:
 	if( r16 == NULL ) hl_null_access();
 	r17 = r16->length;
-	if( r12 >= r17 ) goto label$d8284df_12_82;
+	if( r12 >= r17 ) goto label$d8284df_14_82;
 	r17 = r16->length;
-	if( ((unsigned)r12) < ((unsigned)r17) ) goto label$d8284df_12_73;
+	if( ((unsigned)r12) < ((unsigned)r17) ) goto label$d8284df_14_73;
 	r18 = NULL;
-	goto label$d8284df_12_76;
-	label$d8284df_12_73:
+	goto label$d8284df_14_76;
+	label$d8284df_14_73:
 	r15 = r16->array;
 	r4 = ((vdynamic**)(r15 + 1))[r12];
 	r18 = (components__physics__RidePoint)r4;
-	label$d8284df_12_76:
+	label$d8284df_14_76:
 	++r12;
 	if( r8 == NULL ) hl_null_access();
 	if( r18 == NULL ) hl_null_access();
 	r19 = components_physics_RidePoint_saveState(r18);
 	r14 = hl_types_ArrayObj_push(r8,((vdynamic*)r19));
-	goto label$d8284df_12_65;
-	label$d8284df_12_82:
+	goto label$d8284df_14_65;
+	label$d8284df_14_82:
 	r5 = r0->frameStates;
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_ObjectMap_get(r5,((vdynamic*)r1));
 	r16 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
 	if( r16 == NULL ) hl_null_access();
 	r14 = r16->length;
-	if( ((unsigned)r2) < ((unsigned)r14) ) goto label$d8284df_12_91;
+	if( ((unsigned)r2) < ((unsigned)r14) ) goto label$d8284df_14_91;
 	r13 = NULL;
-	goto label$d8284df_12_94;
-	label$d8284df_12_91:
+	goto label$d8284df_14_94;
+	label$d8284df_14_91:
 	r15 = r16->array;
 	r4 = ((vdynamic**)(r15 + 1))[r2];
 	r13 = hl_to_virtual(&t$vrt_5caddc6,(vdynamic*)r4);
-	label$d8284df_12_94:
+	label$d8284df_14_94:
 	if( r13 == NULL ) hl_null_access();
 	if( hl_vfields(r13)[1] ) *(hl__types__ArrayObj*)(hl_vfields(r13)[1]) = (hl__types__ArrayObj)r6; else hl_dyn_setp(r13->value,-147975645/*points*/,&t$hl_types_ArrayObj,r6);
 	r5 = r0->frameStates;
@@ -607,45 +632,16 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	r16 = (hl__types__ArrayObj)hl_dyn_castp(&r4,&t$_dyn,&t$hl_types_ArrayObj);
 	if( r16 == NULL ) hl_null_access();
 	r14 = r16->length;
-	if( ((unsigned)r2) < ((unsigned)r14) ) goto label$d8284df_12_105;
+	if( ((unsigned)r2) < ((unsigned)r14) ) goto label$d8284df_14_105;
 	r13 = NULL;
-	goto label$d8284df_12_108;
-	label$d8284df_12_105:
+	goto label$d8284df_14_108;
+	label$d8284df_14_105:
 	r15 = r16->array;
 	r4 = ((vdynamic**)(r15 + 1))[r2];
 	r13 = hl_to_virtual(&t$vrt_5caddc6,(vdynamic*)r4);
-	label$d8284df_12_108:
+	label$d8284df_14_108:
 	if( r13 == NULL ) hl_null_access();
 	if( hl_vfields(r13)[2] ) *(hl__types__ArrayObj*)(hl_vfields(r13)[2]) = (hl__types__ArrayObj)r8; else hl_dyn_setp(r13->value,151751954/*scarves*/,&t$hl_types_ArrayObj,r8);
-	return;
-}
-
-void components_managers_Simulation_updateSimHistory(components__managers__Simulation r0,int r1) {
-	return;
-}
-
-void components_managers_Simulation_updateSim(components__managers__Simulation r0) {
-	bool r5;
-	int r1, r3, r4;
-	r1 = 0;
-	label$d8284df_14_1:
-	r3 = 40;
-	if( r1 >= r3 ) goto label$d8284df_14_17;
-	++r1;
-	components_managers_Simulation_stepSim(r0);
-	r3 = r0->frames;
-	r4 = r0->returnPoint;
-	if( r3 < r4 ) goto label$d8284df_14_16;
-	r5 = false;
-	r0->updating = r5;
-	r3 = r0->rewindPoint;
-	r0->frames = r3;
-	r3 = r0->rewindPoint;
-	components_managers_Simulation_restoreState(r0,r3);
-	return;
-	label$d8284df_14_16:
-	goto label$d8284df_14_1;
-	label$d8284df_14_17:
 	return;
 }
 
@@ -665,37 +661,35 @@ double components_managers_Simulation_set_desiredSimSpeed(components__managers__
 
 void components_managers_Simulation_new(components__managers__Simulation r0) {
 	haxe__ds__ObjectMap r4;
-	bool r3;
-	double r2;
-	int r1;
-	r1 = 0;
-	r0->returnPoint = r1;
-	r1 = 0;
-	r0->rewindPoint = r1;
-	r2 = 0.;
-	r0->timeDelta = r2;
-	r1 = 0;
-	r0->flagframe = r1;
-	r3 = false;
-	r0->flagged = r3;
-	r3 = false;
-	r0->updating = r3;
-	r3 = false;
-	r0->rewinding = r3;
-	r3 = false;
-	r0->paused = r3;
-	r3 = false;
-	r0->playing = r3;
-	r1 = 0;
-	r0->frames = r1;
+	bool r1;
+	double r3;
+	int r2;
+	r1 = false;
+	r0->updating = r1;
+	r2 = 0;
+	r0->returnframe = r2;
+	r3 = 0.;
+	r0->timeDelta = r3;
+	r2 = 0;
+	r0->flagframe = r2;
+	r1 = false;
+	r0->flagged = r1;
+	r1 = false;
+	r0->rewinding = r1;
+	r1 = false;
+	r0->paused = r1;
+	r1 = false;
+	r0->playing = r1;
+	r2 = 0;
+	r0->frames = r2;
 	r4 = (haxe__ds__ObjectMap)hl_alloc_obj(&t$haxe_ds_ObjectMap);
 	haxe_ds_ObjectMap_new(r4);
 	r0->frameStates = r4;
-	r2 = 40.;
-	r2 = components_managers_Simulation_set_desiredSimSpeed(r0,r2);
+	r3 = 40.;
+	r3 = components_managers_Simulation_set_desiredSimSpeed(r0,r3);
 	components_managers_Simulation_recordGlobalSimState(r0);
-	r1 = 0;
-	components_managers_Simulation_restoreState(r0,r1);
+	r2 = 0;
+	components_managers_Simulation_restoreState(r0,r2);
 	return;
 }
 
