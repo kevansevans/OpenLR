@@ -182,6 +182,7 @@ class Main extends App
 		
 		textinfo = new TextInfo();
 		s2d.addChild(textinfo.info);
+		textinfo.update();
 		textinfo.info.x = engine.width - textinfo.info.textWidth - 5;
 		textinfo.info.y = 5;
 		
