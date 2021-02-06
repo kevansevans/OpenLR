@@ -56,10 +56,10 @@ class Grid
 		var invDx = 1 / _line.dx;
 		var invDy = 1 / _line.dy;
 		
-		var difX:Float;
-		var difY:Float;
-		
 		while (true) {
+			
+			var difX:Float;
+			var difY:Float;
 			
 			if (start.x < 0) {
 				difX = _line.dx > 0 ? (GRIDSIZE + start.gx) : (-GRIDSIZE - start.gx);
@@ -239,5 +239,4 @@ typedef LineContainer = {
 	var allLines:Array<LineBase>;
 	var colliders:Array<LineBase>;
 	var nonColliders:Array<LineBase>;
-	@:optional var lowFrame:Int;
 }

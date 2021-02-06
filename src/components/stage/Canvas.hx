@@ -221,7 +221,7 @@ class Canvas extends Scene
 		
 	}
 	
-	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
+	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1, ?_lineID:Int = -1) {
 		
 		var line:LineBase = null;
 		switch (_type) {
@@ -235,6 +235,9 @@ class Canvas extends Scene
 			default :
 			
 		}
+		
+		if (_limMode != -1) line.setLim(_limMode);
+		if (_lineID != -1) line.id = _lineID;
 		
 		drawLineGraphic(line);
 		

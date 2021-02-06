@@ -1,6 +1,8 @@
 package file;
 
 import components.lines.Floor;
+import components.lines.Accel;
+import components.lines.Scenery;
 import components.lines.LineBase;
 import components.lines.LineBase.LineSave;
 import components.sledder.RiderBase;
@@ -143,7 +145,7 @@ class SaveLoad
 		if (loadObject.song != null) Main.audio.loadAudio(loadObject.song);
 		
 		for (line in loadObject.lines) {
-			Main.canvas.addLine(line.linetype, line.startPoint.x, line.startPoint.y, line.endPoint.x, line.endPoint.y, line.inverted);
+			Main.canvas.addLine(line.linetype, line.startPoint.x, line.startPoint.y, line.endPoint.x, line.endPoint.y, line.inverted, line.limitMode, line.lineID);
 		}
 		
 		for (rider in loadObject.riders) {
@@ -172,7 +174,7 @@ class SaveLoad
 			var lineArray:Array<Dynamic> = loadObject.lines;
 			lineArray.reverse();
 			for (lineObject in lineArray) {
-				var lim:Int = -1;
+				var lim:Int = 0;
 				if (!lineObject.leftExtended && !lineObject.rightExtended) {
 					lim = 0;
 				} else if (lineObject.leftExtended && !lineObject.rightExtended) {
@@ -182,7 +184,22 @@ class SaveLoad
 				} else if (lineObject.leftExtended && lineObject.rightExtended) {
 					lim = 3;
 				}
-				Main.canvas.addLine(lineObject.type, lineObject.x1, lineObject.y1, lineObject.x2, lineObject.y2, lineObject.flipped, lim);
+				
+				var line:LineBase = null;
+				switch (lineObject.type) {
+					case 0:
+						line = new Floor(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
+					case 1 :
+						line = new Accel(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
+					case 2 :
+						line = new Scenery(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
+					default :
+						continue;
+				}
+				line.setLim(lim);
+				//line.id = lineObject.id;
+				Main.grid.register(line);
+				Main.canvas.drawLineGraphic(line);
 			}
 		}
 		

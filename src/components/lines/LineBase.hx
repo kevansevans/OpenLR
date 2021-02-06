@@ -106,7 +106,8 @@ class LineBase
 			startPoint : start,
 			endPoint : end,
 			inverted : shifted,
-			limitMode : limType
+			limitMode : limType,
+			lineID : id
 		}
 		return save;
 	}
@@ -118,4 +119,5 @@ typedef LineSave = {
 	var endPoint:Point;
 	var inverted:Bool;
 	var limitMode:Int;
+	var lineID:Int;
 }

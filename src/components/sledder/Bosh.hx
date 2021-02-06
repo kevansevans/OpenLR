@@ -193,8 +193,8 @@ class Bosh extends RiderBase
 		ridePoints.push(new RidePoint(10, -11, 0.8));	//Shoulder		5
 		ridePoints.push(new RidePoint(23, -10, 0.1));	//Hand			6
 		ridePoints.push(new RidePoint(23, -10, 0.1));	//Hand			7
-		ridePoints.push(new RidePoint(23, 10, 0));		//Foot			8
-		ridePoints.push(new RidePoint(23, 10, 0));		//Foot			9
+		ridePoints.push(new RidePoint(20, 10, 0));		//Foot			8
+		ridePoints.push(new RidePoint(20, 10, 0));		//Foot			9
 		
 		scarfPoints.push(new ScarfPoint(7, -10));
 		scarfPoints.push(new ScarfPoint(3, -10));
@@ -206,20 +206,14 @@ class Bosh extends RiderBase
 		for (point in ridePoints) {
 			point.pos.x *= 0.5;
 			point.pos.y *= 0.5;
-			point.pos.x += startPos.x;
-			point.pos.y += startPos.y;
-			point.vel.x = point.pos.x - 0.8 * 0.5;
-			point.vel.y = point.pos.y;
 		}
 		
 		for (point in scarfPoints) {
 			point.pos.x *= 0.5;
 			point.pos.y *= 0.5;
-			point.pos.x += startPos.x;
-			point.pos.y += startPos.y;
-			point.vel.x = point.pos.x - 0.8 * 0.5;
-			point.vel.y = point.pos.y;
 		}
+		
+		moveToStart();
 		
 		bones.push(new Stick(ridePoints[0], ridePoints[1], STANDARD, this));			//Second to Tail			0
 		bones.push(new Stick(ridePoints[1], ridePoints[2], STANDARD, this));			//Tail to Nose				1

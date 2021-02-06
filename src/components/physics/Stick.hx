@@ -72,9 +72,8 @@ class Stick
 		var yDist = a.pos.y - b.pos.y;
 		var dist = Math.sqrt(xDist * xDist + yDist * yDist);
 		
-		var adjust:Null<Float> = null;
-		if (dist == 0) adjust = 0;
-		else adjust = (dist - restLength) / dist * 0.5;
+		var adjust:Float = 0;
+		if (dist != 0) adjust = (dist - restLength) / dist * 0.5;
 		
 		if (crashable || breakable) { //should we even check?
 			if (!rider.invincible) { //are we invincible?
@@ -103,9 +102,8 @@ class Stick
 		
 		if (dist < restLength) {
 			
-			var adjust:Null<Float> = null;
-			if (dist == 0) adjust = 0;
-			else adjust = (dist - restLength) / dist * 0.5;
+			var adjust:Float = 0;
+			if (dist != 0) adjust = (dist - restLength) / dist * 0.5;
 			
 			if (crashable || breakable) { //should we even check?
 				if (!rider.invincible) { //are we invincible?
@@ -135,9 +133,8 @@ class Stick
 		
 		if (dist > restLength) {
 			
-			var adjust:Null<Float> = null;
-			if (dist == 0) adjust = 0;
-			else adjust = (dist - restLength) / dist * 0.5;
+			var adjust:Float = 0;
+			if (dist != 0) adjust = (dist - restLength) / dist * 0.5;
 			
 			if (crashable || breakable) { //should we even check?
 				if (!rider.invincible) { //are we invincible?
@@ -162,7 +159,8 @@ class Stick
 	function set_type(value:StickType):StickType 
 	{
 		
-		restLength = Math.sqrt(Math.pow(a.pos.x - b.pos.x, 2) + Math.pow(a.pos.y - b.pos.y, 2));
+		setRestLength();
+		
 		if (value == REPELL || value == ATTRACT) restLength *= 0.5;
 		
 		switch (value) {
@@ -180,5 +178,12 @@ class Stick
 				constrain = noConstrain;
 		}
 		return type = value;
+	}
+	
+	function setRestLength():Void 
+	{
+		var x = a.pos.x - b.pos.x;
+		var y = a.pos.y - b.pos.y;
+		restLength = Math.sqrt(x * x + y * y);
 	}
 }

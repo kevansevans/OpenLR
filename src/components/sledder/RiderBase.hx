@@ -83,6 +83,23 @@ class RiderBase
 	public function init() {}
 	public function reset() {}
 	
+	public function moveToStart() {
+		
+		for (point in ridePoints) {
+			point.pos.x += startPos.x;
+			point.pos.y += startPos.y;
+			point.vel.x = point.pos.x - 0.4;
+			point.vel.y = point.pos.y;
+		}
+		
+		for (point in scarfPoints) {
+			point.pos.x += startPos.x;
+			point.pos.y += startPos.y;
+			point.vel.x = point.pos.x - 0.4;
+			point.vel.y = point.pos.y;
+		}
+	}
+	
 	public function delete() {
 		Main.canvas.sledderLayer.removeChild(gfx);
 		Main.canvas.sledderLayer.removeChild(nameField);
@@ -168,7 +185,6 @@ class RiderBase
 						
 						line.collide(point);
 					}
-					if (register.lowFrame == null || Main.simulation.frames < register.lowFrame) register.lowFrame = Main.simulation.frames;
 				}
 			}
 		}
