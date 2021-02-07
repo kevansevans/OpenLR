@@ -335,7 +335,7 @@ class ToolBehavior
 				if (Main.grid.registry[key] == null) continue;
 				
 				var chunk = Main.grid.registry[key];
-				for (line in chunk.colliders) {
+				for (line in chunk.hittable) {
 					
 					if (line == null) continue;
 					

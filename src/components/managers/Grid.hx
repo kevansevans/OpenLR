@@ -2,9 +2,6 @@ package components.managers;
 
 import components.lines.LineBase;
 import h2d.col.Point;
-import components.tool.ToolBehavior.LineColor;
-import haxe.ds.ArraySort;
-import hxd.Key;
 import network.NetAction;
 
 /**
@@ -44,11 +41,10 @@ class Grid
 		var bottom = _line.dy > 0 ? end.y : start.y;
 		var top = _line.dy > 0 ? start.y : end.y;
 		
+		storeLine(_line, start.x, start.y);
+		
 		if (_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) {
-			storeLine(_line, start.x, start.y);
 			return;
-		} else {
-			storeLine(_line, start.x, start.y);
 		}
 		
 		var x = _line.start.x;
@@ -56,10 +52,10 @@ class Grid
 		var invDx = 1 / _line.dx;
 		var invDy = 1 / _line.dy;
 		
+		var difX:Float;
+		var difY:Float;
+		
 		while (true) {
-			
-			var difX:Float;
-			var difY:Float;
 			
 			if (start.x < 0) {
 				difX = _line.dx > 0 ? (GRIDSIZE + start.gx) : (-GRIDSIZE - start.gx);
@@ -127,7 +123,7 @@ class Grid
 			var reg:LineContainer = {
 				position : new Point(_x, _y),
 				allLines : [],
-				colliders : [],
+				hittable : [],
 				nonColliders : []
 			}
 			registry[key] = reg;
@@ -135,13 +131,15 @@ class Grid
 		registry[key].allLines.push(_line);
 		switch (_line.type) {
 			case FLOOR | ACCEL:
-				registry[key].colliders[_line.id] = _line;
+				registry[key].hittable[_line.id] = _line;
 			case SCENE :
 				registry[key].nonColliders.push(_line);
 			default :
 				Main.console.log("Error registering line", 0xFF0000);
 		}
 		_line.keyList.push(key);
+		
+		trace(key, registry[key].allLines.length, registry[key].hittable.length);
 	}
 	
 	public function deleteTrack() {
@@ -156,7 +154,7 @@ class Grid
 			registry[key].allLines.remove(_line);
 			switch (_line.type) {
 				case FLOOR | ACCEL :
-					registry[key].colliders.remove(_line);
+					registry[key].hittable.remove(_line);
 				case SCENE :
 					registry[key].nonColliders.remove(_line);
 				default :
@@ -193,7 +191,7 @@ class Grid
 			registry[key].allLines.remove(_line);
 			switch (_line.type) {
 				case FLOOR | ACCEL :
-					registry[key].colliders.remove(_line);
+					registry[key].hittable.remove(_line);
 				case SCENE :
 					registry[key].nonColliders.remove(_line);
 				default :
@@ -237,6 +235,7 @@ typedef GridObject = {
 typedef LineContainer = {
 	var position:Point;
 	var allLines:Array<LineBase>;
-	var colliders:Array<LineBase>;
+	//Originally this var, hittable, was named 'colliders', but for some reason this name, YES THE NAME, made it act like it was a static variable and *every* line got cached into it
+	var hittable:Array<LineBase>;
 	var nonColliders:Array<LineBase>;
 }

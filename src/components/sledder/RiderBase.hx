@@ -179,7 +179,8 @@ class RiderBase
 				if (Main.grid.registry[key] == null) continue;
 				else {
 					var register = Main.grid.registry[key];
-					for (line in register.colliders) {
+					trace(key, register.allLines.length, register.hittable.length);
+					for (line in register.hittable) {
 						
 						if (line == null) continue;
 						
