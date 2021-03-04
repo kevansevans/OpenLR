@@ -1,12 +1,10 @@
 package components.lines;
-import components.physics.RidePoint;
+
 import hxlr.components.ContactPoint;
 import components.tool.ToolBehavior.LineColor;
 import enums.LineDrawMode;
 import h2d.Graphics;
 import h2d.Object;
-
-import scripts.LineScript;
 
 import h2d.col.Point;
 
@@ -47,8 +45,6 @@ class LineBase
 	public var prevLine:LineBase;
 	public var nextLine:LineBase;
 	
-	public var scripts:LineScript;
-	
 	public function new(_start:Point, _end:Point, _shift:Bool, ?_lim:Int = 0)
 	{
 		start = _start;
@@ -63,6 +59,7 @@ class LineBase
 		calculateConstants();
 		
 		setLim(_lim);
+		
 	}
 	
 	function calculateConstants() {
