@@ -2,11 +2,8 @@ package components.sledder;
 
 import hxlr.components.ContactPoint;
 
-import components.physics.RidePoint;
-
 import components.lines.LineBase;
 import components.managers.Grid;
-import components.physics.ScarfStick;
 import components.physics.Stick;
 import h2d.Anim;
 import h2d.Bitmap;
@@ -30,14 +27,14 @@ import hxd.Res;
 class RiderBase 
 {
 	public var ridePoints:Array<ContactPoint>;
-	public var scarfPoints:Array<RidePoint>;
+	public var scarfPoints:Array<ContactPoint>;
 	
 	public var colorA(get, null):Int;
 	public var colorB(get, null):Int;
 	public var neckscarf:RiderScarf;
 	
 	public var bones:Array<Stick>;
-	public var scarves:Array<ScarfStick>;
+	public var scarves:Array<Stick>;
 	
 	public var gfx:Graphics;
 	
@@ -159,7 +156,7 @@ class RiderBase
 			point.iterate(gravity);
 		}
 		for (point in scarfPoints) {
-			point.step(gravity);
+			point.iterate(gravity);
 		}
 	}
 	

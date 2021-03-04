@@ -1,7 +1,7 @@
 package components.managers;
 
 import components.sledder.RiderBase;
-import components.physics.RidePoint.PointState;
+import hxlr.components.ContactPoint;
 import haxe.PosInfos;
 
 /**
@@ -169,7 +169,7 @@ class Simulation
 				rider.ridePoints[point].deserialize(state.points[point]);
 			}
 			for (point in 0...rider.scarfPoints.length) {
-				rider.scarfPoints[point].restoreState(state.scarves[point]);
+				rider.scarfPoints[point].deserialize(state.scarves[point]);
 			}
 		}
 	}
@@ -188,13 +188,13 @@ class Simulation
 			scarves : new Array()
 		}
 		frameStates[_rider][_frame] = stat;
-		var _points:Array<PointState> = new Array();
-		var _scarves:Array<PointState> = new Array();
+		var _points:Array<PointContainer> = new Array();
+		var _scarves:Array<PointContainer> = new Array();
 		for (point in _rider.ridePoints) {
 			_points.push(point.serialize());
 		}
 		for (point in _rider.scarfPoints) {
-			_scarves.push(point.saveState());
+			_scarves.push(point.serialize());
 		}
 		frameStates[_rider][_frame].points = _points;
 		frameStates[_rider][_frame].scarves = _scarves;
@@ -220,6 +220,6 @@ class Simulation
 
 typedef RiderState = {
 	var crashed:Bool;
-	var points:Array<PointState>;
-	var scarves:Array<PointState>;
+	var points:Array<PointContainer>;
+	var scarves:Array<PointContainer>;
 }

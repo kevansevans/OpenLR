@@ -1,5 +1,7 @@
 package;
 
+import hxlr.scripts.PhysFloor;
+
 import components.stage.Camera;
 import components.managers.Grid;
 import components.managers.Musicplayer;
@@ -26,6 +28,8 @@ import hxd.App;
 import hxd.Res;
 import utils.TableRNG;
 import hxd.System;
+
+import haxe.Json;
 
 #if js
 import network.WebRTC;
@@ -109,6 +113,9 @@ class Main extends App
 		#else
 		build = "Release";
 		#end
+		
+		PhysFloor.build();
+		
 		new Main();
 	}
 	
@@ -124,12 +131,13 @@ class Main extends App
 		#if (hl && !debug)
 		UI.closeConsole();
 		#end
-		
 	}
 	
 	override function init():Void 
 	{
 		super.init();
+		
+		
 		
 		Main.locengine = engine;
 		

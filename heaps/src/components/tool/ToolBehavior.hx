@@ -613,8 +613,9 @@ class ToolBehavior
 				updatePencilCursor();
 			case LINE :
 				updateLineCursor();
-			default :
+			case ERASER :
 				updateEraserCursor();
+			default :
 		}
 	}
 	

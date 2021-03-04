@@ -1,9 +1,9 @@
 package components.physics;
 
-import hxlr.components.ContactPoint;
-
-import components.physics.RidePoint;
 import components.sledder.RiderBase;
+
+import hxlr.components.ContactPoint;
+import hxlr.components.AirPoint;
 import h2d.col.Point;
 
 /**

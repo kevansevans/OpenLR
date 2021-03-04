@@ -1,9 +1,8 @@
 package components.sledder;
 
 import hxlr.components.ContactPoint;
+import hxlr.components.AirPoint;
 
-import components.physics.ScarfPoint;
-import components.physics.ScarfStick;
 import components.physics.Stick;
 import components.sledder.RiderBase;
 import components.sledder.RiderBase.RiderPart;
@@ -197,12 +196,12 @@ class Bosh extends RiderBase
 		ridePoints.push(new ContactPoint(20, 10, 0));		//Foot			8
 		ridePoints.push(new ContactPoint(20, 10, 0));		//Foot			9
 		
-		scarfPoints.push(new ScarfPoint(7, -10));
-		scarfPoints.push(new ScarfPoint(3, -10));
-		scarfPoints.push(new ScarfPoint(0, -10));
-		scarfPoints.push(new ScarfPoint(-4, -10));
-		scarfPoints.push(new ScarfPoint(-7, -10));
-		scarfPoints.push(new ScarfPoint(-11, -10));
+		scarfPoints.push(new AirPoint(7, -10, 0.9));
+		scarfPoints.push(new AirPoint(3, -10, 0.9));
+		scarfPoints.push(new AirPoint(0, -10, 0.9));
+		scarfPoints.push(new AirPoint(-4, -10, 0.9));
+		scarfPoints.push(new AirPoint(-7, -10, 0.9));
+		scarfPoints.push(new AirPoint(-11, -10, 0.9));
 		
 		for (point in ridePoints) {
 			point.pos.x *= 0.5;
