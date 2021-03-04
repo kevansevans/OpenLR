@@ -2,7 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/sledder/RiderBase.h>
-#include <components/physics/RidePoint.h>
 #include <h2d/Object.h>
 #include <components/stage/Canvas.h>
 #include <_std/Main.h>
@@ -20,10 +19,8 @@ void components_sledder_RiderBase_iterate(components__sledder__RiderBase);
 void components_sledder_RiderBase_constrainBones(components__sledder__RiderBase);
 void components_sledder_RiderBase_collision(components__sledder__RiderBase);
 void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase);
-#include <components/physics/ScarfStick.h>
 #include <components/physics/Stick.h>
 void components_physics_Stick_satisfy(components__physics__Stick,vdynamic*);
-void hxlr_components_ContactPoint_iterate(hxlr__components__ContactPoint,h2d__col__Point);
 void components_sledder_RiderScarf_setColor(components__sledder__RiderScarf,vdynamic*,vdynamic*);
 #include <components/managers/Grid.h>
 #include <components/lines/LineBase.h>
@@ -61,7 +58,6 @@ void components_sledder_RiderBase_reset(components__sledder__RiderBase r0) {
 void components_sledder_RiderBase_moveToStart(components__sledder__RiderBase r0) {
 	hl__types__ArrayObj r3;
 	h2d__col__Point r8, r11;
-	components__physics__RidePoint r12;
 	hxlr__components__ContactPoint r5;
 	double r9, r10;
 	vdynamic *r6;
@@ -124,16 +120,16 @@ void components_sledder_RiderBase_moveToStart(components__sledder__RiderBase r0)
 	if( r1 >= r4 ) goto label$2a8c663_3_92;
 	r4 = r3->length;
 	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_3_56;
-	r12 = NULL;
+	r5 = NULL;
 	goto label$2a8c663_3_59;
 	label$2a8c663_3_56:
 	r7 = r3->array;
 	r6 = ((vdynamic**)(r7 + 1))[r1];
-	r12 = (components__physics__RidePoint)r6;
+	r5 = (hxlr__components__ContactPoint)r6;
 	label$2a8c663_3_59:
 	++r1;
-	if( r12 == NULL ) hl_null_access();
-	r8 = r12->pos;
+	if( r5 == NULL ) hl_null_access();
+	r8 = r5->pos;
 	if( r8 == NULL ) hl_null_access();
 	r9 = r8->x;
 	r11 = r0->startPos;
@@ -141,7 +137,7 @@ void components_sledder_RiderBase_moveToStart(components__sledder__RiderBase r0)
 	r10 = r11->x;
 	r9 = r9 + r10;
 	r8->x = r9;
-	r8 = r12->pos;
+	r8 = r5->pos;
 	if( r8 == NULL ) hl_null_access();
 	r9 = r8->y;
 	r11 = r0->startPos;
@@ -149,17 +145,17 @@ void components_sledder_RiderBase_moveToStart(components__sledder__RiderBase r0)
 	r10 = r11->y;
 	r9 = r9 + r10;
 	r8->y = r9;
-	r8 = r12->vel;
+	r8 = r5->vel;
 	if( r8 == NULL ) hl_null_access();
-	r11 = r12->pos;
+	r11 = r5->pos;
 	if( r11 == NULL ) hl_null_access();
 	r9 = r11->x;
 	r10 = 0.40000000000000002;
 	r9 = r9 - r10;
 	r8->x = r9;
-	r8 = r12->vel;
+	r8 = r5->vel;
 	if( r8 == NULL ) hl_null_access();
-	r11 = r12->pos;
+	r11 = r5->pos;
 	if( r11 == NULL ) hl_null_access();
 	r9 = r11->y;
 	r8->y = r9;
@@ -399,7 +395,7 @@ void components_sledder_RiderBase_stepRider(components__sledder__RiderBase r0) {
 
 void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase r0) {
 	hl__types__ArrayObj r3;
-	components__physics__ScarfStick r5;
+	components__physics__Stick r5;
 	vdynamic *r6, *r8;
 	varray *r7;
 	int r1, r4;
@@ -416,12 +412,12 @@ void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase 
 	label$2a8c663_7_10:
 	r7 = r3->array;
 	r6 = ((vdynamic**)(r7 + 1))[r1];
-	r5 = (components__physics__ScarfStick)r6;
+	r5 = (components__physics__Stick)r6;
 	label$2a8c663_7_13:
 	++r1;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r0->crashed;
-	components_physics_Stick_satisfy(((components__physics__Stick)r5),r8);
+	components_physics_Stick_satisfy(r5,r8);
 	goto label$2a8c663_7_2;
 	label$2a8c663_7_18:
 	return;
@@ -430,7 +426,6 @@ void components_sledder_RiderBase_constrainScarf(components__sledder__RiderBase 
 void components_sledder_RiderBase_iterate(components__sledder__RiderBase r0) {
 	hl__types__ArrayObj r3;
 	h2d__col__Point r8;
-	components__physics__RidePoint r9;
 	hxlr__components__ContactPoint r5;
 	vdynamic *r6;
 	varray *r7;
@@ -453,7 +448,7 @@ void components_sledder_RiderBase_iterate(components__sledder__RiderBase r0) {
 	++r1;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r0->gravity;
-	hxlr_components_ContactPoint_iterate(r5,r8);
+	((void (*)(hxlr__components__ContactPoint,h2d__col__Point))r5->$type->vobj_proto[0])(r5,r8);
 	goto label$2a8c663_8_2;
 	label$2a8c663_8_18:
 	r1 = 0;
@@ -464,17 +459,17 @@ void components_sledder_RiderBase_iterate(components__sledder__RiderBase r0) {
 	if( r1 >= r4 ) goto label$2a8c663_8_36;
 	r4 = r3->length;
 	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$2a8c663_8_28;
-	r9 = NULL;
+	r5 = NULL;
 	goto label$2a8c663_8_31;
 	label$2a8c663_8_28:
 	r7 = r3->array;
 	r6 = ((vdynamic**)(r7 + 1))[r1];
-	r9 = (components__physics__RidePoint)r6;
+	r5 = (hxlr__components__ContactPoint)r6;
 	label$2a8c663_8_31:
 	++r1;
-	if( r9 == NULL ) hl_null_access();
+	if( r5 == NULL ) hl_null_access();
 	r8 = r0->gravity;
-	((void (*)(components__physics__RidePoint,h2d__col__Point))r9->$type->vobj_proto[0])(r9,r8);
+	((void (*)(hxlr__components__ContactPoint,h2d__col__Point))r5->$type->vobj_proto[0])(r5,r8);
 	goto label$2a8c663_8_20;
 	label$2a8c663_8_36:
 	return;

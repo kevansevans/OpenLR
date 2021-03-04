@@ -6,7 +6,7 @@ typedef struct _components__physics__ScarfPoint *components__physics__ScarfPoint
 #include <hl/Class.h>
 #include <hl/BaseType.h>
 #include <_std/String.h>
-#include <components/physics/RidePoint.h>
+#include <hxlr/components/ContactPoint.h>
 #include <h2d/col/Point.h>
 
 
@@ -21,10 +21,10 @@ struct _components__physics__$ScarfPoint {
 struct _components__physics__ScarfPoint {
 	hl_type *$type;
 	h2d__col__Point pos;
-	h2d__col__Point dir;
 	h2d__col__Point vel;
+	h2d__col__Point dir;
+	h2d__col__Point gravity;
 	double friction;
-	h2d__col__Point grav;
 	double airFriction;
 };
 #endif

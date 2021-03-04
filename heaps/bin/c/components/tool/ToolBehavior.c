@@ -120,9 +120,9 @@ extern String s$Tool_set_to_Eraser;
 extern venum* g$components_tool_ToolMode_PENCIL;
 extern String s$Tool_set_to_Pencil;
 extern String s$Tool_set_to_Line;
-void components_tool_ToolBehavior_updateEraserCursor(components__tool__ToolBehavior);
 void components_tool_ToolBehavior_updatePencilCursor(components__tool__ToolBehavior);
 void components_tool_ToolBehavior_updateLineCursor(components__tool__ToolBehavior);
+void components_tool_ToolBehavior_updateEraserCursor(components__tool__ToolBehavior);
 venum* h2d_Interactive_set_cursor(h2d__Interactive,venum*);
 extern venum* g$hxd_Cursor_Default;
 #include <hxd/res/Loader.h>
@@ -1870,15 +1870,17 @@ void components_tool_ToolBehavior_updateCursor(components__tool__ToolBehavior r0
 	switch(r2) {
 		default:
 		case 0:
-			components_tool_ToolBehavior_updateEraserCursor(r0);
-			goto label$80df762_14_9;
+			goto label$80df762_14_10;
 		case 1:
 			components_tool_ToolBehavior_updatePencilCursor(r0);
-			goto label$80df762_14_9;
+			goto label$80df762_14_10;
 		case 2:
 			components_tool_ToolBehavior_updateLineCursor(r0);
+			goto label$80df762_14_10;
+		case 3:
+			components_tool_ToolBehavior_updateEraserCursor(r0);
 	}
-	label$80df762_14_9:
+	label$80df762_14_10:
 	return;
 }
 

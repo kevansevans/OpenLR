@@ -21,6 +21,7 @@ void fun$init(void);
 #  include <_std/StringBuf.c>
 #  include <hl/types/ArrayObj.c>
 #  include <haxe/Exception.c>
+#  include <_std/IntIterator.c>
 #  include <hxd/BitmapInnerDataImpl.c>
 #  include <hxd/BitmapData.c>
 #  include <hxd/CustomCursor.c>
@@ -143,10 +144,8 @@ void fun$init(void);
 #  include <hxd/earcut/Earcut.c>
 #  include <h2d/Graphics.c>
 #  include <components/physics/Stick.c>
-#  include <components/physics/ScarfStick.c>
 #  include <h2d/Bitmap.c>
 #  include <components/sledder/RiderScarf.c>
-#  include <components/physics/RidePoint.c>
 #  include <components/sledder/RiderBase.c>
 #  include <components/stage/Camera.c>
 #  include <utils/TableRNG.c>
@@ -193,6 +192,11 @@ void fun$init(void);
 #  include <haxe/iterators/ArrayIterator.c>
 #  include <components/lines/Accel.c>
 #  include <components/lines/Floor.c>
+#  include <hscript/Interp.c>
+#  include <haxe/ds/GenericCell.c>
+#  include <haxe/ds/GenericStack.c>
+#  include <hscript/Parser.c>
+#  include <hxlr/scripts/PhysFloor.c>
 #  include <components/lines/Scenery.c>
 #  include <components/lines/Undefined.c>
 #  include <hxd/fs/BytesFileEntry.c>
@@ -200,7 +204,7 @@ void fun$init(void);
 #  include <components/sledder/RiderPart.c>
 #  include <components/sledder/Bosh.c>
 #  include <components/sledder/LTAABosh.c>
-#  include <components/physics/ScarfPoint.c>
+#  include <hxlr/components/AirPoint.c>
 #  include <hxd/res/Image.c>
 #  include <hxd/res/ImageInfo.c>
 #  include <h3d/col/Point.c>

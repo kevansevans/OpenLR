@@ -3,16 +3,21 @@
 #include <hlc.h>
 #include <_std/Reflect.h>
 #include <hl/natives.h>
+extern String s$get_;
+String String___add__(String,String);
+extern String s$set_;
 #include <hl/types/ArrayBase.h>
 extern String s$Invalid_function_;
 String Std_string(vdynamic*);
-String String___add__(String,String);
 vdynamic* haxe_Exception_thrown(vdynamic*);
 extern hl_type t$_dyn;
 vdynamic* hl_types_ArrayDyn_getDyn(hl__types__ArrayDyn,int);
 extern hl_type t$String;
 hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
+vdynamic* Reflect__makeVarArgs__$1(vclosure*,varray*);
+extern hl_type t$fun_fbd9832;
+hl__types__ArrayDyn hl_types_ArrayDyn_alloc(hl__types__ArrayBase,bool*);
 
 bool Reflect_hasField(vdynamic* r0,String r1) {
 	bool r2;
@@ -54,6 +59,42 @@ void Reflect_setField(vdynamic* r0,String r1,vdynamic* r2) {
 	return;
 }
 
+vdynamic* Reflect_getProperty(vdynamic* r0,String r1) {
+	String r3;
+	vdynamic *r2, *r4;
+	r3 = (String)s$get_;
+	r3 = String___add__(r3,r1);
+	r2 = Reflect_field(r0,r3);
+	if( !r2 ) goto label$0858e10_4_7;
+	if( r2 == NULL ) hl_null_access();
+	{
+		r4 = (vdynamic*)hl_dyn_call((vclosure*)r2,NULL,0);
+	}
+	return r4;
+	label$0858e10_4_7:
+	r4 = Reflect_field(r0,r1);
+	return r4;
+}
+
+void Reflect_setProperty(vdynamic* r0,String r1,vdynamic* r2) {
+	String r4;
+	vdynamic *r3, *r6;
+	r4 = (String)s$set_;
+	r4 = String___add__(r4,r1);
+	r3 = Reflect_field(r0,r4);
+	if( !r3 ) goto label$0858e10_5_7;
+	if( r3 == NULL ) hl_null_access();
+	{
+		vdynamic *args[] = {r2};
+		r6 = (vdynamic*)hl_dyn_call((vclosure*)r3,args,1);
+	}
+	goto label$0858e10_5_8;
+	label$0858e10_5_7:
+	Reflect_setField(r0,r1,r2);
+	label$0858e10_5_8:
+	return;
+}
+
 vdynamic* Reflect_callMethod(vdynamic* r0,vdynamic* r1,hl__types__ArrayDyn r2) {
 	String r9, r10;
 	hl_type *r4, *r7;
@@ -66,53 +107,53 @@ vdynamic* Reflect_callMethod(vdynamic* r0,vdynamic* r1,hl__types__ArrayDyn r2) {
 	r4 = r1 ? ((vdynamic*)r1)->t : &hlt_void;
 	r6 = r4->kind;
 	r8 = 10;
-	if( r6 == r8 ) goto label$0858e10_4_10;
+	if( r6 == r8 ) goto label$0858e10_6_10;
 	r9 = (String)s$Invalid_function_;
 	r10 = Std_string(r1);
 	r9 = String___add__(r9,r10);
 	r5 = haxe_Exception_thrown(((vdynamic*)r9));
 	hl_throw((vdynamic*)r5);
-	label$0858e10_4_10:
+	label$0858e10_6_10:
 	if( r2 == NULL ) hl_null_access();
 	r11 = r2->array;
 	if( r11 == NULL ) hl_null_access();
 	r6 = r11->length;
 	r8 = hl_type_args_count(r4);
-	if( r6 >= r8 ) goto label$0858e10_4_18;
+	if( r6 >= r8 ) goto label$0858e10_6_18;
 	r12 = r8;
-	goto label$0858e10_4_19;
-	label$0858e10_4_18:
+	goto label$0858e10_6_19;
+	label$0858e10_6_18:
 	r12 = r6;
-	label$0858e10_4_19:
+	label$0858e10_6_19:
 	r5 = hl_get_closure_value(r1);
-	if( !r5 ) goto label$0858e10_4_24;
+	if( !r5 ) goto label$0858e10_6_24;
 	r14 = hl_no_closure(r1);
 	r1 = r14;
 	++r12;
-	label$0858e10_4_24:
+	label$0858e10_6_24:
 	r7 = &t$_dyn;
 	r15 = hl_alloc_array(r7,r12);
 	r16 = r15;
-	if( r5 ) goto label$0858e10_4_39;
+	if( r5 ) goto label$0858e10_6_39;
 	r13 = 0;
 	r17 = r6;
-	label$0858e10_4_30:
-	if( r13 >= r17 ) goto label$0858e10_4_38;
+	label$0858e10_6_30:
+	if( r13 >= r17 ) goto label$0858e10_6_38;
 	r18 = r13;
 	++r13;
 	if( r3 == NULL ) hl_null_access();
 	r14 = hl_types_ArrayDyn_getDyn(r3,r18);
 	((vdynamic**)(r16 + 1))[r18] = r14;
-	goto label$0858e10_4_30;
-	label$0858e10_4_38:
-	goto label$0858e10_4_53;
-	label$0858e10_4_39:
+	goto label$0858e10_6_30;
+	label$0858e10_6_38:
+	goto label$0858e10_6_53;
+	label$0858e10_6_39:
 	r13 = 0;
 	((vdynamic**)(r15 + 1))[r13] = r5;
 	r13 = 0;
 	r17 = r6;
-	label$0858e10_4_43:
-	if( r13 >= r17 ) goto label$0858e10_4_53;
+	label$0858e10_6_43:
+	if( r13 >= r17 ) goto label$0858e10_6_53;
 	r18 = r13;
 	++r13;
 	if( r3 == NULL ) hl_null_access();
@@ -120,8 +161,8 @@ vdynamic* Reflect_callMethod(vdynamic* r0,vdynamic* r1,hl__types__ArrayDyn r2) {
 	r20 = 1;
 	r19 = r18 + r20;
 	((vdynamic**)(r16 + 1))[r19] = r14;
-	goto label$0858e10_4_43;
-	label$0858e10_4_53:
+	goto label$0858e10_6_43;
+	label$0858e10_6_53:
 	r14 = hl_call_method(r1,r16);
 	return r14;
 }
@@ -134,21 +175,21 @@ hl__types__ArrayObj Reflect_fields(vdynamic* r0) {
 	int r5, r6, r7;
 	varray *r1, *r2;
 	r1 = hl_obj_fields(r0);
-	if( r1 ) goto label$0858e10_5_7;
+	if( r1 ) goto label$0858e10_7_7;
 	r4 = &t$String;
 	r5 = 0;
 	r2 = hl_alloc_array(r4,r5);
 	r3 = hl_types_ArrayObj_alloc(r2);
 	return r3;
-	label$0858e10_5_7:
+	label$0858e10_7_7:
 	r4 = &t$String;
 	r5 = 0;
 	r2 = hl_alloc_array(r4,r5);
 	r3 = hl_types_ArrayObj_alloc(r2);
 	r5 = 0;
-	label$0858e10_5_12:
+	label$0858e10_7_12:
 	r7 = r1->size;
-	if( r5 >= r7 ) goto label$0858e10_5_25;
+	if( r5 >= r7 ) goto label$0858e10_7_25;
 	r8 = ((vbyte**)(r1 + 1))[r5];
 	++r5;
 	r9 = (String)hl_alloc_obj(&t$String);
@@ -158,8 +199,8 @@ hl__types__ArrayObj Reflect_fields(vdynamic* r0) {
 	r9->length = r6;
 	if( r3 == NULL ) hl_null_access();
 	r6 = hl_types_ArrayObj_push(r3,((vdynamic*)r9));
-	goto label$0858e10_5_12;
-	label$0858e10_5_25:
+	goto label$0858e10_7_12;
+	label$0858e10_7_25:
 	return r3;
 }
 
@@ -202,12 +243,35 @@ bool Reflect_isEnumValue(vdynamic* r0) {
 	r1 = r0 ? ((vdynamic*)r0)->t : &hlt_void;
 	r3 = r1->kind;
 	r4 = 18;
-	if( r3 == r4 ) goto label$0858e10_7_6;
+	if( r3 == r4 ) goto label$0858e10_9_6;
 	r2 = false;
-	goto label$0858e10_7_7;
-	label$0858e10_7_6:
+	goto label$0858e10_9_7;
+	label$0858e10_9_6:
 	r2 = true;
-	label$0858e10_7_7:
+	label$0858e10_9_7:
 	return r2;
+}
+
+vdynamic* Reflect__makeVarArgs(vclosure* r0) {
+	vclosure *r2;
+	vdynamic *r1;
+	r2 = hl_alloc_closure_ptr(&t$fun_fbd9832,Reflect__makeVarArgs__$1,r0);
+	r1 = hl_make_var_args(r2);
+	return r1;
+}
+
+vdynamic* Reflect__makeVarArgs__$1(vclosure* r0,varray* r1) {
+	bool *r5;
+	hl__types__ArrayObj r3;
+	bool r4;
+	hl__types__ArrayDyn r2;
+	vdynamic *r6;
+	r3 = hl_types_ArrayObj_alloc(r1);
+	r4 = true;
+	r5 = &r4;
+	r2 = hl_types_ArrayDyn_alloc(((hl__types__ArrayBase)r3),r5);
+	if( r0 == NULL ) hl_null_access();
+	r6 = r0->hasValue ? ((vdynamic* (*)(vdynamic*,hl__types__ArrayDyn))r0->fun)((vdynamic*)r0->value,r2) : ((vdynamic* (*)(hl__types__ArrayDyn))r0->fun)(r2);
+	return r6;
 }
 

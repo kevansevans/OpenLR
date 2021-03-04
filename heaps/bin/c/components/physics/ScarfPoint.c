@@ -2,7 +2,7 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/physics/ScarfPoint.h>
-void components_physics_RidePoint_new(components__physics__RidePoint,double*,double*,double*);
+void hxlr_components_ContactPoint_new(hxlr__components__ContactPoint,double*,double*,double*);
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
 
@@ -31,17 +31,17 @@ void components_physics_ScarfPoint_new(components__physics__ScarfPoint r0,double
 	r9 = r5;
 	r2 = &r9;
 	r3 = NULL;
-	components_physics_RidePoint_new(((components__physics__RidePoint)r0),r1,r2,r3);
+	hxlr_components_ContactPoint_new(((hxlr__components__ContactPoint)r0),r1,r2,r3);
 	r0->airFriction = r6;
 	return;
 }
 
-void components_physics_ScarfPoint_step(components__physics__ScarfPoint r0,h2d__col__Point r1) {
+void components_physics_ScarfPoint_iterate(components__physics__ScarfPoint r0,h2d__col__Point r1) {
 	h2d__col__Point r2, r4, r6, r8;
 	double r5, r7, r10;
 	double *r9, *r11;
 	if( r1 ) goto label$8270b85_2_3;
-	r2 = r0->grav;
+	r2 = r0->gravity;
 	goto label$8270b85_2_4;
 	label$8270b85_2_3:
 	r2 = r1;

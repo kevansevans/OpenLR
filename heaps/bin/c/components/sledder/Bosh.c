@@ -11,7 +11,6 @@ void components_sledder_RiderBase_stepRider(components__sledder__RiderBase);
 bool components_sledder_RiderBase_set_crashed(components__sledder__RiderBase,bool);
 #include <components/managers/Simulation.h>
 #include <components/physics/Stick.h>
-#include <components/physics/RidePoint.h>
 #include <h3d/Vector.h>
 #include <components/sledder/RiderBase.h>
 void components_sledder_Bosh_updateEyeball(components__sledder__Bosh,int);
@@ -27,20 +26,21 @@ double h2d_Anim_set_currentFrame(h2d__Anim,double);
 String components_sledder_RiderBase_get_name(components__sledder__RiderBase);
 double utils_TableRNG_getRandomNormal(utils__TableRNG,String);
 double utils_TableRNG_getRandomNormalDecrease(utils__TableRNG,String);
-#include <components/physics/ScarfPoint.h>
+#include <hxlr/components/AirPoint.h>
 #include <components/physics/StickType.h>
 extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 extern hl_type t$hxlr_components_ContactPoint;
 void hxlr_components_ContactPoint_new(hxlr__components__ContactPoint,double*,double*,double*);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
-extern hl_type t$components_physics_ScarfPoint;
-void components_physics_ScarfPoint_new(components__physics__ScarfPoint,double*,double*,double*);
+extern hl_type t$hxlr_components_AirPoint;
+void hxlr_components_AirPoint_new(hxlr__components__AirPoint,double,double,double);
 void components_sledder_RiderBase_moveToStart(components__sledder__RiderBase);
 extern hl_type t$components_physics_Stick;
 extern venum* g$7bcd604;
 void components_physics_Stick_new(components__physics__Stick,hxlr__components__ContactPoint,hxlr__components__ContactPoint,venum*,components__sledder__RiderBase);
 extern venum* g$8c042a7;
+extern venum* g$5ee05e8;
 #include <components/sledder/BodyPart.h>
 extern hl_type t$_f64;
 extern String s$Bosh;
@@ -268,23 +268,22 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	h2d__Graphics r17;
 	bool r14;
 	components__physics__Stick r22;
-	h2d__HtmlText r78, r79;
+	h2d__HtmlText r77, r78;
 	components__sledder__RiderPart r5, r13;
 	$Main r4;
 	h2d__col__Point r7;
-	h3d__Vector r81;
-	components__physics__RidePoint r45;
+	h3d__Vector r80;
 	hxlr__components__ContactPoint r10;
-	components__sledder__$RiderBase r82;
-	components__stage__Canvas r80;
-	double r6, r15, r16, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r35, r36, r37, r38, r42, r43, r44, r46, r47, r49, r50, r51, r52, r53, r55, r56, r57, r58, r59, r61, r62, r63, r64, r65, r67, r68, r69, r70, r71, r73, r74, r75, r76, r77;
+	components__sledder__$RiderBase r81;
+	components__stage__Canvas r79;
+	double r6, r15, r16, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r35, r36, r37, r38, r42, r43, r44, r45, r46, r48, r49, r50, r51, r52, r54, r55, r56, r57, r58, r60, r61, r62, r63, r64, r66, r67, r68, r69, r70, r72, r73, r74, r75, r76;
 	components__managers__Simulation r3;
 	int *r20;
 	double *r19, *r21;
 	vdynamic *r11, *r18, *r39;
 	components__sledder__RiderScarf r40;
 	varray *r12;
-	int r2, r9, r41, r48, r54, r60, r66, r72;
+	int r2, r9, r41, r47, r53, r59, r65, r71;
 	r4 = ($Main)g$_Main;
 	r3 = r4->simulation;
 	if( r3 == NULL ) hl_null_access();
@@ -1256,15 +1255,15 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r9 = 0;
 	r41 = r8->length;
 	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_3_881;
-	r45 = NULL;
+	r10 = NULL;
 	goto label$ebdfb18_3_884;
 	label$ebdfb18_3_881:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
-	r45 = (components__physics__RidePoint)r11;
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_884:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r16 = r7->x;
 	r8 = r0->scarfPoints;
@@ -1272,15 +1271,15 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r9 = 0;
 	r41 = r8->length;
 	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_3_895;
-	r45 = NULL;
+	r10 = NULL;
 	goto label$ebdfb18_3_898;
 	label$ebdfb18_3_895:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
-	r45 = (components__physics__RidePoint)r11;
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_898:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r23 = r7->y;
 	if( r17 == NULL ) hl_null_access();
@@ -1290,19 +1289,19 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r37 = r17->curA;
 	r44 = r17->ma;
 	r43 = r16 * r44;
-	r46 = r17->mc;
-	r44 = r23 * r46;
+	r45 = r17->mc;
+	r44 = r23 * r45;
 	r43 = r43 + r44;
 	r44 = r17->mx;
 	r43 = r43 + r44;
 	r19 = &r43;
-	r46 = r17->mb;
-	r44 = r16 * r46;
-	r47 = r17->md;
-	r46 = r23 * r47;
-	r44 = r44 + r46;
-	r46 = r17->my;
-	r44 = r44 + r46;
+	r45 = r17->mb;
+	r44 = r16 * r45;
+	r46 = r17->md;
+	r45 = r23 * r46;
+	r44 = r44 + r45;
+	r45 = r17->my;
+	r44 = r44 + r45;
 	r21 = &r44;
 	h2d_Graphics_addVertex(r17,r16,r23,r26,r27,r28,r37,r19,r21);
 	r17 = r0->gfx;
@@ -1326,33 +1325,33 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
 	r41 = 0;
-	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_3_947;
-	r45 = NULL;
+	r47 = r8->length;
+	if( ((unsigned)r41) < ((unsigned)r47) ) goto label$ebdfb18_3_947;
+	r10 = NULL;
 	goto label$ebdfb18_3_950;
 	label$ebdfb18_3_947:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
-	r45 = (components__physics__RidePoint)r11;
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_950:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r23 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
 	r41 = 0;
-	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_3_961;
-	r45 = NULL;
+	r47 = r8->length;
+	if( ((unsigned)r41) < ((unsigned)r47) ) goto label$ebdfb18_3_961;
+	r10 = NULL;
 	goto label$ebdfb18_3_964;
 	label$ebdfb18_3_961:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
-	r45 = (components__physics__RidePoint)r11;
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_964:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r24 = r7->y;
 	if( r17 == NULL ) hl_null_access();
@@ -1360,79 +1359,79 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r27 = r17->curR;
 	r28 = r17->curG;
 	r37 = r17->curB;
-	r46 = r17->curA;
-	r49 = r17->ma;
-	r47 = r23 * r49;
-	r50 = r17->mc;
+	r45 = r17->curA;
+	r48 = r17->ma;
+	r46 = r23 * r48;
+	r49 = r17->mc;
+	r48 = r24 * r49;
+	r46 = r46 + r48;
+	r48 = r17->mx;
+	r46 = r46 + r48;
+	r19 = &r46;
+	r49 = r17->mb;
+	r48 = r23 * r49;
+	r50 = r17->md;
 	r49 = r24 * r50;
-	r47 = r47 + r49;
-	r49 = r17->mx;
-	r47 = r47 + r49;
-	r19 = &r47;
-	r50 = r17->mb;
-	r49 = r23 * r50;
-	r51 = r17->md;
-	r50 = r24 * r51;
-	r49 = r49 + r50;
-	r50 = r17->my;
-	r49 = r49 + r50;
-	r21 = &r49;
-	h2d_Graphics_addVertex(r17,r23,r24,r27,r28,r37,r46,r19,r21);
+	r48 = r48 + r49;
+	r49 = r17->my;
+	r48 = r48 + r49;
+	r21 = &r48;
+	h2d_Graphics_addVertex(r17,r23,r24,r27,r28,r37,r45,r19,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
 	r41 = 1;
-	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_3_999;
-	r45 = NULL;
+	r47 = r8->length;
+	if( ((unsigned)r41) < ((unsigned)r47) ) goto label$ebdfb18_3_999;
+	r10 = NULL;
 	goto label$ebdfb18_3_1002;
 	label$ebdfb18_3_999:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
-	r45 = (components__physics__RidePoint)r11;
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1002:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r23 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
 	r41 = 1;
-	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_3_1013;
-	r45 = NULL;
+	r47 = r8->length;
+	if( ((unsigned)r41) < ((unsigned)r47) ) goto label$ebdfb18_3_1013;
+	r10 = NULL;
 	goto label$ebdfb18_3_1016;
 	label$ebdfb18_3_1013:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
-	r45 = (components__physics__RidePoint)r11;
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1016:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r24 = r7->y;
 	if( r17 == NULL ) hl_null_access();
 	r27 = r17->curR;
 	r28 = r17->curG;
 	r37 = r17->curB;
-	r46 = r17->curA;
-	r51 = r17->ma;
+	r45 = r17->curA;
+	r50 = r17->ma;
+	r49 = r23 * r50;
+	r51 = r17->mc;
+	r50 = r24 * r51;
+	r49 = r49 + r50;
+	r50 = r17->mx;
+	r49 = r49 + r50;
+	r19 = &r49;
+	r51 = r17->mb;
 	r50 = r23 * r51;
-	r52 = r17->mc;
+	r52 = r17->md;
 	r51 = r24 * r52;
 	r50 = r50 + r51;
-	r51 = r17->mx;
+	r51 = r17->my;
 	r50 = r50 + r51;
-	r19 = &r50;
-	r52 = r17->mb;
-	r51 = r23 * r52;
-	r53 = r17->md;
-	r52 = r24 * r53;
-	r51 = r51 + r52;
-	r52 = r17->my;
-	r51 = r51 + r52;
-	r21 = &r51;
-	h2d_Graphics_addVertex(r17,r23,r24,r27,r28,r37,r46,r19,r21);
+	r21 = &r50;
+	h2d_Graphics_addVertex(r17,r23,r24,r27,r28,r37,r45,r19,r21);
 	r17 = r0->gfx;
 	if( r17 == NULL ) hl_null_access();
 	r41 = 2;
@@ -1453,118 +1452,118 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r48 = 1;
-	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_3_1065;
-	r45 = NULL;
+	r47 = 1;
+	r53 = r8->length;
+	if( ((unsigned)r47) < ((unsigned)r53) ) goto label$ebdfb18_3_1065;
+	r10 = NULL;
 	goto label$ebdfb18_3_1068;
 	label$ebdfb18_3_1065:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r48];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r47];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1068:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r24 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r48 = 1;
-	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_3_1079;
-	r45 = NULL;
+	r47 = 1;
+	r53 = r8->length;
+	if( ((unsigned)r47) < ((unsigned)r53) ) goto label$ebdfb18_3_1079;
+	r10 = NULL;
 	goto label$ebdfb18_3_1082;
 	label$ebdfb18_3_1079:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r48];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r47];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1082:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r25 = r7->y;
 	if( r17 == NULL ) hl_null_access();
 	h2d_Graphics_flush(r17);
 	r28 = r17->curR;
 	r37 = r17->curG;
-	r46 = r17->curB;
-	r52 = r17->curA;
-	r55 = r17->ma;
-	r53 = r24 * r55;
-	r56 = r17->mc;
+	r45 = r17->curB;
+	r51 = r17->curA;
+	r54 = r17->ma;
+	r52 = r24 * r54;
+	r55 = r17->mc;
+	r54 = r25 * r55;
+	r52 = r52 + r54;
+	r54 = r17->mx;
+	r52 = r52 + r54;
+	r19 = &r52;
+	r55 = r17->mb;
+	r54 = r24 * r55;
+	r56 = r17->md;
 	r55 = r25 * r56;
-	r53 = r53 + r55;
-	r55 = r17->mx;
-	r53 = r53 + r55;
-	r19 = &r53;
-	r56 = r17->mb;
-	r55 = r24 * r56;
-	r57 = r17->md;
-	r56 = r25 * r57;
-	r55 = r55 + r56;
-	r56 = r17->my;
-	r55 = r55 + r56;
-	r21 = &r55;
-	h2d_Graphics_addVertex(r17,r24,r25,r28,r37,r46,r52,r19,r21);
+	r54 = r54 + r55;
+	r55 = r17->my;
+	r54 = r54 + r55;
+	r21 = &r54;
+	h2d_Graphics_addVertex(r17,r24,r25,r28,r37,r45,r51,r19,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r48 = 2;
-	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_3_1117;
-	r45 = NULL;
+	r47 = 2;
+	r53 = r8->length;
+	if( ((unsigned)r47) < ((unsigned)r53) ) goto label$ebdfb18_3_1117;
+	r10 = NULL;
 	goto label$ebdfb18_3_1120;
 	label$ebdfb18_3_1117:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r48];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r47];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1120:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r24 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r48 = 2;
-	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_3_1131;
-	r45 = NULL;
+	r47 = 2;
+	r53 = r8->length;
+	if( ((unsigned)r47) < ((unsigned)r53) ) goto label$ebdfb18_3_1131;
+	r10 = NULL;
 	goto label$ebdfb18_3_1134;
 	label$ebdfb18_3_1131:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r48];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r47];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1134:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r25 = r7->y;
 	if( r17 == NULL ) hl_null_access();
 	r28 = r17->curR;
 	r37 = r17->curG;
-	r46 = r17->curB;
-	r52 = r17->curA;
-	r57 = r17->ma;
+	r45 = r17->curB;
+	r51 = r17->curA;
+	r56 = r17->ma;
+	r55 = r24 * r56;
+	r57 = r17->mc;
+	r56 = r25 * r57;
+	r55 = r55 + r56;
+	r56 = r17->mx;
+	r55 = r55 + r56;
+	r19 = &r55;
+	r57 = r17->mb;
 	r56 = r24 * r57;
-	r58 = r17->mc;
+	r58 = r17->md;
 	r57 = r25 * r58;
 	r56 = r56 + r57;
-	r57 = r17->mx;
+	r57 = r17->my;
 	r56 = r56 + r57;
-	r19 = &r56;
-	r58 = r17->mb;
-	r57 = r24 * r58;
-	r59 = r17->md;
-	r58 = r25 * r59;
-	r57 = r57 + r58;
-	r58 = r17->my;
-	r57 = r57 + r58;
-	r21 = &r57;
-	h2d_Graphics_addVertex(r17,r24,r25,r28,r37,r46,r52,r19,r21);
+	r21 = &r56;
+	h2d_Graphics_addVertex(r17,r24,r25,r28,r37,r45,r51,r19,r21);
 	r17 = r0->gfx;
 	if( r17 == NULL ) hl_null_access();
-	r48 = 2;
-	r24 = (double)r48;
+	r47 = 2;
+	r24 = (double)r47;
 	r19 = &r24;
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
@@ -1573,126 +1572,126 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r20 = NULL;
 	goto label$ebdfb18_3_1173;
 	label$ebdfb18_3_1171:
-	r48 = r39 ? r39->v.i : 0;
-	r20 = &r48;
+	r47 = r39 ? r39->v.i : 0;
+	r20 = &r47;
 	label$ebdfb18_3_1173:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r54 = 2;
-	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_3_1183;
-	r45 = NULL;
+	r53 = 2;
+	r59 = r8->length;
+	if( ((unsigned)r53) < ((unsigned)r59) ) goto label$ebdfb18_3_1183;
+	r10 = NULL;
 	goto label$ebdfb18_3_1186;
 	label$ebdfb18_3_1183:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r54];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r53];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1186:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r25 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r54 = 2;
-	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_3_1197;
-	r45 = NULL;
+	r53 = 2;
+	r59 = r8->length;
+	if( ((unsigned)r53) < ((unsigned)r59) ) goto label$ebdfb18_3_1197;
+	r10 = NULL;
 	goto label$ebdfb18_3_1200;
 	label$ebdfb18_3_1197:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r54];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r53];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1200:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r26 = r7->y;
 	if( r17 == NULL ) hl_null_access();
 	h2d_Graphics_flush(r17);
 	r37 = r17->curR;
-	r46 = r17->curG;
-	r52 = r17->curB;
-	r58 = r17->curA;
-	r61 = r17->ma;
-	r59 = r25 * r61;
-	r62 = r17->mc;
+	r45 = r17->curG;
+	r51 = r17->curB;
+	r57 = r17->curA;
+	r60 = r17->ma;
+	r58 = r25 * r60;
+	r61 = r17->mc;
+	r60 = r26 * r61;
+	r58 = r58 + r60;
+	r60 = r17->mx;
+	r58 = r58 + r60;
+	r19 = &r58;
+	r61 = r17->mb;
+	r60 = r25 * r61;
+	r62 = r17->md;
 	r61 = r26 * r62;
-	r59 = r59 + r61;
-	r61 = r17->mx;
-	r59 = r59 + r61;
-	r19 = &r59;
-	r62 = r17->mb;
-	r61 = r25 * r62;
-	r63 = r17->md;
-	r62 = r26 * r63;
-	r61 = r61 + r62;
-	r62 = r17->my;
-	r61 = r61 + r62;
-	r21 = &r61;
-	h2d_Graphics_addVertex(r17,r25,r26,r37,r46,r52,r58,r19,r21);
+	r60 = r60 + r61;
+	r61 = r17->my;
+	r60 = r60 + r61;
+	r21 = &r60;
+	h2d_Graphics_addVertex(r17,r25,r26,r37,r45,r51,r57,r19,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r54 = 3;
-	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_3_1235;
-	r45 = NULL;
+	r53 = 3;
+	r59 = r8->length;
+	if( ((unsigned)r53) < ((unsigned)r59) ) goto label$ebdfb18_3_1235;
+	r10 = NULL;
 	goto label$ebdfb18_3_1238;
 	label$ebdfb18_3_1235:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r54];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r53];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1238:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r25 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r54 = 3;
-	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_3_1249;
-	r45 = NULL;
+	r53 = 3;
+	r59 = r8->length;
+	if( ((unsigned)r53) < ((unsigned)r59) ) goto label$ebdfb18_3_1249;
+	r10 = NULL;
 	goto label$ebdfb18_3_1252;
 	label$ebdfb18_3_1249:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r54];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r53];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1252:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r26 = r7->y;
 	if( r17 == NULL ) hl_null_access();
 	r37 = r17->curR;
-	r46 = r17->curG;
-	r52 = r17->curB;
-	r58 = r17->curA;
-	r63 = r17->ma;
+	r45 = r17->curG;
+	r51 = r17->curB;
+	r57 = r17->curA;
+	r62 = r17->ma;
+	r61 = r25 * r62;
+	r63 = r17->mc;
+	r62 = r26 * r63;
+	r61 = r61 + r62;
+	r62 = r17->mx;
+	r61 = r61 + r62;
+	r19 = &r61;
+	r63 = r17->mb;
 	r62 = r25 * r63;
-	r64 = r17->mc;
+	r64 = r17->md;
 	r63 = r26 * r64;
 	r62 = r62 + r63;
-	r63 = r17->mx;
+	r63 = r17->my;
 	r62 = r62 + r63;
-	r19 = &r62;
-	r64 = r17->mb;
-	r63 = r25 * r64;
-	r65 = r17->md;
-	r64 = r26 * r65;
-	r63 = r63 + r64;
-	r64 = r17->my;
-	r63 = r63 + r64;
-	r21 = &r63;
-	h2d_Graphics_addVertex(r17,r25,r26,r37,r46,r52,r58,r19,r21);
+	r21 = &r62;
+	h2d_Graphics_addVertex(r17,r25,r26,r37,r45,r51,r57,r19,r21);
 	r17 = r0->gfx;
 	if( r17 == NULL ) hl_null_access();
-	r54 = 2;
-	r25 = (double)r54;
+	r53 = 2;
+	r25 = (double)r53;
 	r19 = &r25;
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
@@ -1701,126 +1700,126 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r20 = NULL;
 	goto label$ebdfb18_3_1291;
 	label$ebdfb18_3_1289:
-	r54 = r39 ? r39->v.i : 0;
-	r20 = &r54;
+	r53 = r39 ? r39->v.i : 0;
+	r20 = &r53;
 	label$ebdfb18_3_1291:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r60 = 3;
-	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_3_1301;
-	r45 = NULL;
+	r59 = 3;
+	r65 = r8->length;
+	if( ((unsigned)r59) < ((unsigned)r65) ) goto label$ebdfb18_3_1301;
+	r10 = NULL;
 	goto label$ebdfb18_3_1304;
 	label$ebdfb18_3_1301:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r60];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r59];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1304:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r26 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r60 = 3;
-	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_3_1315;
-	r45 = NULL;
+	r59 = 3;
+	r65 = r8->length;
+	if( ((unsigned)r59) < ((unsigned)r65) ) goto label$ebdfb18_3_1315;
+	r10 = NULL;
 	goto label$ebdfb18_3_1318;
 	label$ebdfb18_3_1315:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r60];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r59];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1318:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r27 = r7->y;
 	if( r17 == NULL ) hl_null_access();
 	h2d_Graphics_flush(r17);
-	r46 = r17->curR;
-	r52 = r17->curG;
-	r58 = r17->curB;
-	r64 = r17->curA;
-	r67 = r17->ma;
-	r65 = r26 * r67;
-	r68 = r17->mc;
+	r45 = r17->curR;
+	r51 = r17->curG;
+	r57 = r17->curB;
+	r63 = r17->curA;
+	r66 = r17->ma;
+	r64 = r26 * r66;
+	r67 = r17->mc;
+	r66 = r27 * r67;
+	r64 = r64 + r66;
+	r66 = r17->mx;
+	r64 = r64 + r66;
+	r19 = &r64;
+	r67 = r17->mb;
+	r66 = r26 * r67;
+	r68 = r17->md;
 	r67 = r27 * r68;
-	r65 = r65 + r67;
-	r67 = r17->mx;
-	r65 = r65 + r67;
-	r19 = &r65;
-	r68 = r17->mb;
-	r67 = r26 * r68;
-	r69 = r17->md;
-	r68 = r27 * r69;
-	r67 = r67 + r68;
-	r68 = r17->my;
-	r67 = r67 + r68;
-	r21 = &r67;
-	h2d_Graphics_addVertex(r17,r26,r27,r46,r52,r58,r64,r19,r21);
+	r66 = r66 + r67;
+	r67 = r17->my;
+	r66 = r66 + r67;
+	r21 = &r66;
+	h2d_Graphics_addVertex(r17,r26,r27,r45,r51,r57,r63,r19,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r60 = 4;
-	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_3_1353;
-	r45 = NULL;
+	r59 = 4;
+	r65 = r8->length;
+	if( ((unsigned)r59) < ((unsigned)r65) ) goto label$ebdfb18_3_1353;
+	r10 = NULL;
 	goto label$ebdfb18_3_1356;
 	label$ebdfb18_3_1353:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r60];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r59];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1356:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r26 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r60 = 4;
-	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_3_1367;
-	r45 = NULL;
+	r59 = 4;
+	r65 = r8->length;
+	if( ((unsigned)r59) < ((unsigned)r65) ) goto label$ebdfb18_3_1367;
+	r10 = NULL;
 	goto label$ebdfb18_3_1370;
 	label$ebdfb18_3_1367:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r60];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r59];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1370:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r27 = r7->y;
 	if( r17 == NULL ) hl_null_access();
-	r46 = r17->curR;
-	r52 = r17->curG;
-	r58 = r17->curB;
-	r64 = r17->curA;
-	r69 = r17->ma;
+	r45 = r17->curR;
+	r51 = r17->curG;
+	r57 = r17->curB;
+	r63 = r17->curA;
+	r68 = r17->ma;
+	r67 = r26 * r68;
+	r69 = r17->mc;
+	r68 = r27 * r69;
+	r67 = r67 + r68;
+	r68 = r17->mx;
+	r67 = r67 + r68;
+	r19 = &r67;
+	r69 = r17->mb;
 	r68 = r26 * r69;
-	r70 = r17->mc;
+	r70 = r17->md;
 	r69 = r27 * r70;
 	r68 = r68 + r69;
-	r69 = r17->mx;
+	r69 = r17->my;
 	r68 = r68 + r69;
-	r19 = &r68;
-	r70 = r17->mb;
-	r69 = r26 * r70;
-	r71 = r17->md;
-	r70 = r27 * r71;
-	r69 = r69 + r70;
-	r70 = r17->my;
-	r69 = r69 + r70;
-	r21 = &r69;
-	h2d_Graphics_addVertex(r17,r26,r27,r46,r52,r58,r64,r19,r21);
+	r21 = &r68;
+	h2d_Graphics_addVertex(r17,r26,r27,r45,r51,r57,r63,r19,r21);
 	r17 = r0->gfx;
 	if( r17 == NULL ) hl_null_access();
-	r60 = 2;
-	r26 = (double)r60;
+	r59 = 2;
+	r26 = (double)r59;
 	r19 = &r26;
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
@@ -1829,203 +1828,203 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r20 = NULL;
 	goto label$ebdfb18_3_1409;
 	label$ebdfb18_3_1407:
-	r60 = r39 ? r39->v.i : 0;
-	r20 = &r60;
+	r59 = r39 ? r39->v.i : 0;
+	r20 = &r59;
 	label$ebdfb18_3_1409:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r66 = 4;
-	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_3_1419;
-	r45 = NULL;
+	r65 = 4;
+	r71 = r8->length;
+	if( ((unsigned)r65) < ((unsigned)r71) ) goto label$ebdfb18_3_1419;
+	r10 = NULL;
 	goto label$ebdfb18_3_1422;
 	label$ebdfb18_3_1419:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r66];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r65];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1422:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r27 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r66 = 4;
-	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_3_1433;
-	r45 = NULL;
+	r65 = 4;
+	r71 = r8->length;
+	if( ((unsigned)r65) < ((unsigned)r71) ) goto label$ebdfb18_3_1433;
+	r10 = NULL;
 	goto label$ebdfb18_3_1436;
 	label$ebdfb18_3_1433:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r66];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r65];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1436:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r28 = r7->y;
 	if( r17 == NULL ) hl_null_access();
 	h2d_Graphics_flush(r17);
-	r52 = r17->curR;
-	r58 = r17->curG;
-	r64 = r17->curB;
-	r70 = r17->curA;
-	r73 = r17->ma;
-	r71 = r27 * r73;
-	r74 = r17->mc;
+	r51 = r17->curR;
+	r57 = r17->curG;
+	r63 = r17->curB;
+	r69 = r17->curA;
+	r72 = r17->ma;
+	r70 = r27 * r72;
+	r73 = r17->mc;
+	r72 = r28 * r73;
+	r70 = r70 + r72;
+	r72 = r17->mx;
+	r70 = r70 + r72;
+	r19 = &r70;
+	r73 = r17->mb;
+	r72 = r27 * r73;
+	r74 = r17->md;
 	r73 = r28 * r74;
-	r71 = r71 + r73;
-	r73 = r17->mx;
-	r71 = r71 + r73;
-	r19 = &r71;
-	r74 = r17->mb;
-	r73 = r27 * r74;
-	r75 = r17->md;
-	r74 = r28 * r75;
-	r73 = r73 + r74;
-	r74 = r17->my;
-	r73 = r73 + r74;
-	r21 = &r73;
-	h2d_Graphics_addVertex(r17,r27,r28,r52,r58,r64,r70,r19,r21);
+	r72 = r72 + r73;
+	r73 = r17->my;
+	r72 = r72 + r73;
+	r21 = &r72;
+	h2d_Graphics_addVertex(r17,r27,r28,r51,r57,r63,r69,r19,r21);
 	r17 = r0->gfx;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r66 = 5;
-	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_3_1471;
-	r45 = NULL;
+	r65 = 5;
+	r71 = r8->length;
+	if( ((unsigned)r65) < ((unsigned)r71) ) goto label$ebdfb18_3_1471;
+	r10 = NULL;
 	goto label$ebdfb18_3_1474;
 	label$ebdfb18_3_1471:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r66];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r65];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1474:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r27 = r7->x;
 	r8 = r0->scarfPoints;
 	if( r8 == NULL ) hl_null_access();
-	r66 = 5;
-	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_3_1485;
-	r45 = NULL;
+	r65 = 5;
+	r71 = r8->length;
+	if( ((unsigned)r65) < ((unsigned)r71) ) goto label$ebdfb18_3_1485;
+	r10 = NULL;
 	goto label$ebdfb18_3_1488;
 	label$ebdfb18_3_1485:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r66];
-	r45 = (components__physics__RidePoint)r11;
+	r11 = ((vdynamic**)(r12 + 1))[r65];
+	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1488:
-	if( r45 == NULL ) hl_null_access();
-	r7 = r45->pos;
+	if( r10 == NULL ) hl_null_access();
+	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r28 = r7->y;
 	if( r17 == NULL ) hl_null_access();
-	r52 = r17->curR;
-	r58 = r17->curG;
-	r64 = r17->curB;
-	r70 = r17->curA;
-	r75 = r17->ma;
+	r51 = r17->curR;
+	r57 = r17->curG;
+	r63 = r17->curB;
+	r69 = r17->curA;
+	r74 = r17->ma;
+	r73 = r27 * r74;
+	r75 = r17->mc;
+	r74 = r28 * r75;
+	r73 = r73 + r74;
+	r74 = r17->mx;
+	r73 = r73 + r74;
+	r19 = &r73;
+	r75 = r17->mb;
 	r74 = r27 * r75;
-	r76 = r17->mc;
+	r76 = r17->md;
 	r75 = r28 * r76;
 	r74 = r74 + r75;
-	r75 = r17->mx;
+	r75 = r17->my;
 	r74 = r74 + r75;
-	r19 = &r74;
-	r76 = r17->mb;
-	r75 = r27 * r76;
-	r77 = r17->md;
-	r76 = r28 * r77;
-	r75 = r75 + r76;
-	r76 = r17->my;
-	r75 = r75 + r76;
-	r21 = &r75;
-	h2d_Graphics_addVertex(r17,r27,r28,r52,r58,r64,r70,r19,r21);
+	r21 = &r74;
+	h2d_Graphics_addVertex(r17,r27,r28,r51,r57,r63,r69,r19,r21);
+	r77 = r0->nameField;
 	r78 = r0->nameField;
-	r79 = r0->nameField;
-	if( r79 == NULL ) hl_null_access();
-	r14 = true;
-	r79->posChanged = r14;
 	if( r78 == NULL ) hl_null_access();
 	r14 = true;
 	r78->posChanged = r14;
+	if( r77 == NULL ) hl_null_access();
+	r14 = true;
+	r77->posChanged = r14;
 	r27 = 1.;
 	r4 = ($Main)g$_Main;
-	r80 = r4->canvas;
-	if( r80 == NULL ) hl_null_access();
-	r28 = r80->scaleX;
+	r79 = r4->canvas;
+	if( r79 == NULL ) hl_null_access();
+	r28 = r79->scaleX;
 	r27 = r27 / r28;
-	r79->scaleY = r27;
-	r78->scaleX = r27;
-	r78 = r0->nameField;
+	r78->scaleY = r27;
+	r77->scaleX = r27;
+	r77 = r0->nameField;
 	r8 = r0->ridePoints;
 	if( r8 == NULL ) hl_null_access();
-	r66 = 1;
-	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_3_1538;
+	r65 = 1;
+	r71 = r8->length;
+	if( ((unsigned)r65) < ((unsigned)r71) ) goto label$ebdfb18_3_1538;
 	r10 = NULL;
 	goto label$ebdfb18_3_1541;
 	label$ebdfb18_3_1538:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r66];
+	r11 = ((vdynamic**)(r12 + 1))[r65];
 	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1541:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r27 = r7->x;
-	if( r78 == NULL ) hl_null_access();
+	if( r77 == NULL ) hl_null_access();
 	r14 = true;
-	r78->posChanged = r14;
-	r78->x = r27;
-	r78 = r0->nameField;
+	r77->posChanged = r14;
+	r77->x = r27;
+	r77 = r0->nameField;
 	r8 = r0->ridePoints;
 	if( r8 == NULL ) hl_null_access();
-	r66 = 1;
-	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_3_1557;
+	r65 = 1;
+	r71 = r8->length;
+	if( ((unsigned)r65) < ((unsigned)r71) ) goto label$ebdfb18_3_1557;
 	r10 = NULL;
 	goto label$ebdfb18_3_1560;
 	label$ebdfb18_3_1557:
 	r12 = r8->array;
-	r11 = ((vdynamic**)(r12 + 1))[r66];
+	r11 = ((vdynamic**)(r12 + 1))[r65];
 	r10 = (hxlr__components__ContactPoint)r11;
 	label$ebdfb18_3_1560:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
 	r27 = r7->y;
-	if( r78 == NULL ) hl_null_access();
+	if( r77 == NULL ) hl_null_access();
 	r14 = true;
-	r78->posChanged = r14;
-	r78->y = r27;
-	r78 = r0->nameField;
-	if( r78 == NULL ) hl_null_access();
+	r77->posChanged = r14;
+	r77->y = r27;
+	r77 = r0->nameField;
+	if( r77 == NULL ) hl_null_access();
 	r14 = true;
-	r78->posChanged = r14;
+	r77->posChanged = r14;
 	r5 = r0->sled;
 	if( r5 == NULL ) hl_null_access();
 	r27 = r5->rotation;
-	r78->rotation = r27;
+	r77->rotation = r27;
 	r18 = r0->crashed;
 	r14 = r18 ? r18->v.b : 0;
 	if( !r14 ) goto label$ebdfb18_3_1585;
-	r78 = r0->nameField;
-	if( r78 == NULL ) hl_null_access();
-	r82 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
-	r81 = r82->RED;
-	r78->color = r81;
+	r77 = r0->nameField;
+	if( r77 == NULL ) hl_null_access();
+	r81 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
+	r80 = r81->RED;
+	r77->color = r80;
 	goto label$ebdfb18_3_1590;
 	label$ebdfb18_3_1585:
-	r78 = r0->nameField;
-	if( r78 == NULL ) hl_null_access();
-	r82 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
-	r81 = r82->WHITE;
-	r78->color = r81;
+	r77 = r0->nameField;
+	if( r77 == NULL ) hl_null_access();
+	r81 = (components__sledder__$RiderBase)g$_components_sledder_RiderBase;
+	r80 = r81->WHITE;
+	r77->color = r80;
 	label$ebdfb18_3_1590:
 	return;
 }
@@ -2106,19 +2105,18 @@ void components_sledder_Bosh_reset(components__sledder__Bosh r0) {
 }
 
 void components_sledder_Bosh_init(components__sledder__Bosh r0) {
-	components__physics__ScarfPoint r35;
-	hl__types__ArrayObj r1, r50;
-	venum *r59;
-	bool r62;
-	components__physics__Stick r58, r60, r61, r63, r64;
-	h2d__col__Point r53;
-	components__physics__RidePoint r57;
-	hxlr__components__ContactPoint r4, r54;
-	double r5, r7, r9, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r36, r37, r38, r39, r40, r41, r42, r43, r44, r45, r46, r47, r55, r56;
-	vdynamic *r51, *r65;
+	hl__types__ArrayObj r1, r41;
+	venum *r47;
+	hxlr__components__AirPoint r35;
+	bool r50;
+	components__physics__Stick r46, r48, r49, r51, r52;
+	h2d__col__Point r44;
+	hxlr__components__ContactPoint r4, r45;
+	double r5, r7, r9, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r36, r37, r38;
+	vdynamic *r42, *r53;
 	double *r6, *r8, *r10;
-	varray *r52;
-	int r3, r48, r49;
+	varray *r43;
+	int r3, r39, r40;
 	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r1);
 	r0->ridePoints = r1;
@@ -2262,928 +2260,1084 @@ void components_sledder_Bosh_init(components__sledder__Bosh r0) {
 	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r4));
 	r1 = r0->scarfPoints;
 	if( r1 == NULL ) hl_null_access();
-	r35 = (components__physics__ScarfPoint)hl_alloc_obj(&t$components_physics_ScarfPoint);
-	r3 = 7;
-	r36 = (double)r3;
-	r6 = &r36;
-	r3 = -10;
-	r37 = (double)r3;
-	r8 = &r37;
-	r10 = NULL;
-	components_physics_ScarfPoint_new(r35,r6,r8,r10);
+	r35 = (hxlr__components__AirPoint)hl_alloc_obj(&t$hxlr_components_AirPoint);
+	r36 = 7.;
+	r37 = -10.;
+	r38 = 0.90000000000000002;
+	hxlr_components_AirPoint_new(r35,r36,r37,r38);
 	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r35));
 	r1 = r0->scarfPoints;
 	if( r1 == NULL ) hl_null_access();
-	r35 = (components__physics__ScarfPoint)hl_alloc_obj(&t$components_physics_ScarfPoint);
-	r3 = 3;
-	r38 = (double)r3;
-	r6 = &r38;
-	r3 = -10;
-	r39 = (double)r3;
-	r8 = &r39;
-	r10 = NULL;
-	components_physics_ScarfPoint_new(r35,r6,r8,r10);
+	r35 = (hxlr__components__AirPoint)hl_alloc_obj(&t$hxlr_components_AirPoint);
+	r36 = 3.;
+	r37 = -10.;
+	r38 = 0.90000000000000002;
+	hxlr_components_AirPoint_new(r35,r36,r37,r38);
 	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r35));
 	r1 = r0->scarfPoints;
 	if( r1 == NULL ) hl_null_access();
-	r35 = (components__physics__ScarfPoint)hl_alloc_obj(&t$components_physics_ScarfPoint);
-	r3 = 0;
-	r40 = (double)r3;
-	r6 = &r40;
-	r3 = -10;
-	r41 = (double)r3;
-	r8 = &r41;
-	r10 = NULL;
-	components_physics_ScarfPoint_new(r35,r6,r8,r10);
+	r35 = (hxlr__components__AirPoint)hl_alloc_obj(&t$hxlr_components_AirPoint);
+	r36 = 0.;
+	r37 = -10.;
+	r38 = 0.90000000000000002;
+	hxlr_components_AirPoint_new(r35,r36,r37,r38);
 	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r35));
 	r1 = r0->scarfPoints;
 	if( r1 == NULL ) hl_null_access();
-	r35 = (components__physics__ScarfPoint)hl_alloc_obj(&t$components_physics_ScarfPoint);
-	r3 = -4;
-	r42 = (double)r3;
-	r6 = &r42;
-	r3 = -10;
-	r43 = (double)r3;
-	r8 = &r43;
-	r10 = NULL;
-	components_physics_ScarfPoint_new(r35,r6,r8,r10);
+	r35 = (hxlr__components__AirPoint)hl_alloc_obj(&t$hxlr_components_AirPoint);
+	r36 = -4.;
+	r37 = -10.;
+	r38 = 0.90000000000000002;
+	hxlr_components_AirPoint_new(r35,r36,r37,r38);
 	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r35));
 	r1 = r0->scarfPoints;
 	if( r1 == NULL ) hl_null_access();
-	r35 = (components__physics__ScarfPoint)hl_alloc_obj(&t$components_physics_ScarfPoint);
-	r3 = -7;
-	r44 = (double)r3;
-	r6 = &r44;
-	r3 = -10;
-	r45 = (double)r3;
-	r8 = &r45;
-	r10 = NULL;
-	components_physics_ScarfPoint_new(r35,r6,r8,r10);
+	r35 = (hxlr__components__AirPoint)hl_alloc_obj(&t$hxlr_components_AirPoint);
+	r36 = -7.;
+	r37 = -10.;
+	r38 = 0.90000000000000002;
+	hxlr_components_AirPoint_new(r35,r36,r37,r38);
 	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r35));
 	r1 = r0->scarfPoints;
 	if( r1 == NULL ) hl_null_access();
-	r35 = (components__physics__ScarfPoint)hl_alloc_obj(&t$components_physics_ScarfPoint);
-	r3 = -11;
-	r46 = (double)r3;
-	r6 = &r46;
-	r3 = -10;
-	r47 = (double)r3;
-	r8 = &r47;
-	r10 = NULL;
-	components_physics_ScarfPoint_new(r35,r6,r8,r10);
+	r35 = (hxlr__components__AirPoint)hl_alloc_obj(&t$hxlr_components_AirPoint);
+	r36 = -11.;
+	r37 = -10.;
+	r38 = 0.90000000000000002;
+	hxlr_components_AirPoint_new(r35,r36,r37,r38);
 	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r35));
 	r3 = 0;
 	r1 = r0->ridePoints;
-	label$ebdfb18_6_215:
+	label$ebdfb18_6_191:
 	if( r1 == NULL ) hl_null_access();
-	r49 = r1->length;
-	if( r3 >= r49 ) goto label$ebdfb18_6_241;
-	r49 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r49) ) goto label$ebdfb18_6_223;
+	r40 = r1->length;
+	if( r3 >= r40 ) goto label$ebdfb18_6_217;
+	r40 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r40) ) goto label$ebdfb18_6_199;
 	r4 = NULL;
-	goto label$ebdfb18_6_226;
-	label$ebdfb18_6_223:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_226:
+	goto label$ebdfb18_6_202;
+	label$ebdfb18_6_199:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_202:
 	++r3;
 	if( r4 == NULL ) hl_null_access();
-	r53 = r4->pos;
-	if( r53 == NULL ) hl_null_access();
-	r55 = r53->x;
-	r56 = 0.5;
-	r55 = r55 * r56;
-	r53->x = r55;
-	r53 = r4->pos;
-	if( r53 == NULL ) hl_null_access();
-	r55 = r53->y;
-	r56 = 0.5;
-	r55 = r55 * r56;
-	r53->y = r55;
-	goto label$ebdfb18_6_215;
-	label$ebdfb18_6_241:
+	r44 = r4->pos;
+	if( r44 == NULL ) hl_null_access();
+	r36 = r44->x;
+	r37 = 0.5;
+	r36 = r36 * r37;
+	r44->x = r36;
+	r44 = r4->pos;
+	if( r44 == NULL ) hl_null_access();
+	r36 = r44->y;
+	r37 = 0.5;
+	r36 = r36 * r37;
+	r44->y = r36;
+	goto label$ebdfb18_6_191;
+	label$ebdfb18_6_217:
 	r3 = 0;
 	r1 = r0->scarfPoints;
-	label$ebdfb18_6_243:
+	label$ebdfb18_6_219:
 	if( r1 == NULL ) hl_null_access();
-	r49 = r1->length;
-	if( r3 >= r49 ) goto label$ebdfb18_6_269;
-	r49 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r49) ) goto label$ebdfb18_6_251;
-	r57 = NULL;
-	goto label$ebdfb18_6_254;
-	label$ebdfb18_6_251:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r57 = (components__physics__RidePoint)r51;
-	label$ebdfb18_6_254:
+	r40 = r1->length;
+	if( r3 >= r40 ) goto label$ebdfb18_6_245;
+	r40 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r40) ) goto label$ebdfb18_6_227;
+	r4 = NULL;
+	goto label$ebdfb18_6_230;
+	label$ebdfb18_6_227:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_230:
 	++r3;
-	if( r57 == NULL ) hl_null_access();
-	r53 = r57->pos;
-	if( r53 == NULL ) hl_null_access();
-	r55 = r53->x;
-	r56 = 0.5;
-	r55 = r55 * r56;
-	r53->x = r55;
-	r53 = r57->pos;
-	if( r53 == NULL ) hl_null_access();
-	r55 = r53->y;
-	r56 = 0.5;
-	r55 = r55 * r56;
-	r53->y = r55;
-	goto label$ebdfb18_6_243;
-	label$ebdfb18_6_269:
+	if( r4 == NULL ) hl_null_access();
+	r44 = r4->pos;
+	if( r44 == NULL ) hl_null_access();
+	r36 = r44->x;
+	r37 = 0.5;
+	r36 = r36 * r37;
+	r44->x = r36;
+	r44 = r4->pos;
+	if( r44 == NULL ) hl_null_access();
+	r36 = r44->y;
+	r37 = 0.5;
+	r36 = r36 * r37;
+	r44->y = r36;
+	goto label$ebdfb18_6_219;
+	label$ebdfb18_6_245:
 	components_sledder_RiderBase_moveToStart(((components__sledder__RiderBase)r0));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 0;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_280;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_256;
 	r4 = NULL;
-	goto label$ebdfb18_6_283;
-	label$ebdfb18_6_280:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_283:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_259;
+	label$ebdfb18_6_256:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_259:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 1;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_290;
-	r54 = NULL;
-	goto label$ebdfb18_6_293;
-	label$ebdfb18_6_290:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_293:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_266;
+	r45 = NULL;
+	goto label$ebdfb18_6_269;
+	label$ebdfb18_6_266:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_269:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 1;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_306;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_282;
 	r4 = NULL;
-	goto label$ebdfb18_6_309;
-	label$ebdfb18_6_306:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_309:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_285;
+	label$ebdfb18_6_282:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_285:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 2;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_316;
-	r54 = NULL;
-	goto label$ebdfb18_6_319;
-	label$ebdfb18_6_316:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_319:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_292;
+	r45 = NULL;
+	goto label$ebdfb18_6_295;
+	label$ebdfb18_6_292:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_295:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 2;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_332;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_308;
 	r4 = NULL;
-	goto label$ebdfb18_6_335;
-	label$ebdfb18_6_332:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_335:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_311;
+	label$ebdfb18_6_308:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_311:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 3;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_342;
-	r54 = NULL;
-	goto label$ebdfb18_6_345;
-	label$ebdfb18_6_342:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_345:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_318;
+	r45 = NULL;
+	goto label$ebdfb18_6_321;
+	label$ebdfb18_6_318:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_321:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 3;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_358;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_334;
 	r4 = NULL;
-	goto label$ebdfb18_6_361;
-	label$ebdfb18_6_358:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_361:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_337;
+	label$ebdfb18_6_334:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_337:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 0;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_368;
-	r54 = NULL;
-	goto label$ebdfb18_6_371;
-	label$ebdfb18_6_368:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_371:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_344;
+	r45 = NULL;
+	goto label$ebdfb18_6_347;
+	label$ebdfb18_6_344:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_347:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 0;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_384;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_360;
 	r4 = NULL;
-	goto label$ebdfb18_6_387;
-	label$ebdfb18_6_384:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_387:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_363;
+	label$ebdfb18_6_360:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_363:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 2;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_394;
-	r54 = NULL;
-	goto label$ebdfb18_6_397;
-	label$ebdfb18_6_394:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_397:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_370;
+	r45 = NULL;
+	goto label$ebdfb18_6_373;
+	label$ebdfb18_6_370:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_373:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 3;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_410;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_386;
 	r4 = NULL;
-	goto label$ebdfb18_6_413;
-	label$ebdfb18_6_410:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_413:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_389;
+	label$ebdfb18_6_386:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_389:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 1;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_420;
-	r54 = NULL;
-	goto label$ebdfb18_6_423;
-	label$ebdfb18_6_420:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_423:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_396;
+	r45 = NULL;
+	goto label$ebdfb18_6_399;
+	label$ebdfb18_6_396:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_399:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 0;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_436;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_412;
 	r4 = NULL;
-	goto label$ebdfb18_6_439;
-	label$ebdfb18_6_436:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_439:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_415;
+	label$ebdfb18_6_412:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_415:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 4;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_446;
-	r54 = NULL;
-	goto label$ebdfb18_6_449;
-	label$ebdfb18_6_446:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_449:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_422;
+	r45 = NULL;
+	goto label$ebdfb18_6_425;
+	label$ebdfb18_6_422:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_425:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 1;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_462;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_438;
 	r4 = NULL;
-	goto label$ebdfb18_6_465;
-	label$ebdfb18_6_462:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_465:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_441;
+	label$ebdfb18_6_438:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_441:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 4;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_472;
-	r54 = NULL;
-	goto label$ebdfb18_6_475;
-	label$ebdfb18_6_472:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_475:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_448;
+	r45 = NULL;
+	goto label$ebdfb18_6_451;
+	label$ebdfb18_6_448:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_451:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 2;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_488;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_464;
 	r4 = NULL;
-	goto label$ebdfb18_6_491;
-	label$ebdfb18_6_488:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_491:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_467;
+	label$ebdfb18_6_464:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_467:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 4;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_498;
-	r54 = NULL;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_474;
+	r45 = NULL;
+	goto label$ebdfb18_6_477;
+	label$ebdfb18_6_474:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_477:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r1 = r0->bones;
+	if( r1 == NULL ) hl_null_access();
+	r3 = 6;
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_487;
+	r46 = NULL;
+	goto label$ebdfb18_6_490;
+	label$ebdfb18_6_487:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r46 = (components__physics__Stick)r42;
+	label$ebdfb18_6_490:
+	if( r46 == NULL ) hl_null_access();
+	r1 = r0->bones;
+	if( r1 == NULL ) hl_null_access();
+	r3 = 7;
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_498;
+	r48 = NULL;
 	goto label$ebdfb18_6_501;
 	label$ebdfb18_6_498:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r48 = (components__physics__Stick)r42;
 	label$ebdfb18_6_501:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
-	r1 = r0->bones;
-	if( r1 == NULL ) hl_null_access();
-	r3 = 6;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_511;
-	r58 = NULL;
-	goto label$ebdfb18_6_514;
-	label$ebdfb18_6_511:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r58 = (components__physics__Stick)r51;
-	label$ebdfb18_6_514:
-	if( r58 == NULL ) hl_null_access();
-	r1 = r0->bones;
-	if( r1 == NULL ) hl_null_access();
-	r3 = 7;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_522;
-	r60 = NULL;
-	goto label$ebdfb18_6_525;
-	label$ebdfb18_6_522:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r60 = (components__physics__Stick)r51;
-	label$ebdfb18_6_525:
-	if( r60 == NULL ) hl_null_access();
+	if( r48 == NULL ) hl_null_access();
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
 	r3 = 8;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_533;
-	r61 = NULL;
-	goto label$ebdfb18_6_536;
-	label$ebdfb18_6_533:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r61 = (components__physics__Stick)r51;
-	label$ebdfb18_6_536:
-	if( r61 == NULL ) hl_null_access();
-	r62 = true;
-	r61->crashable = r62;
-	r60->crashable = r62;
-	r58->crashable = r62;
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_509;
+	r49 = NULL;
+	goto label$ebdfb18_6_512;
+	label$ebdfb18_6_509:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r49 = (components__physics__Stick)r42;
+	label$ebdfb18_6_512:
+	if( r49 == NULL ) hl_null_access();
+	r50 = true;
+	r49->crashable = r50;
+	r48->crashable = r50;
+	r46->crashable = r50;
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 5;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_551;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_527;
 	r4 = NULL;
-	goto label$ebdfb18_6_554;
-	label$ebdfb18_6_551:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_554:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_530;
+	label$ebdfb18_6_527:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_530:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 4;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_561;
-	r54 = NULL;
-	goto label$ebdfb18_6_564;
-	label$ebdfb18_6_561:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_564:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_537;
+	r45 = NULL;
+	goto label$ebdfb18_6_540;
+	label$ebdfb18_6_537:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_540:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 5;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_577;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_553;
 	r4 = NULL;
-	goto label$ebdfb18_6_580;
-	label$ebdfb18_6_577:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_580:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_556;
+	label$ebdfb18_6_553:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_556:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 6;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_587;
-	r54 = NULL;
-	goto label$ebdfb18_6_590;
-	label$ebdfb18_6_587:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_590:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_563;
+	r45 = NULL;
+	goto label$ebdfb18_6_566;
+	label$ebdfb18_6_563:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_566:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 5;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_603;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_579;
 	r4 = NULL;
-	goto label$ebdfb18_6_606;
-	label$ebdfb18_6_603:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_606:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_582;
+	label$ebdfb18_6_579:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_582:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 7;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_613;
-	r54 = NULL;
-	goto label$ebdfb18_6_616;
-	label$ebdfb18_6_613:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_616:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_589;
+	r45 = NULL;
+	goto label$ebdfb18_6_592;
+	label$ebdfb18_6_589:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_592:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 4;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_629;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_605;
 	r4 = NULL;
-	goto label$ebdfb18_6_632;
-	label$ebdfb18_6_629:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_632:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_608;
+	label$ebdfb18_6_605:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_608:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 8;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_639;
-	r54 = NULL;
-	goto label$ebdfb18_6_642;
-	label$ebdfb18_6_639:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_642:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_615;
+	r45 = NULL;
+	goto label$ebdfb18_6_618;
+	label$ebdfb18_6_615:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_618:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 4;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_655;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_631;
 	r4 = NULL;
-	goto label$ebdfb18_6_658;
-	label$ebdfb18_6_655:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_658:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_634;
+	label$ebdfb18_6_631:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_634:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 9;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_665;
-	r54 = NULL;
-	goto label$ebdfb18_6_668;
-	label$ebdfb18_6_665:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_668:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_641;
+	r45 = NULL;
+	goto label$ebdfb18_6_644;
+	label$ebdfb18_6_641:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_644:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 5;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_681;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_657;
 	r4 = NULL;
-	goto label$ebdfb18_6_684;
-	label$ebdfb18_6_681:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_684:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_660;
+	label$ebdfb18_6_657:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_660:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 7;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_691;
-	r54 = NULL;
-	goto label$ebdfb18_6_694;
-	label$ebdfb18_6_691:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_694:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_667;
+	r45 = NULL;
+	goto label$ebdfb18_6_670;
+	label$ebdfb18_6_667:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_670:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 5;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_707;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_683;
 	r4 = NULL;
-	goto label$ebdfb18_6_710;
-	label$ebdfb18_6_707:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_710:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_686;
+	label$ebdfb18_6_683:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_686:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 0;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_717;
-	r54 = NULL;
-	goto label$ebdfb18_6_720;
-	label$ebdfb18_6_717:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_720:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_693;
+	r45 = NULL;
+	goto label$ebdfb18_6_696;
+	label$ebdfb18_6_693:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_696:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 3;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_733;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_709;
 	r4 = NULL;
-	goto label$ebdfb18_6_736;
-	label$ebdfb18_6_733:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_736:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_712;
+	label$ebdfb18_6_709:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_712:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 6;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_743;
-	r54 = NULL;
-	goto label$ebdfb18_6_746;
-	label$ebdfb18_6_743:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_746:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_719;
+	r45 = NULL;
+	goto label$ebdfb18_6_722;
+	label$ebdfb18_6_719:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_722:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 3;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_759;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_735;
 	r4 = NULL;
-	goto label$ebdfb18_6_762;
-	label$ebdfb18_6_759:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_762:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_738;
+	label$ebdfb18_6_735:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_738:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 7;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_769;
-	r54 = NULL;
-	goto label$ebdfb18_6_772;
-	label$ebdfb18_6_769:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_772:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_745;
+	r45 = NULL;
+	goto label$ebdfb18_6_748;
+	label$ebdfb18_6_745:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_748:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 8;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_785;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_761;
 	r4 = NULL;
-	goto label$ebdfb18_6_788;
-	label$ebdfb18_6_785:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_788:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_764;
+	label$ebdfb18_6_761:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_764:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 2;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_795;
-	r54 = NULL;
-	goto label$ebdfb18_6_798;
-	label$ebdfb18_6_795:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_798:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_771;
+	r45 = NULL;
+	goto label$ebdfb18_6_774;
+	label$ebdfb18_6_771:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_774:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 9;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_811;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_787;
 	r4 = NULL;
-	goto label$ebdfb18_6_814;
-	label$ebdfb18_6_811:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_814:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_790;
+	label$ebdfb18_6_787:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_790:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 2;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_821;
-	r54 = NULL;
-	goto label$ebdfb18_6_824;
-	label$ebdfb18_6_821:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_824:
-	r59 = (venum*)g$7bcd604;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_797;
+	r45 = NULL;
+	goto label$ebdfb18_6_800;
+	label$ebdfb18_6_797:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_800:
+	r47 = (venum*)g$7bcd604;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
 	r3 = 15;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_834;
-	r58 = NULL;
-	goto label$ebdfb18_6_837;
-	label$ebdfb18_6_834:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r58 = (components__physics__Stick)r51;
-	label$ebdfb18_6_837:
-	if( r58 == NULL ) hl_null_access();
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_810;
+	r46 = NULL;
+	goto label$ebdfb18_6_813;
+	label$ebdfb18_6_810:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r46 = (components__physics__Stick)r42;
+	label$ebdfb18_6_813:
+	if( r46 == NULL ) hl_null_access();
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
 	r3 = 16;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_845;
-	r60 = NULL;
-	goto label$ebdfb18_6_848;
-	label$ebdfb18_6_845:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r60 = (components__physics__Stick)r51;
-	label$ebdfb18_6_848:
-	if( r60 == NULL ) hl_null_access();
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_821;
+	r48 = NULL;
+	goto label$ebdfb18_6_824;
+	label$ebdfb18_6_821:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r48 = (components__physics__Stick)r42;
+	label$ebdfb18_6_824:
+	if( r48 == NULL ) hl_null_access();
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
 	r3 = 17;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_856;
-	r61 = NULL;
-	goto label$ebdfb18_6_859;
-	label$ebdfb18_6_856:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r61 = (components__physics__Stick)r51;
-	label$ebdfb18_6_859:
-	if( r61 == NULL ) hl_null_access();
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_832;
+	r49 = NULL;
+	goto label$ebdfb18_6_835;
+	label$ebdfb18_6_832:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r49 = (components__physics__Stick)r42;
+	label$ebdfb18_6_835:
+	if( r49 == NULL ) hl_null_access();
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
 	r3 = 18;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_867;
-	r63 = NULL;
-	goto label$ebdfb18_6_870;
-	label$ebdfb18_6_867:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r63 = (components__physics__Stick)r51;
-	label$ebdfb18_6_870:
-	if( r63 == NULL ) hl_null_access();
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_843;
+	r51 = NULL;
+	goto label$ebdfb18_6_846;
+	label$ebdfb18_6_843:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r51 = (components__physics__Stick)r42;
+	label$ebdfb18_6_846:
+	if( r51 == NULL ) hl_null_access();
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
 	r3 = 19;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_878;
-	r64 = NULL;
-	goto label$ebdfb18_6_881;
-	label$ebdfb18_6_878:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r64 = (components__physics__Stick)r51;
-	label$ebdfb18_6_881:
-	if( r64 == NULL ) hl_null_access();
-	r62 = true;
-	r64->crashable = r62;
-	r63->crashable = r62;
-	r61->crashable = r62;
-	r60->crashable = r62;
-	r58->crashable = r62;
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_854;
+	r52 = NULL;
+	goto label$ebdfb18_6_857;
+	label$ebdfb18_6_854:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r52 = (components__physics__Stick)r42;
+	label$ebdfb18_6_857:
+	if( r52 == NULL ) hl_null_access();
+	r50 = true;
+	r52->crashable = r50;
+	r51->crashable = r50;
+	r49->crashable = r50;
+	r48->crashable = r50;
+	r46->crashable = r50;
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 5;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_898;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_874;
 	r4 = NULL;
-	goto label$ebdfb18_6_901;
-	label$ebdfb18_6_898:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_901:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_877;
+	label$ebdfb18_6_874:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_877:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 8;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_908;
-	r54 = NULL;
-	goto label$ebdfb18_6_911;
-	label$ebdfb18_6_908:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_911:
-	r59 = (venum*)g$8c042a7;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_884;
+	r45 = NULL;
+	goto label$ebdfb18_6_887;
+	label$ebdfb18_6_884:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_887:
+	r47 = (venum*)g$8c042a7;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
 	r1 = r0->bones;
 	if( r1 == NULL ) hl_null_access();
-	r58 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 5;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_924;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_900;
 	r4 = NULL;
-	goto label$ebdfb18_6_927;
-	label$ebdfb18_6_924:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_927:
-	r50 = r0->ridePoints;
-	if( r50 == NULL ) hl_null_access();
+	goto label$ebdfb18_6_903;
+	label$ebdfb18_6_900:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_903:
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
 	r3 = 9;
-	r48 = r50->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_934;
-	r54 = NULL;
-	goto label$ebdfb18_6_937;
-	label$ebdfb18_6_934:
-	r52 = r50->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r54 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_937:
-	r59 = (venum*)g$8c042a7;
-	components_physics_Stick_new(r58,r4,r54,r59,((components__sledder__RiderBase)r0));
-	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r58));
-	r62 = false;
-	r62 = components_sledder_RiderBase_set_crashed(((components__sledder__RiderBase)r0),r62);
-	r65 = hl_alloc_dynbool(r62);
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_910;
+	r45 = NULL;
+	goto label$ebdfb18_6_913;
+	label$ebdfb18_6_910:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_913:
+	r47 = (venum*)g$8c042a7;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->ridePoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 5;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_926;
+	r4 = NULL;
+	goto label$ebdfb18_6_929;
+	label$ebdfb18_6_926:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_929:
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 0;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_936;
+	r45 = NULL;
+	goto label$ebdfb18_6_939;
+	label$ebdfb18_6_936:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_939:
+	r47 = (venum*)g$5ee05e8;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 0;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_952;
+	r4 = NULL;
+	goto label$ebdfb18_6_955;
+	label$ebdfb18_6_952:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_955:
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 1;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_962;
+	r45 = NULL;
+	goto label$ebdfb18_6_965;
+	label$ebdfb18_6_962:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_965:
+	r47 = (venum*)g$5ee05e8;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 1;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_978;
+	r4 = NULL;
+	goto label$ebdfb18_6_981;
+	label$ebdfb18_6_978:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_981:
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 2;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_988;
+	r45 = NULL;
+	goto label$ebdfb18_6_991;
+	label$ebdfb18_6_988:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_991:
+	r47 = (venum*)g$5ee05e8;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 2;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_1004;
+	r4 = NULL;
+	goto label$ebdfb18_6_1007;
+	label$ebdfb18_6_1004:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_1007:
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 3;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_1014;
+	r45 = NULL;
+	goto label$ebdfb18_6_1017;
+	label$ebdfb18_6_1014:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_1017:
+	r47 = (venum*)g$5ee05e8;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 3;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_1030;
+	r4 = NULL;
+	goto label$ebdfb18_6_1033;
+	label$ebdfb18_6_1030:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_1033:
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 4;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_1040;
+	r45 = NULL;
+	goto label$ebdfb18_6_1043;
+	label$ebdfb18_6_1040:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_1043:
+	r47 = (venum*)g$5ee05e8;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r46 = (components__physics__Stick)hl_alloc_obj(&t$components_physics_Stick);
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 4;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_1056;
+	r4 = NULL;
+	goto label$ebdfb18_6_1059;
+	label$ebdfb18_6_1056:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_1059:
+	r41 = r0->scarfPoints;
+	if( r41 == NULL ) hl_null_access();
+	r3 = 5;
+	r39 = r41->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_1066;
+	r45 = NULL;
+	goto label$ebdfb18_6_1069;
+	label$ebdfb18_6_1066:
+	r43 = r41->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r45 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_1069:
+	r47 = (venum*)g$5ee05e8;
+	components_physics_Stick_new(r46,r4,r45,r47,((components__sledder__RiderBase)r0));
+	r3 = hl_types_ArrayObj_push(r1,((vdynamic*)r46));
+	r50 = false;
+	r50 = components_sledder_RiderBase_set_crashed(((components__sledder__RiderBase)r0),r50);
+	r53 = hl_alloc_dynbool(r50);
 	r1 = r0->ridePoints;
 	if( r1 == NULL ) hl_null_access();
 	r3 = 4;
-	r48 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r48) ) goto label$ebdfb18_6_950;
+	r39 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r39) ) goto label$ebdfb18_6_1082;
 	r4 = NULL;
-	goto label$ebdfb18_6_953;
-	label$ebdfb18_6_950:
-	r52 = r1->array;
-	r51 = ((vdynamic**)(r52 + 1))[r3];
-	r4 = (hxlr__components__ContactPoint)r51;
-	label$ebdfb18_6_953:
+	goto label$ebdfb18_6_1085;
+	label$ebdfb18_6_1082:
+	r43 = r1->array;
+	r42 = ((vdynamic**)(r43 + 1))[r3];
+	r4 = (hxlr__components__ContactPoint)r42;
+	label$ebdfb18_6_1085:
 	r0->cameraPoint = r4;
 	return;
 }

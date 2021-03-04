@@ -31,7 +31,6 @@ extern String s$Disabled_flag;
 #include <hl/types/ArrayObj.h>
 #include <hxlr/components/ContactPoint.h>
 #include <h2d/col/Point.h>
-#include <components/physics/RidePoint.h>
 double Math_max(double,double);
 vvirtual* haxe_ds_StringMap_iterator(haxe__ds__StringMap);
 extern hl_type t$vrt_91f9e97;
@@ -46,8 +45,7 @@ extern hl_type t$_bool;
 bool components_sledder_RiderBase_set_crashed(components__sledder__RiderBase,bool);
 extern hl_type t$vrt_6c2da0f;
 void hxlr_components_ContactPoint_deserialize(hxlr__components__ContactPoint,vvirtual*);
-void components_physics_RidePoint_restoreState(components__physics__RidePoint,vvirtual*);
-extern hl_type t$vrt_b840ca7;
+extern hl_type t$vrt_e4dd42c;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 extern hl_type t$haxe_ds_ObjectMap;
 void haxe_ds_ObjectMap_set(haxe__ds__ObjectMap,vdynamic*,vdynamic*);
@@ -56,7 +54,6 @@ extern hl_type t$nul_bool;
 void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
 vvirtual* hxlr_components_ContactPoint_serialize(hxlr__components__ContactPoint);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
-vvirtual* components_physics_RidePoint_saveState(components__physics__RidePoint);
 void haxe_ds_ObjectMap_new(haxe__ds__ObjectMap);
 
 void components_managers_Simulation_startSim(components__managers__Simulation r0) {
@@ -350,7 +347,6 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	bool r13;
 	components__sledder__RiderBase r14;
 	$Main r10;
-	components__physics__RidePoint r25;
 	hxlr__components__ContactPoint r23;
 	double r2, r4;
 	vdynamic *r11, *r20;
@@ -453,14 +449,14 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	if( r16 == NULL ) hl_null_access();
 	r22 = r16->length;
 	if( ((unsigned)r21) < ((unsigned)r22) ) goto label$d8284df_12_85;
-	r25 = NULL;
+	r23 = NULL;
 	goto label$d8284df_12_88;
 	label$d8284df_12_85:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r21];
-	r25 = (components__physics__RidePoint)r11;
+	r23 = (hxlr__components__ContactPoint)r11;
 	label$d8284df_12_88:
-	if( r25 == NULL ) hl_null_access();
+	if( r23 == NULL ) hl_null_access();
 	if( r18 == NULL ) hl_null_access();
 	r16 = hl_vfields(r18)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r18)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r18->value,151751954/*scarves*/,&t$hl_types_ArrayObj);
 	if( r16 == NULL ) hl_null_access();
@@ -473,7 +469,7 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	r11 = ((vdynamic**)(r19 + 1))[r21];
 	r24 = hl_to_virtual(&t$vrt_6c2da0f,(vdynamic*)r11);
 	label$d8284df_12_99:
-	components_physics_RidePoint_restoreState(r25,r24);
+	hxlr_components_ContactPoint_deserialize(r23,r24);
 	goto label$d8284df_12_74;
 	label$d8284df_12_101:
 	goto label$d8284df_12_12;
@@ -518,7 +514,6 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	haxe__ds__ObjectMap r5;
 	vvirtual *r7, *r9, *r11, *r13, *r19;
 	hl__types__ArrayObj r6, r8, r16;
-	components__physics__RidePoint r20;
 	hxlr__components__ContactPoint r18;
 	vdynamic *r4, *r10;
 	varray *r15;
@@ -535,12 +530,12 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	label$d8284df_14_9:
 	r7 = r5->f$1;
 	if( r7 ) goto label$d8284df_14_13;
-	r7 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r5);
+	r7 = hl_to_virtual(&t$vrt_e4dd42c,(vdynamic*)r5);
 	r5->f$1 = r7;
 	label$d8284df_14_13:
 	r6 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r6);
-	r5 = (haxe__ds__ObjectMap)hl_dyn_castp(&r7,&t$vrt_b840ca7,&t$haxe_ds_ObjectMap);
+	r5 = (haxe__ds__ObjectMap)hl_dyn_castp(&r7,&t$vrt_e4dd42c,&t$haxe_ds_ObjectMap);
 	if( r5 == NULL ) hl_null_access();
 	haxe_ds_ObjectMap_set(r5,((vdynamic*)r1),((vdynamic*)r6));
 	label$d8284df_14_18:
@@ -601,17 +596,17 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	if( r12 >= r17 ) goto label$d8284df_14_82;
 	r17 = r16->length;
 	if( ((unsigned)r12) < ((unsigned)r17) ) goto label$d8284df_14_73;
-	r20 = NULL;
+	r18 = NULL;
 	goto label$d8284df_14_76;
 	label$d8284df_14_73:
 	r15 = r16->array;
 	r4 = ((vdynamic**)(r15 + 1))[r12];
-	r20 = (components__physics__RidePoint)r4;
+	r18 = (hxlr__components__ContactPoint)r4;
 	label$d8284df_14_76:
 	++r12;
 	if( r8 == NULL ) hl_null_access();
-	if( r20 == NULL ) hl_null_access();
-	r19 = components_physics_RidePoint_saveState(r20);
+	if( r18 == NULL ) hl_null_access();
+	r19 = hxlr_components_ContactPoint_serialize(r18);
 	r14 = hl_types_ArrayObj_push(r8,((vdynamic*)r19));
 	goto label$d8284df_14_65;
 	label$d8284df_14_82:

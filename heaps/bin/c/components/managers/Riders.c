@@ -24,7 +24,7 @@ extern String s$_already_occupied_renaming_to_;
 #include <h2d/Console.h>
 void h2d_Console_log(h2d__Console,String,vdynamic*);
 extern String s$;
-extern hl_type t$vrt_b840ca7;
+extern hl_type t$vrt_e4dd42c;
 extern hl_type t$components_sledder_LTAABosh;
 extern hl_type t$_f64;
 void components_sledder_LTAABosh_new(components__sledder__LTAABosh,vdynamic*,vdynamic*,String,vdynamic*,vdynamic*);
@@ -145,7 +145,7 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	label$fbc84c5_2_56:
 	r20 = r12->f$1;
 	if( r20 ) goto label$fbc84c5_2_60;
-	r20 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r12);
+	r20 = hl_to_virtual(&t$vrt_e4dd42c,(vdynamic*)r12);
 	r12->f$1 = r20;
 	label$fbc84c5_2_60:
 	r21 = (components__sledder__LTAABosh)hl_alloc_obj(&t$components_sledder_LTAABosh);
@@ -157,7 +157,7 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	r24 = hl_alloc_dynamic(&t$_f64);
 	r24->v.d = r22;
 	components_sledder_LTAABosh_new(r21,r23,r24,r5,r3,r4);
-	r12 = (haxe__ds__StringMap)hl_dyn_castp(&r20,&t$vrt_b840ca7,&t$haxe_ds_StringMap);
+	r12 = (haxe__ds__StringMap)hl_dyn_castp(&r20,&t$vrt_e4dd42c,&t$haxe_ds_StringMap);
 	if( r12 == NULL ) hl_null_access();
 	haxe_ds_StringMap_set(r12,r5,((vdynamic*)r21));
 	r7 = r0->riderCount;

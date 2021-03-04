@@ -5,6 +5,7 @@
 bool components_sledder_RiderBase_set_crashed(components__sledder__RiderBase,bool);
 #include <h2d/col/Point.h>
 #include <hl/natives.h>
+extern hl_type t$_f64;
 void components_physics_Stick_setRestLength(components__physics__Stick);
 extern venum* g$8c042a7;
 extern venum* g$b72f6d6;
@@ -244,6 +245,78 @@ bool components_physics_Stick_repell(components__physics__Stick r0,vdynamic* r1)
 	return r10;
 }
 
+bool components_physics_Stick_scarf(components__physics__Stick r0,vdynamic* r1) {
+	bool r13;
+	h2d__col__Point r3;
+	hxlr__components__ContactPoint r4;
+	double r2, r5, r6, r7, r8, r12;
+	vdynamic *r9, *r11;
+	int r10;
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r2 = r3->x;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->x;
+	r2 = r2 - r5;
+	r4 = r0->a;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->y;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r6 = r3->y;
+	r5 = r5 - r6;
+	r6 = r2 * r2;
+	r7 = r5 * r5;
+	r6 = r6 + r7;
+	r6 = hl_math_sqrt(r6);
+	r9 = NULL;
+	r8 = 0.;
+	if( r6 != r8 ) goto label$3c34fd1_6_33;
+	r10 = 0;
+	r7 = (double)r10;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	goto label$3c34fd1_6_39;
+	label$3c34fd1_6_33:
+	r8 = r0->restLength;
+	r7 = r6 - r8;
+	r7 = r7 / r6;
+	r8 = 0.5;
+	r7 = r7 * r8;
+	r11 = hl_alloc_dynamic(&t$_f64);
+	r11->v.d = r7;
+	label$3c34fd1_6_39:
+	r8 = r11 ? r11->v.d : 0;
+	r7 = r2 * r8;
+	r12 = r11 ? r11->v.d : 0;
+	r8 = r5 * r12;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r12 = r3->x;
+	r12 = r12 + r7;
+	r3->x = r12;
+	r4 = r0->b;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->pos;
+	if( r3 == NULL ) hl_null_access();
+	r12 = r3->y;
+	r12 = r12 + r8;
+	r3->y = r12;
+	r13 = r1 ? r1->v.b : 0;
+	return r13;
+}
+
 venum* components_physics_Stick_set_type(components__physics__Stick r0,venum* r1) {
 	venum *r3;
 	vclosure *r7, *r8;
@@ -251,49 +324,61 @@ venum* components_physics_Stick_set_type(components__physics__Stick r0,venum* r1
 	int r6;
 	components_physics_Stick_setRestLength(r0);
 	r3 = (venum*)g$8c042a7;
-	if( r1 == r3 ) goto label$3c34fd1_6_5;
+	if( r1 == r3 ) goto label$3c34fd1_7_5;
 	r3 = (venum*)g$b72f6d6;
-	if( r1 != r3 ) goto label$3c34fd1_6_9;
-	label$3c34fd1_6_5:
+	if( r1 != r3 ) goto label$3c34fd1_7_9;
+	label$3c34fd1_7_5:
 	r4 = r0->restLength;
 	r5 = 0.5;
 	r4 = r4 * r5;
 	r0->restLength = r4;
-	label$3c34fd1_6_9:
+	label$3c34fd1_7_9:
 	if( r1 == NULL ) hl_null_access();
 	r6 = HL__ENUM_INDEX__(r1);
 	switch(r6) {
 		default:
+		case 2:
+		case 3:
 			r7 = hl_alloc_closure_ptr(&t$fun_76f0ed9,components_physics_Stick_noConstrain,r0);
-			if( r7 ) goto label$3c34fd1_6_16;
+			if( r7 ) goto label$3c34fd1_7_16;
 			r8 = NULL;
-			goto label$3c34fd1_6_17;
-			label$3c34fd1_6_16:
+			goto label$3c34fd1_7_17;
+			label$3c34fd1_7_16:
 			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,components_physics_Stick_set_type__$1,r7);
-			label$3c34fd1_6_17:
+			label$3c34fd1_7_17:
 			r0->constrain = r8;
-			goto label$3c34fd1_6_32;
+			goto label$3c34fd1_7_39;
 		case 0:
 			r7 = hl_alloc_closure_ptr(&t$fun_76f0ed9,components_physics_Stick_standard,r0);
-			if( r7 ) goto label$3c34fd1_6_23;
+			if( r7 ) goto label$3c34fd1_7_23;
 			r8 = NULL;
-			goto label$3c34fd1_6_24;
-			label$3c34fd1_6_23:
+			goto label$3c34fd1_7_24;
+			label$3c34fd1_7_23:
 			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,components_physics_Stick_set_type__$1,r7);
-			label$3c34fd1_6_24:
+			label$3c34fd1_7_24:
 			r0->constrain = r8;
-			goto label$3c34fd1_6_32;
+			goto label$3c34fd1_7_39;
 		case 1:
 			r7 = hl_alloc_closure_ptr(&t$fun_76f0ed9,components_physics_Stick_repell,r0);
-			if( r7 ) goto label$3c34fd1_6_30;
+			if( r7 ) goto label$3c34fd1_7_30;
 			r8 = NULL;
-			goto label$3c34fd1_6_31;
-			label$3c34fd1_6_30:
+			goto label$3c34fd1_7_31;
+			label$3c34fd1_7_30:
 			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,components_physics_Stick_set_type__$1,r7);
-			label$3c34fd1_6_31:
+			label$3c34fd1_7_31:
+			r0->constrain = r8;
+			goto label$3c34fd1_7_39;
+		case 4:
+			r7 = hl_alloc_closure_ptr(&t$fun_76f0ed9,components_physics_Stick_scarf,r0);
+			if( r7 ) goto label$3c34fd1_7_37;
+			r8 = NULL;
+			goto label$3c34fd1_7_38;
+			label$3c34fd1_7_37:
+			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,components_physics_Stick_set_type__$1,r7);
+			label$3c34fd1_7_38:
 			r0->constrain = r8;
 	}
-	label$3c34fd1_6_32:
+	label$3c34fd1_7_39:
 	r0->type = r1;
 	return r1;
 }

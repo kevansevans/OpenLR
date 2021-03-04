@@ -2,14 +2,9 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/AmbientLight.h>
-void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
-
-void h3d_shader_AmbientLight_new(h3d__shader__AmbientLight r0) {
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	return;
-}
+void hxsl_Shader_new(hxsl__Shader);
 
 void h3d_shader_AmbientLight_updateConstants(h3d__shader__AmbientLight r0,hxsl__Globals r1) {
 	bool r4;
@@ -17,12 +12,12 @@ void h3d_shader_AmbientLight_updateConstants(h3d__shader__AmbientLight r0,hxsl__
 	r2 = 0;
 	r0->constBits = r2;
 	r4 = r0->additive__;
-	if( !r4 ) goto label$847f454_2_8;
+	if( !r4 ) goto label$847f454_1_8;
 	r2 = r0->constBits;
 	r5 = 2;
 	r2 = r2 | r5;
 	r0->constBits = r2;
-	label$847f454_2_8:
+	label$847f454_1_8:
 	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
 	return;
 }
@@ -32,11 +27,11 @@ vdynamic* h3d_shader_AmbientLight_getParamValue(h3d__shader__AmbientLight r0,int
 	vdynamic *r4;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$847f454_3_5;
+	if( r1 != r2 ) goto label$847f454_2_5;
 	r3 = r0->additive__;
 	r4 = hl_alloc_dynbool(r3);
 	return r4;
-	label$847f454_3_5:
+	label$847f454_2_5:
 	r4 = NULL;
 	return r4;
 }
@@ -45,5 +40,10 @@ double h3d_shader_AmbientLight_getParamFloatValue(h3d__shader__AmbientLight r0,i
 	double r2;
 	r2 = 0.;
 	return r2;
+}
+
+void h3d_shader_AmbientLight_new(h3d__shader__AmbientLight r0) {
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	return;
 }
 

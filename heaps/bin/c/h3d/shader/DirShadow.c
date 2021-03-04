@@ -2,17 +2,25 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/DirShadow.h>
+extern hl_type t$hl_types_ArrayObj;
+void hl_types_ArrayObj_new(hl__types__ArrayObj);
+extern hl_type t$h3d_Matrix;
+void h3d_Matrix_new(h3d__Matrix);
+extern venum* g$hxsl_Channel_Unknown;
+extern hl_type t$h3d_Vector;
+void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
+void hxsl_Shader_new(hxsl__Shader);
+#include <hl/natives.h>
+hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 #include <hxsl/Globals.h>
 #include <hxd/PixelFormat.h>
 #include <h3d/mat/Texture.h>
 extern String s$pcfQuality;
 extern String s$_is_out_of_range_;
 String String___add__(String,String);
-#include <hl/natives.h>
 String String___alloc__(vbyte*,int);
 extern String s$cedf8da;
 vdynamic* haxe_Exception_thrown(vdynamic*);
-extern venum* g$hxsl_Channel_Unknown;
 extern h3d__mat__$Texture g$_h3d_mat_Texture;
 extern venum* g$hxsl_Channel_PackedFloat;
 extern String s$shadowMap;
@@ -21,213 +29,6 @@ int hxsl_Globals_allocChannelID(hxsl__Globals,h3d__mat__Texture);
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
 extern hl_type t$_i32;
-extern hl_type t$hl_types_ArrayObj;
-void hl_types_ArrayObj_new(hl__types__ArrayObj);
-extern hl_type t$h3d_Matrix;
-void h3d_Matrix_new(h3d__Matrix);
-extern hl_type t$h3d_Vector;
-void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
-void hxsl_Shader_new(hxsl__Shader);
-hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
-
-void h3d_shader_DirShadow_updateConstants(h3d__shader__DirShadow r0,hxsl__Globals r1) {
-	String r8, r9;
-	venum *r14, *r15, *r16, *r17;
-	bool r4;
-	h3d__mat__$Texture r18;
-	int *r10;
-	vdynamic *r7;
-	h3d__mat__Texture r13;
-	vbyte *r11;
-	int r2, r5, r6, r12;
-	r2 = 0;
-	r0->constBits = r2;
-	r4 = r0->enable__;
-	if( !r4 ) goto label$0f39027_1_8;
-	r2 = r0->constBits;
-	r5 = 1;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	label$0f39027_1_8:
-	r4 = r0->USE_ESM__;
-	if( !r4 ) goto label$0f39027_1_14;
-	r2 = r0->constBits;
-	r5 = 2;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	label$0f39027_1_14:
-	r4 = r0->USE_PCF__;
-	if( !r4 ) goto label$0f39027_1_20;
-	r2 = r0->constBits;
-	r5 = 4;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	label$0f39027_1_20:
-	r2 = r0->pcfQuality__;
-	r6 = 8;
-	r5 = ((unsigned)r2) >> r6;
-	r6 = 0;
-	if( r5 == r6 ) goto label$0f39027_1_42;
-	r8 = (String)s$pcfQuality;
-	r9 = (String)s$_is_out_of_range_;
-	r8 = String___add__(r8,r9);
-	r5 = r2;
-	r10 = &r5;
-	r11 = hl_itos(r5,r10);
-	r9 = String___alloc__(r11,r5);
-	r8 = String___add__(r8,r9);
-	r9 = (String)s$cedf8da;
-	r8 = String___add__(r8,r9);
-	r5 = 255;
-	r10 = &r5;
-	r11 = hl_itos(r5,r10);
-	r9 = String___alloc__(r11,r5);
-	r8 = String___add__(r8,r9);
-	r7 = haxe_Exception_thrown(((vdynamic*)r8));
-	hl_throw((vdynamic*)r7);
-	label$0f39027_1_42:
-	r5 = r0->constBits;
-	r12 = 3;
-	r6 = r2 << r12;
-	r5 = r5 | r6;
-	r0->constBits = r5;
-	r13 = r0->shadowMap__;
-	if( r13 ) goto label$0f39027_1_52;
-	r14 = (venum*)g$hxsl_Channel_Unknown;
-	r0->shadowMapChannel__ = r14;
-	goto label$0f39027_1_69;
-	label$0f39027_1_52:
-	r14 = r0->shadowMapChannel__;
-	r15 = (venum*)g$hxsl_Channel_Unknown;
-	if( r14 != r15 ) goto label$0f39027_1_69;
-	r13 = r0->shadowMap__;
-	if( r13 == NULL ) hl_null_access();
-	r16 = r13->format;
-	r18 = (h3d__mat__$Texture)g$_h3d_mat_Texture;
-	r17 = r18->nativeFormat;
-	if( r16 != r17 ) goto label$0f39027_1_64;
-	r14 = (venum*)g$hxsl_Channel_PackedFloat;
-	r0->shadowMapChannel__ = r14;
-	goto label$0f39027_1_69;
-	label$0f39027_1_64:
-	r8 = (String)s$shadowMap;
-	r9 = (String)s$Channel_is_not_set;
-	r8 = String___add__(r8,r9);
-	r7 = haxe_Exception_thrown(((vdynamic*)r8));
-	hl_throw((vdynamic*)r7);
-	label$0f39027_1_69:
-	r2 = r0->constBits;
-	if( r1 == NULL ) hl_null_access();
-	r13 = r0->shadowMap__;
-	r5 = hxsl_Globals_allocChannelID(r1,r13);
-	r6 = 3;
-	r5 = r5 << r6;
-	r14 = r0->shadowMapChannel__;
-	if( r14 == NULL ) hl_null_access();
-	r6 = HL__ENUM_INDEX__(r14);
-	r5 = r5 | r6;
-	r6 = 11;
-	r5 = r5 << r6;
-	r2 = r2 | r5;
-	r0->constBits = r2;
-	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
-	return;
-}
-
-vdynamic* h3d_shader_DirShadow_getParamValue(h3d__shader__DirShadow r0,int r1) {
-	hl__types__ArrayObj r9;
-	bool r3;
-	h3d__Vector r6;
-	double r5;
-	vdynamic *r4;
-	h3d__Matrix r8;
-	h3d__mat__Texture r7;
-	int r2;
-	switch(r1) {
-		default:
-			goto label$0f39027_2_35;
-		case 0:
-			r3 = r0->enable__;
-			r4 = hl_alloc_dynbool(r3);
-			return r4;
-		case 1:
-			r3 = r0->USE_ESM__;
-			r4 = hl_alloc_dynbool(r3);
-			return r4;
-		case 2:
-			r5 = r0->shadowPower__;
-			r4 = hl_alloc_dynamic(&t$_f64);
-			r4->v.d = r5;
-			return r4;
-		case 3:
-			r3 = r0->USE_PCF__;
-			r4 = hl_alloc_dynbool(r3);
-			return r4;
-		case 4:
-			r2 = r0->pcfQuality__;
-			r4 = hl_alloc_dynamic(&t$_i32);
-			r4->v.i = r2;
-			return r4;
-		case 5:
-			r5 = r0->pcfScale__;
-			r4 = hl_alloc_dynamic(&t$_f64);
-			r4->v.d = r5;
-			return r4;
-		case 6:
-			r6 = r0->shadowRes__;
-			return ((vdynamic*)r6);
-		case 7:
-			r7 = r0->shadowMap__;
-			return ((vdynamic*)r7);
-		case 8:
-			r8 = r0->shadowProj__;
-			return ((vdynamic*)r8);
-		case 9:
-			r5 = r0->shadowBias__;
-			r4 = hl_alloc_dynamic(&t$_f64);
-			r4->v.d = r5;
-			return r4;
-		case 10:
-			r9 = r0->poissonDiskLow__;
-			return ((vdynamic*)r9);
-		case 11:
-			r9 = r0->poissonDiskHigh__;
-			return ((vdynamic*)r9);
-		case 12:
-			r9 = r0->poissonDiskVeryHigh__;
-			return ((vdynamic*)r9);
-	}
-	label$0f39027_2_35:
-	r4 = NULL;
-	return r4;
-}
-
-double h3d_shader_DirShadow_getParamFloatValue(h3d__shader__DirShadow r0,int r1) {
-	double r2;
-	switch(r1) {
-		default:
-		case 0:
-		case 1:
-		case 3:
-		case 4:
-		case 6:
-		case 7:
-		case 8:
-			goto label$0f39027_3_8;
-		case 2:
-			r2 = r0->shadowPower__;
-			return r2;
-		case 5:
-			r2 = r0->pcfScale__;
-			return r2;
-		case 9:
-			r2 = r0->shadowBias__;
-			return r2;
-	}
-	label$0f39027_3_8:
-	r2 = 0.;
-	return r2;
-}
 
 void h3d_shader_DirShadow_new(h3d__shader__DirShadow r0) {
 	hl__types__ArrayObj r1;
@@ -1085,5 +886,204 @@ void h3d_shader_DirShadow_new(h3d__shader__DirShadow r0) {
 	r1 = hl_types_ArrayObj_alloc(r12);
 	r0->poissonDiskVeryHigh__ = r1;
 	return;
+}
+
+void h3d_shader_DirShadow_updateConstants(h3d__shader__DirShadow r0,hxsl__Globals r1) {
+	String r8, r9;
+	venum *r14, *r15, *r16, *r17;
+	bool r4;
+	h3d__mat__$Texture r18;
+	int *r10;
+	vdynamic *r7;
+	h3d__mat__Texture r13;
+	vbyte *r11;
+	int r2, r5, r6, r12;
+	r2 = 0;
+	r0->constBits = r2;
+	r4 = r0->enable__;
+	if( !r4 ) goto label$0f39027_2_8;
+	r2 = r0->constBits;
+	r5 = 1;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	label$0f39027_2_8:
+	r4 = r0->USE_ESM__;
+	if( !r4 ) goto label$0f39027_2_14;
+	r2 = r0->constBits;
+	r5 = 2;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	label$0f39027_2_14:
+	r4 = r0->USE_PCF__;
+	if( !r4 ) goto label$0f39027_2_20;
+	r2 = r0->constBits;
+	r5 = 4;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	label$0f39027_2_20:
+	r2 = r0->pcfQuality__;
+	r6 = 8;
+	r5 = ((unsigned)r2) >> r6;
+	r6 = 0;
+	if( r5 == r6 ) goto label$0f39027_2_42;
+	r8 = (String)s$pcfQuality;
+	r9 = (String)s$_is_out_of_range_;
+	r8 = String___add__(r8,r9);
+	r5 = r2;
+	r10 = &r5;
+	r11 = hl_itos(r5,r10);
+	r9 = String___alloc__(r11,r5);
+	r8 = String___add__(r8,r9);
+	r9 = (String)s$cedf8da;
+	r8 = String___add__(r8,r9);
+	r5 = 255;
+	r10 = &r5;
+	r11 = hl_itos(r5,r10);
+	r9 = String___alloc__(r11,r5);
+	r8 = String___add__(r8,r9);
+	r7 = haxe_Exception_thrown(((vdynamic*)r8));
+	hl_throw((vdynamic*)r7);
+	label$0f39027_2_42:
+	r5 = r0->constBits;
+	r12 = 3;
+	r6 = r2 << r12;
+	r5 = r5 | r6;
+	r0->constBits = r5;
+	r13 = r0->shadowMap__;
+	if( r13 ) goto label$0f39027_2_52;
+	r14 = (venum*)g$hxsl_Channel_Unknown;
+	r0->shadowMapChannel__ = r14;
+	goto label$0f39027_2_69;
+	label$0f39027_2_52:
+	r14 = r0->shadowMapChannel__;
+	r15 = (venum*)g$hxsl_Channel_Unknown;
+	if( r14 != r15 ) goto label$0f39027_2_69;
+	r13 = r0->shadowMap__;
+	if( r13 == NULL ) hl_null_access();
+	r16 = r13->format;
+	r18 = (h3d__mat__$Texture)g$_h3d_mat_Texture;
+	r17 = r18->nativeFormat;
+	if( r16 != r17 ) goto label$0f39027_2_64;
+	r14 = (venum*)g$hxsl_Channel_PackedFloat;
+	r0->shadowMapChannel__ = r14;
+	goto label$0f39027_2_69;
+	label$0f39027_2_64:
+	r8 = (String)s$shadowMap;
+	r9 = (String)s$Channel_is_not_set;
+	r8 = String___add__(r8,r9);
+	r7 = haxe_Exception_thrown(((vdynamic*)r8));
+	hl_throw((vdynamic*)r7);
+	label$0f39027_2_69:
+	r2 = r0->constBits;
+	if( r1 == NULL ) hl_null_access();
+	r13 = r0->shadowMap__;
+	r5 = hxsl_Globals_allocChannelID(r1,r13);
+	r6 = 3;
+	r5 = r5 << r6;
+	r14 = r0->shadowMapChannel__;
+	if( r14 == NULL ) hl_null_access();
+	r6 = HL__ENUM_INDEX__(r14);
+	r5 = r5 | r6;
+	r6 = 11;
+	r5 = r5 << r6;
+	r2 = r2 | r5;
+	r0->constBits = r2;
+	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
+	return;
+}
+
+vdynamic* h3d_shader_DirShadow_getParamValue(h3d__shader__DirShadow r0,int r1) {
+	hl__types__ArrayObj r9;
+	bool r3;
+	h3d__Vector r6;
+	double r5;
+	vdynamic *r4;
+	h3d__Matrix r8;
+	h3d__mat__Texture r7;
+	int r2;
+	switch(r1) {
+		default:
+			goto label$0f39027_3_35;
+		case 0:
+			r3 = r0->enable__;
+			r4 = hl_alloc_dynbool(r3);
+			return r4;
+		case 1:
+			r3 = r0->USE_ESM__;
+			r4 = hl_alloc_dynbool(r3);
+			return r4;
+		case 2:
+			r5 = r0->shadowPower__;
+			r4 = hl_alloc_dynamic(&t$_f64);
+			r4->v.d = r5;
+			return r4;
+		case 3:
+			r3 = r0->USE_PCF__;
+			r4 = hl_alloc_dynbool(r3);
+			return r4;
+		case 4:
+			r2 = r0->pcfQuality__;
+			r4 = hl_alloc_dynamic(&t$_i32);
+			r4->v.i = r2;
+			return r4;
+		case 5:
+			r5 = r0->pcfScale__;
+			r4 = hl_alloc_dynamic(&t$_f64);
+			r4->v.d = r5;
+			return r4;
+		case 6:
+			r6 = r0->shadowRes__;
+			return ((vdynamic*)r6);
+		case 7:
+			r7 = r0->shadowMap__;
+			return ((vdynamic*)r7);
+		case 8:
+			r8 = r0->shadowProj__;
+			return ((vdynamic*)r8);
+		case 9:
+			r5 = r0->shadowBias__;
+			r4 = hl_alloc_dynamic(&t$_f64);
+			r4->v.d = r5;
+			return r4;
+		case 10:
+			r9 = r0->poissonDiskLow__;
+			return ((vdynamic*)r9);
+		case 11:
+			r9 = r0->poissonDiskHigh__;
+			return ((vdynamic*)r9);
+		case 12:
+			r9 = r0->poissonDiskVeryHigh__;
+			return ((vdynamic*)r9);
+	}
+	label$0f39027_3_35:
+	r4 = NULL;
+	return r4;
+}
+
+double h3d_shader_DirShadow_getParamFloatValue(h3d__shader__DirShadow r0,int r1) {
+	double r2;
+	switch(r1) {
+		default:
+		case 0:
+		case 1:
+		case 3:
+		case 4:
+		case 6:
+		case 7:
+		case 8:
+			goto label$0f39027_4_8;
+		case 2:
+			r2 = r0->shadowPower__;
+			return r2;
+		case 5:
+			r2 = r0->pcfScale__;
+			return r2;
+		case 9:
+			r2 = r0->shadowBias__;
+			return r2;
+	}
+	label$0f39027_4_8:
+	r2 = 0.;
+	return r2;
 }
 

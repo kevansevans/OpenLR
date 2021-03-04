@@ -4,6 +4,7 @@
 #include <_std/Main.h>
 extern String s$Release;
 extern $Main g$_Main;
+void hxlr_scripts_PhysFloor_build(void);
 extern hl_type t$Main;
 void Main_new(Main);
 #include <_std/Date.h>
@@ -324,13 +325,14 @@ void h2d_Graphics_addVertex(h2d__Graphics,double,double,double,double,double,dou
 
 void Main_main() {
 	String r0;
-	Main r2;
+	Main r3;
 	$Main r1;
 	r0 = (String)s$Release;
 	r1 = ($Main)g$_Main;
 	r1->build = r0;
-	r2 = (Main)hl_alloc_obj(&t$Main);
-	Main_new(r2);
+	hxlr_scripts_PhysFloor_build();
+	r3 = (Main)hl_alloc_obj(&t$Main);
+	Main_new(r3);
 	return;
 }
 

@@ -2,13 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/Blur.h>
-extern hl_type t$h3d_Matrix;
-void h3d_Matrix_new(h3d__Matrix);
-extern hl_type t$h3d_Vector;
-void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
-extern hl_type t$hl_types_ArrayBytes_Float;
-void hl_types_ArrayBytes_Float_new(hl__types__ArrayBytes_Float);
-void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 #include <hxsl/Globals.h>
 extern String s$Quality;
 extern String s$_is_out_of_range_;
@@ -20,44 +13,13 @@ vdynamic* haxe_Exception_thrown(vdynamic*);
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
 extern hl_type t$_i32;
-
-void h3d_shader_Blur_new(h3d__shader__Blur r0) {
-	h3d__Vector r3;
-	hl__types__ArrayBytes_Float r8;
-	double *r4, *r5, *r6, *r7;
-	int r9;
-	h3d__Matrix r1;
-	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
-	h3d_Matrix_new(r1);
-	r0->cubeDir__ = r1;
-	r3 = (h3d__Vector)hl_alloc_obj(&t$h3d_Vector);
-	r4 = NULL;
-	r5 = NULL;
-	r6 = NULL;
-	r7 = NULL;
-	h3d_Vector_new(r3,r4,r5,r6,r7);
-	r0->fixedColor__ = r3;
-	r3 = (h3d__Vector)hl_alloc_obj(&t$h3d_Vector);
-	r4 = NULL;
-	r5 = NULL;
-	r6 = NULL;
-	r7 = NULL;
-	h3d_Vector_new(r3,r4,r5,r6,r7);
-	r0->pixel__ = r3;
-	r8 = (hl__types__ArrayBytes_Float)hl_alloc_obj(&t$hl_types_ArrayBytes_Float);
-	hl_types_ArrayBytes_Float_new(r8);
-	r0->offsets__ = r8;
-	r8 = (hl__types__ArrayBytes_Float)hl_alloc_obj(&t$hl_types_ArrayBytes_Float);
-	hl_types_ArrayBytes_Float_new(r8);
-	r0->values__ = r8;
-	r9 = 0;
-	r0->Quality__ = r9;
-	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
-	h3d_Matrix_new(r1);
-	r0->cameraInverseViewProj__ = r1;
-	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
-	return;
-}
+extern hl_type t$h3d_Matrix;
+void h3d_Matrix_new(h3d__Matrix);
+extern hl_type t$h3d_Vector;
+void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
+extern hl_type t$hl_types_ArrayBytes_Float;
+void hl_types_ArrayBytes_Float_new(hl__types__ArrayBytes_Float);
+void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 
 void h3d_shader_Blur_updateConstants(h3d__shader__Blur r0,hxsl__Globals r1) {
 	String r7, r8;
@@ -72,7 +34,7 @@ void h3d_shader_Blur_updateConstants(h3d__shader__Blur r0,hxsl__Globals r1) {
 	r5 = 8;
 	r4 = ((unsigned)r2) >> r5;
 	r5 = 0;
-	if( r4 == r5 ) goto label$5ae59b0_2_24;
+	if( r4 == r5 ) goto label$5ae59b0_1_24;
 	r7 = (String)s$Quality;
 	r8 = (String)s$_is_out_of_range_;
 	r7 = String___add__(r7,r8);
@@ -90,52 +52,52 @@ void h3d_shader_Blur_updateConstants(h3d__shader__Blur r0,hxsl__Globals r1) {
 	r7 = String___add__(r7,r8);
 	r6 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r6);
-	label$5ae59b0_2_24:
+	label$5ae59b0_1_24:
 	r4 = r0->constBits;
 	r4 = r4 | r2;
 	r0->constBits = r4;
 	r11 = r0->isDepth__;
-	if( !r11 ) goto label$5ae59b0_2_33;
+	if( !r11 ) goto label$5ae59b0_1_33;
 	r2 = r0->constBits;
 	r4 = 256;
 	r2 = r2 | r4;
 	r0->constBits = r2;
-	label$5ae59b0_2_33:
+	label$5ae59b0_1_33:
 	r11 = r0->hasFixedColor__;
-	if( !r11 ) goto label$5ae59b0_2_39;
+	if( !r11 ) goto label$5ae59b0_1_39;
 	r2 = r0->constBits;
 	r4 = 512;
 	r2 = r2 | r4;
 	r0->constBits = r2;
-	label$5ae59b0_2_39:
+	label$5ae59b0_1_39:
 	r11 = r0->smoothFixedColor__;
-	if( !r11 ) goto label$5ae59b0_2_45;
+	if( !r11 ) goto label$5ae59b0_1_45;
 	r2 = r0->constBits;
 	r4 = 1024;
 	r2 = r2 | r4;
 	r0->constBits = r2;
-	label$5ae59b0_2_45:
+	label$5ae59b0_1_45:
 	r11 = r0->isDepthDependant__;
-	if( !r11 ) goto label$5ae59b0_2_51;
+	if( !r11 ) goto label$5ae59b0_1_51;
 	r2 = r0->constBits;
 	r4 = 2048;
 	r2 = r2 | r4;
 	r0->constBits = r2;
-	label$5ae59b0_2_51:
+	label$5ae59b0_1_51:
 	r11 = r0->hasNormal__;
-	if( !r11 ) goto label$5ae59b0_2_57;
+	if( !r11 ) goto label$5ae59b0_1_57;
 	r2 = r0->constBits;
 	r4 = 4096;
 	r2 = r2 | r4;
 	r0->constBits = r2;
-	label$5ae59b0_2_57:
+	label$5ae59b0_1_57:
 	r11 = r0->isCube__;
-	if( !r11 ) goto label$5ae59b0_2_63;
+	if( !r11 ) goto label$5ae59b0_1_63;
 	r2 = r0->constBits;
 	r4 = 8192;
 	r2 = r2 | r4;
 	r0->constBits = r2;
-	label$5ae59b0_2_63:
+	label$5ae59b0_1_63:
 	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
 	return;
 }
@@ -151,7 +113,7 @@ vdynamic* h3d_shader_Blur_getParamValue(h3d__shader__Blur r0,int r1) {
 	int r2;
 	switch(r1) {
 		default:
-			goto label$5ae59b0_3_46;
+			goto label$5ae59b0_2_46;
 		case 0:
 			r3 = r0->flipY__;
 			r4 = hl_alloc_dynamic(&t$_f64);
@@ -217,7 +179,7 @@ vdynamic* h3d_shader_Blur_getParamValue(h3d__shader__Blur r0,int r1) {
 			r5 = r0->cubeDir__;
 			return ((vdynamic*)r5);
 	}
-	label$5ae59b0_3_46:
+	label$5ae59b0_2_46:
 	r4 = NULL;
 	return r4;
 }
@@ -226,11 +188,49 @@ double h3d_shader_Blur_getParamFloatValue(h3d__shader__Blur r0,int r1) {
 	double r3;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$5ae59b0_4_4;
+	if( r1 != r2 ) goto label$5ae59b0_3_4;
 	r3 = r0->flipY__;
 	return r3;
-	label$5ae59b0_4_4:
+	label$5ae59b0_3_4:
 	r3 = 0.;
 	return r3;
+}
+
+void h3d_shader_Blur_new(h3d__shader__Blur r0) {
+	h3d__Vector r3;
+	hl__types__ArrayBytes_Float r8;
+	double *r4, *r5, *r6, *r7;
+	int r9;
+	h3d__Matrix r1;
+	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
+	h3d_Matrix_new(r1);
+	r0->cubeDir__ = r1;
+	r3 = (h3d__Vector)hl_alloc_obj(&t$h3d_Vector);
+	r4 = NULL;
+	r5 = NULL;
+	r6 = NULL;
+	r7 = NULL;
+	h3d_Vector_new(r3,r4,r5,r6,r7);
+	r0->fixedColor__ = r3;
+	r3 = (h3d__Vector)hl_alloc_obj(&t$h3d_Vector);
+	r4 = NULL;
+	r5 = NULL;
+	r6 = NULL;
+	r7 = NULL;
+	h3d_Vector_new(r3,r4,r5,r6,r7);
+	r0->pixel__ = r3;
+	r8 = (hl__types__ArrayBytes_Float)hl_alloc_obj(&t$hl_types_ArrayBytes_Float);
+	hl_types_ArrayBytes_Float_new(r8);
+	r0->offsets__ = r8;
+	r8 = (hl__types__ArrayBytes_Float)hl_alloc_obj(&t$hl_types_ArrayBytes_Float);
+	hl_types_ArrayBytes_Float_new(r8);
+	r0->values__ = r8;
+	r9 = 0;
+	r0->Quality__ = r9;
+	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
+	h3d_Matrix_new(r1);
+	r0->cameraInverseViewProj__ = r1;
+	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
+	return;
 }
 
