@@ -15,7 +15,7 @@ class ContactPoint
 	
 	public var gravity:LRPoint;
 	
-	public var  friction:Float;
+	public var friction:Float;
 	
 	public function new(_x:Float = 0.0, _y:Float = 0.0, _friction:Float = 0.0) 
 	{

@@ -1,24 +1,27 @@
-package components.physics;
+package hxlr.components;
 
-import hxlr.math.LRPoint;
 import hxlr.components.ContactPoint;
+import hxlr.math.LRPoint;
 
 /**
  * ...
  * @author Kaelan
  */
-class ScarfPoint extends ContactPoint
+class AirPoint extends ContactPoint
 {
+
 	public var airFriction:Float;
-	public function new(_x:Float=0.0, _y:Float=0.0, _af:Float = 0.9) 
+	
+	public function new(_x:Float, _y:Float, _af:Float) 
 	{
+		
 		super(_x, _y);
 		
 		airFriction = _af;
 		
 	}
 	
-	override public function iterate(?_gravity:LRPoint):Void 
+	override public function iterate(?_gravity:LRPoint) 
 	{
 		
 		var g = _gravity == null ? gravity : _gravity;
@@ -26,8 +29,7 @@ class ScarfPoint extends ContactPoint
 		dir.x = (pos.x - vel.x) * airFriction + g.x;
 		dir.y = (pos.y - vel.y) * airFriction + g.y;
 		
-		vel.x = pos.x;
-		vel.y = pos.y;
+		vel = pos.clone();
 		
 		pos = pos.add(dir);
 		
