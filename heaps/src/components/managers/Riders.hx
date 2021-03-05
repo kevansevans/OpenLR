@@ -1,6 +1,5 @@
 package components.managers;
 import components.sledder.Bosh;
-import components.sledder.LTAABosh;
 import components.sledder.RiderBase;
 import network.NetAction;
 import h2d.col.Point;
@@ -41,7 +40,7 @@ class Riders
 			Main.console.log('Rider name ${setName} already occupied, renaming to ${setName + occupiedSpace}');
 			setName += "" + occupiedSpace;
 		}
-		riders[setName] = new LTAABosh(_start.x, _start.y, setName, _startFrame, _endFrame);
+		riders[setName] = new Bosh(_start.x, _start.y, setName, _startFrame, _endFrame);
 		++riderCount;
 		Main.simulation.recordGlobalSimState();
 		
