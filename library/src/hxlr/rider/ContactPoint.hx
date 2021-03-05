@@ -1,6 +1,6 @@
-package hxlr.components;
+package hxlr.rider;
 
-import hxlr.math.LRPoint;
+import hxlr.math.Point;
 
 /**
  * ...
@@ -9,24 +9,24 @@ import hxlr.math.LRPoint;
 class ContactPoint
 {
 	
-	public var pos:LRPoint;
-	public var vel:LRPoint;
-	public var dir:LRPoint;
+	public var pos:Point;
+	public var vel:Point;
+	public var dir:Point;
 	
-	public var gravity:LRPoint;
+	public var gravity:Point;
 	
 	public var friction:Float;
 	
 	public function new(_x:Float = 0.0, _y:Float = 0.0, _friction:Float = 0.0) 
 	{
-		pos = new LRPoint(_x, _y);
-		dir = new LRPoint();
-		vel = new LRPoint();
+		pos = new Point(_x, _y);
+		dir = new Point();
+		vel = new Point();
 		
 		friction = _friction;
 	}
 	
-	public function iterate(?_gravity:LRPoint) {
+	public function iterate(?_gravity:Point) {
 		
 		var g = _gravity == null ? gravity : _gravity;
 		
@@ -56,6 +56,6 @@ class ContactPoint
 }
 
 typedef PointContainer = {
-	var position:LRPoint;
-	var velocity:LRPoint;
+	var position:Point;
+	var velocity:Point;
 }

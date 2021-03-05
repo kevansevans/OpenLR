@@ -1,9 +1,9 @@
 package components.stage;
 
-import components.lines.LineBase;
-import components.lines.Floor;
-import components.lines.Accel;
-import components.lines.Scenery;
+import hxlr.lines.LineBase;
+import hxlr.lines.Floor;
+import hxlr.lines.Accel;
+import hxlr.lines.Scenery;
 import components.managers.Grid;
 import enums.LineDrawMode;
 import format.agal.Data.Reg;

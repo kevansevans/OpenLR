@@ -1,10 +1,10 @@
 package file;
 
-import components.lines.Floor;
-import components.lines.Accel;
-import components.lines.Scenery;
-import components.lines.LineBase;
-import components.lines.LineBase.LineSave;
+import hxlr.lines.Floor;
+import hxlr.lines.Accel;
+import hxlr.lines.Scenery;
+import hxlr.lines.LineBase;
+import hxlr.lines.LineBase.LineSave;
 import components.sledder.RiderBase;
 import haxe.Json;
 import h2d.col.Point;

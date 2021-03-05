@@ -6,11 +6,11 @@ package hxlr.math;
  */
 
 #if heaps
-typedef LRPoint = h2d.col.Point;
+typedef Point = h2d.col.Point;
 #else if openfl
-
+typedef Point = openfl.geom.Point;
 #else
-class LRPoint
+class Point
 {
 	public var x:Float;
 	public var y:Float;
@@ -21,16 +21,16 @@ class LRPoint
 	}
 	
 	public function clone() {
-		return new LRPoint(this.x, this.y);
+		return new Point(this.x, this.y);
 	}
 	
-	public function add(_point:LRPoint):LRPoint {
+	public function add(_point:Point):Point {
 		this.x += _point.x;
 		this.y += _point.y;
 		return this;
 	}
 	
-	public function subtract(_point:LRPoint):LRPoint {
+	public function subtract(_point:Point):Point {
 		this.x -= _point.x;
 		this.y -= _point.y;
 		return this;

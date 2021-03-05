@@ -1,10 +1,10 @@
 package components.tool;
-import components.lines.Undefined;
+import hxlr.lines.Undefined;
 import components.managers.Grid;
-import components.lines.Floor;
-import components.lines.Accel;
-import components.lines.Scenery;
-import components.lines.LineBase;
+import hxlr.lines.Floor;
+import hxlr.lines.Accel;
+import hxlr.lines.Scenery;
+import hxlr.lines.LineBase;
 import components.tool.ToolFunction;
 import components.ui.Toolbar.Icon;
 import hxd.BitmapData;

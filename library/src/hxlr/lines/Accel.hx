@@ -1,6 +1,6 @@
-package components.lines;
+package hxlr.lines;
 
-import hxlr.components.ContactPoint;
+import hxlr.rider.ContactPoint;
 
 import h2d.col.Point;
 

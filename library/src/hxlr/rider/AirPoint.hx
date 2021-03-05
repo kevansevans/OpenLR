@@ -1,7 +1,7 @@
-package hxlr.components;
+package hxlr.rider;
 
-import hxlr.components.ContactPoint;
-import hxlr.math.LRPoint;
+import hxlr.rider.ContactPoint;
+import hxlr.math.Point;
 
 /**
  * ...
@@ -21,7 +21,7 @@ class AirPoint extends ContactPoint
 		
 	}
 	
-	override public function iterate(?_gravity:LRPoint) 
+	override public function iterate(?_gravity:Point) 
 	{
 		
 		var g = _gravity == null ? gravity : _gravity;

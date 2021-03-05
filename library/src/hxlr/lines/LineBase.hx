@@ -1,6 +1,6 @@
-package components.lines;
+package hxlr.lines;
 
-import hxlr.components.ContactPoint;
+import hxlr.rider.ContactPoint;
 import components.tool.ToolBehavior.LineColor;
 import enums.LineDrawMode;
 import h2d.Graphics;

@@ -1,4 +1,4 @@
-package components.lines;
+package hxlr.lines;
 
 import h2d.col.Point;
 

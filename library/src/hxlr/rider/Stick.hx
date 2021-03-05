@@ -1,22 +1,17 @@
-package components.physics;
+package hxlr.rider;
 
 import components.sledder.RiderBase;
 
-import hxlr.components.ContactPoint;
-import hxlr.components.AirPoint;
+import hxlr.rider.ContactPoint;
+import hxlr.rider.AirPoint;
+import hxlr.enums.StickType;
+
 import h2d.col.Point;
 
 /**
  * ...
  * @author Kaelan
  */
-enum StickType {
-	STANDARD;
-	REPELL;
-	ATTRACT;
-	FLOPPY;
-	SCARF;
-}
 
 class Stick 
 {

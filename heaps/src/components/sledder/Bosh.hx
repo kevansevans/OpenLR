@@ -1,9 +1,9 @@
 package components.sledder;
 
-import hxlr.components.ContactPoint;
-import hxlr.components.AirPoint;
+import hxlr.rider.ContactPoint;
+import hxlr.rider.AirPoint;
+import hxlr.rider.Stick;
 
-import components.physics.Stick;
 import components.sledder.RiderBase;
 import components.sledder.RiderBase.RiderPart;
 
