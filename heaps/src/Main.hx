@@ -8,7 +8,6 @@ import components.stage.Camera;
 import components.managers.Musicplayer;
 import components.managers.Riders;
 import components.managers.Simulation;
-import components.stage.PolyCanvas;
 import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import components.ui.Toolbar;
@@ -66,8 +65,6 @@ class Main extends App
 	public static var br(get, null):h2d.col.Point;
 	
 	public static var canvas:Canvas;
-	
-	public static var polyCanvas:PolyCanvas;
 	
 	public static var viewGridSize:Int = 14;
 	

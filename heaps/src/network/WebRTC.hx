@@ -141,7 +141,7 @@ class WebRTC
 					
 				case deleteLine :
 					
-					Main.grid.P2Punregister(Main.grid.lines[packet.data[0]]);
+					//Main.grid.P2Punregister(Main.grid.lines[packet.data[0]]);
 					
 				case addNewCursor :
 					
