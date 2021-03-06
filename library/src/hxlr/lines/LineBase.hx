@@ -16,6 +16,7 @@ class LineBase
 	public var end:Point;
 	
 	public var type:LineType;
+	public var tangible:Bool = false;
 	
 	public var keyList:Array<String>;
 	

@@ -30,9 +30,9 @@ class TextInfo
 		info.text += 'Draw calls: ${Main.locengine.drawCalls}\n';
 		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
 		info.text += 'Lines: ${Main.grid.lineCount}\n';
-		info.text += 'Floor: ${Main.grid.floorCount}${getLineVisibility(FLOOR)}\n';
-		info.text += 'Accel: ${Main.grid.accelCount}${getLineVisibility(ACCEL)}\n';
-		info.text += 'Scene: ${Main.grid.sceneCount}${getLineVisibility(SCENE)}\n';
+		info.text += 'Floor: ${Main.grid.subTypeCount[LineType.FLOOR]}${getLineVisibility(FLOOR)}\n';
+		info.text += 'Accel: ${Main.grid.subTypeCount[LineType.ACCEL]}${getLineVisibility(ACCEL)}\n';
+		info.text += 'Scene: ${Main.grid.subTypeCount[LineType.SCENE]}${getLineVisibility(SCENE)}\n';
 		
 	}
 	

@@ -19,6 +19,7 @@ class Accel extends LineBase
 		
 		type = ACCEL;
 		
+		tangible = true;
 	}
 	
 	override function calculateConstants():Void 

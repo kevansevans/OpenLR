@@ -1,7 +1,8 @@
 package components.tool;
+import hxlr.engine.Cell;
 import hxlr.enums.LineType;
 import hxlr.lines.Undefined;
-import components.managers.Grid;
+import hxlr.engine.Grid;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
@@ -322,15 +323,14 @@ class ToolBehavior
 		
 		if (lineSnapping) {
 			var radius:Float = snapDistance / Main.canvas.scaleX;
-			var gridpos:GridObject = Grid.registryPosition(_pos.x, _pos.y);
 			
 			for (_x in -1...2) for (_y in -1...2) {
 				
-				var key:String = 'x${_x + gridpos.x}y${_y + gridpos.y}';
+				var key:String = Cell.getInfo(_x, _y).key;
 				if (Main.grid.registry[key] == null) continue;
 				
 				var chunk = Main.grid.registry[key];
-				for (line in chunk.hittable) {
+				for (line in chunk.tangible) {
 					
 					if (line == null) continue;
 					

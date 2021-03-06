@@ -5,7 +5,7 @@ import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
 import hxlr.enums.LineType;
-import components.managers.Grid;
+import hxlr.engine.Grid;
 import format.agal.Data.Reg;
 import h2d.Graphics;
 import h2d.Object;

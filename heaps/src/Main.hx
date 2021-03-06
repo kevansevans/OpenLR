@@ -2,9 +2,9 @@ package;
 
 import hxlr.enums.LineType;
 import hxlr.scripts.PhysFloor;
+import hxlr.engine.Grid;
 
 import components.stage.Camera;
-import components.managers.Grid;
 import components.managers.Musicplayer;
 import components.managers.Riders;
 import components.managers.Simulation;
@@ -304,9 +304,9 @@ class Main extends App
 		console.addCommand(Commands.trackInfo, "Print track info", [], function() {
 			console.log("===");
 			console.log("Lines " + grid.lineCount);
-			console.log("Floor " + grid.floorCount);
-			console.log("Accel " + grid.accelCount);
-			console.log("Scene " + grid.sceneCount);
+			console.log("Floor " + grid.subTypeCount[LineType.FLOOR]);
+			console.log("Accel " + grid.subTypeCount[LineType.ACCEL]);
+			console.log("Scene " + grid.subTypeCount[LineType.SCENE]);
 			console.log("===");
 		});
 		console.addCommand(Commands.playTrack, "Start simulation", [], function() {simulation.startSim(); });

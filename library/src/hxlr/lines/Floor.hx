@@ -16,6 +16,8 @@ class Floor extends LineBase
 		super(_start, _end, _shift);
 		
 		type = FLOOR;
+		
+		tangible = true;
 	}
 	
 	override public function collide(_point:ContactPoint):Void 

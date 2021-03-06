@@ -3,7 +3,8 @@ package components.tool;
 import hxlr.lines.LineBase;
 import hxlr.enums.LineType;
 import h2d.col.Point;
-import components.managers.Grid;
+import hxlr.engine.Grid;
+import hxlr.engine.Cell;
 import components.stage.Canvas.DrawMode;
 
 /**
@@ -17,19 +18,19 @@ class ToolFunction
 	public static var erase:(Float, Float) -> Void = eraseDefault;
 	public static function eraseDefault(_x:Float, _y:Float) {
 		
-		var gridChunk = Grid.registryPosition(_x, _y);
-		
 		var key:String = "";
 		var invScale = 1 / Main.canvas.scaleX;
 		
 		for (_xg in -1...2) for (_yg in -1...2) {
 			
-			key = 'x${_xg + gridChunk.x}y${_yg + gridChunk.y}';
+			key = Cell.getInfo(_x + _xg, _y + _yg).key;
 			
 			if (Main.grid.registry[key] == null) continue;
 			var storage = Main.grid.registry[key];
 			
 			for (line in storage.allLines) {
+				
+				if (line == null) continue;
 				
 				var _loc9 = invScale;
 				var _loc1 = line;

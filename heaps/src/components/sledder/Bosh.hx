@@ -5,8 +5,8 @@ import hxlr.rider.AirPoint;
 import hxlr.rider.Stick;
 import hxlr.math.Point;
 import hxlr.rider.RiderBase;
-
-import components.managers.Grid;
+import hxlr.engine.Grid;
+import hxlr.engine.Cell;
 
 import h3d.Vector;
 import h2d.Graphics;
@@ -104,6 +104,7 @@ class Bosh extends RiderBase
 	
 	override public function step():Void 
 	{
+		
 		if (enabled) {
 			if ((enabledFrame == null || Main.simulation.frames >= enabledFrame) && (disableFrame == null || Main.simulation.frames < disableFrame)) {
 				iterate();
@@ -139,16 +140,18 @@ class Bosh extends RiderBase
 		}
 	}
 	
+	var cellList:Array<String>;
+	
 	override public function collide() 
 	{
 		for (point in contactPoints) {
-			var gridPos = Grid.registryPosition(point.pos.x, point.pos.y);
+			var gridPos = Cell.getInfo(point.pos.x, point.pos.y);
 			for (_x in -1...2) for (_y in -1...2) {
-				var key = 'x${_x + gridPos.x}y${_y + gridPos.y}';
+				var key:String = 'x${gridPos.x + _x}y${gridPos.y + _y}';
 				if (Main.grid.registry[key] == null) continue;
 				else {
 					var register = Main.grid.registry[key];
-					for (line in register.hittable) {
+					for (line in register.tangible) {
 						
 						if (line == null) continue;
 						
