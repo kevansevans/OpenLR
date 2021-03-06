@@ -5,7 +5,6 @@ import hxlr.enums.LineType;
 import h2d.col.Point;
 import components.managers.Grid;
 import components.stage.Canvas.DrawMode;
-import components.tool.ToolBehavior.LineColor;
 
 /**
  * ...

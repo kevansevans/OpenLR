@@ -1,12 +1,7 @@
 package hxlr.lines;
 
 import hxlr.rider.ContactPoint;
-
-import h2d.col.Point;
-
-import enums.LineDrawMode;
-
-import components.tool.ToolBehavior.LineColor;
+import hxlr.math.Point;
 
 /**
  * ...

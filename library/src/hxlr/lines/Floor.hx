@@ -1,10 +1,8 @@
 package hxlr.lines;
 
-import hxlr.scripts.PhysFloor;
-
 import hxlr.rider.ContactPoint;
+import hxlr.math.Point;
 
-import h2d.col.Point;
 
 /**
  * ...
@@ -22,21 +20,6 @@ class Floor extends LineBase
 	
 	override public function collide(_point:ContactPoint):Void 
 	{
-		
-		/*PhysFloor.interp.variables.set("dx", dx);
-		PhysFloor.interp.variables.set("dy", dy);
-		PhysFloor.interp.variables.set("nx", nx);
-		PhysFloor.interp.variables.set("ny", ny);
-		PhysFloor.interp.variables.set("start", start);
-		PhysFloor.interp.variables.set("end", end);
-		PhysFloor.interp.variables.set("invSqrDistance", invSqrDistance);
-		PhysFloor.interp.variables.set("zone", zone);
-		PhysFloor.interp.variables.set("limStart", limStart);
-		PhysFloor.interp.variables.set("limEnd", limEnd);
-		PhysFloor.interp.variables.set("_point", _point);
-		
-		PhysFloor.interp.execute(PhysFloor.program);*/
-		
 		var _loc5 = _point.pos.x - start.x;
 		var _loc6 = _point.pos.y - start.y;
 		var _loc4 = nx * _loc5 + ny * _loc6;

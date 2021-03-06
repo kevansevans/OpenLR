@@ -1,6 +1,6 @@
 package components.stage;
 import components.stage.Canvas;
-import components.tool.ToolBehavior.LineColor;
+import hxlr.enums.LineType;
 import h2d.Text;
 import h3d.Engine;
 import h3d.Vector;
@@ -36,7 +36,7 @@ class TextInfo
 		
 	}
 	
-	public function getLineVisibility(_line:LineColor):String 
+	public function getLineVisibility(_line:LineType):String 
 	{
 		switch (_line) 
 		{

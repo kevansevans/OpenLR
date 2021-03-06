@@ -1,9 +1,6 @@
 package hxlr.lines;
 
-import enums.LineDrawMode;
-import h2d.col.Point;
-
-import components.tool.ToolBehavior.LineColor;
+import hxlr.math.Point;
 
 /**
  * ...

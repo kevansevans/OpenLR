@@ -25,12 +25,6 @@ enum ToolMode {
 	LINE;
 	ERASER;
 }
-enum abstract LineColor(Int) from Int to Int {
-	var FLOOR:Int;
-	var ACCEL:Int;
-	var SCENE:Int;
-	var NONE = -1;
-}
 class ToolBehavior 
 {
 	public var tool:ToolMode;
@@ -318,7 +312,7 @@ class ToolBehavior
 	
 	public function snap(_pos:Point):Void 
 	{
-		if (color == LineColor.NONE || color == LineColor.SCENE) return;
+		if (color == LineType.NULL || color == LineType.SCENE) return;
 		
 		var lineDist:Null<Float> = null;
 		var gridDist:Null<Float> = null;
@@ -417,7 +411,7 @@ class ToolBehavior
 	
 	function drawLine():Void 
 	{
-		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10 && color != LineColor.SCENE) return;
+		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10 && color != LineType.SCENE) return;
 		
 		var type:LineType = LineType.NULL;
 		switch (color) {
