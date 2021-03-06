@@ -5,8 +5,6 @@ import hxlr.rider.ContactPoint;
 import hxlr.rider.AirPoint;
 import hxlr.enums.StickType;
 
-import h2d.col.Point;
-
 /**
  * ...
  * @author Kaelan
