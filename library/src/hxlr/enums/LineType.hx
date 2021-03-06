@@ -3,10 +3,10 @@ package hxlr.enums;
 /**
  * @author Kaelan
  */
-enum abstract LineType(String) from String to String 
+enum abstract LineType(Int) from Int to Int 
 {
-	var FLOOR:String;
-	var ACCEL:String;
-	var SCENE:String;
-	var NULL:String;
+	var FLOOR:Int;
+	var ACCEL:Int;
+	var SCENE:Int;
+	var NULL:Int;
 }
