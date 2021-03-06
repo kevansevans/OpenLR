@@ -1,6 +1,8 @@
 package components.managers;
+
+import hxlr.rider.RiderBase;
+
 import components.sledder.Bosh;
-import components.sledder.RiderBase;
 import network.NetAction;
 import h2d.col.Point;
 
@@ -87,7 +89,7 @@ class Riders
 	
 	public function stepRiders() {
 		for (rider in riders) {
-			rider.stepRider();
+			rider.step();
 		}
 	}
 	

@@ -1,7 +1,7 @@
 package components.managers;
 
-import components.sledder.RiderBase;
-import hxlr.components.ContactPoint;
+import hxlr.rider.RiderBase;
+import hxlr.rider.ContactPoint;
 import haxe.PosInfos;
 
 /**
@@ -165,11 +165,11 @@ class Simulation
 				continue;
 			}
 			rider.crashed = state.crashed;
-			for (point in 0...rider.ridePoints.length) {
-				rider.ridePoints[point].deserialize(state.points[point]);
+			for (point in 0...rider.contactPoints.length) {
+				rider.contactPoints[point].deserialize(state.points[point]);
 			}
-			for (point in 0...rider.scarfPoints.length) {
-				rider.scarfPoints[point].deserialize(state.scarves[point]);
+			for (point in 0...rider.airPoints.length) {
+				rider.airPoints[point].deserialize(state.scarves[point]);
 			}
 		}
 	}
@@ -190,10 +190,10 @@ class Simulation
 		frameStates[_rider][_frame] = stat;
 		var _points:Array<PointContainer> = new Array();
 		var _scarves:Array<PointContainer> = new Array();
-		for (point in _rider.ridePoints) {
+		for (point in _rider.contactPoints) {
 			_points.push(point.serialize());
 		}
-		for (point in _rider.scarfPoints) {
+		for (point in _rider.airPoints) {
 			_scarves.push(point.serialize());
 		}
 		frameStates[_rider][_frame].points = _points;

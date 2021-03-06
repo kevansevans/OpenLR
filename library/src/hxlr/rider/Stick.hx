@@ -1,7 +1,6 @@
 package hxlr.rider;
 
-import components.sledder.RiderBase;
-
+import hxlr.rider.RiderBase;
 import hxlr.rider.ContactPoint;
 import hxlr.rider.AirPoint;
 import hxlr.enums.StickType;

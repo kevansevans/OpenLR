@@ -1,6 +1,6 @@
 package components.stage;
 
-import components.sledder.RiderBase;
+import hxlr.rider.RiderBase;
 
 import h2d.col.Point;
 
@@ -36,8 +36,8 @@ class Camera
 		lastScale = Main.canvas.scaleX;
 		
 		Main.canvas.setScale(cameraScale);
-		Main.canvas.x = rider.cameraPoint.pos.x + (Main.locengine.width / 2);
-		Main.canvas.y = rider.cameraPoint.pos.y + (Main.locengine.height / 2);
+		Main.canvas.x = rider.focusPoint.pos.x + (Main.locengine.width / 2);
+		Main.canvas.y = rider.focusPoint.pos.y + (Main.locengine.height / 2);
 		
 		running = true;
 		
@@ -45,7 +45,7 @@ class Camera
 	
 	public function follow() {
 		
-		var position = Main.canvas.localToGlobal(rider.cameraPoint.pos.clone());
+		var position = Main.canvas.localToGlobal(rider.focusPoint.pos.clone());
 		
 		var right:Float = Main.locengine.width * 0.6;
 		var left:Float = Main.locengine.width * 0.3;

@@ -3,9 +3,18 @@ package components.sledder;
 import hxlr.rider.ContactPoint;
 import hxlr.rider.AirPoint;
 import hxlr.rider.Stick;
+import hxlr.math.Point;
+import hxlr.rider.RiderBase;
 
-import components.sledder.RiderBase;
-import components.sledder.RiderBase.RiderPart;
+import components.managers.Grid;
+
+import h3d.Vector;
+import h2d.Graphics;
+import h2d.HtmlText;
+import hxd.res.DefaultFont;
+
+import components.sledder.RiderScarf;
+import components.sledder.RiderPart;
 
 /**
  * ...
@@ -13,6 +22,18 @@ import components.sledder.RiderBase.RiderPart;
  */
 class Bosh extends RiderBase 
 {
+	static public var WHITE:Vector = new Vector(1, 1, 1, 1);
+	static public var BLACK:Vector = new Vector(0, 0, 0, 1);
+	static public var RED:Vector = new Vector(1, 0, 0, 1);
+	
+	public var colorA(get, null):Int;
+	public var colorB(get, null):Int;
+	public var neckscarf:RiderScarf;
+	
+	public var gfx:Graphics;
+	public var nameField:HtmlText;
+	
+	public var undead:Bool = false;
 
 	public var leftArm:RiderPart;
 	public var rightArm:RiderPart;
@@ -28,9 +49,22 @@ class Bosh extends RiderBase
 	
 	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh", ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
 	{
-		super(_x, _y, _name, _enable, _disable);
+		super();
+		
+		startPos = new Point(_x, _y);
+		name = _name;
+		enabledFrame = _enable;
+		disableFrame = _disable;
+		
+		startVel = new Point(0.4, 0);
+		gravity = new Point(0, 0.175);
 		
 		init();
+		
+		gfx = new Graphics();
+		Main.canvas.sledderLayer.addChild(gfx);
+		nameField = new HtmlText(DefaultFont.get());
+		Main.canvas.sledderLayer.addChild(nameField);
 		
 		Main.rng.setKeyOffset(_name, Main.rng.getRandom());
 		
@@ -68,14 +102,67 @@ class Bosh extends RiderBase
 		Main.canvas.sledderLayer.removeChild(rightLeg);
 	}
 	
-	override public function stepRider():Void 
+	override public function step():Void 
 	{
-		super.stepRider();
+		if (enabled) {
+			if ((enabledFrame == null || Main.simulation.frames >= enabledFrame) && (disableFrame == null || Main.simulation.frames < disableFrame)) {
+				iterate();
+				for (iteration in 0...6) {
+					constrain();
+					collide();
+				}
+				constrainScarf();
+			}
+		}
 		
-		var fakiex = ridePoints[3].pos.x - ridePoints[0].pos.x;
-		var fakiey = ridePoints[3].pos.y - ridePoints[0].pos.y;
-		if (fakiex * (ridePoints[1].pos.y - ridePoints[0].pos.y) - fakiey * (ridePoints[1].pos.x - ridePoints[0].pos.x) < 0) {
+		var fakiex = contactPoints[3].pos.x - contactPoints[0].pos.x;
+		var fakiey = contactPoints[3].pos.y - contactPoints[0].pos.y;
+		if (fakiex * (contactPoints[1].pos.y - contactPoints[0].pos.y) - fakiey * (contactPoints[1].pos.x - contactPoints[0].pos.x) < 0) {
 			crashed = true;
+		}
+	}
+	
+	override public function iterate() 
+	{
+		for (point in contactPoints) {
+			point.iterate(gravity);
+		}
+		for (point in airPoints) {
+			point.iterate(gravity);
+		}
+	}
+	
+	override public function constrain() 
+	{
+		for (edge in constraints) {
+			edge.satisfy(crashed);
+		}
+	}
+	
+	override public function collide() 
+	{
+		for (point in contactPoints) {
+			var gridPos = Grid.registryPosition(point.pos.x, point.pos.y);
+			for (_x in -1...2) for (_y in -1...2) {
+				var key = 'x${_x + gridPos.x}y${_y + gridPos.y}';
+				if (Main.grid.registry[key] == null) continue;
+				else {
+					var register = Main.grid.registry[key];
+					for (line in register.hittable) {
+						
+						if (line == null) continue;
+						
+						line.collide(point);
+					}
+				}
+			}
+		}
+	}
+	
+	override public function constrainScarf() 
+	{
+		for (edge in scarves) {
+			edge.satisfy(crashed);
 		}
 	}
 	
@@ -83,71 +170,71 @@ class Bosh extends RiderBase
 	{
 		updateEyeball(Main.simulation.frames);
 		
-		body.x = ridePoints[4].pos.x;
-		body.y = ridePoints[4].pos.y;
+		body.x = contactPoints[4].pos.x;
+		body.y = contactPoints[4].pos.y;
 		
-		sled.x = ridePoints[0].pos.x;
-		sled.y = ridePoints[0].pos.y;
+		sled.x = contactPoints[0].pos.x;
+		sled.y = contactPoints[0].pos.y;
 		
-		leftArm.x = rightArm.x = ridePoints[5].pos.x;
-		leftArm.y = rightArm.y = ridePoints[5].pos.y;
+		leftArm.x = rightArm.x = contactPoints[5].pos.x;
+		leftArm.y = rightArm.y = contactPoints[5].pos.y;
 		
-		leftLeg.x = rightLeg.x = ridePoints[4].pos.x;
-		leftLeg.y = rightLeg.y = ridePoints[4].pos.y;
+		leftLeg.x = rightLeg.x = contactPoints[4].pos.x;
+		leftLeg.y = rightLeg.y = contactPoints[4].pos.y;
 		
-		body.rotation = Math.atan2(ridePoints[5].pos.y - ridePoints[4].pos.y, ridePoints[5].pos.x - ridePoints[4].pos.x);
-		sled.rotation = Math.atan2(ridePoints[3].pos.y - ridePoints[0].pos.y, ridePoints[3].pos.x - ridePoints[0].pos.x);
-		leftArm.rotation = Math.atan2(ridePoints[6].pos.y - ridePoints[5].pos.y, ridePoints[6].pos.x - ridePoints[5].pos.x);
-		rightArm.rotation = Math.atan2(ridePoints[7].pos.y - ridePoints[5].pos.y, ridePoints[7].pos.x - ridePoints[5].pos.x);
-		leftLeg.rotation = Math.atan2(ridePoints[8].pos.y - ridePoints[4].pos.y, ridePoints[8].pos.x - ridePoints[4].pos.x);
-		rightLeg.rotation = Math.atan2(ridePoints[9].pos.y - ridePoints[4].pos.y, ridePoints[9].pos.x - ridePoints[4].pos.x);
+		body.rotation = Math.atan2(contactPoints[5].pos.y - contactPoints[4].pos.y, contactPoints[5].pos.x - contactPoints[4].pos.x);
+		sled.rotation = Math.atan2(contactPoints[3].pos.y - contactPoints[0].pos.y, contactPoints[3].pos.x - contactPoints[0].pos.x);
+		leftArm.rotation = Math.atan2(contactPoints[6].pos.y - contactPoints[5].pos.y, contactPoints[6].pos.x - contactPoints[5].pos.x);
+		rightArm.rotation = Math.atan2(contactPoints[7].pos.y - contactPoints[5].pos.y, contactPoints[7].pos.x - contactPoints[5].pos.x);
+		leftLeg.rotation = Math.atan2(contactPoints[8].pos.y - contactPoints[4].pos.y, contactPoints[8].pos.x - contactPoints[4].pos.x);
+		rightLeg.rotation = Math.atan2(contactPoints[9].pos.y - contactPoints[4].pos.y, contactPoints[9].pos.x - contactPoints[4].pos.x);
 		
 		gfx.clear();
 		if (!crashed) {
 			
 			gfx.lineStyle(0.25);
 			
-			if (bones[16].enabled) {
-				gfx.moveTo(ridePoints[6].pos.x, ridePoints[6].pos.y);
-				gfx.lineTo(ridePoints[3].pos.x, ridePoints[3].pos.y);
+			if (constraints[16].enabled) {
+				gfx.moveTo(contactPoints[6].pos.x, contactPoints[6].pos.y);
+				gfx.lineTo(contactPoints[3].pos.x, contactPoints[3].pos.y);
 			}
 			
-			if (bones[17].enabled) {
-				gfx.moveTo(ridePoints[7].pos.x, ridePoints[7].pos.y);
-				gfx.lineTo(ridePoints[3].pos.x, ridePoints[3].pos.y);
+			if (constraints[17].enabled) {
+				gfx.moveTo(contactPoints[7].pos.x, contactPoints[7].pos.y);
+				gfx.lineTo(contactPoints[3].pos.x, contactPoints[3].pos.y);
 			}
 			
 		}
 		
 		gfx.lineStyle(2, neckscarf.colorB);
-		gfx.moveTo(ridePoints[5].pos.x, ridePoints[5].pos.y);
-		gfx.lineTo(scarfPoints[0].pos.x, scarfPoints[0].pos.y);
+		gfx.moveTo(contactPoints[5].pos.x, contactPoints[5].pos.y);
+		gfx.lineTo(airPoints[0].pos.x, airPoints[0].pos.y);
 		gfx.lineStyle(2, neckscarf.colorA);
-		gfx.moveTo(scarfPoints[0].pos.x, scarfPoints[0].pos.y);
-		gfx.lineTo(scarfPoints[1].pos.x, scarfPoints[1].pos.y);
+		gfx.moveTo(airPoints[0].pos.x, airPoints[0].pos.y);
+		gfx.lineTo(airPoints[1].pos.x, airPoints[1].pos.y);
 		gfx.lineStyle(2, neckscarf.colorB);
-		gfx.moveTo(scarfPoints[1].pos.x, scarfPoints[1].pos.y);
-		gfx.lineTo(scarfPoints[2].pos.x, scarfPoints[2].pos.y);
+		gfx.moveTo(airPoints[1].pos.x, airPoints[1].pos.y);
+		gfx.lineTo(airPoints[2].pos.x, airPoints[2].pos.y);
 		gfx.lineStyle(2, neckscarf.colorA);
-		gfx.moveTo(scarfPoints[2].pos.x, scarfPoints[2].pos.y);
-		gfx.lineTo(scarfPoints[3].pos.x, scarfPoints[3].pos.y);
+		gfx.moveTo(airPoints[2].pos.x, airPoints[2].pos.y);
+		gfx.lineTo(airPoints[3].pos.x, airPoints[3].pos.y);
 		gfx.lineStyle(2, neckscarf.colorB);
-		gfx.moveTo(scarfPoints[3].pos.x, scarfPoints[3].pos.y);
-		gfx.lineTo(scarfPoints[4].pos.x, scarfPoints[4].pos.y);
+		gfx.moveTo(airPoints[3].pos.x, airPoints[3].pos.y);
+		gfx.lineTo(airPoints[4].pos.x, airPoints[4].pos.y);
 		gfx.lineStyle(2, neckscarf.colorA);
-		gfx.moveTo(scarfPoints[4].pos.x, scarfPoints[4].pos.y);
-		gfx.lineTo(scarfPoints[5].pos.x, scarfPoints[5].pos.y);
+		gfx.moveTo(airPoints[4].pos.x, airPoints[4].pos.y);
+		gfx.lineTo(airPoints[5].pos.x, airPoints[5].pos.y);
 		
 		nameField.scaleX = nameField.scaleY = 1 * (1 / Main.canvas.scaleX);
 		
-		nameField.x = ridePoints[1].pos.x;
-		nameField.y = ridePoints[1].pos.y;
+		nameField.x = contactPoints[1].pos.x;
+		nameField.y = contactPoints[1].pos.y;
 		nameField.rotation = sled.rotation;
 		
 		if (crashed) {
-			nameField.color = RiderBase.RED;
+			nameField.color = Bosh.RED;
 		} else {
-			nameField.color = RiderBase.WHITE;
+			nameField.color = Bosh.WHITE;
 		}
 	}
 	
@@ -172,6 +259,12 @@ class Bosh extends RiderBase
 		}
 	}
 	
+	public function setColor(?_a:Null<Int>, ?_b:Null<Int>) {
+		
+		neckscarf.setColor(_a, _b);
+		
+	};
+	
 	override public function reset() {
 		
 		init(); 
@@ -180,82 +273,108 @@ class Bosh extends RiderBase
 	
 	override public function init():Void 
 	{
-		ridePoints = new Array();
-		scarfPoints = new Array();
-		bones = new Array();
-		scarves = new Array();
+		contactPoints.push(new ContactPoint(0, 0, 0.8));  		//Second Peg	0
+		contactPoints.push(new ContactPoint(0, 10));			//Tail			1
+		contactPoints.push(new ContactPoint(30, 10));			//Nose			2
+		contactPoints.push(new ContactPoint(35, 0));			//String		3
+		contactPoints.push(new ContactPoint(10, 0, 0.8));		//Butt			4
+		contactPoints.push(new ContactPoint(10, -11, 0.8));		//Shoulder		5
+		contactPoints.push(new ContactPoint(23, -10, 0.1));		//Hand			6
+		contactPoints.push(new ContactPoint(23, -10, 0.1));		//Hand			7
+		contactPoints.push(new ContactPoint(20, 10, 0));		//Foot			8
+		contactPoints.push(new ContactPoint(20, 10, 0));		//Foot			9
 		
-		ridePoints.push(new ContactPoint(0, 0, 0.8));  	//Second Peg	0
-		ridePoints.push(new ContactPoint(0, 10));			//Tail			1
-		ridePoints.push(new ContactPoint(30, 10));			//Nose			2
-		ridePoints.push(new ContactPoint(35, 0));			//String		3
-		ridePoints.push(new ContactPoint(10, 0, 0.8));		//Butt			4
-		ridePoints.push(new ContactPoint(10, -11, 0.8));	//Shoulder		5
-		ridePoints.push(new ContactPoint(23, -10, 0.1));	//Hand			6
-		ridePoints.push(new ContactPoint(23, -10, 0.1));	//Hand			7
-		ridePoints.push(new ContactPoint(20, 10, 0));		//Foot			8
-		ridePoints.push(new ContactPoint(20, 10, 0));		//Foot			9
+		airPoints.push(new AirPoint(7, -10, 0.9));
+		airPoints.push(new AirPoint(3, -10, 0.9));
+		airPoints.push(new AirPoint(0, -10, 0.9));
+		airPoints.push(new AirPoint(-4, -10, 0.9));
+		airPoints.push(new AirPoint(-7, -10, 0.9));
+		airPoints.push(new AirPoint(-11, -10, 0.9));
 		
-		scarfPoints.push(new AirPoint(7, -10, 0.9));
-		scarfPoints.push(new AirPoint(3, -10, 0.9));
-		scarfPoints.push(new AirPoint(0, -10, 0.9));
-		scarfPoints.push(new AirPoint(-4, -10, 0.9));
-		scarfPoints.push(new AirPoint(-7, -10, 0.9));
-		scarfPoints.push(new AirPoint(-11, -10, 0.9));
-		
-		for (point in ridePoints) {
+		for (point in contactPoints) {
 			point.pos.x *= 0.5;
 			point.pos.y *= 0.5;
 		}
 		
-		for (point in scarfPoints) {
+		for (point in airPoints) {
 			point.pos.x *= 0.5;
 			point.pos.y *= 0.5;
 		}
 		
-		moveToStart();
+		for (point in contactPoints) {
+			point.pos.x += startPos.x;
+			point.pos.y += startPos.y;
+			point.vel.x = point.pos.x - startVel.x;
+			point.vel.y = point.pos.y;
+		}
 		
-		bones.push(new Stick(ridePoints[0], ridePoints[1], STANDARD, this));			//Second to Tail			0
-		bones.push(new Stick(ridePoints[1], ridePoints[2], STANDARD, this));			//Tail to Nose				1
-		bones.push(new Stick(ridePoints[2], ridePoints[3], STANDARD, this));			//Nose to String			2
-		bones.push(new Stick(ridePoints[3], ridePoints[0], STANDARD, this));			//String to Second			3
-		bones.push(new Stick(ridePoints[0], ridePoints[2], STANDARD, this));			//Second to nose			4
-		bones.push(new Stick(ridePoints[3], ridePoints[1], STANDARD, this));			//String to Tail			5
+		for (point in airPoints) {
+			point.pos.x += startPos.x;
+			point.pos.y += startPos.y;
+			point.vel.x = point.pos.x - startVel.x;
+			point.vel.y = point.pos.y;
+		}
 		
-		bones.push(new Stick(ridePoints[0], ridePoints[4], STANDARD, this));			//Second to butt			6
-		bones.push(new Stick(ridePoints[1], ridePoints[4], STANDARD, this));			//Tail to butt				7
-		bones.push(new Stick(ridePoints[2], ridePoints[4], STANDARD, this));			//Nose to butt				8
+		constraints.push(new Stick(contactPoints[0], contactPoints[1], STANDARD, this));			//Second to Tail			0
+		constraints.push(new Stick(contactPoints[1], contactPoints[2], STANDARD, this));			//Tail to Nose				1
+		constraints.push(new Stick(contactPoints[2], contactPoints[3], STANDARD, this));			//Nose to String			2
+		constraints.push(new Stick(contactPoints[3], contactPoints[0], STANDARD, this));			//String to Second			3
+		constraints.push(new Stick(contactPoints[0], contactPoints[2], STANDARD, this));			//Second to nose			4
+		constraints.push(new Stick(contactPoints[3], contactPoints[1], STANDARD, this));			//String to Tail			5
 		
-		bones[6].crashable = bones[7].crashable = bones[8].crashable = true;
+		constraints.push(new Stick(contactPoints[0], contactPoints[4], STANDARD, this));			//Second to butt			6
+		constraints.push(new Stick(contactPoints[1], contactPoints[4], STANDARD, this));			//Tail to butt				7
+		constraints.push(new Stick(contactPoints[2], contactPoints[4], STANDARD, this));			//Nose to butt				8
 		
-		bones.push(new Stick(ridePoints[5], ridePoints[4], STANDARD, this));			//Shoulder to butt			9
-		bones.push(new Stick(ridePoints[5], ridePoints[6], STANDARD, this));			//Shoulder to hand			10
-		bones.push(new Stick(ridePoints[5], ridePoints[7], STANDARD, this));			//Shoulder to hand			11
-		bones.push(new Stick(ridePoints[4], ridePoints[8], STANDARD, this));			//Butt to foot				12
-		bones.push(new Stick(ridePoints[4], ridePoints[9], STANDARD, this));			//Butt to foot				13
-		bones.push(new Stick(ridePoints[5], ridePoints[7], STANDARD, this));			//Shoulder to hand, again	14
+		constraints[6].crashable = constraints[7].crashable = constraints[8].crashable = true;
 		
-		bones.push(new Stick(ridePoints[5], ridePoints[0], STANDARD, this));			//Shoulder to second		15
-		bones.push(new Stick(ridePoints[3], ridePoints[6], STANDARD, this));			//String to hand			16
-		bones.push(new Stick(ridePoints[3], ridePoints[7], STANDARD, this));			//String to hand			17
-		bones.push(new Stick(ridePoints[8], ridePoints[2], STANDARD, this));			//Foot to nose				18
-		bones.push(new Stick(ridePoints[9], ridePoints[2], STANDARD, this));			//Foot to nose				19
+		constraints.push(new Stick(contactPoints[5], contactPoints[4], STANDARD, this));			//Shoulder to butt			9
+		constraints.push(new Stick(contactPoints[5], contactPoints[6], STANDARD, this));			//Shoulder to hand			10
+		constraints.push(new Stick(contactPoints[5], contactPoints[7], STANDARD, this));			//Shoulder to hand			11
+		constraints.push(new Stick(contactPoints[4], contactPoints[8], STANDARD, this));			//Butt to foot				12
+		constraints.push(new Stick(contactPoints[4], contactPoints[9], STANDARD, this));			//Butt to foot				13
+		constraints.push(new Stick(contactPoints[5], contactPoints[7], STANDARD, this));			//Shoulder to hand, again	14
 		
-		bones[15].crashable = bones[16].crashable = bones[17].crashable = bones[18].crashable = bones[19].crashable = true;
+		constraints.push(new Stick(contactPoints[5], contactPoints[0], STANDARD, this));			//Shoulder to second		15
+		constraints.push(new Stick(contactPoints[3], contactPoints[6], STANDARD, this));			//String to hand			16
+		constraints.push(new Stick(contactPoints[3], contactPoints[7], STANDARD, this));			//String to hand			17
+		constraints.push(new Stick(contactPoints[8], contactPoints[2], STANDARD, this));			//Foot to nose				18
+		constraints.push(new Stick(contactPoints[9], contactPoints[2], STANDARD, this));			//Foot to nose				19
 		
-		bones.push(new Stick(ridePoints[5], ridePoints[8], REPELL, this));			//Shoulder to foot			20
-		bones.push(new Stick(ridePoints[5], ridePoints[9], REPELL, this));			//Shoulder to foot			21
+		constraints[15].crashable = constraints[16].crashable = constraints[17].crashable = constraints[18].crashable = constraints[19].crashable = true;
 		
-		scarves.push(new Stick(ridePoints[5], scarfPoints[0], SCARF, this));
-		scarves.push(new Stick(scarfPoints[0], scarfPoints[1], SCARF, this));
-		scarves.push(new Stick(scarfPoints[1], scarfPoints[2], SCARF, this));
-		scarves.push(new Stick(scarfPoints[2], scarfPoints[3], SCARF, this));
-		scarves.push(new Stick(scarfPoints[3], scarfPoints[4], SCARF, this));
-		scarves.push(new Stick(scarfPoints[4], scarfPoints[5], SCARF, this));
+		constraints.push(new Stick(contactPoints[5], contactPoints[8], REPELL, this));			//Shoulder to foot			20
+		constraints.push(new Stick(contactPoints[5], contactPoints[9], REPELL, this));			//Shoulder to foot			21
+		
+		scarves.push(new Stick(contactPoints[5], airPoints[0], SCARF, this));
+		scarves.push(new Stick(airPoints[0], airPoints[1], SCARF, this));
+		scarves.push(new Stick(airPoints[1], airPoints[2], SCARF, this));
+		scarves.push(new Stick(airPoints[2], airPoints[3], SCARF, this));
+		scarves.push(new Stick(airPoints[3], airPoints[4], SCARF, this));
+		scarves.push(new Stick(airPoints[4], airPoints[5], SCARF, this));
 		
 		crashed = false;
 		
-		cameraPoint = ridePoints[4];
+		focusPoint = contactPoints[4];
 	}
 	
+	function get_colorA():Int 
+	{
+		return neckscarf.colorA;
+	}
+	
+	function get_colorB():Int 
+	{
+		return neckscarf.colorB;
+	}
+	
+}
+
+typedef RiderSave = {
+	var name:String;
+	var startPoint:Point;
+	var startFrame:Null<Int>;
+	var stopFrame:Null<Int>;
+	var colora:Int;
+	var colorb:Int;
 }
