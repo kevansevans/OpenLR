@@ -5,7 +5,10 @@ import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
 import hxlr.lines.LineBase;
 import hxlr.lines.LineBase.LineSave;
-import components.sledder.RiderBase;
+import hxlr.rider.RiderBase;
+
+import components.sledder.Bosh;
+
 import haxe.Json;
 import h2d.col.Point;
 
@@ -45,7 +48,10 @@ class SaveLoad
 			saveObject.lines.push(line.toSaveObject());
 		}
 		
-		for (sledder in Main.riders.riders) {
+		for (rider in Main.riders.riders) {
+			
+			var sledder:Bosh = cast(rider); 
+
 			var rider:RiderSave = {
 				name : sledder.name,
 				startPoint : sledder.startPos,
@@ -150,7 +156,8 @@ class SaveLoad
 		
 		for (rider in loadObject.riders) {
 			Main.riders.addNewRider(rider.name, rider.startPoint, rider.startFrame, rider.stopFrame);
-			Main.riders.riders[rider.name].setColor(rider.colora, rider.colorb);
+			var bosh = cast(Main.riders.riders[rider.name], Bosh);
+			bosh.setColor(rider.colora, rider.colorb);
 		}
 		
 	}

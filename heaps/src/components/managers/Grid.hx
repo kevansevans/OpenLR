@@ -1,6 +1,6 @@
 package components.managers;
 
-import components.lines.LineBase;
+import hxlr.lines.LineBase;
 import h2d.col.Point;
 import network.NetAction;
 
