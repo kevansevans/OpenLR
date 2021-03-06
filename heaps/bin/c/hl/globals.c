@@ -145,35 +145,11 @@
 #include <haxe/MainEvent.h>
 #include <haxe/Timer.h>
 #include <hxd/Timer.h>
-#include <hxlr/components/ContactPoint.h>
-#include <h2d/Text.h>
-#include <h2d/Kerning.h>
-#include <h2d/Tile.h>
-#include <h2d/FontChar.h>
-#include <hxd/Charset.h>
-#include <h2d/FontType.h>
-#include <h2d/Font.h>
-#include <h3d/shader/ColorMatrix.h>
-#include <_std/Xml.h>
-#include <h2d/ImageVerticalAlign.h>
-#include <h2d/LineHeightMode.h>
-#include <h3d/shader/SignedDistanceField.h>
-#include <h2d/impl/_BatchDrawState/StateEntry.h>
-#include <h2d/impl/BatchDrawState.h>
-#include <h2d/TileLayerContent.h>
-#include <h2d/TileGroup.h>
-#include <h2d/Align.h>
-#include <h2d/HtmlText.h>
-#include <h2d/GPoint.h>
-#include <h2d/_Graphics/GraphicsContent.h>
-#include <hxd/earcut/EarNode.h>
-#include <hxd/earcut/Earcut.h>
-#include <h2d/Graphics.h>
-#include <components/physics/StickType.h>
-#include <components/physics/Stick.h>
-#include <h2d/Bitmap.h>
-#include <components/sledder/RiderScarf.h>
-#include <components/sledder/RiderBase.h>
+#include <hxlr/rider/ContactPoint.h>
+#include <hxlr/enums/StickType.h>
+#include <hxlr/rider/Stick.h>
+#include <hxlr/rider/AirPoint.h>
+#include <hxlr/rider/RiderBase.h>
 #include <components/stage/Camera.h>
 #include <utils/TableRNG.h>
 #include <hxd/snd/ChannelBase.h>
@@ -196,20 +172,44 @@
 #include <hxd/snd/Channel.h>
 #include <hxd/snd/effect/Pitch.h>
 #include <components/managers/Musicplayer.h>
+#include <h3d/shader/SignedDistanceField.h>
+#include <h2d/Tile.h>
+#include <h2d/impl/_BatchDrawState/StateEntry.h>
+#include <h2d/impl/BatchDrawState.h>
+#include <h2d/TileLayerContent.h>
+#include <h2d/TileGroup.h>
+#include <h2d/Align.h>
+#include <h2d/Kerning.h>
+#include <h2d/FontChar.h>
+#include <hxd/Charset.h>
+#include <h2d/FontType.h>
+#include <h2d/Font.h>
+#include <h2d/Text.h>
 #include <components/stage/TextInfo.h>
 #include <file/SaveLoad.h>
 #include <components/managers/Simulation.h>
 #include <components/managers/Riders.h>
-#include <components/lines/LineBase.h>
+#include <hxlr/lines/LineBase.h>
 #include <components/managers/Grid.h>
+#include <h2d/Bitmap.h>
 #include <components/ui/UIButton.h>
 #include <components/ui/Toolbar.h>
 #include <components/tool/ToolMode.h>
 #include <components/tool/ToolBehavior.h>
 #include <h2d/Console.h>
+#include <h3d/shader/ColorMatrix.h>
+#include <_std/Xml.h>
+#include <h2d/ImageVerticalAlign.h>
+#include <h2d/LineHeightMode.h>
+#include <h2d/HtmlText.h>
 #include <h2d/TextInput.h>
 #include <components/stage/LRConsole.h>
 #include <components/stage/DrawMode.h>
+#include <h2d/GPoint.h>
+#include <h2d/_Graphics/GraphicsContent.h>
+#include <hxd/earcut/EarNode.h>
+#include <hxd/earcut/Earcut.h>
+#include <h2d/Graphics.h>
 #include <components/stage/Canvas.h>
 #include <_std/Main.h>
 #include <hxd/res/Loader.h>
@@ -224,32 +224,23 @@
 #include <hl/natives.h>
 #include <_std/ValueType.h>
 #include <haxe/iterators/ArrayIterator.h>
-#include <components/lines/Accel.h>
-#include <components/lines/Floor.h>
-#include <hscript/Interp.h>
-#include <haxe/ds/GenericCell.h>
-#include <haxe/ds/GenericStack.h>
-#include <hscript/Parser.h>
-#include <hxlr/scripts/PhysFloor.h>
-#include <hscript/Const.h>
-#include <hscript/CType.h>
-#include <hscript/Expr.h>
-#include <components/lines/Scenery.h>
-#include <components/lines/Undefined.h>
 #include <hxd/fs/BytesFileEntry.h>
 #include <h2d/Anim.h>
 #include <components/sledder/RiderPart.h>
+#include <components/sledder/RiderScarf.h>
 #include <components/sledder/Bosh.h>
-#include <components/sledder/LTAABosh.h>
 #include <components/sledder/BodyPart.h>
-#include <hxlr/components/AirPoint.h>
 #include <hxd/res/Image.h>
 #include <hxd/res/ImageInfo.h>
+#include <hxlr/lines/Floor.h>
+#include <hxlr/lines/Accel.h>
+#include <hxlr/lines/Scenery.h>
 #include <h3d/col/Point.h>
 #include <hxsl/Channel.h>
 #include <components/stage/LRCanvasShader.h>
 #include <haxe/Log.h>
 #include <components/tool/ToolFunction.h>
+#include <hxlr/lines/Undefined.h>
 #include <components/ui/Icon.h>
 #include <haxe/format/JsonParser.h>
 #include <haxe/io/Input.h>
@@ -357,6 +348,8 @@
 #include <haxe/io/Error.h>
 #include <haxe/crypto/BaseCode.h>
 #include <haxe/crypto/Base64.h>
+#include <haxe/ds/GenericCell.h>
+#include <haxe/ds/GenericStack.h>
 #include <hl/NativeArrayIterator_Int.h>
 #include <hl/NativeArrayIterator_Dynamic.h>
 #include <hl/NativeArrayIterator.h>
@@ -388,9 +381,14 @@
 #include <hl/types/ArrayObjIterator.h>
 #include <hl/types/ArrayObjKeyValueIterator.h>
 #include <_std/Std.h>
+#include <hscript/Interp.h>
+#include <hscript/Const.h>
+#include <hscript/CType.h>
+#include <hscript/Expr.h>
 #include <hscript/Error.h>
 #include <haxe/IMap.h>
 #include <hscript/_Interp/Stop.h>
+#include <hscript/Parser.h>
 #include <hscript/Token.h>
 #include <hxd/Key.h>
 #include <sdl/GameController.h>
@@ -455,6 +453,7 @@
 #include <hxd/snd/openal/PitchDriver.h>
 #include <hxd/snd/openal/ReverbDriver.h>
 #include <hxd/snd/openal/SpatializationDriver.h>
+#include <hxlr/scripts/PhysFloor.h>
 #include <hxsl/Error.h>
 #include <hxsl/Tools.h>
 #include <hxsl/BatchShader.h>
@@ -741,35 +740,11 @@ hxd__$App g$_hxd_App = 0;
 haxe__$MainEvent g$_haxe_MainEvent = 0;
 haxe__$Timer g$_haxe_Timer = 0;
 hxd__$Timer g$_hxd_Timer = 0;
-hxlr__components__$ContactPoint g$_hxlr_components_ContactPoint = 0;
-h2d__$Text g$_h2d_Text = 0;
-h2d__$Kerning g$_h2d_Kerning = 0;
-h2d__$Tile g$_h2d_Tile = 0;
-h2d__$FontChar g$_h2d_FontChar = 0;
-hxd__$Charset g$_hxd_Charset = 0;
-h2d__$FontType g$h2d_FontType = 0;
-h2d__$Font g$_h2d_Font = 0;
-h3d__shader__$ColorMatrix g$_h3d_shader_ColorMatrix = 0;
-$Xml g$_Xml = 0;
-h2d__$ImageVerticalAlign g$h2d_ImageVerticalAlign = 0;
-h2d__$LineHeightMode g$h2d_LineHeightMode = 0;
-h3d__shader__$SignedDistanceField g$_h3d_shader_SignedDistanceField = 0;
-h2d__impl___BatchDrawState__$StateEntry g$b62e2cb = 0;
-h2d__impl__$BatchDrawState g$_h2d_impl_BatchDrawState = 0;
-h2d__$TileLayerContent g$_h2d_TileLayerContent = 0;
-h2d__$TileGroup g$_h2d_TileGroup = 0;
-h2d__$Align g$h2d_Align = 0;
-h2d__$HtmlText g$_h2d_HtmlText = 0;
-h2d__$GPoint g$_h2d_GPoint = 0;
-h2d___Graphics__$GraphicsContent g$_h2d__Graphics_GraphicsContent = 0;
-hxd__earcut__$EarNode g$_hxd_earcut_EarNode = 0;
-hxd__earcut__$Earcut g$_hxd_earcut_Earcut = 0;
-h2d__$Graphics g$_h2d_Graphics = 0;
-components__physics__$StickType g$components_physics_StickType = 0;
-components__physics__$Stick g$_components_physics_Stick = 0;
-h2d__$Bitmap g$_h2d_Bitmap = 0;
-components__sledder__$RiderScarf g$_components_sledder_RiderScarf = 0;
-components__sledder__$RiderBase g$_components_sledder_RiderBase = 0;
+hxlr__rider__$ContactPoint g$_hxlr_rider_ContactPoint = 0;
+hxlr__enums__$StickType g$hxlr_enums_StickType = 0;
+hxlr__rider__$Stick g$_hxlr_rider_Stick = 0;
+hxlr__rider__$AirPoint g$_hxlr_rider_AirPoint = 0;
+hxlr__rider__$RiderBase g$_hxlr_rider_RiderBase = 0;
 components__stage__$Camera g$_components_stage_Camera = 0;
 utils__$TableRNG g$_utils_TableRNG = 0;
 hxd__snd__$ChannelBase g$_hxd_snd_ChannelBase = 0;
@@ -792,20 +767,44 @@ hxd__snd__$Manager g$_hxd_snd_Manager = 0;
 hxd__snd__$Channel g$_hxd_snd_Channel = 0;
 hxd__snd__effect__$Pitch g$_hxd_snd_effect_Pitch = 0;
 components__managers__$Musicplayer g$_components_managers_Musicplayer = 0;
+h3d__shader__$SignedDistanceField g$_h3d_shader_SignedDistanceField = 0;
+h2d__$Tile g$_h2d_Tile = 0;
+h2d__impl___BatchDrawState__$StateEntry g$b62e2cb = 0;
+h2d__impl__$BatchDrawState g$_h2d_impl_BatchDrawState = 0;
+h2d__$TileLayerContent g$_h2d_TileLayerContent = 0;
+h2d__$TileGroup g$_h2d_TileGroup = 0;
+h2d__$Align g$h2d_Align = 0;
+h2d__$Kerning g$_h2d_Kerning = 0;
+h2d__$FontChar g$_h2d_FontChar = 0;
+hxd__$Charset g$_hxd_Charset = 0;
+h2d__$FontType g$h2d_FontType = 0;
+h2d__$Font g$_h2d_Font = 0;
+h2d__$Text g$_h2d_Text = 0;
 components__stage__$TextInfo g$_components_stage_TextInfo = 0;
 file__$SaveLoad g$_file_SaveLoad = 0;
 components__managers__$Simulation g$_components_managers_Simulation = 0;
 components__managers__$Riders g$_components_managers_Riders = 0;
-components__lines__$LineBase g$_components_lines_LineBase = 0;
+hxlr__lines__$LineBase g$_hxlr_lines_LineBase = 0;
 components__managers__$Grid g$_components_managers_Grid = 0;
+h2d__$Bitmap g$_h2d_Bitmap = 0;
 components__ui__$UIButton g$_components_ui_UIButton = 0;
 components__ui__$Toolbar g$_components_ui_Toolbar = 0;
 components__tool__$ToolMode g$components_tool_ToolMode = 0;
 components__tool__$ToolBehavior g$_components_tool_ToolBehavior = 0;
 h2d__$Console g$_h2d_Console = 0;
+h3d__shader__$ColorMatrix g$_h3d_shader_ColorMatrix = 0;
+$Xml g$_Xml = 0;
+h2d__$ImageVerticalAlign g$h2d_ImageVerticalAlign = 0;
+h2d__$LineHeightMode g$h2d_LineHeightMode = 0;
+h2d__$HtmlText g$_h2d_HtmlText = 0;
 h2d__$TextInput g$_h2d_TextInput = 0;
 components__stage__$LRConsole g$_components_stage_LRConsole = 0;
 components__stage__$DrawMode g$components_stage_DrawMode = 0;
+h2d__$GPoint g$_h2d_GPoint = 0;
+h2d___Graphics__$GraphicsContent g$_h2d__Graphics_GraphicsContent = 0;
+hxd__earcut__$EarNode g$_hxd_earcut_EarNode = 0;
+hxd__earcut__$Earcut g$_hxd_earcut_Earcut = 0;
+h2d__$Graphics g$_h2d_Graphics = 0;
 components__stage__$Canvas g$_components_stage_Canvas = 0;
 $Main g$_Main = 0;
 String s$Release = 0;
@@ -1036,64 +1035,32 @@ String s$63ec124 = 0;
 String s$Bad_node_type_unexpected_ = 0;
 String s$925902a = 0;
 haxe__iterators__$ArrayIterator g$_haxe_iterators_ArrayIterator = 0;
-components__lines__$Accel g$_components_lines_Accel = 0;
-components__lines__$Floor g$_components_lines_Floor = 0;
-hscript__$Interp g$_hscript_Interp = 0;
-haxe__ds__$GenericCell g$_haxe_ds_GenericCell = 0;
-haxe__ds__$GenericStack g$_haxe_ds_GenericStack = 0;
-hscript__$Parser g$_hscript_Parser = 0;
-hxlr__scripts__$PhysFloor g$_hxlr_scripts_PhysFloor = 0;
-String s$dx = 0;
-String s$dy = 0;
-String s$nx = 0;
-String s$ny = 0;
-String s$start = 0;
-String s$end = 0;
-String s$invSqrDistance = 0;
-String s$zone = 0;
-String s$limStart = 0;
-String s$limEnd = 0;
-String s$_point = 0;
-hscript__$Const g$hscript_Const = 0;
-hscript__$CType g$hscript_CType = 0;
-hscript__$Expr g$hscript_Expr = 0;
-components__lines__$Scenery g$_components_lines_Scenery = 0;
-components__lines__$Undefined g$_components_lines_Undefined = 0;
 String s$Error_registering_line = 0;
 String s$_is_not_present_ = 0;
 hxd__fs__$BytesFileEntry g$_hxd_fs_BytesFileEntry = 0;
 String s$Audio_has_ended_ = 0;
 h2d__$Anim g$_h2d_Anim = 0;
 components__sledder__$RiderPart g$_components_sledder_RiderPart = 0;
+components__sledder__$RiderScarf g$_components_sledder_RiderScarf = 0;
 components__sledder__$Bosh g$_components_sledder_Bosh = 0;
 String s$Rider_name_ = 0;
 String s$_already_occupied_renaming_to_ = 0;
-components__sledder__$LTAABosh g$_components_sledder_LTAABosh = 0;
 String s$_does_not_exist = 0;
 String s$No_riders_in_current_track = 0;
 String s$Set_flag_on_frame_ = 0;
 String s$Disabled_flag = 0;
-venum* g$8c042a7 = 0;
-venum* g$b72f6d6 = 0;
 components__sledder__$BodyPart g$components_sledder_BodyPart = 0;
 venum* g$components_sledder_BodyPart_ARM = 0;
 venum* g$components_sledder_BodyPart_LEG = 0;
 venum* g$components_sledder_BodyPart_SLED = 0;
 venum* g$components_sledder_BodyPart_EYE = 0;
 venum* g$components_sledder_BodyPart_BODY = 0;
-hxlr__components__$AirPoint g$_hxlr_components_AirPoint = 0;
-venum* g$7bcd604 = 0;
-venum* g$5ee05e8 = 0;
-String s$4_06_20 = 0;
-String s$853ae90 = 0;
-String s$4_05_20 = 0;
-String s$3_02_20 = 0;
-String s$2_04_20 = 0;
-String s$32_00 = 0;
+venum* g$hxlr_enums_StickType_STANDARD = 0;
+venum* g$hxlr_enums_StickType_REPELL = 0;
+venum* g$hxlr_enums_StickType_SCARF = 0;
 venum* g$h2d_BlendMode_Alpha = 0;
 String s$Recursive_addChild = 0;
 String s$filterTemp = 0;
-venum* g$hxd_PixelFormat_ARGB = 0;
 String s$rider_body_png = 0;
 hxd__res__$Image g$_hxd_res_Image = 0;
 hxd__res__$ImageInfo g$_hxd_res_ImageInfo = 0;
@@ -1103,12 +1070,16 @@ String s$rider_sled_png = 0;
 String s$rider_eye0001_png = 0;
 String s$rider_eye0002_png = 0;
 String s$rider_eye0003_png = 0;
+venum* g$hxd_PixelFormat_ARGB = 0;
 venum* g$h2d_ScaleMode_Resize = 0;
 String s$a7cc641 = 0;
 String s$d97a1d0 = 0;
 venum* g$h2d_ScaleModeAlign_Center = 0;
 venum* g$6537d82 = 0;
 String s$Set_canvas_position_to_ = 0;
+hxlr__lines__$Floor g$_hxlr_lines_Floor = 0;
+hxlr__lines__$Accel g$_hxlr_lines_Accel = 0;
+hxlr__lines__$Scenery g$_hxlr_lines_Scenery = 0;
 String s$Draw_mode_set_to_Edit = 0;
 String s$Draw_mode_set_to_Playback = 0;
 String s$Draw_mode_set_to_No_Scenery_Edit = 0;
@@ -1123,6 +1094,7 @@ String s$Clear_console = 0;
 String s$d1457b7 = 0;
 String s$Command_not_found_ = 0;
 String s$b99834b = 0;
+String s$853ae90 = 0;
 String s$_0_1 = 0;
 String s$43ec3e5 = 0;
 String s$8154172 = 0;
@@ -1187,6 +1159,7 @@ String s$3b33a12 = 0;
 String s$components_tool_ToolBehavior = 0;
 String s$mouseDown = 0;
 components__tool__$ToolFunction g$_components_tool_ToolFunction = 0;
+hxlr__lines__$Undefined g$_hxlr_lines_Undefined = 0;
 String s$keyInputDown = 0;
 venum* g$994fdec = 0;
 venum* g$92fe76c = 0;
@@ -1689,6 +1662,8 @@ haxe__crypto__$BaseCode g$_haxe_crypto_BaseCode = 0;
 haxe__crypto__$Base64 g$_haxe_crypto_Base64 = 0;
 String s$786d1e9 = 0;
 String s$BaseCode_invalid_encoded_char = 0;
+haxe__ds__$GenericCell g$_haxe_ds_GenericCell = 0;
+haxe__ds__$GenericStack g$_haxe_ds_GenericStack = 0;
 hl__$NativeArrayIterator_Int g$_hl_NativeArrayIterator_Int = 0;
 hl__$NativeArrayIterator_Dynamic g$_hl_NativeArrayIterator_Dynamic = 0;
 hl__$NativeArrayIterator g$_hl_NativeArrayIterator = 0;
@@ -1776,10 +1751,14 @@ hl__types__$ArrayObjIterator g$_hl_types_ArrayObjIterator = 0;
 hl__types__$ArrayObjKeyValueIterator g$1813e5a = 0;
 $Std g$_Std = 0;
 String s$2f43b42 = 0;
+hscript__$Interp g$_hscript_Interp = 0;
 String s$true = 0;
 String s$false = 0;
 String s$trace = 0;
 String s$hscript = 0;
+hscript__$Const g$hscript_Const = 0;
+hscript__$CType g$hscript_CType = 0;
+hscript__$Expr g$hscript_Expr = 0;
 String s$26b1722 = 0;
 String s$3389dae = 0;
 String s$0bcef9c = 0;
@@ -1822,6 +1801,7 @@ String s$467a1c8 = 0;
 hl__BaseType g$_Int = 0;
 String s$_expected = 0;
 String s$Inconsistent_key_types = 0;
+hscript__$Parser g$_hscript_Parser = 0;
 String s$9c0ce25 = 0;
 String s$cc4b0fc = 0;
 String s$4c761f1 = 0;
@@ -2256,6 +2236,8 @@ hxd__snd__openal__$SpatializationDriver g$8c7cab6 = 0;
 String s$1acc93d = 0;
 String s$ae8b669 = 0;
 String s$too_many_auxiliary_sends = 0;
+venum* g$hxlr_enums_StickType_ATTRACT = 0;
+hxlr__scripts__$PhysFloor g$_hxlr_scripts_PhysFloor = 0;
 String s$e8c60e7 = 0;
 hxsl__$Error g$_hxsl_Error = 0;
 String s$Error_ = 0;
@@ -2550,7 +2532,6 @@ hl___Bytes__$Bytes_Impl_ g$_hl__Bytes_Bytes_Impl_ = 0;
 sys__$FileSystem g$_sys_FileSystem = 0;
 $Type g$_Type = 0;
 _Xml__$XmlType_Impl_ g$__Xml_XmlType_Impl_ = 0;
-venum* g$8693a09 = 0;
 hxd__$InteractiveScene g$_hxd_InteractiveScene = 0;
 hxd__impl___Serializable__$NoSerializeSupport g$29a4c6e = 0;
 venum* g$components_ui_Icon_PLAY = 0;
@@ -2753,6 +2734,7 @@ hxd__res__$ImageInfoFlag g$hxd_res_ImageInfoFlag = 0;
 venum* g$hxd_res_ImageInfoFlag_IsCube = 0;
 venum* g$84acfe4 = 0;
 hxd__snd__$Driver g$_hxd_snd_Driver = 0;
+venum* g$hxlr_enums_StickType_FLOPPY = 0;
 venum* g$hxsl_VecType_VInt = 0;
 venum* g$hxsl_VecType_VBool = 0;
 venum* g$hxsl_Prec_Low = 0;
@@ -3135,17 +3117,6 @@ static struct _String const_s$Document = {&t$String,(vbyte*)USTR("Document"),8};
 static struct _String const_s$63ec124 = {&t$String,(vbyte*)USTR("Bad node type, expected Element but found "),42};
 static struct _String const_s$Bad_node_type_unexpected_ = {&t$String,(vbyte*)USTR("Bad node type, unexpected "),26};
 static struct _String const_s$925902a = {&t$String,(vbyte*)USTR("Bad node type, expected Element or Document but found "),54};
-static struct _String const_s$dx = {&t$String,(vbyte*)USTR("dx"),2};
-static struct _String const_s$dy = {&t$String,(vbyte*)USTR("dy"),2};
-static struct _String const_s$nx = {&t$String,(vbyte*)USTR("nx"),2};
-static struct _String const_s$ny = {&t$String,(vbyte*)USTR("ny"),2};
-static struct _String const_s$start = {&t$String,(vbyte*)USTR("start"),5};
-static struct _String const_s$end = {&t$String,(vbyte*)USTR("end"),3};
-static struct _String const_s$invSqrDistance = {&t$String,(vbyte*)USTR("invSqrDistance"),14};
-static struct _String const_s$zone = {&t$String,(vbyte*)USTR("zone"),4};
-static struct _String const_s$limStart = {&t$String,(vbyte*)USTR("limStart"),8};
-static struct _String const_s$limEnd = {&t$String,(vbyte*)USTR("limEnd"),6};
-static struct _String const_s$_point = {&t$String,(vbyte*)USTR("_point"),6};
 static struct _String const_s$Error_registering_line = {&t$String,(vbyte*)USTR("Error registering line"),22};
 static struct _String const_s$_is_not_present_ = {&t$String,(vbyte*)USTR(" is not present..."),18};
 static struct _String const_s$Audio_has_ended_ = {&t$String,(vbyte*)USTR("Audio has ended..."),18};
@@ -3155,12 +3126,6 @@ static struct _String const_s$_does_not_exist = {&t$String,(vbyte*)USTR(" does n
 static struct _String const_s$No_riders_in_current_track = {&t$String,(vbyte*)USTR("No riders in current track"),26};
 static struct _String const_s$Set_flag_on_frame_ = {&t$String,(vbyte*)USTR("Set flag on frame "),18};
 static struct _String const_s$Disabled_flag = {&t$String,(vbyte*)USTR("Disabled flag"),13};
-static struct _String const_s$4_06_20 = {&t$String,(vbyte*)USTR("4:06:20"),7};
-static struct _String const_s$853ae90 = {&t$String,(vbyte*)USTR(":"),1};
-static struct _String const_s$4_05_20 = {&t$String,(vbyte*)USTR("4:05:20"),7};
-static struct _String const_s$3_02_20 = {&t$String,(vbyte*)USTR("3:02:20"),7};
-static struct _String const_s$2_04_20 = {&t$String,(vbyte*)USTR("2:04:20"),7};
-static struct _String const_s$32_00 = {&t$String,(vbyte*)USTR("32:00"),5};
 static struct _String const_s$Recursive_addChild = {&t$String,(vbyte*)USTR("Recursive addChild"),18};
 static struct _String const_s$filterTemp = {&t$String,(vbyte*)USTR("filterTemp"),10};
 static struct _String const_s$rider_body_png = {&t$String,(vbyte*)USTR("rider/body.png"),14};
@@ -3187,6 +3152,7 @@ static struct _String const_s$Clear_console = {&t$String,(vbyte*)USTR("Clear con
 static struct _String const_s$d1457b7 = {&t$String,(vbyte*)USTR("?"),1};
 static struct _String const_s$Command_not_found_ = {&t$String,(vbyte*)USTR("Command not found \""),19};
 static struct _String const_s$b99834b = {&t$String,(vbyte*)USTR("|"),1};
+static struct _String const_s$853ae90 = {&t$String,(vbyte*)USTR(":"),1};
 static struct _String const_s$_0_1 = {&t$String,(vbyte*)USTR("=0|1"),4};
 static struct _String const_s$43ec3e5 = {&t$String,(vbyte*)USTR("="),1};
 static struct _String const_s$8154172 = {&t$String,(vbyte*)USTR("["),1};
@@ -4456,17 +4422,6 @@ void hl_init_roots() {
 	s$63ec124 = &const_s$63ec124;
 	s$Bad_node_type_unexpected_ = &const_s$Bad_node_type_unexpected_;
 	s$925902a = &const_s$925902a;
-	s$dx = &const_s$dx;
-	s$dy = &const_s$dy;
-	s$nx = &const_s$nx;
-	s$ny = &const_s$ny;
-	s$start = &const_s$start;
-	s$end = &const_s$end;
-	s$invSqrDistance = &const_s$invSqrDistance;
-	s$zone = &const_s$zone;
-	s$limStart = &const_s$limStart;
-	s$limEnd = &const_s$limEnd;
-	s$_point = &const_s$_point;
 	s$Error_registering_line = &const_s$Error_registering_line;
 	s$_is_not_present_ = &const_s$_is_not_present_;
 	s$Audio_has_ended_ = &const_s$Audio_has_ended_;
@@ -4476,12 +4431,6 @@ void hl_init_roots() {
 	s$No_riders_in_current_track = &const_s$No_riders_in_current_track;
 	s$Set_flag_on_frame_ = &const_s$Set_flag_on_frame_;
 	s$Disabled_flag = &const_s$Disabled_flag;
-	s$4_06_20 = &const_s$4_06_20;
-	s$853ae90 = &const_s$853ae90;
-	s$4_05_20 = &const_s$4_05_20;
-	s$3_02_20 = &const_s$3_02_20;
-	s$2_04_20 = &const_s$2_04_20;
-	s$32_00 = &const_s$32_00;
 	s$Recursive_addChild = &const_s$Recursive_addChild;
 	s$filterTemp = &const_s$filterTemp;
 	s$rider_body_png = &const_s$rider_body_png;
@@ -4508,6 +4457,7 @@ void hl_init_roots() {
 	s$d1457b7 = &const_s$d1457b7;
 	s$Command_not_found_ = &const_s$Command_not_found_;
 	s$b99834b = &const_s$b99834b;
+	s$853ae90 = &const_s$853ae90;
 	s$_0_1 = &const_s$_0_1;
 	s$43ec3e5 = &const_s$43ec3e5;
 	s$8154172 = &const_s$8154172;
@@ -5715,35 +5665,11 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_haxe_MainEvent);
 	hl_add_root((void**)&g$_haxe_Timer);
 	hl_add_root((void**)&g$_hxd_Timer);
-	hl_add_root((void**)&g$_hxlr_components_ContactPoint);
-	hl_add_root((void**)&g$_h2d_Text);
-	hl_add_root((void**)&g$_h2d_Kerning);
-	hl_add_root((void**)&g$_h2d_Tile);
-	hl_add_root((void**)&g$_h2d_FontChar);
-	hl_add_root((void**)&g$_hxd_Charset);
-	hl_add_root((void**)&g$h2d_FontType);
-	hl_add_root((void**)&g$_h2d_Font);
-	hl_add_root((void**)&g$_h3d_shader_ColorMatrix);
-	hl_add_root((void**)&g$_Xml);
-	hl_add_root((void**)&g$h2d_ImageVerticalAlign);
-	hl_add_root((void**)&g$h2d_LineHeightMode);
-	hl_add_root((void**)&g$_h3d_shader_SignedDistanceField);
-	hl_add_root((void**)&g$b62e2cb);
-	hl_add_root((void**)&g$_h2d_impl_BatchDrawState);
-	hl_add_root((void**)&g$_h2d_TileLayerContent);
-	hl_add_root((void**)&g$_h2d_TileGroup);
-	hl_add_root((void**)&g$h2d_Align);
-	hl_add_root((void**)&g$_h2d_HtmlText);
-	hl_add_root((void**)&g$_h2d_GPoint);
-	hl_add_root((void**)&g$_h2d__Graphics_GraphicsContent);
-	hl_add_root((void**)&g$_hxd_earcut_EarNode);
-	hl_add_root((void**)&g$_hxd_earcut_Earcut);
-	hl_add_root((void**)&g$_h2d_Graphics);
-	hl_add_root((void**)&g$components_physics_StickType);
-	hl_add_root((void**)&g$_components_physics_Stick);
-	hl_add_root((void**)&g$_h2d_Bitmap);
-	hl_add_root((void**)&g$_components_sledder_RiderScarf);
-	hl_add_root((void**)&g$_components_sledder_RiderBase);
+	hl_add_root((void**)&g$_hxlr_rider_ContactPoint);
+	hl_add_root((void**)&g$hxlr_enums_StickType);
+	hl_add_root((void**)&g$_hxlr_rider_Stick);
+	hl_add_root((void**)&g$_hxlr_rider_AirPoint);
+	hl_add_root((void**)&g$_hxlr_rider_RiderBase);
 	hl_add_root((void**)&g$_components_stage_Camera);
 	hl_add_root((void**)&g$_utils_TableRNG);
 	hl_add_root((void**)&g$_hxd_snd_ChannelBase);
@@ -5766,20 +5692,44 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hxd_snd_Channel);
 	hl_add_root((void**)&g$_hxd_snd_effect_Pitch);
 	hl_add_root((void**)&g$_components_managers_Musicplayer);
+	hl_add_root((void**)&g$_h3d_shader_SignedDistanceField);
+	hl_add_root((void**)&g$_h2d_Tile);
+	hl_add_root((void**)&g$b62e2cb);
+	hl_add_root((void**)&g$_h2d_impl_BatchDrawState);
+	hl_add_root((void**)&g$_h2d_TileLayerContent);
+	hl_add_root((void**)&g$_h2d_TileGroup);
+	hl_add_root((void**)&g$h2d_Align);
+	hl_add_root((void**)&g$_h2d_Kerning);
+	hl_add_root((void**)&g$_h2d_FontChar);
+	hl_add_root((void**)&g$_hxd_Charset);
+	hl_add_root((void**)&g$h2d_FontType);
+	hl_add_root((void**)&g$_h2d_Font);
+	hl_add_root((void**)&g$_h2d_Text);
 	hl_add_root((void**)&g$_components_stage_TextInfo);
 	hl_add_root((void**)&g$_file_SaveLoad);
 	hl_add_root((void**)&g$_components_managers_Simulation);
 	hl_add_root((void**)&g$_components_managers_Riders);
-	hl_add_root((void**)&g$_components_lines_LineBase);
+	hl_add_root((void**)&g$_hxlr_lines_LineBase);
 	hl_add_root((void**)&g$_components_managers_Grid);
+	hl_add_root((void**)&g$_h2d_Bitmap);
 	hl_add_root((void**)&g$_components_ui_UIButton);
 	hl_add_root((void**)&g$_components_ui_Toolbar);
 	hl_add_root((void**)&g$components_tool_ToolMode);
 	hl_add_root((void**)&g$_components_tool_ToolBehavior);
 	hl_add_root((void**)&g$_h2d_Console);
+	hl_add_root((void**)&g$_h3d_shader_ColorMatrix);
+	hl_add_root((void**)&g$_Xml);
+	hl_add_root((void**)&g$h2d_ImageVerticalAlign);
+	hl_add_root((void**)&g$h2d_LineHeightMode);
+	hl_add_root((void**)&g$_h2d_HtmlText);
 	hl_add_root((void**)&g$_h2d_TextInput);
 	hl_add_root((void**)&g$_components_stage_LRConsole);
 	hl_add_root((void**)&g$components_stage_DrawMode);
+	hl_add_root((void**)&g$_h2d_GPoint);
+	hl_add_root((void**)&g$_h2d__Graphics_GraphicsContent);
+	hl_add_root((void**)&g$_hxd_earcut_EarNode);
+	hl_add_root((void**)&g$_hxd_earcut_Earcut);
+	hl_add_root((void**)&g$_h2d_Graphics);
 	hl_add_root((void**)&g$_components_stage_Canvas);
 	hl_add_root((void**)&g$_Main);
 	hl_add_root((void**)&g$_hxd_res_Loader);
@@ -5809,41 +5759,30 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$ValueType_TFunction);
 	hl_add_root((void**)&g$ValueType_TObject);
 	hl_add_root((void**)&g$_haxe_iterators_ArrayIterator);
-	hl_add_root((void**)&g$_components_lines_Accel);
-	hl_add_root((void**)&g$_components_lines_Floor);
-	hl_add_root((void**)&g$_hscript_Interp);
-	hl_add_root((void**)&g$_haxe_ds_GenericCell);
-	hl_add_root((void**)&g$_haxe_ds_GenericStack);
-	hl_add_root((void**)&g$_hscript_Parser);
-	hl_add_root((void**)&g$_hxlr_scripts_PhysFloor);
-	hl_add_root((void**)&g$hscript_Const);
-	hl_add_root((void**)&g$hscript_CType);
-	hl_add_root((void**)&g$hscript_Expr);
-	hl_add_root((void**)&g$_components_lines_Scenery);
-	hl_add_root((void**)&g$_components_lines_Undefined);
 	hl_add_root((void**)&g$_hxd_fs_BytesFileEntry);
 	hl_add_root((void**)&g$_h2d_Anim);
 	hl_add_root((void**)&g$_components_sledder_RiderPart);
+	hl_add_root((void**)&g$_components_sledder_RiderScarf);
 	hl_add_root((void**)&g$_components_sledder_Bosh);
-	hl_add_root((void**)&g$_components_sledder_LTAABosh);
-	hl_add_root((void**)&g$8c042a7);
-	hl_add_root((void**)&g$b72f6d6);
 	hl_add_root((void**)&g$components_sledder_BodyPart);
 	hl_add_root((void**)&g$components_sledder_BodyPart_ARM);
 	hl_add_root((void**)&g$components_sledder_BodyPart_LEG);
 	hl_add_root((void**)&g$components_sledder_BodyPart_SLED);
 	hl_add_root((void**)&g$components_sledder_BodyPart_EYE);
 	hl_add_root((void**)&g$components_sledder_BodyPart_BODY);
-	hl_add_root((void**)&g$_hxlr_components_AirPoint);
-	hl_add_root((void**)&g$7bcd604);
-	hl_add_root((void**)&g$5ee05e8);
+	hl_add_root((void**)&g$hxlr_enums_StickType_STANDARD);
+	hl_add_root((void**)&g$hxlr_enums_StickType_REPELL);
+	hl_add_root((void**)&g$hxlr_enums_StickType_SCARF);
 	hl_add_root((void**)&g$h2d_BlendMode_Alpha);
-	hl_add_root((void**)&g$hxd_PixelFormat_ARGB);
 	hl_add_root((void**)&g$_hxd_res_Image);
 	hl_add_root((void**)&g$_hxd_res_ImageInfo);
+	hl_add_root((void**)&g$hxd_PixelFormat_ARGB);
 	hl_add_root((void**)&g$h2d_ScaleMode_Resize);
 	hl_add_root((void**)&g$h2d_ScaleModeAlign_Center);
 	hl_add_root((void**)&g$6537d82);
+	hl_add_root((void**)&g$_hxlr_lines_Floor);
+	hl_add_root((void**)&g$_hxlr_lines_Accel);
+	hl_add_root((void**)&g$_hxlr_lines_Scenery);
 	hl_add_root((void**)&g$_h3d_col_Point);
 	hl_add_root((void**)&g$hxsl_Channel);
 	hl_add_root((void**)&g$hxsl_Channel_Unknown);
@@ -5853,6 +5792,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$h2d_Align_MultilineRight);
 	hl_add_root((void**)&g$_haxe_Log);
 	hl_add_root((void**)&g$_components_tool_ToolFunction);
+	hl_add_root((void**)&g$_hxlr_lines_Undefined);
 	hl_add_root((void**)&g$994fdec);
 	hl_add_root((void**)&g$92fe76c);
 	hl_add_root((void**)&g$ab5747c);
@@ -6083,6 +6023,8 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$haxe_io_Encoding_RawNative);
 	hl_add_root((void**)&g$_haxe_crypto_BaseCode);
 	hl_add_root((void**)&g$_haxe_crypto_Base64);
+	hl_add_root((void**)&g$_haxe_ds_GenericCell);
+	hl_add_root((void**)&g$_haxe_ds_GenericStack);
 	hl_add_root((void**)&g$_hl_NativeArrayIterator_Int);
 	hl_add_root((void**)&g$_hl_NativeArrayIterator_Dynamic);
 	hl_add_root((void**)&g$_hl_NativeArrayIterator);
@@ -6118,6 +6060,10 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hl_types_ArrayObjIterator);
 	hl_add_root((void**)&g$1813e5a);
 	hl_add_root((void**)&g$_Std);
+	hl_add_root((void**)&g$_hscript_Interp);
+	hl_add_root((void**)&g$hscript_Const);
+	hl_add_root((void**)&g$hscript_CType);
+	hl_add_root((void**)&g$hscript_Expr);
 	hl_add_root((void**)&g$hscript_Error);
 	hl_add_root((void**)&g$_haxe_IMap);
 	hl_add_root((void**)&g$hscript__Interp_Stop);
@@ -6125,6 +6071,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hscript__Interp_Stop_SContinue);
 	hl_add_root((void**)&g$hscript__Interp_Stop_SReturn);
 	hl_add_root((void**)&g$_Int);
+	hl_add_root((void**)&g$_hscript_Parser);
 	hl_add_root((void**)&g$hscript_Token);
 	hl_add_root((void**)&g$hscript_Token_TEof);
 	hl_add_root((void**)&g$hscript_Token_TComma);
@@ -6240,6 +6187,8 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hxd_snd_openal_PitchDriver);
 	hl_add_root((void**)&g$_hxd_snd_openal_ReverbDriver);
 	hl_add_root((void**)&g$8c7cab6);
+	hl_add_root((void**)&g$hxlr_enums_StickType_ATTRACT);
+	hl_add_root((void**)&g$_hxlr_scripts_PhysFloor);
 	hl_add_root((void**)&g$_hxsl_Error);
 	hl_add_root((void**)&g$_hxsl_Tools);
 	hl_add_root((void**)&g$_hxsl_BatchShader);
@@ -6327,7 +6276,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_sys_FileSystem);
 	hl_add_root((void**)&g$_Type);
 	hl_add_root((void**)&g$__Xml_XmlType_Impl_);
-	hl_add_root((void**)&g$8693a09);
 	hl_add_root((void**)&g$_hxd_InteractiveScene);
 	hl_add_root((void**)&g$29a4c6e);
 	hl_add_root((void**)&g$components_ui_Icon_PLAY);
@@ -6527,6 +6475,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxd_res_ImageInfoFlag_IsCube);
 	hl_add_root((void**)&g$84acfe4);
 	hl_add_root((void**)&g$_hxd_snd_Driver);
+	hl_add_root((void**)&g$hxlr_enums_StickType_FLOPPY);
 	hl_add_root((void**)&g$hxsl_VecType_VInt);
 	hl_add_root((void**)&g$hxsl_VecType_VBool);
 	hl_add_root((void**)&g$hxsl_Prec_Low);

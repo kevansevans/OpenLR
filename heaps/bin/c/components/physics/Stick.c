@@ -56,7 +56,7 @@ bool components_physics_Stick_standard(components__physics__Stick r0,vdynamic* r
 	bool r10;
 	components__sledder__RiderBase r11;
 	h2d__col__Point r3;
-	hxlr__components__ContactPoint r4;
+	hxlr__rider__ContactPoint r4;
 	double r2, r5, r6, r7, r8, r9, r12;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
@@ -151,7 +151,7 @@ bool components_physics_Stick_repell(components__physics__Stick r0,vdynamic* r1)
 	bool r10;
 	components__sledder__RiderBase r11;
 	h2d__col__Point r3;
-	hxlr__components__ContactPoint r4;
+	hxlr__rider__ContactPoint r4;
 	double r2, r5, r6, r7, r8, r9, r12;
 	r4 = r0->a;
 	if( r4 == NULL ) hl_null_access();
@@ -248,7 +248,7 @@ bool components_physics_Stick_repell(components__physics__Stick r0,vdynamic* r1)
 bool components_physics_Stick_scarf(components__physics__Stick r0,vdynamic* r1) {
 	bool r13;
 	h2d__col__Point r3;
-	hxlr__components__ContactPoint r4;
+	hxlr__rider__ContactPoint r4;
 	double r2, r5, r6, r7, r8, r12;
 	vdynamic *r9, *r11;
 	int r10;
@@ -385,7 +385,7 @@ venum* components_physics_Stick_set_type(components__physics__Stick r0,venum* r1
 
 void components_physics_Stick_setRestLength(components__physics__Stick r0) {
 	h2d__col__Point r2;
-	hxlr__components__ContactPoint r3;
+	hxlr__rider__ContactPoint r3;
 	double r1, r4, r6, r7;
 	r3 = r0->a;
 	if( r3 == NULL ) hl_null_access();
@@ -417,7 +417,7 @@ void components_physics_Stick_setRestLength(components__physics__Stick r0) {
 	return;
 }
 
-void components_physics_Stick_new(components__physics__Stick r0,hxlr__components__ContactPoint r1,hxlr__components__ContactPoint r2,venum* r3,components__sledder__RiderBase r4) {
+void components_physics_Stick_new(components__physics__Stick r0,hxlr__rider__ContactPoint r1,hxlr__rider__ContactPoint r2,venum* r3,components__sledder__RiderBase r4) {
 	venum *r6;
 	bool r5;
 	double r7, r8;

@@ -12,7 +12,7 @@ typedef struct _components__sledder__RiderBase *components__sledder__RiderBase;
 #include <h2d/Graphics.h>
 #include <h2d/HtmlText.h>
 #include <h2d/col/Point.h>
-#include <hxlr/components/ContactPoint.h>
+#include <hxlr/rider/ContactPoint.h>
 
 
 struct _components__sledder__$RiderBase {
@@ -46,7 +46,7 @@ struct _components__sledder__RiderBase {
 	vdynamic* enabledFrame;
 	vdynamic* disableFrame;
 	bool enabled;
-	hxlr__components__ContactPoint cameraPoint;
+	hxlr__rider__ContactPoint cameraPoint;
 };
 #endif
 

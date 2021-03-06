@@ -2,9 +2,14 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/Shadow.h>
+void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
-void hxsl_Shader_new(hxsl__Shader);
+
+void h3d_shader_Shadow_new(h3d__shader__Shadow r0) {
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	return;
+}
 
 void h3d_shader_Shadow_updateConstants(h3d__shader__Shadow r0,hxsl__Globals r1) {
 	int r2;
@@ -24,10 +29,5 @@ double h3d_shader_Shadow_getParamFloatValue(h3d__shader__Shadow r0,int r1) {
 	double r2;
 	r2 = 0.;
 	return r2;
-}
-
-void h3d_shader_Shadow_new(h3d__shader__Shadow r0) {
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	return;
 }
 

@@ -22,10 +22,10 @@ vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 extern hl_type t$vrt_f6fd8f3;
 extern hl_type t$hl_types_ArrayObj;
 extern components__tool__$ToolFunction g$_components_tool_ToolFunction;
-void components_tool_ToolFunction_tryDispose(components__lines__LineBase);
+void components_tool_ToolFunction_tryDispose(hxlr__lines__LineBase);
 #include <components/stage/DrawMode.h>
 venum* components_stage_Canvas_get_drawMode(components__stage__Canvas);
-void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
+void components_managers_Grid_unregister(components__managers__Grid,hxlr__lines__LineBase);
 
 void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
 	components__managers__Grid r21;
@@ -38,7 +38,7 @@ void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
 	$Main r8;
 	components__tool__ToolBehavior r38;
 	h2d__col__Point r29;
-	components__lines__LineBase r25;
+	hxlr__lines__LineBase r25;
 	components__stage__Canvas r7;
 	double r3, r4, r27, r28, r30, r31, r32, r33, r34, r35;
 	vdynamic *r19;
@@ -113,7 +113,7 @@ void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
 	label$24f39e4_1_63:
 	r26 = r23->array;
 	r19 = ((vdynamic**)(r26 + 1))[r13];
-	r25 = (components__lines__LineBase)r19;
+	r25 = (hxlr__lines__LineBase)r19;
 	label$24f39e4_1_66:
 	++r13;
 	if( r25 == NULL ) hl_null_access();
@@ -203,7 +203,7 @@ void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
 	return;
 }
 
-void components_tool_ToolFunction_tryDispose(components__lines__LineBase r0) {
+void components_tool_ToolFunction_tryDispose(hxlr__lines__LineBase r0) {
 	components__managers__Grid r6;
 	venum *r3;
 	$Main r5;

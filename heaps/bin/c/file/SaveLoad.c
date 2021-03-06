@@ -5,30 +5,32 @@
 #include <hl/types/ArrayObj.h>
 #include <_std/Main.h>
 #include <components/managers/Grid.h>
-#include <components/lines/LineBase.h>
+#include <hxlr/lines/LineBase.h>
 #include <h2d/col/Point.h>
 #include <haxe/ds/StringMap.h>
 #include <components/managers/Riders.h>
-#include <components/sledder/RiderBase.h>
+#include <hxlr/rider/RiderBase.h>
+#include <components/sledder/Bosh.h>
 #include <_std/Date.h>
 extern hl_type t$vrt_9b9728c;
 extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 extern $Main g$_Main;
 extern hl_type t$String;
-vvirtual* components_lines_LineBase_toSaveObject(components__lines__LineBase);
+vvirtual* hxlr_lines_LineBase_toSaveObject(hxlr__lines__LineBase);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 vvirtual* haxe_ds_StringMap_iterator(haxe__ds__StringMap);
-extern hl_type t$vrt_91f9e97;
+extern hl_type t$vrt_6dd9082;
 extern hl_type t$fun_bf7849e;
-extern hl_type t$fun_6c7a217;
+extern hl_type t$fun_8ae12a9;
+extern hl_type t$components_sledder_Bosh;
+extern hl_type t$hxlr_rider_RiderBase;
 extern hl_type t$vrt_9af152f;
-String components_sledder_RiderBase_get_name(components__sledder__RiderBase);
 extern hl_type t$h2d_col_Point;
 extern hl_type t$nul_i32;
-int components_sledder_RiderBase_get_colorA(components__sledder__RiderBase);
+int components_sledder_Bosh_get_colorA(components__sledder__Bosh);
 extern hl_type t$_i32;
-int components_sledder_RiderBase_get_colorB(components__sledder__RiderBase);
+int components_sledder_Bosh_get_colorB(components__sledder__Bosh);
 #include <hl/natives.h>
 extern String s$JAN;
 extern String s$FEB;
@@ -85,13 +87,13 @@ extern hl_type t$_bool;
 void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*,vdynamic*);
 void components_managers_Riders_addNewRider(components__managers__Riders,String,h2d__col__Point,vdynamic*,vdynamic*);
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
-void components_sledder_RiderBase_setColor(components__sledder__RiderBase,vdynamic*,vdynamic*);
+void components_sledder_Bosh_setColor(components__sledder__Bosh,vdynamic*,vdynamic*);
 #include <haxe/io/Bytes.h>
 #include <haxe/format/JsonParser.h>
 #include <hl/types/ArrayDyn.h>
-#include <components/lines/Floor.h>
-#include <components/lines/Accel.h>
-#include <components/lines/Scenery.h>
+#include <hxlr/lines/Floor.h>
+#include <hxlr/lines/Accel.h>
+#include <hxlr/lines/Scenery.h>
 extern String s$_json;
 haxe__io__Bytes sys_io_File_getBytes(String);
 String haxe_io_Bytes_toString(haxe__io__Bytes);
@@ -105,15 +107,15 @@ void h2d_col_Point_new(h2d__col__Point,double*,double*);
 extern hl_type t$hl_types_ArrayDyn;
 void hl_types_ArrayDyn_reverse(hl__types__ArrayDyn);
 int hl_types_ArrayDyn_get_length(hl__types__ArrayDyn);
-extern hl_type t$components_lines_Floor;
-void components_lines_Floor_new(components__lines__Floor,h2d__col__Point,h2d__col__Point,bool);
-extern hl_type t$components_lines_Accel;
-void components_lines_Accel_new(components__lines__Accel,h2d__col__Point,h2d__col__Point,bool);
-extern hl_type t$components_lines_Scenery;
-void components_lines_Scenery_new(components__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
-void components_lines_LineBase_setLim(components__lines__LineBase,int);
-void components_managers_Grid_register(components__managers__Grid,components__lines__LineBase);
-void components_stage_Canvas_drawLineGraphic(components__stage__Canvas,components__lines__LineBase);
+extern hl_type t$hxlr_lines_Floor;
+void hxlr_lines_Floor_new(hxlr__lines__Floor,h2d__col__Point,h2d__col__Point,bool);
+extern hl_type t$hxlr_lines_Accel;
+void hxlr_lines_Accel_new(hxlr__lines__Accel,h2d__col__Point,h2d__col__Point,bool);
+extern hl_type t$hxlr_lines_Scenery;
+void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
+void hxlr_lines_LineBase_setLim(hxlr__lines__LineBase,int);
+void components_managers_Grid_register(components__managers__Grid,hxlr__lines__LineBase);
+void components_stage_Canvas_drawLineGraphic(components__stage__Canvas,hxlr__lines__LineBase);
 extern hl_type t$vrt_45af8a6;
 extern String s$playerdata;
 
@@ -122,23 +124,24 @@ void file_SaveLoad_new(file__SaveLoad r0) {
 }
 
 void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
-	bool *r31;
+	bool *r32;
 	components__managers__Riders r18;
 	components__managers__Grid r8;
-	String r5, r27, r28;
-	Date r26;
+	String r5, r28, r29;
+	Date r27;
 	haxe__ds__StringMap r17;
 	hl__types__ArrayObj r3, r11;
-	vvirtual *r2, *r15, *r16, *r19, *r22;
-	hl_type *r25;
+	vvirtual *r2, *r15, *r16, *r19, *r23;
+	hl_type *r26;
 	bool r20;
-	components__sledder__RiderBase r21;
+	components__sledder__Bosh r22;
+	hxlr__rider__RiderBase r21;
 	$Main r6;
-	h2d__col__Point r23;
-	components__lines__LineBase r12;
-	int *r29;
-	vdynamic *r13, *r24;
-	vbyte *r30;
+	h2d__col__Point r24;
+	hxlr__lines__LineBase r12;
+	int *r30;
+	vdynamic *r13, *r25;
+	vbyte *r31;
 	varray *r14;
 	int r7, r9, r10;
 	r2 = hl_alloc_virtual(&t$vrt_9b9728c);
@@ -173,7 +176,7 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	label$eb91429_2_29:
 	r14 = r3->array;
 	r13 = ((vdynamic**)(r14 + 1))[r7];
-	r12 = (components__lines__LineBase)r13;
+	r12 = (hxlr__lines__LineBase)r13;
 	label$eb91429_2_32:
 	++r7;
 	if( r12 ) goto label$eb91429_2_35;
@@ -183,7 +186,7 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	r11 = hl_vfields(r2)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r2)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r2->value,352444302/*lines*/,&t$hl_types_ArrayObj);
 	if( r11 == NULL ) hl_null_access();
 	if( r12 == NULL ) hl_null_access();
-	r15 = components_lines_LineBase_toSaveObject(r12);
+	r15 = hxlr_lines_LineBase_toSaveObject(r12);
 	r9 = hl_types_ArrayObj_push(r11,((vdynamic*)r15));
 	goto label$eb91429_2_21;
 	label$eb91429_2_42:
@@ -193,7 +196,7 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	r17 = r18->riders;
 	if( r17 == NULL ) hl_null_access();
 	r16 = haxe_ds_StringMap_iterator(r17);
-	r19 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r16);
+	r19 = hl_to_virtual(&t$vrt_6dd9082,(vdynamic*)r16);
 	label$eb91429_2_49:
 	if( r19 == NULL ) hl_null_access();
 	if( hl_vfields(r19)[0] ) r20 = ((bool (*)(vdynamic*))hl_vfields(r19)[0])(r19->value); else {
@@ -201,33 +204,34 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 		hl_dyn_call_obj(r19->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r20 = (bool)ret.v.i;
 	}
-	if( !r20 ) goto label$eb91429_2_73;
-	if( hl_vfields(r19)[1] ) r21 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r19)[1])(r19->value); else {
-		r21 = (components__sledder__RiderBase)hl_dyn_call_obj(r19->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
+	if( !r20 ) goto label$eb91429_2_74;
+	if( hl_vfields(r19)[1] ) r21 = ((hxlr__rider__RiderBase (*)(vdynamic*))hl_vfields(r19)[1])(r19->value); else {
+		r21 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r19->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
-	r22 = hl_alloc_virtual(&t$vrt_9af152f);
-	if( r21 == NULL ) hl_null_access();
-	r5 = components_sledder_RiderBase_get_name(r21);
-	if( hl_vfields(r22)[2] ) *(String*)(hl_vfields(r22)[2]) = (String)r5; else hl_dyn_setp(r22->value,150958933/*name*/,&t$String,r5);
-	r23 = r21->startPos;
-	if( hl_vfields(r22)[4] ) *(h2d__col__Point*)(hl_vfields(r22)[4]) = (h2d__col__Point)r23; else hl_dyn_setp(r22->value,-492401522/*startPoint*/,&t$h2d_col_Point,r23);
-	r24 = r21->enabledFrame;
-	if( hl_vfields(r22)[3] ) *(vdynamic**)(hl_vfields(r22)[3]) = (vdynamic*)r24; else hl_dyn_setp(r22->value,43667696/*startFrame*/,&t$nul_i32,r24);
-	r24 = r21->disableFrame;
-	if( hl_vfields(r22)[5] ) *(vdynamic**)(hl_vfields(r22)[5]) = (vdynamic*)r24; else hl_dyn_setp(r22->value,382054603/*stopFrame*/,&t$nul_i32,r24);
-	r7 = components_sledder_RiderBase_get_colorA(r21);
-	if( hl_vfields(r22)[0] ) *(int*)(hl_vfields(r22)[0]) = (int)r7; else hl_dyn_seti(r22->value,-427375335/*colora*/,&t$_i32,r7);
-	r7 = components_sledder_RiderBase_get_colorB(r21);
-	if( hl_vfields(r22)[1] ) *(int*)(hl_vfields(r22)[1]) = (int)r7; else hl_dyn_seti(r22->value,-427375334/*colorb*/,&t$_i32,r7);
+	r22 = (components__sledder__Bosh)hl_dyn_castp(&r21,&t$hxlr_rider_RiderBase,&t$components_sledder_Bosh);
+	r23 = hl_alloc_virtual(&t$vrt_9af152f);
+	if( r22 == NULL ) hl_null_access();
+	r5 = r22->name;
+	if( hl_vfields(r23)[2] ) *(String*)(hl_vfields(r23)[2]) = (String)r5; else hl_dyn_setp(r23->value,150958933/*name*/,&t$String,r5);
+	r24 = r22->startPos;
+	if( hl_vfields(r23)[4] ) *(h2d__col__Point*)(hl_vfields(r23)[4]) = (h2d__col__Point)r24; else hl_dyn_setp(r23->value,-492401522/*startPoint*/,&t$h2d_col_Point,r24);
+	r25 = r22->enabledFrame;
+	if( hl_vfields(r23)[3] ) *(vdynamic**)(hl_vfields(r23)[3]) = (vdynamic*)r25; else hl_dyn_setp(r23->value,43667696/*startFrame*/,&t$nul_i32,r25);
+	r25 = r22->disableFrame;
+	if( hl_vfields(r23)[5] ) *(vdynamic**)(hl_vfields(r23)[5]) = (vdynamic*)r25; else hl_dyn_setp(r23->value,382054603/*stopFrame*/,&t$nul_i32,r25);
+	r7 = components_sledder_Bosh_get_colorA(r22);
+	if( hl_vfields(r23)[0] ) *(int*)(hl_vfields(r23)[0]) = (int)r7; else hl_dyn_seti(r23->value,-427375335/*colora*/,&t$_i32,r7);
+	r7 = components_sledder_Bosh_get_colorB(r22);
+	if( hl_vfields(r23)[1] ) *(int*)(hl_vfields(r23)[1]) = (int)r7; else hl_dyn_seti(r23->value,-427375334/*colorb*/,&t$_i32,r7);
 	if( r2 == NULL ) hl_null_access();
 	r3 = hl_vfields(r2)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r2)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r2->value,203975107/*riders*/,&t$hl_types_ArrayObj);
 	if( r3 == NULL ) hl_null_access();
-	r7 = hl_types_ArrayObj_push(r3,((vdynamic*)r22));
+	r7 = hl_types_ArrayObj_push(r3,((vdynamic*)r23));
 	goto label$eb91429_2_49;
-	label$eb91429_2_73:
-	r25 = &t$String;
+	label$eb91429_2_74:
+	r26 = &t$String;
 	r7 = 12;
-	r14 = hl_alloc_array(r25,r7);
+	r14 = hl_alloc_array(r26,r7);
 	r5 = (String)s$JAN;
 	r7 = 0;
 	((String*)(r14 + 1))[r7] = r5;
@@ -265,81 +269,81 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	r7 = 11;
 	((String*)(r14 + 1))[r7] = r5;
 	r3 = hl_types_ArrayObj_alloc(r14);
-	r26 = Date_now();
-	if( r26 == NULL ) hl_null_access();
-	r7 = Date_getMonth(r26);
+	r27 = Date_now();
+	if( r27 == NULL ) hl_null_access();
+	r7 = Date_getMonth(r27);
 	if( r3 == NULL ) hl_null_access();
 	r10 = r3->length;
-	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_121;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_122;
 	r5 = NULL;
-	goto label$eb91429_2_124;
-	label$eb91429_2_121:
+	goto label$eb91429_2_125;
+	label$eb91429_2_122:
 	r14 = r3->array;
 	r13 = ((vdynamic**)(r14 + 1))[r7];
 	r5 = (String)r13;
-	label$eb91429_2_124:
-	if( !r5 ) goto label$eb91429_2_133;
+	label$eb91429_2_125:
+	if( !r5 ) goto label$eb91429_2_134;
 	r10 = r3->length;
-	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_129;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_130;
 	r5 = NULL;
-	goto label$eb91429_2_132;
-	label$eb91429_2_129:
+	goto label$eb91429_2_133;
+	label$eb91429_2_130:
 	r14 = r3->array;
 	r13 = ((vdynamic**)(r14 + 1))[r7];
 	r5 = (String)r13;
-	label$eb91429_2_132:
-	goto label$eb91429_2_134;
 	label$eb91429_2_133:
-	r5 = (String)s$Lousy_Smarch_Weather;
+	goto label$eb91429_2_135;
 	label$eb91429_2_134:
-	r27 = (String)s$_saves_;
-	r27 = String___add__(r27,r1);
-	r20 = sys_FileSystem_isDirectory(r27);
-	if( r20 ) goto label$eb91429_2_141;
-	r27 = (String)s$_saves_;
-	r27 = String___add__(r27,r1);
-	sys_FileSystem_createDirectory(r27);
-	label$eb91429_2_141:
-	r27 = (String)s$_saves_;
-	r27 = String___add__(r27,r1);
-	r28 = (String)s$6666cd7;
-	r27 = String___add__(r27,r28);
-	r26 = Date_now();
-	if( r26 == NULL ) hl_null_access();
-	r9 = Date_getDate(r26);
-	r29 = &r9;
-	r30 = hl_itos(r9,r29);
-	r28 = String___alloc__(r30,r9);
-	r27 = String___add__(r27,r28);
-	r27 = String___add__(r27,r5);
-	r26 = Date_now();
-	if( r26 == NULL ) hl_null_access();
-	r9 = Date_getFullYear(r26);
-	r29 = &r9;
-	r30 = hl_itos(r9,r29);
-	r28 = String___alloc__(r30,r9);
-	r27 = String___add__(r27,r28);
-	r28 = (String)s$b14a7b8;
-	r27 = String___add__(r27,r28);
-	r26 = Date_now();
-	if( r26 == NULL ) hl_null_access();
-	r9 = Date_getHours(r26);
-	r29 = &r9;
-	r30 = hl_itos(r9,r29);
-	r28 = String___alloc__(r30,r9);
-	r27 = String___add__(r27,r28);
-	r28 = (String)s$b14a7b8;
-	r27 = String___add__(r27,r28);
-	r26 = Date_now();
-	if( r26 == NULL ) hl_null_access();
-	r9 = Date_getMinutes(r26);
-	r29 = &r9;
-	r30 = hl_itos(r9,r29);
-	r28 = String___alloc__(r30,r9);
-	r27 = String___add__(r27,r28);
+	r5 = (String)s$Lousy_Smarch_Weather;
+	label$eb91429_2_135:
+	r28 = (String)s$_saves_;
+	r28 = String___add__(r28,r1);
+	r20 = sys_FileSystem_isDirectory(r28);
+	if( r20 ) goto label$eb91429_2_142;
+	r28 = (String)s$_saves_;
+	r28 = String___add__(r28,r1);
+	sys_FileSystem_createDirectory(r28);
+	label$eb91429_2_142:
+	r28 = (String)s$_saves_;
+	r28 = String___add__(r28,r1);
+	r29 = (String)s$6666cd7;
+	r28 = String___add__(r28,r29);
+	r27 = Date_now();
+	if( r27 == NULL ) hl_null_access();
+	r9 = Date_getDate(r27);
+	r30 = &r9;
+	r31 = hl_itos(r9,r30);
+	r29 = String___alloc__(r31,r9);
+	r28 = String___add__(r28,r29);
+	r28 = String___add__(r28,r5);
+	r27 = Date_now();
+	if( r27 == NULL ) hl_null_access();
+	r9 = Date_getFullYear(r27);
+	r30 = &r9;
+	r31 = hl_itos(r9,r30);
+	r29 = String___alloc__(r31,r9);
+	r28 = String___add__(r28,r29);
+	r29 = (String)s$b14a7b8;
+	r28 = String___add__(r28,r29);
+	r27 = Date_now();
+	if( r27 == NULL ) hl_null_access();
+	r9 = Date_getHours(r27);
+	r30 = &r9;
+	r31 = hl_itos(r9,r30);
+	r29 = String___alloc__(r31,r9);
+	r28 = String___add__(r28,r29);
+	r29 = (String)s$b14a7b8;
+	r28 = String___add__(r28,r29);
+	r27 = Date_now();
+	if( r27 == NULL ) hl_null_access();
+	r9 = Date_getMinutes(r27);
+	r30 = &r9;
+	r31 = hl_itos(r9,r30);
+	r29 = String___alloc__(r31,r9);
+	r28 = String___add__(r28,r29);
 	r20 = true;
-	r31 = &r20;
-	r20 = hxd_Save_save(((vdynamic*)r2),r27,r31);
+	r32 = &r20;
+	r20 = hxd_Save_save(((vdynamic*)r2),r28,r32);
 	return;
 }
 
@@ -448,8 +452,9 @@ void file_SaveLoad_loadTrack(file__SaveLoad r0,String r1,vdynamic* r2) {
 	hl__types__ArrayObj r15, r16;
 	vvirtual *r4, *r10, *r23, *r33;
 	bool r6, r20, r30;
+	components__sledder__Bosh r37;
 	components__managers__Musicplayer r21;
-	components__sledder__RiderBase r36;
+	hxlr__rider__RiderBase r36;
 	$Main r13;
 	h2d__col__Point r26;
 	components__stage__Canvas r24;
@@ -621,7 +626,7 @@ void file_SaveLoad_loadTrack(file__SaveLoad r0,String r1,vdynamic* r2) {
 	label$eb91429_4_141:
 	if( r15 == NULL ) hl_null_access();
 	r22 = r15->length;
-	if( r3 >= r22 ) goto label$eb91429_4_177;
+	if( r3 >= r22 ) goto label$eb91429_4_178;
 	r22 = r15->length;
 	if( ((unsigned)r3) < ((unsigned)r22) ) goto label$eb91429_4_149;
 	r33 = NULL;
@@ -648,17 +653,18 @@ void file_SaveLoad_loadTrack(file__SaveLoad r0,String r1,vdynamic* r2) {
 	if( r35 == NULL ) hl_null_access();
 	r7 = hl_vfields(r33)[2] ? (*(String*)(hl_vfields(r33)[2])) : (String)hl_dyn_getp(r33->value,150958933/*name*/,&t$String);
 	r9 = haxe_ds_StringMap_get(r35,r7);
-	r36 = (components__sledder__RiderBase)r9;
-	if( r36 == NULL ) hl_null_access();
+	r36 = (hxlr__rider__RiderBase)r9;
+	r37 = (components__sledder__Bosh)hl_dyn_castp(&r36,&t$hxlr_rider_RiderBase,&t$components_sledder_Bosh);
+	if( r37 == NULL ) hl_null_access();
 	r17 = hl_vfields(r33)[0] ? (*(int*)(hl_vfields(r33)[0])) : (int)hl_dyn_geti(r33->value,-427375335/*colora*/,&t$_i32);
 	r14 = hl_alloc_dynamic(&t$_i32);
 	r14->v.i = r17;
 	r17 = hl_vfields(r33)[1] ? (*(int*)(hl_vfields(r33)[1])) : (int)hl_dyn_geti(r33->value,-427375334/*colorb*/,&t$_i32);
 	r32 = hl_alloc_dynamic(&t$_i32);
 	r32->v.i = r17;
-	components_sledder_RiderBase_setColor(r36,r14,r32);
+	components_sledder_Bosh_setColor(r37,r14,r32);
 	goto label$eb91429_4_141;
-	label$eb91429_4_177:
+	label$eb91429_4_178:
 	return;
 }
 
@@ -666,19 +672,19 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 	components__managers__Grid r27;
 	components__managers__Riders r11;
 	String r4, r5;
+	hxlr__lines__Scenery r26;
 	haxe__io__Bytes r7;
 	bool r3;
+	hxlr__lines__Floor r23;
 	haxe__format__JsonParser r8;
-	components__lines__Floor r23;
+	hxlr__lines__Accel r25;
 	$Main r10;
-	components__lines__LineBase r22;
 	h2d__col__Point r12, r24;
+	hxlr__lines__LineBase r22;
 	components__stage__Canvas r28;
 	hl__types__ArrayDyn r17;
-	components__lines__Scenery r26;
 	double *r13, *r14;
 	vdynamic *r6, *r9, *r15, *r16, *r21;
-	components__lines__Accel r25;
 	int r18, r19, r20;
 	r4 = (String)s$_saves_;
 	r4 = String___add__(r4,r1);
@@ -783,7 +789,7 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 		default:
 			goto label$eb91429_5_48;
 		case 0:
-			r23 = (components__lines__Floor)hl_alloc_obj(&t$components_lines_Floor);
+			r23 = (hxlr__lines__Floor)hl_alloc_obj(&t$hxlr_lines_Floor);
 			r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26809/*x1*/,&t$_dyn);
 			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
@@ -798,11 +804,11 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 			h2d_col_Point_new(r24,r13,r14);
 			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,529034705/*flipped*/,&t$_dyn);
 			r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-			components_lines_Floor_new(r23,r12,r24,r3);
-			r22 = ((components__lines__LineBase)r23);
+			hxlr_lines_Floor_new(r23,r12,r24,r3);
+			r22 = ((hxlr__lines__LineBase)r23);
 			goto label$eb91429_5_149;
 		case 1:
-			r25 = (components__lines__Accel)hl_alloc_obj(&t$components_lines_Accel);
+			r25 = (hxlr__lines__Accel)hl_alloc_obj(&t$hxlr_lines_Accel);
 			r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26809/*x1*/,&t$_dyn);
 			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
@@ -817,11 +823,11 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 			h2d_col_Point_new(r24,r13,r14);
 			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,529034705/*flipped*/,&t$_dyn);
 			r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-			components_lines_Accel_new(r25,r12,r24,r3);
-			r22 = ((components__lines__LineBase)r25);
+			hxlr_lines_Accel_new(r25,r12,r24,r3);
+			r22 = ((hxlr__lines__LineBase)r25);
 			goto label$eb91429_5_149;
 		case 2:
-			r26 = (components__lines__Scenery)hl_alloc_obj(&t$components_lines_Scenery);
+			r26 = (hxlr__lines__Scenery)hl_alloc_obj(&t$hxlr_lines_Scenery);
 			r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26809/*x1*/,&t$_dyn);
 			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
@@ -836,11 +842,11 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 			h2d_col_Point_new(r24,r13,r14);
 			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,529034705/*flipped*/,&t$_dyn);
 			r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-			components_lines_Scenery_new(r26,r12,r24,r3);
-			r22 = ((components__lines__LineBase)r26);
+			hxlr_lines_Scenery_new(r26,r12,r24,r3);
+			r22 = ((hxlr__lines__LineBase)r26);
 	}
 	label$eb91429_5_149:
-	components_lines_LineBase_setLim(r22,r19);
+	hxlr_lines_LineBase_setLim(r22,r19);
 	r10 = ($Main)g$_Main;
 	r27 = r10->grid;
 	if( r27 == NULL ) hl_null_access();

@@ -6,7 +6,7 @@ typedef struct _components__stage__Camera *components__stage__Camera;
 #include <hl/Class.h>
 #include <hl/BaseType.h>
 #include <_std/String.h>
-#include <components/sledder/RiderBase.h>
+#include <hxlr/rider/RiderBase.h>
 #include <h2d/col/Point.h>
 
 
@@ -22,7 +22,7 @@ struct _components__stage__Camera {
 	hl_type *$type;
 	bool enabled;
 	String riderFollow;
-	components__sledder__RiderBase rider;
+	hxlr__rider__RiderBase rider;
 	bool running;
 	double cameraScale;
 	h2d__col__Point lastPosition;

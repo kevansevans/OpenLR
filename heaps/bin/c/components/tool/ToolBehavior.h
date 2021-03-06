@@ -10,7 +10,7 @@ typedef struct _components__tool__ToolBehavior *components__tool__ToolBehavior;
 #include <hxd/BitmapData.h>
 #include <hxd/Cursor.h>
 #include <h2d/col/Point.h>
-#include <components/lines/LineBase.h>
+#include <hxlr/lines/LineBase.h>
 
 
 struct _components__tool__$ToolBehavior {
@@ -56,7 +56,7 @@ struct _components__tool__ToolBehavior {
 	bool middleIsDown;
 	bool rightIsDown;
 	bool shifted;
-	components__lines__LineBase tempLine;
+	hxlr__lines__LineBase tempLine;
 	h2d__col__Point lastViewedPosition;
 };
 #endif

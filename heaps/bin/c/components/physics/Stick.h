@@ -6,7 +6,7 @@ typedef struct _components__physics__Stick *components__physics__Stick;
 #include <hl/Class.h>
 #include <hl/BaseType.h>
 #include <_std/String.h>
-#include <hxlr/components/ContactPoint.h>
+#include <hxlr/rider/ContactPoint.h>
 #include <components/physics/StickType.h>
 #include <components/sledder/RiderBase.h>
 
@@ -21,8 +21,8 @@ struct _components__physics__$Stick {
 };
 struct _components__physics__Stick {
 	hl_type *$type;
-	hxlr__components__ContactPoint a;
-	hxlr__components__ContactPoint b;
+	hxlr__rider__ContactPoint a;
+	hxlr__rider__ContactPoint b;
 	double restLength;
 	bool enabled;
 	bool breakable;

@@ -2,7 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/SkinTangent.h>
-void h3d_shader_SkinBase_new(h3d__shader__SkinBase);
 #include <hxsl/Globals.h>
 extern String s$MaxBones;
 extern String s$_is_out_of_range_;
@@ -13,11 +12,7 @@ extern String s$cedf8da;
 vdynamic* haxe_Exception_thrown(vdynamic*);
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_i32;
-
-void h3d_shader_SkinTangent_new(h3d__shader__SkinTangent r0) {
-	h3d_shader_SkinBase_new(((h3d__shader__SkinBase)r0));
-	return;
-}
+void h3d_shader_SkinBase_new(h3d__shader__SkinBase);
 
 void h3d_shader_SkinTangent_updateConstants(h3d__shader__SkinTangent r0,hxsl__Globals r1) {
 	String r7, r8;
@@ -31,7 +26,7 @@ void h3d_shader_SkinTangent_updateConstants(h3d__shader__SkinTangent r0,hxsl__Gl
 	r5 = 8;
 	r4 = ((unsigned)r2) >> r5;
 	r5 = 0;
-	if( r4 == r5 ) goto label$23b1c46_2_24;
+	if( r4 == r5 ) goto label$23b1c46_1_24;
 	r7 = (String)s$MaxBones;
 	r8 = (String)s$_is_out_of_range_;
 	r7 = String___add__(r7,r8);
@@ -49,7 +44,7 @@ void h3d_shader_SkinTangent_updateConstants(h3d__shader__SkinTangent r0,hxsl__Gl
 	r7 = String___add__(r7,r8);
 	r6 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r6);
-	label$23b1c46_2_24:
+	label$23b1c46_1_24:
 	r4 = r0->constBits;
 	r4 = r4 | r2;
 	r0->constBits = r4;
@@ -63,7 +58,7 @@ vdynamic* h3d_shader_SkinTangent_getParamValue(h3d__shader__SkinTangent r0,int r
 	int r2;
 	switch(r1) {
 		default:
-			goto label$23b1c46_3_7;
+			goto label$23b1c46_2_7;
 		case 0:
 			r2 = r0->MaxBones__;
 			r3 = hl_alloc_dynamic(&t$_i32);
@@ -73,7 +68,7 @@ vdynamic* h3d_shader_SkinTangent_getParamValue(h3d__shader__SkinTangent r0,int r
 			r4 = r0->bonesMatrixes__;
 			return ((vdynamic*)r4);
 	}
-	label$23b1c46_3_7:
+	label$23b1c46_2_7:
 	r3 = NULL;
 	return r3;
 }
@@ -82,5 +77,10 @@ double h3d_shader_SkinTangent_getParamFloatValue(h3d__shader__SkinTangent r0,int
 	double r2;
 	r2 = 0.;
 	return r2;
+}
+
+void h3d_shader_SkinTangent_new(h3d__shader__SkinTangent r0) {
+	h3d_shader_SkinBase_new(((h3d__shader__SkinBase)r0));
+	return;
 }
 

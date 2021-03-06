@@ -103,7 +103,6 @@ vdynamic* hscript_Interp_get(hscript__Interp,vdynamic*,String);
 extern hl_type t$fun_555f5cd;
 extern String s$25fb0be;
 extern String s$cfab1ba;
-vdynamic* hscript_Interp_exprReturn(hscript__Interp,venum*);
 #include <haxe/Exception.h>
 #include <hscript/_Interp/Stop.h>
 haxe__Exception haxe_Exception_caught(vdynamic*);
@@ -1430,23 +1429,6 @@ vdynamic* hscript_Interp_increment(hscript__Interp r0,venum* r1,bool r2,int r3) 
 	}
 }
 
-vdynamic* hscript_Interp_execute(hscript__Interp r0,venum* r1) {
-	hl__types__ArrayObj r5;
-	haxe__ds__StringMap r3;
-	vdynamic *r6;
-	int r2;
-	r2 = 0;
-	r0->depth = r2;
-	r3 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
-	haxe_ds_StringMap_new(r3);
-	r0->locals = r3;
-	r5 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r5);
-	r0->declared = r5;
-	r6 = hscript_Interp_exprReturn(r0,r1);
-	return r6;
-}
-
 vdynamic* hscript_Interp_exprReturn(hscript__Interp r0,venum* r1) {
 	String r10;
 	venum *r8;
@@ -1456,25 +1438,25 @@ vdynamic* hscript_Interp_exprReturn(hscript__Interp r0,venum* r1) {
 	vdynamic *r2, *r3, *r6, *r11;
 	int r9;
 	hl_trap_ctx trap$0;
-	hl_trap(trap$0,r2,label$816ff60_49_5);
+	hl_trap(trap$0,r2,label$816ff60_48_5);
 	r2 = hscript_Interp_expr(r0,r1);
 	hl_endtrap(trap$0);
 	return r2;
 	hl_endtrap(trap$0);
-	label$816ff60_49_5:
+	label$816ff60_48_5:
 	r3 = NULL;
 	r4 = haxe_Exception_caught(r2);
 	if( r4 == NULL ) hl_null_access();
 	r3 = ((vdynamic* (*)(haxe__Exception))r4->$type->vobj_proto[0])(r4);
 	r7 = (hscript___Interp__$Stop)g$hscript__Interp_Stop;
 	r5 = Std_isOfType(r3,((vdynamic*)r7));
-	if( !r5 ) goto label$816ff60_49_28;
+	if( !r5 ) goto label$816ff60_48_28;
 	r8 = (venum*)hl_dyn_castp(&r3,&t$_dyn,&t$hscript__Interp_Stop);
 	if( r8 == NULL ) hl_null_access();
 	r9 = HL__ENUM_INDEX__(r8);
 	switch(r9) {
 		default:
-			goto label$816ff60_49_27;
+			goto label$816ff60_48_27;
 		case 0:
 			r10 = (String)s$Invalid_break;
 			r6 = haxe_Exception_thrown(((vdynamic*)r10));
@@ -1489,11 +1471,11 @@ vdynamic* hscript_Interp_exprReturn(hscript__Interp r0,venum* r1) {
 			r0->returnValue = r11;
 			return r6;
 	}
-	label$816ff60_49_27:
-	goto label$816ff60_49_29;
-	label$816ff60_49_28:
+	label$816ff60_48_27:
+	goto label$816ff60_48_29;
+	label$816ff60_48_28:
 	hl_throw((vdynamic*)r2);
-	label$816ff60_49_29:
+	label$816ff60_48_29:
 	r2 = NULL;
 	return r2;
 }
@@ -1508,14 +1490,14 @@ haxe__ds__StringMap hscript_Interp_duplicate(hscript__Interp r0,haxe__ds__String
 	haxe_ds_StringMap_new(r2);
 	if( r1 == NULL ) hl_null_access();
 	r4 = haxe_ds_StringMap_keys(r1);
-	label$816ff60_50_4:
+	label$816ff60_49_4:
 	if( r4 == NULL ) hl_null_access();
 	if( hl_vfields(r4)[0] ) r5 = ((bool (*)(vdynamic*))hl_vfields(r4)[0])(r4->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r4->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r5 = (bool)ret.v.i;
 	}
-	if( !r5 ) goto label$816ff60_50_14;
+	if( !r5 ) goto label$816ff60_49_14;
 	if( hl_vfields(r4)[1] ) r6 = ((String (*)(vdynamic*))hl_vfields(r4)[1])(r4->value); else {
 		r6 = (String)hl_dyn_call_obj(r4->value,&t$fun_820f49a,151160317/*next*/,NULL,NULL);
 	}
@@ -1523,8 +1505,8 @@ haxe__ds__StringMap hscript_Interp_duplicate(hscript__Interp r0,haxe__ds__String
 	if( r1 == NULL ) hl_null_access();
 	r7 = haxe_ds_StringMap_get(r1,r6);
 	haxe_ds_StringMap_set(r2,r6,r7);
-	goto label$816ff60_50_4;
-	label$816ff60_50_14:
+	goto label$816ff60_49_4;
+	label$816ff60_49_14:
 	return r2;
 }
 
@@ -1535,11 +1517,11 @@ void hscript_Interp_restore(hscript__Interp r0,int r1) {
 	hl__types__ArrayObj r3;
 	vdynamic *r4;
 	int r2;
-	label$816ff60_51_0:
+	label$816ff60_50_0:
 	r3 = r0->declared;
 	if( r3 == NULL ) hl_null_access();
 	r2 = r3->length;
-	if( r1 >= r2 ) goto label$816ff60_51_16;
+	if( r1 >= r2 ) goto label$816ff60_50_16;
 	r3 = r0->declared;
 	if( r3 == NULL ) hl_null_access();
 	r4 = hl_types_ArrayObj_pop(r3);
@@ -1550,8 +1532,8 @@ void hscript_Interp_restore(hscript__Interp r0,int r1) {
 	r8 = hl_vfields(r5)[0] ? (*(String*)(hl_vfields(r5)[0])) : (String)hl_dyn_getp(r5->value,110/*n*/,&t$String);
 	r9 = hl_vfields(r5)[1] ? (*(vvirtual**)(hl_vfields(r5)[1])) : (vvirtual*)hl_dyn_getp(r5->value,5544103/*old*/,&t$vrt_1bf6ce2);
 	haxe_ds_StringMap_set(r7,r8,((vdynamic*)r9));
-	goto label$816ff60_51_0;
-	label$816ff60_51_16:
+	goto label$816ff60_50_0;
+	label$816ff60_50_16:
 	return;
 }
 
@@ -1565,24 +1547,24 @@ vdynamic* hscript_Interp_resolve(hscript__Interp r0,String r1) {
 	if( r3 == NULL ) hl_null_access();
 	r2 = haxe_ds_StringMap_get(r3,r1);
 	r4 = hl_to_virtual(&t$vrt_1bf6ce2,(vdynamic*)r2);
-	if( !r4 ) goto label$816ff60_52_8;
+	if( !r4 ) goto label$816ff60_51_8;
 	if( r4 == NULL ) hl_null_access();
 	r2 = hl_vfields(r4)[0] ? (*(vdynamic**)(hl_vfields(r4)[0])) : (vdynamic*)hl_dyn_getp(r4->value,114/*r*/,&t$_dyn);
 	return r2;
-	label$816ff60_52_8:
+	label$816ff60_51_8:
 	r3 = r0->variables;
 	if( r3 == NULL ) hl_null_access();
 	r2 = haxe_ds_StringMap_get(r3,r1);
-	if( r2 ) goto label$816ff60_52_19;
+	if( r2 ) goto label$816ff60_51_19;
 	r3 = r0->variables;
 	if( r3 == NULL ) hl_null_access();
 	r6 = haxe_ds_StringMap_exists(r3,r1);
-	if( r6 ) goto label$816ff60_52_19;
+	if( r6 ) goto label$816ff60_51_19;
 	r7 = hl_alloc_enum(&t$hscript_Error,5);
 	((hscript_Error_EUnknownVariable*)r7)->p0 = r1;
 	r5 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r5);
-	label$816ff60_52_19:
+	label$816ff60_51_19:
 	return r2;
 }
 
@@ -1604,21 +1586,21 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	vbyte *r9;
 	int r3, r5, r19, r20, r21, r28;
 	hl_trap_ctx trap$0;
-	if( r1 ) goto label$816ff60_53_3;
+	if( r1 ) goto label$816ff60_52_3;
 	r3 = 0;
-	goto label$816ff60_53_5;
-	label$816ff60_53_3:
+	goto label$816ff60_52_5;
+	label$816ff60_52_3:
 	if( r1 == NULL ) hl_null_access();
 	r3 = hl_types_ArrayDyn_get_length(r1);
-	label$816ff60_53_5:
+	label$816ff60_52_5:
 	r6 = ((Enumt$ctx_a591254*)r0)->p3;
 	if( r6 == NULL ) hl_null_access();
 	r5 = r6->length;
-	if( r3 == r5 ) goto label$816ff60_53_91;
+	if( r3 == r5 ) goto label$816ff60_52_91;
 	if( r1 == NULL ) hl_null_access();
 	r3 = hl_types_ArrayDyn_get_length(r1);
 	r5 = ((Enumt$ctx_a591254*)r0)->p6;
-	if( r3 >= r5 ) goto label$816ff60_53_38;
+	if( r3 >= r5 ) goto label$816ff60_52_38;
 	r7 = (String)s$188c4b4;
 	r3 = hl_types_ArrayDyn_get_length(r1);
 	r8 = &r3;
@@ -1633,7 +1615,7 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r10 = String___alloc__(r9,r3);
 	r7 = String___add__(r7,r10);
 	r10 = ((Enumt$ctx_a591254*)r0)->p1;
-	if( !r10 ) goto label$816ff60_53_35;
+	if( !r10 ) goto label$816ff60_52_35;
 	r11 = (String)s$_for_function_;
 	r12 = ((Enumt$ctx_a591254*)r0)->p1;
 	r11 = String___add__(r11,r12);
@@ -1641,12 +1623,12 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r11 = String___add__(r11,r12);
 	r10 = String___add__(r7,r11);
 	r7 = r10;
-	label$816ff60_53_35:
+	label$816ff60_52_35:
 	r13 = hl_alloc_enum(&t$hscript_Error,9);
 	((hscript_Error_ECustom*)r13)->p0 = r7;
 	r14 = haxe_Exception_thrown(((vdynamic*)r13));
 	hl_throw((vdynamic*)r14);
-	label$816ff60_53_38:
+	label$816ff60_52_38:
 	r16 = &t$_dyn;
 	r3 = 0;
 	r15 = hl_alloc_array(r16,r3);
@@ -1659,29 +1641,29 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r3 = r3 - r5;
 	r5 = 0;
 	r19 = 0;
-	label$816ff60_53_50:
+	label$816ff60_52_50:
 	r6 = ((Enumt$ctx_a591254*)r0)->p3;
 	if( r6 == NULL ) hl_null_access();
 	r21 = r6->length;
-	if( r19 >= r21 ) goto label$816ff60_53_90;
+	if( r19 >= r21 ) goto label$816ff60_52_90;
 	r6 = ((Enumt$ctx_a591254*)r0)->p3;
 	if( r6 == NULL ) hl_null_access();
 	r21 = r6->length;
-	if( ((unsigned)r19) < ((unsigned)r21) ) goto label$816ff60_53_61;
+	if( ((unsigned)r19) < ((unsigned)r21) ) goto label$816ff60_52_61;
 	r22 = NULL;
-	goto label$816ff60_53_64;
-	label$816ff60_53_61:
+	goto label$816ff60_52_64;
+	label$816ff60_52_61:
 	r15 = r6->array;
 	r14 = ((vdynamic**)(r15 + 1))[r19];
 	r22 = hl_to_virtual(&t$vrt_548a1d9,(vdynamic*)r14);
-	label$816ff60_53_64:
+	label$816ff60_52_64:
 	++r19;
 	if( r22 == NULL ) hl_null_access();
 	r23 = hl_vfields(r22)[1] ? (*(vdynamic**)(hl_vfields(r22)[1])) : (vdynamic*)hl_dyn_getp(r22->value,5545011/*opt*/,&t$nul_bool);
 	r17 = r23 ? r23->v.b : 0;
-	if( !r17 ) goto label$816ff60_53_83;
+	if( !r17 ) goto label$816ff60_52_83;
 	r21 = 0;
-	if( r21 >= r3 ) goto label$816ff60_53_79;
+	if( r21 >= r3 ) goto label$816ff60_52_79;
 	if( r4 == NULL ) hl_null_access();
 	if( r1 == NULL ) hl_null_access();
 	r20 = r5;
@@ -1689,25 +1671,25 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r20);
 	r20 = hl_types_ArrayDyn_push(r4,r14);
 	--r3;
-	goto label$816ff60_53_82;
-	label$816ff60_53_79:
+	goto label$816ff60_52_82;
+	label$816ff60_52_79:
 	if( r4 == NULL ) hl_null_access();
 	r14 = NULL;
 	r20 = hl_types_ArrayDyn_push(r4,r14);
-	label$816ff60_53_82:
-	goto label$816ff60_53_89;
-	label$816ff60_53_83:
+	label$816ff60_52_82:
+	goto label$816ff60_52_89;
+	label$816ff60_52_83:
 	if( r4 == NULL ) hl_null_access();
 	if( r1 == NULL ) hl_null_access();
 	r20 = r5;
 	++r5;
 	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r20);
 	r20 = hl_types_ArrayDyn_push(r4,r14);
-	label$816ff60_53_89:
-	goto label$816ff60_53_50;
-	label$816ff60_53_90:
+	label$816ff60_52_89:
+	goto label$816ff60_52_50;
+	label$816ff60_52_90:
 	r1 = r4;
-	label$816ff60_53_91:
+	label$816ff60_52_91:
 	r25 = ((Enumt$ctx_a591254*)r0)->p5;
 	if( r25 == NULL ) hl_null_access();
 	r24 = r25->locals;
@@ -1730,8 +1712,8 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r6 = ((Enumt$ctx_a591254*)r0)->p3;
 	if( r6 == NULL ) hl_null_access();
 	r19 = r6->length;
-	label$816ff60_53_113:
-	if( r5 >= r19 ) goto label$816ff60_53_138;
+	label$816ff60_52_113:
+	if( r5 >= r19 ) goto label$816ff60_52_138;
 	r20 = r5;
 	++r5;
 	r25 = ((Enumt$ctx_a591254*)r0)->p5;
@@ -1741,14 +1723,14 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r6 = ((Enumt$ctx_a591254*)r0)->p3;
 	if( r6 == NULL ) hl_null_access();
 	r28 = r6->length;
-	if( ((unsigned)r20) < ((unsigned)r28) ) goto label$816ff60_53_127;
+	if( ((unsigned)r20) < ((unsigned)r28) ) goto label$816ff60_52_127;
 	r22 = NULL;
-	goto label$816ff60_53_130;
-	label$816ff60_53_127:
+	goto label$816ff60_52_130;
+	label$816ff60_52_127:
 	r15 = r6->array;
 	r14 = ((vdynamic**)(r15 + 1))[r20];
 	r22 = hl_to_virtual(&t$vrt_548a1d9,(vdynamic*)r14);
-	label$816ff60_53_130:
+	label$816ff60_52_130:
 	if( r22 == NULL ) hl_null_access();
 	r7 = hl_vfields(r22)[0] ? (*(String*)(hl_vfields(r22)[0])) : (String)hl_dyn_getp(r22->value,150958933/*name*/,&t$String);
 	r29 = hl_alloc_virtual(&t$vrt_1bf6ce2);
@@ -1756,22 +1738,22 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r14 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r1->$type->vobj_proto[0])(r1,r20);
 	if( hl_vfields(r29)[0] ) *(vdynamic**)(hl_vfields(r29)[0]) = (vdynamic*)r14; else hl_dyn_setp(r29->value,114/*r*/,&t$_dyn,r14);
 	haxe_ds_StringMap_set(r26,r7,((vdynamic*)r29));
-	goto label$816ff60_53_113;
-	label$816ff60_53_138:
+	goto label$816ff60_52_113;
+	label$816ff60_52_138:
 	r14 = NULL;
 	r25 = ((Enumt$ctx_a591254*)r0)->p0;
 	if( r25 == NULL ) hl_null_access();
 	r17 = r25->inTry;
-	if( !r17 ) goto label$816ff60_53_164;
-	hl_trap(trap$0,r30,label$816ff60_53_151);
+	if( !r17 ) goto label$816ff60_52_164;
+	hl_trap(trap$0,r30,label$816ff60_52_151);
 	r25 = ((Enumt$ctx_a591254*)r0)->p5;
 	if( r25 == NULL ) hl_null_access();
 	r31 = ((Enumt$ctx_a591254*)r0)->p2;
 	r30 = hscript_Interp_exprReturn(r25,r31);
 	r14 = r30;
 	hl_endtrap(trap$0);
-	goto label$816ff60_53_163;
-	label$816ff60_53_151:
+	goto label$816ff60_52_163;
+	label$816ff60_52_151:
 	r32 = NULL;
 	r33 = haxe_Exception_caught(r30);
 	if( r33 == NULL ) hl_null_access();
@@ -1784,15 +1766,15 @@ vdynamic* hscript_Interp_expr__$1(venum* r0,hl__types__ArrayDyn r1) {
 	r25->depth = r3;
 	r34 = haxe_Exception_thrown(r32);
 	hl_throw((vdynamic*)r34);
-	label$816ff60_53_163:
-	goto label$816ff60_53_169;
-	label$816ff60_53_164:
+	label$816ff60_52_163:
+	goto label$816ff60_52_169;
+	label$816ff60_52_164:
 	r25 = ((Enumt$ctx_a591254*)r0)->p5;
 	if( r25 == NULL ) hl_null_access();
 	r31 = ((Enumt$ctx_a591254*)r0)->p2;
 	r32 = hscript_Interp_exprReturn(r25,r31);
 	r14 = r32;
-	label$816ff60_53_169:
+	label$816ff60_52_169:
 	r25 = ((Enumt$ctx_a591254*)r0)->p5;
 	if( r25 == NULL ) hl_null_access();
 	r25->locals = r24;
@@ -1834,14 +1816,14 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 	r4 = HL__ENUM_INDEX__(r1);
 	switch(r4) {
 		default:
-			goto label$816ff60_54_692;
+			goto label$816ff60_53_692;
 		case 0:
 			r6 = ((hscript_Expr_EConst*)r1)->p0;
 			if( r6 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r6);
 			switch(r4) {
 				default:
-					goto label$816ff60_54_18;
+					goto label$816ff60_53_18;
 				case 0:
 					r4 = ((hscript_Const_CInt*)r6)->p0;
 					r8 = hl_alloc_dynamic(&t$_i32);
@@ -1856,8 +1838,8 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 					r10 = ((hscript_Const_CString*)r6)->p0;
 					return ((vdynamic*)r10);
 			}
-			label$816ff60_54_18:
-			goto label$816ff60_54_692;
+			label$816ff60_53_18:
+			goto label$816ff60_53_692;
 		case 1:
 			r10 = ((hscript_Expr_EIdent*)r1)->p0;
 			r8 = hscript_Interp_resolve(r0,r10);
@@ -1879,12 +1861,12 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r16 = r0->locals;
 			if( r16 == NULL ) hl_null_access();
 			r17 = hl_alloc_virtual(&t$vrt_1bf6ce2);
-			if( r5 ) goto label$816ff60_54_41;
+			if( r5 ) goto label$816ff60_53_41;
 			r8 = NULL;
-			goto label$816ff60_54_42;
-			label$816ff60_54_41:
+			goto label$816ff60_53_42;
+			label$816ff60_53_41:
 			r8 = hscript_Interp_expr(r0,r5);
-			label$816ff60_54_42:
+			label$816ff60_53_42:
 			if( hl_vfields(r17)[0] ) *(vdynamic**)(hl_vfields(r17)[0]) = (vdynamic*)r8; else hl_dyn_setp(r17->value,114/*r*/,&t$_dyn,r8);
 			haxe_ds_StringMap_set(r16,r10,((vdynamic*)r17));
 			r8 = NULL;
@@ -1900,24 +1882,24 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r4 = r18->length;
 			r8 = NULL;
 			r7 = 0;
-			label$816ff60_54_55:
+			label$816ff60_53_55:
 			if( r14 == NULL ) hl_null_access();
 			r20 = r14->length;
-			if( r7 >= r20 ) goto label$816ff60_54_70;
+			if( r7 >= r20 ) goto label$816ff60_53_70;
 			r20 = r14->length;
-			if( ((unsigned)r7) < ((unsigned)r20) ) goto label$816ff60_54_63;
+			if( ((unsigned)r7) < ((unsigned)r20) ) goto label$816ff60_53_63;
 			r5 = NULL;
-			goto label$816ff60_54_66;
-			label$816ff60_54_63:
+			goto label$816ff60_53_66;
+			label$816ff60_53_63:
 			r22 = r14->array;
 			r21 = ((vdynamic**)(r22 + 1))[r7];
 			r5 = (venum*)r21;
-			label$816ff60_54_66:
+			label$816ff60_53_66:
 			++r7;
 			r21 = hscript_Interp_expr(r0,r5);
 			r8 = r21;
-			goto label$816ff60_54_55;
-			label$816ff60_54_70:
+			goto label$816ff60_53_55;
+			label$816ff60_53_70:
 			hscript_Interp_restore(r0,r4);
 			return r8;
 		case 5:
@@ -1934,12 +1916,12 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			if( r16 == NULL ) hl_null_access();
 			r8 = haxe_ds_StringMap_get(r16,r10);
 			r24 = (vclosure*)r8;
-			if( r24 ) goto label$816ff60_54_88;
+			if( r24 ) goto label$816ff60_53_88;
 			r25 = hl_alloc_enum(&t$hscript_Error,7);
 			((hscript_Error_EInvalidOp*)r25)->p0 = r10;
 			r8 = haxe_Exception_thrown(((vdynamic*)r25));
 			hl_throw((vdynamic*)r8);
-			label$816ff60_54_88:
+			label$816ff60_53_88:
 			if( r24 == NULL ) hl_null_access();
 			r8 = r24->hasValue ? ((vdynamic* (*)(vdynamic*,venum*,venum*))r24->fun)((vdynamic*)r24->value,r13,r5) : ((vdynamic* (*)(venum*,venum*))r24->fun)(r13,r5);
 			return r8;
@@ -1947,88 +1929,88 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r5 = ((hscript_Expr_EUnop*)r1)->p2;
 			r26 = ((hscript_Expr_EUnop*)r1)->p1;
 			r10 = ((hscript_Expr_EUnop*)r1)->p0;
-			if( !r10 ) goto label$816ff60_54_103;
+			if( !r10 ) goto label$816ff60_53_103;
 			r4 = r10->length;
 			r7 = 1;
-			if( r4 != r7 ) goto label$816ff60_54_103;
+			if( r4 != r7 ) goto label$816ff60_53_103;
 			r27 = r10->bytes;
 			r28 = (vbyte*)USTR("!");
 			r4 = hl_string_compare(r27,r28,r4);
 			r7 = 0;
-			if( r4 == r7 ) goto label$816ff60_54_142;
-			label$816ff60_54_103:
-			if( !r10 ) goto label$816ff60_54_112;
+			if( r4 == r7 ) goto label$816ff60_53_142;
+			label$816ff60_53_103:
+			if( !r10 ) goto label$816ff60_53_112;
 			r4 = r10->length;
 			r7 = 2;
-			if( r4 != r7 ) goto label$816ff60_54_112;
+			if( r4 != r7 ) goto label$816ff60_53_112;
 			r27 = r10->bytes;
 			r28 = (vbyte*)USTR("++");
 			r4 = hl_string_compare(r27,r28,r4);
 			r7 = 0;
-			if( r4 == r7 ) goto label$816ff60_54_151;
-			label$816ff60_54_112:
-			if( !r10 ) goto label$816ff60_54_121;
+			if( r4 == r7 ) goto label$816ff60_53_151;
+			label$816ff60_53_112:
+			if( !r10 ) goto label$816ff60_53_121;
 			r4 = r10->length;
 			r7 = 1;
-			if( r4 != r7 ) goto label$816ff60_54_121;
+			if( r4 != r7 ) goto label$816ff60_53_121;
 			r27 = r10->bytes;
 			r28 = (vbyte*)USTR("-");
 			r4 = hl_string_compare(r27,r28,r4);
 			r7 = 0;
-			if( r4 == r7 ) goto label$816ff60_54_154;
-			label$816ff60_54_121:
-			if( !r10 ) goto label$816ff60_54_130;
+			if( r4 == r7 ) goto label$816ff60_53_154;
+			label$816ff60_53_121:
+			if( !r10 ) goto label$816ff60_53_130;
 			r4 = r10->length;
 			r7 = 2;
-			if( r4 != r7 ) goto label$816ff60_54_130;
+			if( r4 != r7 ) goto label$816ff60_53_130;
 			r27 = r10->bytes;
 			r28 = (vbyte*)USTR("--");
 			r4 = hl_string_compare(r27,r28,r4);
 			r7 = 0;
-			if( r4 == r7 ) goto label$816ff60_54_159;
-			label$816ff60_54_130:
-			if( !r10 ) goto label$816ff60_54_139;
+			if( r4 == r7 ) goto label$816ff60_53_159;
+			label$816ff60_53_130:
+			if( !r10 ) goto label$816ff60_53_139;
 			r4 = r10->length;
 			r7 = 1;
-			if( r4 != r7 ) goto label$816ff60_54_139;
+			if( r4 != r7 ) goto label$816ff60_53_139;
 			r27 = r10->bytes;
 			r28 = (vbyte*)USTR("~");
 			r4 = hl_string_compare(r27,r28,r4);
 			r7 = 0;
-			if( r4 == r7 ) goto label$816ff60_54_162;
-			label$816ff60_54_139:
+			if( r4 == r7 ) goto label$816ff60_53_162;
+			label$816ff60_53_139:
 			r25 = hl_alloc_enum(&t$hscript_Error,7);
 			((hscript_Error_EInvalidOp*)r25)->p0 = r10;
 			r8 = haxe_Exception_thrown(((vdynamic*)r25));
 			hl_throw((vdynamic*)r8);
-			label$816ff60_54_142:
+			label$816ff60_53_142:
 			r8 = hscript_Interp_expr(r0,r5);
 			r29 = true;
 			r21 = hl_alloc_dynbool(r29);
-			{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r21); if( i != 0 ) goto label$816ff60_54_148; };
+			{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r21); if( i != 0 ) goto label$816ff60_53_148; };
 			r29 = false;
-			goto label$816ff60_54_149;
-			label$816ff60_54_148:
+			goto label$816ff60_53_149;
+			label$816ff60_53_148:
 			r29 = true;
-			label$816ff60_54_149:
+			label$816ff60_53_149:
 			r8 = hl_alloc_dynbool(r29);
 			return r8;
-			label$816ff60_54_151:
+			label$816ff60_53_151:
 			r4 = 1;
 			r8 = hscript_Interp_increment(r0,r5,r26,r4);
 			return r8;
-			label$816ff60_54_154:
+			label$816ff60_53_154:
 			r8 = hscript_Interp_expr(r0,r5);
 			r9 = (double)hl_dyn_castd(&r8,&t$_dyn);
 			r9 = -r9;
 			r8 = hl_alloc_dynamic(&t$_f64);
 			r8->v.d = r9;
 			return r8;
-			label$816ff60_54_159:
+			label$816ff60_53_159:
 			r4 = -1;
 			r8 = hscript_Interp_increment(r0,r5,r26,r4);
 			return r8;
-			label$816ff60_54_162:
+			label$816ff60_53_162:
 			r8 = hscript_Interp_expr(r0,r5);
 			r4 = (int)hl_dyn_casti(&r8,&t$_dyn,&t$_i32);
 			r7 = -1;
@@ -2042,41 +2024,41 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r30 = (hl__types__ArrayDyn)hl_alloc_obj(&t$hl_types_ArrayDyn);
 			hl_types_ArrayDyn_new(r30);
 			r4 = 0;
-			label$816ff60_54_173:
+			label$816ff60_53_173:
 			if( r14 == NULL ) hl_null_access();
 			r19 = r14->length;
-			if( r4 >= r19 ) goto label$816ff60_54_189;
+			if( r4 >= r19 ) goto label$816ff60_53_189;
 			r19 = r14->length;
-			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_54_181;
+			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_53_181;
 			r13 = NULL;
-			goto label$816ff60_54_184;
-			label$816ff60_54_181:
+			goto label$816ff60_53_184;
+			label$816ff60_53_181:
 			r22 = r14->array;
 			r8 = ((vdynamic**)(r22 + 1))[r4];
 			r13 = (venum*)r8;
-			label$816ff60_54_184:
+			label$816ff60_53_184:
 			++r4;
 			if( r30 == NULL ) hl_null_access();
 			r8 = hscript_Interp_expr(r0,r13);
 			r7 = hl_types_ArrayDyn_push(r30,r8);
-			goto label$816ff60_54_173;
-			label$816ff60_54_189:
+			goto label$816ff60_53_173;
+			label$816ff60_53_189:
 			if( r5 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r5);
 			r7 = 5;
-			if( r4 != r7 ) goto label$816ff60_54_202;
+			if( r4 != r7 ) goto label$816ff60_53_202;
 			r10 = ((hscript_Expr_EField*)r5)->p1;
 			r13 = ((hscript_Expr_EField*)r5)->p0;
 			r8 = hscript_Interp_expr(r0,r13);
-			if( r8 ) goto label$816ff60_54_200;
+			if( r8 ) goto label$816ff60_53_200;
 			r25 = hl_alloc_enum(&t$hscript_Error,8);
 			((hscript_Error_EInvalidAccess*)r25)->p0 = r10;
 			r21 = haxe_Exception_thrown(((vdynamic*)r25));
 			hl_throw((vdynamic*)r21);
-			label$816ff60_54_200:
+			label$816ff60_53_200:
 			r21 = hscript_Interp_fcall(r0,r8,r10,r30);
 			return r21;
-			label$816ff60_54_202:
+			label$816ff60_53_202:
 			r8 = NULL;
 			r21 = hscript_Interp_expr(r0,r5);
 			r8 = hscript_Interp_call(r0,r8,r21,r30);
@@ -2088,14 +2070,14 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r8 = hscript_Interp_expr(r0,r23);
 			r26 = true;
 			r21 = hl_alloc_dynbool(r26);
-			{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r21); if( i != 0 ) goto label$816ff60_54_215; };
+			{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r21); if( i != 0 ) goto label$816ff60_53_215; };
 			r8 = hscript_Interp_expr(r0,r13);
 			return r8;
-			label$816ff60_54_215:
-			if( r5 ) goto label$816ff60_54_218;
+			label$816ff60_53_215:
+			if( r5 ) goto label$816ff60_53_218;
 			r8 = NULL;
 			return r8;
-			label$816ff60_54_218:
+			label$816ff60_53_218:
 			r8 = hscript_Interp_expr(r0,r5);
 			return r8;
 		case 10:
@@ -2130,33 +2112,33 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r26 = false;
 			r4 = 0;
 			r7 = 0;
-			label$816ff60_54_247:
+			label$816ff60_53_247:
 			if( r14 == NULL ) hl_null_access();
 			r20 = r14->length;
-			if( r7 >= r20 ) goto label$816ff60_54_269;
+			if( r7 >= r20 ) goto label$816ff60_53_269;
 			r20 = r14->length;
-			if( ((unsigned)r7) < ((unsigned)r20) ) goto label$816ff60_54_255;
+			if( ((unsigned)r7) < ((unsigned)r20) ) goto label$816ff60_53_255;
 			r34 = NULL;
-			goto label$816ff60_54_258;
-			label$816ff60_54_255:
+			goto label$816ff60_53_258;
+			label$816ff60_53_255:
 			r22 = r14->array;
 			r8 = ((vdynamic**)(r22 + 1))[r7];
 			r34 = hl_to_virtual(&t$vrt_548a1d9,(vdynamic*)r8);
-			label$816ff60_54_258:
+			label$816ff60_53_258:
 			++r7;
 			if( r34 == NULL ) hl_null_access();
 			r35 = hl_vfields(r34)[1] ? (*(vdynamic**)(hl_vfields(r34)[1])) : (vdynamic*)hl_dyn_getp(r34->value,5545011/*opt*/,&t$nul_bool);
 			r29 = r35 ? r35->v.b : 0;
-			if( !r29 ) goto label$816ff60_54_265;
+			if( !r29 ) goto label$816ff60_53_265;
 			r29 = true;
-			goto label$816ff60_54_268;
-			label$816ff60_54_265:
+			goto label$816ff60_53_268;
+			label$816ff60_53_265:
 			r20 = 1;
 			r19 = r4 + r20;
 			r4 = r19;
-			label$816ff60_54_268:
-			goto label$816ff60_54_247;
-			label$816ff60_54_269:
+			label$816ff60_53_268:
+			goto label$816ff60_53_247;
+			label$816ff60_53_269:
 			r37 = hl_alloc_enum(&t$ctx_a591254,0);
 			((Enumt$ctx_a591254*)r37)->p0 = (hscript__Interp)r2;
 			((Enumt$ctx_a591254*)r37)->p1 = (String)r10;
@@ -2167,15 +2149,15 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			((Enumt$ctx_a591254*)r37)->p6 = (int)r4;
 			r36 = hl_alloc_closure_ptr(&t$fun_2066890,hscript_Interp_expr__$1,r37);
 			r8 = Reflect__makeVarArgs(r36);
-			if( !r10 ) goto label$816ff60_54_304;
+			if( !r10 ) goto label$816ff60_53_304;
 			r7 = r0->depth;
 			r19 = 0;
-			if( r7 != r19 ) goto label$816ff60_54_287;
+			if( r7 != r19 ) goto label$816ff60_53_287;
 			r38 = r0->variables;
 			if( r38 == NULL ) hl_null_access();
 			haxe_ds_StringMap_set(r38,r10,r8);
-			goto label$816ff60_54_304;
-			label$816ff60_54_287:
+			goto label$816ff60_53_304;
+			label$816ff60_53_287:
 			r18 = r0->declared;
 			if( r18 == NULL ) hl_null_access();
 			r15 = hl_alloc_virtual(&t$vrt_5b72176);
@@ -2193,16 +2175,16 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			haxe_ds_StringMap_set(r38,r10,((vdynamic*)r17));
 			if( r16 == NULL ) hl_null_access();
 			haxe_ds_StringMap_set(r16,r10,((vdynamic*)r17));
-			label$816ff60_54_304:
+			label$816ff60_53_304:
 			return r8;
 		case 15:
 			r5 = ((hscript_Expr_EReturn*)r1)->p0;
-			if( r5 ) goto label$816ff60_54_309;
+			if( r5 ) goto label$816ff60_53_309;
 			r8 = NULL;
-			goto label$816ff60_54_310;
-			label$816ff60_54_309:
+			goto label$816ff60_53_310;
+			label$816ff60_53_309:
 			r8 = hscript_Interp_expr(r0,r5);
-			label$816ff60_54_310:
+			label$816ff60_53_310:
 			r0->returnValue = r8;
 			r32 = (venum*)g$hscript__Interp_Stop_SReturn;
 			r8 = haxe_Exception_thrown(((vdynamic*)r32));
@@ -2214,14 +2196,14 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r21 = hscript_Interp_expr(r0,r5);
 			r40 = (haxe__$IMap)g$_haxe_IMap;
 			r26 = Std_isOfType(r8,((vdynamic*)r40));
-			if( !r26 ) goto label$816ff60_54_331;
+			if( !r26 ) goto label$816ff60_53_331;
 			r40 = (haxe__$IMap)g$_haxe_IMap;
 			r26 = hl_BaseType_check(((hl__BaseType)r40),r8);
-			if( r26 ) goto label$816ff60_54_327;
-			if( !r8 ) goto label$816ff60_54_327;
+			if( r26 ) goto label$816ff60_53_327;
+			if( !r8 ) goto label$816ff60_53_327;
 			r10 = (String)s$Cast_error;
 			hl_throw((vdynamic*)r10);
-			label$816ff60_54_327:
+			label$816ff60_53_327:
 			r41 = hl_to_virtual(&t$vrt_e4dd42c,(vdynamic*)r8);
 			if( r41 == NULL ) hl_null_access();
 			if( hl_vfields(r41)[1] ) r39 = ((vdynamic* (*)(vdynamic*,vdynamic*))hl_vfields(r41)[1])(r41->value,r21); else {
@@ -2229,7 +2211,7 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 				r39 = (vdynamic*)hl_dyn_call_obj(r41->value,&t$fun_555f5cd,5144726/*get*/,args,NULL);
 			}
 			return r39;
-			label$816ff60_54_331:
+			label$816ff60_53_331:
 			r30 = (hl__types__ArrayDyn)hl_dyn_castp(&r8,&t$_dyn,&t$hl_types_ArrayDyn);
 			if( r30 == NULL ) hl_null_access();
 			r4 = (int)hl_dyn_casti(&r21,&t$_dyn,&t$_i32);
@@ -2240,40 +2222,40 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			if( r14 == NULL ) hl_null_access();
 			r4 = r14->length;
 			r7 = 0;
-			if( r7 >= r4 ) goto label$816ff60_54_364;
+			if( r7 >= r4 ) goto label$816ff60_53_364;
 			r4 = 0;
 			r7 = r14->length;
-			if( ((unsigned)r4) < ((unsigned)r7) ) goto label$816ff60_54_346;
+			if( ((unsigned)r4) < ((unsigned)r7) ) goto label$816ff60_53_346;
 			r5 = NULL;
-			goto label$816ff60_54_349;
-			label$816ff60_54_346:
+			goto label$816ff60_53_349;
+			label$816ff60_53_346:
 			r22 = r14->array;
 			r8 = ((vdynamic**)(r22 + 1))[r4];
 			r5 = (venum*)r8;
-			label$816ff60_54_349:
+			label$816ff60_53_349:
 			if( r5 == NULL ) hl_null_access();
 			r4 = HL__ENUM_INDEX__(r5);
 			r7 = 6;
-			if( r4 != r7 ) goto label$816ff60_54_362;
+			if( r4 != r7 ) goto label$816ff60_53_362;
 			r13 = ((hscript_Expr_EBinop*)r5)->p2;
 			r23 = ((hscript_Expr_EBinop*)r5)->p1;
 			r10 = ((hscript_Expr_EBinop*)r5)->p0;
 			r11 = (String)s$467a1c8;
-			if( r10 == r11 || (r10 && r11 && String___compare(r10,(vdynamic*)r11) == 0) ) goto label$816ff60_54_360;
+			if( r10 == r11 || (r10 && r11 && String___compare(r10,(vdynamic*)r11) == 0) ) goto label$816ff60_53_360;
 			r29 = false;
-			goto label$816ff60_54_361;
-			label$816ff60_54_360:
+			goto label$816ff60_53_361;
+			label$816ff60_53_360:
 			r29 = true;
-			label$816ff60_54_361:
-			goto label$816ff60_54_363;
-			label$816ff60_54_362:
+			label$816ff60_53_361:
+			goto label$816ff60_53_363;
+			label$816ff60_53_362:
 			r29 = false;
-			label$816ff60_54_363:
-			goto label$816ff60_54_365;
-			label$816ff60_54_364:
+			label$816ff60_53_363:
+			goto label$816ff60_53_365;
+			label$816ff60_53_364:
 			r29 = false;
-			label$816ff60_54_365:
-			if( !r29 ) goto label$816ff60_54_496;
+			label$816ff60_53_365:
+			if( !r29 ) goto label$816ff60_53_496;
 			r29 = true;
 			r42 = true;
 			r43 = true;
@@ -2293,129 +2275,129 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r47 = &r46;
 			r31 = hl_types_ArrayDyn_alloc(((hl__types__ArrayBase)r18),r47);
 			r4 = 0;
-			label$816ff60_54_385:
+			label$816ff60_53_385:
 			if( r14 == NULL ) hl_null_access();
 			r19 = r14->length;
-			if( r4 >= r19 ) goto label$816ff60_54_451;
+			if( r4 >= r19 ) goto label$816ff60_53_451;
 			r19 = r14->length;
-			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_54_393;
+			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_53_393;
 			r5 = NULL;
-			goto label$816ff60_54_396;
-			label$816ff60_54_393:
+			goto label$816ff60_53_396;
+			label$816ff60_53_393:
 			r22 = r14->array;
 			r8 = ((vdynamic**)(r22 + 1))[r4];
 			r5 = (venum*)r8;
-			label$816ff60_54_396:
+			label$816ff60_53_396:
 			++r4;
 			if( r5 == NULL ) hl_null_access();
 			r7 = HL__ENUM_INDEX__(r5);
 			r19 = 6;
-			if( r7 != r19 ) goto label$816ff60_54_447;
+			if( r7 != r19 ) goto label$816ff60_53_447;
 			r10 = ((hscript_Expr_EBinop*)r5)->p0;
 			r11 = (String)s$467a1c8;
-			if( r10 != r11 && (!r10 || !r11 || String___compare(r10,(vdynamic*)r11) != 0) ) goto label$816ff60_54_443;
+			if( r10 != r11 && (!r10 || !r11 || String___compare(r10,(vdynamic*)r11) != 0) ) goto label$816ff60_53_443;
 			r13 = ((hscript_Expr_EBinop*)r5)->p2;
 			r23 = ((hscript_Expr_EBinop*)r5)->p1;
 			r8 = hscript_Interp_expr(r0,r23);
 			r21 = hscript_Interp_expr(r0,r13);
-			if( !r29 ) goto label$816ff60_54_414;
+			if( !r29 ) goto label$816ff60_53_414;
 			r48 = ($String)g$_String;
 			r46 = Std_isOfType(r8,((vdynamic*)r48));
-			if( !r46 ) goto label$816ff60_54_414;
+			if( !r46 ) goto label$816ff60_53_414;
 			r46 = true;
-			goto label$816ff60_54_415;
-			label$816ff60_54_414:
+			goto label$816ff60_53_415;
+			label$816ff60_53_414:
 			r46 = false;
-			label$816ff60_54_415:
+			label$816ff60_53_415:
 			r29 = r46;
-			if( !r42 ) goto label$816ff60_54_422;
+			if( !r42 ) goto label$816ff60_53_422;
 			r49 = (hl__BaseType)g$_Int;
 			r46 = Std_isOfType(r8,((vdynamic*)r49));
-			if( !r46 ) goto label$816ff60_54_422;
+			if( !r46 ) goto label$816ff60_53_422;
 			r46 = true;
-			goto label$816ff60_54_423;
-			label$816ff60_54_422:
+			goto label$816ff60_53_423;
+			label$816ff60_53_422:
 			r46 = false;
-			label$816ff60_54_423:
+			label$816ff60_53_423:
 			r42 = r46;
-			if( !r43 ) goto label$816ff60_54_429;
+			if( !r43 ) goto label$816ff60_53_429;
 			r46 = Reflect_isObject(r8);
-			if( !r46 ) goto label$816ff60_54_429;
+			if( !r46 ) goto label$816ff60_53_429;
 			r46 = true;
-			goto label$816ff60_54_430;
-			label$816ff60_54_429:
+			goto label$816ff60_53_430;
+			label$816ff60_53_429:
 			r46 = false;
-			label$816ff60_54_430:
+			label$816ff60_53_430:
 			r43 = r46;
-			if( !r44 ) goto label$816ff60_54_436;
+			if( !r44 ) goto label$816ff60_53_436;
 			r46 = Reflect_isEnumValue(r8);
-			if( !r46 ) goto label$816ff60_54_436;
+			if( !r46 ) goto label$816ff60_53_436;
 			r46 = true;
-			goto label$816ff60_54_437;
-			label$816ff60_54_436:
+			goto label$816ff60_53_437;
+			label$816ff60_53_436:
 			r46 = false;
-			label$816ff60_54_437:
+			label$816ff60_53_437:
 			r44 = r46;
 			if( r30 == NULL ) hl_null_access();
 			r7 = hl_types_ArrayDyn_push(r30,r8);
 			if( r31 == NULL ) hl_null_access();
 			r7 = hl_types_ArrayDyn_push(r31,r21);
-			goto label$816ff60_54_446;
-			label$816ff60_54_443:
+			goto label$816ff60_53_446;
+			label$816ff60_53_443:
 			r10 = (String)s$_expected;
 			r8 = haxe_Exception_thrown(((vdynamic*)r10));
 			hl_throw((vdynamic*)r8);
-			label$816ff60_54_446:
-			goto label$816ff60_54_450;
-			label$816ff60_54_447:
+			label$816ff60_53_446:
+			goto label$816ff60_53_450;
+			label$816ff60_53_447:
 			r10 = (String)s$_expected;
 			r8 = haxe_Exception_thrown(((vdynamic*)r10));
 			hl_throw((vdynamic*)r8);
-			label$816ff60_54_450:
-			goto label$816ff60_54_385;
-			label$816ff60_54_451:
-			if( !r42 ) goto label$816ff60_54_456;
+			label$816ff60_53_450:
+			goto label$816ff60_53_385;
+			label$816ff60_53_451:
+			if( !r42 ) goto label$816ff60_53_456;
 			r50 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 			haxe_ds_IntMap_new(r50);
 			r8 = ((vdynamic*)r50);
-			goto label$816ff60_54_474;
-			label$816ff60_54_456:
-			if( !r29 ) goto label$816ff60_54_461;
+			goto label$816ff60_53_474;
+			label$816ff60_53_456:
+			if( !r29 ) goto label$816ff60_53_461;
 			r16 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
 			haxe_ds_StringMap_new(r16);
 			r8 = ((vdynamic*)r16);
-			goto label$816ff60_54_474;
-			label$816ff60_54_461:
-			if( !r44 ) goto label$816ff60_54_466;
+			goto label$816ff60_53_474;
+			label$816ff60_53_461:
+			if( !r44 ) goto label$816ff60_53_466;
 			r51 = (haxe__ds__EnumValueMap)hl_alloc_obj(&t$haxe_ds_EnumValueMap);
 			haxe_ds_EnumValueMap_new(r51);
 			r8 = ((vdynamic*)r51);
-			goto label$816ff60_54_474;
-			label$816ff60_54_466:
-			if( !r43 ) goto label$816ff60_54_471;
+			goto label$816ff60_53_474;
+			label$816ff60_53_466:
+			if( !r43 ) goto label$816ff60_53_471;
 			r52 = (haxe__ds__ObjectMap)hl_alloc_obj(&t$haxe_ds_ObjectMap);
 			haxe_ds_ObjectMap_new(r52);
 			r8 = ((vdynamic*)r52);
-			goto label$816ff60_54_474;
-			label$816ff60_54_471:
+			goto label$816ff60_53_474;
+			label$816ff60_53_471:
 			r10 = (String)s$Inconsistent_key_types;
 			r21 = haxe_Exception_thrown(((vdynamic*)r10));
 			hl_throw((vdynamic*)r21);
-			label$816ff60_54_474:
+			label$816ff60_53_474:
 			r4 = 0;
 			if( r30 == NULL ) hl_null_access();
 			r7 = hl_types_ArrayDyn_get_length(r30);
-			label$816ff60_54_477:
-			if( r4 >= r7 ) goto label$816ff60_54_495;
+			label$816ff60_53_477:
+			if( r4 >= r7 ) goto label$816ff60_53_495;
 			r19 = r4;
 			++r4;
 			r40 = (haxe__$IMap)g$_haxe_IMap;
 			r46 = hl_BaseType_check(((hl__BaseType)r40),r8);
-			if( r46 ) goto label$816ff60_54_487;
-			if( !r8 ) goto label$816ff60_54_487;
+			if( r46 ) goto label$816ff60_53_487;
+			if( !r8 ) goto label$816ff60_53_487;
 			r10 = (String)s$Cast_error;
 			hl_throw((vdynamic*)r10);
-			label$816ff60_54_487:
+			label$816ff60_53_487:
 			r41 = hl_to_virtual(&t$vrt_e4dd42c,(vdynamic*)r8);
 			if( r41 == NULL ) hl_null_access();
 			if( r30 == NULL ) hl_null_access();
@@ -2426,32 +2408,32 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 				void *args[] = {r21,r39};
 				hl_dyn_call_obj(r41->value,&t$fun_7eae6db,5741474/*set*/,args,NULL);
 			}
-			goto label$816ff60_54_477;
-			label$816ff60_54_495:
+			goto label$816ff60_53_477;
+			label$816ff60_53_495:
 			return r8;
-			label$816ff60_54_496:
+			label$816ff60_53_496:
 			r30 = (hl__types__ArrayDyn)hl_alloc_obj(&t$hl_types_ArrayDyn);
 			hl_types_ArrayDyn_new(r30);
 			r4 = 0;
-			label$816ff60_54_499:
+			label$816ff60_53_499:
 			if( r14 == NULL ) hl_null_access();
 			r19 = r14->length;
-			if( r4 >= r19 ) goto label$816ff60_54_515;
+			if( r4 >= r19 ) goto label$816ff60_53_515;
 			r19 = r14->length;
-			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_54_507;
+			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_53_507;
 			r5 = NULL;
-			goto label$816ff60_54_510;
-			label$816ff60_54_507:
+			goto label$816ff60_53_510;
+			label$816ff60_53_507:
 			r22 = r14->array;
 			r8 = ((vdynamic**)(r22 + 1))[r4];
 			r5 = (venum*)r8;
-			label$816ff60_54_510:
+			label$816ff60_53_510:
 			++r4;
 			if( r30 == NULL ) hl_null_access();
 			r8 = hscript_Interp_expr(r0,r5);
 			r7 = hl_types_ArrayDyn_push(r30,r8);
-			goto label$816ff60_54_499;
-			label$816ff60_54_515:
+			goto label$816ff60_53_499;
+			label$816ff60_53_515:
 			return ((vdynamic*)r30);
 		case 18:
 			r14 = ((hscript_Expr_ENew*)r1)->p1;
@@ -2459,25 +2441,25 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r30 = (hl__types__ArrayDyn)hl_alloc_obj(&t$hl_types_ArrayDyn);
 			hl_types_ArrayDyn_new(r30);
 			r4 = 0;
-			label$816ff60_54_521:
+			label$816ff60_53_521:
 			if( r14 == NULL ) hl_null_access();
 			r19 = r14->length;
-			if( r4 >= r19 ) goto label$816ff60_54_537;
+			if( r4 >= r19 ) goto label$816ff60_53_537;
 			r19 = r14->length;
-			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_54_529;
+			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_53_529;
 			r5 = NULL;
-			goto label$816ff60_54_532;
-			label$816ff60_54_529:
+			goto label$816ff60_53_532;
+			label$816ff60_53_529:
 			r22 = r14->array;
 			r8 = ((vdynamic**)(r22 + 1))[r4];
 			r5 = (venum*)r8;
-			label$816ff60_54_532:
+			label$816ff60_53_532:
 			++r4;
 			if( r30 == NULL ) hl_null_access();
 			r8 = hscript_Interp_expr(r0,r5);
 			r7 = hl_types_ArrayDyn_push(r30,r8);
-			goto label$816ff60_54_521;
-			label$816ff60_54_537:
+			goto label$816ff60_53_521;
+			label$816ff60_53_537:
 			r8 = hscript_Interp_cnew(r0,r10,r30);
 			return r8;
 		case 19:
@@ -2494,7 +2476,7 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			if( r14 == NULL ) hl_null_access();
 			r4 = r14->length;
 			r26 = r0->inTry;
-			hl_trap(trap$0,r8,label$816ff60_54_560);
+			hl_trap(trap$0,r8,label$816ff60_53_560);
 			r29 = true;
 			r0->inTry = r29;
 			r8 = hscript_Interp_expr(r0,r13);
@@ -2503,19 +2485,19 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			hl_endtrap(trap$0);
 			return r8;
 			hl_endtrap(trap$0);
-			label$816ff60_54_560:
+			label$816ff60_53_560:
 			r21 = NULL;
 			r53 = haxe_Exception_caught(r8);
 			if( r53 == NULL ) hl_null_access();
 			r21 = ((vdynamic* (*)(haxe__Exception))r53->$type->vobj_proto[0])(r53);
 			r54 = (hscript___Interp__$Stop)g$hscript__Interp_Stop;
 			r29 = Std_isOfType(r21,((vdynamic*)r54));
-			if( !r29 ) goto label$816ff60_54_571;
+			if( !r29 ) goto label$816ff60_53_571;
 			r32 = (venum*)hl_dyn_castp(&r21,&t$_dyn,&t$hscript__Interp_Stop);
 			r0->inTry = r26;
 			r39 = haxe_Exception_thrown(((vdynamic*)r32));
 			hl_throw((vdynamic*)r39);
-			label$816ff60_54_571:
+			label$816ff60_53_571:
 			hscript_Interp_restore(r0,r4);
 			r0->inTry = r26;
 			r14 = r0->declared;
@@ -2541,27 +2523,27 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r56 = hl_alloc_dynobj();
 			r8 = ((vdynamic*)r56);
 			r4 = 0;
-			label$816ff60_54_595:
+			label$816ff60_53_595:
 			if( r14 == NULL ) hl_null_access();
 			r19 = r14->length;
-			if( r4 >= r19 ) goto label$816ff60_54_613;
+			if( r4 >= r19 ) goto label$816ff60_53_613;
 			r19 = r14->length;
-			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_54_603;
+			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_53_603;
 			r57 = NULL;
-			goto label$816ff60_54_606;
-			label$816ff60_54_603:
+			goto label$816ff60_53_606;
+			label$816ff60_53_603:
 			r22 = r14->array;
 			r21 = ((vdynamic**)(r22 + 1))[r4];
 			r57 = hl_to_virtual(&t$vrt_a226c6b,(vdynamic*)r21);
-			label$816ff60_54_606:
+			label$816ff60_53_606:
 			++r4;
 			if( r57 == NULL ) hl_null_access();
 			r10 = hl_vfields(r57)[1] ? (*(String*)(hl_vfields(r57)[1])) : (String)hl_dyn_getp(r57->value,150958933/*name*/,&t$String);
 			r5 = hl_vfields(r57)[0] ? (*(venum**)(hl_vfields(r57)[0])) : (venum*)hl_dyn_getp(r57->value,101/*e*/,&t$hscript_Expr);
 			r39 = hscript_Interp_expr(r0,r5);
 			r21 = hscript_Interp_set(r0,r8,r10,r39);
-			goto label$816ff60_54_595;
-			label$816ff60_54_613:
+			goto label$816ff60_53_595;
+			label$816ff60_53_613:
 			return r8;
 		case 22:
 			r5 = ((hscript_Expr_ETernary*)r1)->p2;
@@ -2570,10 +2552,10 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r8 = hscript_Interp_expr(r0,r23);
 			r26 = true;
 			r21 = hl_alloc_dynbool(r26);
-			{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r21); if( i != 0 ) goto label$816ff60_54_623; };
+			{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r21); if( i != 0 ) goto label$816ff60_53_623; };
 			r8 = hscript_Interp_expr(r0,r13);
 			return r8;
-			label$816ff60_54_623:
+			label$816ff60_53_623:
 			r8 = hscript_Interp_expr(r0,r5);
 			return r8;
 		case 23:
@@ -2583,63 +2565,63 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r8 = hscript_Interp_expr(r0,r13);
 			r26 = false;
 			r4 = 0;
-			label$816ff60_54_631:
+			label$816ff60_53_631:
 			if( r14 == NULL ) hl_null_access();
 			r19 = r14->length;
-			if( r4 >= r19 ) goto label$816ff60_54_671;
+			if( r4 >= r19 ) goto label$816ff60_53_671;
 			r19 = r14->length;
-			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_54_639;
+			if( ((unsigned)r4) < ((unsigned)r19) ) goto label$816ff60_53_639;
 			r58 = NULL;
-			goto label$816ff60_54_642;
-			label$816ff60_54_639:
+			goto label$816ff60_53_642;
+			label$816ff60_53_639:
 			r22 = r14->array;
 			r21 = ((vdynamic**)(r22 + 1))[r4];
 			r58 = hl_to_virtual(&t$vrt_9b52c5f,(vdynamic*)r21);
-			label$816ff60_54_642:
+			label$816ff60_53_642:
 			++r4;
 			r7 = 0;
 			if( r58 == NULL ) hl_null_access();
 			r18 = hl_vfields(r58)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r58)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r58->value,263652588/*values*/,&t$hl_types_ArrayObj);
-			label$816ff60_54_646:
+			label$816ff60_53_646:
 			if( r18 == NULL ) hl_null_access();
 			r20 = r18->length;
-			if( r7 >= r20 ) goto label$816ff60_54_664;
+			if( r7 >= r20 ) goto label$816ff60_53_664;
 			r20 = r18->length;
-			if( ((unsigned)r7) < ((unsigned)r20) ) goto label$816ff60_54_654;
+			if( ((unsigned)r7) < ((unsigned)r20) ) goto label$816ff60_53_654;
 			r23 = NULL;
-			goto label$816ff60_54_657;
-			label$816ff60_54_654:
+			goto label$816ff60_53_657;
+			label$816ff60_53_654:
 			r22 = r18->array;
 			r21 = ((vdynamic**)(r22 + 1))[r7];
 			r23 = (venum*)r21;
-			label$816ff60_54_657:
+			label$816ff60_53_657:
 			++r7;
 			r21 = hscript_Interp_expr(r0,r23);
-			{ int i = hl_dyn_compare((vdynamic*)r21,(vdynamic*)r8); if( i != 0 ) goto label$816ff60_54_663; };
+			{ int i = hl_dyn_compare((vdynamic*)r21,(vdynamic*)r8); if( i != 0 ) goto label$816ff60_53_663; };
 			r29 = true;
 			r26 = r29;
-			goto label$816ff60_54_664;
-			label$816ff60_54_663:
-			goto label$816ff60_54_646;
-			label$816ff60_54_664:
-			if( !r26 ) goto label$816ff60_54_670;
+			goto label$816ff60_53_664;
+			label$816ff60_53_663:
+			goto label$816ff60_53_646;
+			label$816ff60_53_664:
+			if( !r26 ) goto label$816ff60_53_670;
 			if( r58 == NULL ) hl_null_access();
 			r23 = hl_vfields(r58)[0] ? (*(venum**)(hl_vfields(r58)[0])) : (venum*)hl_dyn_getp(r58->value,52297279/*expr*/,&t$hscript_Expr);
 			r21 = hscript_Interp_expr(r0,r23);
 			r8 = r21;
-			goto label$816ff60_54_671;
-			label$816ff60_54_670:
-			goto label$816ff60_54_631;
-			label$816ff60_54_671:
-			if( r26 ) goto label$816ff60_54_677;
-			if( r5 ) goto label$816ff60_54_675;
+			goto label$816ff60_53_671;
+			label$816ff60_53_670:
+			goto label$816ff60_53_631;
+			label$816ff60_53_671:
+			if( r26 ) goto label$816ff60_53_677;
+			if( r5 ) goto label$816ff60_53_675;
 			r21 = NULL;
-			goto label$816ff60_54_676;
-			label$816ff60_54_675:
+			goto label$816ff60_53_676;
+			label$816ff60_53_675:
 			r21 = hscript_Interp_expr(r0,r5);
-			label$816ff60_54_676:
+			label$816ff60_53_676:
 			r8 = r21;
-			label$816ff60_54_677:
+			label$816ff60_53_677:
 			return r8;
 		case 24:
 			r5 = ((hscript_Expr_EDoWhile*)r1)->p1;
@@ -2659,7 +2641,7 @@ vdynamic* hscript_Interp_expr(hscript__Interp r0,venum* r1) {
 			r8 = hscript_Interp_expr(r0,r5);
 			return r8;
 	}
-	label$816ff60_54_692:
+	label$816ff60_53_692:
 	r8 = NULL;
 	return r8;
 }
@@ -2676,48 +2658,48 @@ void hscript_Interp_doWhileLoop(hscript__Interp r0,venum* r1,venum* r2) {
 	r4 = r0->declared;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->length;
-	label$816ff60_55_3:
+	label$816ff60_54_3:
 	r6 = true;
-	if( !r6 ) goto label$816ff60_55_34;
-	hl_trap(trap$0,r7,label$816ff60_55_10);
+	if( !r6 ) goto label$816ff60_54_34;
+	hl_trap(trap$0,r7,label$816ff60_54_10);
 	r7 = hscript_Interp_expr(r0,r2);
 	hl_endtrap(trap$0);
-	goto label$816ff60_55_28;
-	label$816ff60_55_10:
+	goto label$816ff60_54_28;
+	label$816ff60_54_10:
 	r8 = NULL;
 	r9 = haxe_Exception_caught(r7);
 	if( r9 == NULL ) hl_null_access();
 	r8 = ((vdynamic* (*)(haxe__Exception))r9->$type->vobj_proto[0])(r9);
 	r11 = (hscript___Interp__$Stop)g$hscript__Interp_Stop;
 	r6 = Std_isOfType(r8,((vdynamic*)r11));
-	if( !r6 ) goto label$816ff60_55_27;
+	if( !r6 ) goto label$816ff60_54_27;
 	r12 = (venum*)hl_dyn_castp(&r8,&t$_dyn,&t$hscript__Interp_Stop);
 	if( r12 == NULL ) hl_null_access();
 	r13 = HL__ENUM_INDEX__(r12);
 	switch(r13) {
 		default:
-			goto label$816ff60_55_26;
+			goto label$816ff60_54_26;
 		case 0:
-			goto label$816ff60_55_34;
+			goto label$816ff60_54_34;
 		case 1:
-			goto label$816ff60_55_26;
+			goto label$816ff60_54_26;
 		case 2:
 			r10 = haxe_Exception_thrown(((vdynamic*)r12));
 			hl_throw((vdynamic*)r10);
 	}
-	label$816ff60_55_26:
-	goto label$816ff60_55_28;
-	label$816ff60_55_27:
+	label$816ff60_54_26:
+	goto label$816ff60_54_28;
+	label$816ff60_54_27:
 	hl_throw((vdynamic*)r7);
-	label$816ff60_55_28:
+	label$816ff60_54_28:
 	r8 = hscript_Interp_expr(r0,r1);
 	r6 = true;
 	r10 = hl_alloc_dynbool(r6);
-	{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r10); if( i == 0 ) goto label$816ff60_55_33; };
-	goto label$816ff60_55_34;
-	label$816ff60_55_33:
-	goto label$816ff60_55_3;
-	label$816ff60_55_34:
+	{ int i = hl_dyn_compare((vdynamic*)r8,(vdynamic*)r10); if( i == 0 ) goto label$816ff60_54_33; };
+	goto label$816ff60_54_34;
+	label$816ff60_54_33:
+	goto label$816ff60_54_3;
+	label$816ff60_54_34:
 	hscript_Interp_restore(r0,r3);
 	return;
 }
@@ -2734,44 +2716,44 @@ void hscript_Interp_whileLoop(hscript__Interp r0,venum* r1,venum* r2) {
 	r4 = r0->declared;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->length;
-	label$816ff60_56_3:
+	label$816ff60_55_3:
 	r6 = hscript_Interp_expr(r0,r1);
 	r7 = true;
 	r8 = hl_alloc_dynbool(r7);
-	{ int i = hl_dyn_compare((vdynamic*)r6,(vdynamic*)r8); if( i != 0 ) goto label$816ff60_56_31; };
-	hl_trap(trap$0,r6,label$816ff60_56_12);
+	{ int i = hl_dyn_compare((vdynamic*)r6,(vdynamic*)r8); if( i != 0 ) goto label$816ff60_55_31; };
+	hl_trap(trap$0,r6,label$816ff60_55_12);
 	r6 = hscript_Interp_expr(r0,r2);
 	hl_endtrap(trap$0);
-	goto label$816ff60_56_30;
-	label$816ff60_56_12:
+	goto label$816ff60_55_30;
+	label$816ff60_55_12:
 	r8 = NULL;
 	r9 = haxe_Exception_caught(r6);
 	if( r9 == NULL ) hl_null_access();
 	r8 = ((vdynamic* (*)(haxe__Exception))r9->$type->vobj_proto[0])(r9);
 	r11 = (hscript___Interp__$Stop)g$hscript__Interp_Stop;
 	r7 = Std_isOfType(r8,((vdynamic*)r11));
-	if( !r7 ) goto label$816ff60_56_29;
+	if( !r7 ) goto label$816ff60_55_29;
 	r12 = (venum*)hl_dyn_castp(&r8,&t$_dyn,&t$hscript__Interp_Stop);
 	if( r12 == NULL ) hl_null_access();
 	r13 = HL__ENUM_INDEX__(r12);
 	switch(r13) {
 		default:
-			goto label$816ff60_56_28;
+			goto label$816ff60_55_28;
 		case 0:
-			goto label$816ff60_56_31;
+			goto label$816ff60_55_31;
 		case 1:
-			goto label$816ff60_56_28;
+			goto label$816ff60_55_28;
 		case 2:
 			r10 = haxe_Exception_thrown(((vdynamic*)r12));
 			hl_throw((vdynamic*)r10);
 	}
-	label$816ff60_56_28:
-	goto label$816ff60_56_30;
-	label$816ff60_56_29:
+	label$816ff60_55_28:
+	goto label$816ff60_55_30;
+	label$816ff60_55_29:
 	hl_throw((vdynamic*)r6);
-	label$816ff60_56_30:
-	goto label$816ff60_56_3;
-	label$816ff60_56_31:
+	label$816ff60_55_30:
+	goto label$816ff60_55_3;
+	label$816ff60_55_31:
 	hscript_Interp_restore(r0,r3);
 	return;
 }
@@ -2782,7 +2764,7 @@ vvirtual* hscript_Interp_makeIterator(hscript__Interp r0,vdynamic* r1) {
 	venum *r4;
 	vdynamic *r2, *r3;
 	hl_trap_ctx trap$0;
-	hl_trap(trap$0,r2,label$816ff60_57_8);
+	hl_trap(trap$0,r2,label$816ff60_56_8);
 	if( r1 == NULL ) hl_null_access();
 	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,-207992737/*iterator*/,&t$_dyn);
 	if( r2 == NULL ) hl_null_access();
@@ -2791,22 +2773,22 @@ vvirtual* hscript_Interp_makeIterator(hscript__Interp r0,vdynamic* r1) {
 	}
 	r1 = r2;
 	hl_endtrap(trap$0);
-	goto label$816ff60_57_9;
-	label$816ff60_57_8:
+	goto label$816ff60_56_9;
+	label$816ff60_56_8:
 	r3 = NULL;
-	label$816ff60_57_9:
+	label$816ff60_56_9:
 	if( r1 == NULL ) hl_null_access();
 	r3 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,407283053/*hasNext*/,&t$_dyn);
-	if( !r3 ) goto label$816ff60_57_14;
+	if( !r3 ) goto label$816ff60_56_14;
 	r3 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,151160317/*next*/,&t$_dyn);
-	if( r3 ) goto label$816ff60_57_18;
-	label$816ff60_57_14:
+	if( r3 ) goto label$816ff60_56_18;
+	label$816ff60_56_14:
 	r5 = (String)hl_dyn_castp(&r1,&t$_dyn,&t$String);
 	r4 = hl_alloc_enum(&t$hscript_Error,6);
 	((hscript_Error_EInvalidIterator*)r4)->p0 = r5;
 	r3 = haxe_Exception_thrown(((vdynamic*)r4));
 	hl_throw((vdynamic*)r3);
-	label$816ff60_57_18:
+	label$816ff60_56_18:
 	r6 = hl_to_virtual(&t$vrt_ef76930,(vdynamic*)r1);
 	return r6;
 }
@@ -2837,14 +2819,14 @@ void hscript_Interp_forLoop(hscript__Interp r0,String r1,venum* r2,venum* r3) {
 	r7 = hl_types_ArrayObj_push(r5,((vdynamic*)r8));
 	r9 = hscript_Interp_expr(r0,r2);
 	r12 = hscript_Interp_makeIterator(r0,r9);
-	label$816ff60_58_15:
+	label$816ff60_57_15:
 	if( r12 == NULL ) hl_null_access();
 	if( hl_vfields(r12)[0] ) r13 = ((bool (*)(vdynamic*))hl_vfields(r12)[0])(r12->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r12->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r13 = (bool)ret.v.i;
 	}
-	if( !r13 ) goto label$816ff60_58_48;
+	if( !r13 ) goto label$816ff60_57_48;
 	r10 = r0->locals;
 	if( r10 == NULL ) hl_null_access();
 	r11 = hl_alloc_virtual(&t$vrt_1bf6ce2);
@@ -2853,39 +2835,39 @@ void hscript_Interp_forLoop(hscript__Interp r0,String r1,venum* r2,venum* r3) {
 	}
 	if( hl_vfields(r11)[0] ) *(vdynamic**)(hl_vfields(r11)[0]) = (vdynamic*)r9; else hl_dyn_setp(r11->value,114/*r*/,&t$_dyn,r9);
 	haxe_ds_StringMap_set(r10,r1,((vdynamic*)r11));
-	hl_trap(trap$0,r9,label$816ff60_58_29);
+	hl_trap(trap$0,r9,label$816ff60_57_29);
 	r9 = hscript_Interp_expr(r0,r3);
 	hl_endtrap(trap$0);
-	goto label$816ff60_58_47;
-	label$816ff60_58_29:
+	goto label$816ff60_57_47;
+	label$816ff60_57_29:
 	r14 = NULL;
 	r15 = haxe_Exception_caught(r9);
 	if( r15 == NULL ) hl_null_access();
 	r14 = ((vdynamic* (*)(haxe__Exception))r15->$type->vobj_proto[0])(r15);
 	r17 = (hscript___Interp__$Stop)g$hscript__Interp_Stop;
 	r13 = Std_isOfType(r14,((vdynamic*)r17));
-	if( !r13 ) goto label$816ff60_58_46;
+	if( !r13 ) goto label$816ff60_57_46;
 	r18 = (venum*)hl_dyn_castp(&r14,&t$_dyn,&t$hscript__Interp_Stop);
 	if( r18 == NULL ) hl_null_access();
 	r7 = HL__ENUM_INDEX__(r18);
 	switch(r7) {
 		default:
-			goto label$816ff60_58_45;
+			goto label$816ff60_57_45;
 		case 0:
-			goto label$816ff60_58_48;
+			goto label$816ff60_57_48;
 		case 1:
-			goto label$816ff60_58_45;
+			goto label$816ff60_57_45;
 		case 2:
 			r16 = haxe_Exception_thrown(((vdynamic*)r18));
 			hl_throw((vdynamic*)r16);
 	}
-	label$816ff60_58_45:
-	goto label$816ff60_58_47;
-	label$816ff60_58_46:
+	label$816ff60_57_45:
+	goto label$816ff60_57_47;
+	label$816ff60_57_46:
 	hl_throw((vdynamic*)r9);
-	label$816ff60_58_47:
-	goto label$816ff60_58_15;
-	label$816ff60_58_48:
+	label$816ff60_57_47:
+	goto label$816ff60_57_15;
+	label$816ff60_57_48:
 	hscript_Interp_restore(r0,r4);
 	return;
 }
@@ -2893,12 +2875,12 @@ void hscript_Interp_forLoop(hscript__Interp r0,String r1,venum* r2,venum* r3) {
 vdynamic* hscript_Interp_get(hscript__Interp r0,vdynamic* r1,String r2) {
 	venum *r4;
 	vdynamic *r3;
-	if( r1 ) goto label$816ff60_59_4;
+	if( r1 ) goto label$816ff60_58_4;
 	r4 = hl_alloc_enum(&t$hscript_Error,8);
 	((hscript_Error_EInvalidAccess*)r4)->p0 = r2;
 	r3 = haxe_Exception_thrown(((vdynamic*)r4));
 	hl_throw((vdynamic*)r3);
-	label$816ff60_59_4:
+	label$816ff60_58_4:
 	r3 = Reflect_getProperty(r1,r2);
 	return r3;
 }
@@ -2906,12 +2888,12 @@ vdynamic* hscript_Interp_get(hscript__Interp r0,vdynamic* r1,String r2) {
 vdynamic* hscript_Interp_set(hscript__Interp r0,vdynamic* r1,String r2,vdynamic* r3) {
 	venum *r6;
 	vdynamic *r5;
-	if( r1 ) goto label$816ff60_60_4;
+	if( r1 ) goto label$816ff60_59_4;
 	r6 = hl_alloc_enum(&t$hscript_Error,8);
 	((hscript_Error_EInvalidAccess*)r6)->p0 = r2;
 	r5 = haxe_Exception_thrown(((vdynamic*)r6));
 	hl_throw((vdynamic*)r5);
-	label$816ff60_60_4:
+	label$816ff60_59_4:
 	Reflect_setProperty(r1,r2,r3);
 	return r3;
 }
@@ -2933,11 +2915,11 @@ vdynamic* hscript_Interp_cnew(hscript__Interp r0,String r1,hl__types__ArrayDyn r
 	hl__Class r3, r4;
 	vdynamic *r5;
 	r3 = Type_resolveClass(r1);
-	if( r3 ) goto label$816ff60_63_5;
+	if( r3 ) goto label$816ff60_62_5;
 	r5 = hscript_Interp_resolve(r0,r1);
 	r4 = (hl__Class)hl_dyn_castp(&r5,&t$_dyn,&t$hl_Class);
 	r3 = r4;
-	label$816ff60_63_5:
+	label$816ff60_62_5:
 	r5 = Type_createInstance(r3,r2);
 	return r5;
 }

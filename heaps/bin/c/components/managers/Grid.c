@@ -2,12 +2,12 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/managers/Grid.h>
-#include <components/lines/LineBase.h>
+#include <hxlr/lines/LineBase.h>
 #include <h2d/col/Point.h>
-void components_managers_Grid_addLine(components__managers__Grid,components__lines__LineBase);
+void components_managers_Grid_addLine(components__managers__Grid,hxlr__lines__LineBase);
 vvirtual* components_managers_Grid_registryPosition(double,double);
 extern hl_type t$_i32;
-void components_managers_Grid_storeLine(components__managers__Grid,components__lines__LineBase,int,int);
+void components_managers_Grid_storeLine(components__managers__Grid,hxlr__lines__LineBase,int,int);
 #include <hl/natives.h>
 #include <components/managers/Simulation.h>
 #include <_std/Main.h>
@@ -23,7 +23,7 @@ vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 extern hl_type t$vrt_f6fd8f3;
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
-extern hl_type t$components_lines_LineBase;
+extern hl_type t$hxlr_lines_LineBase;
 hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 extern hl_type t$hl_types_ArrayObj;
 void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
@@ -31,7 +31,7 @@ int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 extern String s$Error_registering_line;
 #include <h2d/Console.h>
 void h2d_Console_log(h2d__Console,String,vdynamic*);
-void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
+void components_managers_Grid_unregister(components__managers__Grid,hxlr__lines__LineBase);
 #include <components/stage/Canvas.h>
 bool hl_types_ArrayObj_remove(hl__types__ArrayObj,vdynamic*);
 void components_stage_Canvas_redrawLines(components__stage__Canvas,int);
@@ -40,7 +40,7 @@ extern hl_type t$haxe_ds_StringMap;
 void haxe_ds_StringMap_new(haxe__ds__StringMap);
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 
-void components_managers_Grid_register(components__managers__Grid r0,components__lines__LineBase r1) {
+void components_managers_Grid_register(components__managers__Grid r0,hxlr__lines__LineBase r1) {
 	vvirtual *r4, *r8, *r9;
 	bool r18;
 	h2d__col__Point r6;
@@ -270,7 +270,7 @@ void components_managers_Grid_register(components__managers__Grid r0,components_
 	return;
 }
 
-void components_managers_Grid_addLine(components__managers__Grid r0,components__lines__LineBase r1) {
+void components_managers_Grid_addLine(components__managers__Grid r0,hxlr__lines__LineBase r1) {
 	hl__types__ArrayObj r5;
 	$Main r9;
 	components__managers__Simulation r8;
@@ -294,7 +294,7 @@ void components_managers_Grid_addLine(components__managers__Grid r0,components__
 	hl_types_ArrayObj___expand(r5,r4);
 	label$e6f4f97_2_13:
 	r7 = r5->array;
-	((components__lines__LineBase*)(r7 + 1))[r4] = r1;
+	((hxlr__lines__LineBase*)(r7 + 1))[r4] = r1;
 	r4 = r0->lineCount;
 	++r4;
 	r0->lineCount = r4;
@@ -328,7 +328,7 @@ void components_managers_Grid_addLine(components__managers__Grid r0,components__
 	return;
 }
 
-void components_managers_Grid_storeLine(components__managers__Grid r0,components__lines__LineBase r1,int r2,int r3) {
+void components_managers_Grid_storeLine(components__managers__Grid r0,hxlr__lines__LineBase r1,int r2,int r3) {
 	String r4, r8;
 	hl__types__ArrayObj r18;
 	vvirtual *r12;
@@ -370,17 +370,17 @@ void components_managers_Grid_storeLine(components__managers__Grid r0,components
 	r17 = &r16;
 	h2d_col_Point_new(r13,r15,r17);
 	if( hl_vfields(r12)[3] ) *(h2d__col__Point*)(hl_vfields(r12)[3]) = (h2d__col__Point)r13; else hl_dyn_setp(r12->value,-352673756/*position*/,&t$h2d_col_Point,r13);
-	r20 = &t$components_lines_LineBase;
+	r20 = &t$hxlr_lines_LineBase;
 	r5 = 0;
 	r19 = hl_alloc_array(r20,r5);
 	r18 = hl_types_ArrayObj_alloc(r19);
 	if( hl_vfields(r12)[0] ) *(hl__types__ArrayObj*)(hl_vfields(r12)[0]) = (hl__types__ArrayObj)r18; else hl_dyn_setp(r12->value,233152173/*allLines*/,&t$hl_types_ArrayObj,r18);
-	r20 = &t$components_lines_LineBase;
+	r20 = &t$hxlr_lines_LineBase;
 	r5 = 0;
 	r19 = hl_alloc_array(r20,r5);
 	r18 = hl_types_ArrayObj_alloc(r19);
 	if( hl_vfields(r12)[1] ) *(hl__types__ArrayObj*)(hl_vfields(r12)[1]) = (hl__types__ArrayObj)r18; else hl_dyn_setp(r12->value,-149576751/*hittable*/,&t$hl_types_ArrayObj,r18);
-	r20 = &t$components_lines_LineBase;
+	r20 = &t$hxlr_lines_LineBase;
 	r5 = 0;
 	r19 = hl_alloc_array(r20,r5);
 	r18 = hl_types_ArrayObj_alloc(r19);
@@ -426,7 +426,7 @@ void components_managers_Grid_storeLine(components__managers__Grid r0,components
 			hl_types_ArrayObj___expand(r18,r5);
 			label$e6f4f97_3_75:
 			r19 = r18->array;
-			((components__lines__LineBase*)(r19 + 1))[r5] = r1;
+			((hxlr__lines__LineBase*)(r19 + 1))[r5] = r1;
 			goto label$e6f4f97_3_86;
 		case 2:
 			r11 = r0->registry;
@@ -447,7 +447,7 @@ void components_managers_Grid_storeLine(components__managers__Grid r0,components
 
 void components_managers_Grid_deleteTrack(components__managers__Grid r0) {
 	hl__types__ArrayObj r3;
-	components__lines__LineBase r5;
+	hxlr__lines__LineBase r5;
 	vdynamic *r6;
 	varray *r7;
 	int r1, r4;
@@ -464,7 +464,7 @@ void components_managers_Grid_deleteTrack(components__managers__Grid r0) {
 	label$e6f4f97_4_10:
 	r7 = r3->array;
 	r6 = ((vdynamic**)(r7 + 1))[r1];
-	r5 = (components__lines__LineBase)r6;
+	r5 = (hxlr__lines__LineBase)r6;
 	label$e6f4f97_4_13:
 	++r1;
 	components_managers_Grid_unregister(r0,r5);
@@ -473,14 +473,14 @@ void components_managers_Grid_deleteTrack(components__managers__Grid r0) {
 	return;
 }
 
-void components_managers_Grid_unregister(components__managers__Grid r0,components__lines__LineBase r1) {
+void components_managers_Grid_unregister(components__managers__Grid r0,hxlr__lines__LineBase r1) {
 	String r10;
 	vvirtual *r14;
 	haxe__ds__StringMap r13;
 	hl__types__ArrayObj r6, r9;
 	bool r12;
 	$Main r17;
-	components__lines__LineBase r3;
+	hxlr__lines__LineBase r3;
 	components__stage__Canvas r18;
 	components__managers__Simulation r16;
 	vdynamic *r4, *r15;
@@ -577,7 +577,7 @@ void components_managers_Grid_unregister(components__managers__Grid r0,component
 	hl_types_ArrayObj___expand(r6,r5);
 	label$e6f4f97_5_73:
 	r11 = r6->array;
-	((components__lines__LineBase*)(r11 + 1))[r5] = r3;
+	((hxlr__lines__LineBase*)(r11 + 1))[r5] = r3;
 	r17 = ($Main)g$_Main;
 	r16 = r17->simulation;
 	if( r16 == NULL ) hl_null_access();

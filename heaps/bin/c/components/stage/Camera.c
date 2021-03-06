@@ -4,7 +4,7 @@
 #include <components/stage/Camera.h>
 #include <components/stage/Canvas.h>
 #include <_std/Main.h>
-#include <hxlr/components/ContactPoint.h>
+#include <hxlr/rider/ContactPoint.h>
 #include <h3d/Engine.h>
 extern hl_type t$h2d_col_Point;
 extern $Main g$_Main;
@@ -18,11 +18,11 @@ vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 void components_stage_Camera_start(components__stage__Camera r0) {
 	String r3;
 	bool r2;
-	components__sledder__RiderBase r14;
+	hxlr__rider__RiderBase r14;
 	$Main r7;
 	h3d__Engine r16;
 	h2d__col__Point r4;
-	hxlr__components__ContactPoint r13;
+	hxlr__rider__ContactPoint r13;
 	components__stage__Canvas r6;
 	double r5, r9, r11, r12, r17;
 	double *r8, *r10;
@@ -68,7 +68,7 @@ void components_stage_Camera_start(components__stage__Camera r0) {
 	r6->posChanged = r2;
 	r14 = r0->rider;
 	if( r14 == NULL ) hl_null_access();
-	r13 = r14->cameraPoint;
+	r13 = r14->focusPoint;
 	if( r13 == NULL ) hl_null_access();
 	r4 = r13->pos;
 	if( r4 == NULL ) hl_null_access();
@@ -89,7 +89,7 @@ void components_stage_Camera_start(components__stage__Camera r0) {
 	r6->posChanged = r2;
 	r14 = r0->rider;
 	if( r14 == NULL ) hl_null_access();
-	r13 = r14->cameraPoint;
+	r13 = r14->focusPoint;
 	if( r13 == NULL ) hl_null_access();
 	r4 = r13->pos;
 	if( r4 == NULL ) hl_null_access();
@@ -111,17 +111,17 @@ void components_stage_Camera_start(components__stage__Camera r0) {
 void components_stage_Camera_follow(components__stage__Camera r0) {
 	bool r22;
 	$Main r7;
-	components__sledder__RiderBase r3;
+	hxlr__rider__RiderBase r3;
 	h3d__Engine r14;
 	h2d__col__Point r1, r5;
-	hxlr__components__ContactPoint r2;
+	hxlr__rider__ContactPoint r2;
 	components__stage__Canvas r6;
 	double r8, r10, r12, r15, r16, r17, r18, r19, r20, r21;
 	double *r9, *r11;
 	int r13;
 	r3 = r0->rider;
 	if( r3 == NULL ) hl_null_access();
-	r2 = r3->cameraPoint;
+	r2 = r3->focusPoint;
 	if( r2 == NULL ) hl_null_access();
 	r1 = r2->pos;
 	r7 = ($Main)g$_Main;
@@ -221,7 +221,7 @@ void components_stage_Camera_stop(components__stage__Camera r0) {
 String components_stage_Camera_set_riderFollow(components__stage__Camera r0,String r1) {
 	components__managers__Riders r4;
 	haxe__ds__StringMap r3;
-	components__sledder__RiderBase r6;
+	hxlr__rider__RiderBase r6;
 	$Main r5;
 	vdynamic *r2;
 	r5 = ($Main)g$_Main;
@@ -230,7 +230,7 @@ String components_stage_Camera_set_riderFollow(components__stage__Camera r0,Stri
 	r3 = r4->riders;
 	if( r3 == NULL ) hl_null_access();
 	r2 = haxe_ds_StringMap_get(r3,r1);
-	r6 = (components__sledder__RiderBase)r2;
+	r6 = (hxlr__rider__RiderBase)r2;
 	r0->rider = r6;
 	r0->riderFollow = r1;
 	return r1;

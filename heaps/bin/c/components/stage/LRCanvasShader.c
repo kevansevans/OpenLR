@@ -2,11 +2,24 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/stage/LRCanvasShader.h>
+void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
 extern hl_type t$_i32;
-void hxsl_Shader_new(hxsl__Shader);
+
+void components_stage_LRCanvasShader_new(components__stage__LRCanvasShader r0) {
+	double r2;
+	int r1;
+	r1 = 0;
+	r0->mode__ = r1;
+	r2 = 0.;
+	r0->ypos__ = r2;
+	r2 = 0.;
+	r0->xpos__ = r2;
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	return;
+}
 
 void components_stage_LRCanvasShader_updateConstants(components__stage__LRCanvasShader r0,hxsl__Globals r1) {
 	int r2;
@@ -23,7 +36,7 @@ vdynamic* components_stage_LRCanvasShader_getParamValue(components__stage__LRCan
 	int r2;
 	switch(r1) {
 		default:
-			goto label$812c35a_2_13;
+			goto label$812c35a_3_13;
 		case 0:
 			r3 = r0->xpos__;
 			r4 = hl_alloc_dynamic(&t$_f64);
@@ -43,7 +56,7 @@ vdynamic* components_stage_LRCanvasShader_getParamValue(components__stage__LRCan
 			r4->v.i = r2;
 			return r4;
 	}
-	label$812c35a_2_13:
+	label$812c35a_3_13:
 	r4 = NULL;
 	return r4;
 }
@@ -52,7 +65,7 @@ double components_stage_LRCanvasShader_getParamFloatValue(components__stage__LRC
 	double r2;
 	switch(r1) {
 		default:
-			goto label$812c35a_3_6;
+			goto label$812c35a_4_6;
 		case 0:
 			r2 = r0->xpos__;
 			return r2;
@@ -60,21 +73,8 @@ double components_stage_LRCanvasShader_getParamFloatValue(components__stage__LRC
 			r2 = r0->ypos__;
 			return r2;
 	}
-	label$812c35a_3_6:
+	label$812c35a_4_6:
 	r2 = 0.;
 	return r2;
-}
-
-void components_stage_LRCanvasShader_new(components__stage__LRCanvasShader r0) {
-	double r2;
-	int r1;
-	r1 = 0;
-	r0->mode__ = r1;
-	r2 = 0.;
-	r0->ypos__ = r2;
-	r2 = 0.;
-	r0->xpos__ = r2;
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	return;
 }
 

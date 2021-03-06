@@ -37,21 +37,21 @@ void components_tool_ToolBehavior_drawLine(components__tool__ToolBehavior);
 void components_tool_ToolBehavior_updatePreview(components__tool__ToolBehavior);
 void components_stage_Canvas_addCanvasPosition(components__stage__Canvas,double,double);
 #include <h2d/Graphics.h>
-#include <components/lines/Undefined.h>
-#include <components/lines/Floor.h>
-#include <components/lines/Accel.h>
-#include <components/lines/Scenery.h>
+#include <hxlr/lines/Undefined.h>
+#include <hxlr/lines/Floor.h>
+#include <hxlr/lines/Accel.h>
+#include <hxlr/lines/Scenery.h>
 void h2d_Graphics_clear(h2d__Graphics);
 extern venum* g$components_tool_ToolMode_ERASER;
-extern hl_type t$components_lines_Undefined;
-void components_lines_Undefined_new(components__lines__Undefined,h2d__col__Point,h2d__col__Point,bool,vdynamic*);
-extern hl_type t$components_lines_Floor;
-void components_lines_Floor_new(components__lines__Floor,h2d__col__Point,h2d__col__Point,bool);
-extern hl_type t$components_lines_Accel;
-void components_lines_Accel_new(components__lines__Accel,h2d__col__Point,h2d__col__Point,bool);
-extern hl_type t$components_lines_Scenery;
-void components_lines_Scenery_new(components__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
-void components_stage_Canvas_drawPreviewLine(components__stage__Canvas,components__lines__LineBase);
+extern hl_type t$hxlr_lines_Undefined;
+void hxlr_lines_Undefined_new(hxlr__lines__Undefined,h2d__col__Point,h2d__col__Point,bool,vdynamic*);
+extern hl_type t$hxlr_lines_Floor;
+void hxlr_lines_Floor_new(hxlr__lines__Floor,h2d__col__Point,h2d__col__Point,bool);
+extern hl_type t$hxlr_lines_Accel;
+void hxlr_lines_Accel_new(hxlr__lines__Accel,h2d__col__Point,h2d__col__Point,bool);
+extern hl_type t$hxlr_lines_Scenery;
+void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
+void components_stage_Canvas_drawPreviewLine(components__stage__Canvas,hxlr__lines__LineBase);
 extern venum* g$components_tool_ToolMode_LINE;
 #include <haxe/ds/StringMap.h>
 #include <components/managers/Grid.h>
@@ -77,7 +77,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double
 #include <components/managers/Riders.h>
 #include <components/stage/Camera.h>
 #include <h3d/Engine.h>
-#include <components/sledder/RiderBase.h>
+#include <hxlr/rider/RiderBase.h>
 extern String s$keyInputDown;
 venum* components_stage_Canvas_get_drawMode(components__stage__Canvas);
 extern venum* g$994fdec;
@@ -568,20 +568,20 @@ void components_tool_ToolBehavior_mouseMove(components__tool__ToolBehavior r0,hx
 }
 
 void components_tool_ToolBehavior_updatePreview(components__tool__ToolBehavior r0) {
-	components__lines__Undefined r13;
+	hxlr__lines__Undefined r13;
 	venum *r6, *r7;
 	h2d__Graphics r3;
+	hxlr__lines__Scenery r19;
 	bool r2;
+	hxlr__lines__Floor r17;
 	h2d__Object r8;
-	components__lines__Floor r17;
+	hxlr__lines__Accel r18;
 	$Main r5;
-	components__lines__LineBase r20;
 	h2d__col__Point r10, r14;
+	hxlr__lines__LineBase r20;
 	components__stage__Canvas r4;
 	double r9, r11, r12;
-	components__lines__Scenery r19;
 	vdynamic *r15;
-	components__lines__Accel r18;
 	int r16;
 	r2 = r0->leftIsDown;
 	if( r2 ) goto label$80df762_5_11;
@@ -631,13 +631,13 @@ void components_tool_ToolBehavior_updatePreview(components__tool__ToolBehavior r
 	r9 = r9 * r11;
 	r11 = 10.;
 	if( !(r9 < r11) ) goto label$80df762_5_54;
-	r13 = (components__lines__Undefined)hl_alloc_obj(&t$components_lines_Undefined);
+	r13 = (hxlr__lines__Undefined)hl_alloc_obj(&t$hxlr_lines_Undefined);
 	r10 = r0->mouseStart;
 	r14 = r0->mouseEnd;
 	r2 = r0->shifted;
 	r15 = NULL;
-	components_lines_Undefined_new(r13,r10,r14,r2,r15);
-	r0->tempLine = ((components__lines__LineBase)r13);
+	hxlr_lines_Undefined_new(r13,r10,r14,r2,r15);
+	r0->tempLine = ((hxlr__lines__LineBase)r13);
 	goto label$80df762_5_101;
 	label$80df762_5_54:
 	r16 = r0->color;
@@ -647,54 +647,54 @@ void components_tool_ToolBehavior_updatePreview(components__tool__ToolBehavior r
 		case 0:
 			r2 = r0->leftIsDown;
 			if( !r2 ) goto label$80df762_5_66;
-			r17 = (components__lines__Floor)hl_alloc_obj(&t$components_lines_Floor);
+			r17 = (hxlr__lines__Floor)hl_alloc_obj(&t$hxlr_lines_Floor);
 			r10 = r0->mouseStart;
 			r14 = r0->mouseEnd;
 			r2 = r0->shifted;
-			components_lines_Floor_new(r17,r10,r14,r2);
-			r0->tempLine = ((components__lines__LineBase)r17);
+			hxlr_lines_Floor_new(r17,r10,r14,r2);
+			r0->tempLine = ((hxlr__lines__LineBase)r17);
 			goto label$80df762_5_75;
 			label$80df762_5_66:
 			r2 = r0->rightIsDown;
 			if( !r2 ) goto label$80df762_5_75;
-			r17 = (components__lines__Floor)hl_alloc_obj(&t$components_lines_Floor);
+			r17 = (hxlr__lines__Floor)hl_alloc_obj(&t$hxlr_lines_Floor);
 			r10 = r0->mouseEnd;
 			r14 = r0->mouseStart;
 			r2 = r0->shifted;
 			r2 = !r2;
-			components_lines_Floor_new(r17,r10,r14,r2);
-			r0->tempLine = ((components__lines__LineBase)r17);
+			hxlr_lines_Floor_new(r17,r10,r14,r2);
+			r0->tempLine = ((hxlr__lines__LineBase)r17);
 			label$80df762_5_75:
 			goto label$80df762_5_101;
 		case 1:
 			r2 = r0->leftIsDown;
 			if( !r2 ) goto label$80df762_5_85;
-			r18 = (components__lines__Accel)hl_alloc_obj(&t$components_lines_Accel);
+			r18 = (hxlr__lines__Accel)hl_alloc_obj(&t$hxlr_lines_Accel);
 			r10 = r0->mouseStart;
 			r14 = r0->mouseEnd;
 			r2 = r0->shifted;
-			components_lines_Accel_new(r18,r10,r14,r2);
-			r0->tempLine = ((components__lines__LineBase)r18);
+			hxlr_lines_Accel_new(r18,r10,r14,r2);
+			r0->tempLine = ((hxlr__lines__LineBase)r18);
 			goto label$80df762_5_94;
 			label$80df762_5_85:
 			r2 = r0->rightIsDown;
 			if( !r2 ) goto label$80df762_5_94;
-			r18 = (components__lines__Accel)hl_alloc_obj(&t$components_lines_Accel);
+			r18 = (hxlr__lines__Accel)hl_alloc_obj(&t$hxlr_lines_Accel);
 			r10 = r0->mouseEnd;
 			r14 = r0->mouseStart;
 			r2 = r0->shifted;
 			r2 = !r2;
-			components_lines_Accel_new(r18,r10,r14,r2);
-			r0->tempLine = ((components__lines__LineBase)r18);
+			hxlr_lines_Accel_new(r18,r10,r14,r2);
+			r0->tempLine = ((hxlr__lines__LineBase)r18);
 			label$80df762_5_94:
 			goto label$80df762_5_101;
 		case 2:
-			r19 = (components__lines__Scenery)hl_alloc_obj(&t$components_lines_Scenery);
+			r19 = (hxlr__lines__Scenery)hl_alloc_obj(&t$hxlr_lines_Scenery);
 			r10 = r0->mouseStart;
 			r14 = r0->mouseEnd;
 			r2 = r0->shifted;
-			components_lines_Scenery_new(r19,r10,r14,r2);
-			r0->tempLine = ((components__lines__LineBase)r19);
+			hxlr_lines_Scenery_new(r19,r10,r14,r2);
+			r0->tempLine = ((hxlr__lines__LineBase)r19);
 	}
 	label$80df762_5_101:
 	r5 = ($Main)g$_Main;
@@ -778,8 +778,8 @@ void components_tool_ToolBehavior_snap(components__tool__ToolBehavior r0,h2d__co
 	hl_type *r38;
 	bool r13;
 	$Main r17;
-	components__lines__LineBase r33;
 	h2d__col__Point r9;
+	hxlr__lines__LineBase r33;
 	components__stage__Canvas r16;
 	double r8, r10, r11, r12, r14, r15, r19, r35, r36, r40, r42, r43, r44, r45, r46, r47, r48, r49, r50;
 	double *r39, *r41;
@@ -874,7 +874,7 @@ void components_tool_ToolBehavior_snap(components__tool__ToolBehavior r0,h2d__co
 	label$80df762_7_80:
 	r34 = r31->array;
 	r5 = ((vdynamic**)(r34 + 1))[r22];
-	r33 = (components__lines__LineBase)r5;
+	r33 = (hxlr__lines__LineBase)r5;
 	label$80df762_7_83:
 	++r22;
 	if( r33 ) goto label$80df762_7_86;
@@ -1231,7 +1231,7 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 	bool r16;
 	components__managers__Musicplayer r17;
 	haxe__$Log r6;
-	components__sledder__RiderBase r36;
+	hxlr__rider__RiderBase r36;
 	$Main r14;
 	h3d__Engine r34;
 	h2d__col__Point r29;

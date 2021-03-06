@@ -95,8 +95,8 @@ extern hl_type t$_f64;
 double h2d_Scene_get_mouseY(h2d__Scene);
 void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*,vdynamic*);
 #include <hl/types/ArrayObj.h>
-#include <components/lines/LineBase.h>
-void components_managers_Grid_unregister(components__managers__Grid,components__lines__LineBase);
+#include <hxlr/lines/LineBase.h>
+void components_managers_Grid_unregister(components__managers__Grid,hxlr__lines__LineBase);
 #include <components/tool/ToolMode.h>
 String String_toUpperCase(String);
 extern String s$;
@@ -120,16 +120,15 @@ void components_managers_Simulation_endSim(components__managers__Simulation);
 void components_managers_Simulation_backSim(components__managers__Simulation);
 void components_managers_Simulation_stepSim(components__managers__Simulation);
 #include <haxe/ds/StringMap.h>
-#include <components/sledder/RiderBase.h>
+#include <hxlr/rider/RiderBase.h>
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
 void components_managers_Riders_addNewRider(components__managers__Riders,String,h2d__col__Point,vdynamic*,vdynamic*);
 vvirtual* haxe_ds_StringMap_iterator(haxe__ds__StringMap);
-extern hl_type t$vrt_91f9e97;
+extern hl_type t$vrt_6dd9082;
 extern hl_type t$fun_bf7849e;
-extern hl_type t$fun_6c7a217;
-String components_sledder_RiderBase_get_name(components__sledder__RiderBase);
+extern hl_type t$fun_8ae12a9;
 extern String s$7215ee9;
 extern String s$Rider_;
 extern String s$_does_not_exist_;
@@ -909,7 +908,7 @@ void Main_setConsoleActions__$9(vdynamic* r0) {
 	components__managers__Grid r2, r5;
 	hl__types__ArrayObj r4;
 	$Main r3;
-	components__lines__LineBase r8;
+	hxlr__lines__LineBase r8;
 	vdynamic *r9;
 	varray *r10;
 	int r6, r7;
@@ -930,7 +929,7 @@ void Main_setConsoleActions__$9(vdynamic* r0) {
 	label$36888b6_12_14:
 	r10 = r4->array;
 	r9 = ((vdynamic**)(r10 + 1))[r6];
-	r8 = (components__lines__LineBase)r9;
+	r8 = (hxlr__lines__LineBase)r9;
 	label$36888b6_12_17:
 	components_managers_Grid_unregister(r2,r8);
 	label$36888b6_12_18:
@@ -1441,7 +1440,7 @@ void Main_setConsoleActions__$21(bool r0) {
 void Main_setConsoleActions__$22(String r0,double* r1,double* r2) {
 	components__managers__Riders r7;
 	haxe__ds__StringMap r6;
-	components__sledder__RiderBase r9;
+	hxlr__rider__RiderBase r9;
 	$Main r8;
 	h2d__col__Point r11;
 	double r3, r4, r12, r13;
@@ -1464,7 +1463,7 @@ void Main_setConsoleActions__$22(String r0,double* r1,double* r2) {
 	r6 = r7->riders;
 	if( r6 == NULL ) hl_null_access();
 	r5 = haxe_ds_StringMap_get(r6,r0);
-	r9 = (components__sledder__RiderBase)r5;
+	r9 = (hxlr__rider__RiderBase)r5;
 	if( r9 ) goto label$36888b6_25_17;
 	return;
 	label$36888b6_25_17:
@@ -1476,7 +1475,7 @@ void Main_setConsoleActions__$22(String r0,double* r1,double* r2) {
 	r2 = &r13;
 	h2d_col_Point_new(r11,r1,r2);
 	r9->startPos = r11;
-	((void (*)(components__sledder__RiderBase))r9->$type->vobj_proto[0])(r9);
+	((void (*)(hxlr__rider__RiderBase))r9->$type->vobj_proto[0])(r9);
 	return;
 }
 
@@ -1554,7 +1553,7 @@ void Main_setConsoleActions__$24() {
 	haxe__ds__StringMap r6;
 	vvirtual *r5, *r8;
 	bool r9;
-	components__sledder__RiderBase r10;
+	hxlr__rider__RiderBase r10;
 	$Main r2;
 	h2d__col__Point r13;
 	double r12;
@@ -1575,7 +1574,7 @@ void Main_setConsoleActions__$24() {
 	r6 = r7->riders;
 	if( r6 == NULL ) hl_null_access();
 	r5 = haxe_ds_StringMap_iterator(r6);
-	r8 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r5);
+	r8 = hl_to_virtual(&t$vrt_6dd9082,(vdynamic*)r5);
 	label$36888b6_27_13:
 	if( r8 == NULL ) hl_null_access();
 	if( hl_vfields(r8)[0] ) r9 = ((bool (*)(vdynamic*))hl_vfields(r8)[0])(r8->value); else {
@@ -1584,15 +1583,15 @@ void Main_setConsoleActions__$24() {
 		r9 = (bool)ret.v.i;
 	}
 	if( !r9 ) goto label$36888b6_27_46;
-	if( hl_vfields(r8)[1] ) r10 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r8)[1])(r8->value); else {
-		r10 = (components__sledder__RiderBase)hl_dyn_call_obj(r8->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
+	if( hl_vfields(r8)[1] ) r10 = ((hxlr__rider__RiderBase (*)(vdynamic*))hl_vfields(r8)[1])(r8->value); else {
+		r10 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r8->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
 	r2 = ($Main)g$_Main;
 	r1 = r2->console;
 	if( r1 == NULL ) hl_null_access();
 	r3 = (String)s$;
 	if( r10 == NULL ) hl_null_access();
-	r11 = components_sledder_RiderBase_get_name(r10);
+	r11 = r10->name;
 	r3 = String___add__(r3,r11);
 	r11 = (String)s$7215ee9;
 	r3 = String___add__(r3,r11);
@@ -1629,7 +1628,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	String r7, r10;
 	components__managers__Riders r5;
 	haxe__ds__StringMap r4;
-	components__sledder__RiderBase r8;
+	hxlr__rider__RiderBase r8;
 	$Main r6;
 	components__managers__Simulation r13;
 	vdynamic *r3, *r12, *r14;
@@ -1641,7 +1640,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 ) goto label$36888b6_28_19;
 	r6 = ($Main)g$_Main;
 	r9 = r6->console;
@@ -1681,7 +1680,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r14 = r8->disableFrame;
 	if( !r14 ) goto label$36888b6_28_86;
@@ -1692,7 +1691,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r14 = r8->disableFrame;
 	r15 = r14 ? r14->v.i : 0;
@@ -1716,7 +1715,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r14 = r8->disableFrame;
 	if( r14 ) goto label$36888b6_28_78;
@@ -1740,7 +1739,7 @@ void Main_setConsoleActions__$25(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r8->enabledFrame = r1;
 	return;
@@ -1750,7 +1749,7 @@ void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
 	String r7, r10;
 	components__managers__Riders r5;
 	haxe__ds__StringMap r4;
-	components__sledder__RiderBase r8;
+	hxlr__rider__RiderBase r8;
 	$Main r6;
 	components__managers__Simulation r13;
 	vdynamic *r3, *r12, *r14;
@@ -1762,7 +1761,7 @@ void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 ) goto label$36888b6_29_19;
 	r6 = ($Main)g$_Main;
 	r9 = r6->console;
@@ -1802,7 +1801,7 @@ void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r14 = r8->enabledFrame;
 	if( !r14 ) goto label$36888b6_29_86;
@@ -1813,7 +1812,7 @@ void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r14 = r8->enabledFrame;
 	r15 = r14 ? r14->v.i : 0;
@@ -1837,7 +1836,7 @@ void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r14 = r8->enabledFrame;
 	if( r14 ) goto label$36888b6_29_78;
@@ -1861,7 +1860,7 @@ void Main_setConsoleActions__$26(String r0,vdynamic* r1) {
 	r4 = r5->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r0);
-	r8 = (components__sledder__RiderBase)r3;
+	r8 = (hxlr__rider__RiderBase)r3;
 	if( r8 == NULL ) hl_null_access();
 	r8->disableFrame = r1;
 	return;

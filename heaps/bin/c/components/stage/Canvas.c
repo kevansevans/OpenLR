@@ -5,12 +5,12 @@
 #include <haxe/ds/StringMap.h>
 #include <components/managers/Riders.h>
 #include <_std/Main.h>
-#include <components/sledder/RiderBase.h>
+#include <hxlr/rider/RiderBase.h>
 extern $Main g$_Main;
 vvirtual* haxe_ds_StringMap_iterator(haxe__ds__StringMap);
-extern hl_type t$vrt_91f9e97;
+extern hl_type t$vrt_6dd9082;
 extern hl_type t$fun_bf7849e;
-extern hl_type t$fun_6c7a217;
+extern hl_type t$fun_8ae12a9;
 #include <components/stage/LRConsole.h>
 extern String s$Set_canvas_position_to_;
 #include <hl/natives.h>
@@ -25,26 +25,26 @@ double h2d_Scene_get_mouseY(h2d__Scene);
 double Math_max(double,double);
 double Math_min(double,double);
 #include <components/managers/Grid.h>
-#include <components/lines/LineBase.h>
+#include <hxlr/lines/LineBase.h>
 void h2d_Graphics_clear(h2d__Graphics);
-void components_stage_Canvas_drawLineGraphic(components__stage__Canvas,components__lines__LineBase);
+void components_stage_Canvas_drawLineGraphic(components__stage__Canvas,hxlr__lines__LineBase);
 void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
 void h2d_Graphics_flush(h2d__Graphics);
 void h2d_Graphics_addVertex(h2d__Graphics,double,double,double,double,double,double,double*,double*);
 void h2d_Graphics_drawCircle(h2d__Graphics,double,double,double,int*);
-#include <components/lines/Floor.h>
-#include <components/lines/Accel.h>
-#include <components/lines/Scenery.h>
-extern hl_type t$components_lines_Floor;
+#include <hxlr/lines/Floor.h>
+#include <hxlr/lines/Accel.h>
+#include <hxlr/lines/Scenery.h>
+extern hl_type t$hxlr_lines_Floor;
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
-void components_lines_Floor_new(components__lines__Floor,h2d__col__Point,h2d__col__Point,bool);
-extern hl_type t$components_lines_Accel;
-void components_lines_Accel_new(components__lines__Accel,h2d__col__Point,h2d__col__Point,bool);
-extern hl_type t$components_lines_Scenery;
-void components_lines_Scenery_new(components__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
-void components_lines_LineBase_setLim(components__lines__LineBase,int);
-void components_managers_Grid_register(components__managers__Grid,components__lines__LineBase);
+void hxlr_lines_Floor_new(hxlr__lines__Floor,h2d__col__Point,h2d__col__Point,bool);
+extern hl_type t$hxlr_lines_Accel;
+void hxlr_lines_Accel_new(hxlr__lines__Accel,h2d__col__Point,h2d__col__Point,bool);
+extern hl_type t$hxlr_lines_Scenery;
+void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
+void hxlr_lines_LineBase_setLim(hxlr__lines__LineBase,int);
+void components_managers_Grid_register(components__managers__Grid,hxlr__lines__LineBase);
 bool h2d_Object_set_visible(h2d__Object,bool);
 extern String s$Draw_mode_set_to_Edit;
 extern String s$Draw_mode_set_to_Playback;
@@ -64,7 +64,7 @@ void components_stage_Canvas_drawRiders(components__stage__Canvas r0) {
 	haxe__ds__StringMap r2;
 	vvirtual *r1, *r5;
 	bool r7;
-	components__sledder__RiderBase r8;
+	hxlr__rider__RiderBase r8;
 	$Main r4;
 	r4 = ($Main)g$_Main;
 	r3 = r4->riders;
@@ -72,7 +72,7 @@ void components_stage_Canvas_drawRiders(components__stage__Canvas r0) {
 	r2 = r3->riders;
 	if( r2 == NULL ) hl_null_access();
 	r1 = haxe_ds_StringMap_iterator(r2);
-	r5 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r1);
+	r5 = hl_to_virtual(&t$vrt_6dd9082,(vdynamic*)r1);
 	label$ae2bdbd_1_7:
 	if( r5 == NULL ) hl_null_access();
 	if( hl_vfields(r5)[0] ) r7 = ((bool (*)(vdynamic*))hl_vfields(r5)[0])(r5->value); else {
@@ -81,11 +81,11 @@ void components_stage_Canvas_drawRiders(components__stage__Canvas r0) {
 		r7 = (bool)ret.v.i;
 	}
 	if( !r7 ) goto label$ae2bdbd_1_15;
-	if( hl_vfields(r5)[1] ) r8 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r5)[1])(r5->value); else {
-		r8 = (components__sledder__RiderBase)hl_dyn_call_obj(r5->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
+	if( hl_vfields(r5)[1] ) r8 = ((hxlr__rider__RiderBase (*)(vdynamic*))hl_vfields(r5)[1])(r5->value); else {
+		r8 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r5->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
 	if( r8 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r8->$type->vobj_proto[3])(r8);
+	((void (*)(hxlr__rider__RiderBase))r8->$type->vobj_proto[3])(r8);
 	goto label$ae2bdbd_1_7;
 	label$ae2bdbd_1_15:
 	return;
@@ -203,7 +203,7 @@ void components_stage_Canvas_redrawLines(components__stage__Canvas r0,int r1) {
 	hl__types__ArrayObj r5;
 	h2d__Graphics r4;
 	$Main r7;
-	components__lines__LineBase r9;
+	hxlr__lines__LineBase r9;
 	vdynamic *r10;
 	varray *r11;
 	int r3, r8;
@@ -244,7 +244,7 @@ void components_stage_Canvas_redrawLines(components__stage__Canvas r0,int r1) {
 	label$ae2bdbd_5_28:
 	r11 = r5->array;
 	r10 = ((vdynamic**)(r11 + 1))[r3];
-	r9 = (components__lines__LineBase)r10;
+	r9 = (hxlr__lines__LineBase)r10;
 	label$ae2bdbd_5_31:
 	++r3;
 	if( r9 ) goto label$ae2bdbd_5_34;
@@ -256,7 +256,7 @@ void components_stage_Canvas_redrawLines(components__stage__Canvas r0,int r1) {
 	return;
 }
 
-void components_stage_Canvas_drawPreviewLine(components__stage__Canvas r0,components__lines__LineBase r1) {
+void components_stage_Canvas_drawPreviewLine(components__stage__Canvas r0,hxlr__lines__LineBase r1) {
 	h2d__Graphics r3;
 	h2d__col__Point r12;
 	double r4, r7, r11, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r27, r28, r29, r30, r31, r33, r34, r35, r36, r37, r41, r42, r43, r44, r45, r46, r47, r48, r49, r51, r52, r53, r54, r55, r59, r60, r61, r62, r63, r67, r68, r69, r70, r71;
@@ -953,7 +953,7 @@ void components_stage_Canvas_drawPreviewLine(components__stage__Canvas r0,compon
 	return;
 }
 
-void components_stage_Canvas_drawLineGraphic(components__stage__Canvas r0,components__lines__LineBase r1) {
+void components_stage_Canvas_drawLineGraphic(components__stage__Canvas r0,hxlr__lines__LineBase r1) {
 	h2d__Graphics r6;
 	h2d__col__Point r12;
 	double r2, r7, r11, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r27, r28, r29, r30, r31, r35, r36, r37, r38, r39, r41, r42, r43, r44, r45, r49, r50, r51, r52, r53, r54, r55, r56, r57, r59, r60, r61, r62, r63, r67, r68, r69, r70, r71;
@@ -1649,16 +1649,16 @@ void components_stage_Canvas_drawLineGraphic(components__stage__Canvas r0,compon
 
 void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double r2,double r3,double r4,double r5,vdynamic* r6,vdynamic* r7,vdynamic* r8) {
 	components__managers__Grid r33;
+	hxlr__lines__Scenery r27;
 	bool r9;
-	components__lines__Floor r13;
+	hxlr__lines__Floor r13;
+	hxlr__lines__Accel r22;
 	$Main r34;
 	h2d__col__Point r14, r19;
-	components__lines__LineBase r11;
+	hxlr__lines__LineBase r11;
 	double r15, r17, r20, r21, r23, r24, r25, r26, r28, r29, r30, r31;
 	vdynamic *r32;
-	components__lines__Scenery r27;
 	double *r16, *r18;
-	components__lines__Accel r22;
 	int r10;
 	if( r6 ) goto label$ae2bdbd_8_3;
 	r9 = false;
@@ -1679,7 +1679,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 		default:
 			goto label$ae2bdbd_8_62;
 		case 0:
-			r13 = (components__lines__Floor)hl_alloc_obj(&t$components_lines_Floor);
+			r13 = (hxlr__lines__Floor)hl_alloc_obj(&t$hxlr_lines_Floor);
 			r14 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 			r15 = r2;
 			r16 = &r15;
@@ -1693,11 +1693,11 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 			r18 = &r21;
 			h2d_col_Point_new(r19,r16,r18);
 			r9 = r6 ? r6->v.b : 0;
-			components_lines_Floor_new(r13,r14,r19,r9);
-			r11 = ((components__lines__LineBase)r13);
+			hxlr_lines_Floor_new(r13,r14,r19,r9);
+			r11 = ((hxlr__lines__LineBase)r13);
 			goto label$ae2bdbd_8_62;
 		case 1:
-			r22 = (components__lines__Accel)hl_alloc_obj(&t$components_lines_Accel);
+			r22 = (hxlr__lines__Accel)hl_alloc_obj(&t$hxlr_lines_Accel);
 			r14 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 			r23 = r2;
 			r16 = &r23;
@@ -1711,11 +1711,11 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 			r18 = &r26;
 			h2d_col_Point_new(r19,r16,r18);
 			r9 = r6 ? r6->v.b : 0;
-			components_lines_Accel_new(r22,r14,r19,r9);
-			r11 = ((components__lines__LineBase)r22);
+			hxlr_lines_Accel_new(r22,r14,r19,r9);
+			r11 = ((hxlr__lines__LineBase)r22);
 			goto label$ae2bdbd_8_62;
 		case 2:
-			r27 = (components__lines__Scenery)hl_alloc_obj(&t$components_lines_Scenery);
+			r27 = (hxlr__lines__Scenery)hl_alloc_obj(&t$hxlr_lines_Scenery);
 			r14 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 			r28 = r2;
 			r16 = &r28;
@@ -1729,8 +1729,8 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 			r18 = &r31;
 			h2d_col_Point_new(r19,r16,r18);
 			r9 = r6 ? r6->v.b : 0;
-			components_lines_Scenery_new(r27,r14,r19,r9);
-			r11 = ((components__lines__LineBase)r27);
+			hxlr_lines_Scenery_new(r27,r14,r19,r9);
+			r11 = ((hxlr__lines__LineBase)r27);
 	}
 	label$ae2bdbd_8_62:
 	r10 = -1;
@@ -1739,7 +1739,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 	if( r7 == r32 || (r7 && r32 && (r7->v.i == r32->v.i)) ) goto label$ae2bdbd_8_68;
 	if( r11 == NULL ) hl_null_access();
 	r10 = r7 ? r7->v.i : 0;
-	components_lines_LineBase_setLim(r11,r10);
+	hxlr_lines_LineBase_setLim(r11,r10);
 	label$ae2bdbd_8_68:
 	r10 = -1;
 	r32 = hl_alloc_dynamic(&t$_i32);

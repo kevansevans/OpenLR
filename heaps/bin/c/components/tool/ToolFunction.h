@@ -6,7 +6,7 @@ typedef struct _components__tool__ToolFunction *components__tool__ToolFunction;
 #include <hl/Class.h>
 #include <hl/BaseType.h>
 #include <_std/String.h>
-#include <components/lines/LineBase.h>
+#include <hxlr/lines/LineBase.h>
 
 
 struct _components__tool__$ToolFunction {

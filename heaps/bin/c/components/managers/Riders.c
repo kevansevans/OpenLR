@@ -2,15 +2,15 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/managers/Riders.h>
-#include <components/sledder/RiderBase.h>
+#include <hxlr/rider/RiderBase.h>
 vvirtual* haxe_ds_StringMap_iterator(haxe__ds__StringMap);
-extern hl_type t$vrt_91f9e97;
+extern hl_type t$vrt_6dd9082;
 extern hl_type t$fun_bf7849e;
-extern hl_type t$fun_6c7a217;
+extern hl_type t$fun_8ae12a9;
 #include <h2d/col/Point.h>
 #include <components/stage/LRConsole.h>
 #include <_std/Main.h>
-#include <components/sledder/LTAABosh.h>
+#include <components/sledder/Bosh.h>
 #include <components/managers/Simulation.h>
 extern hl_type t$_i32;
 String String_substr(String,int,vdynamic*);
@@ -25,31 +25,26 @@ extern String s$_already_occupied_renaming_to_;
 void h2d_Console_log(h2d__Console,String,vdynamic*);
 extern String s$;
 extern hl_type t$vrt_e4dd42c;
-extern hl_type t$components_sledder_LTAABosh;
+extern hl_type t$components_sledder_Bosh;
 extern hl_type t$_f64;
-void components_sledder_LTAABosh_new(components__sledder__LTAABosh,vdynamic*,vdynamic*,String,vdynamic*,vdynamic*);
+void components_sledder_Bosh_new(components__sledder__Bosh,vdynamic*,vdynamic*,String,vdynamic*,vdynamic*);
 extern hl_type t$haxe_ds_StringMap;
 void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
 void components_managers_Simulation_recordGlobalSimState(components__managers__Simulation);
 extern String s$Rider_;
 extern String s$_does_not_exist;
 bool haxe_ds_StringMap_remove(haxe__ds__StringMap,String);
-String components_sledder_RiderBase_set_name(components__sledder__RiderBase,String);
-#include <components/sledder/Bosh.h>
 void haxe_ds_StringMap_new(haxe__ds__StringMap);
-extern hl_type t$components_sledder_Bosh;
-void components_sledder_Bosh_new(components__sledder__Bosh,vdynamic*,vdynamic*,String,vdynamic*,vdynamic*);
-String components_sledder_RiderBase_get_name(components__sledder__RiderBase);
 
 void components_managers_Riders_deleteAllRiders(components__managers__Riders r0) {
 	haxe__ds__StringMap r2;
 	vvirtual *r1, *r3;
 	bool r5;
-	components__sledder__RiderBase r6;
+	hxlr__rider__RiderBase r6;
 	r2 = r0->riders;
 	if( r2 == NULL ) hl_null_access();
 	r1 = haxe_ds_StringMap_iterator(r2);
-	r3 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r1);
+	r3 = hl_to_virtual(&t$vrt_6dd9082,(vdynamic*)r1);
 	label$fbc84c5_1_4:
 	if( r3 == NULL ) hl_null_access();
 	if( hl_vfields(r3)[0] ) r5 = ((bool (*)(vdynamic*))hl_vfields(r3)[0])(r3->value); else {
@@ -58,11 +53,11 @@ void components_managers_Riders_deleteAllRiders(components__managers__Riders r0)
 		r5 = (bool)ret.v.i;
 	}
 	if( !r5 ) goto label$fbc84c5_1_12;
-	if( hl_vfields(r3)[1] ) r6 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
-		r6 = (components__sledder__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
+	if( hl_vfields(r3)[1] ) r6 = ((hxlr__rider__RiderBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
+		r6 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
 	if( r6 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r6->$type->vobj_proto[2])(r6);
+	((void (*)(hxlr__rider__RiderBase))r6->$type->vobj_proto[4])(r6);
 	goto label$fbc84c5_1_4;
 	label$fbc84c5_1_12:
 	return;
@@ -72,9 +67,9 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	String r5, r8, r16, r19;
 	vvirtual *r20;
 	haxe__ds__StringMap r12;
+	components__sledder__Bosh r21;
 	$Main r18;
-	components__sledder__RiderBase r13;
-	components__sledder__LTAABosh r21;
+	hxlr__rider__RiderBase r13;
 	components__managers__Simulation r25;
 	double r22;
 	int *r14;
@@ -97,7 +92,7 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	r12 = r0->riders;
 	if( r12 == NULL ) hl_null_access();
 	r11 = haxe_ds_StringMap_get(r12,r5);
-	r13 = (components__sledder__RiderBase)r11;
+	r13 = (hxlr__rider__RiderBase)r11;
 	if( !r13 ) goto label$fbc84c5_2_52;
 	r7 = 0;
 	label$fbc84c5_2_16:
@@ -109,7 +104,7 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	r16 = String___alloc__(r15,r9);
 	r8 = String___add__(r5,r16);
 	r11 = haxe_ds_StringMap_get(r12,r8);
-	r13 = (components__sledder__RiderBase)r11;
+	r13 = (hxlr__rider__RiderBase)r11;
 	if( !r13 ) goto label$fbc84c5_2_29;
 	++r7;
 	goto label$fbc84c5_2_16;
@@ -148,7 +143,7 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	r20 = hl_to_virtual(&t$vrt_e4dd42c,(vdynamic*)r12);
 	r12->f$1 = r20;
 	label$fbc84c5_2_60:
-	r21 = (components__sledder__LTAABosh)hl_alloc_obj(&t$components_sledder_LTAABosh);
+	r21 = (components__sledder__Bosh)hl_alloc_obj(&t$components_sledder_Bosh);
 	if( r2 == NULL ) hl_null_access();
 	r22 = r2->x;
 	r23 = hl_alloc_dynamic(&t$_f64);
@@ -156,7 +151,7 @@ void components_managers_Riders_addNewRider(components__managers__Riders r0,Stri
 	r22 = r2->y;
 	r24 = hl_alloc_dynamic(&t$_f64);
 	r24->v.d = r22;
-	components_sledder_LTAABosh_new(r21,r23,r24,r5,r3,r4);
+	components_sledder_Bosh_new(r21,r23,r24,r5,r3,r4);
 	r12 = (haxe__ds__StringMap)hl_dyn_castp(&r20,&t$vrt_e4dd42c,&t$haxe_ds_StringMap);
 	if( r12 == NULL ) hl_null_access();
 	haxe_ds_StringMap_set(r12,r5,((vdynamic*)r21));
@@ -175,7 +170,7 @@ void components_managers_Riders_renameRider(components__managers__Riders r0,Stri
 	haxe__ds__StringMap r5;
 	bool r18;
 	$Main r9;
-	components__sledder__RiderBase r7;
+	hxlr__rider__RiderBase r7;
 	int *r14;
 	vdynamic *r4, *r12;
 	vbyte *r15;
@@ -184,7 +179,7 @@ void components_managers_Riders_renameRider(components__managers__Riders r0,Stri
 	r5 = r0->riders;
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_StringMap_get(r5,r1);
-	r7 = (components__sledder__RiderBase)r4;
+	r7 = (hxlr__rider__RiderBase)r4;
 	if( r7 ) goto label$fbc84c5_3_16;
 	r9 = ($Main)g$_Main;
 	r8 = r9->console;
@@ -203,7 +198,7 @@ void components_managers_Riders_renameRider(components__managers__Riders r0,Stri
 	r5 = r0->riders;
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_StringMap_get(r5,r2);
-	r7 = (components__sledder__RiderBase)r4;
+	r7 = (hxlr__rider__RiderBase)r4;
 	if( !r7 ) goto label$fbc84c5_3_59;
 	r11 = 0;
 	label$fbc84c5_3_23:
@@ -215,7 +210,7 @@ void components_managers_Riders_renameRider(components__managers__Riders r0,Stri
 	r16 = String___alloc__(r15,r13);
 	r10 = String___add__(r6,r16);
 	r4 = haxe_ds_StringMap_get(r5,r10);
-	r7 = (components__sledder__RiderBase)r4;
+	r7 = (hxlr__rider__RiderBase)r4;
 	if( !r7 ) goto label$fbc84c5_3_36;
 	++r11;
 	goto label$fbc84c5_3_23;
@@ -247,12 +242,12 @@ void components_managers_Riders_renameRider(components__managers__Riders r0,Stri
 	r5 = r0->riders;
 	if( r5 == NULL ) hl_null_access();
 	r4 = haxe_ds_StringMap_get(r5,r1);
-	r7 = (components__sledder__RiderBase)r4;
+	r7 = (hxlr__rider__RiderBase)r4;
 	r5 = r0->riders;
 	if( r5 == NULL ) hl_null_access();
 	r18 = haxe_ds_StringMap_remove(r5,r1);
 	if( r7 == NULL ) hl_null_access();
-	r10 = components_sledder_RiderBase_set_name(r7,r6);
+	r7->name = r6;
 	r5 = r0->riders;
 	if( r5 == NULL ) hl_null_access();
 	haxe_ds_StringMap_set(r5,r6,((vdynamic*)r7));
@@ -263,11 +258,11 @@ void components_managers_Riders_stepRiders(components__managers__Riders r0) {
 	haxe__ds__StringMap r2;
 	vvirtual *r1, *r3;
 	bool r5;
-	components__sledder__RiderBase r6;
+	hxlr__rider__RiderBase r6;
 	r2 = r0->riders;
 	if( r2 == NULL ) hl_null_access();
 	r1 = haxe_ds_StringMap_iterator(r2);
-	r3 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r1);
+	r3 = hl_to_virtual(&t$vrt_6dd9082,(vdynamic*)r1);
 	label$fbc84c5_4_4:
 	if( r3 == NULL ) hl_null_access();
 	if( hl_vfields(r3)[0] ) r5 = ((bool (*)(vdynamic*))hl_vfields(r3)[0])(r3->value); else {
@@ -276,11 +271,11 @@ void components_managers_Riders_stepRiders(components__managers__Riders r0) {
 		r5 = (bool)ret.v.i;
 	}
 	if( !r5 ) goto label$fbc84c5_4_12;
-	if( hl_vfields(r3)[1] ) r6 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
-		r6 = (components__sledder__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
+	if( hl_vfields(r3)[1] ) r6 = ((hxlr__rider__RiderBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
+		r6 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
 	if( r6 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r6->$type->vobj_proto[4])(r6);
+	((void (*)(hxlr__rider__RiderBase))r6->$type->vobj_proto[2])(r6);
 	goto label$fbc84c5_4_4;
 	label$fbc84c5_4_12:
 	return;
@@ -290,11 +285,11 @@ void components_managers_Riders_resetPositions(components__managers__Riders r0) 
 	haxe__ds__StringMap r2;
 	vvirtual *r1, *r3;
 	bool r5;
-	components__sledder__RiderBase r6;
+	hxlr__rider__RiderBase r6;
 	r2 = r0->riders;
 	if( r2 == NULL ) hl_null_access();
 	r1 = haxe_ds_StringMap_iterator(r2);
-	r3 = hl_to_virtual(&t$vrt_91f9e97,(vdynamic*)r1);
+	r3 = hl_to_virtual(&t$vrt_6dd9082,(vdynamic*)r1);
 	label$fbc84c5_5_4:
 	if( r3 == NULL ) hl_null_access();
 	if( hl_vfields(r3)[0] ) r5 = ((bool (*)(vdynamic*))hl_vfields(r3)[0])(r3->value); else {
@@ -303,11 +298,11 @@ void components_managers_Riders_resetPositions(components__managers__Riders r0) 
 		r5 = (bool)ret.v.i;
 	}
 	if( !r5 ) goto label$fbc84c5_5_12;
-	if( hl_vfields(r3)[1] ) r6 = ((components__sledder__RiderBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
-		r6 = (components__sledder__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_6c7a217,151160317/*next*/,NULL,NULL);
+	if( hl_vfields(r3)[1] ) r6 = ((hxlr__rider__RiderBase (*)(vdynamic*))hl_vfields(r3)[1])(r3->value); else {
+		r6 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r3->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
 	if( r6 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r6->$type->vobj_proto[1])(r6);
+	((void (*)(hxlr__rider__RiderBase))r6->$type->vobj_proto[1])(r6);
 	goto label$fbc84c5_5_4;
 	label$fbc84c5_5_12:
 	return;
@@ -315,14 +310,14 @@ void components_managers_Riders_resetPositions(components__managers__Riders r0) 
 
 void components_managers_Riders_removeRider(components__managers__Riders r0,String r1) {
 	haxe__ds__StringMap r4;
-	components__sledder__RiderBase r5;
+	hxlr__rider__RiderBase r5;
 	vdynamic *r3;
 	r4 = r0->riders;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r4,r1);
-	r5 = (components__sledder__RiderBase)r3;
+	r5 = (hxlr__rider__RiderBase)r3;
 	if( r5 == NULL ) hl_null_access();
-	((void (*)(components__sledder__RiderBase))r5->$type->vobj_proto[2])(r5);
+	((void (*)(hxlr__rider__RiderBase))r5->$type->vobj_proto[4])(r5);
 	return;
 }
 
@@ -346,7 +341,7 @@ void components_managers_Riders_new(components__managers__Riders r0) {
 	components_sledder_Bosh_new(r4,r5,r6,r7,r8,r9);
 	r2 = r0->riders;
 	if( r2 == NULL ) hl_null_access();
-	r7 = components_sledder_RiderBase_get_name(((components__sledder__RiderBase)r4));
+	r7 = r4->name;
 	haxe_ds_StringMap_set(r2,r7,((vdynamic*)r4));
 	r1 = r0->riderCount;
 	++r1;
