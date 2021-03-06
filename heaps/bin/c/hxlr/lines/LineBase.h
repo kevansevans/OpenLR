@@ -24,6 +24,7 @@ struct _hxlr__lines__LineBase {
 	h2d__col__Point start;
 	h2d__col__Point end;
 	int type;
+	bool tangible;
 	hl__types__ArrayObj keyList;
 	h2d__col__Point gfxEnd;
 	bool shifted;

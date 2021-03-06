@@ -2,9 +2,15 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/SpecularTexture.h>
+void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
-void hxsl_Shader_new(hxsl__Shader);
+
+void h3d_shader_SpecularTexture_new(h3d__shader__SpecularTexture r0,h3d__mat__Texture r1) {
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	r0->texture__ = r1;
+	return;
+}
 
 void h3d_shader_SpecularTexture_updateConstants(h3d__shader__SpecularTexture r0,hxsl__Globals r1) {
 	int r2;
@@ -19,10 +25,10 @@ vdynamic* h3d_shader_SpecularTexture_getParamValue(h3d__shader__SpecularTexture 
 	h3d__mat__Texture r3;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$1c90034_2_4;
+	if( r1 != r2 ) goto label$1c90034_3_4;
 	r3 = r0->texture__;
 	return ((vdynamic*)r3);
-	label$1c90034_2_4:
+	label$1c90034_3_4:
 	r4 = NULL;
 	return r4;
 }
@@ -31,11 +37,5 @@ double h3d_shader_SpecularTexture_getParamFloatValue(h3d__shader__SpecularTextur
 	double r2;
 	r2 = 0.;
 	return r2;
-}
-
-void h3d_shader_SpecularTexture_new(h3d__shader__SpecularTexture r0,h3d__mat__Texture r1) {
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	r0->texture__ = r1;
-	return;
 }
 

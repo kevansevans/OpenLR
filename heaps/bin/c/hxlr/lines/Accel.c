@@ -166,15 +166,18 @@ void hxlr_lines_Accel_collide(hxlr__lines__Accel r0,hxlr__rider__ContactPoint r1
 }
 
 void hxlr_lines_Accel_new(hxlr__lines__Accel r0,h2d__col__Point r1,h2d__col__Point r2,bool r3) {
+	bool r6;
 	double r4;
-	vdynamic *r6;
-	int r7;
+	vdynamic *r7;
+	int r8;
 	r4 = 0.10000000000000001;
 	r0->accConst = r4;
-	r6 = NULL;
-	hxlr_lines_LineBase_new(((hxlr__lines__LineBase)r0),r1,r2,r3,r6);
-	r7 = 1;
-	r0->type = r7;
+	r7 = NULL;
+	hxlr_lines_LineBase_new(((hxlr__lines__LineBase)r0),r1,r2,r3,r7);
+	r8 = 1;
+	r0->type = r8;
+	r6 = true;
+	r0->tangible = r6;
 	return;
 }
 

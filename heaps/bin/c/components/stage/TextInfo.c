@@ -16,7 +16,8 @@ venum* h2d_Text_set_textAlign(h2d__Text,venum*);
 #include <_std/Main.h>
 #include <h3d/Engine.h>
 #include <components/managers/Simulation.h>
-#include <components/managers/Grid.h>
+#include <hxlr/engine/Grid.h>
+#include <hl/types/ArrayBytes_Int.h>
 extern $Main g$_Main;
 extern String s$Untitled;
 extern String s$f910c9f;
@@ -82,8 +83,9 @@ void components_stage_TextInfo_new(components__stage__TextInfo r0) {
 }
 
 void components_stage_TextInfo_update(components__stage__TextInfo r0) {
-	components__managers__Grid r14;
 	String r1, r4, r10;
+	hl__types__ArrayBytes_Int r15;
+	hxlr__engine__Grid r14;
 	$Main r3;
 	h2d__Text r2;
 	h3d__Engine r12;
@@ -91,7 +93,7 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	double r6, r7;
 	int *r8;
 	vbyte *r9;
-	int r5;
+	int r5, r16;
 	r2 = r0->info;
 	if( r2 == NULL ) hl_null_access();
 	r3 = ($Main)g$_Main;
@@ -173,7 +175,19 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	r3 = ($Main)g$_Main;
 	r14 = r3->grid;
 	if( r14 == NULL ) hl_null_access();
-	r5 = r14->floorCount;
+	r15 = r14->subTypeCount;
+	if( r15 == NULL ) hl_null_access();
+	r5 = 0;
+	r16 = r15->length;
+	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_86;
+	r5 = 0;
+	goto label$47952d5_2_90;
+	label$47952d5_2_86:
+	r9 = r15->bytes;
+	r16 = 2;
+	r16 = r5 << r16;
+	r5 = *(int*)(r9 + r16);
+	label$47952d5_2_90:
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);
@@ -192,7 +206,19 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	r3 = ($Main)g$_Main;
 	r14 = r3->grid;
 	if( r14 == NULL ) hl_null_access();
-	r5 = r14->accelCount;
+	r15 = r14->subTypeCount;
+	if( r15 == NULL ) hl_null_access();
+	r5 = 1;
+	r16 = r15->length;
+	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_115;
+	r5 = 0;
+	goto label$47952d5_2_119;
+	label$47952d5_2_115:
+	r9 = r15->bytes;
+	r16 = 2;
+	r16 = r5 << r16;
+	r5 = *(int*)(r9 + r16);
+	label$47952d5_2_119:
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);
@@ -211,7 +237,19 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	r3 = ($Main)g$_Main;
 	r14 = r3->grid;
 	if( r14 == NULL ) hl_null_access();
-	r5 = r14->sceneCount;
+	r15 = r14->subTypeCount;
+	if( r15 == NULL ) hl_null_access();
+	r5 = 2;
+	r16 = r15->length;
+	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_144;
+	r5 = 0;
+	goto label$47952d5_2_148;
+	label$47952d5_2_144:
+	r9 = r15->bytes;
+	r16 = 2;
+	r16 = r5 << r16;
+	r5 = *(int*)(r9 + r16);
+	label$47952d5_2_148:
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);

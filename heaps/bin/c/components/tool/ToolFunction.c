@@ -5,207 +5,211 @@
 #include <components/stage/Canvas.h>
 #include <_std/Main.h>
 #include <haxe/ds/StringMap.h>
-#include <components/managers/Grid.h>
+#include <hxlr/engine/Grid.h>
+#include <hxlr/engine/Cell.h>
 #include <hl/types/ArrayObj.h>
 #include <h2d/col/Point.h>
 #include <components/tool/ToolBehavior.h>
-vvirtual* components_managers_Grid_registryPosition(double,double);
 extern String s$;
 extern $Main g$_Main;
-extern String s$x;
-extern hl_type t$_i32;
-#include <hl/natives.h>
-String String___alloc__(vbyte*,int);
-String String___add__(String,String);
-extern String s$y;
+vvirtual* hxlr_engine_Cell_getInfo(double,double);
+extern hl_type t$String;
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
-extern hl_type t$vrt_f6fd8f3;
-extern hl_type t$hl_types_ArrayObj;
+#include <hl/natives.h>
 extern components__tool__$ToolFunction g$_components_tool_ToolFunction;
 void components_tool_ToolFunction_tryDispose(hxlr__lines__LineBase);
 #include <components/stage/DrawMode.h>
 venum* components_stage_Canvas_get_drawMode(components__stage__Canvas);
-void components_managers_Grid_unregister(components__managers__Grid,hxlr__lines__LineBase);
+void hxlr_engine_Grid_unregister(hxlr__engine__Grid,hxlr__lines__LineBase);
 
 void components_tool_ToolFunction_eraseDefault(double r0,double r1) {
-	components__managers__Grid r21;
-	String r6, r14, r18;
-	hl__types__ArrayObj r23;
-	haxe__ds__StringMap r20;
-	vvirtual *r2, *r22;
-	bool r37;
-	components__tool__$ToolFunction r36;
-	$Main r8;
-	components__tool__ToolBehavior r38;
-	h2d__col__Point r29;
-	hxlr__lines__LineBase r25;
-	components__stage__Canvas r7;
-	double r3, r4, r27, r28, r30, r31, r32, r33, r34, r35;
-	vdynamic *r19;
-	int *r16;
-	varray *r26;
-	vbyte *r17;
-	int r9, r10, r11, r12, r13, r15, r24;
-	r2 = components_managers_Grid_registryPosition(r0,r1);
-	r6 = (String)s$;
-	r3 = 1.;
-	r8 = ($Main)g$_Main;
-	r7 = r8->canvas;
-	if( r7 == NULL ) hl_null_access();
-	r4 = r7->scaleX;
-	r3 = r3 / r4;
-	r9 = -1;
-	label$24f39e4_1_9:
-	r11 = 2;
-	if( r9 >= r11 ) goto label$24f39e4_1_143;
-	r10 = r9;
-	++r9;
-	r11 = -1;
-	label$24f39e4_1_15:
-	r13 = 2;
-	if( r11 >= r13 ) goto label$24f39e4_1_142;
-	r12 = r11;
-	++r11;
-	r14 = (String)s$x;
-	if( r2 == NULL ) hl_null_access();
-	r15 = hl_vfields(r2)[2] ? (*(int*)(hl_vfields(r2)[2])) : (int)hl_dyn_geti(r2->value,120/*x*/,&t$_i32);
-	r13 = r10 + r15;
-	r16 = &r13;
-	r17 = hl_itos(r13,r16);
-	r18 = String___alloc__(r17,r13);
-	r14 = String___add__(r14,r18);
-	r18 = (String)s$y;
-	r14 = String___add__(r14,r18);
-	r15 = hl_vfields(r2)[3] ? (*(int*)(hl_vfields(r2)[3])) : (int)hl_dyn_geti(r2->value,121/*y*/,&t$_i32);
-	r13 = r12 + r15;
-	r16 = &r13;
-	r17 = hl_itos(r13,r16);
-	r18 = String___alloc__(r17,r13);
-	r14 = String___add__(r14,r18);
-	r8 = ($Main)g$_Main;
-	r21 = r8->grid;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->registry;
+	String r2, r13;
+	hl__types__ArrayObj r21;
+	haxe__ds__StringMap r18;
+	vvirtual *r14;
+	bool r34;
+	components__tool__$ToolFunction r33;
+	hxlr__engine__Grid r19;
+	hxlr__engine__Cell r20;
+	$Main r7;
+	components__tool__ToolBehavior r35;
+	h2d__col__Point r26;
+	hxlr__lines__LineBase r24;
+	components__stage__Canvas r6;
+	double r4, r5, r15, r16, r27, r28, r29, r30, r31, r32;
+	vdynamic *r17;
+	varray *r25;
+	int r8, r9, r10, r11, r12, r22, r23;
+	r2 = (String)s$;
+	r4 = 1.;
+	r7 = ($Main)g$_Main;
+	r6 = r7->canvas;
+	if( r6 == NULL ) hl_null_access();
+	r5 = r6->scaleX;
+	r4 = r4 / r5;
+	r8 = -1;
+	label$24f39e4_1_8:
+	r10 = 2;
+	if( r8 >= r10 ) goto label$24f39e4_1_146;
+	r9 = r8;
+	++r8;
+	r10 = -1;
+	label$24f39e4_1_14:
+	r12 = 2;
+	if( r10 >= r12 ) goto label$24f39e4_1_145;
+	r11 = r10;
+	++r10;
+	r15 = (double)r9;
+	r5 = r0 + r15;
+	r16 = (double)r11;
+	r15 = r1 + r16;
+	r14 = hxlr_engine_Cell_getInfo(r5,r15);
+	if( r14 == NULL ) hl_null_access();
+	r13 = hl_vfields(r14)[2] ? (*(String*)(hl_vfields(r14)[2])) : (String)hl_dyn_getp(r14->value,5343647/*key*/,&t$String);
+	r7 = ($Main)g$_Main;
+	r19 = r7->grid;
+	if( r19 == NULL ) hl_null_access();
+	r18 = r19->registry;
+	if( r18 == NULL ) hl_null_access();
+	r17 = haxe_ds_StringMap_get(r18,r13);
+	r20 = (hxlr__engine__Cell)r17;
+	if( r20 ) goto label$24f39e4_1_35;
+	goto label$24f39e4_1_14;
+	label$24f39e4_1_35:
+	r7 = ($Main)g$_Main;
+	r19 = r7->grid;
+	if( r19 == NULL ) hl_null_access();
+	r18 = r19->registry;
+	if( r18 == NULL ) hl_null_access();
+	r17 = haxe_ds_StringMap_get(r18,r13);
+	r20 = (hxlr__engine__Cell)r17;
+	r12 = 0;
 	if( r20 == NULL ) hl_null_access();
-	r19 = haxe_ds_StringMap_get(r20,r14);
-	r22 = hl_to_virtual(&t$vrt_f6fd8f3,(vdynamic*)r19);
-	if( r22 ) goto label$24f39e4_1_45;
-	goto label$24f39e4_1_15;
+	r21 = r20->allLines;
 	label$24f39e4_1_45:
-	r8 = ($Main)g$_Main;
-	r21 = r8->grid;
 	if( r21 == NULL ) hl_null_access();
-	r20 = r21->registry;
-	if( r20 == NULL ) hl_null_access();
-	r19 = haxe_ds_StringMap_get(r20,r14);
-	r22 = hl_to_virtual(&t$vrt_f6fd8f3,(vdynamic*)r19);
-	r13 = 0;
-	if( r22 == NULL ) hl_null_access();
-	r23 = hl_vfields(r22)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r22)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r22->value,233152173/*allLines*/,&t$hl_types_ArrayObj);
-	label$24f39e4_1_55:
-	if( r23 == NULL ) hl_null_access();
-	r24 = r23->length;
-	if( r13 >= r24 ) goto label$24f39e4_1_141;
-	r24 = r23->length;
-	if( ((unsigned)r13) < ((unsigned)r24) ) goto label$24f39e4_1_63;
-	r25 = NULL;
-	goto label$24f39e4_1_66;
-	label$24f39e4_1_63:
-	r26 = r23->array;
-	r19 = ((vdynamic**)(r26 + 1))[r13];
-	r25 = (hxlr__lines__LineBase)r19;
-	label$24f39e4_1_66:
-	++r13;
-	if( r25 == NULL ) hl_null_access();
-	r29 = r25->start;
-	if( r29 == NULL ) hl_null_access();
-	r28 = r29->x;
-	r27 = r0 - r28;
-	r29 = r25->start;
-	if( r29 == NULL ) hl_null_access();
-	r30 = r29->y;
-	r28 = r1 - r30;
-	r31 = 2.;
-	r30 = hl_math_pow(r27,r31);
-	r32 = 2.;
-	r31 = hl_math_pow(r28,r32);
+	r23 = r21->length;
+	if( r12 >= r23 ) goto label$24f39e4_1_144;
+	r23 = r21->length;
+	if( ((unsigned)r12) < ((unsigned)r23) ) goto label$24f39e4_1_53;
+	r24 = NULL;
+	goto label$24f39e4_1_56;
+	label$24f39e4_1_53:
+	r25 = r21->array;
+	r17 = ((vdynamic**)(r25 + 1))[r12];
+	r24 = (hxlr__lines__LineBase)r17;
+	label$24f39e4_1_56:
+	++r12;
+	if( r24 ) goto label$24f39e4_1_59;
+	goto label$24f39e4_1_45;
+	label$24f39e4_1_59:
+	if( r24 == NULL ) hl_null_access();
+	r26 = r24->start;
+	if( r26 == NULL ) hl_null_access();
+	r16 = r26->x;
+	r15 = r0 - r16;
+	r26 = r24->start;
+	if( r26 == NULL ) hl_null_access();
+	r27 = r26->y;
+	r16 = r1 - r27;
+	r28 = 2.;
+	r27 = hl_math_pow(r15,r28);
+	r29 = 2.;
+	r28 = hl_math_pow(r16,r29);
+	r27 = r27 + r28;
+	r27 = hl_math_sqrt(r27);
+	r26 = r24->end;
+	if( r26 == NULL ) hl_null_access();
+	r29 = r26->x;
+	r28 = r0 - r29;
+	r29 = 2.;
+	r28 = hl_math_pow(r28,r29);
+	r26 = r24->end;
+	if( r26 == NULL ) hl_null_access();
+	r30 = r26->y;
+	r29 = r1 - r30;
+	r30 = 2.;
+	r29 = hl_math_pow(r29,r30);
+	r28 = r28 + r29;
+	r28 = hl_math_sqrt(r28);
+	r29 = r24->nx;
+	r29 = r29 * r15;
+	r30 = r24->ny;
+	r30 = r30 * r16;
+	r29 = r29 + r30;
+	r29 = hl_math_abs(r29);
+	r31 = r24->dx;
+	r30 = r15 * r31;
+	r32 = r24->dy;
+	r31 = r16 * r32;
 	r30 = r30 + r31;
-	r30 = hl_math_sqrt(r30);
-	r29 = r25->end;
-	if( r29 == NULL ) hl_null_access();
-	r32 = r29->x;
-	r31 = r0 - r32;
-	r32 = 2.;
-	r31 = hl_math_pow(r31,r32);
-	r29 = r25->end;
-	if( r29 == NULL ) hl_null_access();
-	r33 = r29->y;
-	r32 = r1 - r33;
-	r33 = 2.;
-	r32 = hl_math_pow(r32,r33);
-	r31 = r31 + r32;
-	r31 = hl_math_sqrt(r31);
-	r32 = r25->nx;
-	r32 = r32 * r27;
-	r33 = r25->ny;
-	r33 = r33 * r28;
-	r32 = r32 + r33;
-	r32 = hl_math_abs(r32);
-	r34 = r25->dx;
-	r33 = r27 * r34;
-	r35 = r25->dy;
-	r34 = r28 * r35;
-	r33 = r33 + r34;
-	r34 = r25->invSqrDistance;
-	r33 = r33 * r34;
-	r36 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
-	r35 = r36->eraserSize;
-	r35 = r35 * r3;
-	if( r30 < r35 ) goto label$24f39e4_1_125;
-	r36 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
-	r35 = r36->eraserSize;
-	r35 = r35 * r3;
-	if( r31 < r35 ) goto label$24f39e4_1_125;
-	r36 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
-	r35 = r36->eraserSize;
-	r35 = r35 * r3;
-	if( !(r32 < r35) ) goto label$24f39e4_1_140;
-	r35 = 0.;
-	if( !(r33 >= r35) ) goto label$24f39e4_1_140;
-	r35 = 1.;
-	if( !(r35 >= r33) ) goto label$24f39e4_1_140;
-	label$24f39e4_1_125:
-	r8 = ($Main)g$_Main;
-	r38 = r8->toolControl;
-	if( r38 == NULL ) hl_null_access();
-	r37 = r38->colorEraser;
-	if( !r37 ) goto label$24f39e4_1_138;
-	r15 = r25->type;
-	r8 = ($Main)g$_Main;
-	r38 = r8->toolControl;
-	if( r38 == NULL ) hl_null_access();
-	r24 = r38->color;
-	if( r15 != r24 ) goto label$24f39e4_1_137;
-	components_tool_ToolFunction_tryDispose(r25);
+	r31 = r24->invSqrDistance;
+	r30 = r30 * r31;
+	r33 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
+	r32 = r33->eraserSize;
+	r32 = r32 * r4;
+	if( r27 < r32 ) goto label$24f39e4_1_117;
+	r33 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
+	r32 = r33->eraserSize;
+	r32 = r32 * r4;
+	if( r28 < r32 ) goto label$24f39e4_1_117;
+	r33 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
+	r32 = r33->eraserSize;
+	r32 = r32 * r4;
+	if( !(r29 < r32) ) goto label$24f39e4_1_143;
+	r32 = 0.;
+	if( !(r30 >= r32) ) goto label$24f39e4_1_143;
+	r32 = 1.;
+	if( !(r32 >= r30) ) goto label$24f39e4_1_143;
+	label$24f39e4_1_117:
+	r7 = ($Main)g$_Main;
+	r35 = r7->toolControl;
+	if( r35 == NULL ) hl_null_access();
+	r34 = r35->colorEraser;
+	if( !r34 ) goto label$24f39e4_1_141;
+	r22 = 3;
+	r7 = ($Main)g$_Main;
+	r35 = r7->toolControl;
+	if( r35 == NULL ) hl_null_access();
+	r23 = r35->color;
+	switch(r23) {
+		default:
+			goto label$24f39e4_1_137;
+		case 0:
+			r23 = 0;
+			r22 = r23;
+			goto label$24f39e4_1_137;
+		case 1:
+			r23 = 1;
+			r22 = r23;
+			goto label$24f39e4_1_137;
+		case 2:
+			r23 = 2;
+			r22 = r23;
+	}
 	label$24f39e4_1_137:
-	goto label$24f39e4_1_139;
-	label$24f39e4_1_138:
-	components_tool_ToolFunction_tryDispose(r25);
-	label$24f39e4_1_139:
-	goto label$24f39e4_1_55;
+	r23 = r24->type;
+	if( r23 != r22 ) goto label$24f39e4_1_140;
+	components_tool_ToolFunction_tryDispose(r24);
 	label$24f39e4_1_140:
-	goto label$24f39e4_1_55;
+	goto label$24f39e4_1_142;
 	label$24f39e4_1_141:
-	goto label$24f39e4_1_15;
+	components_tool_ToolFunction_tryDispose(r24);
 	label$24f39e4_1_142:
-	goto label$24f39e4_1_9;
+	goto label$24f39e4_1_45;
 	label$24f39e4_1_143:
+	goto label$24f39e4_1_45;
+	label$24f39e4_1_144:
+	goto label$24f39e4_1_14;
+	label$24f39e4_1_145:
+	goto label$24f39e4_1_8;
+	label$24f39e4_1_146:
 	return;
 }
 
 void components_tool_ToolFunction_tryDispose(hxlr__lines__LineBase r0) {
-	components__managers__Grid r6;
 	venum *r3;
+	hxlr__engine__Grid r6;
 	$Main r5;
 	components__stage__Canvas r4;
 	int r2, r7;
@@ -223,7 +227,7 @@ void components_tool_ToolFunction_tryDispose(hxlr__lines__LineBase r0) {
 			r5 = ($Main)g$_Main;
 			r6 = r5->grid;
 			if( r6 == NULL ) hl_null_access();
-			components_managers_Grid_unregister(r6,r0);
+			hxlr_engine_Grid_unregister(r6,r0);
 			goto label$24f39e4_2_30;
 		case 2:
 		case 3:
@@ -234,7 +238,7 @@ void components_tool_ToolFunction_tryDispose(hxlr__lines__LineBase r0) {
 			r5 = ($Main)g$_Main;
 			r6 = r5->grid;
 			if( r6 == NULL ) hl_null_access();
-			components_managers_Grid_unregister(r6,r0);
+			hxlr_engine_Grid_unregister(r6,r0);
 			label$24f39e4_2_21:
 			goto label$24f39e4_2_30;
 		case 4:
@@ -246,7 +250,7 @@ void components_tool_ToolFunction_tryDispose(hxlr__lines__LineBase r0) {
 			r5 = ($Main)g$_Main;
 			r6 = r5->grid;
 			if( r6 == NULL ) hl_null_access();
-			components_managers_Grid_unregister(r6,r0);
+			hxlr_engine_Grid_unregister(r6,r0);
 	}
 	label$24f39e4_2_30:
 	return;

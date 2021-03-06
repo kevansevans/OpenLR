@@ -12,7 +12,7 @@ typedef struct _Main *Main;
 #include <components/stage/LRConsole.h>
 #include <components/tool/ToolBehavior.h>
 #include <components/ui/Toolbar.h>
-#include <components/managers/Grid.h>
+#include <hxlr/engine/Grid.h>
 #include <components/managers/Riders.h>
 #include <components/managers/Simulation.h>
 #include <file/SaveLoad.h>
@@ -43,7 +43,7 @@ struct _$Main {
 	components__tool__ToolBehavior toolControl;
 	components__ui__Toolbar toolbar;
 	String build;
-	components__managers__Grid grid;
+	hxlr__engine__Grid grid;
 	components__managers__Riders riders;
 	components__managers__Simulation simulation;
 	file__SaveLoad saveload;

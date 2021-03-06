@@ -2,10 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxd/fmt/fbx/BaseLibrary.h>
-#include <hxd/fmt/fbx/_BaseLibrary/AnimCurve.h>
-extern hl_type t$hxd_fmt_fbx__BaseLibrary_AnimCurve;
-extern hl_type t$_dyn;
-extern hl_type t$vrt_0813dd2;
 extern hl_type t$haxe_ds_IntMap;
 void haxe_ds_IntMap_new(haxe__ds__IntMap);
 #include <hxd/fmt/fbx/FbxProp.h>
@@ -18,6 +14,7 @@ extern String s$67a1ce3;
 vdynamic* haxe_Exception_thrown(vdynamic*);
 extern String s$f8d6304;
 hl__types__ArrayObj hxd_fmt_fbx_FbxTools_getAll(vvirtual*,String);
+extern hl_type t$vrt_0813dd2;
 String hxd_fmt_fbx_FbxTools_toString(venum*);
 extern String s$Original_ApplicationName;
 int String___compare(String,vdynamic*);
@@ -110,6 +107,7 @@ void haxe_ds_IntMap_set(haxe__ds__IntMap,int,vdynamic*);
 extern hl_type t$_i32;
 extern String s$LookAtProperty;
 extern hl_type t$hl_types_ArrayBytes_Int;
+extern hl_type t$_dyn;
 hl__types__ArrayBytes_Int hl_types_ArrayBase_allocI32(vbyte*,int);
 int hl_types_ArrayBytes_Int_push(hl__types__ArrayBytes_Int,int);
 int hxd_fmt_fbx_FbxTools_getId(vvirtual*);
@@ -137,10 +135,12 @@ extern String s$Mesh;
 extern String s$Geometry;
 extern String s$Deformer;
 extern hl_type t$vrt_ba1ac8c;
+#include <hxd/fmt/fbx/_BaseLibrary/AnimCurve.h>
 hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__fmt__fbx__BaseLibrary,vvirtual*);
 extern String s$Visibility;
 extern String s$UV;
 extern String s$assert;
+extern hl_type t$hxd_fmt_fbx__BaseLibrary_AnimCurve;
 void hxd_fmt_fbx__BaseLibrary_AnimCurve_new(hxd__fmt__fbx___BaseLibrary__AnimCurve,hxd__fmt__fbx__DefaultMatrixes,String);
 extern String s$Model_not_found_;
 #include <hxd/fmt/fbx/Geometry.h>
@@ -230,6 +230,7 @@ void h3d_anim_LinearAnimation_new(h3d__anim__LinearAnimation,String,int,double);
 extern hl_type t$vrt_a6194c5;
 extern hl_type t$fun_5bcdc12;
 extern hl_type t$fun_ad9ad60;
+int hxd_fmt_fbx_BaseLibrary_loadAnimation__$3(vclosure*,vdynamic*,vdynamic*);
 extern hl_type t$fun_19675cd;
 void hl_types_ArrayObj_sort(hl__types__ArrayObj,vclosure*);
 extern hl_type t$vrt_a6e9cbf;
@@ -243,6 +244,7 @@ void h3d_anim_LinearAnimation_addPropCurve(h3d__anim__LinearAnimation,String,Str
 extern String s$FOVY;
 extern String s$Root;
 extern hl_type t$fun_bd926c5;
+int hxd_fmt_fbx_BaseLibrary_autoMerge__$2(vclosure*,vdynamic*,vdynamic*);
 extern hl_type t$fun_c474f16;
 #include <h3d/anim/Joint.h>
 #include <h3d/anim/Skin.h>
@@ -267,24 +269,6 @@ void h3d_anim_Skin_initWeights(h3d__anim__Skin);
 extern String s$NaN_found;
 extern String s$Transform;
 h3d__Matrix h3d_Matrix_L(hl__types__ArrayBytes_Float);
-
-int hxd_fmt_fbx_BaseLibrary_loadAnimation__$3(vclosure* r0,vdynamic* r1,vdynamic* r2) {
-	hxd__fmt__fbx___BaseLibrary__AnimCurve r3, r4;
-	int r5;
-	r3 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)hl_dyn_castp(&r1,&t$_dyn,&t$hxd_fmt_fbx__BaseLibrary_AnimCurve);
-	r4 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)hl_dyn_castp(&r2,&t$_dyn,&t$hxd_fmt_fbx__BaseLibrary_AnimCurve);
-	r5 = r0->hasValue ? ((int (*)(vdynamic*,hxd__fmt__fbx___BaseLibrary__AnimCurve,hxd__fmt__fbx___BaseLibrary__AnimCurve))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(hxd__fmt__fbx___BaseLibrary__AnimCurve,hxd__fmt__fbx___BaseLibrary__AnimCurve))r0->fun)(r3,r4);
-	return r5;
-}
-
-int hxd_fmt_fbx_BaseLibrary_autoMerge__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
-	vvirtual *r3, *r4;
-	int r5;
-	r3 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r1);
-	r4 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r2);
-	r5 = r0->hasValue ? ((int (*)(vdynamic*,vvirtual*,vvirtual*))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(vvirtual*,vvirtual*))r0->fun)(r3,r4);
-	return r5;
-}
 
 void hxd_fmt_fbx_BaseLibrary_reset(hxd__fmt__fbx__BaseLibrary r0) {
 	haxe__ds__IntMap r1;
@@ -333,14 +317,14 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	if( r6 == NULL ) hl_null_access();
 	r5 = 0;
 	r9 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_4_13;
+	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_2_13;
 	r10 = NULL;
-	goto label$eabbec9_4_16;
-	label$eabbec9_4_13:
+	goto label$eabbec9_2_16;
+	label$eabbec9_2_13:
 	r12 = r6->array;
 	r11 = ((vdynamic**)(r12 + 1))[r5];
 	r10 = (venum*)r11;
-	label$eabbec9_4_16:
+	label$eabbec9_2_16:
 	r5 = hxd_fmt_fbx_FbxTools_toInt(r10);
 	r4 = (double)r5;
 	r13 = 1000.;
@@ -349,56 +333,56 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r4 = r0->version;
 	r5 = (int)r4;
 	r9 = 7;
-	if( r5 == r9 ) goto label$eabbec9_4_28;
+	if( r5 == r9 ) goto label$eabbec9_2_28;
 	r7 = (String)s$67a1ce3;
 	r11 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r11);
-	label$eabbec9_4_28:
+	label$eabbec9_2_28:
 	r5 = 0;
 	r7 = (String)s$f8d6304;
 	r6 = hxd_fmt_fbx_FbxTools_getAll(r1,r7);
-	label$eabbec9_4_31:
+	label$eabbec9_2_31:
 	if( r6 == NULL ) hl_null_access();
 	r14 = r6->length;
-	if( r5 >= r14 ) goto label$eabbec9_4_82;
+	if( r5 >= r14 ) goto label$eabbec9_2_82;
 	r14 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r14) ) goto label$eabbec9_4_39;
+	if( ((unsigned)r5) < ((unsigned)r14) ) goto label$eabbec9_2_39;
 	r3 = NULL;
-	goto label$eabbec9_4_42;
-	label$eabbec9_4_39:
+	goto label$eabbec9_2_42;
+	label$eabbec9_2_39:
 	r12 = r6->array;
 	r11 = ((vdynamic**)(r12 + 1))[r5];
 	r3 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_4_42:
+	label$eabbec9_2_42:
 	++r5;
 	if( r3 == NULL ) hl_null_access();
 	r15 = hl_vfields(r3)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r3)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r3->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r9 = 0;
 	r14 = r15->length;
-	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$eabbec9_4_51;
+	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$eabbec9_2_51;
 	r10 = NULL;
-	goto label$eabbec9_4_54;
-	label$eabbec9_4_51:
+	goto label$eabbec9_2_54;
+	label$eabbec9_2_51:
 	r12 = r15->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
 	r10 = (venum*)r11;
-	label$eabbec9_4_54:
+	label$eabbec9_2_54:
 	r7 = hxd_fmt_fbx_FbxTools_toString(r10);
 	r17 = (String)s$Original_ApplicationName;
-	if( r7 != r17 && (!r7 || !r17 || String___compare(r7,(vdynamic*)r17) != 0) ) goto label$eabbec9_4_81;
+	if( r7 != r17 && (!r7 || !r17 || String___compare(r7,(vdynamic*)r17) != 0) ) goto label$eabbec9_2_81;
 	r15 = hl_vfields(r3)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r3)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r3->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r9 = 4;
 	r14 = r15->length;
-	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$eabbec9_4_64;
+	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$eabbec9_2_64;
 	r10 = NULL;
-	goto label$eabbec9_4_67;
-	label$eabbec9_4_64:
+	goto label$eabbec9_2_67;
+	label$eabbec9_2_64:
 	r12 = r15->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
 	r10 = (venum*)r11;
-	label$eabbec9_4_67:
+	label$eabbec9_2_67:
 	r7 = hxd_fmt_fbx_FbxTools_toString(r10);
 	if( r7 == NULL ) hl_null_access();
 	r7 = String_toLowerCase(r7);
@@ -407,140 +391,140 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r19 = NULL;
 	r9 = String_indexOf(r7,r17,r19);
 	r14 = 0;
-	if( r9 >= r14 ) goto label$eabbec9_4_78;
+	if( r9 >= r14 ) goto label$eabbec9_2_78;
 	r18 = false;
-	goto label$eabbec9_4_79;
-	label$eabbec9_4_78:
+	goto label$eabbec9_2_79;
+	label$eabbec9_2_78:
 	r18 = true;
-	label$eabbec9_4_79:
+	label$eabbec9_2_79:
 	r0->isMaya = r18;
-	goto label$eabbec9_4_82;
-	label$eabbec9_4_81:
-	goto label$eabbec9_4_31;
-	label$eabbec9_4_82:
+	goto label$eabbec9_2_82;
+	label$eabbec9_2_81:
+	goto label$eabbec9_2_31;
+	label$eabbec9_2_82:
 	r5 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r6 = hl_vfields(r1)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,-54870451/*childs*/,&t$hl_types_ArrayObj);
-	label$eabbec9_4_85:
+	label$eabbec9_2_85:
 	if( r6 == NULL ) hl_null_access();
 	r14 = r6->length;
-	if( r5 >= r14 ) goto label$eabbec9_4_99;
+	if( r5 >= r14 ) goto label$eabbec9_2_99;
 	r14 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r14) ) goto label$eabbec9_4_93;
+	if( ((unsigned)r5) < ((unsigned)r14) ) goto label$eabbec9_2_93;
 	r3 = NULL;
-	goto label$eabbec9_4_96;
-	label$eabbec9_4_93:
+	goto label$eabbec9_2_96;
+	label$eabbec9_2_93:
 	r12 = r6->array;
 	r11 = ((vdynamic**)(r12 + 1))[r5];
 	r3 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_4_96:
+	label$eabbec9_2_96:
 	++r5;
 	hxd_fmt_fbx_BaseLibrary_init(r0,r3);
-	goto label$eabbec9_4_85;
-	label$eabbec9_4_99:
+	goto label$eabbec9_2_85;
+	label$eabbec9_2_99:
 	r18 = r0->normalizeScaleOrient;
-	if( !r18 ) goto label$eabbec9_4_102;
+	if( !r18 ) goto label$eabbec9_2_102;
 	hxd_fmt_fbx_BaseLibrary_updateModelScale(r0);
-	label$eabbec9_4_102:
+	label$eabbec9_2_102:
 	r5 = 0;
 	r6 = hxd_fmt_fbx_BaseLibrary_getAllModels(r0);
-	label$eabbec9_4_104:
+	label$eabbec9_2_104:
 	if( r6 == NULL ) hl_null_access();
 	r14 = r6->length;
-	if( r5 >= r14 ) goto label$eabbec9_4_366;
+	if( r5 >= r14 ) goto label$eabbec9_2_366;
 	r14 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r14) ) goto label$eabbec9_4_112;
+	if( ((unsigned)r5) < ((unsigned)r14) ) goto label$eabbec9_2_112;
 	r3 = NULL;
-	goto label$eabbec9_4_115;
-	label$eabbec9_4_112:
+	goto label$eabbec9_2_115;
+	label$eabbec9_2_112:
 	r12 = r6->array;
 	r11 = ((vdynamic**)(r12 + 1))[r5];
 	r3 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_4_115:
+	label$eabbec9_2_115:
 	++r5;
 	r9 = 0;
 	r7 = (String)s$Properties70_P;
 	r15 = hxd_fmt_fbx_FbxTools_getAll(r3,r7);
-	label$eabbec9_4_119:
+	label$eabbec9_2_119:
 	if( r15 == NULL ) hl_null_access();
 	r20 = r15->length;
-	if( r9 >= r20 ) goto label$eabbec9_4_365;
+	if( r9 >= r20 ) goto label$eabbec9_2_365;
 	r20 = r15->length;
-	if( ((unsigned)r9) < ((unsigned)r20) ) goto label$eabbec9_4_127;
+	if( ((unsigned)r9) < ((unsigned)r20) ) goto label$eabbec9_2_127;
 	r16 = NULL;
-	goto label$eabbec9_4_130;
-	label$eabbec9_4_127:
+	goto label$eabbec9_2_130;
+	label$eabbec9_2_127:
 	r12 = r15->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
 	r16 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_4_130:
+	label$eabbec9_2_130:
 	++r9;
 	if( r16 == NULL ) hl_null_access();
 	r21 = hl_vfields(r16)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r21 == NULL ) hl_null_access();
 	r14 = 0;
 	r20 = r21->length;
-	if( ((unsigned)r14) < ((unsigned)r20) ) goto label$eabbec9_4_139;
+	if( ((unsigned)r14) < ((unsigned)r20) ) goto label$eabbec9_2_139;
 	r10 = NULL;
-	goto label$eabbec9_4_142;
-	label$eabbec9_4_139:
+	goto label$eabbec9_2_142;
+	label$eabbec9_2_139:
 	r12 = r21->array;
 	r11 = ((vdynamic**)(r12 + 1))[r14];
 	r10 = (venum*)r11;
-	label$eabbec9_4_142:
+	label$eabbec9_2_142:
 	r7 = hxd_fmt_fbx_FbxTools_toString(r10);
-	if( !r7 ) goto label$eabbec9_4_152;
+	if( !r7 ) goto label$eabbec9_2_152;
 	r14 = r7->length;
 	r20 = 6;
-	if( r14 != r20 ) goto label$eabbec9_4_152;
+	if( r14 != r20 ) goto label$eabbec9_2_152;
 	r22 = r7->bytes;
 	r23 = (vbyte*)USTR("Events");
 	r14 = hl_string_compare(r22,r23,r14);
 	r20 = 0;
-	if( r14 == r20 ) goto label$eabbec9_4_162;
-	label$eabbec9_4_152:
-	if( !r7 ) goto label$eabbec9_4_161;
+	if( r14 == r20 ) goto label$eabbec9_2_162;
+	label$eabbec9_2_152:
+	if( !r7 ) goto label$eabbec9_2_161;
 	r14 = r7->length;
 	r20 = 9;
-	if( r14 != r20 ) goto label$eabbec9_4_161;
+	if( r14 != r20 ) goto label$eabbec9_2_161;
 	r22 = r7->bytes;
 	r23 = (vbyte*)USTR("UDP3DSMAX");
 	r14 = hl_string_compare(r22,r23,r14);
 	r20 = 0;
-	if( r14 == r20 ) goto label$eabbec9_4_162;
-	label$eabbec9_4_161:
-	goto label$eabbec9_4_364;
-	label$eabbec9_4_162:
+	if( r14 == r20 ) goto label$eabbec9_2_162;
+	label$eabbec9_2_161:
+	goto label$eabbec9_2_364;
+	label$eabbec9_2_162:
 	r21 = hl_vfields(r16)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r21 == NULL ) hl_null_access();
 	r14 = 4;
 	r20 = r21->length;
-	if( ((unsigned)r14) < ((unsigned)r20) ) goto label$eabbec9_4_169;
+	if( ((unsigned)r14) < ((unsigned)r20) ) goto label$eabbec9_2_169;
 	r10 = NULL;
-	goto label$eabbec9_4_172;
-	label$eabbec9_4_169:
+	goto label$eabbec9_2_172;
+	label$eabbec9_2_169:
 	r12 = r21->array;
 	r11 = ((vdynamic**)(r12 + 1))[r14];
 	r10 = (venum*)r11;
-	label$eabbec9_4_172:
+	label$eabbec9_2_172:
 	r7 = hxd_fmt_fbx_FbxTools_toString(r10);
 	if( r7 == NULL ) hl_null_access();
 	r17 = (String)s$_cr_lf_;
 	r21 = String_split(r7,r17);
 	r14 = 0;
-	label$eabbec9_4_177:
+	label$eabbec9_2_177:
 	if( r21 == NULL ) hl_null_access();
 	r24 = r21->length;
-	if( r14 >= r24 ) goto label$eabbec9_4_364;
+	if( r14 >= r24 ) goto label$eabbec9_2_364;
 	r24 = r21->length;
-	if( ((unsigned)r14) < ((unsigned)r24) ) goto label$eabbec9_4_185;
+	if( ((unsigned)r14) < ((unsigned)r24) ) goto label$eabbec9_2_185;
 	r7 = NULL;
-	goto label$eabbec9_4_188;
-	label$eabbec9_4_185:
+	goto label$eabbec9_2_188;
+	label$eabbec9_2_185:
 	r12 = r21->array;
 	r11 = ((vdynamic**)(r12 + 1))[r14];
 	r7 = (String)r11;
-	label$eabbec9_4_188:
+	label$eabbec9_2_188:
 	++r14;
 	if( r7 == NULL ) hl_null_access();
 	r26 = (String)s$43ec3e5;
@@ -552,40 +536,40 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r26 = (String)s$43ec3e5;
 	r26 = hl_types_ArrayObj_join(r25,r26);
 	r26 = StringTools_trim(r26);
-	if( !r17 ) goto label$eabbec9_4_208;
+	if( !r17 ) goto label$eabbec9_2_208;
 	r20 = r17->length;
 	r24 = 6;
-	if( r20 != r24 ) goto label$eabbec9_4_208;
+	if( r20 != r24 ) goto label$eabbec9_2_208;
 	r22 = r17->bytes;
 	r23 = (vbyte*)USTR("Events");
 	r20 = hl_string_compare(r22,r23,r20);
 	r24 = 0;
-	if( r20 == r24 ) goto label$eabbec9_4_218;
-	label$eabbec9_4_208:
-	if( !r17 ) goto label$eabbec9_4_217;
+	if( r20 == r24 ) goto label$eabbec9_2_218;
+	label$eabbec9_2_208:
+	if( !r17 ) goto label$eabbec9_2_217;
 	r20 = r17->length;
 	r24 = 2;
-	if( r20 != r24 ) goto label$eabbec9_4_217;
+	if( r20 != r24 ) goto label$eabbec9_2_217;
 	r22 = r17->bytes;
 	r23 = (vbyte*)USTR("UV");
 	r20 = hl_string_compare(r22,r23,r20);
 	r24 = 0;
-	if( r20 == r24 ) goto label$eabbec9_4_274;
-	label$eabbec9_4_217:
-	goto label$eabbec9_4_363;
-	label$eabbec9_4_218:
-	hl_trap(trap$0,r11,label$eabbec9_4_222);
+	if( r20 == r24 ) goto label$eabbec9_2_274;
+	label$eabbec9_2_217:
+	goto label$eabbec9_2_363;
+	label$eabbec9_2_218:
+	hl_trap(trap$0,r11,label$eabbec9_2_222);
 	r29 = Xml_parse(r26);
 	hl_endtrap(trap$0);
-	goto label$eabbec9_4_228;
-	label$eabbec9_4_222:
+	goto label$eabbec9_2_228;
+	label$eabbec9_2_222:
 	r30 = NULL;
 	r28 = (String)s$Invalid_Events_data_in_;
 	r31 = hxd_fmt_fbx_FbxTools_getName(r3);
 	r28 = String___add__(r28,r31);
 	r30 = haxe_Exception_thrown(((vdynamic*)r28));
 	hl_throw((vdynamic*)r30);
-	label$eabbec9_4_228:
+	label$eabbec9_2_228:
 	r32 = &t$vrt_8c19931;
 	r20 = 0;
 	r12 = hl_alloc_array(r32,r20);
@@ -596,27 +580,27 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r20 = r29->nodeType;
 	r33 = ($Xml)g$_Xml;
 	r24 = r33->Document;
-	if( r20 == r24 ) goto label$eabbec9_4_249;
+	if( r20 == r24 ) goto label$eabbec9_2_249;
 	r20 = r29->nodeType;
 	r33 = ($Xml)g$_Xml;
 	r24 = r33->Element;
-	if( r20 == r24 ) goto label$eabbec9_4_249;
+	if( r20 == r24 ) goto label$eabbec9_2_249;
 	r28 = (String)s$Invalid_nodeType_;
 	r20 = r29->nodeType;
 	r31 = _Xml_XmlType_Impl__toString(r20);
 	r28 = String___add__(r28,r31);
 	r30 = haxe_Exception_thrown(((vdynamic*)r28));
 	hl_throw((vdynamic*)r30);
-	label$eabbec9_4_249:
+	label$eabbec9_2_249:
 	r34 = Xml_elements(r29);
-	label$eabbec9_4_250:
+	label$eabbec9_2_250:
 	if( r34 == NULL ) hl_null_access();
 	if( hl_vfields(r34)[0] ) r18 = ((bool (*)(vdynamic*))hl_vfields(r34)[0])(r34->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r34->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r18 = (bool)ret.v.i;
 	}
-	if( !r18 ) goto label$eabbec9_4_272;
+	if( !r18 ) goto label$eabbec9_2_272;
 	if( hl_vfields(r34)[1] ) r35 = ((Xml (*)(vdynamic*))hl_vfields(r34)[1])(r34->value); else {
 		r35 = (Xml)hl_dyn_call_obj(r34->value,&t$fun_efa96ab,151160317/*next*/,NULL,NULL);
 	}
@@ -636,25 +620,25 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r28 = StringTools_trim(r28);
 	if( hl_vfields(r37)[0] ) *(String*)(hl_vfields(r37)[0]) = (String)r28; else hl_dyn_setp(r37->value,40064820/*data*/,&t$String,r28);
 	r20 = hl_types_ArrayObj_push(r27,((vdynamic*)r37));
-	goto label$eabbec9_4_250;
-	label$eabbec9_4_272:
+	goto label$eabbec9_2_250;
+	label$eabbec9_2_272:
 	r0->animationEvents = r27;
-	goto label$eabbec9_4_363;
-	label$eabbec9_4_274:
+	goto label$eabbec9_2_363;
+	label$eabbec9_2_274:
 	r31 = (String)s$;
-	if( r26 == r31 || (r26 && r31 && String___compare(r26,(vdynamic*)r31) == 0) ) goto label$eabbec9_4_363;
-	hl_trap(trap$0,r11,label$eabbec9_4_280);
+	if( r26 == r31 || (r26 && r31 && String___compare(r26,(vdynamic*)r31) == 0) ) goto label$eabbec9_2_363;
+	hl_trap(trap$0,r11,label$eabbec9_2_280);
 	r29 = Xml_parse(r26);
 	hl_endtrap(trap$0);
-	goto label$eabbec9_4_286;
-	label$eabbec9_4_280:
+	goto label$eabbec9_2_286;
+	label$eabbec9_2_280:
 	r30 = NULL;
 	r28 = (String)s$Invalid_UV_data_in_;
 	r31 = hxd_fmt_fbx_FbxTools_getName(r3);
 	r28 = String___add__(r28,r31);
 	r30 = haxe_Exception_thrown(((vdynamic*)r28));
 	hl_throw((vdynamic*)r30);
-	label$eabbec9_4_286:
+	label$eabbec9_2_286:
 	r32 = &t$vrt_92c68e9;
 	r20 = 0;
 	r12 = hl_alloc_array(r32,r20);
@@ -665,27 +649,27 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r20 = r29->nodeType;
 	r33 = ($Xml)g$_Xml;
 	r24 = r33->Document;
-	if( r20 == r24 ) goto label$eabbec9_4_307;
+	if( r20 == r24 ) goto label$eabbec9_2_307;
 	r20 = r29->nodeType;
 	r33 = ($Xml)g$_Xml;
 	r24 = r33->Element;
-	if( r20 == r24 ) goto label$eabbec9_4_307;
+	if( r20 == r24 ) goto label$eabbec9_2_307;
 	r28 = (String)s$Invalid_nodeType_;
 	r20 = r29->nodeType;
 	r31 = _Xml_XmlType_Impl__toString(r20);
 	r28 = String___add__(r28,r31);
 	r30 = haxe_Exception_thrown(((vdynamic*)r28));
 	hl_throw((vdynamic*)r30);
-	label$eabbec9_4_307:
+	label$eabbec9_2_307:
 	r34 = Xml_elements(r29);
-	label$eabbec9_4_308:
+	label$eabbec9_2_308:
 	if( r34 == NULL ) hl_null_access();
 	if( hl_vfields(r34)[0] ) r18 = ((bool (*)(vdynamic*))hl_vfields(r34)[0])(r34->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r34->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r18 = (bool)ret.v.i;
 	}
-	if( !r18 ) goto label$eabbec9_4_354;
+	if( !r18 ) goto label$eabbec9_2_354;
 	if( hl_vfields(r34)[1] ) r35 = ((Xml (*)(vdynamic*))hl_vfields(r34)[1])(r34->value); else {
 		r35 = (Xml)hl_dyn_call_obj(r34->value,&t$fun_efa96ab,151160317/*next*/,NULL,NULL);
 	}
@@ -698,62 +682,62 @@ void hxd_fmt_fbx_BaseLibrary_load(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	if( r36 == NULL ) hl_null_access();
 	r20 = 0;
 	r24 = r36->length;
-	if( ((unsigned)r20) < ((unsigned)r24) ) goto label$eabbec9_4_325;
+	if( ((unsigned)r20) < ((unsigned)r24) ) goto label$eabbec9_2_325;
 	r28 = NULL;
-	goto label$eabbec9_4_328;
-	label$eabbec9_4_325:
+	goto label$eabbec9_2_328;
+	label$eabbec9_2_325:
 	r12 = r36->array;
 	r30 = ((vdynamic**)(r12 + 1))[r20];
 	r28 = (String)r30;
-	label$eabbec9_4_328:
+	label$eabbec9_2_328:
 	r13 = Std_parseFloat(r28);
 	r39 = 9622116.25;
 	r13 = r13 * r39;
 	if( hl_vfields(r38)[0] ) *(double*)(hl_vfields(r38)[0]) = (double)r13; else hl_dyn_setd(r38->value,116/*t*/,r13);
 	r20 = 1;
 	r24 = r36->length;
-	if( ((unsigned)r20) < ((unsigned)r24) ) goto label$eabbec9_4_337;
+	if( ((unsigned)r20) < ((unsigned)r24) ) goto label$eabbec9_2_337;
 	r28 = NULL;
-	goto label$eabbec9_4_340;
-	label$eabbec9_4_337:
+	goto label$eabbec9_2_340;
+	label$eabbec9_2_337:
 	r12 = r36->array;
 	r30 = ((vdynamic**)(r12 + 1))[r20];
 	r28 = (String)r30;
-	label$eabbec9_4_340:
+	label$eabbec9_2_340:
 	r13 = Std_parseFloat(r28);
 	if( hl_vfields(r38)[1] ) *(double*)(hl_vfields(r38)[1]) = (double)r13; else hl_dyn_setd(r38->value,117/*u*/,r13);
 	r20 = 2;
 	r24 = r36->length;
-	if( ((unsigned)r20) < ((unsigned)r24) ) goto label$eabbec9_4_347;
+	if( ((unsigned)r20) < ((unsigned)r24) ) goto label$eabbec9_2_347;
 	r28 = NULL;
-	goto label$eabbec9_4_350;
-	label$eabbec9_4_347:
+	goto label$eabbec9_2_350;
+	label$eabbec9_2_347:
 	r12 = r36->array;
 	r30 = ((vdynamic**)(r12 + 1))[r20];
 	r28 = (String)r30;
-	label$eabbec9_4_350:
+	label$eabbec9_2_350:
 	r13 = Std_parseFloat(r28);
 	if( hl_vfields(r38)[2] ) *(double*)(hl_vfields(r38)[2]) = (double)r13; else hl_dyn_setd(r38->value,118/*v*/,r13);
 	r20 = hl_types_ArrayObj_push(r27,((vdynamic*)r38));
-	goto label$eabbec9_4_308;
-	label$eabbec9_4_354:
+	goto label$eabbec9_2_308;
+	label$eabbec9_2_354:
 	r40 = r0->uvAnims;
-	if( r40 ) goto label$eabbec9_4_359;
+	if( r40 ) goto label$eabbec9_2_359;
 	r40 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
 	haxe_ds_StringMap_new(r40);
 	r0->uvAnims = r40;
-	label$eabbec9_4_359:
+	label$eabbec9_2_359:
 	r40 = r0->uvAnims;
 	if( r40 == NULL ) hl_null_access();
 	r28 = hxd_fmt_fbx_FbxTools_getName(r3);
 	haxe_ds_StringMap_set(r40,r28,((vdynamic*)r27));
-	label$eabbec9_4_363:
-	goto label$eabbec9_4_177;
-	label$eabbec9_4_364:
-	goto label$eabbec9_4_119;
-	label$eabbec9_4_365:
-	goto label$eabbec9_4_104;
-	label$eabbec9_4_366:
+	label$eabbec9_2_363:
+	goto label$eabbec9_2_177;
+	label$eabbec9_2_364:
+	goto label$eabbec9_2_119;
+	label$eabbec9_2_365:
+	goto label$eabbec9_2_104;
+	label$eabbec9_2_366:
 	return;
 }
 
@@ -773,14 +757,14 @@ hl__types__ArrayBytes_Float hxd_fmt_fbx_BaseLibrary_toFloats(hxd__fmt__fbx__Base
 	if( r2 == NULL ) hl_null_access();
 	r3 = 0;
 	r4 = r2->length;
-	if( ((unsigned)r3) < ((unsigned)r4) ) goto label$eabbec9_5_8;
+	if( ((unsigned)r3) < ((unsigned)r4) ) goto label$eabbec9_3_8;
 	r5 = NULL;
-	goto label$eabbec9_5_11;
-	label$eabbec9_5_8:
+	goto label$eabbec9_3_11;
+	label$eabbec9_3_8:
 	r7 = r2->array;
 	r6 = ((vdynamic**)(r7 + 1))[r3];
 	r5 = (venum*)r6;
-	label$eabbec9_5_11:
+	label$eabbec9_3_11:
 	if( r5 == NULL ) hl_null_access();
 	r3 = HL__ENUM_INDEX__(r5);
 	switch(r3) {
@@ -793,14 +777,14 @@ hl__types__ArrayBytes_Float hxd_fmt_fbx_BaseLibrary_toFloats(hxd__fmt__fbx__Base
 			if( r2 == NULL ) hl_null_access();
 			r3 = 0;
 			r4 = r2->length;
-			if( ((unsigned)r3) < ((unsigned)r4) ) goto label$eabbec9_5_21;
+			if( ((unsigned)r3) < ((unsigned)r4) ) goto label$eabbec9_3_21;
 			r9 = NULL;
-			goto label$eabbec9_5_24;
-			label$eabbec9_5_21:
+			goto label$eabbec9_3_24;
+			label$eabbec9_3_21:
 			r7 = r2->array;
 			r6 = ((vdynamic**)(r7 + 1))[r3];
 			r9 = (venum*)r6;
-			label$eabbec9_5_24:
+			label$eabbec9_3_24:
 			r10 = Std_string(((vdynamic*)r9));
 			r11 = (String)s$_should_be_floats_;
 			r10 = String___add__(r10,r11);
@@ -814,26 +798,26 @@ hl__types__ArrayBytes_Float hxd_fmt_fbx_BaseLibrary_toFloats(hxd__fmt__fbx__Base
 			r3 = 0;
 			r13 = hl_types_ArrayBase_allocF64(r14,r3);
 			r3 = 0;
-			label$eabbec9_5_36:
+			label$eabbec9_3_36:
 			if( r12 == NULL ) hl_null_access();
 			r15 = r12->length;
-			if( r3 >= r15 ) goto label$eabbec9_5_53;
+			if( r3 >= r15 ) goto label$eabbec9_3_53;
 			r15 = r12->length;
-			if( ((unsigned)r3) < ((unsigned)r15) ) goto label$eabbec9_5_44;
+			if( ((unsigned)r3) < ((unsigned)r15) ) goto label$eabbec9_3_44;
 			r4 = 0;
-			goto label$eabbec9_5_48;
-			label$eabbec9_5_44:
+			goto label$eabbec9_3_48;
+			label$eabbec9_3_44:
 			r14 = r12->bytes;
 			r15 = 2;
 			r15 = r3 << r15;
 			r4 = *(int*)(r14 + r15);
-			label$eabbec9_5_48:
+			label$eabbec9_3_48:
 			++r3;
 			if( r13 == NULL ) hl_null_access();
 			r16 = (double)r4;
 			r15 = hl_types_ArrayBytes_Float_push(r13,r16);
-			goto label$eabbec9_5_36;
-			label$eabbec9_5_53:
+			goto label$eabbec9_3_36;
+			label$eabbec9_3_53:
 			if( r1 == NULL ) hl_null_access();
 			r2 = hl_vfields(r1)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 			if( r2 == NULL ) hl_null_access();
@@ -841,9 +825,9 @@ hl__types__ArrayBytes_Float hxd_fmt_fbx_BaseLibrary_toFloats(hxd__fmt__fbx__Base
 			r9 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,5);
 			((hxd_fmt_fbx_FbxProp_PFloats*)r9)->p0 = r13;
 			r4 = r2->length;
-			if( ((unsigned)r3) < ((unsigned)r4) ) goto label$eabbec9_5_61;
+			if( ((unsigned)r3) < ((unsigned)r4) ) goto label$eabbec9_3_61;
 			hl_types_ArrayObj___expand(r2,r3);
-			label$eabbec9_5_61:
+			label$eabbec9_3_61:
 			r7 = r2->array;
 			((venum**)(r7 + 1))[r3] = r9;
 			return r13;
@@ -877,27 +861,27 @@ hl__types__ArrayObj hxd_fmt_fbx_BaseLibrary_getRootModels(hxd__fmt__fbx__BaseLib
 	r1 = hl_types_ArrayObj_alloc(r2);
 	r4 = 0;
 	r5 = hxd_fmt_fbx_BaseLibrary_getAllModels(r0);
-	label$eabbec9_7_6:
+	label$eabbec9_5_6:
 	if( r5 == NULL ) hl_null_access();
 	r7 = r5->length;
-	if( r4 >= r7 ) goto label$eabbec9_7_23;
+	if( r4 >= r7 ) goto label$eabbec9_5_23;
 	r7 = r5->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$eabbec9_7_14;
+	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$eabbec9_5_14;
 	r8 = NULL;
-	goto label$eabbec9_7_17;
-	label$eabbec9_7_14:
+	goto label$eabbec9_5_17;
+	label$eabbec9_5_14:
 	r2 = r5->array;
 	r9 = ((vdynamic**)(r2 + 1))[r4];
 	r8 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r9);
-	label$eabbec9_7_17:
+	label$eabbec9_5_17:
 	++r4;
 	r10 = hxd_fmt_fbx_BaseLibrary_isRootModel(r0,r8);
-	if( !r10 ) goto label$eabbec9_7_22;
+	if( !r10 ) goto label$eabbec9_5_22;
 	if( r1 == NULL ) hl_null_access();
 	r6 = hl_types_ArrayObj_push(r1,((vdynamic*)r8));
-	label$eabbec9_7_22:
-	goto label$eabbec9_7_6;
-	label$eabbec9_7_23:
+	label$eabbec9_5_22:
+	goto label$eabbec9_5_6;
+	label$eabbec9_5_23:
 	return r1;
 }
 
@@ -911,12 +895,12 @@ bool hxd_fmt_fbx_BaseLibrary_isRootModel(hxd__fmt__fbx__BaseLibrary r0,vvirtual*
 	r5 = hl_alloc_dynbool(r2);
 	r3 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r1,r4,r5);
 	r6 = NULL;
-	if( r3 == r6 || (r3 && r6 && r3->value && r6->value && r3->value == r6->value) ) goto label$eabbec9_8_8;
+	if( r3 == r6 || (r3 && r6 && r3->value && r6->value && r3->value == r6->value) ) goto label$eabbec9_6_8;
 	r2 = false;
-	goto label$eabbec9_8_9;
-	label$eabbec9_8_8:
+	goto label$eabbec9_6_9;
+	label$eabbec9_6_8:
 	r2 = true;
-	label$eabbec9_8_9:
+	label$eabbec9_6_9:
 	return r2;
 }
 
@@ -941,365 +925,365 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	r8 = r0->root;
 	r9 = (String)s$GlobalSettings_Properties70_P;
 	r7 = hxd_fmt_fbx_FbxTools_getAll(r8,r9);
-	label$eabbec9_9_8:
+	label$eabbec9_7_8:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r6 >= r11 ) goto label$eabbec9_9_121;
+	if( r6 >= r11 ) goto label$eabbec9_7_121;
 	r11 = r7->length;
-	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_9_16;
+	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_7_16;
 	r8 = NULL;
-	goto label$eabbec9_9_19;
-	label$eabbec9_9_16:
+	goto label$eabbec9_7_19;
+	label$eabbec9_7_16:
 	r14 = r7->array;
 	r13 = ((vdynamic**)(r14 + 1))[r6];
 	r8 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_19:
+	label$eabbec9_7_19:
 	++r6;
 	if( r8 == NULL ) hl_null_access();
 	r12 = hl_vfields(r8)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r8)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r8->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r12 == NULL ) hl_null_access();
 	r10 = 0;
 	r11 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_28;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_28;
 	r16 = NULL;
-	goto label$eabbec9_9_31;
-	label$eabbec9_9_28:
+	goto label$eabbec9_7_31;
+	label$eabbec9_7_28:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r16 = (venum*)r13;
-	label$eabbec9_9_31:
+	label$eabbec9_7_31:
 	r9 = hxd_fmt_fbx_FbxTools_toString(r16);
-	if( !r9 ) goto label$eabbec9_9_41;
+	if( !r9 ) goto label$eabbec9_7_41;
 	r10 = r9->length;
 	r11 = 23;
-	if( r10 != r11 ) goto label$eabbec9_9_41;
+	if( r10 != r11 ) goto label$eabbec9_7_41;
 	r17 = r9->bytes;
 	r18 = (vbyte*)USTR("OriginalUnitScaleFactor");
 	r10 = hl_string_compare(r17,r18,r10);
 	r11 = 0;
-	if( r10 == r11 ) goto label$eabbec9_9_69;
-	label$eabbec9_9_41:
-	if( !r9 ) goto label$eabbec9_9_50;
+	if( r10 == r11 ) goto label$eabbec9_7_69;
+	label$eabbec9_7_41:
+	if( !r9 ) goto label$eabbec9_7_50;
 	r10 = r9->length;
 	r11 = 14;
-	if( r10 != r11 ) goto label$eabbec9_9_50;
+	if( r10 != r11 ) goto label$eabbec9_7_50;
 	r17 = r9->bytes;
 	r18 = (vbyte*)USTR("OriginalUpAxis");
 	r10 = hl_string_compare(r17,r18,r10);
 	r11 = 0;
-	if( r10 == r11 ) goto label$eabbec9_9_82;
-	label$eabbec9_9_50:
-	if( !r9 ) goto label$eabbec9_9_59;
+	if( r10 == r11 ) goto label$eabbec9_7_82;
+	label$eabbec9_7_50:
+	if( !r9 ) goto label$eabbec9_7_59;
 	r10 = r9->length;
 	r11 = 15;
-	if( r10 != r11 ) goto label$eabbec9_9_59;
+	if( r10 != r11 ) goto label$eabbec9_7_59;
 	r17 = r9->bytes;
 	r18 = (vbyte*)USTR("UnitScaleFactor");
 	r10 = hl_string_compare(r17,r18,r10);
 	r11 = 0;
-	if( r10 == r11 ) goto label$eabbec9_9_95;
-	label$eabbec9_9_59:
-	if( !r9 ) goto label$eabbec9_9_68;
+	if( r10 == r11 ) goto label$eabbec9_7_95;
+	label$eabbec9_7_59:
+	if( !r9 ) goto label$eabbec9_7_68;
 	r10 = r9->length;
 	r11 = 6;
-	if( r10 != r11 ) goto label$eabbec9_9_68;
+	if( r10 != r11 ) goto label$eabbec9_7_68;
 	r17 = r9->bytes;
 	r18 = (vbyte*)USTR("UpAxis");
 	r10 = hl_string_compare(r17,r18,r10);
 	r11 = 0;
-	if( r10 == r11 ) goto label$eabbec9_9_108;
-	label$eabbec9_9_68:
-	goto label$eabbec9_9_120;
-	label$eabbec9_9_69:
+	if( r10 == r11 ) goto label$eabbec9_7_108;
+	label$eabbec9_7_68:
+	goto label$eabbec9_7_120;
+	label$eabbec9_7_69:
 	r12 = hl_vfields(r8)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r8)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r8->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r12 == NULL ) hl_null_access();
 	r10 = 4;
 	r11 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_76;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_76;
 	r16 = NULL;
-	goto label$eabbec9_9_79;
-	label$eabbec9_9_76:
+	goto label$eabbec9_7_79;
+	label$eabbec9_7_76:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r16 = (venum*)r13;
-	label$eabbec9_9_79:
+	label$eabbec9_7_79:
 	r10 = hxd_fmt_fbx_FbxTools_toInt(r16);
 	r3 = r10;
-	goto label$eabbec9_9_120;
-	label$eabbec9_9_82:
+	goto label$eabbec9_7_120;
+	label$eabbec9_7_82:
 	r12 = hl_vfields(r8)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r8)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r8->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r12 == NULL ) hl_null_access();
 	r10 = 4;
 	r11 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_89;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_89;
 	r16 = NULL;
-	goto label$eabbec9_9_92;
-	label$eabbec9_9_89:
+	goto label$eabbec9_7_92;
+	label$eabbec9_7_89:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r16 = (venum*)r13;
-	label$eabbec9_9_92:
+	label$eabbec9_7_92:
 	r10 = hxd_fmt_fbx_FbxTools_toInt(r16);
 	r5 = r10;
-	goto label$eabbec9_9_120;
-	label$eabbec9_9_95:
+	goto label$eabbec9_7_120;
+	label$eabbec9_7_95:
 	r12 = hl_vfields(r8)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r8)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r8->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r12 == NULL ) hl_null_access();
 	r10 = 4;
 	r11 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_102;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_102;
 	r16 = NULL;
-	goto label$eabbec9_9_105;
-	label$eabbec9_9_102:
+	goto label$eabbec9_7_105;
+	label$eabbec9_7_102:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r16 = (venum*)r13;
-	label$eabbec9_9_105:
+	label$eabbec9_7_105:
 	r10 = hxd_fmt_fbx_FbxTools_toInt(r16);
 	r1 = r10;
-	goto label$eabbec9_9_120;
-	label$eabbec9_9_108:
+	goto label$eabbec9_7_120;
+	label$eabbec9_7_108:
 	r12 = hl_vfields(r8)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r8)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r8->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r12 == NULL ) hl_null_access();
 	r10 = 4;
 	r11 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_115;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_115;
 	r16 = NULL;
-	goto label$eabbec9_9_118;
-	label$eabbec9_9_115:
+	goto label$eabbec9_7_118;
+	label$eabbec9_7_115:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r16 = (venum*)r13;
-	label$eabbec9_9_118:
+	label$eabbec9_7_118:
 	r10 = hxd_fmt_fbx_FbxTools_toInt(r16);
 	r4 = r10;
-	label$eabbec9_9_120:
-	goto label$eabbec9_9_8;
-	label$eabbec9_9_121:
+	label$eabbec9_7_120:
+	goto label$eabbec9_7_8;
+	label$eabbec9_7_121:
 	r10 = 100;
-	if( r1 != r10 ) goto label$eabbec9_9_127;
+	if( r1 != r10 ) goto label$eabbec9_7_127;
 	r10 = 1;
-	if( r3 != r10 ) goto label$eabbec9_9_127;
+	if( r3 != r10 ) goto label$eabbec9_7_127;
 	r19 = 100.;
-	goto label$eabbec9_9_128;
-	label$eabbec9_9_127:
+	goto label$eabbec9_7_128;
+	label$eabbec9_7_127:
 	r19 = 1.;
-	label$eabbec9_9_128:
+	label$eabbec9_7_128:
 	r20 = r19;
 	r10 = 1;
-	if( r4 != r10 ) goto label$eabbec9_9_132;
+	if( r4 != r10 ) goto label$eabbec9_7_132;
 	hxd_fmt_fbx_BaseLibrary_convertYupToZup(r0,r5);
-	label$eabbec9_9_132:
+	label$eabbec9_7_132:
 	r9 = (String)s$;
 	r6 = 0;
 	r8 = r0->root;
 	r21 = (String)s$f8d6304;
 	r7 = hxd_fmt_fbx_FbxTools_getAll(r8,r21);
-	label$eabbec9_9_137:
+	label$eabbec9_7_137:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r6 >= r11 ) goto label$eabbec9_9_176;
+	if( r6 >= r11 ) goto label$eabbec9_7_176;
 	r11 = r7->length;
-	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_9_145;
+	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_7_145;
 	r8 = NULL;
-	goto label$eabbec9_9_148;
-	label$eabbec9_9_145:
+	goto label$eabbec9_7_148;
+	label$eabbec9_7_145:
 	r14 = r7->array;
 	r13 = ((vdynamic**)(r14 + 1))[r6];
 	r8 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_148:
+	label$eabbec9_7_148:
 	++r6;
 	if( r8 == NULL ) hl_null_access();
 	r12 = hl_vfields(r8)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r8)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r8->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r12 == NULL ) hl_null_access();
 	r10 = 0;
 	r11 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_157;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_157;
 	r16 = NULL;
-	goto label$eabbec9_9_160;
-	label$eabbec9_9_157:
+	goto label$eabbec9_7_160;
+	label$eabbec9_7_157:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r16 = (venum*)r13;
-	label$eabbec9_9_160:
+	label$eabbec9_7_160:
 	r21 = hxd_fmt_fbx_FbxTools_toString(r16);
 	r22 = (String)s$LastSaved_ApplicationName;
-	if( r21 != r22 && (!r21 || !r22 || String___compare(r21,(vdynamic*)r22) != 0) ) goto label$eabbec9_9_175;
+	if( r21 != r22 && (!r21 || !r22 || String___compare(r21,(vdynamic*)r22) != 0) ) goto label$eabbec9_7_175;
 	r12 = hl_vfields(r8)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r8)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r8->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r12 == NULL ) hl_null_access();
 	r10 = 4;
 	r11 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_170;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_170;
 	r16 = NULL;
-	goto label$eabbec9_9_173;
-	label$eabbec9_9_170:
+	goto label$eabbec9_7_173;
+	label$eabbec9_7_170:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r16 = (venum*)r13;
-	label$eabbec9_9_173:
+	label$eabbec9_7_173:
 	r21 = hxd_fmt_fbx_FbxTools_toString(r16);
 	r9 = r21;
-	label$eabbec9_9_175:
-	goto label$eabbec9_9_137;
-	label$eabbec9_9_176:
+	label$eabbec9_7_175:
+	goto label$eabbec9_7_137;
+	label$eabbec9_7_176:
 	if( r9 == NULL ) hl_null_access();
 	r22 = (String)s$Blender;
 	r23 = NULL;
 	r6 = String_indexOf(r9,r22,r23);
 	r10 = 0;
-	if( r6 < r10 ) goto label$eabbec9_9_187;
-	if( r1 != r3 ) goto label$eabbec9_9_187;
+	if( r6 < r10 ) goto label$eabbec9_7_187;
+	if( r1 != r3 ) goto label$eabbec9_7_187;
 	r24 = (double)r1;
 	r25 = 100.;
 	r24 = r24 / r25;
 	r19 = r24;
-	label$eabbec9_9_187:
+	label$eabbec9_7_187:
 	r25 = 1.;
-	if( r19 != r25 ) goto label$eabbec9_9_192;
+	if( r19 != r25 ) goto label$eabbec9_7_192;
 	r25 = 1.;
-	if( r20 != r25 ) goto label$eabbec9_9_192;
+	if( r20 != r25 ) goto label$eabbec9_7_192;
 	return;
-	label$eabbec9_9_192:
+	label$eabbec9_7_192:
 	r25 = 1.;
-	if( r20 == r25 ) goto label$eabbec9_9_230;
+	if( r20 == r25 ) goto label$eabbec9_7_230;
 	r6 = 0;
 	r8 = r0->root;
 	r21 = (String)s$Objects_Geometry_Vertices;
 	r7 = hxd_fmt_fbx_FbxTools_getAll(r8,r21);
-	label$eabbec9_9_198:
+	label$eabbec9_7_198:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r6 >= r11 ) goto label$eabbec9_9_230;
+	if( r6 >= r11 ) goto label$eabbec9_7_230;
 	r11 = r7->length;
-	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_9_206;
+	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_7_206;
 	r8 = NULL;
-	goto label$eabbec9_9_209;
-	label$eabbec9_9_206:
+	goto label$eabbec9_7_209;
+	label$eabbec9_7_206:
 	r14 = r7->array;
 	r13 = ((vdynamic**)(r14 + 1))[r6];
 	r8 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_209:
+	label$eabbec9_7_209:
 	++r6;
 	r26 = hxd_fmt_fbx_BaseLibrary_toFloats(r0,r8);
 	r10 = 0;
 	if( r26 == NULL ) hl_null_access();
 	r11 = r26->length;
-	label$eabbec9_9_214:
-	if( r10 >= r11 ) goto label$eabbec9_9_229;
+	label$eabbec9_7_214:
+	if( r10 >= r11 ) goto label$eabbec9_7_229;
 	r27 = r10;
 	++r10;
 	if( r26 == NULL ) hl_null_access();
 	r29 = r26->length;
-	if( ((unsigned)r27) < ((unsigned)r29) ) goto label$eabbec9_9_222;
+	if( ((unsigned)r27) < ((unsigned)r29) ) goto label$eabbec9_7_222;
 	hl_types_ArrayBytes_Float___expand(r26,r27);
-	label$eabbec9_9_222:
+	label$eabbec9_7_222:
 	r17 = r26->bytes;
 	r29 = 3;
 	r29 = r27 << r29;
 	r24 = *(double*)(r17 + r29);
 	r24 = r24 / r20;
 	*(double*)(r17 + r29) = r24;
-	goto label$eabbec9_9_214;
-	label$eabbec9_9_229:
-	goto label$eabbec9_9_198;
-	label$eabbec9_9_230:
+	goto label$eabbec9_7_214;
+	label$eabbec9_7_229:
+	goto label$eabbec9_7_198;
+	label$eabbec9_7_230:
 	r25 = 1.;
-	if( r19 != r25 ) goto label$eabbec9_9_233;
+	if( r19 != r25 ) goto label$eabbec9_7_233;
 	return;
-	label$eabbec9_9_233:
+	label$eabbec9_7_233:
 	r6 = 0;
 	r7 = hxd_fmt_fbx_BaseLibrary_getAllModels(r0);
-	label$eabbec9_9_235:
+	label$eabbec9_7_235:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r6 >= r11 ) goto label$eabbec9_9_428;
+	if( r6 >= r11 ) goto label$eabbec9_7_428;
 	r11 = r7->length;
-	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_9_243;
+	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_7_243;
 	r8 = NULL;
-	goto label$eabbec9_9_246;
-	label$eabbec9_9_243:
+	goto label$eabbec9_7_246;
+	label$eabbec9_7_243:
 	r14 = r7->array;
 	r13 = ((vdynamic**)(r14 + 1))[r6];
 	r8 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_246:
+	label$eabbec9_7_246:
 	++r6;
 	r30 = hxd_fmt_fbx_BaseLibrary_isRootModel(r0,r8);
 	r10 = 0;
 	r21 = (String)s$Properties70_P;
 	r12 = hxd_fmt_fbx_FbxTools_getAll(r8,r21);
-	label$eabbec9_9_251:
+	label$eabbec9_7_251:
 	if( r12 == NULL ) hl_null_access();
 	r27 = r12->length;
-	if( r10 >= r27 ) goto label$eabbec9_9_427;
+	if( r10 >= r27 ) goto label$eabbec9_7_427;
 	r27 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r27) ) goto label$eabbec9_9_259;
+	if( ((unsigned)r10) < ((unsigned)r27) ) goto label$eabbec9_7_259;
 	r15 = NULL;
-	goto label$eabbec9_9_262;
-	label$eabbec9_9_259:
+	goto label$eabbec9_7_262;
+	label$eabbec9_7_259:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r15 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_262:
+	label$eabbec9_7_262:
 	++r10;
 	if( r15 == NULL ) hl_null_access();
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r11 = 0;
 	r27 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_9_271;
+	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_7_271;
 	r16 = NULL;
-	goto label$eabbec9_9_274;
-	label$eabbec9_9_271:
+	goto label$eabbec9_7_274;
+	label$eabbec9_7_271:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_274:
+	label$eabbec9_7_274:
 	r21 = hxd_fmt_fbx_FbxTools_toString(r16);
-	if( !r21 ) goto label$eabbec9_9_284;
+	if( !r21 ) goto label$eabbec9_7_284;
 	r11 = r21->length;
 	r27 = 20;
-	if( r11 != r27 ) goto label$eabbec9_9_284;
+	if( r11 != r27 ) goto label$eabbec9_7_284;
 	r17 = r21->bytes;
 	r18 = (vbyte*)USTR("GeometricTranslation");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_303;
-	label$eabbec9_9_284:
-	if( !r21 ) goto label$eabbec9_9_293;
+	if( r11 == r27 ) goto label$eabbec9_7_303;
+	label$eabbec9_7_284:
+	if( !r21 ) goto label$eabbec9_7_293;
 	r11 = r21->length;
 	r27 = 15;
-	if( r11 != r27 ) goto label$eabbec9_9_293;
+	if( r11 != r27 ) goto label$eabbec9_7_293;
 	r17 = r21->bytes;
 	r18 = (vbyte*)USTR("Lcl Translation");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_303;
-	label$eabbec9_9_293:
-	if( !r21 ) goto label$eabbec9_9_302;
+	if( r11 == r27 ) goto label$eabbec9_7_303;
+	label$eabbec9_7_293:
+	if( !r21 ) goto label$eabbec9_7_302;
 	r11 = r21->length;
 	r27 = 11;
-	if( r11 != r27 ) goto label$eabbec9_9_302;
+	if( r11 != r27 ) goto label$eabbec9_7_302;
 	r17 = r21->bytes;
 	r18 = (vbyte*)USTR("Lcl Scaling");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_365;
-	label$eabbec9_9_302:
-	goto label$eabbec9_9_426;
-	label$eabbec9_9_303:
-	if( r30 ) goto label$eabbec9_9_364;
+	if( r11 == r27 ) goto label$eabbec9_7_365;
+	label$eabbec9_7_302:
+	goto label$eabbec9_7_426;
+	label$eabbec9_7_303:
+	if( r30 ) goto label$eabbec9_7_364;
 	r11 = 4;
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_311;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_311;
 	r16 = NULL;
-	goto label$eabbec9_9_314;
-	label$eabbec9_9_311:
+	goto label$eabbec9_7_314;
+	label$eabbec9_7_311:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_314:
+	label$eabbec9_7_314:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
@@ -1307,23 +1291,23 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r25;
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_322;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_322;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_322:
+	label$eabbec9_7_322:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
 	r11 = 5;
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_331;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_331;
 	r16 = NULL;
-	goto label$eabbec9_9_334;
-	label$eabbec9_9_331:
+	goto label$eabbec9_7_334;
+	label$eabbec9_7_331:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_334:
+	label$eabbec9_7_334:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
@@ -1331,23 +1315,23 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r25;
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_342;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_342;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_342:
+	label$eabbec9_7_342:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
 	r11 = 6;
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_351;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_351;
 	r16 = NULL;
-	goto label$eabbec9_9_354;
-	label$eabbec9_9_351:
+	goto label$eabbec9_7_354;
+	label$eabbec9_7_351:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_354:
+	label$eabbec9_7_354:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
@@ -1355,27 +1339,27 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r25;
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_362;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_362;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_362:
+	label$eabbec9_7_362:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
-	label$eabbec9_9_364:
-	goto label$eabbec9_9_426;
-	label$eabbec9_9_365:
-	if( !r30 ) goto label$eabbec9_9_426;
+	label$eabbec9_7_364:
+	goto label$eabbec9_7_426;
+	label$eabbec9_7_365:
+	if( !r30 ) goto label$eabbec9_7_426;
 	r11 = 4;
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_373;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_373;
 	r16 = NULL;
-	goto label$eabbec9_9_376;
-	label$eabbec9_9_373:
+	goto label$eabbec9_7_376;
+	label$eabbec9_7_373:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_376:
+	label$eabbec9_7_376:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
@@ -1383,23 +1367,23 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r25;
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_384;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_384;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_384:
+	label$eabbec9_7_384:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
 	r11 = 5;
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_393;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_393;
 	r16 = NULL;
-	goto label$eabbec9_9_396;
-	label$eabbec9_9_393:
+	goto label$eabbec9_7_396;
+	label$eabbec9_7_393:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_396:
+	label$eabbec9_7_396:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
@@ -1407,23 +1391,23 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r25;
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_404;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_404;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_404:
+	label$eabbec9_7_404:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
 	r11 = 6;
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_413;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_413;
 	r16 = NULL;
-	goto label$eabbec9_9_416;
-	label$eabbec9_9_413:
+	goto label$eabbec9_7_416;
+	label$eabbec9_7_413:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_416:
+	label$eabbec9_7_416:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r31 = hl_vfields(r15)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r15)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r15->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
@@ -1431,41 +1415,41 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r25;
 	r28 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_9_424;
+	if( ((unsigned)r11) < ((unsigned)r28) ) goto label$eabbec9_7_424;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_424:
+	label$eabbec9_7_424:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
-	label$eabbec9_9_426:
-	goto label$eabbec9_9_251;
-	label$eabbec9_9_427:
-	goto label$eabbec9_9_235;
-	label$eabbec9_9_428:
+	label$eabbec9_7_426:
+	goto label$eabbec9_7_251;
+	label$eabbec9_7_427:
+	goto label$eabbec9_7_235;
+	label$eabbec9_7_428:
 	r6 = 0;
 	r8 = r0->root;
 	r21 = (String)s$Objects_Deformer_Transform;
 	r7 = hxd_fmt_fbx_FbxTools_getAll(r8,r21);
-	label$eabbec9_9_432:
+	label$eabbec9_7_432:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r6 >= r11 ) goto label$eabbec9_9_477;
+	if( r6 >= r11 ) goto label$eabbec9_7_477;
 	r11 = r7->length;
-	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_9_440;
+	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_7_440;
 	r8 = NULL;
-	goto label$eabbec9_9_443;
-	label$eabbec9_9_440:
+	goto label$eabbec9_7_443;
+	label$eabbec9_7_440:
 	r14 = r7->array;
 	r13 = ((vdynamic**)(r14 + 1))[r6];
 	r8 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_443:
+	label$eabbec9_7_443:
 	++r6;
 	r26 = hxd_fmt_fbx_BaseLibrary_toFloats(r0,r8);
 	if( r26 == NULL ) hl_null_access();
 	r10 = 12;
 	r11 = r26->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_450;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_450;
 	hl_types_ArrayBytes_Float___expand(r26,r10);
-	label$eabbec9_9_450:
+	label$eabbec9_7_450:
 	r17 = r26->bytes;
 	r11 = 3;
 	r11 = r10 << r11;
@@ -1474,9 +1458,9 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	*(double*)(r17 + r11) = r24;
 	r10 = 13;
 	r11 = r26->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_460;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_460;
 	hl_types_ArrayBytes_Float___expand(r26,r10);
-	label$eabbec9_9_460:
+	label$eabbec9_7_460:
 	r17 = r26->bytes;
 	r11 = 3;
 	r11 = r10 << r11;
@@ -1485,117 +1469,117 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	*(double*)(r17 + r11) = r24;
 	r10 = 14;
 	r11 = r26->length;
-	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_9_470;
+	if( ((unsigned)r10) < ((unsigned)r11) ) goto label$eabbec9_7_470;
 	hl_types_ArrayBytes_Float___expand(r26,r10);
-	label$eabbec9_9_470:
+	label$eabbec9_7_470:
 	r17 = r26->bytes;
 	r11 = 3;
 	r11 = r10 << r11;
 	r24 = *(double*)(r17 + r11);
 	r24 = r24 / r19;
 	*(double*)(r17 + r11) = r24;
-	goto label$eabbec9_9_432;
-	label$eabbec9_9_477:
+	goto label$eabbec9_7_432;
+	label$eabbec9_7_477:
 	r6 = 0;
 	r8 = r0->root;
 	r21 = (String)s$Objects_AnimationCurveNode;
 	r7 = hxd_fmt_fbx_FbxTools_getAll(r8,r21);
-	label$eabbec9_9_481:
+	label$eabbec9_7_481:
 	if( r7 == NULL ) hl_null_access();
 	r11 = r7->length;
-	if( r6 >= r11 ) goto label$eabbec9_9_692;
+	if( r6 >= r11 ) goto label$eabbec9_7_692;
 	r11 = r7->length;
-	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_9_489;
+	if( ((unsigned)r6) < ((unsigned)r11) ) goto label$eabbec9_7_489;
 	r8 = NULL;
-	goto label$eabbec9_9_492;
-	label$eabbec9_9_489:
+	goto label$eabbec9_7_492;
+	label$eabbec9_7_489:
 	r14 = r7->array;
 	r13 = ((vdynamic**)(r14 + 1))[r6];
 	r8 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_492:
+	label$eabbec9_7_492:
 	++r6;
 	r21 = hxd_fmt_fbx_FbxTools_getName(r8);
 	r22 = (String)s$Model;
 	r30 = true;
 	r33 = hl_alloc_dynbool(r30);
 	r15 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r8,r22,r33);
-	if( !r15 ) goto label$eabbec9_9_506;
+	if( !r15 ) goto label$eabbec9_7_506;
 	r22 = (String)s$Model;
 	r30 = true;
 	r33 = hl_alloc_dynbool(r30);
 	r32 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r15,r22,r33);
-	if( r32 ) goto label$eabbec9_9_506;
+	if( r32 ) goto label$eabbec9_7_506;
 	r30 = true;
-	goto label$eabbec9_9_507;
-	label$eabbec9_9_506:
+	goto label$eabbec9_7_507;
+	label$eabbec9_7_506:
 	r30 = false;
-	label$eabbec9_9_507:
+	label$eabbec9_7_507:
 	r10 = 0;
 	r22 = (String)s$Properties70_P;
 	r12 = hxd_fmt_fbx_FbxTools_getAll(r8,r22);
-	label$eabbec9_9_510:
+	label$eabbec9_7_510:
 	if( r12 == NULL ) hl_null_access();
 	r27 = r12->length;
-	if( r10 >= r27 ) goto label$eabbec9_9_612;
+	if( r10 >= r27 ) goto label$eabbec9_7_612;
 	r27 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r27) ) goto label$eabbec9_9_518;
+	if( ((unsigned)r10) < ((unsigned)r27) ) goto label$eabbec9_7_518;
 	r32 = NULL;
-	goto label$eabbec9_9_521;
-	label$eabbec9_9_518:
+	goto label$eabbec9_7_521;
+	label$eabbec9_7_518:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r32 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_521:
+	label$eabbec9_7_521:
 	++r10;
 	if( r32 == NULL ) hl_null_access();
 	r31 = hl_vfields(r32)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r32)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r32->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r11 = 0;
 	r27 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_9_530;
+	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_7_530;
 	r16 = NULL;
-	goto label$eabbec9_9_533;
-	label$eabbec9_9_530:
+	goto label$eabbec9_7_533;
+	label$eabbec9_7_530:
 	r14 = r31->array;
 	r13 = ((vdynamic**)(r14 + 1))[r11];
 	r16 = (venum*)r13;
-	label$eabbec9_9_533:
+	label$eabbec9_7_533:
 	r22 = hxd_fmt_fbx_FbxTools_toString(r16);
-	if( !r22 ) goto label$eabbec9_9_543;
+	if( !r22 ) goto label$eabbec9_7_543;
 	r11 = r22->length;
 	r27 = 3;
-	if( r11 != r27 ) goto label$eabbec9_9_543;
+	if( r11 != r27 ) goto label$eabbec9_7_543;
 	r17 = r22->bytes;
 	r18 = (vbyte*)USTR("d|X");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_562;
-	label$eabbec9_9_543:
-	if( !r22 ) goto label$eabbec9_9_552;
+	if( r11 == r27 ) goto label$eabbec9_7_562;
+	label$eabbec9_7_543:
+	if( !r22 ) goto label$eabbec9_7_552;
 	r11 = r22->length;
 	r27 = 3;
-	if( r11 != r27 ) goto label$eabbec9_9_552;
+	if( r11 != r27 ) goto label$eabbec9_7_552;
 	r17 = r22->bytes;
 	r18 = (vbyte*)USTR("d|Y");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_562;
-	label$eabbec9_9_552:
-	if( !r22 ) goto label$eabbec9_9_561;
+	if( r11 == r27 ) goto label$eabbec9_7_562;
+	label$eabbec9_7_552:
+	if( !r22 ) goto label$eabbec9_7_561;
 	r11 = r22->length;
 	r27 = 3;
-	if( r11 != r27 ) goto label$eabbec9_9_561;
+	if( r11 != r27 ) goto label$eabbec9_7_561;
 	r17 = r22->bytes;
 	r18 = (vbyte*)USTR("d|Z");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_562;
-	label$eabbec9_9_561:
-	goto label$eabbec9_9_611;
-	label$eabbec9_9_562:
+	if( r11 == r27 ) goto label$eabbec9_7_562;
+	label$eabbec9_7_561:
+	goto label$eabbec9_7_611;
+	label$eabbec9_7_562:
 	r35 = (String)s$T;
-	if( r21 != r35 && (!r21 || !r35 || String___compare(r21,(vdynamic*)r35) != 0) ) goto label$eabbec9_9_587;
-	if( r30 ) goto label$eabbec9_9_587;
+	if( r21 != r35 && (!r21 || !r35 || String___compare(r21,(vdynamic*)r35) != 0) ) goto label$eabbec9_7_587;
+	if( r30 ) goto label$eabbec9_7_587;
 	r31 = hl_vfields(r32)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r32)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r32->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r11 = 4;
@@ -1603,29 +1587,29 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	if( r36 == NULL ) hl_null_access();
 	r27 = 4;
 	r28 = r36->length;
-	if( ((unsigned)r27) < ((unsigned)r28) ) goto label$eabbec9_9_575;
+	if( ((unsigned)r27) < ((unsigned)r28) ) goto label$eabbec9_7_575;
 	r16 = NULL;
-	goto label$eabbec9_9_578;
-	label$eabbec9_9_575:
+	goto label$eabbec9_7_578;
+	label$eabbec9_7_575:
 	r14 = r36->array;
 	r13 = ((vdynamic**)(r14 + 1))[r27];
 	r16 = (venum*)r13;
-	label$eabbec9_9_578:
+	label$eabbec9_7_578:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r24 = r24 / r19;
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r24;
 	r27 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_9_584;
+	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_7_584;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_584:
+	label$eabbec9_7_584:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
-	goto label$eabbec9_9_611;
-	label$eabbec9_9_587:
+	goto label$eabbec9_7_611;
+	label$eabbec9_7_587:
 	r35 = (String)s$S;
-	if( r21 != r35 && (!r21 || !r35 || String___compare(r21,(vdynamic*)r35) != 0) ) goto label$eabbec9_9_611;
-	if( !r30 ) goto label$eabbec9_9_611;
+	if( r21 != r35 && (!r21 || !r35 || String___compare(r21,(vdynamic*)r35) != 0) ) goto label$eabbec9_7_611;
+	if( !r30 ) goto label$eabbec9_7_611;
 	r31 = hl_vfields(r32)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r32)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r32->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r11 = 4;
@@ -1633,119 +1617,119 @@ void hxd_fmt_fbx_BaseLibrary_updateModelScale(hxd__fmt__fbx__BaseLibrary r0) {
 	if( r36 == NULL ) hl_null_access();
 	r27 = 4;
 	r28 = r36->length;
-	if( ((unsigned)r27) < ((unsigned)r28) ) goto label$eabbec9_9_600;
+	if( ((unsigned)r27) < ((unsigned)r28) ) goto label$eabbec9_7_600;
 	r16 = NULL;
-	goto label$eabbec9_9_603;
-	label$eabbec9_9_600:
+	goto label$eabbec9_7_603;
+	label$eabbec9_7_600:
 	r14 = r36->array;
 	r13 = ((vdynamic**)(r14 + 1))[r27];
 	r16 = (venum*)r13;
-	label$eabbec9_9_603:
+	label$eabbec9_7_603:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r16);
 	r24 = r24 * r19;
 	r16 = hl_alloc_enum(&t$hxd_fmt_fbx_FbxProp,1);
 	((hxd_fmt_fbx_FbxProp_PFloat*)r16)->p0 = r24;
 	r27 = r31->length;
-	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_9_609;
+	if( ((unsigned)r11) < ((unsigned)r27) ) goto label$eabbec9_7_609;
 	hl_types_ArrayObj___expand(r31,r11);
-	label$eabbec9_9_609:
+	label$eabbec9_7_609:
 	r14 = r31->array;
 	((venum**)(r14 + 1))[r11] = r16;
-	label$eabbec9_9_611:
-	goto label$eabbec9_9_510;
-	label$eabbec9_9_612:
+	label$eabbec9_7_611:
+	goto label$eabbec9_7_510;
+	label$eabbec9_7_612:
 	r10 = 0;
 	r22 = (String)s$AnimationCurve;
 	r12 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r8,r22);
-	label$eabbec9_9_615:
+	label$eabbec9_7_615:
 	if( r12 == NULL ) hl_null_access();
 	r27 = r12->length;
-	if( r10 >= r27 ) goto label$eabbec9_9_691;
+	if( r10 >= r27 ) goto label$eabbec9_7_691;
 	r27 = r12->length;
-	if( ((unsigned)r10) < ((unsigned)r27) ) goto label$eabbec9_9_623;
+	if( ((unsigned)r10) < ((unsigned)r27) ) goto label$eabbec9_7_623;
 	r32 = NULL;
-	goto label$eabbec9_9_626;
-	label$eabbec9_9_623:
+	goto label$eabbec9_7_626;
+	label$eabbec9_7_623:
 	r14 = r12->array;
 	r13 = ((vdynamic**)(r14 + 1))[r10];
 	r32 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r13);
-	label$eabbec9_9_626:
+	label$eabbec9_7_626:
 	++r10;
 	r22 = (String)s$KeyValueFloat;
 	r37 = NULL;
 	r34 = hxd_fmt_fbx_FbxTools_get(r32,r22,r37);
 	r26 = hxd_fmt_fbx_BaseLibrary_toFloats(r0,r34);
-	if( !r21 ) goto label$eabbec9_9_690;
-	if( !r21 ) goto label$eabbec9_9_641;
+	if( !r21 ) goto label$eabbec9_7_690;
+	if( !r21 ) goto label$eabbec9_7_641;
 	r11 = r21->length;
 	r27 = 1;
-	if( r11 != r27 ) goto label$eabbec9_9_641;
+	if( r11 != r27 ) goto label$eabbec9_7_641;
 	r17 = r21->bytes;
 	r18 = (vbyte*)USTR("S");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_651;
-	label$eabbec9_9_641:
-	if( !r21 ) goto label$eabbec9_9_650;
+	if( r11 == r27 ) goto label$eabbec9_7_651;
+	label$eabbec9_7_641:
+	if( !r21 ) goto label$eabbec9_7_650;
 	r11 = r21->length;
 	r27 = 1;
-	if( r11 != r27 ) goto label$eabbec9_9_650;
+	if( r11 != r27 ) goto label$eabbec9_7_650;
 	r17 = r21->bytes;
 	r18 = (vbyte*)USTR("T");
 	r11 = hl_string_compare(r17,r18,r11);
 	r27 = 0;
-	if( r11 == r27 ) goto label$eabbec9_9_671;
-	label$eabbec9_9_650:
-	goto label$eabbec9_9_690;
-	label$eabbec9_9_651:
-	if( !r30 ) goto label$eabbec9_9_670;
+	if( r11 == r27 ) goto label$eabbec9_7_671;
+	label$eabbec9_7_650:
+	goto label$eabbec9_7_690;
+	label$eabbec9_7_651:
+	if( !r30 ) goto label$eabbec9_7_670;
 	r11 = 0;
 	if( r26 == NULL ) hl_null_access();
 	r27 = r26->length;
-	label$eabbec9_9_655:
-	if( r11 >= r27 ) goto label$eabbec9_9_670;
+	label$eabbec9_7_655:
+	if( r11 >= r27 ) goto label$eabbec9_7_670;
 	r28 = r11;
 	++r11;
 	if( r26 == NULL ) hl_null_access();
 	r38 = r26->length;
-	if( ((unsigned)r28) < ((unsigned)r38) ) goto label$eabbec9_9_663;
+	if( ((unsigned)r28) < ((unsigned)r38) ) goto label$eabbec9_7_663;
 	hl_types_ArrayBytes_Float___expand(r26,r28);
-	label$eabbec9_9_663:
+	label$eabbec9_7_663:
 	r17 = r26->bytes;
 	r38 = 3;
 	r38 = r28 << r38;
 	r24 = *(double*)(r17 + r38);
 	r24 = r24 * r19;
 	*(double*)(r17 + r38) = r24;
-	goto label$eabbec9_9_655;
-	label$eabbec9_9_670:
-	goto label$eabbec9_9_690;
-	label$eabbec9_9_671:
-	if( r30 ) goto label$eabbec9_9_690;
+	goto label$eabbec9_7_655;
+	label$eabbec9_7_670:
+	goto label$eabbec9_7_690;
+	label$eabbec9_7_671:
+	if( r30 ) goto label$eabbec9_7_690;
 	r11 = 0;
 	if( r26 == NULL ) hl_null_access();
 	r27 = r26->length;
-	label$eabbec9_9_675:
-	if( r11 >= r27 ) goto label$eabbec9_9_690;
+	label$eabbec9_7_675:
+	if( r11 >= r27 ) goto label$eabbec9_7_690;
 	r28 = r11;
 	++r11;
 	if( r26 == NULL ) hl_null_access();
 	r38 = r26->length;
-	if( ((unsigned)r28) < ((unsigned)r38) ) goto label$eabbec9_9_683;
+	if( ((unsigned)r28) < ((unsigned)r38) ) goto label$eabbec9_7_683;
 	hl_types_ArrayBytes_Float___expand(r26,r28);
-	label$eabbec9_9_683:
+	label$eabbec9_7_683:
 	r17 = r26->bytes;
 	r38 = 3;
 	r38 = r28 << r38;
 	r24 = *(double*)(r17 + r38);
 	r24 = r24 / r19;
 	*(double*)(r17 + r38) = r24;
-	goto label$eabbec9_9_675;
-	label$eabbec9_9_690:
-	goto label$eabbec9_9_615;
-	label$eabbec9_9_691:
-	goto label$eabbec9_9_481;
-	label$eabbec9_9_692:
+	goto label$eabbec9_7_675;
+	label$eabbec9_7_690:
+	goto label$eabbec9_7_615;
+	label$eabbec9_7_691:
+	goto label$eabbec9_7_481;
+	label$eabbec9_7_692:
 	return;
 }
 
@@ -1764,11 +1748,11 @@ void hxd_fmt_fbx_BaseLibrary_convertYupToZup(hxd__fmt__fbx__BaseLibrary r0,int r
 	vbyte *r8;
 	int r3, r4, r11, r17;
 	r4 = -1;
-	if( r4 == r1 ) goto label$eabbec9_10_16;
+	if( r4 == r1 ) goto label$eabbec9_8_16;
 	r4 = 1;
-	if( r4 == r1 ) goto label$eabbec9_10_16;
+	if( r4 == r1 ) goto label$eabbec9_8_16;
 	r4 = 2;
-	if( r4 == r1 ) goto label$eabbec9_10_156;
+	if( r4 == r1 ) goto label$eabbec9_8_156;
 	r6 = (String)s$68fd4e5;
 	r3 = r1;
 	r7 = &r3;
@@ -1779,110 +1763,110 @@ void hxd_fmt_fbx_BaseLibrary_convertYupToZup(hxd__fmt__fbx__BaseLibrary r0,int r
 	r6 = String___add__(r6,r9);
 	r5 = haxe_Exception_thrown(((vdynamic*)r6));
 	hl_throw((vdynamic*)r5);
-	label$eabbec9_10_16:
+	label$eabbec9_8_16:
 	r3 = 0;
 	r10 = hxd_fmt_fbx_BaseLibrary_getRootModels(r0);
-	label$eabbec9_10_18:
+	label$eabbec9_8_18:
 	if( r10 == NULL ) hl_null_access();
 	r11 = r10->length;
-	if( r3 >= r11 ) goto label$eabbec9_10_155;
+	if( r3 >= r11 ) goto label$eabbec9_8_155;
 	r11 = r10->length;
-	if( ((unsigned)r3) < ((unsigned)r11) ) goto label$eabbec9_10_26;
+	if( ((unsigned)r3) < ((unsigned)r11) ) goto label$eabbec9_8_26;
 	r13 = NULL;
-	goto label$eabbec9_10_29;
-	label$eabbec9_10_26:
+	goto label$eabbec9_8_29;
+	label$eabbec9_8_26:
 	r14 = r10->array;
 	r5 = ((vdynamic**)(r14 + 1))[r3];
 	r13 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r5);
-	label$eabbec9_10_29:
+	label$eabbec9_8_29:
 	++r3;
 	r15 = true;
 	r4 = 0;
 	r16 = r0->root;
 	r6 = (String)s$GlobalSettings_Properties70_P;
 	r12 = hxd_fmt_fbx_FbxTools_getAll(r16,r6);
-	label$eabbec9_10_35:
+	label$eabbec9_8_35:
 	if( r12 == NULL ) hl_null_access();
 	r17 = r12->length;
-	if( r4 >= r17 ) goto label$eabbec9_10_104;
+	if( r4 >= r17 ) goto label$eabbec9_8_104;
 	r17 = r12->length;
-	if( ((unsigned)r4) < ((unsigned)r17) ) goto label$eabbec9_10_43;
+	if( ((unsigned)r4) < ((unsigned)r17) ) goto label$eabbec9_8_43;
 	r16 = NULL;
-	goto label$eabbec9_10_46;
-	label$eabbec9_10_43:
+	goto label$eabbec9_8_46;
+	label$eabbec9_8_43:
 	r14 = r12->array;
 	r5 = ((vdynamic**)(r14 + 1))[r4];
 	r16 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r5);
-	label$eabbec9_10_46:
+	label$eabbec9_8_46:
 	++r4;
 	if( r16 == NULL ) hl_null_access();
 	r18 = hl_vfields(r16)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 0;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_55;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_55;
 	r20 = NULL;
-	goto label$eabbec9_10_58;
-	label$eabbec9_10_55:
+	goto label$eabbec9_8_58;
+	label$eabbec9_8_55:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_58:
+	label$eabbec9_8_58:
 	r6 = hxd_fmt_fbx_FbxTools_toString(r20);
 	r9 = (String)s$PreRotation;
-	if( r6 != r9 && (!r6 || !r9 || String___compare(r6,(vdynamic*)r9) != 0) ) goto label$eabbec9_10_103;
+	if( r6 != r9 && (!r6 || !r9 || String___compare(r6,(vdynamic*)r9) != 0) ) goto label$eabbec9_8_103;
 	r18 = hl_vfields(r16)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 4;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_68;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_68;
 	r20 = NULL;
-	goto label$eabbec9_10_71;
-	label$eabbec9_10_68:
+	goto label$eabbec9_8_71;
+	label$eabbec9_8_68:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_71:
+	label$eabbec9_8_71:
 	r21 = hxd_fmt_fbx_FbxTools_toFloat(r20);
 	r22 = 90.;
-	if( r21 != r22 ) goto label$eabbec9_10_103;
+	if( r21 != r22 ) goto label$eabbec9_8_103;
 	r18 = hl_vfields(r16)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 5;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_81;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_81;
 	r20 = NULL;
-	goto label$eabbec9_10_84;
-	label$eabbec9_10_81:
+	goto label$eabbec9_8_84;
+	label$eabbec9_8_81:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_84:
+	label$eabbec9_8_84:
 	r21 = hxd_fmt_fbx_FbxTools_toFloat(r20);
 	r22 = 0.;
-	if( r21 != r22 ) goto label$eabbec9_10_103;
+	if( r21 != r22 ) goto label$eabbec9_8_103;
 	r18 = hl_vfields(r16)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 6;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_94;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_94;
 	r20 = NULL;
-	goto label$eabbec9_10_97;
-	label$eabbec9_10_94:
+	goto label$eabbec9_8_97;
+	label$eabbec9_8_94:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_97:
+	label$eabbec9_8_97:
 	r21 = hxd_fmt_fbx_FbxTools_toFloat(r20);
 	r22 = 0.;
-	if( r21 != r22 ) goto label$eabbec9_10_103;
+	if( r21 != r22 ) goto label$eabbec9_8_103;
 	r23 = false;
 	r15 = r23;
-	goto label$eabbec9_10_104;
-	label$eabbec9_10_103:
-	goto label$eabbec9_10_35;
-	label$eabbec9_10_104:
-	if( !r15 ) goto label$eabbec9_10_154;
+	goto label$eabbec9_8_104;
+	label$eabbec9_8_103:
+	goto label$eabbec9_8_35;
+	label$eabbec9_8_104:
+	if( !r15 ) goto label$eabbec9_8_154;
 	r16 = hl_alloc_virtual(&t$vrt_0813dd2);
 	r6 = (String)s$P;
 	if( hl_vfields(r16)[1] ) *(String*)(hl_vfields(r16)[1]) = (String)r6; else hl_dyn_setp(r16->value,150958933/*name*/,&t$String,r6);
@@ -1939,26 +1923,26 @@ void hxd_fmt_fbx_BaseLibrary_convertYupToZup(hxd__fmt__fbx__BaseLibrary r0,int r
 	if( r12 == NULL ) hl_null_access();
 	r4 = 0;
 	hl_types_ArrayObj_insert(r12,r4,((vdynamic*)r16));
-	label$eabbec9_10_154:
-	goto label$eabbec9_10_18;
-	label$eabbec9_10_155:
-	goto label$eabbec9_10_248;
-	label$eabbec9_10_156:
+	label$eabbec9_8_154:
+	goto label$eabbec9_8_18;
+	label$eabbec9_8_155:
+	goto label$eabbec9_8_248;
+	label$eabbec9_8_156:
 	r3 = 0;
 	r10 = hxd_fmt_fbx_BaseLibrary_getRootModels(r0);
-	label$eabbec9_10_158:
+	label$eabbec9_8_158:
 	if( r10 == NULL ) hl_null_access();
 	r11 = r10->length;
-	if( r3 >= r11 ) goto label$eabbec9_10_248;
+	if( r3 >= r11 ) goto label$eabbec9_8_248;
 	r11 = r10->length;
-	if( ((unsigned)r3) < ((unsigned)r11) ) goto label$eabbec9_10_166;
+	if( ((unsigned)r3) < ((unsigned)r11) ) goto label$eabbec9_8_166;
 	r13 = NULL;
-	goto label$eabbec9_10_169;
-	label$eabbec9_10_166:
+	goto label$eabbec9_8_169;
+	label$eabbec9_8_166:
 	r14 = r10->array;
 	r5 = ((vdynamic**)(r14 + 1))[r3];
 	r13 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r5);
-	label$eabbec9_10_169:
+	label$eabbec9_8_169:
 	++r3;
 	r6 = (String)s$Properties70;
 	r25 = NULL;
@@ -1966,91 +1950,91 @@ void hxd_fmt_fbx_BaseLibrary_convertYupToZup(hxd__fmt__fbx__BaseLibrary r0,int r
 	r4 = 0;
 	if( r16 == NULL ) hl_null_access();
 	r12 = hl_vfields(r16)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-54870451/*childs*/,&t$hl_types_ArrayObj);
-	label$eabbec9_10_176:
+	label$eabbec9_8_176:
 	if( r12 == NULL ) hl_null_access();
 	r17 = r12->length;
-	if( r4 >= r17 ) goto label$eabbec9_10_247;
+	if( r4 >= r17 ) goto label$eabbec9_8_247;
 	r17 = r12->length;
-	if( ((unsigned)r4) < ((unsigned)r17) ) goto label$eabbec9_10_184;
+	if( ((unsigned)r4) < ((unsigned)r17) ) goto label$eabbec9_8_184;
 	r19 = NULL;
-	goto label$eabbec9_10_187;
-	label$eabbec9_10_184:
+	goto label$eabbec9_8_187;
+	label$eabbec9_8_184:
 	r14 = r12->array;
 	r5 = ((vdynamic**)(r14 + 1))[r4];
 	r19 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r5);
-	label$eabbec9_10_187:
+	label$eabbec9_8_187:
 	++r4;
 	if( r19 == NULL ) hl_null_access();
 	r18 = hl_vfields(r19)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r19)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r19->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 0;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_196;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_196;
 	r20 = NULL;
-	goto label$eabbec9_10_199;
-	label$eabbec9_10_196:
+	goto label$eabbec9_8_199;
+	label$eabbec9_8_196:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_199:
+	label$eabbec9_8_199:
 	r6 = hxd_fmt_fbx_FbxTools_toString(r20);
 	r9 = (String)s$PreRotation;
-	if( r6 != r9 && (!r6 || !r9 || String___compare(r6,(vdynamic*)r9) != 0) ) goto label$eabbec9_10_246;
+	if( r6 != r9 && (!r6 || !r9 || String___compare(r6,(vdynamic*)r9) != 0) ) goto label$eabbec9_8_246;
 	r18 = hl_vfields(r19)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r19)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r19->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 4;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_209;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_209;
 	r20 = NULL;
-	goto label$eabbec9_10_212;
-	label$eabbec9_10_209:
+	goto label$eabbec9_8_212;
+	label$eabbec9_8_209:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_212:
+	label$eabbec9_8_212:
 	r21 = hxd_fmt_fbx_FbxTools_toFloat(r20);
 	r22 = -90.;
-	if( r21 != r22 ) goto label$eabbec9_10_246;
+	if( r21 != r22 ) goto label$eabbec9_8_246;
 	r18 = hl_vfields(r19)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r19)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r19->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 5;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_222;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_222;
 	r20 = NULL;
-	goto label$eabbec9_10_225;
-	label$eabbec9_10_222:
+	goto label$eabbec9_8_225;
+	label$eabbec9_8_222:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_225:
+	label$eabbec9_8_225:
 	r21 = hxd_fmt_fbx_FbxTools_toFloat(r20);
 	r22 = 0.;
-	if( r21 != r22 ) goto label$eabbec9_10_246;
+	if( r21 != r22 ) goto label$eabbec9_8_246;
 	r18 = hl_vfields(r19)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r19)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r19->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r11 = 6;
 	r17 = r18->length;
-	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_10_235;
+	if( ((unsigned)r11) < ((unsigned)r17) ) goto label$eabbec9_8_235;
 	r20 = NULL;
-	goto label$eabbec9_10_238;
-	label$eabbec9_10_235:
+	goto label$eabbec9_8_238;
+	label$eabbec9_8_235:
 	r14 = r18->array;
 	r5 = ((vdynamic**)(r14 + 1))[r11];
 	r20 = (venum*)r5;
-	label$eabbec9_10_238:
+	label$eabbec9_8_238:
 	r21 = hxd_fmt_fbx_FbxTools_toFloat(r20);
 	r22 = 0.;
-	if( r21 != r22 ) goto label$eabbec9_10_246;
+	if( r21 != r22 ) goto label$eabbec9_8_246;
 	if( r16 == NULL ) hl_null_access();
 	r18 = hl_vfields(r16)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r16)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r16->value,-54870451/*childs*/,&t$hl_types_ArrayObj);
 	if( r18 == NULL ) hl_null_access();
 	r15 = hl_types_ArrayObj_remove(r18,((vdynamic*)r19));
-	goto label$eabbec9_10_247;
-	label$eabbec9_10_246:
-	goto label$eabbec9_10_176;
-	label$eabbec9_10_247:
-	goto label$eabbec9_10_158;
-	label$eabbec9_10_248:
+	goto label$eabbec9_8_247;
+	label$eabbec9_8_246:
+	goto label$eabbec9_8_176;
+	label$eabbec9_8_247:
+	goto label$eabbec9_8_158;
+	label$eabbec9_8_248:
 	return;
 }
 
@@ -2066,25 +2050,25 @@ void hxd_fmt_fbx_BaseLibrary_convertPoints(hxd__fmt__fbx__BaseLibrary r0,hl__typ
 	r7 = 3.;
 	r5 = r5 / r7;
 	r6 = (int)r5;
-	label$eabbec9_11_8:
-	if( r4 >= r6 ) goto label$eabbec9_11_32;
+	label$eabbec9_9_8:
+	if( r4 >= r6 ) goto label$eabbec9_9_32;
 	++r4;
 	if( r1 == NULL ) hl_null_access();
 	r10 = r1->length;
-	if( ((unsigned)r2) < ((unsigned)r10) ) goto label$eabbec9_11_16;
+	if( ((unsigned)r2) < ((unsigned)r10) ) goto label$eabbec9_9_16;
 	r7 = 0.;
-	goto label$eabbec9_11_20;
-	label$eabbec9_11_16:
+	goto label$eabbec9_9_20;
+	label$eabbec9_9_16:
 	r11 = r1->bytes;
 	r10 = 3;
 	r10 = r2 << r10;
 	r7 = *(double*)(r11 + r10);
-	label$eabbec9_11_20:
+	label$eabbec9_9_20:
 	r7 = -r7;
 	r9 = r1->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$eabbec9_11_24;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$eabbec9_9_24;
 	hl_types_ArrayBytes_Float___expand(r1,r2);
-	label$eabbec9_11_24:
+	label$eabbec9_9_24:
 	r11 = r1->bytes;
 	r9 = 3;
 	r9 = r2 << r9;
@@ -2092,8 +2076,8 @@ void hxd_fmt_fbx_BaseLibrary_convertPoints(hxd__fmt__fbx__BaseLibrary r0,hl__typ
 	r9 = 3;
 	r8 = r2 + r9;
 	r2 = r8;
-	goto label$eabbec9_11_8;
-	label$eabbec9_11_32:
+	goto label$eabbec9_9_8;
+	label$eabbec9_9_32:
 	return;
 }
 
@@ -2107,115 +2091,115 @@ void hxd_fmt_fbx_BaseLibrary_leftHandConvert(hxd__fmt__fbx__BaseLibrary r0) {
 	varray *r11;
 	int r4, r8, r9, r13;
 	r2 = r0->leftHand;
-	if( !r2 ) goto label$eabbec9_12_3;
+	if( !r2 ) goto label$eabbec9_10_3;
 	return;
-	label$eabbec9_12_3:
+	label$eabbec9_10_3:
 	r2 = true;
 	r0->leftHand = r2;
 	r4 = 0;
 	r6 = r0->root;
 	r7 = (String)s$Objects_Geometry;
 	r5 = hxd_fmt_fbx_FbxTools_getAll(r6,r7);
-	label$eabbec9_12_9:
+	label$eabbec9_10_9:
 	if( r5 == NULL ) hl_null_access();
 	r9 = r5->length;
-	if( r4 >= r9 ) goto label$eabbec9_12_94;
+	if( r4 >= r9 ) goto label$eabbec9_10_94;
 	r9 = r5->length;
-	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_12_17;
+	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_10_17;
 	r6 = NULL;
-	goto label$eabbec9_12_20;
-	label$eabbec9_12_17:
+	goto label$eabbec9_10_20;
+	label$eabbec9_10_17:
 	r11 = r5->array;
 	r3 = ((vdynamic**)(r11 + 1))[r4];
 	r6 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r3);
-	label$eabbec9_12_20:
+	label$eabbec9_10_20:
 	++r4;
 	r8 = 0;
 	r7 = (String)s$Vertices;
 	r10 = hxd_fmt_fbx_FbxTools_getAll(r6,r7);
-	label$eabbec9_12_24:
+	label$eabbec9_10_24:
 	if( r10 == NULL ) hl_null_access();
 	r13 = r10->length;
-	if( r8 >= r13 ) goto label$eabbec9_12_39;
+	if( r8 >= r13 ) goto label$eabbec9_10_39;
 	r13 = r10->length;
-	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_12_32;
+	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_10_32;
 	r12 = NULL;
-	goto label$eabbec9_12_35;
-	label$eabbec9_12_32:
+	goto label$eabbec9_10_35;
+	label$eabbec9_10_32:
 	r11 = r10->array;
 	r3 = ((vdynamic**)(r11 + 1))[r8];
 	r12 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r3);
-	label$eabbec9_12_35:
+	label$eabbec9_10_35:
 	++r8;
 	r14 = hxd_fmt_fbx_FbxTools_getFloats(r12);
 	hxd_fmt_fbx_BaseLibrary_convertPoints(r0,r14);
-	goto label$eabbec9_12_24;
-	label$eabbec9_12_39:
+	goto label$eabbec9_10_24;
+	label$eabbec9_10_39:
 	r8 = 0;
 	r7 = (String)s$LayerElementNormal_Normals;
 	r10 = hxd_fmt_fbx_FbxTools_getAll(r6,r7);
-	label$eabbec9_12_42:
+	label$eabbec9_10_42:
 	if( r10 == NULL ) hl_null_access();
 	r13 = r10->length;
-	if( r8 >= r13 ) goto label$eabbec9_12_57;
+	if( r8 >= r13 ) goto label$eabbec9_10_57;
 	r13 = r10->length;
-	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_12_50;
+	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_10_50;
 	r12 = NULL;
-	goto label$eabbec9_12_53;
-	label$eabbec9_12_50:
+	goto label$eabbec9_10_53;
+	label$eabbec9_10_50:
 	r11 = r10->array;
 	r3 = ((vdynamic**)(r11 + 1))[r8];
 	r12 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r3);
-	label$eabbec9_12_53:
+	label$eabbec9_10_53:
 	++r8;
 	r14 = hxd_fmt_fbx_FbxTools_getFloats(r12);
 	hxd_fmt_fbx_BaseLibrary_convertPoints(r0,r14);
-	goto label$eabbec9_12_42;
-	label$eabbec9_12_57:
+	goto label$eabbec9_10_42;
+	label$eabbec9_10_57:
 	r8 = 0;
 	r7 = (String)s$LayerElementTangent_Tangents;
 	r10 = hxd_fmt_fbx_FbxTools_getAll(r6,r7);
-	label$eabbec9_12_60:
+	label$eabbec9_10_60:
 	if( r10 == NULL ) hl_null_access();
 	r13 = r10->length;
-	if( r8 >= r13 ) goto label$eabbec9_12_75;
+	if( r8 >= r13 ) goto label$eabbec9_10_75;
 	r13 = r10->length;
-	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_12_68;
+	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_10_68;
 	r12 = NULL;
-	goto label$eabbec9_12_71;
-	label$eabbec9_12_68:
+	goto label$eabbec9_10_71;
+	label$eabbec9_10_68:
 	r11 = r10->array;
 	r3 = ((vdynamic**)(r11 + 1))[r8];
 	r12 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r3);
-	label$eabbec9_12_71:
+	label$eabbec9_10_71:
 	++r8;
 	r14 = hxd_fmt_fbx_FbxTools_getFloats(r12);
 	hxd_fmt_fbx_BaseLibrary_convertPoints(r0,r14);
-	goto label$eabbec9_12_60;
-	label$eabbec9_12_75:
+	goto label$eabbec9_10_60;
+	label$eabbec9_10_75:
 	r8 = 0;
 	r7 = (String)s$LayerElementBinormal_Binormals;
 	r10 = hxd_fmt_fbx_FbxTools_getAll(r6,r7);
-	label$eabbec9_12_78:
+	label$eabbec9_10_78:
 	if( r10 == NULL ) hl_null_access();
 	r13 = r10->length;
-	if( r8 >= r13 ) goto label$eabbec9_12_93;
+	if( r8 >= r13 ) goto label$eabbec9_10_93;
 	r13 = r10->length;
-	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_12_86;
+	if( ((unsigned)r8) < ((unsigned)r13) ) goto label$eabbec9_10_86;
 	r12 = NULL;
-	goto label$eabbec9_12_89;
-	label$eabbec9_12_86:
+	goto label$eabbec9_10_89;
+	label$eabbec9_10_86:
 	r11 = r10->array;
 	r3 = ((vdynamic**)(r11 + 1))[r8];
 	r12 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r3);
-	label$eabbec9_12_89:
+	label$eabbec9_10_89:
 	++r8;
 	r14 = hxd_fmt_fbx_FbxTools_getFloats(r12);
 	hxd_fmt_fbx_BaseLibrary_convertPoints(r0,r14);
-	goto label$eabbec9_12_78;
-	label$eabbec9_12_93:
-	goto label$eabbec9_12_9;
-	label$eabbec9_12_94:
+	goto label$eabbec9_10_78;
+	label$eabbec9_10_93:
+	goto label$eabbec9_10_9;
+	label$eabbec9_10_94:
 	return;
 }
 
@@ -2233,128 +2217,128 @@ void hxd_fmt_fbx_BaseLibrary_init(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	int r5, r6, r10, r17, r19;
 	if( r1 == NULL ) hl_null_access();
 	r3 = hl_vfields(r1)[1] ? (*(String*)(hl_vfields(r1)[1])) : (String)hl_dyn_getp(r1->value,150958933/*name*/,&t$String);
-	if( !r3 ) goto label$eabbec9_13_11;
+	if( !r3 ) goto label$eabbec9_11_11;
 	r5 = r3->length;
 	r6 = 11;
-	if( r5 != r6 ) goto label$eabbec9_13_11;
+	if( r5 != r6 ) goto label$eabbec9_11_11;
 	r7 = r3->bytes;
 	r8 = (vbyte*)USTR("Connections");
 	r5 = hl_string_compare(r7,r8,r5);
 	r6 = 0;
-	if( r5 == r6 ) goto label$eabbec9_13_21;
-	label$eabbec9_13_11:
-	if( !r3 ) goto label$eabbec9_13_20;
+	if( r5 == r6 ) goto label$eabbec9_11_21;
+	label$eabbec9_11_11:
+	if( !r3 ) goto label$eabbec9_11_20;
 	r5 = r3->length;
 	r6 = 7;
-	if( r5 != r6 ) goto label$eabbec9_13_20;
+	if( r5 != r6 ) goto label$eabbec9_11_20;
 	r7 = r3->bytes;
 	r8 = (vbyte*)USTR("Objects");
 	r5 = hl_string_compare(r7,r8,r5);
 	r6 = 0;
-	if( r5 == r6 ) goto label$eabbec9_13_139;
-	label$eabbec9_13_20:
-	goto label$eabbec9_13_158;
-	label$eabbec9_13_21:
+	if( r5 == r6 ) goto label$eabbec9_11_139;
+	label$eabbec9_11_20:
+	goto label$eabbec9_11_158;
+	label$eabbec9_11_21:
 	r5 = 0;
 	r9 = hl_vfields(r1)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,-54870451/*childs*/,&t$hl_types_ArrayObj);
-	label$eabbec9_13_23:
+	label$eabbec9_11_23:
 	if( r9 == NULL ) hl_null_access();
 	r10 = r9->length;
-	if( r5 >= r10 ) goto label$eabbec9_13_138;
+	if( r5 >= r10 ) goto label$eabbec9_11_138;
 	r10 = r9->length;
-	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$eabbec9_13_31;
+	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$eabbec9_11_31;
 	r4 = NULL;
-	goto label$eabbec9_13_34;
-	label$eabbec9_13_31:
+	goto label$eabbec9_11_34;
+	label$eabbec9_11_31:
 	r13 = r9->array;
 	r12 = ((vdynamic**)(r13 + 1))[r5];
 	r4 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_13_34:
+	label$eabbec9_11_34:
 	++r5;
 	if( r4 == NULL ) hl_null_access();
 	r3 = hl_vfields(r4)[1] ? (*(String*)(hl_vfields(r4)[1])) : (String)hl_dyn_getp(r4->value,150958933/*name*/,&t$String);
 	r15 = (String)s$C;
-	if( r3 == r15 || (r3 && r15 && String___compare(r3,(vdynamic*)r15) == 0) ) goto label$eabbec9_13_40;
-	goto label$eabbec9_13_23;
-	label$eabbec9_13_40:
+	if( r3 == r15 || (r3 && r15 && String___compare(r3,(vdynamic*)r15) == 0) ) goto label$eabbec9_11_40;
+	goto label$eabbec9_11_23;
+	label$eabbec9_11_40:
 	r11 = hl_vfields(r4)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r11 == NULL ) hl_null_access();
 	r6 = 1;
 	r10 = r11->length;
-	if( ((unsigned)r6) < ((unsigned)r10) ) goto label$eabbec9_13_47;
+	if( ((unsigned)r6) < ((unsigned)r10) ) goto label$eabbec9_11_47;
 	r16 = NULL;
-	goto label$eabbec9_13_50;
-	label$eabbec9_13_47:
+	goto label$eabbec9_11_50;
+	label$eabbec9_11_47:
 	r13 = r11->array;
 	r12 = ((vdynamic**)(r13 + 1))[r6];
 	r16 = (venum*)r12;
-	label$eabbec9_13_50:
+	label$eabbec9_11_50:
 	r6 = hxd_fmt_fbx_FbxTools_toInt(r16);
 	r11 = hl_vfields(r4)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r11 == NULL ) hl_null_access();
 	r10 = 2;
 	r17 = r11->length;
-	if( ((unsigned)r10) < ((unsigned)r17) ) goto label$eabbec9_13_58;
+	if( ((unsigned)r10) < ((unsigned)r17) ) goto label$eabbec9_11_58;
 	r16 = NULL;
-	goto label$eabbec9_13_61;
-	label$eabbec9_13_58:
+	goto label$eabbec9_11_61;
+	label$eabbec9_11_58:
 	r13 = r11->array;
 	r12 = ((vdynamic**)(r13 + 1))[r10];
 	r16 = (venum*)r12;
-	label$eabbec9_13_61:
+	label$eabbec9_11_61:
 	r10 = hxd_fmt_fbx_FbxTools_toInt(r16);
 	r18 = r0->ids;
 	if( r18 == NULL ) hl_null_access();
 	r12 = haxe_ds_IntMap_get(r18,r6);
 	r14 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	if( !r14 ) goto label$eabbec9_13_72;
+	if( !r14 ) goto label$eabbec9_11_72;
 	r18 = r0->ids;
 	if( r18 == NULL ) hl_null_access();
 	r12 = haxe_ds_IntMap_get(r18,r10);
 	r14 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	if( r14 ) goto label$eabbec9_13_73;
-	label$eabbec9_13_72:
-	goto label$eabbec9_13_23;
-	label$eabbec9_13_73:
+	if( r14 ) goto label$eabbec9_11_73;
+	label$eabbec9_11_72:
+	goto label$eabbec9_11_23;
+	label$eabbec9_11_73:
 	r11 = hl_vfields(r4)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r11 == NULL ) hl_null_access();
 	r17 = 3;
 	r19 = r11->length;
-	if( ((unsigned)r17) < ((unsigned)r19) ) goto label$eabbec9_13_80;
+	if( ((unsigned)r17) < ((unsigned)r19) ) goto label$eabbec9_11_80;
 	r16 = NULL;
-	goto label$eabbec9_13_83;
-	label$eabbec9_13_80:
+	goto label$eabbec9_11_83;
+	label$eabbec9_11_80:
 	r13 = r11->array;
 	r12 = ((vdynamic**)(r13 + 1))[r17];
 	r16 = (venum*)r12;
-	label$eabbec9_13_83:
-	if( !r16 ) goto label$eabbec9_13_102;
+	label$eabbec9_11_83:
+	if( !r16 ) goto label$eabbec9_11_102;
 	r3 = hxd_fmt_fbx_FbxTools_toString(r16);
 	r18 = r0->namedConnect;
 	if( r18 == NULL ) hl_null_access();
 	r12 = haxe_ds_IntMap_get(r18,r10);
 	r20 = (haxe__ds__StringMap)r12;
-	if( r20 ) goto label$eabbec9_13_96;
+	if( r20 ) goto label$eabbec9_11_96;
 	r21 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
 	haxe_ds_StringMap_new(r21);
 	r20 = r21;
 	r18 = r0->namedConnect;
 	if( r18 == NULL ) hl_null_access();
 	haxe_ds_IntMap_set(r18,r10,((vdynamic*)r21));
-	label$eabbec9_13_96:
+	label$eabbec9_11_96:
 	if( r20 == NULL ) hl_null_access();
 	r22 = hl_alloc_dynamic(&t$_i32);
 	r22->v.i = r6;
 	haxe_ds_StringMap_set(r20,r3,((vdynamic*)r22));
 	r23 = (String)s$LookAtProperty;
-	if( r3 != r23 && (!r3 || !r23 || String___compare(r3,(vdynamic*)r23) != 0) ) goto label$eabbec9_13_102;
-	goto label$eabbec9_13_23;
-	label$eabbec9_13_102:
+	if( r3 != r23 && (!r3 || !r23 || String___compare(r3,(vdynamic*)r23) != 0) ) goto label$eabbec9_11_102;
+	goto label$eabbec9_11_23;
+	label$eabbec9_11_102:
 	r18 = r0->connect;
 	if( r18 == NULL ) hl_null_access();
 	r12 = haxe_ds_IntMap_get(r18,r10);
 	r24 = (hl__types__ArrayBytes_Int)hl_dyn_castp(&r12,&t$_dyn,&t$hl_types_ArrayBytes_Int);
-	if( r24 ) goto label$eabbec9_13_116;
+	if( r24 ) goto label$eabbec9_11_116;
 	r17 = 0;
 	r7 = hl_alloc_bytes(r17);
 	r17 = 0;
@@ -2364,18 +2348,18 @@ void hxd_fmt_fbx_BaseLibrary_init(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r18 = r0->connect;
 	if( r18 == NULL ) hl_null_access();
 	haxe_ds_IntMap_set(r18,r10,((vdynamic*)r25));
-	label$eabbec9_13_116:
+	label$eabbec9_11_116:
 	if( r24 == NULL ) hl_null_access();
 	r17 = hl_types_ArrayBytes_Int_push(r24,r6);
 	r19 = 0;
-	if( r10 != r19 ) goto label$eabbec9_13_121;
-	goto label$eabbec9_13_23;
-	label$eabbec9_13_121:
+	if( r10 != r19 ) goto label$eabbec9_11_121;
+	goto label$eabbec9_11_23;
+	label$eabbec9_11_121:
 	r18 = r0->invConnect;
 	if( r18 == NULL ) hl_null_access();
 	r12 = haxe_ds_IntMap_get(r18,r6);
 	r25 = (hl__types__ArrayBytes_Int)hl_dyn_castp(&r12,&t$_dyn,&t$hl_types_ArrayBytes_Int);
-	if( r25 ) goto label$eabbec9_13_135;
+	if( r25 ) goto label$eabbec9_11_135;
 	r17 = 0;
 	r7 = hl_alloc_bytes(r17);
 	r17 = 0;
@@ -2385,35 +2369,35 @@ void hxd_fmt_fbx_BaseLibrary_init(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r1) {
 	r18 = r0->invConnect;
 	if( r18 == NULL ) hl_null_access();
 	haxe_ds_IntMap_set(r18,r6,((vdynamic*)r26));
-	label$eabbec9_13_135:
+	label$eabbec9_11_135:
 	if( r25 == NULL ) hl_null_access();
 	r17 = hl_types_ArrayBytes_Int_push(r25,r10);
-	goto label$eabbec9_13_23;
-	label$eabbec9_13_138:
-	goto label$eabbec9_13_158;
-	label$eabbec9_13_139:
+	goto label$eabbec9_11_23;
+	label$eabbec9_11_138:
+	goto label$eabbec9_11_158;
+	label$eabbec9_11_139:
 	r5 = 0;
 	r9 = hl_vfields(r1)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r1)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r1->value,-54870451/*childs*/,&t$hl_types_ArrayObj);
-	label$eabbec9_13_141:
+	label$eabbec9_11_141:
 	if( r9 == NULL ) hl_null_access();
 	r10 = r9->length;
-	if( r5 >= r10 ) goto label$eabbec9_13_158;
+	if( r5 >= r10 ) goto label$eabbec9_11_158;
 	r10 = r9->length;
-	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$eabbec9_13_149;
+	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$eabbec9_11_149;
 	r4 = NULL;
-	goto label$eabbec9_13_152;
-	label$eabbec9_13_149:
+	goto label$eabbec9_11_152;
+	label$eabbec9_11_149:
 	r13 = r9->array;
 	r12 = ((vdynamic**)(r13 + 1))[r5];
 	r4 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_13_152:
+	label$eabbec9_11_152:
 	++r5;
 	r18 = r0->ids;
 	if( r18 == NULL ) hl_null_access();
 	r6 = hxd_fmt_fbx_FbxTools_getId(r4);
 	haxe_ds_IntMap_set(r18,r6,((vdynamic*)r4));
-	goto label$eabbec9_13_141;
-	label$eabbec9_13_158:
+	goto label$eabbec9_11_141;
+	label$eabbec9_11_158:
 	return;
 }
 
@@ -2432,7 +2416,7 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_getParent(hxd__fmt__fbx__BaseLibrary r0,vvirtu
 	if( r4 == NULL ) hl_null_access();
 	r7 = r4->length;
 	r9 = 1;
-	if( r9 >= r7 ) goto label$eabbec9_14_45;
+	if( r9 >= r7 ) goto label$eabbec9_12_45;
 	r6 = hxd_fmt_fbx_FbxTools_getName(r1);
 	r10 = (String)s$_has_;
 	r6 = String___add__(r6,r10);
@@ -2451,37 +2435,37 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_getParent(hxd__fmt__fbx__BaseLibrary r0,vvirtu
 	r13 = hl_alloc_array(r14,r7);
 	r8 = hl_types_ArrayObj_alloc(r13);
 	r7 = 0;
-	label$eabbec9_14_23:
+	label$eabbec9_12_23:
 	if( r4 == NULL ) hl_null_access();
 	r15 = r4->length;
-	if( r7 >= r15 ) goto label$eabbec9_14_39;
+	if( r7 >= r15 ) goto label$eabbec9_12_39;
 	r15 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$eabbec9_14_31;
+	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$eabbec9_12_31;
 	r5 = NULL;
-	goto label$eabbec9_14_34;
-	label$eabbec9_14_31:
+	goto label$eabbec9_12_34;
+	label$eabbec9_12_31:
 	r13 = r4->array;
 	r16 = ((vdynamic**)(r13 + 1))[r7];
 	r5 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r16);
-	label$eabbec9_14_34:
+	label$eabbec9_12_34:
 	++r7;
 	if( r8 == NULL ) hl_null_access();
 	r10 = hxd_fmt_fbx_FbxTools_getName(r5);
 	r9 = hl_types_ArrayObj_push(r8,((vdynamic*)r10));
-	goto label$eabbec9_14_23;
-	label$eabbec9_14_39:
+	goto label$eabbec9_12_23;
+	label$eabbec9_12_39:
 	if( r8 == NULL ) hl_null_access();
 	r17 = (String)s$c0cb5f0;
 	r17 = hl_types_ArrayObj_join(r8,r17);
 	r10 = String___add__(r6,r17);
 	r16 = haxe_Exception_thrown(((vdynamic*)r10));
 	hl_throw((vdynamic*)r16);
-	label$eabbec9_14_45:
+	label$eabbec9_12_45:
 	r7 = r4->length;
 	r9 = 0;
-	if( r7 != r9 ) goto label$eabbec9_14_60;
+	if( r7 != r9 ) goto label$eabbec9_12_60;
 	r18 = r3 ? r3->v.b : 0;
-	if( r18 ) goto label$eabbec9_14_60;
+	if( r18 ) goto label$eabbec9_12_60;
 	r6 = (String)s$Missing_;
 	r10 = hxd_fmt_fbx_FbxTools_getName(r1);
 	r6 = String___add__(r6,r10);
@@ -2492,17 +2476,17 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_getParent(hxd__fmt__fbx__BaseLibrary r0,vvirtu
 	r6 = String___add__(r6,r10);
 	r16 = haxe_Exception_thrown(((vdynamic*)r6));
 	hl_throw((vdynamic*)r16);
-	label$eabbec9_14_60:
+	label$eabbec9_12_60:
 	r7 = 0;
 	r9 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r9) ) goto label$eabbec9_14_65;
+	if( ((unsigned)r7) < ((unsigned)r9) ) goto label$eabbec9_12_65;
 	r5 = NULL;
-	goto label$eabbec9_14_68;
-	label$eabbec9_14_65:
+	goto label$eabbec9_12_68;
+	label$eabbec9_12_65:
 	r13 = r4->array;
 	r16 = ((vdynamic**)(r13 + 1))[r7];
 	r5 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r16);
-	label$eabbec9_14_68:
+	label$eabbec9_12_68:
 	return r5;
 }
 
@@ -2521,7 +2505,7 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_getChild(hxd__fmt__fbx__BaseLibrary r0,vvirtua
 	if( r4 == NULL ) hl_null_access();
 	r7 = r4->length;
 	r9 = 1;
-	if( r9 >= r7 ) goto label$eabbec9_15_45;
+	if( r9 >= r7 ) goto label$eabbec9_13_45;
 	r6 = hxd_fmt_fbx_FbxTools_getName(r1);
 	r10 = (String)s$_has_;
 	r6 = String___add__(r6,r10);
@@ -2540,37 +2524,37 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_getChild(hxd__fmt__fbx__BaseLibrary r0,vvirtua
 	r13 = hl_alloc_array(r14,r7);
 	r8 = hl_types_ArrayObj_alloc(r13);
 	r7 = 0;
-	label$eabbec9_15_23:
+	label$eabbec9_13_23:
 	if( r4 == NULL ) hl_null_access();
 	r15 = r4->length;
-	if( r7 >= r15 ) goto label$eabbec9_15_39;
+	if( r7 >= r15 ) goto label$eabbec9_13_39;
 	r15 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$eabbec9_15_31;
+	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$eabbec9_13_31;
 	r5 = NULL;
-	goto label$eabbec9_15_34;
-	label$eabbec9_15_31:
+	goto label$eabbec9_13_34;
+	label$eabbec9_13_31:
 	r13 = r4->array;
 	r16 = ((vdynamic**)(r13 + 1))[r7];
 	r5 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r16);
-	label$eabbec9_15_34:
+	label$eabbec9_13_34:
 	++r7;
 	if( r8 == NULL ) hl_null_access();
 	r10 = hxd_fmt_fbx_FbxTools_getName(r5);
 	r9 = hl_types_ArrayObj_push(r8,((vdynamic*)r10));
-	goto label$eabbec9_15_23;
-	label$eabbec9_15_39:
+	goto label$eabbec9_13_23;
+	label$eabbec9_13_39:
 	if( r8 == NULL ) hl_null_access();
 	r17 = (String)s$c0cb5f0;
 	r17 = hl_types_ArrayObj_join(r8,r17);
 	r10 = String___add__(r6,r17);
 	r16 = haxe_Exception_thrown(((vdynamic*)r10));
 	hl_throw((vdynamic*)r16);
-	label$eabbec9_15_45:
+	label$eabbec9_13_45:
 	r7 = r4->length;
 	r9 = 0;
-	if( r7 != r9 ) goto label$eabbec9_15_60;
+	if( r7 != r9 ) goto label$eabbec9_13_60;
 	r18 = r3 ? r3->v.b : 0;
-	if( r18 ) goto label$eabbec9_15_60;
+	if( r18 ) goto label$eabbec9_13_60;
 	r6 = (String)s$Missing_;
 	r10 = hxd_fmt_fbx_FbxTools_getName(r1);
 	r6 = String___add__(r6,r10);
@@ -2581,17 +2565,17 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_getChild(hxd__fmt__fbx__BaseLibrary r0,vvirtua
 	r6 = String___add__(r6,r10);
 	r16 = haxe_Exception_thrown(((vdynamic*)r6));
 	hl_throw((vdynamic*)r16);
-	label$eabbec9_15_60:
+	label$eabbec9_13_60:
 	r7 = 0;
 	r9 = r4->length;
-	if( ((unsigned)r7) < ((unsigned)r9) ) goto label$eabbec9_15_65;
+	if( ((unsigned)r7) < ((unsigned)r9) ) goto label$eabbec9_13_65;
 	r5 = NULL;
-	goto label$eabbec9_15_68;
-	label$eabbec9_15_65:
+	goto label$eabbec9_13_68;
+	label$eabbec9_13_65:
 	r13 = r4->array;
 	r16 = ((vdynamic**)(r13 + 1))[r7];
 	r5 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r16);
-	label$eabbec9_15_68:
+	label$eabbec9_13_68:
 	return r5;
 }
 
@@ -2606,17 +2590,17 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_getSpecChild(hxd__fmt__fbx__BaseLibrary r0,vvi
 	r5 = hxd_fmt_fbx_FbxTools_getId(r1);
 	r3 = haxe_ds_IntMap_get(r4,r5);
 	r7 = (haxe__ds__StringMap)r3;
-	if( r7 ) goto label$eabbec9_16_8;
+	if( r7 ) goto label$eabbec9_14_8;
 	r6 = NULL;
 	return r6;
-	label$eabbec9_16_8:
+	label$eabbec9_14_8:
 	if( r7 == NULL ) hl_null_access();
 	r3 = haxe_ds_StringMap_get(r7,r2);
 	r8 = (vdynamic*)r3;
-	if( r8 ) goto label$eabbec9_16_14;
+	if( r8 ) goto label$eabbec9_14_14;
 	r6 = NULL;
 	return r6;
-	label$eabbec9_16_14:
+	label$eabbec9_14_14:
 	r4 = r0->ids;
 	if( r4 == NULL ) hl_null_access();
 	r5 = r8 ? r8->v.i : 0;
@@ -2646,28 +2630,28 @@ hl__types__ArrayObj hxd_fmt_fbx_BaseLibrary_getChilds(hxd__fmt__fbx__BaseLibrary
 	r5 = 0;
 	r9 = hl_alloc_array(r10,r5);
 	r8 = hl_types_ArrayObj_alloc(r9);
-	if( !r7 ) goto label$eabbec9_17_45;
+	if( !r7 ) goto label$eabbec9_15_45;
 	r5 = 0;
-	label$eabbec9_17_11:
+	label$eabbec9_15_11:
 	if( r7 == NULL ) hl_null_access();
 	r12 = r7->length;
-	if( r5 >= r12 ) goto label$eabbec9_17_45;
+	if( r5 >= r12 ) goto label$eabbec9_15_45;
 	r12 = r7->length;
-	if( ((unsigned)r5) < ((unsigned)r12) ) goto label$eabbec9_17_19;
+	if( ((unsigned)r5) < ((unsigned)r12) ) goto label$eabbec9_15_19;
 	r11 = 0;
-	goto label$eabbec9_17_23;
-	label$eabbec9_17_19:
+	goto label$eabbec9_15_23;
+	label$eabbec9_15_19:
 	r13 = r7->bytes;
 	r12 = 2;
 	r12 = r5 << r12;
 	r11 = *(int*)(r13 + r12);
-	label$eabbec9_17_23:
+	label$eabbec9_15_23:
 	++r5;
 	r4 = r0->ids;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_IntMap_get(r4,r11);
 	r6 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r3);
-	if( r6 ) goto label$eabbec9_17_37;
+	if( r6 ) goto label$eabbec9_15_37;
 	r12 = r11;
 	r15 = &r12;
 	r13 = hl_itos(r12,r15);
@@ -2676,17 +2660,17 @@ hl__types__ArrayObj hxd_fmt_fbx_BaseLibrary_getChilds(hxd__fmt__fbx__BaseLibrary
 	r14 = String___add__(r14,r16);
 	r3 = haxe_Exception_thrown(((vdynamic*)r14));
 	hl_throw((vdynamic*)r3);
-	label$eabbec9_17_37:
-	if( !r2 ) goto label$eabbec9_17_42;
+	label$eabbec9_15_37:
+	if( !r2 ) goto label$eabbec9_15_42;
 	if( r6 == NULL ) hl_null_access();
 	r14 = hl_vfields(r6)[1] ? (*(String*)(hl_vfields(r6)[1])) : (String)hl_dyn_getp(r6->value,150958933/*name*/,&t$String);
-	if( r14 == r2 || (r14 && r2 && String___compare(r14,(vdynamic*)r2) == 0) ) goto label$eabbec9_17_42;
-	goto label$eabbec9_17_11;
-	label$eabbec9_17_42:
+	if( r14 == r2 || (r14 && r2 && String___compare(r14,(vdynamic*)r2) == 0) ) goto label$eabbec9_15_42;
+	goto label$eabbec9_15_11;
+	label$eabbec9_15_42:
 	if( r8 == NULL ) hl_null_access();
 	r12 = hl_types_ArrayObj_push(r8,((vdynamic*)r6));
-	goto label$eabbec9_17_11;
-	label$eabbec9_17_45:
+	goto label$eabbec9_15_11;
+	label$eabbec9_15_45:
 	return r8;
 }
 
@@ -2711,28 +2695,28 @@ hl__types__ArrayObj hxd_fmt_fbx_BaseLibrary_getParents(hxd__fmt__fbx__BaseLibrar
 	r5 = 0;
 	r9 = hl_alloc_array(r10,r5);
 	r8 = hl_types_ArrayObj_alloc(r9);
-	if( !r7 ) goto label$eabbec9_18_45;
+	if( !r7 ) goto label$eabbec9_16_45;
 	r5 = 0;
-	label$eabbec9_18_11:
+	label$eabbec9_16_11:
 	if( r7 == NULL ) hl_null_access();
 	r12 = r7->length;
-	if( r5 >= r12 ) goto label$eabbec9_18_45;
+	if( r5 >= r12 ) goto label$eabbec9_16_45;
 	r12 = r7->length;
-	if( ((unsigned)r5) < ((unsigned)r12) ) goto label$eabbec9_18_19;
+	if( ((unsigned)r5) < ((unsigned)r12) ) goto label$eabbec9_16_19;
 	r11 = 0;
-	goto label$eabbec9_18_23;
-	label$eabbec9_18_19:
+	goto label$eabbec9_16_23;
+	label$eabbec9_16_19:
 	r13 = r7->bytes;
 	r12 = 2;
 	r12 = r5 << r12;
 	r11 = *(int*)(r13 + r12);
-	label$eabbec9_18_23:
+	label$eabbec9_16_23:
 	++r5;
 	r4 = r0->ids;
 	if( r4 == NULL ) hl_null_access();
 	r3 = haxe_ds_IntMap_get(r4,r11);
 	r6 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r3);
-	if( r6 ) goto label$eabbec9_18_37;
+	if( r6 ) goto label$eabbec9_16_37;
 	r12 = r11;
 	r15 = &r12;
 	r13 = hl_itos(r12,r15);
@@ -2741,17 +2725,17 @@ hl__types__ArrayObj hxd_fmt_fbx_BaseLibrary_getParents(hxd__fmt__fbx__BaseLibrar
 	r14 = String___add__(r14,r16);
 	r3 = haxe_Exception_thrown(((vdynamic*)r14));
 	hl_throw((vdynamic*)r3);
-	label$eabbec9_18_37:
-	if( !r2 ) goto label$eabbec9_18_42;
+	label$eabbec9_16_37:
+	if( !r2 ) goto label$eabbec9_16_42;
 	if( r6 == NULL ) hl_null_access();
 	r14 = hl_vfields(r6)[1] ? (*(String*)(hl_vfields(r6)[1])) : (String)hl_dyn_getp(r6->value,150958933/*name*/,&t$String);
-	if( r14 == r2 || (r14 && r2 && String___compare(r14,(vdynamic*)r2) == 0) ) goto label$eabbec9_18_42;
-	goto label$eabbec9_18_11;
-	label$eabbec9_18_42:
+	if( r14 == r2 || (r14 && r2 && String___compare(r14,(vdynamic*)r2) == 0) ) goto label$eabbec9_16_42;
+	goto label$eabbec9_16_11;
+	label$eabbec9_16_42:
 	if( r8 == NULL ) hl_null_access();
 	r12 = hl_types_ArrayObj_push(r8,((vdynamic*)r6));
-	goto label$eabbec9_18_11;
-	label$eabbec9_18_45:
+	goto label$eabbec9_16_11;
+	label$eabbec9_16_45:
 	return r8;
 }
 
@@ -2764,7 +2748,7 @@ void hxd_fmt_fbx_BaseLibrary_ignoreMissingObject(hxd__fmt__fbx__BaseLibrary r0,i
 	if( r3 == NULL ) hl_null_access();
 	r2 = haxe_ds_IntMap_get(r3,r1);
 	r5 = (hxd__fmt__fbx__DefaultMatrixes)r2;
-	if( r5 ) goto label$eabbec9_19_13;
+	if( r5 ) goto label$eabbec9_17_13;
 	r7 = (hxd__fmt__fbx__DefaultMatrixes)hl_alloc_obj(&t$hxd_fmt_fbx_DefaultMatrixes);
 	hxd_fmt_fbx_DefaultMatrixes_new(r7);
 	r4 = -2;
@@ -2774,7 +2758,7 @@ void hxd_fmt_fbx_BaseLibrary_ignoreMissingObject(hxd__fmt__fbx__BaseLibrary r0,i
 	r3 = r0->defaultModelMatrixes;
 	if( r3 == NULL ) hl_null_access();
 	haxe_ds_IntMap_set(r3,r1,((vdynamic*)r7));
-	label$eabbec9_19_13:
+	label$eabbec9_17_13:
 	return;
 }
 
@@ -2800,19 +2784,19 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_buildHierarchy(hxd__fmt__fbx__BaseLibrary r0) 
 	haxe_ds_IntMap_set(r4,r5,((vdynamic*)r1));
 	r5 = 0;
 	r7 = hxd_fmt_fbx_BaseLibrary_getAllModels(r0);
-	label$eabbec9_20_10:
+	label$eabbec9_18_10:
 	if( r7 == NULL ) hl_null_access();
 	r9 = r7->length;
-	if( r5 >= r9 ) goto label$eabbec9_20_56;
+	if( r5 >= r9 ) goto label$eabbec9_18_56;
 	r9 = r7->length;
-	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_20_18;
+	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_18_18;
 	r11 = NULL;
-	goto label$eabbec9_20_21;
-	label$eabbec9_20_18:
+	goto label$eabbec9_18_21;
+	label$eabbec9_18_18:
 	r13 = r7->array;
 	r12 = ((vdynamic**)(r13 + 1))[r5];
 	r11 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_20_21:
+	label$eabbec9_18_21:
 	++r5;
 	r14 = r0->skipObjects;
 	if( r14 == NULL ) hl_null_access();
@@ -2820,55 +2804,55 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_buildHierarchy(hxd__fmt__fbx__BaseLibrary r0) 
 	r12 = haxe_ds_StringMap_get(r14,r15);
 	r17 = (vdynamic*)r12;
 	r18 = r17 ? r17->v.b : 0;
-	if( !r18 ) goto label$eabbec9_20_30;
-	goto label$eabbec9_20_10;
-	label$eabbec9_20_30:
+	if( !r18 ) goto label$eabbec9_18_30;
+	goto label$eabbec9_18_10;
+	label$eabbec9_18_30:
 	r15 = hxd_fmt_fbx_FbxTools_getType(r11);
 	r19 = (String)s$LimbNode;
-	if( r15 != r19 && (!r15 || !r19 || String___compare(r15,(vdynamic*)r19) != 0) ) goto label$eabbec9_20_39;
+	if( r15 != r19 && (!r15 || !r19 || String___compare(r15,(vdynamic*)r19) != 0) ) goto label$eabbec9_18_39;
 	r18 = r0->unskinnedJointsAsObjects;
-	if( !r18 ) goto label$eabbec9_20_37;
+	if( !r18 ) goto label$eabbec9_18_37;
 	r18 = hxd_fmt_fbx_BaseLibrary_isNullJoint(r0,r11);
-	if( r18 ) goto label$eabbec9_20_39;
-	label$eabbec9_20_37:
+	if( r18 ) goto label$eabbec9_18_39;
+	label$eabbec9_18_37:
 	r18 = true;
-	goto label$eabbec9_20_40;
-	label$eabbec9_20_39:
+	goto label$eabbec9_18_40;
+	label$eabbec9_18_39:
 	r18 = false;
-	label$eabbec9_20_40:
+	label$eabbec9_18_40:
 	r6 = (hxd__fmt__fbx__TmpObject)hl_alloc_obj(&t$hxd_fmt_fbx_TmpObject);
 	hxd_fmt_fbx_TmpObject_new(r6);
 	r6->model = r11;
 	r6->isJoint = r18;
 	r19 = (String)s$Mesh;
-	if( r15 == r19 || (r15 && r19 && String___compare(r15,(vdynamic*)r19) == 0) ) goto label$eabbec9_20_48;
+	if( r15 == r19 || (r15 && r19 && String___compare(r15,(vdynamic*)r19) == 0) ) goto label$eabbec9_18_48;
 	r21 = false;
-	goto label$eabbec9_20_49;
-	label$eabbec9_20_48:
+	goto label$eabbec9_18_49;
+	label$eabbec9_18_48:
 	r21 = true;
-	label$eabbec9_20_49:
+	label$eabbec9_18_49:
 	r6->isMesh = r21;
 	if( r4 == NULL ) hl_null_access();
 	r8 = hxd_fmt_fbx_FbxTools_getId(r11);
 	haxe_ds_IntMap_set(r4,r8,((vdynamic*)r6));
 	if( r3 == NULL ) hl_null_access();
 	r8 = hl_types_ArrayObj_push(r3,((vdynamic*)r6));
-	goto label$eabbec9_20_10;
-	label$eabbec9_20_56:
+	goto label$eabbec9_18_10;
+	label$eabbec9_18_56:
 	r5 = 0;
-	label$eabbec9_20_57:
+	label$eabbec9_18_57:
 	if( r3 == NULL ) hl_null_access();
 	r9 = r3->length;
-	if( r5 >= r9 ) goto label$eabbec9_20_90;
+	if( r5 >= r9 ) goto label$eabbec9_18_90;
 	r9 = r3->length;
-	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_20_65;
+	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_18_65;
 	r6 = NULL;
-	goto label$eabbec9_20_68;
-	label$eabbec9_20_65:
+	goto label$eabbec9_18_68;
+	label$eabbec9_18_65:
 	r13 = r3->array;
 	r12 = ((vdynamic**)(r13 + 1))[r5];
 	r6 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_68:
+	label$eabbec9_18_68:
 	++r5;
 	if( r6 == NULL ) hl_null_access();
 	r11 = r6->model;
@@ -2876,45 +2860,45 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_buildHierarchy(hxd__fmt__fbx__BaseLibrary r0) 
 	r18 = true;
 	r17 = hl_alloc_dynbool(r18);
 	r11 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r11,r15,r17);
-	if( r11 ) goto label$eabbec9_20_78;
+	if( r11 ) goto label$eabbec9_18_78;
 	r8 = 0;
-	goto label$eabbec9_20_79;
-	label$eabbec9_20_78:
+	goto label$eabbec9_18_79;
+	label$eabbec9_18_78:
 	r8 = hxd_fmt_fbx_FbxTools_getId(r11);
-	label$eabbec9_20_79:
+	label$eabbec9_18_79:
 	if( r4 == NULL ) hl_null_access();
 	r12 = haxe_ds_IntMap_get(r4,r8);
 	r20 = (hxd__fmt__fbx__TmpObject)r12;
-	if( r20 ) goto label$eabbec9_20_84;
+	if( r20 ) goto label$eabbec9_18_84;
 	r20 = r1;
-	label$eabbec9_20_84:
+	label$eabbec9_18_84:
 	if( r20 == NULL ) hl_null_access();
 	r7 = r20->childs;
 	if( r7 == NULL ) hl_null_access();
 	r9 = hl_types_ArrayObj_push(r7,((vdynamic*)r6));
 	r6->parent = r20;
-	goto label$eabbec9_20_57;
-	label$eabbec9_20_90:
+	goto label$eabbec9_18_57;
+	label$eabbec9_18_90:
 	r5 = 0;
-	label$eabbec9_20_91:
+	label$eabbec9_18_91:
 	if( r3 == NULL ) hl_null_access();
 	r9 = r3->length;
-	if( r5 >= r9 ) goto label$eabbec9_20_296;
+	if( r5 >= r9 ) goto label$eabbec9_18_296;
 	r9 = r3->length;
-	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_20_99;
+	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_18_99;
 	r6 = NULL;
-	goto label$eabbec9_20_102;
-	label$eabbec9_20_99:
+	goto label$eabbec9_18_102;
+	label$eabbec9_18_99:
 	r13 = r3->array;
 	r12 = ((vdynamic**)(r13 + 1))[r5];
 	r6 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_102:
+	label$eabbec9_18_102:
 	++r5;
 	if( r6 == NULL ) hl_null_access();
 	r18 = r6->isMesh;
-	if( r18 ) goto label$eabbec9_20_107;
-	goto label$eabbec9_20_91;
-	label$eabbec9_20_107:
+	if( r18 ) goto label$eabbec9_18_107;
+	goto label$eabbec9_18_91;
+	label$eabbec9_18_107:
 	r11 = r6->model;
 	r15 = (String)s$Geometry;
 	r17 = NULL;
@@ -2923,9 +2907,9 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_buildHierarchy(hxd__fmt__fbx__BaseLibrary r0) 
 	r18 = true;
 	r17 = hl_alloc_dynbool(r18);
 	r16 = hxd_fmt_fbx_BaseLibrary_getChild(r0,r11,r15,r17);
-	if( r16 ) goto label$eabbec9_20_117;
-	goto label$eabbec9_20_91;
-	label$eabbec9_20_117:
+	if( r16 ) goto label$eabbec9_18_117;
+	goto label$eabbec9_18_91;
+	label$eabbec9_18_117:
 	r25 = &t$hxd_fmt_fbx_TmpObject;
 	r8 = 0;
 	r13 = hl_alloc_array(r25,r8);
@@ -2933,19 +2917,19 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_buildHierarchy(hxd__fmt__fbx__BaseLibrary r0) 
 	r8 = 0;
 	r15 = (String)s$Deformer;
 	r10 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r16,r15);
-	label$eabbec9_20_124:
+	label$eabbec9_18_124:
 	if( r10 == NULL ) hl_null_access();
 	r26 = r10->length;
-	if( r8 >= r26 ) goto label$eabbec9_20_146;
+	if( r8 >= r26 ) goto label$eabbec9_18_146;
 	r26 = r10->length;
-	if( ((unsigned)r8) < ((unsigned)r26) ) goto label$eabbec9_20_132;
+	if( ((unsigned)r8) < ((unsigned)r26) ) goto label$eabbec9_18_132;
 	r24 = NULL;
-	goto label$eabbec9_20_135;
-	label$eabbec9_20_132:
+	goto label$eabbec9_18_135;
+	label$eabbec9_18_132:
 	r13 = r10->array;
 	r12 = ((vdynamic**)(r13 + 1))[r8];
 	r24 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_20_135:
+	label$eabbec9_18_135:
 	++r8;
 	if( r7 == NULL ) hl_null_access();
 	if( r4 == NULL ) hl_null_access();
@@ -2956,66 +2940,66 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_buildHierarchy(hxd__fmt__fbx__BaseLibrary r0) 
 	r12 = haxe_ds_IntMap_get(r4,r9);
 	r20 = (hxd__fmt__fbx__TmpObject)r12;
 	r9 = hl_types_ArrayObj_push(r7,((vdynamic*)r20));
-	goto label$eabbec9_20_124;
-	label$eabbec9_20_146:
+	goto label$eabbec9_18_124;
+	label$eabbec9_18_146:
 	r10 = r7;
 	if( r7 == NULL ) hl_null_access();
 	r8 = r7->length;
 	r9 = 0;
-	if( r8 != r9 ) goto label$eabbec9_20_152;
-	goto label$eabbec9_20_91;
-	label$eabbec9_20_152:
+	if( r8 != r9 ) goto label$eabbec9_18_152;
+	goto label$eabbec9_18_91;
+	label$eabbec9_18_152:
 	r8 = 0;
 	r9 = r7->length;
-	if( ((unsigned)r8) < ((unsigned)r9) ) goto label$eabbec9_20_157;
+	if( ((unsigned)r8) < ((unsigned)r9) ) goto label$eabbec9_18_157;
 	r20 = NULL;
-	goto label$eabbec9_20_160;
-	label$eabbec9_20_157:
+	goto label$eabbec9_18_160;
+	label$eabbec9_18_157:
 	r13 = r7->array;
 	r12 = ((vdynamic**)(r13 + 1))[r8];
 	r20 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_160:
+	label$eabbec9_18_160:
 	r8 = 0;
-	label$eabbec9_20_161:
-	if( r20 == r1 ) goto label$eabbec9_20_168;
+	label$eabbec9_18_161:
+	if( r20 == r1 ) goto label$eabbec9_18_168;
 	if( r20 == NULL ) hl_null_access();
 	r22 = r20->parent;
 	r20 = r22;
 	++r8;
-	goto label$eabbec9_20_161;
-	label$eabbec9_20_168:
+	goto label$eabbec9_18_161;
+	label$eabbec9_18_168:
 	r9 = r8;
 	r26 = 1;
 	if( r10 == NULL ) hl_null_access();
 	r29 = r10->length;
-	label$eabbec9_20_172:
-	if( r26 >= r29 ) goto label$eabbec9_20_195;
+	label$eabbec9_18_172:
+	if( r26 >= r29 ) goto label$eabbec9_18_195;
 	r30 = r26;
 	++r26;
 	if( r10 == NULL ) hl_null_access();
 	r32 = r10->length;
-	if( ((unsigned)r30) < ((unsigned)r32) ) goto label$eabbec9_20_181;
+	if( ((unsigned)r30) < ((unsigned)r32) ) goto label$eabbec9_18_181;
 	r22 = NULL;
-	goto label$eabbec9_20_184;
-	label$eabbec9_20_181:
+	goto label$eabbec9_18_184;
+	label$eabbec9_18_181:
 	r13 = r10->array;
 	r12 = ((vdynamic**)(r13 + 1))[r30];
 	r22 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_184:
+	label$eabbec9_18_184:
 	r31 = 0;
-	label$eabbec9_20_185:
-	if( r22 == r1 ) goto label$eabbec9_20_192;
+	label$eabbec9_18_185:
+	if( r22 == r1 ) goto label$eabbec9_18_192;
 	if( r22 == NULL ) hl_null_access();
 	r23 = r22->parent;
 	r22 = r23;
 	++r31;
-	goto label$eabbec9_20_185;
-	label$eabbec9_20_192:
-	if( r31 >= r9 ) goto label$eabbec9_20_194;
+	goto label$eabbec9_18_185;
+	label$eabbec9_18_192:
+	if( r31 >= r9 ) goto label$eabbec9_18_194;
 	r9 = r31;
-	label$eabbec9_20_194:
-	goto label$eabbec9_20_172;
-	label$eabbec9_20_195:
+	label$eabbec9_18_194:
+	goto label$eabbec9_18_172;
+	label$eabbec9_18_195:
 	r25 = &t$hxd_fmt_fbx_TmpObject;
 	r26 = 0;
 	r13 = hl_alloc_array(r25,r26);
@@ -3023,215 +3007,215 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_buildHierarchy(hxd__fmt__fbx__BaseLibrary r0) 
 	r26 = 0;
 	if( r10 == NULL ) hl_null_access();
 	r29 = r10->length;
-	label$eabbec9_20_202:
-	if( r26 >= r29 ) goto label$eabbec9_20_239;
+	label$eabbec9_18_202:
+	if( r26 >= r29 ) goto label$eabbec9_18_239;
 	r30 = r26;
 	++r26;
 	if( r10 == NULL ) hl_null_access();
 	r32 = r10->length;
-	if( ((unsigned)r30) < ((unsigned)r32) ) goto label$eabbec9_20_211;
+	if( ((unsigned)r30) < ((unsigned)r32) ) goto label$eabbec9_18_211;
 	r22 = NULL;
-	goto label$eabbec9_20_214;
-	label$eabbec9_20_211:
+	goto label$eabbec9_18_214;
+	label$eabbec9_18_211:
 	r13 = r10->array;
 	r12 = ((vdynamic**)(r13 + 1))[r30];
 	r22 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_214:
+	label$eabbec9_18_214:
 	r23 = r22;
 	r31 = 0;
-	label$eabbec9_20_216:
-	if( r23 == r1 ) goto label$eabbec9_20_223;
+	label$eabbec9_18_216:
+	if( r23 == r1 ) goto label$eabbec9_18_223;
 	if( r23 == NULL ) hl_null_access();
 	r33 = r23->parent;
 	r23 = r33;
 	++r31;
-	goto label$eabbec9_20_216;
-	label$eabbec9_20_223:
+	goto label$eabbec9_18_216;
+	label$eabbec9_18_223:
 	r32 = r31 - r9;
 	r34 = 0;
 	r35 = r32;
-	label$eabbec9_20_226:
-	if( r34 >= r35 ) goto label$eabbec9_20_235;
+	label$eabbec9_18_226:
+	if( r34 >= r35 ) goto label$eabbec9_18_235;
 	++r34;
 	if( r22 == NULL ) hl_null_access();
 	r18 = true;
 	r22->isJoint = r18;
 	r33 = r22->parent;
 	r22 = r33;
-	goto label$eabbec9_20_226;
-	label$eabbec9_20_235:
+	goto label$eabbec9_18_226;
+	label$eabbec9_18_235:
 	if( r27 == NULL ) hl_null_access();
 	r18 = hl_types_ArrayObj_remove(r27,((vdynamic*)r22));
 	r34 = hl_types_ArrayObj_push(r27,((vdynamic*)r22));
-	goto label$eabbec9_20_202;
-	label$eabbec9_20_239:
+	goto label$eabbec9_18_202;
+	label$eabbec9_18_239:
 	r10 = r27;
-	label$eabbec9_20_240:
+	label$eabbec9_18_240:
 	if( r10 == NULL ) hl_null_access();
 	r26 = r10->length;
 	r29 = 1;
-	if( r29 >= r26 ) goto label$eabbec9_20_295;
+	if( r29 >= r26 ) goto label$eabbec9_18_295;
 	r26 = 0;
-	label$eabbec9_20_246:
+	label$eabbec9_18_246:
 	if( r10 == NULL ) hl_null_access();
 	r30 = r10->length;
-	if( r26 >= r30 ) goto label$eabbec9_20_262;
+	if( r26 >= r30 ) goto label$eabbec9_18_262;
 	r30 = r10->length;
-	if( ((unsigned)r26) < ((unsigned)r30) ) goto label$eabbec9_20_254;
+	if( ((unsigned)r26) < ((unsigned)r30) ) goto label$eabbec9_18_254;
 	r22 = NULL;
-	goto label$eabbec9_20_257;
-	label$eabbec9_20_254:
+	goto label$eabbec9_18_257;
+	label$eabbec9_18_254:
 	r13 = r10->array;
 	r12 = ((vdynamic**)(r13 + 1))[r26];
 	r22 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_257:
+	label$eabbec9_18_257:
 	++r26;
 	if( r22 == NULL ) hl_null_access();
 	r18 = true;
 	r22->isJoint = r18;
-	goto label$eabbec9_20_246;
-	label$eabbec9_20_262:
+	goto label$eabbec9_18_246;
+	label$eabbec9_18_262:
 	r25 = &t$hxd_fmt_fbx_TmpObject;
 	r26 = 0;
 	r13 = hl_alloc_array(r25,r26);
 	r36 = hl_types_ArrayObj_alloc(r13);
 	r26 = 0;
-	label$eabbec9_20_267:
+	label$eabbec9_18_267:
 	if( r10 == NULL ) hl_null_access();
 	r30 = r10->length;
-	if( r26 >= r30 ) goto label$eabbec9_20_293;
+	if( r26 >= r30 ) goto label$eabbec9_18_293;
 	r30 = r10->length;
-	if( ((unsigned)r26) < ((unsigned)r30) ) goto label$eabbec9_20_275;
+	if( ((unsigned)r26) < ((unsigned)r30) ) goto label$eabbec9_18_275;
 	r22 = NULL;
-	goto label$eabbec9_20_278;
-	label$eabbec9_20_275:
+	goto label$eabbec9_18_278;
+	label$eabbec9_18_275:
 	r13 = r10->array;
 	r12 = ((vdynamic**)(r13 + 1))[r26];
 	r22 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_278:
+	label$eabbec9_18_278:
 	++r26;
 	if( r22 == NULL ) hl_null_access();
 	r23 = r22->parent;
-	if( r23 == r1 ) goto label$eabbec9_20_286;
+	if( r23 == r1 ) goto label$eabbec9_18_286;
 	r23 = r22->parent;
 	if( r23 == NULL ) hl_null_access();
 	r18 = r23->isMesh;
-	if( !r18 ) goto label$eabbec9_20_287;
-	label$eabbec9_20_286:
-	goto label$eabbec9_20_267;
-	label$eabbec9_20_287:
+	if( !r18 ) goto label$eabbec9_18_287;
+	label$eabbec9_18_286:
+	goto label$eabbec9_18_267;
+	label$eabbec9_18_287:
 	if( r36 == NULL ) hl_null_access();
 	r23 = r22->parent;
 	r18 = hl_types_ArrayObj_remove(r36,((vdynamic*)r23));
 	r23 = r22->parent;
 	r29 = hl_types_ArrayObj_push(r36,((vdynamic*)r23));
-	goto label$eabbec9_20_267;
-	label$eabbec9_20_293:
+	goto label$eabbec9_18_267;
+	label$eabbec9_18_293:
 	r10 = r36;
-	goto label$eabbec9_20_240;
-	label$eabbec9_20_295:
-	goto label$eabbec9_20_91;
-	label$eabbec9_20_296:
+	goto label$eabbec9_18_240;
+	label$eabbec9_18_295:
+	goto label$eabbec9_18_91;
+	label$eabbec9_18_296:
 	r18 = true;
-	label$eabbec9_20_297:
-	if( !r18 ) goto label$eabbec9_20_381;
+	label$eabbec9_18_297:
+	if( !r18 ) goto label$eabbec9_18_381;
 	r21 = false;
 	r18 = r21;
 	r5 = 0;
-	label$eabbec9_20_302:
+	label$eabbec9_18_302:
 	if( r3 == NULL ) hl_null_access();
 	r9 = r3->length;
-	if( r5 >= r9 ) goto label$eabbec9_20_380;
+	if( r5 >= r9 ) goto label$eabbec9_18_380;
 	r9 = r3->length;
-	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_20_310;
+	if( ((unsigned)r5) < ((unsigned)r9) ) goto label$eabbec9_18_310;
 	r6 = NULL;
-	goto label$eabbec9_20_313;
-	label$eabbec9_20_310:
+	goto label$eabbec9_18_313;
+	label$eabbec9_18_310:
 	r13 = r3->array;
 	r12 = ((vdynamic**)(r13 + 1))[r5];
 	r6 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_313:
+	label$eabbec9_18_313:
 	++r5;
 	if( r6 == NULL ) hl_null_access();
 	r21 = r6->isJoint;
-	if( r21 ) goto label$eabbec9_20_319;
+	if( r21 ) goto label$eabbec9_18_319;
 	r21 = r6->isMesh;
-	if( !r21 ) goto label$eabbec9_20_320;
-	label$eabbec9_20_319:
-	goto label$eabbec9_20_302;
-	label$eabbec9_20_320:
+	if( !r21 ) goto label$eabbec9_18_320;
+	label$eabbec9_18_319:
+	goto label$eabbec9_18_302;
+	label$eabbec9_18_320:
 	r20 = r6->parent;
 	if( r20 == NULL ) hl_null_access();
 	r21 = r20->isJoint;
-	if( !r21 ) goto label$eabbec9_20_329;
+	if( !r21 ) goto label$eabbec9_18_329;
 	r21 = true;
 	r6->isJoint = r21;
 	r21 = true;
 	r18 = r21;
-	goto label$eabbec9_20_302;
-	label$eabbec9_20_329:
+	goto label$eabbec9_18_302;
+	label$eabbec9_18_329:
 	r21 = false;
 	r8 = 0;
 	r7 = r6->childs;
-	label$eabbec9_20_332:
+	label$eabbec9_18_332:
 	if( r7 == NULL ) hl_null_access();
 	r26 = r7->length;
-	if( r8 >= r26 ) goto label$eabbec9_20_351;
+	if( r8 >= r26 ) goto label$eabbec9_18_351;
 	r26 = r7->length;
-	if( ((unsigned)r8) < ((unsigned)r26) ) goto label$eabbec9_20_340;
+	if( ((unsigned)r8) < ((unsigned)r26) ) goto label$eabbec9_18_340;
 	r20 = NULL;
-	goto label$eabbec9_20_343;
-	label$eabbec9_20_340:
+	goto label$eabbec9_18_343;
+	label$eabbec9_18_340:
 	r13 = r7->array;
 	r12 = ((vdynamic**)(r13 + 1))[r8];
 	r20 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_343:
+	label$eabbec9_18_343:
 	++r8;
 	if( r20 == NULL ) hl_null_access();
 	r37 = r20->isJoint;
-	if( !r37 ) goto label$eabbec9_20_350;
+	if( !r37 ) goto label$eabbec9_18_350;
 	r37 = true;
 	r21 = r37;
-	goto label$eabbec9_20_351;
-	label$eabbec9_20_350:
-	goto label$eabbec9_20_332;
-	label$eabbec9_20_351:
-	if( !r21 ) goto label$eabbec9_20_379;
+	goto label$eabbec9_18_351;
+	label$eabbec9_18_350:
+	goto label$eabbec9_18_332;
+	label$eabbec9_18_351:
+	if( !r21 ) goto label$eabbec9_18_379;
 	r8 = 0;
 	if( r6 == NULL ) hl_null_access();
 	r20 = r6->parent;
 	if( r20 == NULL ) hl_null_access();
 	r7 = r20->childs;
-	label$eabbec9_20_357:
+	label$eabbec9_18_357:
 	if( r7 == NULL ) hl_null_access();
 	r26 = r7->length;
-	if( r8 >= r26 ) goto label$eabbec9_20_379;
+	if( r8 >= r26 ) goto label$eabbec9_18_379;
 	r26 = r7->length;
-	if( ((unsigned)r8) < ((unsigned)r26) ) goto label$eabbec9_20_365;
+	if( ((unsigned)r8) < ((unsigned)r26) ) goto label$eabbec9_18_365;
 	r20 = NULL;
-	goto label$eabbec9_20_368;
-	label$eabbec9_20_365:
+	goto label$eabbec9_18_368;
+	label$eabbec9_18_365:
 	r13 = r7->array;
 	r12 = ((vdynamic**)(r13 + 1))[r8];
 	r20 = (hxd__fmt__fbx__TmpObject)r12;
-	label$eabbec9_20_368:
+	label$eabbec9_18_368:
 	++r8;
 	if( r20 == NULL ) hl_null_access();
 	r37 = r20->isJoint;
-	if( !r37 ) goto label$eabbec9_20_378;
+	if( !r37 ) goto label$eabbec9_18_378;
 	if( r6 == NULL ) hl_null_access();
 	r37 = true;
 	r6->isJoint = r37;
 	r37 = true;
 	r18 = r37;
-	goto label$eabbec9_20_379;
-	label$eabbec9_20_378:
-	goto label$eabbec9_20_357;
-	label$eabbec9_20_379:
-	goto label$eabbec9_20_302;
-	label$eabbec9_20_380:
-	goto label$eabbec9_20_297;
-	label$eabbec9_20_381:
+	goto label$eabbec9_18_379;
+	label$eabbec9_18_378:
+	goto label$eabbec9_18_357;
+	label$eabbec9_18_379:
+	goto label$eabbec9_18_302;
+	label$eabbec9_18_380:
+	goto label$eabbec9_18_297;
+	label$eabbec9_18_381:
 	r38 = hl_alloc_virtual(&t$vrt_ba1ac8c);
 	if( hl_vfields(r38)[1] ) *(hxd__fmt__fbx__TmpObject*)(hl_vfields(r38)[1]) = (hxd__fmt__fbx__TmpObject)r1; else hl_dyn_setp(r38->value,196013868/*root*/,&t$hxd_fmt_fbx_TmpObject,r1);
 	if( hl_vfields(r38)[0] ) *(hl__types__ArrayObj*)(hl_vfields(r38)[0]) = (hl__types__ArrayObj)r3; else hl_dyn_setp(r38->value,-498112699/*objects*/,&t$hl_types_ArrayObj,r3);
@@ -3252,53 +3236,53 @@ hxd__fmt__fbx___BaseLibrary__AnimCurve hxd_fmt_fbx_BaseLibrary_getObjectCurve(hx
 	r7 = hxd_fmt_fbx_FbxTools_getId(r2);
 	r5 = haxe_ds_IntMap_get(r1,r7);
 	r9 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)r5;
-	if( !r9 ) goto label$eabbec9_21_6;
+	if( !r9 ) goto label$eabbec9_19_6;
 	return r9;
-	label$eabbec9_21_6:
+	label$eabbec9_19_6:
 	r12 = hxd_fmt_fbx_FbxTools_getName(r2);
 	r13 = r0->skipObjects;
 	if( r13 == NULL ) hl_null_access();
 	r5 = haxe_ds_StringMap_get(r13,r12);
 	r15 = (vdynamic*)r5;
 	r16 = r15 ? r15->v.b : 0;
-	if( !r16 ) goto label$eabbec9_21_15;
+	if( !r16 ) goto label$eabbec9_19_15;
 	r11 = NULL;
 	return r11;
-	label$eabbec9_21_15:
+	label$eabbec9_19_15:
 	r17 = hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(r0,r2);
-	if( r17 ) goto label$eabbec9_21_19;
+	if( r17 ) goto label$eabbec9_19_19;
 	r11 = NULL;
 	return r11;
-	label$eabbec9_21_19:
+	label$eabbec9_19_19:
 	r19 = (String)s$Visibility;
-	if( r3 == r19 || (r3 && r19 && String___compare(r3,(vdynamic*)r19) == 0) ) goto label$eabbec9_21_25;
+	if( r3 == r19 || (r3 && r19 && String___compare(r3,(vdynamic*)r19) == 0) ) goto label$eabbec9_19_25;
 	r19 = (String)s$UV;
-	if( r3 == r19 || (r3 && r19 && String___compare(r3,(vdynamic*)r19) == 0) ) goto label$eabbec9_21_25;
+	if( r3 == r19 || (r3 && r19 && String___compare(r3,(vdynamic*)r19) == 0) ) goto label$eabbec9_19_25;
 	r16 = true;
-	goto label$eabbec9_21_26;
-	label$eabbec9_21_25:
+	goto label$eabbec9_19_26;
+	label$eabbec9_19_25:
 	r16 = false;
-	label$eabbec9_21_26:
+	label$eabbec9_19_26:
 	if( r17 == NULL ) hl_null_access();
 	r20 = r17->wasRemoved;
-	if( !r20 ) goto label$eabbec9_21_36;
-	if( r16 ) goto label$eabbec9_21_34;
+	if( !r20 ) goto label$eabbec9_19_36;
+	if( r16 ) goto label$eabbec9_19_34;
 	r20 = r17->wasRemoved;
 	r7 = -1;
 	r21 = hl_alloc_dynamic(&t$_i32);
 	r21->v.i = r7;
-	if( r20 != r21 && (!r20 || !r21 || (r20->v.i != r21->v.i)) ) goto label$eabbec9_21_36;
-	label$eabbec9_21_34:
+	if( r20 != r21 && (!r20 || !r21 || (r20->v.i != r21->v.i)) ) goto label$eabbec9_19_36;
+	label$eabbec9_19_34:
 	r11 = NULL;
 	return r11;
-	label$eabbec9_21_36:
+	label$eabbec9_19_36:
 	r20 = r17->wasRemoved;
-	if( !r20 ) goto label$eabbec9_21_62;
+	if( !r20 ) goto label$eabbec9_19_62;
 	r20 = r17->wasRemoved;
 	r7 = -2;
 	r21 = hl_alloc_dynamic(&t$_i32);
 	r21->v.i = r7;
-	if( r20 == r21 || (r20 && r21 && (r20->v.i == r21->v.i)) ) goto label$eabbec9_21_62;
+	if( r20 == r21 || (r20 && r21 && (r20->v.i == r21->v.i)) ) goto label$eabbec9_19_62;
 	r6 = r0->ids;
 	if( r6 == NULL ) hl_null_access();
 	r20 = r17->wasRemoved;
@@ -3315,18 +3299,18 @@ hxd__fmt__fbx___BaseLibrary__AnimCurve hxd_fmt_fbx_BaseLibrary_getObjectCurve(hx
 	r9 = r11;
 	r18 = hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(r0,r8);
 	r17 = r18;
-	if( r18 ) goto label$eabbec9_21_62;
+	if( r18 ) goto label$eabbec9_19_62;
 	r14 = (String)s$assert;
 	r5 = haxe_Exception_thrown(((vdynamic*)r14));
 	hl_throw((vdynamic*)r5);
-	label$eabbec9_21_62:
-	if( r9 ) goto label$eabbec9_21_68;
+	label$eabbec9_19_62:
+	if( r9 ) goto label$eabbec9_19_68;
 	r11 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)hl_alloc_obj(&t$hxd_fmt_fbx__BaseLibrary_AnimCurve);
 	hxd_fmt_fbx__BaseLibrary_AnimCurve_new(r11,r17,r12);
 	r9 = r11;
 	r7 = hxd_fmt_fbx_FbxTools_getId(r2);
 	haxe_ds_IntMap_set(r1,r7,((vdynamic*)r11));
-	label$eabbec9_21_68:
+	label$eabbec9_19_68:
 	return r9;
 }
 
@@ -3337,26 +3321,26 @@ vvirtual* hxd_fmt_fbx_BaseLibrary_mergeModels__$1(hl__types__ArrayObj r0,String 
 	varray *r6;
 	int r2, r3;
 	r2 = 0;
-	label$eabbec9_22_1:
+	label$eabbec9_20_1:
 	if( r0 == NULL ) hl_null_access();
 	r3 = r0->length;
-	if( r2 >= r3 ) goto label$eabbec9_22_17;
+	if( r2 >= r3 ) goto label$eabbec9_20_17;
 	r3 = r0->length;
-	if( ((unsigned)r2) < ((unsigned)r3) ) goto label$eabbec9_22_9;
+	if( ((unsigned)r2) < ((unsigned)r3) ) goto label$eabbec9_20_9;
 	r4 = NULL;
-	goto label$eabbec9_22_12;
-	label$eabbec9_22_9:
+	goto label$eabbec9_20_12;
+	label$eabbec9_20_9:
 	r6 = r0->array;
 	r5 = ((vdynamic**)(r6 + 1))[r2];
 	r4 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r5);
-	label$eabbec9_22_12:
+	label$eabbec9_20_12:
 	++r2;
 	r7 = hxd_fmt_fbx_FbxTools_getName(r4);
-	if( r7 != r1 && (!r7 || !r1 || String___compare(r7,(vdynamic*)r1) != 0) ) goto label$eabbec9_22_16;
+	if( r7 != r1 && (!r7 || !r1 || String___compare(r7,(vdynamic*)r1) != 0) ) goto label$eabbec9_20_16;
 	return r4;
-	label$eabbec9_22_16:
-	goto label$eabbec9_22_1;
-	label$eabbec9_22_17:
+	label$eabbec9_20_16:
+	goto label$eabbec9_20_1;
+	label$eabbec9_20_17:
 	r7 = (String)s$Model_not_found_;
 	r7 = String___add__(r7,r1);
 	r5 = haxe_Exception_thrown(((vdynamic*)r7));
@@ -3382,22 +3366,22 @@ void hxd_fmt_fbx_BaseLibrary_mergeModels(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->length;
 	r5 = 1;
-	if( r5 < r3 ) goto label$eabbec9_23_5;
+	if( r5 < r3 ) goto label$eabbec9_21_5;
 	return;
-	label$eabbec9_23_5:
+	label$eabbec9_21_5:
 	r4 = hxd_fmt_fbx_BaseLibrary_getAllModels(r0);
 	r7 = hl_alloc_closure_ptr(&t$fun_24f45e2,hxd_fmt_fbx_BaseLibrary_mergeModels__$1,r4);
 	if( r7 == NULL ) hl_null_access();
 	r3 = 0;
 	r5 = r1->length;
-	if( ((unsigned)r3) < ((unsigned)r5) ) goto label$eabbec9_23_13;
+	if( ((unsigned)r3) < ((unsigned)r5) ) goto label$eabbec9_21_13;
 	r10 = NULL;
-	goto label$eabbec9_23_16;
-	label$eabbec9_23_13:
+	goto label$eabbec9_21_16;
+	label$eabbec9_21_13:
 	r11 = r1->array;
 	r6 = ((vdynamic**)(r11 + 1))[r3];
 	r10 = (String)r6;
-	label$eabbec9_23_16:
+	label$eabbec9_21_16:
 	r8 = r7->hasValue ? ((vvirtual* (*)(vdynamic*,String))r7->fun)((vdynamic*)r7->value,r10) : ((vvirtual* (*)(String))r7->fun)(r10);
 	r12 = (hxd__fmt__fbx__Geometry)hl_alloc_obj(&t$hxd_fmt_fbx_Geometry);
 	r10 = (String)s$Geometry;
@@ -3413,20 +3397,20 @@ void hxd_fmt_fbx_BaseLibrary_mergeModels(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	r9 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r13,r10);
 	r3 = 1;
 	r5 = r1->length;
-	label$eabbec9_23_31:
-	if( r3 >= r5 ) goto label$eabbec9_23_236;
+	label$eabbec9_21_31:
+	if( r3 >= r5 ) goto label$eabbec9_21_236;
 	r19 = r3;
 	++r3;
 	if( r1 == NULL ) hl_null_access();
 	r21 = r1->length;
-	if( ((unsigned)r19) < ((unsigned)r21) ) goto label$eabbec9_23_40;
+	if( ((unsigned)r19) < ((unsigned)r21) ) goto label$eabbec9_21_40;
 	r10 = NULL;
-	goto label$eabbec9_23_43;
-	label$eabbec9_23_40:
+	goto label$eabbec9_21_43;
+	label$eabbec9_21_40:
 	r11 = r1->array;
 	r6 = ((vdynamic**)(r11 + 1))[r19];
 	r10 = (String)r6;
-	label$eabbec9_23_43:
+	label$eabbec9_21_43:
 	if( r7 == NULL ) hl_null_access();
 	r17 = r7->hasValue ? ((vvirtual* (*)(vdynamic*,String))r7->fun)((vdynamic*)r7->value,r10) : ((vvirtual* (*)(String))r7->fun)(r10);
 	r15 = (hxd__fmt__fbx__Geometry)hl_alloc_obj(&t$hxd_fmt_fbx_Geometry);
@@ -3457,34 +3441,34 @@ void hxd_fmt_fbx_BaseLibrary_mergeModels(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	r21 = 0;
 	r22 = (String)s$Material;
 	r30 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r17,r22);
-	label$eabbec9_23_73:
+	label$eabbec9_21_73:
 	if( r30 == NULL ) hl_null_access();
 	r32 = r30->length;
-	if( r21 >= r32 ) goto label$eabbec9_23_97;
+	if( r21 >= r32 ) goto label$eabbec9_21_97;
 	r32 = r30->length;
-	if( ((unsigned)r21) < ((unsigned)r32) ) goto label$eabbec9_23_81;
+	if( ((unsigned)r21) < ((unsigned)r32) ) goto label$eabbec9_21_81;
 	r23 = NULL;
-	goto label$eabbec9_23_84;
-	label$eabbec9_23_81:
+	goto label$eabbec9_21_84;
+	label$eabbec9_21_81:
 	r11 = r30->array;
 	r6 = ((vdynamic**)(r11 + 1))[r21];
 	r23 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r6);
-	label$eabbec9_23_84:
+	label$eabbec9_21_84:
 	++r21;
 	if( r18 == NULL ) hl_null_access();
 	r34 = NULL;
 	r31 = hl_types_ArrayObj_indexOf(r18,((vdynamic*)r23),r34);
 	r35 = 0;
-	if( r31 >= r35 ) goto label$eabbec9_23_94;
+	if( r31 >= r35 ) goto label$eabbec9_21_94;
 	r32 = r18->length;
 	r31 = r32;
 	r32 = hl_types_ArrayObj_push(r18,((vdynamic*)r23));
 	hxd_fmt_fbx_BaseLibrary_addLink(r0,r8,r23);
-	label$eabbec9_23_94:
+	label$eabbec9_21_94:
 	if( r28 == NULL ) hl_null_access();
 	r32 = hl_types_ArrayBytes_Int_push(r28,r31);
-	goto label$eabbec9_23_73;
-	label$eabbec9_23_97:
+	goto label$eabbec9_21_73;
+	label$eabbec9_21_97:
 	if( r12 == NULL ) hl_null_access();
 	hxd_fmt_fbx_Geometry_merge(r12,r15,r28);
 	if( r15 == NULL ) hl_null_access();
@@ -3493,8 +3477,8 @@ void hxd_fmt_fbx_BaseLibrary_mergeModels(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	r16 = true;
 	r14 = hl_alloc_dynbool(r16);
 	r23 = hxd_fmt_fbx_BaseLibrary_getChild(r0,r23,r22,r14);
-	if( !r23 ) goto label$eabbec9_23_235;
-	if( r13 ) goto label$eabbec9_23_115;
+	if( !r23 ) goto label$eabbec9_21_235;
+	if( r13 ) goto label$eabbec9_21_115;
 	r22 = hxd_fmt_fbx_FbxTools_getName(r8);
 	r38 = (String)s$_does_not_have_a_deformer_but_;
 	r22 = String___add__(r22,r38);
@@ -3503,63 +3487,63 @@ void hxd_fmt_fbx_BaseLibrary_mergeModels(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	r22 = String___add__(r22,r38);
 	r6 = haxe_Exception_thrown(((vdynamic*)r22));
 	hl_throw((vdynamic*)r6);
-	label$eabbec9_23_115:
+	label$eabbec9_21_115:
 	r21 = 0;
 	r22 = (String)s$Deformer;
 	r30 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r23,r22);
-	label$eabbec9_23_118:
+	label$eabbec9_21_118:
 	if( r30 == NULL ) hl_null_access();
 	r32 = r30->length;
-	if( r21 >= r32 ) goto label$eabbec9_23_235;
+	if( r21 >= r32 ) goto label$eabbec9_21_235;
 	r32 = r30->length;
-	if( ((unsigned)r21) < ((unsigned)r32) ) goto label$eabbec9_23_126;
+	if( ((unsigned)r21) < ((unsigned)r32) ) goto label$eabbec9_21_126;
 	r33 = NULL;
-	goto label$eabbec9_23_129;
-	label$eabbec9_23_126:
+	goto label$eabbec9_21_129;
+	label$eabbec9_21_126:
 	r11 = r30->array;
 	r6 = ((vdynamic**)(r11 + 1))[r21];
 	r33 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r6);
-	label$eabbec9_23_129:
+	label$eabbec9_21_129:
 	++r21;
 	r22 = (String)s$Model;
 	r14 = NULL;
 	r36 = hxd_fmt_fbx_BaseLibrary_getChild(r0,r33,r22,r14);
 	r39 = NULL;
 	r31 = 0;
-	label$eabbec9_23_135:
+	label$eabbec9_21_135:
 	if( r9 == NULL ) hl_null_access();
 	r35 = r9->length;
-	if( r31 >= r35 ) goto label$eabbec9_23_154;
+	if( r31 >= r35 ) goto label$eabbec9_21_154;
 	r35 = r9->length;
-	if( ((unsigned)r31) < ((unsigned)r35) ) goto label$eabbec9_23_143;
+	if( ((unsigned)r31) < ((unsigned)r35) ) goto label$eabbec9_21_143;
 	r40 = NULL;
-	goto label$eabbec9_23_146;
-	label$eabbec9_23_143:
+	goto label$eabbec9_21_146;
+	label$eabbec9_21_143:
 	r11 = r9->array;
 	r6 = ((vdynamic**)(r11 + 1))[r31];
 	r40 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r6);
-	label$eabbec9_23_146:
+	label$eabbec9_21_146:
 	++r31;
 	r22 = (String)s$Model;
 	r14 = NULL;
 	r41 = hxd_fmt_fbx_BaseLibrary_getChild(r0,r40,r22,r14);
-	if( r41 != r36 && (!r41 || !r36 || !r41->value || !r36->value || r41->value != r36->value) ) goto label$eabbec9_23_153;
+	if( r41 != r36 && (!r41 || !r36 || !r41->value || !r36->value || r41->value != r36->value) ) goto label$eabbec9_21_153;
 	r39 = r40;
-	goto label$eabbec9_23_154;
-	label$eabbec9_23_153:
-	goto label$eabbec9_23_135;
-	label$eabbec9_23_154:
-	if( !r39 ) goto label$eabbec9_23_156;
+	goto label$eabbec9_21_154;
+	label$eabbec9_21_153:
+	goto label$eabbec9_21_135;
+	label$eabbec9_21_154:
+	if( !r39 ) goto label$eabbec9_21_156;
 	hxd_fmt_fbx_BaseLibrary_removeLink(r0,r33,r36);
-	label$eabbec9_23_156:
+	label$eabbec9_21_156:
 	r22 = (String)s$Indexes;
 	r16 = true;
 	r42 = &r16;
 	r40 = hxd_fmt_fbx_FbxTools_get(r33,r22,r42);
-	if( r40 ) goto label$eabbec9_23_162;
-	goto label$eabbec9_23_118;
-	label$eabbec9_23_162:
-	if( r39 ) goto label$eabbec9_23_186;
+	if( r40 ) goto label$eabbec9_21_162;
+	goto label$eabbec9_21_118;
+	label$eabbec9_21_162:
+	if( r39 ) goto label$eabbec9_21_186;
 	hxd_fmt_fbx_BaseLibrary_addLink(r0,r13,r33);
 	hxd_fmt_fbx_BaseLibrary_removeLink(r0,r23,r33);
 	r31 = hl_types_ArrayObj_push(r9,((vdynamic*)r33));
@@ -3567,51 +3551,51 @@ void hxd_fmt_fbx_BaseLibrary_mergeModels(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	r31 = 0;
 	if( r37 == NULL ) hl_null_access();
 	r32 = r37->length;
-	label$eabbec9_23_170:
-	if( r31 >= r32 ) goto label$eabbec9_23_185;
+	label$eabbec9_21_170:
+	if( r31 >= r32 ) goto label$eabbec9_21_185;
 	r35 = r31;
 	++r31;
 	if( r37 == NULL ) hl_null_access();
 	r44 = r37->length;
-	if( ((unsigned)r35) < ((unsigned)r44) ) goto label$eabbec9_23_178;
+	if( ((unsigned)r35) < ((unsigned)r44) ) goto label$eabbec9_21_178;
 	hl_types_ArrayBytes_Int___expand(r37,r35);
-	label$eabbec9_23_178:
+	label$eabbec9_21_178:
 	r29 = r37->bytes;
 	r44 = 2;
 	r44 = r35 << r44;
 	r45 = *(int*)(r29 + r44);
 	r45 = r45 + r20;
 	*(int*)(r29 + r44) = r45;
-	goto label$eabbec9_23_170;
-	label$eabbec9_23_185:
-	goto label$eabbec9_23_234;
-	label$eabbec9_23_186:
+	goto label$eabbec9_21_170;
+	label$eabbec9_21_185:
+	goto label$eabbec9_21_234;
+	label$eabbec9_21_186:
 	r22 = (String)s$Indexes;
 	r42 = NULL;
 	r41 = hxd_fmt_fbx_FbxTools_get(r39,r22,r42);
 	r37 = hxd_fmt_fbx_FbxTools_getInts(r41);
 	r31 = 0;
 	r43 = hxd_fmt_fbx_FbxTools_getInts(r40);
-	label$eabbec9_23_192:
+	label$eabbec9_21_192:
 	if( r43 == NULL ) hl_null_access();
 	r35 = r43->length;
-	if( r31 >= r35 ) goto label$eabbec9_23_209;
+	if( r31 >= r35 ) goto label$eabbec9_21_209;
 	r35 = r43->length;
-	if( ((unsigned)r31) < ((unsigned)r35) ) goto label$eabbec9_23_200;
+	if( ((unsigned)r31) < ((unsigned)r35) ) goto label$eabbec9_21_200;
 	r32 = 0;
-	goto label$eabbec9_23_204;
-	label$eabbec9_23_200:
+	goto label$eabbec9_21_204;
+	label$eabbec9_21_200:
 	r29 = r43->bytes;
 	r35 = 2;
 	r35 = r31 << r35;
 	r32 = *(int*)(r29 + r35);
-	label$eabbec9_23_204:
+	label$eabbec9_21_204:
 	++r31;
 	if( r37 == NULL ) hl_null_access();
 	r35 = r32 + r20;
 	r35 = hl_types_ArrayBytes_Int_push(r37,r35);
-	goto label$eabbec9_23_192;
-	label$eabbec9_23_209:
+	goto label$eabbec9_21_192;
+	label$eabbec9_21_209:
 	r22 = (String)s$Weights;
 	r42 = NULL;
 	r41 = hxd_fmt_fbx_FbxTools_get(r39,r22,r42);
@@ -3621,29 +3605,29 @@ void hxd_fmt_fbx_BaseLibrary_mergeModels(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	r42 = NULL;
 	r41 = hxd_fmt_fbx_FbxTools_get(r33,r22,r42);
 	r46 = hxd_fmt_fbx_FbxTools_getFloats(r41);
-	label$eabbec9_23_218:
+	label$eabbec9_21_218:
 	if( r46 == NULL ) hl_null_access();
 	r35 = r46->length;
-	if( r31 >= r35 ) goto label$eabbec9_23_234;
+	if( r31 >= r35 ) goto label$eabbec9_21_234;
 	r35 = r46->length;
-	if( ((unsigned)r31) < ((unsigned)r35) ) goto label$eabbec9_23_226;
+	if( ((unsigned)r31) < ((unsigned)r35) ) goto label$eabbec9_21_226;
 	r26 = 0.;
-	goto label$eabbec9_23_230;
-	label$eabbec9_23_226:
+	goto label$eabbec9_21_230;
+	label$eabbec9_21_226:
 	r29 = r46->bytes;
 	r35 = 3;
 	r35 = r31 << r35;
 	r26 = *(double*)(r29 + r35);
-	label$eabbec9_23_230:
+	label$eabbec9_21_230:
 	++r31;
 	if( r25 == NULL ) hl_null_access();
 	r32 = hl_types_ArrayBytes_Float_push(r25,r26);
-	goto label$eabbec9_23_218;
-	label$eabbec9_23_234:
-	goto label$eabbec9_23_118;
-	label$eabbec9_23_235:
-	goto label$eabbec9_23_31;
-	label$eabbec9_23_236:
+	goto label$eabbec9_21_218;
+	label$eabbec9_21_234:
+	goto label$eabbec9_21_118;
+	label$eabbec9_21_235:
+	goto label$eabbec9_21_31;
+	label$eabbec9_21_236:
 	return;
 }
 
@@ -3698,127 +3682,127 @@ bool hxd_fmt_fbx_BaseLibrary_checkData(hxd__fmt__fbx__BaseLibrary r0,vvirtual* r
 	double r6, r9;
 	vbyte *r7;
 	int r4, r5, r8;
-	if( r1 ) goto label$eabbec9_26_3;
+	if( r1 ) goto label$eabbec9_24_3;
 	r2 = true;
 	return r2;
-	label$eabbec9_26_3:
+	label$eabbec9_24_3:
 	if( r1 == NULL ) hl_null_access();
 	r3 = hl_vfields(r1)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	if( !r3 ) goto label$eabbec9_26_36;
+	if( !r3 ) goto label$eabbec9_24_36;
 	r3 = hl_vfields(r1)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
 	if( r3 == NULL ) hl_null_access();
 	r4 = 0;
 	r5 = r3->length;
-	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$eabbec9_26_13;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$eabbec9_24_13;
 	r6 = 0.;
-	goto label$eabbec9_26_17;
-	label$eabbec9_26_13:
+	goto label$eabbec9_24_17;
+	label$eabbec9_24_13:
 	r7 = r3->bytes;
 	r5 = 3;
 	r5 = r4 << r5;
 	r6 = *(double*)(r7 + r5);
-	label$eabbec9_26_17:
+	label$eabbec9_24_17:
 	r4 = 0;
 	r3 = hl_vfields(r1)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_26_19:
+	label$eabbec9_24_19:
 	if( r3 == NULL ) hl_null_access();
 	r8 = r3->length;
-	if( r4 >= r8 ) goto label$eabbec9_26_36;
+	if( r4 >= r8 ) goto label$eabbec9_24_36;
 	r8 = r3->length;
-	if( ((unsigned)r4) < ((unsigned)r8) ) goto label$eabbec9_26_27;
+	if( ((unsigned)r4) < ((unsigned)r8) ) goto label$eabbec9_24_27;
 	r9 = 0.;
-	goto label$eabbec9_26_31;
-	label$eabbec9_26_27:
+	goto label$eabbec9_24_31;
+	label$eabbec9_24_27:
 	r7 = r3->bytes;
 	r8 = 3;
 	r8 = r4 << r8;
 	r9 = *(double*)(r7 + r8);
-	label$eabbec9_26_31:
+	label$eabbec9_24_31:
 	++r4;
-	if( r6 == r9 ) goto label$eabbec9_26_35;
+	if( r6 == r9 ) goto label$eabbec9_24_35;
 	r2 = false;
 	return r2;
-	label$eabbec9_26_35:
-	goto label$eabbec9_26_19;
-	label$eabbec9_26_36:
+	label$eabbec9_24_35:
+	goto label$eabbec9_24_19;
+	label$eabbec9_24_36:
 	if( r1 == NULL ) hl_null_access();
 	r3 = hl_vfields(r1)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	if( !r3 ) goto label$eabbec9_26_69;
+	if( !r3 ) goto label$eabbec9_24_69;
 	r3 = hl_vfields(r1)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
 	if( r3 == NULL ) hl_null_access();
 	r4 = 0;
 	r5 = r3->length;
-	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$eabbec9_26_46;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$eabbec9_24_46;
 	r6 = 0.;
-	goto label$eabbec9_26_50;
-	label$eabbec9_26_46:
+	goto label$eabbec9_24_50;
+	label$eabbec9_24_46:
 	r7 = r3->bytes;
 	r5 = 3;
 	r5 = r4 << r5;
 	r6 = *(double*)(r7 + r5);
-	label$eabbec9_26_50:
+	label$eabbec9_24_50:
 	r4 = 0;
 	r3 = hl_vfields(r1)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_26_52:
+	label$eabbec9_24_52:
 	if( r3 == NULL ) hl_null_access();
 	r8 = r3->length;
-	if( r4 >= r8 ) goto label$eabbec9_26_69;
+	if( r4 >= r8 ) goto label$eabbec9_24_69;
 	r8 = r3->length;
-	if( ((unsigned)r4) < ((unsigned)r8) ) goto label$eabbec9_26_60;
+	if( ((unsigned)r4) < ((unsigned)r8) ) goto label$eabbec9_24_60;
 	r9 = 0.;
-	goto label$eabbec9_26_64;
-	label$eabbec9_26_60:
+	goto label$eabbec9_24_64;
+	label$eabbec9_24_60:
 	r7 = r3->bytes;
 	r8 = 3;
 	r8 = r4 << r8;
 	r9 = *(double*)(r7 + r8);
-	label$eabbec9_26_64:
+	label$eabbec9_24_64:
 	++r4;
-	if( r6 == r9 ) goto label$eabbec9_26_68;
+	if( r6 == r9 ) goto label$eabbec9_24_68;
 	r2 = false;
 	return r2;
-	label$eabbec9_26_68:
-	goto label$eabbec9_26_52;
-	label$eabbec9_26_69:
+	label$eabbec9_24_68:
+	goto label$eabbec9_24_52;
+	label$eabbec9_24_69:
 	if( r1 == NULL ) hl_null_access();
 	r3 = hl_vfields(r1)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	if( !r3 ) goto label$eabbec9_26_102;
+	if( !r3 ) goto label$eabbec9_24_102;
 	r3 = hl_vfields(r1)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
 	if( r3 == NULL ) hl_null_access();
 	r4 = 0;
 	r5 = r3->length;
-	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$eabbec9_26_79;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$eabbec9_24_79;
 	r6 = 0.;
-	goto label$eabbec9_26_83;
-	label$eabbec9_26_79:
+	goto label$eabbec9_24_83;
+	label$eabbec9_24_79:
 	r7 = r3->bytes;
 	r5 = 3;
 	r5 = r4 << r5;
 	r6 = *(double*)(r7 + r5);
-	label$eabbec9_26_83:
+	label$eabbec9_24_83:
 	r4 = 0;
 	r3 = hl_vfields(r1)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r1)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r1->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_26_85:
+	label$eabbec9_24_85:
 	if( r3 == NULL ) hl_null_access();
 	r8 = r3->length;
-	if( r4 >= r8 ) goto label$eabbec9_26_102;
+	if( r4 >= r8 ) goto label$eabbec9_24_102;
 	r8 = r3->length;
-	if( ((unsigned)r4) < ((unsigned)r8) ) goto label$eabbec9_26_93;
+	if( ((unsigned)r4) < ((unsigned)r8) ) goto label$eabbec9_24_93;
 	r9 = 0.;
-	goto label$eabbec9_26_97;
-	label$eabbec9_26_93:
+	goto label$eabbec9_24_97;
+	label$eabbec9_24_93:
 	r7 = r3->bytes;
 	r8 = 3;
 	r8 = r4 << r8;
 	r9 = *(double*)(r7 + r8);
-	label$eabbec9_26_97:
+	label$eabbec9_24_97:
 	++r4;
-	if( r6 == r9 ) goto label$eabbec9_26_101;
+	if( r6 == r9 ) goto label$eabbec9_24_101;
 	r2 = false;
 	return r2;
-	label$eabbec9_26_101:
-	goto label$eabbec9_26_85;
-	label$eabbec9_26_102:
+	label$eabbec9_24_101:
+	goto label$eabbec9_24_85;
+	label$eabbec9_24_102:
 	r2 = true;
 	return r2;
 }
@@ -3828,59 +3812,59 @@ bool hxd_fmt_fbx_BaseLibrary_roundValues(hxd__fmt__fbx__BaseLibrary r0,hl__types
 	double r4, r10, r13, r14, r15;
 	vbyte *r12;
 	int r7, r8, r9, r11;
-	if( r3 ) goto label$eabbec9_27_3;
+	if( r3 ) goto label$eabbec9_25_3;
 	r4 = 1.;
-	goto label$eabbec9_27_4;
-	label$eabbec9_27_3:
+	goto label$eabbec9_25_4;
+	label$eabbec9_25_3:
 	r4 = *r3;
-	label$eabbec9_27_4:
+	label$eabbec9_25_4:
 	r5 = false;
 	r7 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r8 = r1->length;
-	label$eabbec9_27_8:
-	if( r7 >= r8 ) goto label$eabbec9_27_43;
+	label$eabbec9_25_8:
+	if( r7 >= r8 ) goto label$eabbec9_25_43;
 	r9 = r7;
 	++r7;
 	if( r1 == NULL ) hl_null_access();
 	r11 = r1->length;
-	if( ((unsigned)r9) < ((unsigned)r11) ) goto label$eabbec9_27_17;
+	if( ((unsigned)r9) < ((unsigned)r11) ) goto label$eabbec9_25_17;
 	r10 = 0.;
-	goto label$eabbec9_27_21;
-	label$eabbec9_27_17:
+	goto label$eabbec9_25_21;
+	label$eabbec9_25_17:
 	r12 = r1->bytes;
 	r11 = 3;
 	r11 = r9 << r11;
 	r10 = *(double*)(r12 + r11);
-	label$eabbec9_27_21:
+	label$eabbec9_25_21:
 	r10 = r10 * r4;
 	r13 = r10 - r2;
 	r15 = 0.;
-	if( !(r13 < r15) ) goto label$eabbec9_27_27;
+	if( !(r13 < r15) ) goto label$eabbec9_25_27;
 	r14 = -r13;
-	goto label$eabbec9_27_28;
-	label$eabbec9_27_27:
+	goto label$eabbec9_25_28;
+	label$eabbec9_25_27:
 	r14 = r13;
-	label$eabbec9_27_28:
+	label$eabbec9_25_28:
 	r15 = 0.001;
-	if( !(r15 < r14) ) goto label$eabbec9_27_33;
+	if( !(r15 < r14) ) goto label$eabbec9_25_33;
 	r16 = true;
 	r5 = r16;
-	goto label$eabbec9_27_34;
-	label$eabbec9_27_33:
+	goto label$eabbec9_25_34;
+	label$eabbec9_25_33:
 	r10 = r2;
-	label$eabbec9_27_34:
+	label$eabbec9_25_34:
 	r14 = hxd_fmt_fbx_BaseLibrary_round(r0,r10);
 	r11 = r1->length;
-	if( ((unsigned)r9) < ((unsigned)r11) ) goto label$eabbec9_27_38;
+	if( ((unsigned)r9) < ((unsigned)r11) ) goto label$eabbec9_25_38;
 	hl_types_ArrayBytes_Float___expand(r1,r9);
-	label$eabbec9_27_38:
+	label$eabbec9_25_38:
 	r12 = r1->bytes;
 	r11 = 3;
 	r11 = r9 << r11;
 	*(double*)(r12 + r11) = r14;
-	goto label$eabbec9_27_8;
-	label$eabbec9_27_43:
+	goto label$eabbec9_25_8;
+	label$eabbec9_25_43:
 	return r5;
 }
 
@@ -3900,32 +3884,32 @@ hl__types__ArrayObj hxd_fmt_fbx_BaseLibrary_getAnimationNames(hxd__fmt__fbx__Bas
 	r6 = r0->root;
 	r7 = (String)s$Objects_AnimationStack;
 	r5 = hxd_fmt_fbx_FbxTools_getAll(r6,r7);
-	label$eabbec9_28_8:
+	label$eabbec9_26_8:
 	if( r5 == NULL ) hl_null_access();
 	r9 = r5->length;
-	if( r4 >= r9 ) goto label$eabbec9_28_30;
+	if( r4 >= r9 ) goto label$eabbec9_26_30;
 	r9 = r5->length;
-	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_28_16;
+	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_26_16;
 	r6 = NULL;
-	goto label$eabbec9_28_19;
-	label$eabbec9_28_16:
+	goto label$eabbec9_26_19;
+	label$eabbec9_26_16:
 	r2 = r5->array;
 	r11 = ((vdynamic**)(r2 + 1))[r4];
 	r6 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_28_19:
+	label$eabbec9_26_19:
 	++r4;
 	r7 = (String)s$AnimationLayer;
 	r10 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r6,r7);
 	if( r10 == NULL ) hl_null_access();
 	r8 = r10->length;
 	r9 = 0;
-	if( r9 >= r8 ) goto label$eabbec9_28_29;
+	if( r9 >= r8 ) goto label$eabbec9_26_29;
 	if( r1 == NULL ) hl_null_access();
 	r7 = hxd_fmt_fbx_FbxTools_getName(r6);
 	r8 = hl_types_ArrayObj_push(r1,((vdynamic*)r7));
-	label$eabbec9_28_29:
-	goto label$eabbec9_28_8;
-	label$eabbec9_28_30:
+	label$eabbec9_26_29:
+	goto label$eabbec9_26_8;
+	label$eabbec9_26_30:
 	return r1;
 }
 
@@ -3935,20 +3919,20 @@ String hxd_fmt_fbx_BaseLibrary_loadAnimation__$1(vvirtual* r0) {
 	vvirtual *r1;
 	if( r0 == NULL ) hl_null_access();
 	r1 = hl_vfields(r0)[1] ? (*(vvirtual**)(hl_vfields(r0)[1])) : (vvirtual*)hl_dyn_getp(r0->value,196013191/*roll*/,&t$vrt_31e350b);
-	if( !r1 ) goto label$eabbec9_29_5;
+	if( !r1 ) goto label$eabbec9_27_5;
 	r2 = (String)s$roll;
 	return r2;
-	label$eabbec9_29_5:
+	label$eabbec9_27_5:
 	r1 = hl_vfields(r0)[0] ? (*(vvirtual**)(hl_vfields(r0)[0])) : (vvirtual*)hl_dyn_getp(r0->value,5097229/*fov*/,&t$vrt_31e350b);
-	if( !r1 ) goto label$eabbec9_29_9;
+	if( !r1 ) goto label$eabbec9_27_9;
 	r2 = (String)s$fov;
 	return r2;
-	label$eabbec9_29_9:
+	label$eabbec9_27_9:
 	r3 = hl_vfields(r0)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r0)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r0->value,26209/*uv*/,&t$hl_types_ArrayObj);
-	if( !r3 ) goto label$eabbec9_29_13;
+	if( !r3 ) goto label$eabbec9_27_13;
 	r2 = (String)s$uv;
 	return r2;
-	label$eabbec9_29_13:
+	label$eabbec9_27_13:
 	r2 = (String)s$position;
 	return r2;
 }
@@ -3963,9 +3947,9 @@ int hxd_fmt_fbx_BaseLibrary_loadAnimation__$2(vclosure* r0,hxd__fmt__fbx___BaseL
 	r5 = r2->object;
 	r3 = hl_dyn_compare(((vdynamic*)r4),((vdynamic*)r5));
 	r7 = 0;
-	if( r3 == r7 ) goto label$eabbec9_30_8;
+	if( r3 == r7 ) goto label$eabbec9_28_8;
 	return r3;
-	label$eabbec9_30_8:
+	label$eabbec9_28_8:
 	if( r0 == NULL ) hl_null_access();
 	r8 = hl_to_virtual(&t$vrt_68ba32e,(vdynamic*)r1);
 	r4 = r0->hasValue ? ((String (*)(vdynamic*,vvirtual*))r0->fun)((vdynamic*)r0->value,r8) : ((String (*)(vvirtual*))r0->fun)(r8);
@@ -4007,7 +3991,7 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	varray *r15;
 	static vclosure cl$0 = { &t$fun_abea61a, hl_dyn_compare, 0 };
 	static vclosure cl$1 = { &t$fun_b2cd549, hxd_fmt_fbx_BaseLibrary_loadAnimation__$1, 0 };
-	if( !r3 ) goto label$eabbec9_31_8;
+	if( !r3 ) goto label$eabbec9_29_8;
 	if( r3 == NULL ) hl_null_access();
 	r6 = r0->defaultModelMatrixes;
 	r3->defaultModelMatrixes = r6;
@@ -4015,8 +3999,8 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r10 = NULL;
 	r7 = hxd_fmt_fbx_BaseLibrary_loadAnimation(r3,r1,r9,r10);
 	return r7;
-	label$eabbec9_31_8:
-	if( !r2 ) goto label$eabbec9_31_24;
+	label$eabbec9_29_8:
+	if( !r2 ) goto label$eabbec9_29_24;
 	r5 = (hxd__fmt__fbx__BaseLibrary)hl_alloc_obj(&t$hxd_fmt_fbx_BaseLibrary);
 	r8 = r0->fileName;
 	hxd_fmt_fbx_BaseLibrary_new(r5,r8);
@@ -4024,16 +4008,16 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r5->normalizeScaleOrient = r12;
 	hxd_fmt_fbx_BaseLibrary_load(r5,r2);
 	r12 = r0->leftHand;
-	if( !r12 ) goto label$eabbec9_31_18;
+	if( !r12 ) goto label$eabbec9_29_18;
 	hxd_fmt_fbx_BaseLibrary_leftHandConvert(r5);
-	label$eabbec9_31_18:
+	label$eabbec9_29_18:
 	r6 = r0->defaultModelMatrixes;
 	r5->defaultModelMatrixes = r6;
 	r9 = NULL;
 	r13 = NULL;
 	r7 = hxd_fmt_fbx_BaseLibrary_loadAnimation(r5,r1,r9,r13);
 	return r7;
-	label$eabbec9_31_24:
+	label$eabbec9_29_24:
 	r9 = NULL;
 	r16 = &t$vrt_0813dd2;
 	r17 = 0;
@@ -4043,40 +4027,40 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r19 = r0->root;
 	r8 = (String)s$Objects_AnimationStack;
 	r18 = hxd_fmt_fbx_FbxTools_getAll(r19,r8);
-	label$eabbec9_31_33:
+	label$eabbec9_29_33:
 	if( r18 == NULL ) hl_null_access();
 	r21 = r18->length;
-	if( r17 >= r21 ) goto label$eabbec9_31_74;
+	if( r17 >= r21 ) goto label$eabbec9_29_74;
 	r21 = r18->length;
-	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_31_41;
+	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_29_41;
 	r19 = NULL;
-	goto label$eabbec9_31_44;
-	label$eabbec9_31_41:
+	goto label$eabbec9_29_44;
+	label$eabbec9_29_41:
 	r15 = r18->array;
 	r11 = ((vdynamic**)(r15 + 1))[r17];
 	r19 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_31_44:
+	label$eabbec9_29_44:
 	++r17;
-	if( !r1 ) goto label$eabbec9_31_48;
+	if( !r1 ) goto label$eabbec9_29_48;
 	r8 = hxd_fmt_fbx_FbxTools_getName(r19);
-	if( r8 != r1 && (!r8 || !r1 || String___compare(r8,(vdynamic*)r1) != 0) ) goto label$eabbec9_31_73;
-	label$eabbec9_31_48:
+	if( r8 != r1 && (!r8 || !r1 || String___compare(r8,(vdynamic*)r1) != 0) ) goto label$eabbec9_29_73;
+	label$eabbec9_29_48:
 	r20 = 0;
 	r8 = (String)s$AnimationLayer;
 	r22 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r19,r8);
-	label$eabbec9_31_51:
+	label$eabbec9_29_51:
 	if( r22 == NULL ) hl_null_access();
 	r25 = r22->length;
-	if( r20 >= r25 ) goto label$eabbec9_31_73;
+	if( r20 >= r25 ) goto label$eabbec9_29_73;
 	r25 = r22->length;
-	if( ((unsigned)r20) < ((unsigned)r25) ) goto label$eabbec9_31_59;
+	if( ((unsigned)r20) < ((unsigned)r25) ) goto label$eabbec9_29_59;
 	r23 = NULL;
-	goto label$eabbec9_31_62;
-	label$eabbec9_31_59:
+	goto label$eabbec9_29_62;
+	label$eabbec9_29_59:
 	r15 = r22->array;
 	r11 = ((vdynamic**)(r15 + 1))[r20];
 	r23 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_31_62:
+	label$eabbec9_29_62:
 	++r20;
 	r9 = r23;
 	r8 = (String)s$AnimationCurveNode;
@@ -4084,14 +4068,14 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( r26 == NULL ) hl_null_access();
 	r21 = r26->length;
 	r25 = 0;
-	if( r25 >= r21 ) goto label$eabbec9_31_72;
+	if( r25 >= r21 ) goto label$eabbec9_29_72;
 	if( r14 == NULL ) hl_null_access();
 	r21 = hl_types_ArrayObj_push(r14,((vdynamic*)r23));
-	label$eabbec9_31_72:
-	goto label$eabbec9_31_51;
-	label$eabbec9_31_73:
-	goto label$eabbec9_31_33;
-	label$eabbec9_31_74:
+	label$eabbec9_29_72:
+	goto label$eabbec9_29_51;
+	label$eabbec9_29_73:
+	goto label$eabbec9_29_33;
+	label$eabbec9_29_74:
 	if( r14 == NULL ) hl_null_access();
 	r17 = r14->length;
 	switch(r17) {
@@ -4113,52 +4097,52 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 			r28->hasValue ? ((void (*)(vdynamic*,vdynamic*,vvirtual*))r28->fun)((vdynamic*)r28->value,((vdynamic*)r8),r31) : ((void (*)(vdynamic*,vvirtual*))r28->fun)(((vdynamic*)r8),r31);
 			r17 = 0;
 			r20 = r14->length;
-			if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_31_97;
+			if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_29_97;
 			r23 = NULL;
-			goto label$eabbec9_31_100;
-			label$eabbec9_31_97:
+			goto label$eabbec9_29_100;
+			label$eabbec9_29_97:
 			r15 = r14->array;
 			r11 = ((vdynamic**)(r15 + 1))[r17];
 			r23 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-			label$eabbec9_31_100:
+			label$eabbec9_29_100:
 			r19 = r23;
-			goto label$eabbec9_31_113;
+			goto label$eabbec9_29_113;
 		case 0:
 			r19 = r9;
-			goto label$eabbec9_31_113;
+			goto label$eabbec9_29_113;
 		case 1:
 			r17 = 0;
 			r20 = r14->length;
-			if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_31_109;
+			if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_29_109;
 			r23 = NULL;
-			goto label$eabbec9_31_112;
-			label$eabbec9_31_109:
+			goto label$eabbec9_29_112;
+			label$eabbec9_29_109:
 			r15 = r14->array;
 			r11 = ((vdynamic**)(r15 + 1))[r17];
 			r23 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-			label$eabbec9_31_112:
+			label$eabbec9_29_112:
 			r19 = r23;
 	}
-	label$eabbec9_31_113:
-	if( r19 ) goto label$eabbec9_31_123;
-	if( !r1 ) goto label$eabbec9_31_119;
+	label$eabbec9_29_113:
+	if( r19 ) goto label$eabbec9_29_123;
+	if( !r1 ) goto label$eabbec9_29_119;
 	r8 = (String)s$Animation_not_found_;
 	r8 = String___add__(r8,r1);
 	r11 = haxe_Exception_thrown(((vdynamic*)r8));
 	hl_throw((vdynamic*)r11);
-	label$eabbec9_31_119:
+	label$eabbec9_29_119:
 	r32 = r0->uvAnims;
-	if( r32 ) goto label$eabbec9_31_123;
+	if( r32 ) goto label$eabbec9_29_123;
 	r7 = NULL;
 	return r7;
-	label$eabbec9_31_123:
-	if( r1 ) goto label$eabbec9_31_129;
+	label$eabbec9_29_123:
+	if( r1 ) goto label$eabbec9_29_129;
 	r8 = (String)s$AnimationStack;
 	r33 = NULL;
 	r23 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r19,r8,r33);
 	r8 = hxd_fmt_fbx_FbxTools_getName(r23);
 	r1 = r8;
-	label$eabbec9_31_129:
+	label$eabbec9_29_129:
 	r6 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 	haxe_ds_IntMap_new(r6);
 	r34 = (h3d__col__Point)hl_alloc_obj(&t$h3d_col_Point);
@@ -4180,96 +4164,96 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r42 = 0.017453292519943295;
 	r43 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 	haxe_ds_IntMap_new(r43);
-	if( !r19 ) goto label$eabbec9_31_901;
+	if( !r19 ) goto label$eabbec9_29_901;
 	r17 = 0;
 	r8 = (String)s$AnimationCurveNode;
 	r18 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r19,r8);
-	label$eabbec9_31_154:
+	label$eabbec9_29_154:
 	if( r18 == NULL ) hl_null_access();
 	r21 = r18->length;
-	if( r17 >= r21 ) goto label$eabbec9_31_901;
+	if( r17 >= r21 ) goto label$eabbec9_29_901;
 	r21 = r18->length;
-	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_31_162;
+	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_29_162;
 	r23 = NULL;
-	goto label$eabbec9_31_165;
-	label$eabbec9_31_162:
+	goto label$eabbec9_29_165;
+	label$eabbec9_29_162:
 	r15 = r18->array;
 	r11 = ((vdynamic**)(r15 + 1))[r17];
 	r23 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_31_165:
+	label$eabbec9_29_165:
 	++r17;
 	r8 = (String)s$Model;
 	r12 = true;
 	r33 = hl_alloc_dynbool(r12);
 	r27 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r23,r8,r33);
-	if( r27 ) goto label$eabbec9_31_207;
+	if( r27 ) goto label$eabbec9_29_207;
 	r8 = hxd_fmt_fbx_FbxTools_getName(r23);
-	if( r8 ) goto label$eabbec9_31_174;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_174:
-	if( !r8 ) goto label$eabbec9_31_183;
+	if( r8 ) goto label$eabbec9_29_174;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_174:
+	if( !r8 ) goto label$eabbec9_29_183;
 	r20 = r8->length;
 	r21 = 11;
-	if( r20 != r21 ) goto label$eabbec9_31_183;
+	if( r20 != r21 ) goto label$eabbec9_29_183;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("FieldOfView");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_193;
-	label$eabbec9_31_183:
-	if( !r8 ) goto label$eabbec9_31_192;
+	if( r20 == r21 ) goto label$eabbec9_29_193;
+	label$eabbec9_29_183:
+	if( !r8 ) goto label$eabbec9_29_192;
 	r20 = r8->length;
 	r21 = 4;
-	if( r20 != r21 ) goto label$eabbec9_31_192;
+	if( r20 != r21 ) goto label$eabbec9_29_192;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("Roll");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_193;
-	label$eabbec9_31_192:
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_193:
+	if( r20 == r21 ) goto label$eabbec9_29_193;
+	label$eabbec9_29_192:
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_193:
 	r24 = (String)s$NodeAttribute;
 	r12 = true;
 	r33 = hl_alloc_dynbool(r12);
 	r44 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r23,r24,r33);
-	if( r44 ) goto label$eabbec9_31_200;
+	if( r44 ) goto label$eabbec9_29_200;
 	r47 = NULL;
-	goto label$eabbec9_31_204;
-	label$eabbec9_31_200:
+	goto label$eabbec9_29_204;
+	label$eabbec9_29_200:
 	r24 = (String)s$Model;
 	r12 = true;
 	r33 = hl_alloc_dynbool(r12);
 	r47 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r44,r24,r33);
-	label$eabbec9_31_204:
+	label$eabbec9_29_204:
 	r27 = r47;
-	if( r47 ) goto label$eabbec9_31_207;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_207:
+	if( r47 ) goto label$eabbec9_29_207;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_207:
 	r8 = hxd_fmt_fbx_FbxTools_getName(r23);
 	r48 = hxd_fmt_fbx_BaseLibrary_getObjectCurve(r0,r6,r27,r8,r1);
-	if( r48 ) goto label$eabbec9_31_211;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_211:
+	if( r48 ) goto label$eabbec9_29_211;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_211:
 	r8 = (String)s$AnimationCurve;
 	r22 = hxd_fmt_fbx_BaseLibrary_getChilds(r0,r23,r8);
 	if( r22 == NULL ) hl_null_access();
 	r20 = r22->length;
 	r21 = 0;
-	if( r20 != r21 ) goto label$eabbec9_31_218;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_218:
+	if( r20 != r21 ) goto label$eabbec9_29_218;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_218:
 	r8 = hxd_fmt_fbx_FbxTools_getName(r23);
 	r20 = 0;
 	r21 = r22->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_31_224;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_29_224;
 	r44 = NULL;
-	goto label$eabbec9_31_227;
-	label$eabbec9_31_224:
+	goto label$eabbec9_29_227;
+	label$eabbec9_29_224:
 	r15 = r22->array;
 	r11 = ((vdynamic**)(r15 + 1))[r20];
 	r44 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_31_227:
+	label$eabbec9_29_227:
 	r24 = (String)s$KeyTime;
 	r51 = NULL;
 	r44 = hxd_fmt_fbx_FbxTools_get(r44,r24,r51);
@@ -4277,25 +4261,25 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r20 = 0;
 	if( r50 == NULL ) hl_null_access();
 	r21 = r50->length;
-	label$eabbec9_31_234:
-	if( r20 >= r21 ) goto label$eabbec9_31_271;
+	label$eabbec9_29_234:
+	if( r20 >= r21 ) goto label$eabbec9_29_271;
 	r25 = r20;
 	++r20;
 	if( r50 == NULL ) hl_null_access();
 	r54 = r50->length;
-	if( ((unsigned)r25) < ((unsigned)r54) ) goto label$eabbec9_31_243;
+	if( ((unsigned)r25) < ((unsigned)r54) ) goto label$eabbec9_29_243;
 	r55 = 0.;
-	goto label$eabbec9_31_247;
-	label$eabbec9_31_243:
+	goto label$eabbec9_29_247;
+	label$eabbec9_29_243:
 	r45 = r50->bytes;
 	r54 = 3;
 	r54 = r25 << r54;
 	r55 = *(double*)(r45 + r54);
-	label$eabbec9_31_247:
+	label$eabbec9_29_247:
 	r57 = 100.;
 	r56 = fmod(r55,r57);
 	r57 = 0.;
-	if( r56 == r57 ) goto label$eabbec9_31_264;
+	if( r56 == r57 ) goto label$eabbec9_29_264;
 	r57 = 100.;
 	r59 = 100.;
 	r58 = fmod(r55,r59);
@@ -4303,14 +4287,14 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r56 = r55 + r57;
 	r55 = r56;
 	r54 = r50->length;
-	if( ((unsigned)r25) < ((unsigned)r54) ) goto label$eabbec9_31_260;
+	if( ((unsigned)r25) < ((unsigned)r54) ) goto label$eabbec9_29_260;
 	hl_types_ArrayBytes_Float___expand(r50,r25);
-	label$eabbec9_31_260:
+	label$eabbec9_29_260:
 	r45 = r50->bytes;
 	r54 = 3;
 	r54 = r25 << r54;
 	*(double*)(r45 + r54) = r56;
-	label$eabbec9_31_264:
+	label$eabbec9_29_264:
 	r57 = 200000.;
 	r56 = r55 / r57;
 	r53 = (int)r56;
@@ -4318,59 +4302,59 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r60 = hl_alloc_dynamic(&t$_f64);
 	r60->v.d = r55;
 	haxe_ds_IntMap_set(r43,r53,((vdynamic*)r60));
-	goto label$eabbec9_31_234;
-	label$eabbec9_31_271:
+	goto label$eabbec9_29_234;
+	label$eabbec9_29_271:
 	if( r22 == NULL ) hl_null_access();
 	r20 = r22->length;
 	r21 = 3;
-	if( r20 == r21 ) goto label$eabbec9_31_479;
+	if( r20 == r21 ) goto label$eabbec9_29_479;
 	r20 = 0;
 	r21 = r22->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_31_280;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_29_280;
 	r44 = NULL;
-	goto label$eabbec9_31_283;
-	label$eabbec9_31_280:
+	goto label$eabbec9_29_283;
+	label$eabbec9_29_280:
 	r15 = r22->array;
 	r11 = ((vdynamic**)(r15 + 1))[r20];
 	r44 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_31_283:
+	label$eabbec9_29_283:
 	r24 = (String)s$KeyValueFloat;
 	r51 = NULL;
 	r44 = hxd_fmt_fbx_FbxTools_get(r44,r24,r51);
 	r52 = hxd_fmt_fbx_FbxTools_getFloats(r44);
-	if( !r8 ) goto label$eabbec9_31_479;
-	if( !r8 ) goto label$eabbec9_31_297;
+	if( !r8 ) goto label$eabbec9_29_479;
+	if( !r8 ) goto label$eabbec9_29_297;
 	r20 = r8->length;
 	r21 = 11;
-	if( r20 != r21 ) goto label$eabbec9_31_297;
+	if( r20 != r21 ) goto label$eabbec9_29_297;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("FieldOfView");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_316;
-	label$eabbec9_31_297:
-	if( !r8 ) goto label$eabbec9_31_306;
+	if( r20 == r21 ) goto label$eabbec9_29_316;
+	label$eabbec9_29_297:
+	if( !r8 ) goto label$eabbec9_29_306;
 	r20 = r8->length;
 	r21 = 4;
-	if( r20 != r21 ) goto label$eabbec9_31_306;
+	if( r20 != r21 ) goto label$eabbec9_29_306;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("Roll");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_457;
-	label$eabbec9_31_306:
-	if( !r8 ) goto label$eabbec9_31_315;
+	if( r20 == r21 ) goto label$eabbec9_29_457;
+	label$eabbec9_29_306:
+	if( !r8 ) goto label$eabbec9_29_315;
 	r20 = r8->length;
 	r21 = 10;
-	if( r20 != r21 ) goto label$eabbec9_31_315;
+	if( r20 != r21 ) goto label$eabbec9_29_315;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("Visibility");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_468;
-	label$eabbec9_31_315:
-	goto label$eabbec9_31_479;
-	label$eabbec9_31_316:
+	if( r20 == r21 ) goto label$eabbec9_29_468;
+	label$eabbec9_29_315:
+	goto label$eabbec9_29_479;
+	label$eabbec9_29_316:
 	r55 = 1.7777777777777777;
 	r56 = 45.;
 	r20 = 0;
@@ -4379,108 +4363,108 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r44 = hxd_fmt_fbx_BaseLibrary_getChild(r0,r27,r24,r33);
 	r24 = (String)s$Properties70_P;
 	r26 = hxd_fmt_fbx_FbxTools_getAll(r44,r24);
-	label$eabbec9_31_324:
+	label$eabbec9_29_324:
 	if( r26 == NULL ) hl_null_access();
 	r25 = r26->length;
-	if( r20 >= r25 ) goto label$eabbec9_31_393;
+	if( r20 >= r25 ) goto label$eabbec9_29_393;
 	r25 = r26->length;
-	if( ((unsigned)r20) < ((unsigned)r25) ) goto label$eabbec9_31_332;
+	if( ((unsigned)r20) < ((unsigned)r25) ) goto label$eabbec9_29_332;
 	r44 = NULL;
-	goto label$eabbec9_31_335;
-	label$eabbec9_31_332:
+	goto label$eabbec9_29_335;
+	label$eabbec9_29_332:
 	r15 = r26->array;
 	r11 = ((vdynamic**)(r15 + 1))[r20];
 	r44 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_31_335:
+	label$eabbec9_29_335:
 	++r20;
 	if( r44 == NULL ) hl_null_access();
 	r61 = hl_vfields(r44)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r44)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r44->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r61 == NULL ) hl_null_access();
 	r21 = 0;
 	r25 = r61->length;
-	if( ((unsigned)r21) < ((unsigned)r25) ) goto label$eabbec9_31_344;
+	if( ((unsigned)r21) < ((unsigned)r25) ) goto label$eabbec9_29_344;
 	r62 = NULL;
-	goto label$eabbec9_31_347;
-	label$eabbec9_31_344:
+	goto label$eabbec9_29_347;
+	label$eabbec9_29_344:
 	r15 = r61->array;
 	r11 = ((vdynamic**)(r15 + 1))[r21];
 	r62 = (venum*)r11;
-	label$eabbec9_31_347:
+	label$eabbec9_29_347:
 	r24 = hxd_fmt_fbx_FbxTools_toString(r62);
-	if( !r24 ) goto label$eabbec9_31_357;
+	if( !r24 ) goto label$eabbec9_29_357;
 	r21 = r24->length;
 	r25 = 11;
-	if( r21 != r25 ) goto label$eabbec9_31_357;
+	if( r21 != r25 ) goto label$eabbec9_29_357;
 	r45 = r24->bytes;
 	r46 = (vbyte*)USTR("FieldOfView");
 	r21 = hl_string_compare(r45,r46,r21);
 	r25 = 0;
-	if( r21 == r25 ) goto label$eabbec9_31_367;
-	label$eabbec9_31_357:
-	if( !r24 ) goto label$eabbec9_31_366;
+	if( r21 == r25 ) goto label$eabbec9_29_367;
+	label$eabbec9_29_357:
+	if( !r24 ) goto label$eabbec9_29_366;
 	r21 = r24->length;
 	r25 = 15;
-	if( r21 != r25 ) goto label$eabbec9_31_366;
+	if( r21 != r25 ) goto label$eabbec9_29_366;
 	r45 = r24->bytes;
 	r46 = (vbyte*)USTR("FilmAspectRatio");
 	r21 = hl_string_compare(r45,r46,r21);
 	r25 = 0;
-	if( r21 == r25 ) goto label$eabbec9_31_380;
-	label$eabbec9_31_366:
-	goto label$eabbec9_31_392;
-	label$eabbec9_31_367:
+	if( r21 == r25 ) goto label$eabbec9_29_380;
+	label$eabbec9_29_366:
+	goto label$eabbec9_29_392;
+	label$eabbec9_29_367:
 	r61 = hl_vfields(r44)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r44)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r44->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r61 == NULL ) hl_null_access();
 	r21 = 4;
 	r25 = r61->length;
-	if( ((unsigned)r21) < ((unsigned)r25) ) goto label$eabbec9_31_374;
+	if( ((unsigned)r21) < ((unsigned)r25) ) goto label$eabbec9_29_374;
 	r62 = NULL;
-	goto label$eabbec9_31_377;
-	label$eabbec9_31_374:
+	goto label$eabbec9_29_377;
+	label$eabbec9_29_374:
 	r15 = r61->array;
 	r11 = ((vdynamic**)(r15 + 1))[r21];
 	r62 = (venum*)r11;
-	label$eabbec9_31_377:
+	label$eabbec9_29_377:
 	r57 = hxd_fmt_fbx_FbxTools_toFloat(r62);
 	r56 = r57;
-	goto label$eabbec9_31_392;
-	label$eabbec9_31_380:
+	goto label$eabbec9_29_392;
+	label$eabbec9_29_380:
 	r61 = hl_vfields(r44)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r44)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r44->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r61 == NULL ) hl_null_access();
 	r21 = 4;
 	r25 = r61->length;
-	if( ((unsigned)r21) < ((unsigned)r25) ) goto label$eabbec9_31_387;
+	if( ((unsigned)r21) < ((unsigned)r25) ) goto label$eabbec9_29_387;
 	r62 = NULL;
-	goto label$eabbec9_31_390;
-	label$eabbec9_31_387:
+	goto label$eabbec9_29_390;
+	label$eabbec9_29_387:
 	r15 = r61->array;
 	r11 = ((vdynamic**)(r15 + 1))[r21];
 	r62 = (venum*)r11;
-	label$eabbec9_31_390:
+	label$eabbec9_29_390:
 	r57 = hxd_fmt_fbx_FbxTools_toFloat(r62);
 	r55 = r57;
-	label$eabbec9_31_392:
-	goto label$eabbec9_31_324;
-	label$eabbec9_31_393:
+	label$eabbec9_29_392:
+	goto label$eabbec9_29_324;
+	label$eabbec9_29_393:
 	r20 = 0;
 	if( r52 == NULL ) hl_null_access();
 	r21 = r52->length;
-	label$eabbec9_31_396:
-	if( r20 >= r21 ) goto label$eabbec9_31_432;
+	label$eabbec9_29_396:
+	if( r20 >= r21 ) goto label$eabbec9_29_432;
 	r25 = r20;
 	++r20;
 	if( r52 == NULL ) hl_null_access();
 	r57 = 2.;
 	r65 = r52->length;
-	if( ((unsigned)r25) < ((unsigned)r65) ) goto label$eabbec9_31_406;
+	if( ((unsigned)r25) < ((unsigned)r65) ) goto label$eabbec9_29_406;
 	r58 = 0.;
-	goto label$eabbec9_31_410;
-	label$eabbec9_31_406:
+	goto label$eabbec9_29_410;
+	label$eabbec9_29_406:
 	r45 = r52->bytes;
 	r65 = 3;
 	r65 = r25 << r65;
 	r58 = *(double*)(r45 + r65);
-	label$eabbec9_31_410:
+	label$eabbec9_29_410:
 	r59 = 0.5;
 	r58 = r58 * r59;
 	r59 = 3.1415926535897931;
@@ -4496,15 +4480,15 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r58 = 3.1415926535897931;
 	r57 = r57 / r58;
 	r54 = r52->length;
-	if( ((unsigned)r25) < ((unsigned)r54) ) goto label$eabbec9_31_427;
+	if( ((unsigned)r25) < ((unsigned)r54) ) goto label$eabbec9_29_427;
 	hl_types_ArrayBytes_Float___expand(r52,r25);
-	label$eabbec9_31_427:
+	label$eabbec9_29_427:
 	r45 = r52->bytes;
 	r54 = 3;
 	r54 = r25 << r54;
 	*(double*)(r45 + r54) = r57;
-	goto label$eabbec9_31_396;
-	label$eabbec9_31_432:
+	goto label$eabbec9_29_396;
+	label$eabbec9_29_432:
 	r57 = 2.;
 	r59 = 0.5;
 	r58 = r56 * r59;
@@ -4522,42 +4506,42 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r57 = r57 / r58;
 	r35 = NULL;
 	r12 = hxd_fmt_fbx_BaseLibrary_roundValues(r0,r52,r57,r35);
-	if( r12 ) goto label$eabbec9_31_451;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_451:
+	if( r12 ) goto label$eabbec9_29_451;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_451:
 	if( r48 == NULL ) hl_null_access();
 	r66 = hl_alloc_virtual(&t$vrt_31e350b);
 	if( hl_vfields(r66)[1] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[1]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r66->value,118/*v*/,&t$hl_types_ArrayBytes_Float,r52);
 	if( hl_vfields(r66)[0] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[0]) = (hl__types__ArrayBytes_Float)r50; else hl_dyn_setp(r66->value,116/*t*/,&t$hl_types_ArrayBytes_Float,r50);
 	r48->fov = r66;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_457:
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_457:
 	r55 = 0.;
 	r35 = NULL;
 	r12 = hxd_fmt_fbx_BaseLibrary_roundValues(r0,r52,r55,r35);
-	if( r12 ) goto label$eabbec9_31_462;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_462:
+	if( r12 ) goto label$eabbec9_29_462;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_462:
 	if( r48 == NULL ) hl_null_access();
 	r66 = hl_alloc_virtual(&t$vrt_31e350b);
 	if( hl_vfields(r66)[1] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[1]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r66->value,118/*v*/,&t$hl_types_ArrayBytes_Float,r52);
 	if( hl_vfields(r66)[0] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[0]) = (hl__types__ArrayBytes_Float)r50; else hl_dyn_setp(r66->value,116/*t*/,&t$hl_types_ArrayBytes_Float,r50);
 	r48->roll = r66;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_468:
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_468:
 	r55 = 1.;
 	r35 = NULL;
 	r12 = hxd_fmt_fbx_BaseLibrary_roundValues(r0,r52,r55,r35);
-	if( r12 ) goto label$eabbec9_31_473;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_473:
+	if( r12 ) goto label$eabbec9_29_473;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_473:
 	if( r48 == NULL ) hl_null_access();
 	r66 = hl_alloc_virtual(&t$vrt_31e350b);
 	if( hl_vfields(r66)[1] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[1]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r66->value,118/*v*/,&t$hl_types_ArrayBytes_Float,r52);
 	if( hl_vfields(r66)[0] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[0]) = (hl__types__ArrayBytes_Float)r50; else hl_dyn_setp(r66->value,116/*t*/,&t$hl_types_ArrayBytes_Float,r50);
 	r48->a = r66;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_479:
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_479:
 	r67 = hl_alloc_virtual(&t$vrt_141210f);
 	r52 = NULL;
 	if( hl_vfields(r67)[1] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float,r52);
@@ -4573,14 +4557,14 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r32 = (haxe__ds__StringMap)r11;
 	if( r32 == NULL ) hl_null_access();
 	r68 = haxe_ds_StringMap_keys(r32);
-	label$eabbec9_31_494:
+	label$eabbec9_29_494:
 	if( r68 == NULL ) hl_null_access();
 	if( hl_vfields(r68)[0] ) r12 = ((bool (*)(vdynamic*))hl_vfields(r68)[0])(r68->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r68->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r12 = (bool)ret.v.i;
 	}
-	if( !r12 ) goto label$eabbec9_31_564;
+	if( !r12 ) goto label$eabbec9_29_564;
 	if( hl_vfields(r68)[1] ) r24 = ((String (*)(vdynamic*))hl_vfields(r68)[1])(r68->value); else {
 		r24 = (String)hl_dyn_call_obj(r68->value,&t$fun_820f49a,151160317/*next*/,NULL,NULL);
 	}
@@ -4596,36 +4580,36 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r51 = NULL;
 	r44 = hxd_fmt_fbx_FbxTools_get(r44,r70,r51);
 	r52 = hxd_fmt_fbx_FbxTools_getFloats(r44);
-	if( !r24 ) goto label$eabbec9_31_520;
+	if( !r24 ) goto label$eabbec9_29_520;
 	r20 = r24->length;
 	r21 = 3;
-	if( r20 != r21 ) goto label$eabbec9_31_520;
+	if( r20 != r21 ) goto label$eabbec9_29_520;
 	r45 = r24->bytes;
 	r46 = (vbyte*)USTR("d|X");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_555;
-	label$eabbec9_31_520:
-	if( !r24 ) goto label$eabbec9_31_529;
+	if( r20 == r21 ) goto label$eabbec9_29_555;
+	label$eabbec9_29_520:
+	if( !r24 ) goto label$eabbec9_29_529;
 	r20 = r24->length;
 	r21 = 3;
-	if( r20 != r21 ) goto label$eabbec9_31_529;
+	if( r20 != r21 ) goto label$eabbec9_29_529;
 	r45 = r24->bytes;
 	r46 = (vbyte*)USTR("d|Y");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_558;
-	label$eabbec9_31_529:
-	if( !r24 ) goto label$eabbec9_31_538;
+	if( r20 == r21 ) goto label$eabbec9_29_558;
+	label$eabbec9_29_529:
+	if( !r24 ) goto label$eabbec9_29_538;
 	r20 = r24->length;
 	r21 = 3;
-	if( r20 != r21 ) goto label$eabbec9_31_538;
+	if( r20 != r21 ) goto label$eabbec9_29_538;
 	r45 = r24->bytes;
 	r46 = (vbyte*)USTR("d|Z");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_561;
-	label$eabbec9_31_538:
+	if( r20 == r21 ) goto label$eabbec9_29_561;
+	label$eabbec9_29_538:
 	r29 = (haxe__$Log)g$_haxe_Log;
 	r28 = r29->trace;
 	if( r28 == NULL ) hl_null_access();
@@ -4642,23 +4626,23 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( hl_vfields(r30)[3] ) *(String*)(hl_vfields(r30)[3]) = (String)r72; else hl_dyn_setp(r30->value,302979532/*methodName*/,&t$String,r72);
 	r31 = hl_to_virtual(&t$vrt_eaa6a3b,(vdynamic*)r30);
 	r28->hasValue ? ((void (*)(vdynamic*,vdynamic*,vvirtual*))r28->fun)((vdynamic*)r28->value,((vdynamic*)r70),r31) : ((void (*)(vdynamic*,vvirtual*))r28->fun)(((vdynamic*)r70),r31);
-	goto label$eabbec9_31_563;
-	label$eabbec9_31_555:
+	goto label$eabbec9_29_563;
+	label$eabbec9_29_555:
 	if( r67 == NULL ) hl_null_access();
 	if( hl_vfields(r67)[1] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float,r52);
-	goto label$eabbec9_31_563;
-	label$eabbec9_31_558:
+	goto label$eabbec9_29_563;
+	label$eabbec9_29_558:
 	if( r67 == NULL ) hl_null_access();
 	if( hl_vfields(r67)[2] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float,r52);
-	goto label$eabbec9_31_563;
-	label$eabbec9_31_561:
+	goto label$eabbec9_29_563;
+	label$eabbec9_29_561:
 	if( r67 == NULL ) hl_null_access();
 	if( hl_vfields(r67)[3] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float,r52);
-	label$eabbec9_31_563:
-	goto label$eabbec9_31_494;
-	label$eabbec9_31_564:
+	label$eabbec9_29_563:
+	goto label$eabbec9_29_494;
+	label$eabbec9_29_564:
 	r55 = 1.;
-	if( r8 ) goto label$eabbec9_31_587;
+	if( r8 ) goto label$eabbec9_29_587;
 	r29 = (haxe__$Log)g$_haxe_Log;
 	r28 = r29->trace;
 	if( r28 == NULL ) hl_null_access();
@@ -4679,38 +4663,38 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( hl_vfields(r30)[3] ) *(String*)(hl_vfields(r30)[3]) = (String)r70; else hl_dyn_setp(r30->value,302979532/*methodName*/,&t$String,r70);
 	r31 = hl_to_virtual(&t$vrt_eaa6a3b,(vdynamic*)r30);
 	r28->hasValue ? ((void (*)(vdynamic*,vdynamic*,vvirtual*))r28->fun)((vdynamic*)r28->value,((vdynamic*)r24),r31) : ((void (*)(vdynamic*,vvirtual*))r28->fun)(((vdynamic*)r24),r31);
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_587:
-	if( !r8 ) goto label$eabbec9_31_596;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_587:
+	if( !r8 ) goto label$eabbec9_29_596;
 	r20 = r8->length;
 	r21 = 1;
-	if( r20 != r21 ) goto label$eabbec9_31_596;
+	if( r20 != r21 ) goto label$eabbec9_29_596;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("R");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_635;
-	label$eabbec9_31_596:
-	if( !r8 ) goto label$eabbec9_31_605;
+	if( r20 == r21 ) goto label$eabbec9_29_635;
+	label$eabbec9_29_596:
+	if( !r8 ) goto label$eabbec9_29_605;
 	r20 = r8->length;
 	r21 = 1;
-	if( r20 != r21 ) goto label$eabbec9_31_605;
+	if( r20 != r21 ) goto label$eabbec9_29_605;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("S");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_722;
-	label$eabbec9_31_605:
-	if( !r8 ) goto label$eabbec9_31_614;
+	if( r20 == r21 ) goto label$eabbec9_29_722;
+	label$eabbec9_29_605:
+	if( !r8 ) goto label$eabbec9_29_614;
 	r20 = r8->length;
 	r21 = 1;
-	if( r20 != r21 ) goto label$eabbec9_31_614;
+	if( r20 != r21 ) goto label$eabbec9_29_614;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("T");
 	r20 = hl_string_compare(r45,r46,r20);
 	r21 = 0;
-	if( r20 == r21 ) goto label$eabbec9_31_734;
-	label$eabbec9_31_614:
+	if( r20 == r21 ) goto label$eabbec9_29_734;
+	label$eabbec9_29_614:
 	r29 = (haxe__$Log)g$_haxe_Log;
 	r28 = r29->trace;
 	if( r28 == NULL ) hl_null_access();
@@ -4731,41 +4715,41 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( hl_vfields(r30)[3] ) *(String*)(hl_vfields(r30)[3]) = (String)r70; else hl_dyn_setp(r30->value,302979532/*methodName*/,&t$String,r70);
 	r31 = hl_to_virtual(&t$vrt_eaa6a3b,(vdynamic*)r30);
 	r28->hasValue ? ((void (*)(vdynamic*,vdynamic*,vvirtual*))r28->fun)((vdynamic*)r28->value,((vdynamic*)r24),r31) : ((void (*)(vdynamic*,vvirtual*))r28->fun)(((vdynamic*)r24),r31);
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_635:
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_635:
 	r55 = r42;
 	if( r48 == NULL ) hl_null_access();
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r74 = r75->rotate;
-	if( r74 ) goto label$eabbec9_31_647;
+	if( r74 ) goto label$eabbec9_29_647;
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r74 = r75->preRot;
-	if( r74 ) goto label$eabbec9_31_647;
+	if( r74 ) goto label$eabbec9_29_647;
 	r74 = r34;
-	goto label$eabbec9_31_721;
-	label$eabbec9_31_647:
+	goto label$eabbec9_29_721;
+	label$eabbec9_29_647:
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->rotate;
-	if( r76 ) goto label$eabbec9_31_656;
+	if( r76 ) goto label$eabbec9_29_656;
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->preRot;
 	r74 = r76;
-	goto label$eabbec9_31_721;
-	label$eabbec9_31_656:
+	goto label$eabbec9_29_721;
+	label$eabbec9_29_656:
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->preRot;
-	if( r76 ) goto label$eabbec9_31_665;
+	if( r76 ) goto label$eabbec9_29_665;
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->rotate;
 	r74 = r76;
-	goto label$eabbec9_31_721;
-	label$eabbec9_31_665:
+	goto label$eabbec9_29_721;
+	label$eabbec9_29_665:
 	r77 = (h3d__Quat)hl_alloc_obj(&t$h3d_Quat);
 	r35 = NULL;
 	r36 = NULL;
@@ -4822,103 +4806,103 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r37 = &r58;
 	h3d_col_Point_new(r76,r35,r36,r37);
 	r74 = r76;
-	label$eabbec9_31_721:
-	goto label$eabbec9_31_745;
-	label$eabbec9_31_722:
+	label$eabbec9_29_721:
+	goto label$eabbec9_29_745;
+	label$eabbec9_29_722:
 	if( r48 == NULL ) hl_null_access();
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->scale;
-	if( r76 ) goto label$eabbec9_31_729;
+	if( r76 ) goto label$eabbec9_29_729;
 	r76 = r38;
-	goto label$eabbec9_31_732;
-	label$eabbec9_31_729:
+	goto label$eabbec9_29_732;
+	label$eabbec9_29_729:
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->scale;
-	label$eabbec9_31_732:
+	label$eabbec9_29_732:
 	r74 = r76;
-	goto label$eabbec9_31_745;
-	label$eabbec9_31_734:
+	goto label$eabbec9_29_745;
+	label$eabbec9_29_734:
 	if( r48 == NULL ) hl_null_access();
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->trans;
-	if( r76 ) goto label$eabbec9_31_741;
+	if( r76 ) goto label$eabbec9_29_741;
 	r76 = r34;
-	goto label$eabbec9_31_744;
-	label$eabbec9_31_741:
+	goto label$eabbec9_29_744;
+	label$eabbec9_29_741:
 	r75 = r48->def;
 	if( r75 == NULL ) hl_null_access();
 	r76 = r75->trans;
-	label$eabbec9_31_744:
+	label$eabbec9_29_744:
 	r74 = r76;
-	label$eabbec9_31_745:
+	label$eabbec9_29_745:
 	r12 = false;
 	if( r67 == NULL ) hl_null_access();
 	r52 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	if( !r52 ) goto label$eabbec9_31_758;
+	if( !r52 ) goto label$eabbec9_29_758;
 	r52 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
 	if( r74 == NULL ) hl_null_access();
 	r59 = r74->x;
 	r82 = r55;
 	r35 = &r82;
 	r81 = hxd_fmt_fbx_BaseLibrary_roundValues(r0,r52,r59,r35);
-	if( !r81 ) goto label$eabbec9_31_758;
+	if( !r81 ) goto label$eabbec9_29_758;
 	r81 = true;
 	r12 = r81;
-	label$eabbec9_31_758:
+	label$eabbec9_29_758:
 	r52 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	if( !r52 ) goto label$eabbec9_31_769;
+	if( !r52 ) goto label$eabbec9_29_769;
 	r52 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
 	if( r74 == NULL ) hl_null_access();
 	r59 = r74->y;
 	r83 = r55;
 	r35 = &r83;
 	r81 = hxd_fmt_fbx_BaseLibrary_roundValues(r0,r52,r59,r35);
-	if( !r81 ) goto label$eabbec9_31_769;
+	if( !r81 ) goto label$eabbec9_29_769;
 	r81 = true;
 	r12 = r81;
-	label$eabbec9_31_769:
+	label$eabbec9_29_769:
 	r52 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	if( !r52 ) goto label$eabbec9_31_780;
+	if( !r52 ) goto label$eabbec9_29_780;
 	r52 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
 	if( r74 == NULL ) hl_null_access();
 	r59 = r74->z;
 	r84 = r55;
 	r35 = &r84;
 	r81 = hxd_fmt_fbx_BaseLibrary_roundValues(r0,r52,r59,r35);
-	if( !r81 ) goto label$eabbec9_31_780;
+	if( !r81 ) goto label$eabbec9_29_780;
 	r81 = true;
 	r12 = r81;
-	label$eabbec9_31_780:
-	if( r12 ) goto label$eabbec9_31_782;
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_782:
+	label$eabbec9_29_780:
+	if( r12 ) goto label$eabbec9_29_782;
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_782:
 	r20 = 0;
 	r52 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	if( !r52 ) goto label$eabbec9_31_789;
+	if( !r52 ) goto label$eabbec9_29_789;
 	r52 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
 	if( r52 == NULL ) hl_null_access();
 	r21 = r52->length;
 	r20 = r21;
-	label$eabbec9_31_789:
+	label$eabbec9_29_789:
 	r52 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	if( !r52 ) goto label$eabbec9_31_795;
+	if( !r52 ) goto label$eabbec9_29_795;
 	r52 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
 	if( r52 == NULL ) hl_null_access();
 	r21 = r52->length;
 	r20 = r21;
-	label$eabbec9_31_795:
+	label$eabbec9_29_795:
 	r52 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	if( !r52 ) goto label$eabbec9_31_801;
+	if( !r52 ) goto label$eabbec9_29_801;
 	r52 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
 	if( r52 == NULL ) hl_null_access();
 	r21 = r52->length;
 	r20 = r21;
-	label$eabbec9_31_801:
+	label$eabbec9_29_801:
 	r52 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	if( r52 ) goto label$eabbec9_31_820;
+	if( r52 ) goto label$eabbec9_29_820;
 	r21 = 0;
 	r45 = hl_alloc_bytes(r21);
 	r21 = 0;
@@ -4926,20 +4910,20 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r52 = hl_types_ArrayBase_allocF64(r45,r21);
 	r21 = 0;
 	r25 = r20;
-	label$eabbec9_31_810:
-	if( r21 >= r25 ) goto label$eabbec9_31_818;
+	label$eabbec9_29_810:
+	if( r21 >= r25 ) goto label$eabbec9_29_818;
 	++r21;
 	if( r52 == NULL ) hl_null_access();
 	if( r74 == NULL ) hl_null_access();
 	r59 = r74->x;
 	r54 = hl_types_ArrayBytes_Float_push(r52,r59);
-	goto label$eabbec9_31_810;
-	label$eabbec9_31_818:
+	goto label$eabbec9_29_810;
+	label$eabbec9_29_818:
 	if( r67 == NULL ) hl_null_access();
 	if( hl_vfields(r67)[1] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float,r52);
-	label$eabbec9_31_820:
+	label$eabbec9_29_820:
 	r52 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	if( r52 ) goto label$eabbec9_31_839;
+	if( r52 ) goto label$eabbec9_29_839;
 	r21 = 0;
 	r45 = hl_alloc_bytes(r21);
 	r21 = 0;
@@ -4947,20 +4931,20 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r52 = hl_types_ArrayBase_allocF64(r45,r21);
 	r21 = 0;
 	r25 = r20;
-	label$eabbec9_31_829:
-	if( r21 >= r25 ) goto label$eabbec9_31_837;
+	label$eabbec9_29_829:
+	if( r21 >= r25 ) goto label$eabbec9_29_837;
 	++r21;
 	if( r52 == NULL ) hl_null_access();
 	if( r74 == NULL ) hl_null_access();
 	r59 = r74->y;
 	r54 = hl_types_ArrayBytes_Float_push(r52,r59);
-	goto label$eabbec9_31_829;
-	label$eabbec9_31_837:
+	goto label$eabbec9_29_829;
+	label$eabbec9_29_837:
 	if( r67 == NULL ) hl_null_access();
 	if( hl_vfields(r67)[2] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float,r52);
-	label$eabbec9_31_839:
+	label$eabbec9_29_839:
 	r52 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	if( r52 ) goto label$eabbec9_31_858;
+	if( r52 ) goto label$eabbec9_29_858;
 	r21 = 0;
 	r45 = hl_alloc_bytes(r21);
 	r21 = 0;
@@ -4968,106 +4952,106 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r52 = hl_types_ArrayBase_allocF64(r45,r21);
 	r21 = 0;
 	r25 = r20;
-	label$eabbec9_31_848:
-	if( r21 >= r25 ) goto label$eabbec9_31_856;
+	label$eabbec9_29_848:
+	if( r21 >= r25 ) goto label$eabbec9_29_856;
 	++r21;
 	if( r52 == NULL ) hl_null_access();
 	if( r74 == NULL ) hl_null_access();
 	r59 = r74->z;
 	r54 = hl_types_ArrayBytes_Float_push(r52,r59);
-	goto label$eabbec9_31_848;
-	label$eabbec9_31_856:
+	goto label$eabbec9_29_848;
+	label$eabbec9_29_856:
 	if( r67 == NULL ) hl_null_access();
 	if( hl_vfields(r67)[3] ) *(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3]) = (hl__types__ArrayBytes_Float)r52; else hl_dyn_setp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float,r52);
-	label$eabbec9_31_858:
-	if( r8 ) goto label$eabbec9_31_862;
+	label$eabbec9_29_858:
+	if( r8 ) goto label$eabbec9_29_862;
 	r24 = (String)s$assert;
 	r11 = haxe_Exception_thrown(((vdynamic*)r24));
 	hl_throw((vdynamic*)r11);
-	label$eabbec9_31_862:
-	if( !r8 ) goto label$eabbec9_31_871;
+	label$eabbec9_29_862:
+	if( !r8 ) goto label$eabbec9_29_871;
 	r21 = r8->length;
 	r25 = 1;
-	if( r21 != r25 ) goto label$eabbec9_31_871;
+	if( r21 != r25 ) goto label$eabbec9_29_871;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("R");
 	r21 = hl_string_compare(r45,r46,r21);
 	r25 = 0;
-	if( r21 == r25 ) goto label$eabbec9_31_892;
-	label$eabbec9_31_871:
-	if( !r8 ) goto label$eabbec9_31_880;
+	if( r21 == r25 ) goto label$eabbec9_29_892;
+	label$eabbec9_29_871:
+	if( !r8 ) goto label$eabbec9_29_880;
 	r21 = r8->length;
 	r25 = 1;
-	if( r21 != r25 ) goto label$eabbec9_31_880;
+	if( r21 != r25 ) goto label$eabbec9_29_880;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("S");
 	r21 = hl_string_compare(r45,r46,r21);
 	r25 = 0;
-	if( r21 == r25 ) goto label$eabbec9_31_895;
-	label$eabbec9_31_880:
-	if( !r8 ) goto label$eabbec9_31_889;
+	if( r21 == r25 ) goto label$eabbec9_29_895;
+	label$eabbec9_29_880:
+	if( !r8 ) goto label$eabbec9_29_889;
 	r21 = r8->length;
 	r25 = 1;
-	if( r21 != r25 ) goto label$eabbec9_31_889;
+	if( r21 != r25 ) goto label$eabbec9_29_889;
 	r45 = r8->bytes;
 	r46 = (vbyte*)USTR("T");
 	r21 = hl_string_compare(r45,r46,r21);
 	r25 = 0;
-	if( r21 == r25 ) goto label$eabbec9_31_898;
-	label$eabbec9_31_889:
+	if( r21 == r25 ) goto label$eabbec9_29_898;
+	label$eabbec9_29_889:
 	r24 = (String)s$assert;
 	r11 = haxe_Exception_thrown(((vdynamic*)r24));
 	hl_throw((vdynamic*)r11);
-	label$eabbec9_31_892:
+	label$eabbec9_29_892:
 	if( r48 == NULL ) hl_null_access();
 	r48->r = r67;
-	goto label$eabbec9_31_900;
-	label$eabbec9_31_895:
+	goto label$eabbec9_29_900;
+	label$eabbec9_29_895:
 	if( r48 == NULL ) hl_null_access();
 	r48->s = r67;
-	goto label$eabbec9_31_900;
-	label$eabbec9_31_898:
+	goto label$eabbec9_29_900;
+	label$eabbec9_29_898:
 	if( r48 == NULL ) hl_null_access();
 	r48->_t = r67;
-	label$eabbec9_31_900:
-	goto label$eabbec9_31_154;
-	label$eabbec9_31_901:
+	label$eabbec9_29_900:
+	goto label$eabbec9_29_154;
+	label$eabbec9_29_901:
 	r32 = r0->uvAnims;
-	if( !r32 ) goto label$eabbec9_31_975;
+	if( !r32 ) goto label$eabbec9_29_975;
 	r32 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
 	haxe_ds_StringMap_new(r32);
 	r17 = 0;
 	r18 = hxd_fmt_fbx_BaseLibrary_getAllModels(r0);
-	label$eabbec9_31_907:
+	label$eabbec9_29_907:
 	if( r18 == NULL ) hl_null_access();
 	r21 = r18->length;
-	if( r17 >= r21 ) goto label$eabbec9_31_923;
+	if( r17 >= r21 ) goto label$eabbec9_29_923;
 	r21 = r18->length;
-	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_31_915;
+	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_29_915;
 	r23 = NULL;
-	goto label$eabbec9_31_918;
-	label$eabbec9_31_915:
+	goto label$eabbec9_29_918;
+	label$eabbec9_29_915:
 	r15 = r18->array;
 	r11 = ((vdynamic**)(r15 + 1))[r17];
 	r23 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	label$eabbec9_31_918:
+	label$eabbec9_29_918:
 	++r17;
 	if( r32 == NULL ) hl_null_access();
 	r8 = hxd_fmt_fbx_FbxTools_getName(r23);
 	haxe_ds_StringMap_set(r32,r8,((vdynamic*)r23));
-	goto label$eabbec9_31_907;
-	label$eabbec9_31_923:
+	goto label$eabbec9_29_907;
+	label$eabbec9_29_923:
 	r69 = r0->uvAnims;
 	if( r69 == NULL ) hl_null_access();
 	r68 = haxe_ds_StringMap_keys(r69);
-	label$eabbec9_31_926:
+	label$eabbec9_29_926:
 	if( r68 == NULL ) hl_null_access();
 	if( hl_vfields(r68)[0] ) r12 = ((bool (*)(vdynamic*))hl_vfields(r68)[0])(r68->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r68->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r12 = (bool)ret.v.i;
 	}
-	if( !r12 ) goto label$eabbec9_31_975;
+	if( !r12 ) goto label$eabbec9_29_975;
 	if( hl_vfields(r68)[1] ) r8 = ((String (*)(vdynamic*))hl_vfields(r68)[1])(r68->value); else {
 		r8 = (String)hl_dyn_call_obj(r68->value,&t$fun_820f49a,151160317/*next*/,NULL,NULL);
 	}
@@ -5078,35 +5062,35 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( r32 == NULL ) hl_null_access();
 	r11 = haxe_ds_StringMap_get(r32,r8);
 	r23 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r11);
-	if( r23 ) goto label$eabbec9_31_945;
+	if( r23 ) goto label$eabbec9_29_945;
 	r24 = (String)s$Missing_model_;
 	r24 = String___add__(r24,r8);
 	r70 = (String)s$_required_by_UV_animation;
 	r24 = String___add__(r24,r70);
 	r11 = haxe_Exception_thrown(((vdynamic*)r24));
 	hl_throw((vdynamic*)r11);
-	label$eabbec9_31_945:
+	label$eabbec9_29_945:
 	r24 = (String)s$UV;
 	r48 = hxd_fmt_fbx_BaseLibrary_getObjectCurve(r0,r6,r23,r24,r1);
-	if( r48 ) goto label$eabbec9_31_949;
-	goto label$eabbec9_31_926;
-	label$eabbec9_31_949:
+	if( r48 ) goto label$eabbec9_29_949;
+	goto label$eabbec9_29_926;
+	label$eabbec9_29_949:
 	if( r48 == NULL ) hl_null_access();
 	r48->uv = r18;
 	r17 = 0;
-	label$eabbec9_31_952:
+	label$eabbec9_29_952:
 	if( r18 == NULL ) hl_null_access();
 	r21 = r18->length;
-	if( r17 >= r21 ) goto label$eabbec9_31_974;
+	if( r17 >= r21 ) goto label$eabbec9_29_974;
 	r21 = r18->length;
-	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_31_960;
+	if( ((unsigned)r17) < ((unsigned)r21) ) goto label$eabbec9_29_960;
 	r85 = NULL;
-	goto label$eabbec9_31_963;
-	label$eabbec9_31_960:
+	goto label$eabbec9_29_963;
+	label$eabbec9_29_960:
 	r15 = r18->array;
 	r11 = ((vdynamic**)(r15 + 1))[r17];
 	r85 = hl_to_virtual(&t$vrt_92c68e9,(vdynamic*)r11);
-	label$eabbec9_31_963:
+	label$eabbec9_29_963:
 	++r17;
 	if( r85 == NULL ) hl_null_access();
 	r55 = hl_vfields(r85)[0] ? (*(double*)(hl_vfields(r85)[0])) : (double)hl_dyn_getd(r85->value,116/*t*/);
@@ -5118,10 +5102,10 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r60 = hl_alloc_dynamic(&t$_f64);
 	r60->v.d = r59;
 	haxe_ds_IntMap_set(r43,r20,((vdynamic*)r60));
-	goto label$eabbec9_31_952;
-	label$eabbec9_31_974:
-	goto label$eabbec9_31_926;
-	label$eabbec9_31_975:
+	goto label$eabbec9_29_952;
+	label$eabbec9_29_974:
+	goto label$eabbec9_29_926;
+	label$eabbec9_29_975:
 	r17 = 0;
 	r45 = hl_alloc_bytes(r17);
 	r17 = 0;
@@ -5130,14 +5114,14 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( r43 == NULL ) hl_null_access();
 	r86 = haxe_ds_IntMap_iterator(r43);
 	r87 = hl_to_virtual(&t$vrt_a31fa59,(vdynamic*)r86);
-	label$eabbec9_31_983:
+	label$eabbec9_29_983:
 	if( r87 == NULL ) hl_null_access();
 	if( hl_vfields(r87)[0] ) r12 = ((bool (*)(vdynamic*))hl_vfields(r87)[0])(r87->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r87->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r12 = (bool)ret.v.i;
 	}
-	if( !r12 ) goto label$eabbec9_31_991;
+	if( !r12 ) goto label$eabbec9_29_991;
 	if( hl_vfields(r87)[1] ) r55 = ((double (*)(vdynamic*))hl_vfields(r87)[1])(r87->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r87->value,&t$fun_ac62f2e,151160317/*next*/,NULL,&ret);
@@ -5145,131 +5129,131 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	}
 	if( r50 == NULL ) hl_null_access();
 	r17 = hl_types_ArrayBytes_Float_push(r50,r55);
-	goto label$eabbec9_31_983;
-	label$eabbec9_31_991:
+	goto label$eabbec9_29_983;
+	label$eabbec9_29_991:
 	r52 = r50;
 	if( r50 == NULL ) hl_null_access();
 	r17 = r50->length;
 	r20 = 0;
-	if( r17 != r20 ) goto label$eabbec9_31_998;
+	if( r17 != r20 ) goto label$eabbec9_29_998;
 	r7 = NULL;
 	return r7;
-	label$eabbec9_31_998:
+	label$eabbec9_29_998:
 	r88 = hl_alloc_closure_ptr(&t$fun_351e596,hxd_fmt_fbx_BaseLibrary_sortDistinctFloats,r0);
 	hl_types_ArrayBytes_Float_sort(r50,r88);
 	r17 = r50->length;
 	r20 = 1;
 	r17 = r17 - r20;
 	r20 = r50->length;
-	if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_31_1007;
+	if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_29_1007;
 	r55 = 0.;
-	goto label$eabbec9_31_1011;
-	label$eabbec9_31_1007:
+	goto label$eabbec9_29_1011;
+	label$eabbec9_29_1007:
 	r45 = r50->bytes;
 	r20 = 3;
 	r20 = r17 << r20;
 	r55 = *(double*)(r45 + r20);
-	label$eabbec9_31_1011:
+	label$eabbec9_29_1011:
 	r59 = r55;
 	r17 = 0;
 	r20 = r50->length;
-	if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_31_1017;
+	if( ((unsigned)r17) < ((unsigned)r20) ) goto label$eabbec9_29_1017;
 	r89 = 0.;
-	goto label$eabbec9_31_1021;
-	label$eabbec9_31_1017:
+	goto label$eabbec9_29_1021;
+	label$eabbec9_29_1017:
 	r45 = r50->bytes;
 	r20 = 3;
 	r20 = r17 << r20;
 	r89 = *(double*)(r45 + r20);
-	label$eabbec9_31_1021:
+	label$eabbec9_29_1021:
 	r17 = 1;
 	r20 = r50->length;
-	label$eabbec9_31_1023:
-	if( r17 >= r20 ) goto label$eabbec9_31_1041;
+	label$eabbec9_29_1023:
+	if( r17 >= r20 ) goto label$eabbec9_29_1041;
 	r21 = r17;
 	++r17;
 	if( r52 == NULL ) hl_null_access();
 	r53 = r52->length;
-	if( ((unsigned)r21) < ((unsigned)r53) ) goto label$eabbec9_31_1032;
+	if( ((unsigned)r21) < ((unsigned)r53) ) goto label$eabbec9_29_1032;
 	r90 = 0.;
-	goto label$eabbec9_31_1036;
-	label$eabbec9_31_1032:
+	goto label$eabbec9_29_1036;
+	label$eabbec9_29_1032:
 	r45 = r52->bytes;
 	r53 = 3;
 	r53 = r21 << r53;
 	r90 = *(double*)(r45 + r53);
-	label$eabbec9_31_1036:
+	label$eabbec9_29_1036:
 	r91 = r90 - r89;
-	if( !(r91 < r59) ) goto label$eabbec9_31_1039;
+	if( !(r91 < r59) ) goto label$eabbec9_29_1039;
 	r59 = r91;
-	label$eabbec9_31_1039:
+	label$eabbec9_29_1039:
 	r89 = r90;
-	goto label$eabbec9_31_1023;
-	label$eabbec9_31_1041:
+	goto label$eabbec9_29_1023;
+	label$eabbec9_29_1041:
 	r91 = 0.;
-	if( r55 != r91 ) goto label$eabbec9_31_1045;
+	if( r55 != r91 ) goto label$eabbec9_29_1045;
 	r17 = 1;
-	goto label$eabbec9_31_1060;
-	label$eabbec9_31_1045:
+	goto label$eabbec9_29_1060;
+	label$eabbec9_29_1045:
 	r17 = 1;
 	if( r52 == NULL ) hl_null_access();
 	r20 = 0;
 	r21 = r52->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_31_1052;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_29_1052;
 	r91 = 0.;
-	goto label$eabbec9_31_1056;
-	label$eabbec9_31_1052:
+	goto label$eabbec9_29_1056;
+	label$eabbec9_29_1052:
 	r45 = r52->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r91 = *(double*)(r45 + r21);
-	label$eabbec9_31_1056:
+	label$eabbec9_29_1056:
 	r90 = r55 - r91;
 	r90 = r90 / r59;
 	r20 = (int)r90;
 	r17 = r17 + r20;
-	label$eabbec9_31_1060:
+	label$eabbec9_29_1060:
 	r90 = 15.;
 	r92 = 3079077200.;
 	r91 = r59 / r92;
 	r90 = r90 / r91;
 	if( r52 == NULL ) hl_null_access();
 	r20 = r52->length;
-	if( r20 >= r17 ) goto label$eabbec9_31_1118;
+	if( r20 >= r17 ) goto label$eabbec9_29_1118;
 	r20 = 0;
 	r21 = r52->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_31_1072;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$eabbec9_29_1072;
 	r91 = 0.;
-	goto label$eabbec9_31_1076;
-	label$eabbec9_31_1072:
+	goto label$eabbec9_29_1076;
+	label$eabbec9_29_1072:
 	r45 = r52->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r91 = *(double*)(r45 + r21);
-	label$eabbec9_31_1076:
-	if( !(r91 < r55) ) goto label$eabbec9_31_1087;
+	label$eabbec9_29_1076:
+	if( !(r91 < r55) ) goto label$eabbec9_29_1087;
 	if( r52 == NULL ) hl_null_access();
 	r71 = NULL;
 	r20 = hl_types_ArrayBytes_Float_indexOf(r52,r91,r71);
 	r21 = 0;
-	if( r20 >= r21 ) goto label$eabbec9_31_1084;
+	if( r20 >= r21 ) goto label$eabbec9_29_1084;
 	r20 = hl_types_ArrayBytes_Float_push(r52,r91);
-	label$eabbec9_31_1084:
+	label$eabbec9_29_1084:
 	r92 = r91 + r59;
 	r91 = r92;
-	goto label$eabbec9_31_1076;
-	label$eabbec9_31_1087:
+	goto label$eabbec9_29_1076;
+	label$eabbec9_29_1087:
 	if( r52 == NULL ) hl_null_access();
 	r94 = &cl$0;
-	if( r94 ) goto label$eabbec9_31_1092;
+	if( r94 ) goto label$eabbec9_29_1092;
 	r88 = NULL;
-	goto label$eabbec9_31_1093;
-	label$eabbec9_31_1092:
+	goto label$eabbec9_29_1093;
+	label$eabbec9_29_1092:
 	r88 = hl_alloc_closure_ptr(&t$fun_cae6940,wrapt$fun_cae6940,r94);
-	label$eabbec9_31_1093:
+	label$eabbec9_29_1093:
 	hl_types_ArrayBytes_Float_sort(r52,r88);
 	r20 = r52->length;
-	if( r17 >= r20 ) goto label$eabbec9_31_1113;
+	if( r17 >= r20 ) goto label$eabbec9_29_1113;
 	r8 = (String)s$Animation_;
 	r8 = String___add__(r8,r1);
 	r24 = (String)s$84c4047;
@@ -5287,13 +5271,13 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r8 = String___add__(r8,r24);
 	r11 = haxe_Exception_thrown(((vdynamic*)r8));
 	hl_throw((vdynamic*)r11);
-	label$eabbec9_31_1113:
+	label$eabbec9_29_1113:
 	r20 = r52->length;
-	if( r20 >= r17 ) goto label$eabbec9_31_1118;
+	if( r20 >= r17 ) goto label$eabbec9_29_1118;
 	r8 = (String)s$assert;
 	r11 = haxe_Exception_thrown(((vdynamic*)r8));
 	hl_throw((vdynamic*)r11);
-	label$eabbec9_31_1118:
+	label$eabbec9_29_1118:
 	r96 = (h3d__anim__LinearAnimation)hl_alloc_obj(&t$h3d_anim_LinearAnimation);
 	h3d_anim_LinearAnimation_new(r96,r1,r17,r90);
 	r77 = (h3d__Quat)hl_alloc_obj(&t$h3d_Quat);
@@ -5315,146 +5299,146 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( r6 == NULL ) hl_null_access();
 	r86 = haxe_ds_IntMap_iterator(r6);
 	r97 = hl_to_virtual(&t$vrt_a6194c5,(vdynamic*)r86);
-	label$eabbec9_31_1139:
+	label$eabbec9_29_1139:
 	if( r97 == NULL ) hl_null_access();
 	if( hl_vfields(r97)[0] ) r12 = ((bool (*)(vdynamic*))hl_vfields(r97)[0])(r97->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r97->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r12 = (bool)ret.v.i;
 	}
-	if( !r12 ) goto label$eabbec9_31_1147;
+	if( !r12 ) goto label$eabbec9_29_1147;
 	if( hl_vfields(r97)[1] ) r48 = ((hxd__fmt__fbx___BaseLibrary__AnimCurve (*)(vdynamic*))hl_vfields(r97)[1])(r97->value); else {
 		r48 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)hl_dyn_call_obj(r97->value,&t$fun_5bcdc12,151160317/*next*/,NULL,NULL);
 	}
 	if( r18 == NULL ) hl_null_access();
 	r20 = hl_types_ArrayObj_push(r18,((vdynamic*)r48));
-	goto label$eabbec9_31_1139;
-	label$eabbec9_31_1147:
+	goto label$eabbec9_29_1139;
+	label$eabbec9_29_1147:
 	r22 = r18;
 	r98 = &cl$1;
 	if( r18 == NULL ) hl_null_access();
 	r99 = hl_alloc_closure_ptr(&t$fun_ad9ad60,hxd_fmt_fbx_BaseLibrary_loadAnimation__$2,r98);
-	if( r99 ) goto label$eabbec9_31_1154;
+	if( r99 ) goto label$eabbec9_29_1154;
 	r94 = NULL;
-	goto label$eabbec9_31_1155;
-	label$eabbec9_31_1154:
+	goto label$eabbec9_29_1155;
+	label$eabbec9_29_1154:
 	r94 = hl_alloc_closure_ptr(&t$fun_19675cd,hxd_fmt_fbx_BaseLibrary_loadAnimation__$3,r99);
-	label$eabbec9_31_1155:
+	label$eabbec9_29_1155:
 	hl_types_ArrayObj_sort(r18,r94);
 	r20 = 0;
-	label$eabbec9_31_1157:
+	label$eabbec9_29_1157:
 	if( r22 == NULL ) hl_null_access();
 	r25 = r22->length;
-	if( r20 >= r25 ) goto label$eabbec9_31_2034;
+	if( r20 >= r25 ) goto label$eabbec9_29_2034;
 	r25 = r22->length;
-	if( ((unsigned)r20) < ((unsigned)r25) ) goto label$eabbec9_31_1165;
+	if( ((unsigned)r20) < ((unsigned)r25) ) goto label$eabbec9_29_1165;
 	r48 = NULL;
-	goto label$eabbec9_31_1168;
-	label$eabbec9_31_1165:
+	goto label$eabbec9_29_1168;
+	label$eabbec9_29_1165:
 	r15 = r22->array;
 	r11 = ((vdynamic**)(r15 + 1))[r20];
 	r48 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)r11;
-	label$eabbec9_31_1168:
+	label$eabbec9_29_1168:
 	++r20;
 	r21 = r17;
 	r12 = true;
 	if( r48 == NULL ) hl_null_access();
 	r67 = r48->_t;
-	if( r67 ) goto label$eabbec9_31_1189;
+	if( r67 ) goto label$eabbec9_29_1189;
 	r67 = r48->r;
-	if( r67 ) goto label$eabbec9_31_1189;
+	if( r67 ) goto label$eabbec9_29_1189;
 	r67 = r48->s;
-	if( r67 ) goto label$eabbec9_31_1189;
+	if( r67 ) goto label$eabbec9_29_1189;
 	r66 = r48->a;
-	if( r66 ) goto label$eabbec9_31_1189;
+	if( r66 ) goto label$eabbec9_29_1189;
 	r26 = r48->uv;
-	if( r26 ) goto label$eabbec9_31_1189;
+	if( r26 ) goto label$eabbec9_29_1189;
 	r66 = r48->roll;
-	if( r66 ) goto label$eabbec9_31_1189;
+	if( r66 ) goto label$eabbec9_29_1189;
 	r66 = r48->fov;
-	if( r66 ) goto label$eabbec9_31_1189;
+	if( r66 ) goto label$eabbec9_29_1189;
 	r25 = 1;
 	r21 = r25;
-	goto label$eabbec9_31_1204;
-	label$eabbec9_31_1189:
-	if( !r12 ) goto label$eabbec9_31_1194;
+	goto label$eabbec9_29_1204;
+	label$eabbec9_29_1189:
+	if( !r12 ) goto label$eabbec9_29_1194;
 	r67 = r48->_t;
 	r100 = hl_to_virtual(&t$vrt_a6e9cbf,(vdynamic*)r67);
 	r81 = hxd_fmt_fbx_BaseLibrary_checkData(r0,r100);
 	r12 = r81;
-	label$eabbec9_31_1194:
-	if( !r12 ) goto label$eabbec9_31_1199;
+	label$eabbec9_29_1194:
+	if( !r12 ) goto label$eabbec9_29_1199;
 	r67 = r48->r;
 	r100 = hl_to_virtual(&t$vrt_a6e9cbf,(vdynamic*)r67);
 	r81 = hxd_fmt_fbx_BaseLibrary_checkData(r0,r100);
 	r12 = r81;
-	label$eabbec9_31_1199:
-	if( !r12 ) goto label$eabbec9_31_1204;
+	label$eabbec9_29_1199:
+	if( !r12 ) goto label$eabbec9_29_1204;
 	r67 = r48->s;
 	r100 = hl_to_virtual(&t$vrt_a6e9cbf,(vdynamic*)r67);
 	r81 = hxd_fmt_fbx_BaseLibrary_checkData(r0,r100);
 	r12 = r81;
-	label$eabbec9_31_1204:
-	if( !r12 ) goto label$eabbec9_31_1207;
+	label$eabbec9_29_1204:
+	if( !r12 ) goto label$eabbec9_29_1207;
 	r25 = 1;
-	goto label$eabbec9_31_1208;
-	label$eabbec9_31_1207:
+	goto label$eabbec9_29_1208;
+	label$eabbec9_29_1207:
 	r25 = r21;
-	label$eabbec9_31_1208:
+	label$eabbec9_29_1208:
 	r16 = &t$h3d_anim_LinearFrame;
 	r53 = 0;
 	r15 = hl_alloc_array(r16,r53);
 	r26 = hl_types_ArrayObj_alloc(r15);
 	r54 = 0;
-	if( r54 >= r25 ) goto label$eabbec9_31_1224;
+	if( r54 >= r25 ) goto label$eabbec9_29_1224;
 	if( r26 == NULL ) hl_null_access();
 	r54 = 1;
 	r53 = r25 - r54;
 	r11 = NULL;
 	r101 = (h3d__anim__LinearFrame)hl_dyn_castp(&r11,&t$_dyn,&t$h3d_anim_LinearFrame);
 	r54 = r26->length;
-	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_31_1222;
+	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_29_1222;
 	hl_types_ArrayObj___expand(r26,r53);
-	label$eabbec9_31_1222:
+	label$eabbec9_29_1222:
 	r15 = r26->array;
 	((h3d__anim__LinearFrame*)(r15 + 1))[r53] = r101;
-	label$eabbec9_31_1224:
+	label$eabbec9_29_1224:
 	r61 = r26;
 	r66 = r48->a;
-	if( r66 ) goto label$eabbec9_31_1230;
+	if( r66 ) goto label$eabbec9_29_1230;
 	r64 = NULL;
 	r63 = r64;
-	goto label$eabbec9_31_1250;
-	label$eabbec9_31_1230:
+	goto label$eabbec9_29_1250;
+	label$eabbec9_29_1230:
 	r53 = 0;
 	r45 = hl_alloc_bytes(r53);
 	r53 = 0;
 	r53 = 0;
 	r64 = hl_types_ArrayBase_allocF64(r45,r53);
 	r54 = 0;
-	if( r54 >= r21 ) goto label$eabbec9_31_1249;
+	if( r54 >= r21 ) goto label$eabbec9_29_1249;
 	if( r64 == NULL ) hl_null_access();
 	r54 = 1;
 	r53 = r21 - r54;
 	r11 = NULL;
 	r91 = (double)hl_dyn_castd(&r11,&t$_dyn);
 	r54 = r64->length;
-	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_31_1245;
+	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_29_1245;
 	hl_types_ArrayBytes_Float___expand(r64,r53);
-	label$eabbec9_31_1245:
+	label$eabbec9_29_1245:
 	r45 = r64->bytes;
 	r54 = 3;
 	r54 = r53 << r54;
 	*(double*)(r45 + r54) = r91;
-	label$eabbec9_31_1249:
+	label$eabbec9_29_1249:
 	r63 = r64;
-	label$eabbec9_31_1250:
+	label$eabbec9_29_1250:
 	r103 = r48->uv;
-	if( r103 ) goto label$eabbec9_31_1255;
+	if( r103 ) goto label$eabbec9_29_1255;
 	r102 = NULL;
 	r64 = r102;
-	goto label$eabbec9_31_1277;
-	label$eabbec9_31_1255:
+	goto label$eabbec9_29_1277;
+	label$eabbec9_29_1255:
 	r54 = 2;
 	r53 = r21 * r54;
 	r54 = 0;
@@ -5463,117 +5447,117 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r54 = 0;
 	r102 = hl_types_ArrayBase_allocF64(r45,r54);
 	r65 = 0;
-	if( r65 >= r53 ) goto label$eabbec9_31_1276;
+	if( r65 >= r53 ) goto label$eabbec9_29_1276;
 	if( r102 == NULL ) hl_null_access();
 	r65 = 1;
 	r54 = r53 - r65;
 	r11 = NULL;
 	r91 = (double)hl_dyn_castd(&r11,&t$_dyn);
 	r65 = r102->length;
-	if( ((unsigned)r54) < ((unsigned)r65) ) goto label$eabbec9_31_1272;
+	if( ((unsigned)r54) < ((unsigned)r65) ) goto label$eabbec9_29_1272;
 	hl_types_ArrayBytes_Float___expand(r102,r54);
-	label$eabbec9_31_1272:
+	label$eabbec9_29_1272:
 	r45 = r102->bytes;
 	r65 = 3;
 	r65 = r54 << r65;
 	*(double*)(r45 + r65) = r91;
-	label$eabbec9_31_1276:
+	label$eabbec9_29_1276:
 	r64 = r102;
-	label$eabbec9_31_1277:
+	label$eabbec9_29_1277:
 	r66 = r48->roll;
-	if( r66 ) goto label$eabbec9_31_1282;
+	if( r66 ) goto label$eabbec9_29_1282;
 	r104 = NULL;
 	r102 = r104;
-	goto label$eabbec9_31_1302;
-	label$eabbec9_31_1282:
+	goto label$eabbec9_29_1302;
+	label$eabbec9_29_1282:
 	r53 = 0;
 	r45 = hl_alloc_bytes(r53);
 	r53 = 0;
 	r53 = 0;
 	r104 = hl_types_ArrayBase_allocF64(r45,r53);
 	r54 = 0;
-	if( r54 >= r21 ) goto label$eabbec9_31_1301;
+	if( r54 >= r21 ) goto label$eabbec9_29_1301;
 	if( r104 == NULL ) hl_null_access();
 	r54 = 1;
 	r53 = r21 - r54;
 	r11 = NULL;
 	r91 = (double)hl_dyn_castd(&r11,&t$_dyn);
 	r54 = r104->length;
-	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_31_1297;
+	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_29_1297;
 	hl_types_ArrayBytes_Float___expand(r104,r53);
-	label$eabbec9_31_1297:
+	label$eabbec9_29_1297:
 	r45 = r104->bytes;
 	r54 = 3;
 	r54 = r53 << r54;
 	*(double*)(r45 + r54) = r91;
-	label$eabbec9_31_1301:
+	label$eabbec9_29_1301:
 	r102 = r104;
-	label$eabbec9_31_1302:
+	label$eabbec9_29_1302:
 	r66 = r48->fov;
-	if( r66 ) goto label$eabbec9_31_1307;
+	if( r66 ) goto label$eabbec9_29_1307;
 	r105 = NULL;
 	r104 = r105;
-	goto label$eabbec9_31_1327;
-	label$eabbec9_31_1307:
+	goto label$eabbec9_29_1327;
+	label$eabbec9_29_1307:
 	r53 = 0;
 	r45 = hl_alloc_bytes(r53);
 	r53 = 0;
 	r53 = 0;
 	r105 = hl_types_ArrayBase_allocF64(r45,r53);
 	r54 = 0;
-	if( r54 >= r21 ) goto label$eabbec9_31_1326;
+	if( r54 >= r21 ) goto label$eabbec9_29_1326;
 	if( r105 == NULL ) hl_null_access();
 	r54 = 1;
 	r53 = r21 - r54;
 	r11 = NULL;
 	r91 = (double)hl_dyn_castd(&r11,&t$_dyn);
 	r54 = r105->length;
-	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_31_1322;
+	if( ((unsigned)r53) < ((unsigned)r54) ) goto label$eabbec9_29_1322;
 	hl_types_ArrayBytes_Float___expand(r105,r53);
-	label$eabbec9_31_1322:
+	label$eabbec9_29_1322:
 	r45 = r105->bytes;
 	r54 = 3;
 	r54 = r53 << r54;
 	*(double*)(r45 + r54) = r91;
-	label$eabbec9_31_1326:
+	label$eabbec9_29_1326:
 	r104 = r105;
-	label$eabbec9_31_1327:
-	if( r26 ) goto label$eabbec9_31_1333;
-	if( r63 ) goto label$eabbec9_31_1333;
-	if( r64 ) goto label$eabbec9_31_1333;
-	if( r102 ) goto label$eabbec9_31_1333;
-	if( r104 ) goto label$eabbec9_31_1333;
-	goto label$eabbec9_31_1157;
-	label$eabbec9_31_1333:
+	label$eabbec9_29_1327:
+	if( r26 ) goto label$eabbec9_29_1333;
+	if( r63 ) goto label$eabbec9_29_1333;
+	if( r64 ) goto label$eabbec9_29_1333;
+	if( r102 ) goto label$eabbec9_29_1333;
+	if( r104 ) goto label$eabbec9_29_1333;
+	goto label$eabbec9_29_1157;
+	label$eabbec9_29_1333:
 	r67 = r48->_t;
-	if( r67 ) goto label$eabbec9_31_1337;
+	if( r67 ) goto label$eabbec9_29_1337;
 	r105 = NULL;
-	goto label$eabbec9_31_1340;
-	label$eabbec9_31_1337:
+	goto label$eabbec9_29_1340;
+	label$eabbec9_29_1337:
 	r67 = r48->_t;
 	if( r67 == NULL ) hl_null_access();
 	r105 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1340:
+	label$eabbec9_29_1340:
 	r67 = r48->_t;
-	if( r67 ) goto label$eabbec9_31_1344;
+	if( r67 ) goto label$eabbec9_29_1344;
 	r106 = NULL;
-	goto label$eabbec9_31_1347;
-	label$eabbec9_31_1344:
+	goto label$eabbec9_29_1347;
+	label$eabbec9_29_1344:
 	r67 = r48->_t;
 	if( r67 == NULL ) hl_null_access();
 	r106 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1347:
+	label$eabbec9_29_1347:
 	r67 = r48->_t;
-	if( r67 ) goto label$eabbec9_31_1351;
+	if( r67 ) goto label$eabbec9_29_1351;
 	r107 = NULL;
-	goto label$eabbec9_31_1354;
-	label$eabbec9_31_1351:
+	goto label$eabbec9_29_1354;
+	label$eabbec9_29_1351:
 	r67 = r48->_t;
 	if( r67 == NULL ) hl_null_access();
 	r107 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1354:
+	label$eabbec9_29_1354:
 	r67 = r48->_t;
-	if( r67 ) goto label$eabbec9_31_1367;
+	if( r67 ) goto label$eabbec9_29_1367;
 	r53 = 8;
 	r45 = hl_alloc_bytes(r53);
 	r53 = 0;
@@ -5584,41 +5568,41 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	++r53;
 	r53 = 1;
 	r108 = hl_types_ArrayBase_allocF64(r45,r53);
-	goto label$eabbec9_31_1370;
-	label$eabbec9_31_1367:
+	goto label$eabbec9_29_1370;
+	label$eabbec9_29_1367:
 	r67 = r48->_t;
 	if( r67 == NULL ) hl_null_access();
 	r108 = hl_vfields(r67)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,116/*t*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1370:
+	label$eabbec9_29_1370:
 	r67 = r48->r;
-	if( r67 ) goto label$eabbec9_31_1374;
+	if( r67 ) goto label$eabbec9_29_1374;
 	r109 = NULL;
-	goto label$eabbec9_31_1377;
-	label$eabbec9_31_1374:
+	goto label$eabbec9_29_1377;
+	label$eabbec9_29_1374:
 	r67 = r48->r;
 	if( r67 == NULL ) hl_null_access();
 	r109 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1377:
+	label$eabbec9_29_1377:
 	r67 = r48->r;
-	if( r67 ) goto label$eabbec9_31_1381;
+	if( r67 ) goto label$eabbec9_29_1381;
 	r110 = NULL;
-	goto label$eabbec9_31_1384;
-	label$eabbec9_31_1381:
+	goto label$eabbec9_29_1384;
+	label$eabbec9_29_1381:
 	r67 = r48->r;
 	if( r67 == NULL ) hl_null_access();
 	r110 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1384:
+	label$eabbec9_29_1384:
 	r67 = r48->r;
-	if( r67 ) goto label$eabbec9_31_1388;
+	if( r67 ) goto label$eabbec9_29_1388;
 	r111 = NULL;
-	goto label$eabbec9_31_1391;
-	label$eabbec9_31_1388:
+	goto label$eabbec9_29_1391;
+	label$eabbec9_29_1388:
 	r67 = r48->r;
 	if( r67 == NULL ) hl_null_access();
 	r111 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1391:
+	label$eabbec9_29_1391:
 	r67 = r48->r;
-	if( r67 ) goto label$eabbec9_31_1404;
+	if( r67 ) goto label$eabbec9_29_1404;
 	r53 = 8;
 	r45 = hl_alloc_bytes(r53);
 	r53 = 0;
@@ -5629,41 +5613,41 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	++r53;
 	r53 = 1;
 	r112 = hl_types_ArrayBase_allocF64(r45,r53);
-	goto label$eabbec9_31_1407;
-	label$eabbec9_31_1404:
+	goto label$eabbec9_29_1407;
+	label$eabbec9_29_1404:
 	r67 = r48->r;
 	if( r67 == NULL ) hl_null_access();
 	r112 = hl_vfields(r67)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,116/*t*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1407:
+	label$eabbec9_29_1407:
 	r67 = r48->s;
-	if( r67 ) goto label$eabbec9_31_1411;
+	if( r67 ) goto label$eabbec9_29_1411;
 	r113 = NULL;
-	goto label$eabbec9_31_1414;
-	label$eabbec9_31_1411:
+	goto label$eabbec9_29_1414;
+	label$eabbec9_29_1411:
 	r67 = r48->s;
 	if( r67 == NULL ) hl_null_access();
 	r113 = hl_vfields(r67)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,120/*x*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1414:
+	label$eabbec9_29_1414:
 	r67 = r48->s;
-	if( r67 ) goto label$eabbec9_31_1418;
+	if( r67 ) goto label$eabbec9_29_1418;
 	r114 = NULL;
-	goto label$eabbec9_31_1421;
-	label$eabbec9_31_1418:
+	goto label$eabbec9_29_1421;
+	label$eabbec9_29_1418:
 	r67 = r48->s;
 	if( r67 == NULL ) hl_null_access();
 	r114 = hl_vfields(r67)[2] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[2])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,121/*y*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1421:
+	label$eabbec9_29_1421:
 	r67 = r48->s;
-	if( r67 ) goto label$eabbec9_31_1425;
+	if( r67 ) goto label$eabbec9_29_1425;
 	r115 = NULL;
-	goto label$eabbec9_31_1428;
-	label$eabbec9_31_1425:
+	goto label$eabbec9_29_1428;
+	label$eabbec9_29_1425:
 	r67 = r48->s;
 	if( r67 == NULL ) hl_null_access();
 	r115 = hl_vfields(r67)[3] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[3])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,122/*z*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1428:
+	label$eabbec9_29_1428:
 	r67 = r48->s;
-	if( r67 ) goto label$eabbec9_31_1441;
+	if( r67 ) goto label$eabbec9_29_1441;
 	r53 = 8;
 	r45 = hl_alloc_bytes(r53);
 	r53 = 0;
@@ -5674,30 +5658,30 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	++r53;
 	r53 = 1;
 	r116 = hl_types_ArrayBase_allocF64(r45,r53);
-	goto label$eabbec9_31_1444;
-	label$eabbec9_31_1441:
+	goto label$eabbec9_29_1444;
+	label$eabbec9_29_1441:
 	r67 = r48->s;
 	if( r67 == NULL ) hl_null_access();
 	r116 = hl_vfields(r67)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r67)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r67->value,116/*t*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1444:
+	label$eabbec9_29_1444:
 	r66 = r48->a;
-	if( r66 ) goto label$eabbec9_31_1448;
+	if( r66 ) goto label$eabbec9_29_1448;
 	r117 = NULL;
-	goto label$eabbec9_31_1451;
-	label$eabbec9_31_1448:
+	goto label$eabbec9_29_1451;
+	label$eabbec9_29_1448:
 	r66 = r48->a;
 	if( r66 == NULL ) hl_null_access();
 	r117 = hl_vfields(r66)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r66->value,118/*v*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1451:
+	label$eabbec9_29_1451:
 	r66 = r48->a;
-	if( r66 ) goto label$eabbec9_31_1455;
+	if( r66 ) goto label$eabbec9_29_1455;
 	r118 = NULL;
-	goto label$eabbec9_31_1458;
-	label$eabbec9_31_1455:
+	goto label$eabbec9_29_1458;
+	label$eabbec9_29_1455:
 	r66 = r48->a;
 	if( r66 == NULL ) hl_null_access();
 	r118 = hl_vfields(r66)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r66->value,116/*t*/,&t$hl_types_ArrayBytes_Float);
-	label$eabbec9_31_1458:
+	label$eabbec9_29_1458:
 	r103 = r48->uv;
 	r75 = r48->def;
 	r53 = 0;
@@ -5710,108 +5694,108 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r101 = NULL;
 	r123 = 0;
 	r124 = r21;
-	label$eabbec9_31_1470:
-	if( r123 >= r124 ) goto label$eabbec9_31_1976;
+	label$eabbec9_29_1470:
+	if( r123 >= r124 ) goto label$eabbec9_29_1976;
 	r125 = r123;
 	++r123;
 	r128 = NULL;
-	if( r101 == r128 ) goto label$eabbec9_31_1478;
+	if( r101 == r128 ) goto label$eabbec9_29_1478;
 	r81 = false;
-	goto label$eabbec9_31_1479;
-	label$eabbec9_31_1478:
+	goto label$eabbec9_29_1479;
+	label$eabbec9_29_1478:
 	r81 = true;
-	label$eabbec9_31_1479:
+	label$eabbec9_29_1479:
 	if( r52 == NULL ) hl_null_access();
 	r130 = r52->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1484;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1484;
 	r91 = 0.;
-	goto label$eabbec9_31_1488;
-	label$eabbec9_31_1484:
+	goto label$eabbec9_29_1488;
+	label$eabbec9_29_1484:
 	r45 = r52->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1488:
+	label$eabbec9_29_1488:
 	if( r108 == NULL ) hl_null_access();
 	r130 = r108->length;
-	if( ((unsigned)r53) < ((unsigned)r130) ) goto label$eabbec9_31_1493;
+	if( ((unsigned)r53) < ((unsigned)r130) ) goto label$eabbec9_29_1493;
 	r92 = 0.;
-	goto label$eabbec9_31_1497;
-	label$eabbec9_31_1493:
+	goto label$eabbec9_29_1497;
+	label$eabbec9_29_1493:
 	r45 = r108->bytes;
 	r130 = 3;
 	r130 = r53 << r130;
 	r92 = *(double*)(r45 + r130);
-	label$eabbec9_31_1497:
-	if( r91 != r92 ) goto label$eabbec9_31_1501;
+	label$eabbec9_29_1497:
+	if( r91 != r92 ) goto label$eabbec9_29_1501;
 	r131 = true;
 	r81 = r131;
 	++r53;
-	label$eabbec9_31_1501:
+	label$eabbec9_29_1501:
 	r130 = r52->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1505;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1505;
 	r91 = 0.;
-	goto label$eabbec9_31_1509;
-	label$eabbec9_31_1505:
+	goto label$eabbec9_29_1509;
+	label$eabbec9_29_1505:
 	r45 = r52->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1509:
+	label$eabbec9_29_1509:
 	if( r112 == NULL ) hl_null_access();
 	r130 = r112->length;
-	if( ((unsigned)r54) < ((unsigned)r130) ) goto label$eabbec9_31_1514;
+	if( ((unsigned)r54) < ((unsigned)r130) ) goto label$eabbec9_29_1514;
 	r92 = 0.;
-	goto label$eabbec9_31_1518;
-	label$eabbec9_31_1514:
+	goto label$eabbec9_29_1518;
+	label$eabbec9_29_1514:
 	r45 = r112->bytes;
 	r130 = 3;
 	r130 = r54 << r130;
 	r92 = *(double*)(r45 + r130);
-	label$eabbec9_31_1518:
-	if( r91 != r92 ) goto label$eabbec9_31_1522;
+	label$eabbec9_29_1518:
+	if( r91 != r92 ) goto label$eabbec9_29_1522;
 	r131 = true;
 	r81 = r131;
 	++r54;
-	label$eabbec9_31_1522:
+	label$eabbec9_29_1522:
 	r130 = r52->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1526;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1526;
 	r91 = 0.;
-	goto label$eabbec9_31_1530;
-	label$eabbec9_31_1526:
+	goto label$eabbec9_29_1530;
+	label$eabbec9_29_1526:
 	r45 = r52->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1530:
+	label$eabbec9_29_1530:
 	if( r116 == NULL ) hl_null_access();
 	r130 = r116->length;
-	if( ((unsigned)r65) < ((unsigned)r130) ) goto label$eabbec9_31_1535;
+	if( ((unsigned)r65) < ((unsigned)r130) ) goto label$eabbec9_29_1535;
 	r92 = 0.;
-	goto label$eabbec9_31_1539;
-	label$eabbec9_31_1535:
+	goto label$eabbec9_29_1539;
+	label$eabbec9_29_1535:
 	r45 = r116->bytes;
 	r130 = 3;
 	r130 = r65 << r130;
 	r92 = *(double*)(r45 + r130);
-	label$eabbec9_31_1539:
-	if( r91 != r92 ) goto label$eabbec9_31_1543;
+	label$eabbec9_29_1539:
+	if( r91 != r92 ) goto label$eabbec9_29_1543;
 	r131 = true;
 	r81 = r131;
 	++r65;
-	label$eabbec9_31_1543:
-	if( !r81 ) goto label$eabbec9_31_1769;
+	label$eabbec9_29_1543:
+	if( !r81 ) goto label$eabbec9_29_1769;
 	r127 = (h3d__anim__LinearFrame)hl_alloc_obj(&t$h3d_anim_LinearFrame);
 	h3d_anim_LinearFrame_new(r127);
 	if( r48 == NULL ) hl_null_access();
 	r67 = r48->s;
-	if( !r67 ) goto label$eabbec9_31_1551;
+	if( !r67 ) goto label$eabbec9_29_1551;
 	r130 = 0;
-	if( r65 != r130 ) goto label$eabbec9_31_1574;
-	label$eabbec9_31_1551:
+	if( r65 != r130 ) goto label$eabbec9_29_1574;
+	label$eabbec9_29_1551:
 	if( r75 == NULL ) hl_null_access();
 	r74 = r75->scale;
-	if( !r74 ) goto label$eabbec9_31_1567;
+	if( !r74 ) goto label$eabbec9_29_1567;
 	r74 = r75->scale;
 	if( r74 == NULL ) hl_null_access();
 	r91 = r74->x;
@@ -5824,68 +5808,68 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( r74 == NULL ) hl_null_access();
 	r91 = r74->z;
 	r127->sz = r91;
-	goto label$eabbec9_31_1573;
-	label$eabbec9_31_1567:
+	goto label$eabbec9_29_1573;
+	label$eabbec9_29_1567:
 	r91 = 1.;
 	r127->sx = r91;
 	r91 = 1.;
 	r127->sy = r91;
 	r91 = 1.;
 	r127->sz = r91;
-	label$eabbec9_31_1573:
-	goto label$eabbec9_31_1610;
-	label$eabbec9_31_1574:
+	label$eabbec9_29_1573:
+	goto label$eabbec9_29_1610;
+	label$eabbec9_29_1574:
 	if( r113 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r65 - r130;
 	r130 = r113->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1581;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1581;
 	r91 = 0.;
-	goto label$eabbec9_31_1585;
-	label$eabbec9_31_1581:
+	goto label$eabbec9_29_1585;
+	label$eabbec9_29_1581:
 	r45 = r113->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1585:
+	label$eabbec9_29_1585:
 	r127->sx = r91;
 	if( r114 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r65 - r130;
 	r130 = r114->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1593;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1593;
 	r91 = 0.;
-	goto label$eabbec9_31_1597;
-	label$eabbec9_31_1593:
+	goto label$eabbec9_29_1597;
+	label$eabbec9_29_1593:
 	r45 = r114->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1597:
+	label$eabbec9_29_1597:
 	r127->sy = r91;
 	if( r115 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r65 - r130;
 	r130 = r115->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1605;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1605;
 	r91 = 0.;
-	goto label$eabbec9_31_1609;
-	label$eabbec9_31_1605:
+	goto label$eabbec9_29_1609;
+	label$eabbec9_29_1605:
 	r45 = r115->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1609:
+	label$eabbec9_29_1609:
 	r127->sz = r91;
-	label$eabbec9_31_1610:
+	label$eabbec9_29_1610:
 	r67 = r48->r;
-	if( !r67 ) goto label$eabbec9_31_1614;
+	if( !r67 ) goto label$eabbec9_29_1614;
 	r130 = 0;
-	if( r54 != r130 ) goto label$eabbec9_31_1637;
-	label$eabbec9_31_1614:
+	if( r54 != r130 ) goto label$eabbec9_29_1637;
+	label$eabbec9_29_1614:
 	if( r75 == NULL ) hl_null_access();
 	r74 = r75->rotate;
-	if( !r74 ) goto label$eabbec9_31_1629;
+	if( !r74 ) goto label$eabbec9_29_1629;
 	if( r77 == NULL ) hl_null_access();
 	r74 = r75->rotate;
 	if( r74 == NULL ) hl_null_access();
@@ -5897,8 +5881,8 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( r74 == NULL ) hl_null_access();
 	r93 = r74->z;
 	h3d_Quat_initRotation(r77,r91,r92,r93);
-	goto label$eabbec9_31_1636;
-	label$eabbec9_31_1629:
+	goto label$eabbec9_29_1636;
+	label$eabbec9_29_1629:
 	if( r77 == NULL ) hl_null_access();
 	r91 = 0.;
 	r77->z = r91;
@@ -5906,54 +5890,54 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r77->x = r91;
 	r91 = 1.;
 	r77->w = r91;
-	label$eabbec9_31_1636:
-	goto label$eabbec9_31_1672;
-	label$eabbec9_31_1637:
+	label$eabbec9_29_1636:
+	goto label$eabbec9_29_1672;
+	label$eabbec9_29_1637:
 	if( r77 == NULL ) hl_null_access();
 	if( r109 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r54 - r130;
 	r130 = r109->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1645;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1645;
 	r91 = 0.;
-	goto label$eabbec9_31_1649;
-	label$eabbec9_31_1645:
+	goto label$eabbec9_29_1649;
+	label$eabbec9_29_1645:
 	r45 = r109->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1649:
+	label$eabbec9_29_1649:
 	if( r110 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r54 - r130;
 	r130 = r110->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1656;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1656;
 	r92 = 0.;
-	goto label$eabbec9_31_1660;
-	label$eabbec9_31_1656:
+	goto label$eabbec9_29_1660;
+	label$eabbec9_29_1656:
 	r45 = r110->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r92 = *(double*)(r45 + r130);
-	label$eabbec9_31_1660:
+	label$eabbec9_29_1660:
 	if( r111 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r54 - r130;
 	r130 = r111->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1667;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1667;
 	r93 = 0.;
-	goto label$eabbec9_31_1671;
-	label$eabbec9_31_1667:
+	goto label$eabbec9_29_1671;
+	label$eabbec9_29_1667:
 	r45 = r111->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r93 = *(double*)(r45 + r130);
-	label$eabbec9_31_1671:
+	label$eabbec9_29_1671:
 	h3d_Quat_initRotation(r77,r91,r92,r93);
-	label$eabbec9_31_1672:
+	label$eabbec9_29_1672:
 	if( r75 == NULL ) hl_null_access();
 	r74 = r75->preRot;
-	if( !r74 ) goto label$eabbec9_31_1687;
+	if( !r74 ) goto label$eabbec9_29_1687;
 	if( r79 == NULL ) hl_null_access();
 	r74 = r75->preRot;
 	if( r74 == NULL ) hl_null_access();
@@ -5966,7 +5950,7 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r93 = r74->z;
 	h3d_Quat_initRotation(r79,r91,r92,r93);
 	h3d_Quat_multiply(r77,r79,r77);
-	label$eabbec9_31_1687:
+	label$eabbec9_29_1687:
 	r91 = r77->x;
 	r127->qx = r91;
 	r91 = r77->y;
@@ -5976,12 +5960,12 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r91 = r77->w;
 	r127->qw = r91;
 	r67 = r48->_t;
-	if( !r67 ) goto label$eabbec9_31_1699;
+	if( !r67 ) goto label$eabbec9_29_1699;
 	r130 = 0;
-	if( r53 != r130 ) goto label$eabbec9_31_1721;
-	label$eabbec9_31_1699:
+	if( r53 != r130 ) goto label$eabbec9_29_1721;
+	label$eabbec9_29_1699:
 	r74 = r75->trans;
-	if( !r74 ) goto label$eabbec9_31_1714;
+	if( !r74 ) goto label$eabbec9_29_1714;
 	r74 = r75->trans;
 	if( r74 == NULL ) hl_null_access();
 	r91 = r74->x;
@@ -5994,62 +5978,62 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	if( r74 == NULL ) hl_null_access();
 	r91 = r74->z;
 	r127->tz = r91;
-	goto label$eabbec9_31_1720;
-	label$eabbec9_31_1714:
+	goto label$eabbec9_29_1720;
+	label$eabbec9_29_1714:
 	r91 = 0.;
 	r127->tx = r91;
 	r91 = 0.;
 	r127->ty = r91;
 	r91 = 0.;
 	r127->tz = r91;
-	label$eabbec9_31_1720:
-	goto label$eabbec9_31_1757;
-	label$eabbec9_31_1721:
+	label$eabbec9_29_1720:
+	goto label$eabbec9_29_1757;
+	label$eabbec9_29_1721:
 	if( r105 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r53 - r130;
 	r130 = r105->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1728;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1728;
 	r91 = 0.;
-	goto label$eabbec9_31_1732;
-	label$eabbec9_31_1728:
+	goto label$eabbec9_29_1732;
+	label$eabbec9_29_1728:
 	r45 = r105->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1732:
+	label$eabbec9_29_1732:
 	r127->tx = r91;
 	if( r106 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r53 - r130;
 	r130 = r106->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1740;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1740;
 	r91 = 0.;
-	goto label$eabbec9_31_1744;
-	label$eabbec9_31_1740:
+	goto label$eabbec9_29_1744;
+	label$eabbec9_29_1740:
 	r45 = r106->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1744:
+	label$eabbec9_29_1744:
 	r127->ty = r91;
 	if( r107 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r53 - r130;
 	r130 = r107->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1752;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1752;
 	r91 = 0.;
-	goto label$eabbec9_31_1756;
-	label$eabbec9_31_1752:
+	goto label$eabbec9_29_1756;
+	label$eabbec9_29_1752:
 	r45 = r107->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1756:
+	label$eabbec9_29_1756:
 	r127->tz = r91;
-	label$eabbec9_31_1757:
+	label$eabbec9_29_1757:
 	r131 = r0->leftHand;
-	if( !r131 ) goto label$eabbec9_31_1768;
+	if( !r131 ) goto label$eabbec9_29_1768;
 	r91 = r127->tx;
 	r91 = -r91;
 	r127->tx = r91;
@@ -6059,116 +6043,116 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r91 = r127->qz;
 	r91 = -r91;
 	r127->qz = r91;
-	label$eabbec9_31_1768:
+	label$eabbec9_29_1768:
 	r101 = r127;
-	label$eabbec9_31_1769:
-	if( !r61 ) goto label$eabbec9_31_1778;
+	label$eabbec9_29_1769:
+	if( !r61 ) goto label$eabbec9_29_1778;
 	if( r61 == NULL ) hl_null_access();
 	r130 = r61->length;
-	if( r125 >= r130 ) goto label$eabbec9_31_1778;
+	if( r125 >= r130 ) goto label$eabbec9_29_1778;
 	r130 = r61->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1776;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1776;
 	hl_types_ArrayObj___expand(r61,r125);
-	label$eabbec9_31_1776:
+	label$eabbec9_29_1776:
 	r15 = r61->array;
 	((h3d__anim__LinearFrame*)(r15 + 1))[r125] = r101;
-	label$eabbec9_31_1778:
-	if( !r63 ) goto label$eabbec9_31_1817;
+	label$eabbec9_29_1778:
+	if( !r63 ) goto label$eabbec9_29_1817;
 	r130 = r52->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1783;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1783;
 	r91 = 0.;
-	goto label$eabbec9_31_1787;
-	label$eabbec9_31_1783:
+	goto label$eabbec9_29_1787;
+	label$eabbec9_29_1783:
 	r45 = r52->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1787:
+	label$eabbec9_29_1787:
 	if( r118 == NULL ) hl_null_access();
 	r130 = r118->length;
-	if( ((unsigned)r119) < ((unsigned)r130) ) goto label$eabbec9_31_1792;
+	if( ((unsigned)r119) < ((unsigned)r130) ) goto label$eabbec9_29_1792;
 	r92 = 0.;
-	goto label$eabbec9_31_1796;
-	label$eabbec9_31_1792:
+	goto label$eabbec9_29_1796;
+	label$eabbec9_29_1792:
 	r45 = r118->bytes;
 	r130 = 3;
 	r130 = r119 << r130;
 	r92 = *(double*)(r45 + r130);
-	label$eabbec9_31_1796:
-	if( r91 != r92 ) goto label$eabbec9_31_1798;
+	label$eabbec9_29_1796:
+	if( r91 != r92 ) goto label$eabbec9_29_1798;
 	++r119;
-	label$eabbec9_31_1798:
+	label$eabbec9_29_1798:
 	if( r63 == NULL ) hl_null_access();
 	if( r117 == NULL ) hl_null_access();
 	r133 = 1;
 	r130 = r119 - r133;
 	r133 = r117->length;
-	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_31_1806;
+	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_29_1806;
 	r91 = 0.;
-	goto label$eabbec9_31_1810;
-	label$eabbec9_31_1806:
+	goto label$eabbec9_29_1810;
+	label$eabbec9_29_1806:
 	r45 = r117->bytes;
 	r133 = 3;
 	r133 = r130 << r133;
 	r91 = *(double*)(r45 + r133);
-	label$eabbec9_31_1810:
+	label$eabbec9_29_1810:
 	r130 = r63->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1813;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1813;
 	hl_types_ArrayBytes_Float___expand(r63,r125);
-	label$eabbec9_31_1813:
+	label$eabbec9_29_1813:
 	r45 = r63->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	*(double*)(r45 + r130) = r91;
-	label$eabbec9_31_1817:
-	if( !r64 ) goto label$eabbec9_31_1883;
+	label$eabbec9_29_1817:
+	if( !r64 ) goto label$eabbec9_29_1883;
 	if( r103 == NULL ) hl_null_access();
 	r130 = r103->length;
-	if( r120 >= r130 ) goto label$eabbec9_31_1840;
+	if( r120 >= r130 ) goto label$eabbec9_29_1840;
 	r130 = r52->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1825;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1825;
 	r91 = 0.;
-	goto label$eabbec9_31_1829;
-	label$eabbec9_31_1825:
+	goto label$eabbec9_29_1829;
+	label$eabbec9_29_1825:
 	r45 = r52->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1829:
+	label$eabbec9_29_1829:
 	r130 = r103->length;
-	if( ((unsigned)r120) < ((unsigned)r130) ) goto label$eabbec9_31_1833;
+	if( ((unsigned)r120) < ((unsigned)r130) ) goto label$eabbec9_29_1833;
 	r85 = NULL;
-	goto label$eabbec9_31_1836;
-	label$eabbec9_31_1833:
+	goto label$eabbec9_29_1836;
+	label$eabbec9_29_1833:
 	r15 = r103->array;
 	r11 = ((vdynamic**)(r15 + 1))[r120];
 	r85 = hl_to_virtual(&t$vrt_92c68e9,(vdynamic*)r11);
-	label$eabbec9_31_1836:
+	label$eabbec9_29_1836:
 	if( r85 == NULL ) hl_null_access();
 	r92 = hl_vfields(r85)[0] ? (*(double*)(hl_vfields(r85)[0])) : (double)hl_dyn_getd(r85->value,116/*t*/);
-	if( r91 != r92 ) goto label$eabbec9_31_1840;
+	if( r91 != r92 ) goto label$eabbec9_29_1840;
 	++r120;
-	label$eabbec9_31_1840:
+	label$eabbec9_29_1840:
 	if( r64 == NULL ) hl_null_access();
 	r130 = 1;
 	r126 = r125 << r130;
 	r133 = 1;
 	r130 = r120 - r133;
 	r133 = r103->length;
-	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_31_1849;
+	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_29_1849;
 	r85 = NULL;
-	goto label$eabbec9_31_1852;
-	label$eabbec9_31_1849:
+	goto label$eabbec9_29_1852;
+	label$eabbec9_29_1849:
 	r15 = r103->array;
 	r11 = ((vdynamic**)(r15 + 1))[r130];
 	r85 = hl_to_virtual(&t$vrt_92c68e9,(vdynamic*)r11);
-	label$eabbec9_31_1852:
+	label$eabbec9_29_1852:
 	if( r85 == NULL ) hl_null_access();
 	r91 = hl_vfields(r85)[1] ? (*(double*)(hl_vfields(r85)[1])) : (double)hl_dyn_getd(r85->value,117/*u*/);
 	r130 = r64->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1857;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1857;
 	hl_types_ArrayBytes_Float___expand(r64,r126);
-	label$eabbec9_31_1857:
+	label$eabbec9_29_1857:
 	r45 = r64->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
@@ -6180,54 +6164,54 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r133 = 1;
 	r130 = r120 - r133;
 	r133 = r103->length;
-	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_31_1871;
+	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_29_1871;
 	r85 = NULL;
-	goto label$eabbec9_31_1874;
-	label$eabbec9_31_1871:
+	goto label$eabbec9_29_1874;
+	label$eabbec9_29_1871:
 	r15 = r103->array;
 	r11 = ((vdynamic**)(r15 + 1))[r130];
 	r85 = hl_to_virtual(&t$vrt_92c68e9,(vdynamic*)r11);
-	label$eabbec9_31_1874:
+	label$eabbec9_29_1874:
 	if( r85 == NULL ) hl_null_access();
 	r91 = hl_vfields(r85)[2] ? (*(double*)(hl_vfields(r85)[2])) : (double)hl_dyn_getd(r85->value,118/*v*/);
 	r130 = r64->length;
-	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_31_1879;
+	if( ((unsigned)r126) < ((unsigned)r130) ) goto label$eabbec9_29_1879;
 	hl_types_ArrayBytes_Float___expand(r64,r126);
-	label$eabbec9_31_1879:
+	label$eabbec9_29_1879:
 	r45 = r64->bytes;
 	r130 = 3;
 	r130 = r126 << r130;
 	*(double*)(r45 + r130) = r91;
-	label$eabbec9_31_1883:
-	if( !r102 ) goto label$eabbec9_31_1929;
+	label$eabbec9_29_1883:
+	if( !r102 ) goto label$eabbec9_29_1929;
 	r130 = r52->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1888;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1888;
 	r91 = 0.;
-	goto label$eabbec9_31_1892;
-	label$eabbec9_31_1888:
+	goto label$eabbec9_29_1892;
+	label$eabbec9_29_1888:
 	r45 = r52->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1892:
+	label$eabbec9_29_1892:
 	if( r48 == NULL ) hl_null_access();
 	r66 = r48->roll;
 	if( r66 == NULL ) hl_null_access();
 	r129 = hl_vfields(r66)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r66->value,116/*t*/,&t$hl_types_ArrayBytes_Float);
 	if( r129 == NULL ) hl_null_access();
 	r130 = r129->length;
-	if( ((unsigned)r122) < ((unsigned)r130) ) goto label$eabbec9_31_1901;
+	if( ((unsigned)r122) < ((unsigned)r130) ) goto label$eabbec9_29_1901;
 	r92 = 0.;
-	goto label$eabbec9_31_1905;
-	label$eabbec9_31_1901:
+	goto label$eabbec9_29_1905;
+	label$eabbec9_29_1901:
 	r45 = r129->bytes;
 	r130 = 3;
 	r130 = r122 << r130;
 	r92 = *(double*)(r45 + r130);
-	label$eabbec9_31_1905:
-	if( r91 != r92 ) goto label$eabbec9_31_1907;
+	label$eabbec9_29_1905:
+	if( r91 != r92 ) goto label$eabbec9_29_1907;
 	++r122;
-	label$eabbec9_31_1907:
+	label$eabbec9_29_1907:
 	if( r102 == NULL ) hl_null_access();
 	r66 = r48->roll;
 	if( r66 == NULL ) hl_null_access();
@@ -6236,53 +6220,53 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r133 = 1;
 	r130 = r122 - r133;
 	r133 = r132->length;
-	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_31_1918;
+	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_29_1918;
 	r91 = 0.;
-	goto label$eabbec9_31_1922;
-	label$eabbec9_31_1918:
+	goto label$eabbec9_29_1922;
+	label$eabbec9_29_1918:
 	r45 = r132->bytes;
 	r133 = 3;
 	r133 = r130 << r133;
 	r91 = *(double*)(r45 + r133);
-	label$eabbec9_31_1922:
+	label$eabbec9_29_1922:
 	r130 = r102->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1925;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1925;
 	hl_types_ArrayBytes_Float___expand(r102,r125);
-	label$eabbec9_31_1925:
+	label$eabbec9_29_1925:
 	r45 = r102->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	*(double*)(r45 + r130) = r91;
-	label$eabbec9_31_1929:
-	if( !r104 ) goto label$eabbec9_31_1975;
+	label$eabbec9_29_1929:
+	if( !r104 ) goto label$eabbec9_29_1975;
 	r130 = r52->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1934;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1934;
 	r91 = 0.;
-	goto label$eabbec9_31_1938;
-	label$eabbec9_31_1934:
+	goto label$eabbec9_29_1938;
+	label$eabbec9_29_1934:
 	r45 = r52->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	r91 = *(double*)(r45 + r130);
-	label$eabbec9_31_1938:
+	label$eabbec9_29_1938:
 	if( r48 == NULL ) hl_null_access();
 	r66 = r48->fov;
 	if( r66 == NULL ) hl_null_access();
 	r129 = hl_vfields(r66)[0] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r66)[0])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r66->value,116/*t*/,&t$hl_types_ArrayBytes_Float);
 	if( r129 == NULL ) hl_null_access();
 	r130 = r129->length;
-	if( ((unsigned)r121) < ((unsigned)r130) ) goto label$eabbec9_31_1947;
+	if( ((unsigned)r121) < ((unsigned)r130) ) goto label$eabbec9_29_1947;
 	r92 = 0.;
-	goto label$eabbec9_31_1951;
-	label$eabbec9_31_1947:
+	goto label$eabbec9_29_1951;
+	label$eabbec9_29_1947:
 	r45 = r129->bytes;
 	r130 = 3;
 	r130 = r121 << r130;
 	r92 = *(double*)(r45 + r130);
-	label$eabbec9_31_1951:
-	if( r91 != r92 ) goto label$eabbec9_31_1953;
+	label$eabbec9_29_1951:
+	if( r91 != r92 ) goto label$eabbec9_29_1953;
 	++r121;
-	label$eabbec9_31_1953:
+	label$eabbec9_29_1953:
 	if( r104 == NULL ) hl_null_access();
 	r66 = r48->fov;
 	if( r66 == NULL ) hl_null_access();
@@ -6291,106 +6275,106 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 	r133 = 1;
 	r130 = r121 - r133;
 	r133 = r132->length;
-	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_31_1964;
+	if( ((unsigned)r130) < ((unsigned)r133) ) goto label$eabbec9_29_1964;
 	r91 = 0.;
-	goto label$eabbec9_31_1968;
-	label$eabbec9_31_1964:
+	goto label$eabbec9_29_1968;
+	label$eabbec9_29_1964:
 	r45 = r132->bytes;
 	r133 = 3;
 	r133 = r130 << r133;
 	r91 = *(double*)(r45 + r133);
-	label$eabbec9_31_1968:
+	label$eabbec9_29_1968:
 	r130 = r104->length;
-	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_31_1971;
+	if( ((unsigned)r125) < ((unsigned)r130) ) goto label$eabbec9_29_1971;
 	hl_types_ArrayBytes_Float___expand(r104,r125);
-	label$eabbec9_31_1971:
+	label$eabbec9_29_1971:
 	r45 = r104->bytes;
 	r130 = 3;
 	r130 = r125 << r130;
 	*(double*)(r45 + r130) = r91;
-	label$eabbec9_31_1975:
-	goto label$eabbec9_31_1470;
-	label$eabbec9_31_1976:
-	if( !r61 ) goto label$eabbec9_31_2011;
+	label$eabbec9_29_1975:
+	goto label$eabbec9_29_1470;
+	label$eabbec9_29_1976:
+	if( !r61 ) goto label$eabbec9_29_2011;
 	if( r48 == NULL ) hl_null_access();
 	r67 = r48->_t;
 	r73 = NULL;
-	if( r67 != r73 && (!r67 || !r73 || !r67->value || !r73->value || r67->value != r73->value) ) goto label$eabbec9_31_1983;
+	if( r67 != r73 && (!r67 || !r73 || !r67->value || !r73->value || r67->value != r73->value) ) goto label$eabbec9_29_1983;
 	r81 = false;
-	goto label$eabbec9_31_1984;
-	label$eabbec9_31_1983:
+	goto label$eabbec9_29_1984;
+	label$eabbec9_29_1983:
 	r81 = true;
-	label$eabbec9_31_1984:
+	label$eabbec9_29_1984:
 	r67 = r48->r;
-	if( r67 ) goto label$eabbec9_31_1993;
+	if( r67 ) goto label$eabbec9_29_1993;
 	if( r75 == NULL ) hl_null_access();
 	r74 = r75->rotate;
-	if( r74 ) goto label$eabbec9_31_1993;
+	if( r74 ) goto label$eabbec9_29_1993;
 	r74 = r75->preRot;
-	if( r74 ) goto label$eabbec9_31_1993;
+	if( r74 ) goto label$eabbec9_29_1993;
 	r131 = false;
-	goto label$eabbec9_31_1994;
-	label$eabbec9_31_1993:
+	goto label$eabbec9_29_1994;
+	label$eabbec9_29_1993:
 	r131 = true;
-	label$eabbec9_31_1994:
+	label$eabbec9_29_1994:
 	r67 = r48->s;
-	if( r67 ) goto label$eabbec9_31_2001;
+	if( r67 ) goto label$eabbec9_29_2001;
 	if( r75 == NULL ) hl_null_access();
 	r74 = r75->scale;
-	if( r74 ) goto label$eabbec9_31_2001;
+	if( r74 ) goto label$eabbec9_29_2001;
 	r134 = false;
-	goto label$eabbec9_31_2002;
-	label$eabbec9_31_2001:
+	goto label$eabbec9_29_2002;
+	label$eabbec9_29_2001:
 	r134 = true;
-	label$eabbec9_31_2002:
-	if( r81 ) goto label$eabbec9_31_2008;
+	label$eabbec9_29_2002:
+	if( r81 ) goto label$eabbec9_29_2008;
 	if( r75 == NULL ) hl_null_access();
 	r136 = r75->transPos;
-	if( r136 ) goto label$eabbec9_31_2008;
+	if( r136 ) goto label$eabbec9_29_2008;
 	r135 = true;
 	r81 = r135;
-	label$eabbec9_31_2008:
+	label$eabbec9_29_2008:
 	if( r96 == NULL ) hl_null_access();
 	r8 = r48->object;
 	h3d_anim_LinearAnimation_addCurve(r96,r8,r61,r81,r131,r134);
-	label$eabbec9_31_2011:
-	if( !r63 ) goto label$eabbec9_31_2016;
+	label$eabbec9_29_2011:
+	if( !r63 ) goto label$eabbec9_29_2016;
 	if( r96 == NULL ) hl_null_access();
 	if( r48 == NULL ) hl_null_access();
 	r8 = r48->object;
 	h3d_anim_LinearAnimation_addAlphaCurve(r96,r8,r63);
-	label$eabbec9_31_2016:
-	if( !r64 ) goto label$eabbec9_31_2021;
+	label$eabbec9_29_2016:
+	if( !r64 ) goto label$eabbec9_29_2021;
 	if( r96 == NULL ) hl_null_access();
 	if( r48 == NULL ) hl_null_access();
 	r8 = r48->object;
 	h3d_anim_LinearAnimation_addUVCurve(r96,r8,r64);
-	label$eabbec9_31_2021:
-	if( !r102 ) goto label$eabbec9_31_2027;
+	label$eabbec9_29_2021:
+	if( !r102 ) goto label$eabbec9_29_2027;
 	if( r96 == NULL ) hl_null_access();
 	if( r48 == NULL ) hl_null_access();
 	r8 = r48->object;
 	r24 = (String)s$Roll;
 	h3d_anim_LinearAnimation_addPropCurve(r96,r8,r24,r102);
-	label$eabbec9_31_2027:
-	if( !r104 ) goto label$eabbec9_31_2033;
+	label$eabbec9_29_2027:
+	if( !r104 ) goto label$eabbec9_29_2033;
 	if( r96 == NULL ) hl_null_access();
 	if( r48 == NULL ) hl_null_access();
 	r8 = r48->object;
 	r24 = (String)s$FOVY;
 	h3d_anim_LinearAnimation_addPropCurve(r96,r8,r24,r104);
-	label$eabbec9_31_2033:
-	goto label$eabbec9_31_1157;
-	label$eabbec9_31_2034:
+	label$eabbec9_29_2033:
+	goto label$eabbec9_29_1157;
+	label$eabbec9_29_2034:
 	return ((h3d__anim__Animation)r96);
 }
 
 int hxd_fmt_fbx_BaseLibrary_sortDistinctFloats(hxd__fmt__fbx__BaseLibrary r0,double r1,double r2) {
 	int r3;
-	if( !(r2 < r1) ) goto label$eabbec9_32_3;
+	if( !(r2 < r1) ) goto label$eabbec9_30_3;
 	r3 = 1;
 	return r3;
-	label$eabbec9_32_3:
+	label$eabbec9_30_3:
 	r3 = -1;
 	return r3;
 }
@@ -6407,27 +6391,27 @@ bool hxd_fmt_fbx_BaseLibrary_isNullJoint(hxd__fmt__fbx__BaseLibrary r0,vvirtual*
 	if( r3 == NULL ) hl_null_access();
 	r2 = r3->length;
 	r6 = 0;
-	if( r6 >= r2 ) goto label$eabbec9_33_8;
+	if( r6 >= r2 ) goto label$eabbec9_31_8;
 	r7 = false;
 	return r7;
-	label$eabbec9_33_8:
+	label$eabbec9_31_8:
 	r5 = (String)s$Model;
 	r7 = true;
 	r8 = hl_alloc_dynbool(r7);
 	r4 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r1,r5,r8);
-	if( r4 ) goto label$eabbec9_33_15;
+	if( r4 ) goto label$eabbec9_31_15;
 	r7 = true;
 	return r7;
-	label$eabbec9_33_15:
+	label$eabbec9_31_15:
 	r5 = hxd_fmt_fbx_FbxTools_getType(r4);
 	r9 = (String)s$LimbNode;
-	if( r5 == r9 || (r5 && r9 && String___compare(r5,(vdynamic*)r9) == 0) ) goto label$eabbec9_33_20;
+	if( r5 == r9 || (r5 && r9 && String___compare(r5,(vdynamic*)r9) == 0) ) goto label$eabbec9_31_20;
 	r9 = (String)s$Root;
-	if( r5 != r9 && (!r5 || !r9 || String___compare(r5,(vdynamic*)r9) != 0) ) goto label$eabbec9_33_22;
-	label$eabbec9_33_20:
+	if( r5 != r9 && (!r5 || !r9 || String___compare(r5,(vdynamic*)r9) != 0) ) goto label$eabbec9_31_22;
+	label$eabbec9_31_20:
 	r7 = false;
 	return r7;
-	label$eabbec9_33_22:
+	label$eabbec9_31_22:
 	r7 = true;
 	return r7;
 }
@@ -6462,19 +6446,19 @@ void hxd_fmt_fbx_BaseLibrary_autoMerge(hxd__fmt__fbx__BaseLibrary r0) {
 	haxe_ds_IntMap_new(r6);
 	r4 = 0;
 	r7 = hxd_fmt_fbx_BaseLibrary_getAllModels(r0);
-	label$eabbec9_35_8:
+	label$eabbec9_33_8:
 	if( r7 == NULL ) hl_null_access();
 	r9 = r7->length;
-	if( r4 >= r9 ) goto label$eabbec9_35_112;
+	if( r4 >= r9 ) goto label$eabbec9_33_112;
 	r9 = r7->length;
-	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_35_16;
+	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_33_16;
 	r11 = NULL;
-	goto label$eabbec9_35_19;
-	label$eabbec9_35_16:
+	goto label$eabbec9_33_19;
+	label$eabbec9_33_16:
 	r2 = r7->array;
 	r12 = ((vdynamic**)(r2 + 1))[r4];
 	r11 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_35_19:
+	label$eabbec9_33_19:
 	++r4;
 	r13 = r0->skipObjects;
 	if( r13 == NULL ) hl_null_access();
@@ -6482,216 +6466,216 @@ void hxd_fmt_fbx_BaseLibrary_autoMerge(hxd__fmt__fbx__BaseLibrary r0) {
 	r12 = haxe_ds_StringMap_get(r13,r14);
 	r16 = (vdynamic*)r12;
 	r17 = r16 ? r16->v.b : 0;
-	if( !r17 ) goto label$eabbec9_35_28;
-	goto label$eabbec9_35_8;
-	label$eabbec9_35_28:
+	if( !r17 ) goto label$eabbec9_33_28;
+	goto label$eabbec9_33_8;
+	label$eabbec9_33_28:
 	r14 = hxd_fmt_fbx_FbxTools_getType(r11);
 	r19 = (String)s$LimbNode;
-	if( r14 != r19 && (!r14 || !r19 || String___compare(r14,(vdynamic*)r19) != 0) ) goto label$eabbec9_35_37;
+	if( r14 != r19 && (!r14 || !r19 || String___compare(r14,(vdynamic*)r19) != 0) ) goto label$eabbec9_33_37;
 	r17 = r0->unskinnedJointsAsObjects;
-	if( !r17 ) goto label$eabbec9_35_35;
+	if( !r17 ) goto label$eabbec9_33_35;
 	r17 = hxd_fmt_fbx_BaseLibrary_isNullJoint(r0,r11);
-	if( r17 ) goto label$eabbec9_35_37;
-	label$eabbec9_35_35:
+	if( r17 ) goto label$eabbec9_33_37;
+	label$eabbec9_33_35:
 	r17 = true;
-	goto label$eabbec9_35_38;
-	label$eabbec9_35_37:
+	goto label$eabbec9_33_38;
+	label$eabbec9_33_37:
 	r17 = false;
-	label$eabbec9_35_38:
-	if( r17 ) goto label$eabbec9_35_40;
-	goto label$eabbec9_35_8;
-	label$eabbec9_35_40:
+	label$eabbec9_33_38:
+	if( r17 ) goto label$eabbec9_33_40;
+	goto label$eabbec9_33_8;
+	label$eabbec9_33_40:
 	r18 = (String)s$Deformer;
 	r10 = hxd_fmt_fbx_BaseLibrary_getParents(r0,r11,r18);
 	if( r10 == NULL ) hl_null_access();
 	r8 = r10->length;
 	r9 = 1;
-	if( r9 < r8 ) goto label$eabbec9_35_47;
-	goto label$eabbec9_35_8;
-	label$eabbec9_35_47:
+	if( r9 < r8 ) goto label$eabbec9_33_47;
+	goto label$eabbec9_33_8;
+	label$eabbec9_33_47:
 	r3 = &t$vrt_0813dd2;
 	r8 = 0;
 	r2 = hl_alloc_array(r3,r8);
 	r21 = hl_types_ArrayObj_alloc(r2);
 	r8 = 0;
-	label$eabbec9_35_52:
+	label$eabbec9_33_52:
 	if( r10 == NULL ) hl_null_access();
 	r22 = r10->length;
-	if( r8 >= r22 ) goto label$eabbec9_35_109;
+	if( r8 >= r22 ) goto label$eabbec9_33_109;
 	r22 = r10->length;
-	if( ((unsigned)r8) < ((unsigned)r22) ) goto label$eabbec9_35_60;
+	if( ((unsigned)r8) < ((unsigned)r22) ) goto label$eabbec9_33_60;
 	r15 = NULL;
-	goto label$eabbec9_35_63;
-	label$eabbec9_35_60:
+	goto label$eabbec9_33_63;
+	label$eabbec9_33_60:
 	r2 = r10->array;
 	r12 = ((vdynamic**)(r2 + 1))[r8];
 	r15 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_35_63:
+	label$eabbec9_33_63:
 	++r8;
 	r18 = (String)s$Deformer;
 	r16 = NULL;
 	r24 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r15,r18,r16);
-	if( r24 ) goto label$eabbec9_35_69;
-	goto label$eabbec9_35_52;
-	label$eabbec9_35_69:
+	if( r24 ) goto label$eabbec9_33_69;
+	goto label$eabbec9_33_52;
+	label$eabbec9_33_69:
 	r18 = (String)s$Geometry;
 	r16 = NULL;
 	r25 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r24,r18,r16);
-	if( r25 ) goto label$eabbec9_35_74;
-	goto label$eabbec9_35_52;
-	label$eabbec9_35_74:
+	if( r25 ) goto label$eabbec9_33_74;
+	goto label$eabbec9_33_52;
+	label$eabbec9_33_74:
 	r18 = (String)s$Model;
 	r16 = NULL;
 	r26 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r25,r18,r16);
-	if( r26 ) goto label$eabbec9_35_79;
-	goto label$eabbec9_35_52;
-	label$eabbec9_35_79:
+	if( r26 ) goto label$eabbec9_33_79;
+	goto label$eabbec9_33_52;
+	label$eabbec9_33_79:
 	r9 = hxd_fmt_fbx_FbxTools_getId(r26);
 	if( r6 == NULL ) hl_null_access();
 	r12 = haxe_ds_IntMap_get(r6,r9);
 	r23 = (hl__types__ArrayObj)hl_dyn_castp(&r12,&t$_dyn,&t$hl_types_ArrayObj);
-	if( !r23 ) goto label$eabbec9_35_103;
+	if( !r23 ) goto label$eabbec9_33_103;
 	r22 = 0;
-	label$eabbec9_35_85:
+	label$eabbec9_33_85:
 	if( r23 == NULL ) hl_null_access();
 	r29 = r23->length;
-	if( r22 >= r29 ) goto label$eabbec9_35_101;
+	if( r22 >= r29 ) goto label$eabbec9_33_101;
 	r29 = r23->length;
-	if( ((unsigned)r22) < ((unsigned)r29) ) goto label$eabbec9_35_93;
+	if( ((unsigned)r22) < ((unsigned)r29) ) goto label$eabbec9_33_93;
 	r27 = NULL;
-	goto label$eabbec9_35_96;
-	label$eabbec9_35_93:
+	goto label$eabbec9_33_96;
+	label$eabbec9_33_93:
 	r2 = r23->array;
 	r12 = ((vdynamic**)(r2 + 1))[r22];
 	r27 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_35_96:
+	label$eabbec9_33_96:
 	++r22;
 	if( r21 == NULL ) hl_null_access();
 	r20 = hl_types_ArrayObj_remove(r21,((vdynamic*)r27));
 	r28 = hl_types_ArrayObj_push(r21,((vdynamic*)r27));
-	goto label$eabbec9_35_85;
-	label$eabbec9_35_101:
+	goto label$eabbec9_33_85;
+	label$eabbec9_33_101:
 	if( r1 == NULL ) hl_null_access();
 	r20 = hl_types_ArrayObj_remove(r1,((vdynamic*)r23));
-	label$eabbec9_35_103:
+	label$eabbec9_33_103:
 	if( r21 == NULL ) hl_null_access();
 	r20 = hl_types_ArrayObj_remove(r21,((vdynamic*)r26));
 	r22 = hl_types_ArrayObj_push(r21,((vdynamic*)r26));
 	if( r6 == NULL ) hl_null_access();
 	haxe_ds_IntMap_set(r6,r9,((vdynamic*)r21));
-	goto label$eabbec9_35_52;
-	label$eabbec9_35_109:
+	goto label$eabbec9_33_52;
+	label$eabbec9_33_109:
 	if( r1 == NULL ) hl_null_access();
 	r8 = hl_types_ArrayObj_push(r1,((vdynamic*)r21));
-	goto label$eabbec9_35_8;
-	label$eabbec9_35_112:
+	goto label$eabbec9_33_8;
+	label$eabbec9_33_112:
 	r4 = 0;
-	label$eabbec9_35_113:
+	label$eabbec9_33_113:
 	if( r1 == NULL ) hl_null_access();
 	r9 = r1->length;
-	if( r4 >= r9 ) goto label$eabbec9_35_201;
+	if( r4 >= r9 ) goto label$eabbec9_33_201;
 	r9 = r1->length;
-	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_35_121;
+	if( ((unsigned)r4) < ((unsigned)r9) ) goto label$eabbec9_33_121;
 	r7 = NULL;
-	goto label$eabbec9_35_124;
-	label$eabbec9_35_121:
+	goto label$eabbec9_33_124;
+	label$eabbec9_33_121:
 	r2 = r1->array;
 	r12 = ((vdynamic**)(r2 + 1))[r4];
 	r7 = (hl__types__ArrayObj)hl_dyn_castp(&r12,&t$_dyn,&t$hl_types_ArrayObj);
-	label$eabbec9_35_124:
+	label$eabbec9_33_124:
 	++r4;
 	if( r7 == NULL ) hl_null_access();
 	r30 = &cl$0;
-	if( r30 ) goto label$eabbec9_35_130;
+	if( r30 ) goto label$eabbec9_33_130;
 	r31 = NULL;
-	goto label$eabbec9_35_131;
-	label$eabbec9_35_130:
+	goto label$eabbec9_33_131;
+	label$eabbec9_33_130:
 	r31 = hl_alloc_closure_ptr(&t$fun_c474f16,hxd_fmt_fbx_BaseLibrary_autoMerge__$2,r30);
-	label$eabbec9_35_131:
+	label$eabbec9_33_131:
 	hl_types_ArrayObj_sort(r7,r31);
 	r8 = 0;
-	label$eabbec9_35_133:
+	label$eabbec9_33_133:
 	if( r1 == NULL ) hl_null_access();
 	r22 = r1->length;
-	if( r8 >= r22 ) goto label$eabbec9_35_178;
+	if( r8 >= r22 ) goto label$eabbec9_33_178;
 	r22 = r1->length;
-	if( ((unsigned)r8) < ((unsigned)r22) ) goto label$eabbec9_35_141;
+	if( ((unsigned)r8) < ((unsigned)r22) ) goto label$eabbec9_33_141;
 	r10 = NULL;
-	goto label$eabbec9_35_144;
-	label$eabbec9_35_141:
+	goto label$eabbec9_33_144;
+	label$eabbec9_33_141:
 	r2 = r1->array;
 	r12 = ((vdynamic**)(r2 + 1))[r8];
 	r10 = (hl__types__ArrayObj)hl_dyn_castp(&r12,&t$_dyn,&t$hl_types_ArrayObj);
-	label$eabbec9_35_144:
+	label$eabbec9_33_144:
 	++r8;
-	if( r10 == r7 ) goto label$eabbec9_35_177;
+	if( r10 == r7 ) goto label$eabbec9_33_177;
 	r17 = false;
 	r9 = 0;
-	label$eabbec9_35_148:
+	label$eabbec9_33_148:
 	if( r7 == NULL ) hl_null_access();
 	r28 = r7->length;
-	if( r9 >= r28 ) goto label$eabbec9_35_166;
+	if( r9 >= r28 ) goto label$eabbec9_33_166;
 	r28 = r7->length;
-	if( ((unsigned)r9) < ((unsigned)r28) ) goto label$eabbec9_35_156;
+	if( ((unsigned)r9) < ((unsigned)r28) ) goto label$eabbec9_33_156;
 	r11 = NULL;
-	goto label$eabbec9_35_159;
-	label$eabbec9_35_156:
+	goto label$eabbec9_33_159;
+	label$eabbec9_33_156:
 	r2 = r7->array;
 	r12 = ((vdynamic**)(r2 + 1))[r9];
 	r11 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_35_159:
+	label$eabbec9_33_159:
 	++r9;
 	if( r10 == NULL ) hl_null_access();
 	r20 = hl_types_ArrayObj_remove(r10,((vdynamic*)r11));
-	if( !r20 ) goto label$eabbec9_35_165;
+	if( !r20 ) goto label$eabbec9_33_165;
 	r20 = true;
 	r17 = r20;
-	label$eabbec9_35_165:
-	goto label$eabbec9_35_148;
-	label$eabbec9_35_166:
-	if( !r17 ) goto label$eabbec9_35_177;
+	label$eabbec9_33_165:
+	goto label$eabbec9_33_148;
+	label$eabbec9_33_166:
+	if( !r17 ) goto label$eabbec9_33_177;
 	if( r10 == NULL ) hl_null_access();
 	r9 = 0;
 	r22 = r7->length;
-	if( ((unsigned)r9) < ((unsigned)r22) ) goto label$eabbec9_35_173;
+	if( ((unsigned)r9) < ((unsigned)r22) ) goto label$eabbec9_33_173;
 	r11 = NULL;
-	goto label$eabbec9_35_176;
-	label$eabbec9_35_173:
+	goto label$eabbec9_33_176;
+	label$eabbec9_33_173:
 	r2 = r7->array;
 	r12 = ((vdynamic**)(r2 + 1))[r9];
 	r11 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_35_176:
+	label$eabbec9_33_176:
 	r9 = hl_types_ArrayObj_push(r10,((vdynamic*)r11));
-	label$eabbec9_35_177:
-	goto label$eabbec9_35_133;
-	label$eabbec9_35_178:
+	label$eabbec9_33_177:
+	goto label$eabbec9_33_133;
+	label$eabbec9_33_178:
 	r3 = &t$String;
 	r8 = 0;
 	r2 = hl_alloc_array(r3,r8);
 	r10 = hl_types_ArrayObj_alloc(r2);
 	r8 = 0;
-	label$eabbec9_35_183:
+	label$eabbec9_33_183:
 	if( r7 == NULL ) hl_null_access();
 	r22 = r7->length;
-	if( r8 >= r22 ) goto label$eabbec9_35_199;
+	if( r8 >= r22 ) goto label$eabbec9_33_199;
 	r22 = r7->length;
-	if( ((unsigned)r8) < ((unsigned)r22) ) goto label$eabbec9_35_191;
+	if( ((unsigned)r8) < ((unsigned)r22) ) goto label$eabbec9_33_191;
 	r11 = NULL;
-	goto label$eabbec9_35_194;
-	label$eabbec9_35_191:
+	goto label$eabbec9_33_194;
+	label$eabbec9_33_191:
 	r2 = r7->array;
 	r12 = ((vdynamic**)(r2 + 1))[r8];
 	r11 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r12);
-	label$eabbec9_35_194:
+	label$eabbec9_33_194:
 	++r8;
 	if( r10 == NULL ) hl_null_access();
 	r14 = hxd_fmt_fbx_FbxTools_getName(r11);
 	r9 = hl_types_ArrayObj_push(r10,((vdynamic*)r14));
-	goto label$eabbec9_35_183;
-	label$eabbec9_35_199:
+	goto label$eabbec9_33_183;
+	label$eabbec9_33_199:
 	hxd_fmt_fbx_BaseLibrary_mergeModels(r0,r10);
-	goto label$eabbec9_35_113;
-	label$eabbec9_35_201:
+	goto label$eabbec9_33_113;
+	label$eabbec9_33_201:
 	return;
 }
 
@@ -6720,36 +6704,36 @@ void hxd_fmt_fbx_BaseLibrary_createSkin__$1(venum* r0,h3d__anim__Joint r1) {
 	r2 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r4 = r1->subs;
-	label$eabbec9_37_3:
+	label$eabbec9_35_3:
 	if( r4 == NULL ) hl_null_access();
 	r7 = r4->length;
-	if( r2 >= r7 ) goto label$eabbec9_37_28;
+	if( r2 >= r7 ) goto label$eabbec9_35_28;
 	r7 = r4->length;
-	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$eabbec9_37_11;
+	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$eabbec9_35_11;
 	r5 = NULL;
-	goto label$eabbec9_37_14;
-	label$eabbec9_37_11:
+	goto label$eabbec9_35_14;
+	label$eabbec9_35_11:
 	r10 = r4->array;
 	r9 = ((vdynamic**)(r10 + 1))[r2];
 	r5 = (h3d__anim__Joint)r9;
-	label$eabbec9_37_14:
+	label$eabbec9_35_14:
 	++r2;
 	r8 = ((Enumt$ctx_69976ab*)r0)->p1;
 	if( r8 == NULL ) hl_null_access();
 	r6 = 0;
 	r7 = r8->length;
-	if( ((unsigned)r6) < ((unsigned)r7) ) goto label$eabbec9_37_22;
+	if( ((unsigned)r6) < ((unsigned)r7) ) goto label$eabbec9_35_22;
 	r11 = NULL;
-	goto label$eabbec9_37_25;
-	label$eabbec9_37_22:
+	goto label$eabbec9_35_25;
+	label$eabbec9_35_22:
 	r10 = r8->array;
 	r9 = ((vdynamic**)(r10 + 1))[r6];
 	r11 = (vclosure*)r9;
-	label$eabbec9_37_25:
+	label$eabbec9_35_25:
 	if( r11 == NULL ) hl_null_access();
 	r11->hasValue ? ((void (*)(vdynamic*,h3d__anim__Joint))r11->fun)((vdynamic*)r11->value,r5) : ((void (*)(h3d__anim__Joint))r11->fun)(r5);
-	goto label$eabbec9_37_3;
-	label$eabbec9_37_28:
+	goto label$eabbec9_35_3;
+	label$eabbec9_35_28:
 	r4 = ((Enumt$ctx_69976ab*)r0)->p0;
 	if( r4 == NULL ) hl_null_access();
 	r2 = hl_types_ArrayObj_push(r4,((vdynamic*)r1));
@@ -6796,59 +6780,59 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	((Enumt$ctx_69976ab*)r13)->p1 = (hl__types__ArrayObj)r10;
 	r11 = hl_alloc_closure_ptr(&t$fun_dfc2554,hxd_fmt_fbx_BaseLibrary_createSkin__$1,r13);
 	r14 = r10->length;
-	if( ((unsigned)r8) < ((unsigned)r14) ) goto label$eabbec9_38_20;
+	if( ((unsigned)r8) < ((unsigned)r14) ) goto label$eabbec9_36_20;
 	hl_types_ArrayObj___expand(r10,r8);
-	label$eabbec9_38_20:
+	label$eabbec9_36_20:
 	r6 = r10->array;
 	((vclosure**)(r6 + 1))[r8] = r11;
 	r8 = 0;
-	label$eabbec9_38_23:
+	label$eabbec9_36_23:
 	if( r3 == NULL ) hl_null_access();
 	r15 = r3->length;
-	if( r8 >= r15 ) goto label$eabbec9_38_47;
+	if( r8 >= r15 ) goto label$eabbec9_36_47;
 	r15 = r3->length;
-	if( ((unsigned)r8) < ((unsigned)r15) ) goto label$eabbec9_38_31;
+	if( ((unsigned)r8) < ((unsigned)r15) ) goto label$eabbec9_36_31;
 	r16 = NULL;
-	goto label$eabbec9_38_34;
-	label$eabbec9_38_31:
+	goto label$eabbec9_36_34;
+	label$eabbec9_36_31:
 	r6 = r3->array;
 	r17 = ((vdynamic**)(r6 + 1))[r8];
 	r16 = (h3d__anim__Joint)r17;
-	label$eabbec9_38_34:
+	label$eabbec9_36_34:
 	++r8;
 	if( r10 == NULL ) hl_null_access();
 	r14 = 0;
 	r15 = r10->length;
-	if( ((unsigned)r14) < ((unsigned)r15) ) goto label$eabbec9_38_41;
+	if( ((unsigned)r14) < ((unsigned)r15) ) goto label$eabbec9_36_41;
 	r11 = NULL;
-	goto label$eabbec9_38_44;
-	label$eabbec9_38_41:
+	goto label$eabbec9_36_44;
+	label$eabbec9_36_41:
 	r6 = r10->array;
 	r17 = ((vdynamic**)(r6 + 1))[r14];
 	r11 = (vclosure*)r17;
-	label$eabbec9_38_44:
+	label$eabbec9_36_44:
 	if( r11 == NULL ) hl_null_access();
 	r11->hasValue ? ((void (*)(vdynamic*,h3d__anim__Joint))r11->fun)((vdynamic*)r11->value,r16) : ((void (*)(h3d__anim__Joint))r11->fun)(r16);
-	goto label$eabbec9_38_23;
-	label$eabbec9_38_47:
+	goto label$eabbec9_36_23;
+	label$eabbec9_36_47:
 	r19 = NULL;
 	r17 = NULL;
 	if( r5 == NULL ) hl_null_access();
 	r12 = hl_types_ArrayObj_copy(r5);
 	r8 = 0;
-	label$eabbec9_38_52:
+	label$eabbec9_36_52:
 	if( r12 == NULL ) hl_null_access();
 	r15 = r12->length;
-	if( r8 >= r15 ) goto label$eabbec9_38_212;
+	if( r8 >= r15 ) goto label$eabbec9_36_212;
 	r15 = r12->length;
-	if( ((unsigned)r8) < ((unsigned)r15) ) goto label$eabbec9_38_60;
+	if( ((unsigned)r8) < ((unsigned)r15) ) goto label$eabbec9_36_60;
 	r16 = NULL;
-	goto label$eabbec9_38_63;
-	label$eabbec9_38_60:
+	goto label$eabbec9_36_63;
+	label$eabbec9_36_60:
 	r6 = r12->array;
 	r21 = ((vdynamic**)(r6 + 1))[r8];
 	r16 = (h3d__anim__Joint)r21;
-	label$eabbec9_38_63:
+	label$eabbec9_36_63:
 	++r8;
 	r22 = r0->ids;
 	if( r22 == NULL ) hl_null_access();
@@ -6869,38 +6853,38 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	r26 = r0->leftHand;
 	r30 = hxd_fmt_fbx_DefaultMatrixes_toMatrix(r29,r26);
 	r16->defMat = r30;
-	if( r24 ) goto label$eabbec9_38_108;
+	if( r24 ) goto label$eabbec9_36_108;
 	r20 = r16->subs;
 	if( r20 == NULL ) hl_null_access();
 	r14 = r20->length;
 	r15 = 0;
-	if( r15 < r14 ) goto label$eabbec9_38_91;
+	if( r15 < r14 ) goto label$eabbec9_36_91;
 	r26 = ((bool (*)(hxd__fmt__fbx__BaseLibrary,h3d__anim__Joint))r0->$type->vobj_proto[0])(r0,r16);
-	if( !r26 ) goto label$eabbec9_38_92;
-	label$eabbec9_38_91:
-	goto label$eabbec9_38_52;
-	label$eabbec9_38_92:
+	if( !r26 ) goto label$eabbec9_36_92;
+	label$eabbec9_36_91:
+	goto label$eabbec9_36_52;
+	label$eabbec9_36_92:
 	r18 = r16->parent;
-	if( r18 ) goto label$eabbec9_38_97;
+	if( r18 ) goto label$eabbec9_36_97;
 	if( r3 == NULL ) hl_null_access();
 	r26 = hl_types_ArrayObj_remove(r3,((vdynamic*)r16));
-	goto label$eabbec9_38_102;
-	label$eabbec9_38_97:
+	goto label$eabbec9_36_102;
+	label$eabbec9_36_97:
 	r18 = r16->parent;
 	if( r18 == NULL ) hl_null_access();
 	r20 = r18->subs;
 	if( r20 == NULL ) hl_null_access();
 	r26 = hl_types_ArrayObj_remove(r20,((vdynamic*)r16));
-	label$eabbec9_38_102:
+	label$eabbec9_36_102:
 	if( r5 == NULL ) hl_null_access();
 	r26 = hl_types_ArrayObj_remove(r5,((vdynamic*)r16));
 	r14 = -1;
 	r31 = hl_alloc_dynamic(&t$_i32);
 	r31->v.i = r14;
 	r29->wasRemoved = r31;
-	goto label$eabbec9_38_52;
-	label$eabbec9_38_108:
-	if( r19 ) goto label$eabbec9_38_134;
+	goto label$eabbec9_36_52;
+	label$eabbec9_36_108:
+	if( r19 ) goto label$eabbec9_36_134;
 	r25 = (String)s$Deformer;
 	r27 = NULL;
 	r28 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r24,r25,r27);
@@ -6908,9 +6892,9 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	r14 = hxd_fmt_fbx_FbxTools_getId(r28);
 	r21 = haxe_ds_IntMap_get(r1,r14);
 	r32 = (h3d__anim__Skin)r21;
-	if( !r32 ) goto label$eabbec9_38_118;
+	if( !r32 ) goto label$eabbec9_36_118;
 	return r32;
-	label$eabbec9_38_118:
+	label$eabbec9_36_118:
 	if( r2 == NULL ) hl_null_access();
 	r25 = (String)s$Geometry;
 	r27 = NULL;
@@ -6934,7 +6918,7 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	}
 	r14 = hxd_fmt_fbx_FbxTools_getId(r28);
 	haxe_ds_IntMap_set(r1,r14,((vdynamic*)r32));
-	label$eabbec9_38_134:
+	label$eabbec9_36_134:
 	r30 = r29->transPos;
 	r16->transPos = r30;
 	r25 = (String)s$Weights;
@@ -6942,17 +6926,17 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	if( r20 == NULL ) hl_null_access();
 	r14 = r20->length;
 	r15 = 0;
-	if( r15 >= r14 ) goto label$eabbec9_38_211;
+	if( r15 >= r14 ) goto label$eabbec9_36_211;
 	r14 = 0;
 	r15 = r20->length;
-	if( ((unsigned)r14) < ((unsigned)r15) ) goto label$eabbec9_38_147;
+	if( ((unsigned)r14) < ((unsigned)r15) ) goto label$eabbec9_36_147;
 	r28 = NULL;
-	goto label$eabbec9_38_150;
-	label$eabbec9_38_147:
+	goto label$eabbec9_36_150;
+	label$eabbec9_36_147:
 	r6 = r20->array;
 	r21 = ((vdynamic**)(r6 + 1))[r14];
 	r28 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r21);
-	label$eabbec9_38_150:
+	label$eabbec9_36_150:
 	r36 = hxd_fmt_fbx_FbxTools_getFloats(r28);
 	r25 = (String)s$Indexes;
 	r38 = NULL;
@@ -6961,49 +6945,49 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	r14 = 0;
 	if( r37 == NULL ) hl_null_access();
 	r15 = r37->length;
-	label$eabbec9_38_158:
-	if( r14 >= r15 ) goto label$eabbec9_38_211;
+	label$eabbec9_36_158:
+	if( r14 >= r15 ) goto label$eabbec9_36_211;
 	r39 = r14;
 	++r14;
 	if( r36 == NULL ) hl_null_access();
 	r41 = r36->length;
-	if( ((unsigned)r39) < ((unsigned)r41) ) goto label$eabbec9_38_167;
+	if( ((unsigned)r39) < ((unsigned)r41) ) goto label$eabbec9_36_167;
 	r42 = 0.;
-	goto label$eabbec9_38_171;
-	label$eabbec9_38_167:
+	goto label$eabbec9_36_171;
+	label$eabbec9_36_167:
 	r43 = r36->bytes;
 	r41 = 3;
 	r41 = r39 << r41;
 	r42 = *(double*)(r43 + r41);
-	label$eabbec9_38_171:
+	label$eabbec9_36_171:
 	r44 = 0.01;
-	if( !(r42 < r44) ) goto label$eabbec9_38_174;
-	goto label$eabbec9_38_158;
-	label$eabbec9_38_174:
+	if( !(r42 < r44) ) goto label$eabbec9_36_174;
+	goto label$eabbec9_36_158;
+	label$eabbec9_36_174:
 	if( r37 == NULL ) hl_null_access();
 	r41 = r37->length;
-	if( ((unsigned)r39) < ((unsigned)r41) ) goto label$eabbec9_38_179;
+	if( ((unsigned)r39) < ((unsigned)r41) ) goto label$eabbec9_36_179;
 	r40 = 0;
-	goto label$eabbec9_38_183;
-	label$eabbec9_38_179:
+	goto label$eabbec9_36_183;
+	label$eabbec9_36_179:
 	r43 = r37->bytes;
 	r41 = 2;
 	r41 = r39 << r41;
 	r40 = *(int*)(r43 + r41);
-	label$eabbec9_38_183:
+	label$eabbec9_36_183:
 	if( r19 == NULL ) hl_null_access();
 	r35 = r19->envelop;
 	if( r35 == NULL ) hl_null_access();
 	r45 = r35->length;
-	if( ((unsigned)r40) < ((unsigned)r45) ) goto label$eabbec9_38_190;
+	if( ((unsigned)r40) < ((unsigned)r45) ) goto label$eabbec9_36_190;
 	r35 = NULL;
-	goto label$eabbec9_38_193;
-	label$eabbec9_38_190:
+	goto label$eabbec9_36_193;
+	label$eabbec9_36_190:
 	r6 = r35->array;
 	r21 = ((vdynamic**)(r6 + 1))[r40];
 	r35 = (hl__types__ArrayObj)hl_dyn_castp(&r21,&t$_dyn,&t$hl_types_ArrayObj);
-	label$eabbec9_38_193:
-	if( r35 ) goto label$eabbec9_38_206;
+	label$eabbec9_36_193:
+	if( r35 ) goto label$eabbec9_36_206;
 	r46 = r19->envelop;
 	if( r46 == NULL ) hl_null_access();
 	r7 = &t$h3d_anim__Skin_Influence;
@@ -7011,47 +6995,47 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	r6 = hl_alloc_array(r7,r45);
 	r47 = hl_types_ArrayObj_alloc(r6);
 	r45 = r46->length;
-	if( ((unsigned)r40) < ((unsigned)r45) ) goto label$eabbec9_38_203;
+	if( ((unsigned)r40) < ((unsigned)r45) ) goto label$eabbec9_36_203;
 	hl_types_ArrayObj___expand(r46,r40);
-	label$eabbec9_38_203:
+	label$eabbec9_36_203:
 	r6 = r46->array;
 	((hl__types__ArrayObj*)(r6 + 1))[r40] = r47;
 	r35 = r47;
-	label$eabbec9_38_206:
+	label$eabbec9_36_206:
 	if( r35 == NULL ) hl_null_access();
 	r48 = (h3d__anim___Skin__Influence)hl_alloc_obj(&t$h3d_anim__Skin_Influence);
 	h3d_anim__Skin_Influence_new(r48,r16,r42);
 	r41 = hl_types_ArrayObj_push(r35,((vdynamic*)r48));
-	goto label$eabbec9_38_158;
-	label$eabbec9_38_211:
-	goto label$eabbec9_38_52;
-	label$eabbec9_38_212:
-	if( r19 ) goto label$eabbec9_38_244;
+	goto label$eabbec9_36_158;
+	label$eabbec9_36_211:
+	goto label$eabbec9_36_52;
+	label$eabbec9_36_212:
+	if( r19 ) goto label$eabbec9_36_244;
 	r7 = &t$String;
 	r8 = 0;
 	r6 = hl_alloc_array(r7,r8);
 	r20 = hl_types_ArrayObj_alloc(r6);
 	r8 = 0;
-	label$eabbec9_38_218:
+	label$eabbec9_36_218:
 	if( r12 == NULL ) hl_null_access();
 	r15 = r12->length;
-	if( r8 >= r15 ) goto label$eabbec9_38_235;
+	if( r8 >= r15 ) goto label$eabbec9_36_235;
 	r15 = r12->length;
-	if( ((unsigned)r8) < ((unsigned)r15) ) goto label$eabbec9_38_226;
+	if( ((unsigned)r8) < ((unsigned)r15) ) goto label$eabbec9_36_226;
 	r16 = NULL;
-	goto label$eabbec9_38_229;
-	label$eabbec9_38_226:
+	goto label$eabbec9_36_229;
+	label$eabbec9_36_226:
 	r6 = r12->array;
 	r21 = ((vdynamic**)(r6 + 1))[r8];
 	r16 = (h3d__anim__Joint)r21;
-	label$eabbec9_38_229:
+	label$eabbec9_36_229:
 	++r8;
 	if( r20 == NULL ) hl_null_access();
 	if( r16 == NULL ) hl_null_access();
 	r25 = r16->name;
 	r14 = hl_types_ArrayObj_push(r20,((vdynamic*)r25));
-	goto label$eabbec9_38_218;
-	label$eabbec9_38_235:
+	goto label$eabbec9_36_218;
+	label$eabbec9_36_235:
 	r25 = (String)s$No_joint_is_skinned_;
 	if( r20 == NULL ) hl_null_access();
 	r49 = (String)s$c0cb5f0;
@@ -7061,29 +7045,29 @@ h3d__anim__Skin hxd_fmt_fbx_BaseLibrary_createSkin(hxd__fmt__fbx__BaseLibrary r0
 	r25 = String___add__(r25,r49);
 	r21 = haxe_Exception_thrown(((vdynamic*)r25));
 	hl_throw((vdynamic*)r21);
-	label$eabbec9_38_244:
+	label$eabbec9_36_244:
 	if( r5 == NULL ) hl_null_access();
 	hl_types_ArrayObj_reverse(r5);
 	r8 = 0;
 	r14 = r5->length;
-	label$eabbec9_38_248:
-	if( r8 >= r14 ) goto label$eabbec9_38_263;
+	label$eabbec9_36_248:
+	if( r8 >= r14 ) goto label$eabbec9_36_263;
 	r15 = r8;
 	++r8;
 	if( r5 == NULL ) hl_null_access();
 	r40 = r5->length;
-	if( ((unsigned)r15) < ((unsigned)r40) ) goto label$eabbec9_38_257;
+	if( ((unsigned)r15) < ((unsigned)r40) ) goto label$eabbec9_36_257;
 	r16 = NULL;
-	goto label$eabbec9_38_260;
-	label$eabbec9_38_257:
+	goto label$eabbec9_36_260;
+	label$eabbec9_36_257:
 	r6 = r5->array;
 	r21 = ((vdynamic**)(r6 + 1))[r15];
 	r16 = (h3d__anim__Joint)r21;
-	label$eabbec9_38_260:
+	label$eabbec9_36_260:
 	if( r16 == NULL ) hl_null_access();
 	r16->index = r15;
-	goto label$eabbec9_38_248;
-	label$eabbec9_38_263:
+	goto label$eabbec9_36_248;
+	label$eabbec9_36_263:
 	if( r19 == NULL ) hl_null_access();
 	h3d_anim_Skin_setJoints(r19,r5,r3);
 	h3d_anim_Skin_initWeights(r19);
@@ -7094,11 +7078,11 @@ double hxd_fmt_fbx_BaseLibrary_round(hxd__fmt__fbx__BaseLibrary r0,double r1) {
 	String r5;
 	double r2, r3;
 	vdynamic *r4;
-	if( r1 == r1 ) goto label$eabbec9_39_4;
+	if( r1 == r1 ) goto label$eabbec9_37_4;
 	r5 = (String)s$NaN_found;
 	r4 = haxe_Exception_thrown(((vdynamic*)r5));
 	hl_throw((vdynamic*)r4);
-	label$eabbec9_39_4:
+	label$eabbec9_37_4:
 	r3 = 131072.;
 	r2 = r1 * r3;
 	r2 = hl_math_fround(r2);
@@ -7120,16 +7104,16 @@ void hxd_fmt_fbx_BaseLibrary_updateDefaultMatrix(hxd__fmt__fbx__BaseLibrary r0,v
 	r5 = true;
 	r6 = hl_alloc_dynbool(r5);
 	r3 = hxd_fmt_fbx_BaseLibrary_getParent(r0,r1,r4,r6);
-	if( r3 ) goto label$eabbec9_40_6;
+	if( r3 ) goto label$eabbec9_38_6;
 	return;
-	label$eabbec9_40_6:
+	label$eabbec9_38_6:
 	r4 = (String)s$Transform;
 	r11 = NULL;
 	r8 = hxd_fmt_fbx_FbxTools_get(r3,r4,r11);
 	r10 = hxd_fmt_fbx_FbxTools_getFloats(r8);
 	r9 = h3d_Matrix_L(r10);
 	r5 = r0->leftHand;
-	if( !r5 ) goto label$eabbec9_40_29;
+	if( !r5 ) goto label$eabbec9_38_29;
 	if( r9 == NULL ) hl_null_access();
 	r12 = r9->_12;
 	r12 = -r12;
@@ -7146,7 +7130,7 @@ void hxd_fmt_fbx_BaseLibrary_updateDefaultMatrix(hxd__fmt__fbx__BaseLibrary r0,v
 	r12 = r9->_41;
 	r12 = -r12;
 	r9->_41 = r12;
-	label$eabbec9_40_29:
+	label$eabbec9_38_29:
 	if( r2 == NULL ) hl_null_access();
 	r2->transPos = r9;
 	return;
@@ -7171,9 +7155,9 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r6 == NULL ) hl_null_access();
 	r5 = haxe_ds_IntMap_get(r6,r2);
 	r8 = (hxd__fmt__fbx__DefaultMatrixes)r5;
-	if( !r8 ) goto label$eabbec9_41_7;
+	if( !r8 ) goto label$eabbec9_39_7;
 	return r8;
-	label$eabbec9_41_7:
+	label$eabbec9_39_7:
 	r9 = (hxd__fmt__fbx__DefaultMatrixes)hl_alloc_obj(&t$hxd_fmt_fbx_DefaultMatrixes);
 	hxd_fmt_fbx_DefaultMatrixes_new(r9);
 	r8 = r9;
@@ -7181,102 +7165,102 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	r7 = 0;
 	r12 = (String)s$Properties70_P;
 	r11 = hxd_fmt_fbx_FbxTools_getAll(r1,r12);
-	label$eabbec9_41_14:
+	label$eabbec9_39_14:
 	if( r11 == NULL ) hl_null_access();
 	r14 = r11->length;
-	if( r7 >= r14 ) goto label$eabbec9_41_335;
+	if( r7 >= r14 ) goto label$eabbec9_39_335;
 	r14 = r11->length;
-	if( ((unsigned)r7) < ((unsigned)r14) ) goto label$eabbec9_41_22;
+	if( ((unsigned)r7) < ((unsigned)r14) ) goto label$eabbec9_39_22;
 	r3 = NULL;
-	goto label$eabbec9_41_25;
-	label$eabbec9_41_22:
+	goto label$eabbec9_39_25;
+	label$eabbec9_39_22:
 	r16 = r11->array;
 	r5 = ((vdynamic**)(r16 + 1))[r7];
 	r3 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r5);
-	label$eabbec9_41_25:
+	label$eabbec9_39_25:
 	++r7;
 	if( r3 == NULL ) hl_null_access();
 	r15 = hl_vfields(r3)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r3)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r3->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r13 = 0;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_34;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_34;
 	r17 = NULL;
-	goto label$eabbec9_41_37;
-	label$eabbec9_41_34:
+	goto label$eabbec9_39_37;
+	label$eabbec9_39_34:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_37:
+	label$eabbec9_39_37:
 	r12 = hxd_fmt_fbx_FbxTools_toString(r17);
-	if( !r12 ) goto label$eabbec9_41_47;
+	if( !r12 ) goto label$eabbec9_39_47;
 	r13 = r12->length;
 	r14 = 20;
-	if( r13 != r14 ) goto label$eabbec9_41_47;
+	if( r13 != r14 ) goto label$eabbec9_39_47;
 	r18 = r12->bytes;
 	r19 = (vbyte*)USTR("GeometricTranslation");
 	r13 = hl_string_compare(r18,r19,r13);
 	r14 = 0;
-	if( r13 == r14 ) goto label$eabbec9_41_84;
-	label$eabbec9_41_47:
-	if( !r12 ) goto label$eabbec9_41_56;
+	if( r13 == r14 ) goto label$eabbec9_39_84;
+	label$eabbec9_39_47:
+	if( !r12 ) goto label$eabbec9_39_56;
 	r13 = r12->length;
 	r14 = 12;
-	if( r13 != r14 ) goto label$eabbec9_41_56;
+	if( r13 != r14 ) goto label$eabbec9_39_56;
 	r18 = r12->bytes;
 	r19 = (vbyte*)USTR("Lcl Rotation");
 	r13 = hl_string_compare(r18,r19,r13);
 	r14 = 0;
-	if( r13 == r14 ) goto label$eabbec9_41_85;
-	label$eabbec9_41_56:
-	if( !r12 ) goto label$eabbec9_41_65;
+	if( r13 == r14 ) goto label$eabbec9_39_85;
+	label$eabbec9_39_56:
+	if( !r12 ) goto label$eabbec9_39_65;
 	r13 = r12->length;
 	r14 = 11;
-	if( r13 != r14 ) goto label$eabbec9_41_65;
+	if( r13 != r14 ) goto label$eabbec9_39_65;
 	r18 = r12->bytes;
 	r19 = (vbyte*)USTR("Lcl Scaling");
 	r13 = hl_string_compare(r18,r19,r13);
 	r14 = 0;
-	if( r13 == r14 ) goto label$eabbec9_41_149;
-	label$eabbec9_41_65:
-	if( !r12 ) goto label$eabbec9_41_74;
+	if( r13 == r14 ) goto label$eabbec9_39_149;
+	label$eabbec9_39_65:
+	if( !r12 ) goto label$eabbec9_39_74;
 	r13 = r12->length;
 	r14 = 15;
-	if( r13 != r14 ) goto label$eabbec9_41_74;
+	if( r13 != r14 ) goto label$eabbec9_39_74;
 	r18 = r12->bytes;
 	r19 = (vbyte*)USTR("Lcl Translation");
 	r13 = hl_string_compare(r18,r19,r13);
 	r14 = 0;
-	if( r13 == r14 ) goto label$eabbec9_41_210;
-	label$eabbec9_41_74:
-	if( !r12 ) goto label$eabbec9_41_83;
+	if( r13 == r14 ) goto label$eabbec9_39_210;
+	label$eabbec9_39_74:
+	if( !r12 ) goto label$eabbec9_39_83;
 	r13 = r12->length;
 	r14 = 11;
-	if( r13 != r14 ) goto label$eabbec9_41_83;
+	if( r13 != r14 ) goto label$eabbec9_39_83;
 	r18 = r12->bytes;
 	r19 = (vbyte*)USTR("PreRotation");
 	r13 = hl_string_compare(r18,r19,r13);
 	r14 = 0;
-	if( r13 == r14 ) goto label$eabbec9_41_271;
-	label$eabbec9_41_83:
-	goto label$eabbec9_41_334;
-	label$eabbec9_41_84:
-	goto label$eabbec9_41_334;
-	label$eabbec9_41_85:
+	if( r13 == r14 ) goto label$eabbec9_39_271;
+	label$eabbec9_39_83:
+	goto label$eabbec9_39_334;
+	label$eabbec9_39_84:
+	goto label$eabbec9_39_334;
+	label$eabbec9_39_85:
 	if( r8 == NULL ) hl_null_access();
 	r20 = (h3d__col__Point)hl_alloc_obj(&t$h3d_col_Point);
 	r15 = hl_vfields(r3)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r3)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r3->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r13 = 4;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_94;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_94;
 	r17 = NULL;
-	goto label$eabbec9_41_97;
-	label$eabbec9_41_94:
+	goto label$eabbec9_39_97;
+	label$eabbec9_39_94:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_97:
+	label$eabbec9_39_97:
 	r21 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r21 = r21 * r10;
 	r21 = hxd_fmt_fbx_BaseLibrary_round(r0,r21);
@@ -7285,14 +7269,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 5;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_108;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_108;
 	r17 = NULL;
-	goto label$eabbec9_41_111;
-	label$eabbec9_41_108:
+	goto label$eabbec9_39_111;
+	label$eabbec9_39_108:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_111:
+	label$eabbec9_39_111:
 	r22 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r22 = r22 * r10;
 	r22 = hxd_fmt_fbx_BaseLibrary_round(r0,r22);
@@ -7301,14 +7285,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 6;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_122;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_122;
 	r17 = NULL;
-	goto label$eabbec9_41_125;
-	label$eabbec9_41_122:
+	goto label$eabbec9_39_125;
+	label$eabbec9_39_122:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_125:
+	label$eabbec9_39_125:
 	r24 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r24 = r24 * r10;
 	r24 = hxd_fmt_fbx_BaseLibrary_round(r0,r24);
@@ -7319,36 +7303,36 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r20 == NULL ) hl_null_access();
 	r26 = r20->x;
 	r28 = 0.;
-	if( r26 != r28 ) goto label$eabbec9_41_148;
+	if( r26 != r28 ) goto label$eabbec9_39_148;
 	r20 = r8->rotate;
 	if( r20 == NULL ) hl_null_access();
 	r26 = r20->y;
 	r28 = 0.;
-	if( r26 != r28 ) goto label$eabbec9_41_148;
+	if( r26 != r28 ) goto label$eabbec9_39_148;
 	r20 = r8->rotate;
 	if( r20 == NULL ) hl_null_access();
 	r26 = r20->z;
 	r28 = 0.;
-	if( r26 != r28 ) goto label$eabbec9_41_148;
+	if( r26 != r28 ) goto label$eabbec9_39_148;
 	r20 = NULL;
 	r8->rotate = r20;
-	label$eabbec9_41_148:
-	goto label$eabbec9_41_334;
-	label$eabbec9_41_149:
+	label$eabbec9_39_148:
+	goto label$eabbec9_39_334;
+	label$eabbec9_39_149:
 	if( r8 == NULL ) hl_null_access();
 	r20 = (h3d__col__Point)hl_alloc_obj(&t$h3d_col_Point);
 	r15 = hl_vfields(r3)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r3)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r3->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r13 = 4;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_158;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_158;
 	r17 = NULL;
-	goto label$eabbec9_41_161;
-	label$eabbec9_41_158:
+	goto label$eabbec9_39_161;
+	label$eabbec9_39_158:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_161:
+	label$eabbec9_39_161:
 	r26 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r26 = hxd_fmt_fbx_BaseLibrary_round(r0,r26);
 	r23 = &r26;
@@ -7356,14 +7340,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 5;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_171;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_171;
 	r17 = NULL;
-	goto label$eabbec9_41_174;
-	label$eabbec9_41_171:
+	goto label$eabbec9_39_174;
+	label$eabbec9_39_171:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_174:
+	label$eabbec9_39_174:
 	r28 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r28 = hxd_fmt_fbx_BaseLibrary_round(r0,r28);
 	r25 = &r28;
@@ -7371,14 +7355,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 6;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_184;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_184;
 	r17 = NULL;
-	goto label$eabbec9_41_187;
-	label$eabbec9_41_184:
+	goto label$eabbec9_39_187;
+	label$eabbec9_39_184:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_187:
+	label$eabbec9_39_187:
 	r29 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r29 = hxd_fmt_fbx_BaseLibrary_round(r0,r29);
 	r27 = &r29;
@@ -7388,36 +7372,36 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r20 == NULL ) hl_null_access();
 	r30 = r20->x;
 	r31 = 1.;
-	if( r30 != r31 ) goto label$eabbec9_41_209;
+	if( r30 != r31 ) goto label$eabbec9_39_209;
 	r20 = r8->scale;
 	if( r20 == NULL ) hl_null_access();
 	r30 = r20->y;
 	r31 = 1.;
-	if( r30 != r31 ) goto label$eabbec9_41_209;
+	if( r30 != r31 ) goto label$eabbec9_39_209;
 	r20 = r8->scale;
 	if( r20 == NULL ) hl_null_access();
 	r30 = r20->z;
 	r31 = 1.;
-	if( r30 != r31 ) goto label$eabbec9_41_209;
+	if( r30 != r31 ) goto label$eabbec9_39_209;
 	r20 = NULL;
 	r8->scale = r20;
-	label$eabbec9_41_209:
-	goto label$eabbec9_41_334;
-	label$eabbec9_41_210:
+	label$eabbec9_39_209:
+	goto label$eabbec9_39_334;
+	label$eabbec9_39_210:
 	if( r8 == NULL ) hl_null_access();
 	r20 = (h3d__col__Point)hl_alloc_obj(&t$h3d_col_Point);
 	r15 = hl_vfields(r3)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r3)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r3->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r13 = 4;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_219;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_219;
 	r17 = NULL;
-	goto label$eabbec9_41_222;
-	label$eabbec9_41_219:
+	goto label$eabbec9_39_222;
+	label$eabbec9_39_219:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_222:
+	label$eabbec9_39_222:
 	r30 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r30 = hxd_fmt_fbx_BaseLibrary_round(r0,r30);
 	r23 = &r30;
@@ -7425,14 +7409,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 5;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_232;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_232;
 	r17 = NULL;
-	goto label$eabbec9_41_235;
-	label$eabbec9_41_232:
+	goto label$eabbec9_39_235;
+	label$eabbec9_39_232:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_235:
+	label$eabbec9_39_235:
 	r31 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r31 = hxd_fmt_fbx_BaseLibrary_round(r0,r31);
 	r25 = &r31;
@@ -7440,14 +7424,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 6;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_245;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_245;
 	r17 = NULL;
-	goto label$eabbec9_41_248;
-	label$eabbec9_41_245:
+	goto label$eabbec9_39_248;
+	label$eabbec9_39_245:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_248:
+	label$eabbec9_39_248:
 	r32 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r32 = hxd_fmt_fbx_BaseLibrary_round(r0,r32);
 	r27 = &r32;
@@ -7457,36 +7441,36 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r20 == NULL ) hl_null_access();
 	r33 = r20->x;
 	r34 = 0.;
-	if( r33 != r34 ) goto label$eabbec9_41_270;
+	if( r33 != r34 ) goto label$eabbec9_39_270;
 	r20 = r8->trans;
 	if( r20 == NULL ) hl_null_access();
 	r33 = r20->y;
 	r34 = 0.;
-	if( r33 != r34 ) goto label$eabbec9_41_270;
+	if( r33 != r34 ) goto label$eabbec9_39_270;
 	r20 = r8->trans;
 	if( r20 == NULL ) hl_null_access();
 	r33 = r20->z;
 	r34 = 0.;
-	if( r33 != r34 ) goto label$eabbec9_41_270;
+	if( r33 != r34 ) goto label$eabbec9_39_270;
 	r20 = NULL;
 	r8->trans = r20;
-	label$eabbec9_41_270:
-	goto label$eabbec9_41_334;
-	label$eabbec9_41_271:
+	label$eabbec9_39_270:
+	goto label$eabbec9_39_334;
+	label$eabbec9_39_271:
 	if( r8 == NULL ) hl_null_access();
 	r20 = (h3d__col__Point)hl_alloc_obj(&t$h3d_col_Point);
 	r15 = hl_vfields(r3)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r3)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r3->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r15 == NULL ) hl_null_access();
 	r13 = 4;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_280;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_280;
 	r17 = NULL;
-	goto label$eabbec9_41_283;
-	label$eabbec9_41_280:
+	goto label$eabbec9_39_283;
+	label$eabbec9_39_280:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_283:
+	label$eabbec9_39_283:
 	r33 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r33 = r33 * r10;
 	r33 = hxd_fmt_fbx_BaseLibrary_round(r0,r33);
@@ -7495,14 +7479,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 5;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_294;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_294;
 	r17 = NULL;
-	goto label$eabbec9_41_297;
-	label$eabbec9_41_294:
+	goto label$eabbec9_39_297;
+	label$eabbec9_39_294:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_297:
+	label$eabbec9_39_297:
 	r34 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r34 = r34 * r10;
 	r34 = hxd_fmt_fbx_BaseLibrary_round(r0,r34);
@@ -7511,14 +7495,14 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r15 == NULL ) hl_null_access();
 	r13 = 6;
 	r14 = r15->length;
-	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_41_308;
+	if( ((unsigned)r13) < ((unsigned)r14) ) goto label$eabbec9_39_308;
 	r17 = NULL;
-	goto label$eabbec9_41_311;
-	label$eabbec9_41_308:
+	goto label$eabbec9_39_311;
+	label$eabbec9_39_308:
 	r16 = r15->array;
 	r5 = ((vdynamic**)(r16 + 1))[r13];
 	r17 = (venum*)r5;
-	label$eabbec9_41_311:
+	label$eabbec9_39_311:
 	r35 = hxd_fmt_fbx_FbxTools_toFloat(r17);
 	r35 = r35 * r10;
 	r35 = hxd_fmt_fbx_BaseLibrary_round(r0,r35);
@@ -7529,27 +7513,27 @@ hxd__fmt__fbx__DefaultMatrixes hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(hxd__f
 	if( r20 == NULL ) hl_null_access();
 	r36 = r20->x;
 	r37 = 0.;
-	if( r36 != r37 ) goto label$eabbec9_41_334;
+	if( r36 != r37 ) goto label$eabbec9_39_334;
 	r20 = r8->preRot;
 	if( r20 == NULL ) hl_null_access();
 	r36 = r20->y;
 	r37 = 0.;
-	if( r36 != r37 ) goto label$eabbec9_41_334;
+	if( r36 != r37 ) goto label$eabbec9_39_334;
 	r20 = r8->preRot;
 	if( r20 == NULL ) hl_null_access();
 	r36 = r20->z;
 	r37 = 0.;
-	if( r36 != r37 ) goto label$eabbec9_41_334;
+	if( r36 != r37 ) goto label$eabbec9_39_334;
 	r20 = NULL;
 	r8->preRot = r20;
-	label$eabbec9_41_334:
-	goto label$eabbec9_41_14;
-	label$eabbec9_41_335:
+	label$eabbec9_39_334:
+	goto label$eabbec9_39_14;
+	label$eabbec9_39_335:
 	r12 = hxd_fmt_fbx_FbxTools_getType(r1);
 	r38 = (String)s$LimbNode;
-	if( r12 != r38 && (!r12 || !r38 || String___compare(r12,(vdynamic*)r38) != 0) ) goto label$eabbec9_41_339;
+	if( r12 != r38 && (!r12 || !r38 || String___compare(r12,(vdynamic*)r38) != 0) ) goto label$eabbec9_39_339;
 	hxd_fmt_fbx_BaseLibrary_updateDefaultMatrix(r0,r1,r8);
-	label$eabbec9_41_339:
+	label$eabbec9_39_339:
 	r6 = r0->defaultModelMatrixes;
 	if( r6 == NULL ) hl_null_access();
 	haxe_ds_IntMap_set(r6,r2,((vdynamic*)r8));
@@ -7595,5 +7579,23 @@ void hxd_fmt_fbx_BaseLibrary_new(hxd__fmt__fbx__BaseLibrary r0,String r1) {
 	r0->skipObjects = r10;
 	hxd_fmt_fbx_BaseLibrary_reset(r0);
 	return;
+}
+
+int hxd_fmt_fbx_BaseLibrary_loadAnimation__$3(vclosure* r0,vdynamic* r1,vdynamic* r2) {
+	hxd__fmt__fbx___BaseLibrary__AnimCurve r3, r4;
+	int r5;
+	r3 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)hl_dyn_castp(&r1,&t$_dyn,&t$hxd_fmt_fbx__BaseLibrary_AnimCurve);
+	r4 = (hxd__fmt__fbx___BaseLibrary__AnimCurve)hl_dyn_castp(&r2,&t$_dyn,&t$hxd_fmt_fbx__BaseLibrary_AnimCurve);
+	r5 = r0->hasValue ? ((int (*)(vdynamic*,hxd__fmt__fbx___BaseLibrary__AnimCurve,hxd__fmt__fbx___BaseLibrary__AnimCurve))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(hxd__fmt__fbx___BaseLibrary__AnimCurve,hxd__fmt__fbx___BaseLibrary__AnimCurve))r0->fun)(r3,r4);
+	return r5;
+}
+
+int hxd_fmt_fbx_BaseLibrary_autoMerge__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
+	vvirtual *r3, *r4;
+	int r5;
+	r3 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r1);
+	r4 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r2);
+	r5 = r0->hasValue ? ((int (*)(vdynamic*,vvirtual*,vvirtual*))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(vvirtual*,vvirtual*))r0->fun)(r3,r4);
+	return r5;
 }
 

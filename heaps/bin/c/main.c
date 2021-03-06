@@ -163,7 +163,7 @@ void fun$init(void);
 #  include <components/managers/Simulation.c>
 #  include <components/managers/Riders.c>
 #  include <hxlr/lines/LineBase.c>
-#  include <components/managers/Grid.c>
+#  include <hxlr/engine/Grid.c>
 #  include <h2d/Bitmap.c>
 #  include <components/ui/UIButton.c>
 #  include <components/ui/Toolbar.c>
@@ -195,13 +195,12 @@ void fun$init(void);
 #  include <components/sledder/RiderPart.c>
 #  include <components/sledder/RiderScarf.c>
 #  include <components/sledder/Bosh.c>
+#  include <hxlr/engine/Cell.c>
 #  include <hxd/res/Image.c>
 #  include <hxd/res/ImageInfo.c>
 #  include <hxlr/lines/Floor.c>
 #  include <hxlr/lines/Accel.c>
 #  include <hxlr/lines/Scenery.c>
-#  include <h3d/col/Point.c>
-#  include <components/stage/LRCanvasShader.c>
 #  include <haxe/Log.c>
 #  include <hl/types/ArrayDyn.c>
 #  include <components/tool/ToolFunction.c>
@@ -221,6 +220,7 @@ void fun$init(void);
 #  include <format/tga/Reader.c>
 #  include <format/wav/Reader.c>
 #  include <hxd/impl/Allocator.c>
+#  include <h3d/col/Point.c>
 #  include <h3d/impl/_GlDriver/CompiledAttribute.c>
 #  include <h3d/impl/InputNames.c>
 #  include <h3d/impl/_GlDriver/CompiledShader.c>

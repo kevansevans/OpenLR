@@ -2,6 +2,9 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/SkinBase.h>
+extern hl_type t$hl_types_ArrayObj;
+void hl_types_ArrayObj_new(hl__types__ArrayObj);
+void hxsl_Shader_new(hxsl__Shader);
 #include <hxsl/Globals.h>
 extern String s$MaxBones;
 extern String s$_is_out_of_range_;
@@ -12,9 +15,23 @@ extern String s$cedf8da;
 vdynamic* haxe_Exception_thrown(vdynamic*);
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_i32;
-extern hl_type t$hl_types_ArrayObj;
-void hl_types_ArrayObj_new(hl__types__ArrayObj);
-void hxsl_Shader_new(hxsl__Shader);
+
+void h3d_shader_SkinBase_new(h3d__shader__SkinBase r0) {
+	hl__types__ArrayObj r1;
+	bool r4;
+	int r3;
+	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r1);
+	r0->bonesMatrixes__ = r1;
+	r3 = 0;
+	r0->MaxBones__ = r3;
+	hxsl_Shader_new(((hxsl__Shader)r0));
+	r4 = true;
+	r0->constModified = r4;
+	r3 = 34;
+	r0->MaxBones__ = r3;
+	return;
+}
 
 void h3d_shader_SkinBase_updateConstants(h3d__shader__SkinBase r0,hxsl__Globals r1) {
 	String r7, r8;
@@ -28,7 +45,7 @@ void h3d_shader_SkinBase_updateConstants(h3d__shader__SkinBase r0,hxsl__Globals 
 	r5 = 8;
 	r4 = ((unsigned)r2) >> r5;
 	r5 = 0;
-	if( r4 == r5 ) goto label$34dea1f_1_24;
+	if( r4 == r5 ) goto label$34dea1f_2_24;
 	r7 = (String)s$MaxBones;
 	r8 = (String)s$_is_out_of_range_;
 	r7 = String___add__(r7,r8);
@@ -46,7 +63,7 @@ void h3d_shader_SkinBase_updateConstants(h3d__shader__SkinBase r0,hxsl__Globals 
 	r7 = String___add__(r7,r8);
 	r6 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r6);
-	label$34dea1f_1_24:
+	label$34dea1f_2_24:
 	r4 = r0->constBits;
 	r4 = r4 | r2;
 	r0->constBits = r4;
@@ -60,7 +77,7 @@ vdynamic* h3d_shader_SkinBase_getParamValue(h3d__shader__SkinBase r0,int r1) {
 	int r2;
 	switch(r1) {
 		default:
-			goto label$34dea1f_2_7;
+			goto label$34dea1f_3_7;
 		case 0:
 			r2 = r0->MaxBones__;
 			r3 = hl_alloc_dynamic(&t$_i32);
@@ -70,7 +87,7 @@ vdynamic* h3d_shader_SkinBase_getParamValue(h3d__shader__SkinBase r0,int r1) {
 			r4 = r0->bonesMatrixes__;
 			return ((vdynamic*)r4);
 	}
-	label$34dea1f_2_7:
+	label$34dea1f_3_7:
 	r3 = NULL;
 	return r3;
 }
@@ -79,22 +96,5 @@ double h3d_shader_SkinBase_getParamFloatValue(h3d__shader__SkinBase r0,int r1) {
 	double r2;
 	r2 = 0.;
 	return r2;
-}
-
-void h3d_shader_SkinBase_new(h3d__shader__SkinBase r0) {
-	hl__types__ArrayObj r1;
-	bool r4;
-	int r3;
-	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r1);
-	r0->bonesMatrixes__ = r1;
-	r3 = 0;
-	r0->MaxBones__ = r3;
-	hxsl_Shader_new(((hxsl__Shader)r0));
-	r4 = true;
-	r0->constModified = r4;
-	r3 = 34;
-	r0->MaxBones__ = r3;
-	return;
 }
 

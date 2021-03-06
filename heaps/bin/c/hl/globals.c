@@ -190,7 +190,7 @@
 #include <components/managers/Simulation.h>
 #include <components/managers/Riders.h>
 #include <hxlr/lines/LineBase.h>
-#include <components/managers/Grid.h>
+#include <hxlr/engine/Grid.h>
 #include <h2d/Bitmap.h>
 #include <components/ui/UIButton.h>
 #include <components/ui/Toolbar.h>
@@ -230,14 +230,12 @@
 #include <components/sledder/RiderScarf.h>
 #include <components/sledder/Bosh.h>
 #include <components/sledder/BodyPart.h>
+#include <hxlr/engine/Cell.h>
 #include <hxd/res/Image.h>
 #include <hxd/res/ImageInfo.h>
 #include <hxlr/lines/Floor.h>
 #include <hxlr/lines/Accel.h>
 #include <hxlr/lines/Scenery.h>
-#include <h3d/col/Point.h>
-#include <hxsl/Channel.h>
-#include <components/stage/LRCanvasShader.h>
 #include <haxe/Log.h>
 #include <components/tool/ToolFunction.h>
 #include <hxlr/lines/Undefined.h>
@@ -276,6 +274,7 @@
 #include <hxd/impl/Allocator.h>
 #include <hxsl/Output.h>
 #include <h3d/impl/Feature.h>
+#include <h3d/col/Point.h>
 #include <hxd/SystemValue.h>
 #include <h3d/impl/_GlDriver/CompiledAttribute.h>
 #include <h3d/impl/InputNames.h>
@@ -304,6 +303,7 @@
 #include <h3d/shader/ScreenShader.h>
 #include <h3d/pass/ScreenFx.h>
 #include <h3d/pass/Border.h>
+#include <hxsl/Channel.h>
 #include <h3d/shader/DirShadow.h>
 #include <h3d/pass/ShadowSamplingKind.h>
 #include <h3d/pass/Blur.h>
@@ -483,13 +483,13 @@
 #include <_std/Type.h>
 #include <_Xml/XmlType_Impl_.h>
 #include <hxd/InteractiveScene.h>
-#include <hxd/impl/_Serializable/NoSerializeSupport.h>
 #include <format/gif/Tools.h>
 #include <format/mp3/CChannelMode.h>
 #include <format/mp3/CEmphasis.h>
 #include <format/mp3/Tools.h>
 #include <format/png/Tools.h>
 #include <format/tools/Deflate.h>
+#include <hxd/impl/_Serializable/NoSerializeSupport.h>
 #include <hxd/Interactive.h>
 #include <h2d/col/Collider.h>
 #include <h3d/col/Collider.h>
@@ -557,7 +557,6 @@ extern vbyte string$441fe27[];
 extern vbyte string$a597577[];
 extern vbyte string$da58c2e[];
 extern vbyte string$ed3530b[];
-extern vbyte string$47ea800[];
 extern vbyte string$10c9b0c[];
 extern vbyte string$d1a194d[];
 extern vbyte string$15ecfe9[];
@@ -785,7 +784,7 @@ file__$SaveLoad g$_file_SaveLoad = 0;
 components__managers__$Simulation g$_components_managers_Simulation = 0;
 components__managers__$Riders g$_components_managers_Riders = 0;
 hxlr__lines__$LineBase g$_hxlr_lines_LineBase = 0;
-components__managers__$Grid g$_components_managers_Grid = 0;
+hxlr__engine__$Grid g$_hxlr_engine_Grid = 0;
 h2d__$Bitmap g$_h2d_Bitmap = 0;
 components__ui__$UIButton g$_components_ui_UIButton = 0;
 components__ui__$Toolbar g$_components_ui_Toolbar = 0;
@@ -1035,7 +1034,6 @@ String s$63ec124 = 0;
 String s$Bad_node_type_unexpected_ = 0;
 String s$925902a = 0;
 haxe__iterators__$ArrayIterator g$_haxe_iterators_ArrayIterator = 0;
-String s$Error_registering_line = 0;
 String s$_is_not_present_ = 0;
 hxd__fs__$BytesFileEntry g$_hxd_fs_BytesFileEntry = 0;
 String s$Audio_has_ended_ = 0;
@@ -1055,6 +1053,7 @@ venum* g$components_sledder_BodyPart_LEG = 0;
 venum* g$components_sledder_BodyPart_SLED = 0;
 venum* g$components_sledder_BodyPart_EYE = 0;
 venum* g$components_sledder_BodyPart_BODY = 0;
+hxlr__engine__$Cell g$_hxlr_engine_Cell = 0;
 venum* g$hxlr_enums_StickType_STANDARD = 0;
 venum* g$hxlr_enums_StickType_REPELL = 0;
 venum* g$hxlr_enums_StickType_SCARF = 0;
@@ -1112,21 +1111,6 @@ String s$ERROR_ = 0;
 String s$_font_color_ = 0;
 String s$490d6e0 = 0;
 String s$_font_br_ = 0;
-h3d__col__$Point g$_h3d_col_Point = 0;
-String s$_is_not_a_Mesh = 0;
-String s$not_implemented_for_ = 0;
-String s$not_implemented = 0;
-String s$_has_no_shader_source = 0;
-String s$assert = 0;
-String s$Constant_ = 0;
-String s$_is_outside_range_ = 0;
-String s$c30787c = 0;
-hxsl__$Channel g$hxsl_Channel = 0;
-venum* g$hxsl_Channel_Unknown = 0;
-String s$999911f = 0;
-venum* g$hxsl_Channel_PackedFloat = 0;
-venum* g$hxsl_Channel_PackedNormal = 0;
-components__stage__$LRCanvasShader g$_components_stage_LRCanvasShader = 0;
 venum* g$h2d_Align_MultilineRight = 0;
 String s$Untitled = 0;
 String s$FPS_ = 0;
@@ -1251,6 +1235,7 @@ venum* g$format_mp3_Layer_Layer3 = 0;
 venum* g$format_mp3_Layer_Layer2 = 0;
 venum* g$format_mp3_Layer_Layer1 = 0;
 format__mp3__$ChannelMode g$format_mp3_ChannelMode = 0;
+String s$assert = 0;
 venum* g$format_mp3_ChannelMode_Stereo = 0;
 venum* g$8a17448 = 0;
 venum* g$a00cf09 = 0;
@@ -1313,6 +1298,8 @@ String s$cue_ = 0;
 String s$Can_t_add_null_shader = 0;
 String s$png = 0;
 venum* g$h2d_FontType_BitmapFont = 0;
+String s$not_implemented_for_ = 0;
+String s$not_implemented = 0;
 hxd__impl__$Allocator g$_hxd_impl_Allocator = 0;
 venum* g$h2d_Align_Left = 0;
 venum* g$h2d_Align_MultilineCenter = 0;
@@ -1361,6 +1348,7 @@ venum* g$hxd_EventKind_EPush = 0;
 venum* g$hxd_EventKind_ERelease = 0;
 venum* g$hxd_EventKind_EKeyDown = 0;
 String s$Too_many_vertices = 0;
+h3d__col__$Point g$_h3d_col_Point = 0;
 String s$FOVY = 0;
 hxd__$SystemValue g$hxd_SystemValue = 0;
 venum* g$hxd_SystemValue_IsWindowed = 0;
@@ -1472,6 +1460,7 @@ h3d__pass__$DirShadowMap g$_h3d_pass_DirShadowMap = 0;
 h3d__shader__$ScreenShader g$_h3d_shader_ScreenShader = 0;
 h3d__pass__$ScreenFx g$_h3d_pass_ScreenFx = 0;
 h3d__pass__$Border g$_h3d_pass_Border = 0;
+hxsl__$Channel g$hxsl_Channel = 0;
 h3d__shader__$DirShadow g$_h3d_shader_DirShadow = 0;
 h3d__pass__$ShadowSamplingKind g$h3d_pass_ShadowSamplingKind = 0;
 h3d__pass__$Blur g$_h3d_pass_Blur = 0;
@@ -1501,6 +1490,14 @@ venum* g$h3d_mat_TextureFlags_IsArray = 0;
 String s$screenfx = 0;
 h3d__shader__$Blur g$_h3d_shader_Blur = 0;
 String s$BlurTmp = 0;
+String s$_has_no_shader_source = 0;
+String s$Constant_ = 0;
+String s$_is_outside_range_ = 0;
+String s$c30787c = 0;
+venum* g$hxsl_Channel_Unknown = 0;
+String s$999911f = 0;
+venum* g$hxsl_Channel_PackedFloat = 0;
+venum* g$hxsl_Channel_PackedNormal = 0;
 h3d__pass___Border__$BorderShader g$_h3d_pass__Border_BorderShader = 0;
 h3d__prim__$RawPrimitive g$_h3d_prim_RawPrimitive = 0;
 h3d__pass___Copy__$ArrayCopyShader g$_h3d_pass__Copy_ArrayCopyShader = 0;
@@ -1556,6 +1553,7 @@ h3d__prim__$Plane2D g$_h3d_prim_Plane2D = 0;
 String s$Cannot_realloc_ = 0;
 venum* g$h3d_BufferFlag_Triangles = 0;
 String s$Bounds_not_defined_for_ = 0;
+String s$_is_not_a_Mesh = 0;
 h3d__shader__$VertexColorAlpha g$_h3d_shader_VertexColorAlpha = 0;
 venum* g$4b90600 = 0;
 h3d__shader__$SkinTangent g$_h3d_shader_SkinTangent = 0;
@@ -2533,7 +2531,6 @@ sys__$FileSystem g$_sys_FileSystem = 0;
 $Type g$_Type = 0;
 _Xml__$XmlType_Impl_ g$__Xml_XmlType_Impl_ = 0;
 hxd__$InteractiveScene g$_hxd_InteractiveScene = 0;
-hxd__impl___Serializable__$NoSerializeSupport g$29a4c6e = 0;
 venum* g$components_ui_Icon_PLAY = 0;
 venum* g$components_ui_Icon_PAUSE = 0;
 venum* g$components_ui_Icon_STOP = 0;
@@ -2586,6 +2583,7 @@ venum* g$h2d_BlendMode_Screen = 0;
 venum* g$h2d_BlendMode_Sub = 0;
 venum* g$h2d_BlendMode_Max = 0;
 venum* g$h2d_BlendMode_Min = 0;
+hxd__impl___Serializable__$NoSerializeSupport g$29a4c6e = 0;
 venum* g$h2d_LineHeightMode_TextOnly = 0;
 venum* g$h2d_ImageVerticalAlign_Top = 0;
 venum* g$h2d_ImageVerticalAlign_Middle = 0;
@@ -2798,7 +2796,6 @@ venum* g$hxsl_Channel_A = 0;
 sdl__$GL g$_sdl_GL = 0;
 sys__io__$File g$_sys_io_File = 0;
 String s$Program_timeout_infinite_loop_ = 0;
-String s$47ea800 = 0;
 String s$12484cd = 0;
 String s$Default = 0;
 String s$10c9b0c = 0;
@@ -3117,7 +3114,6 @@ static struct _String const_s$Document = {&t$String,(vbyte*)USTR("Document"),8};
 static struct _String const_s$63ec124 = {&t$String,(vbyte*)USTR("Bad node type, expected Element but found "),42};
 static struct _String const_s$Bad_node_type_unexpected_ = {&t$String,(vbyte*)USTR("Bad node type, unexpected "),26};
 static struct _String const_s$925902a = {&t$String,(vbyte*)USTR("Bad node type, expected Element or Document but found "),54};
-static struct _String const_s$Error_registering_line = {&t$String,(vbyte*)USTR("Error registering line"),22};
 static struct _String const_s$_is_not_present_ = {&t$String,(vbyte*)USTR(" is not present..."),18};
 static struct _String const_s$Audio_has_ended_ = {&t$String,(vbyte*)USTR("Audio has ended..."),18};
 static struct _String const_s$Rider_name_ = {&t$String,(vbyte*)USTR("Rider name "),11};
@@ -3170,15 +3166,6 @@ static struct _String const_s$ERROR_ = {&t$String,(vbyte*)USTR("ERROR "),6};
 static struct _String const_s$_font_color_ = {&t$String,(vbyte*)USTR("<font color=\"#"),14};
 static struct _String const_s$490d6e0 = {&t$String,(vbyte*)USTR("\">"),2};
 static struct _String const_s$_font_br_ = {&t$String,(vbyte*)USTR("</font><br/>"),12};
-static struct _String const_s$_is_not_a_Mesh = {&t$String,(vbyte*)USTR(" is not a Mesh"),14};
-static struct _String const_s$not_implemented_for_ = {&t$String,(vbyte*)USTR("not implemented for "),20};
-static struct _String const_s$not_implemented = {&t$String,(vbyte*)USTR("not implemented"),15};
-static struct _String const_s$_has_no_shader_source = {&t$String,(vbyte*)USTR(" has no shader source"),21};
-static struct _String const_s$assert = {&t$String,(vbyte*)USTR("assert"),6};
-static struct _String const_s$Constant_ = {&t$String,(vbyte*)USTR("Constant "),9};
-static struct _String const_s$_is_outside_range_ = {&t$String,(vbyte*)USTR(" is outside range ("),19};
-static struct _String const_s$c30787c = {&t$String,(vbyte*)USTR(" > "),3};
-static struct _String const_s$999911f = {&t$String,(vbyte*)USTR(" does not define channel select value"),37};
 static struct _String const_s$Untitled = {&t$String,(vbyte*)USTR("Untitled"),8};
 static struct _String const_s$FPS_ = {&t$String,(vbyte*)USTR("FPS\n"),4};
 static struct _String const_s$Draw_calls_ = {&t$String,(vbyte*)USTR("Draw calls: "),12};
@@ -3258,6 +3245,7 @@ static struct _String const_s$01941c5 = {&t$String,(vbyte*)USTR("Incorrect size 
 static struct _String const_s$NETSCAPE = {&t$String,(vbyte*)USTR("NETSCAPE"),8};
 static struct _String const_s$2_0 = {&t$String,(vbyte*)USTR("2.0"),3};
 static struct _String const_s$5c1a108 = {&t$String,(vbyte*)USTR("Frame does not have a color table!"),34};
+static struct _String const_s$assert = {&t$String,(vbyte*)USTR("assert"),6};
 static struct _String const_s$IEND = {&t$String,(vbyte*)USTR("IEND"),4};
 static struct _String const_s$IHDR = {&t$String,(vbyte*)USTR("IHDR"),4};
 static struct _String const_s$IDAT = {&t$String,(vbyte*)USTR("IDAT"),4};
@@ -3278,6 +3266,8 @@ static struct _String const_s$Invalid_chunk_data_length = {&t$String,(vbyte*)UST
 static struct _String const_s$cue_ = {&t$String,(vbyte*)USTR("cue "),4};
 static struct _String const_s$Can_t_add_null_shader = {&t$String,(vbyte*)USTR("Can't add null shader"),21};
 static struct _String const_s$png = {&t$String,(vbyte*)USTR("png"),3};
+static struct _String const_s$not_implemented_for_ = {&t$String,(vbyte*)USTR("not implemented for "),20};
+static struct _String const_s$not_implemented = {&t$String,(vbyte*)USTR("not implemented"),15};
 static struct _String const_s$Could_not_parse_ = {&t$String,(vbyte*)USTR("Could not parse "),16};
 static struct _String const_s$bbee82c = {&t$String,(vbyte*)USTR(" ("),2};
 static struct _String const_s$bold = {&t$String,(vbyte*)USTR("bold"),4};
@@ -3370,6 +3360,11 @@ static struct _String const_s$TODO = {&t$String,(vbyte*)USTR("TODO"),4};
 static struct _String const_s$Invalid_upload_size_ = {&t$String,(vbyte*)USTR("Invalid upload size : "),22};
 static struct _String const_s$screenfx = {&t$String,(vbyte*)USTR("screenfx"),8};
 static struct _String const_s$BlurTmp = {&t$String,(vbyte*)USTR("BlurTmp"),7};
+static struct _String const_s$_has_no_shader_source = {&t$String,(vbyte*)USTR(" has no shader source"),21};
+static struct _String const_s$Constant_ = {&t$String,(vbyte*)USTR("Constant "),9};
+static struct _String const_s$_is_outside_range_ = {&t$String,(vbyte*)USTR(" is outside range ("),19};
+static struct _String const_s$c30787c = {&t$String,(vbyte*)USTR(" > "),3};
+static struct _String const_s$999911f = {&t$String,(vbyte*)USTR(" does not define channel select value"),37};
 static struct _String const_s$output_color = {&t$String,(vbyte*)USTR("output.color"),12};
 static struct _String const_s$Missing_global_value_ = {&t$String,(vbyte*)USTR("Missing global value "),21};
 static struct _String const_s$_for_shader_ = {&t$String,(vbyte*)USTR(" for shader "),12};
@@ -3403,6 +3398,7 @@ static struct _String const_s$Too_many_vertices_in_begin_ = {&t$String,(vbyte*)U
 static struct _String const_s$646f081 = {&t$String,(vbyte*)USTR("Cannot clear() BigPrimitive while it's flushing"),47};
 static struct _String const_s$Cannot_realloc_ = {&t$String,(vbyte*)USTR("Cannot realloc "),15};
 static struct _String const_s$Bounds_not_defined_for_ = {&t$String,(vbyte*)USTR("Bounds not defined for "),23};
+static struct _String const_s$_is_not_a_Mesh = {&t$String,(vbyte*)USTR(" is not a Mesh"),14};
 static struct _String const_s$add = {&t$String,(vbyte*)USTR("add"),3};
 static struct _String const_s$global_ambientLight = {&t$String,(vbyte*)USTR("global.ambientLight"),19};
 static struct _String const_s$global_perPixelLighting = {&t$String,(vbyte*)USTR("global.perPixelLighting"),23};
@@ -4101,7 +4097,6 @@ static struct _String const_s$shader = {&t$String,(vbyte*)USTR("shader"),6};
 static struct _String const_s$Array = {&t$String,(vbyte*)USTR("Array"),5};
 static struct _String const_s$hl_types_ArrayDyn = {&t$String,(vbyte*)USTR("hl.types.ArrayDyn"),17};
 static struct _String const_s$Program_timeout_infinite_loop_ = {&t$String,(vbyte*)USTR("Program timeout (infinite loop?)"),32};
-static struct _String const_s$47ea800 = {&t$String,(vbyte*)string$47ea800,498};
 static struct _String const_s$12484cd = {&t$String,(vbyte*)USTR("[\r\n\t ]+"),7};
 static struct _String const_s$Default = {&t$String,(vbyte*)USTR("Default"),7};
 static struct _String const_s$10c9b0c = {&t$String,(vbyte*)string$10c9b0c,370};
@@ -4422,7 +4417,6 @@ void hl_init_roots() {
 	s$63ec124 = &const_s$63ec124;
 	s$Bad_node_type_unexpected_ = &const_s$Bad_node_type_unexpected_;
 	s$925902a = &const_s$925902a;
-	s$Error_registering_line = &const_s$Error_registering_line;
 	s$_is_not_present_ = &const_s$_is_not_present_;
 	s$Audio_has_ended_ = &const_s$Audio_has_ended_;
 	s$Rider_name_ = &const_s$Rider_name_;
@@ -4475,15 +4469,6 @@ void hl_init_roots() {
 	s$_font_color_ = &const_s$_font_color_;
 	s$490d6e0 = &const_s$490d6e0;
 	s$_font_br_ = &const_s$_font_br_;
-	s$_is_not_a_Mesh = &const_s$_is_not_a_Mesh;
-	s$not_implemented_for_ = &const_s$not_implemented_for_;
-	s$not_implemented = &const_s$not_implemented;
-	s$_has_no_shader_source = &const_s$_has_no_shader_source;
-	s$assert = &const_s$assert;
-	s$Constant_ = &const_s$Constant_;
-	s$_is_outside_range_ = &const_s$_is_outside_range_;
-	s$c30787c = &const_s$c30787c;
-	s$999911f = &const_s$999911f;
 	s$Untitled = &const_s$Untitled;
 	s$FPS_ = &const_s$FPS_;
 	s$Draw_calls_ = &const_s$Draw_calls_;
@@ -4563,6 +4548,7 @@ void hl_init_roots() {
 	s$NETSCAPE = &const_s$NETSCAPE;
 	s$2_0 = &const_s$2_0;
 	s$5c1a108 = &const_s$5c1a108;
+	s$assert = &const_s$assert;
 	s$IEND = &const_s$IEND;
 	s$IHDR = &const_s$IHDR;
 	s$IDAT = &const_s$IDAT;
@@ -4583,6 +4569,8 @@ void hl_init_roots() {
 	s$cue_ = &const_s$cue_;
 	s$Can_t_add_null_shader = &const_s$Can_t_add_null_shader;
 	s$png = &const_s$png;
+	s$not_implemented_for_ = &const_s$not_implemented_for_;
+	s$not_implemented = &const_s$not_implemented;
 	s$Could_not_parse_ = &const_s$Could_not_parse_;
 	s$bbee82c = &const_s$bbee82c;
 	s$bold = &const_s$bold;
@@ -4675,6 +4663,11 @@ void hl_init_roots() {
 	s$Invalid_upload_size_ = &const_s$Invalid_upload_size_;
 	s$screenfx = &const_s$screenfx;
 	s$BlurTmp = &const_s$BlurTmp;
+	s$_has_no_shader_source = &const_s$_has_no_shader_source;
+	s$Constant_ = &const_s$Constant_;
+	s$_is_outside_range_ = &const_s$_is_outside_range_;
+	s$c30787c = &const_s$c30787c;
+	s$999911f = &const_s$999911f;
 	s$output_color = &const_s$output_color;
 	s$Missing_global_value_ = &const_s$Missing_global_value_;
 	s$_for_shader_ = &const_s$_for_shader_;
@@ -4708,6 +4701,7 @@ void hl_init_roots() {
 	s$646f081 = &const_s$646f081;
 	s$Cannot_realloc_ = &const_s$Cannot_realloc_;
 	s$Bounds_not_defined_for_ = &const_s$Bounds_not_defined_for_;
+	s$_is_not_a_Mesh = &const_s$_is_not_a_Mesh;
 	s$add = &const_s$add;
 	s$global_ambientLight = &const_s$global_ambientLight;
 	s$global_perPixelLighting = &const_s$global_perPixelLighting;
@@ -5406,7 +5400,6 @@ void hl_init_roots() {
 	s$Array = &const_s$Array;
 	s$hl_types_ArrayDyn = &const_s$hl_types_ArrayDyn;
 	s$Program_timeout_infinite_loop_ = &const_s$Program_timeout_infinite_loop_;
-	s$47ea800 = &const_s$47ea800;
 	s$12484cd = &const_s$12484cd;
 	s$Default = &const_s$Default;
 	s$10c9b0c = &const_s$10c9b0c;
@@ -5710,7 +5703,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_components_managers_Simulation);
 	hl_add_root((void**)&g$_components_managers_Riders);
 	hl_add_root((void**)&g$_hxlr_lines_LineBase);
-	hl_add_root((void**)&g$_components_managers_Grid);
+	hl_add_root((void**)&g$_hxlr_engine_Grid);
 	hl_add_root((void**)&g$_h2d_Bitmap);
 	hl_add_root((void**)&g$_components_ui_UIButton);
 	hl_add_root((void**)&g$_components_ui_Toolbar);
@@ -5770,6 +5763,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$components_sledder_BodyPart_SLED);
 	hl_add_root((void**)&g$components_sledder_BodyPart_EYE);
 	hl_add_root((void**)&g$components_sledder_BodyPart_BODY);
+	hl_add_root((void**)&g$_hxlr_engine_Cell);
 	hl_add_root((void**)&g$hxlr_enums_StickType_STANDARD);
 	hl_add_root((void**)&g$hxlr_enums_StickType_REPELL);
 	hl_add_root((void**)&g$hxlr_enums_StickType_SCARF);
@@ -5783,12 +5777,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hxlr_lines_Floor);
 	hl_add_root((void**)&g$_hxlr_lines_Accel);
 	hl_add_root((void**)&g$_hxlr_lines_Scenery);
-	hl_add_root((void**)&g$_h3d_col_Point);
-	hl_add_root((void**)&g$hxsl_Channel);
-	hl_add_root((void**)&g$hxsl_Channel_Unknown);
-	hl_add_root((void**)&g$hxsl_Channel_PackedFloat);
-	hl_add_root((void**)&g$hxsl_Channel_PackedNormal);
-	hl_add_root((void**)&g$_components_stage_LRCanvasShader);
 	hl_add_root((void**)&g$h2d_Align_MultilineRight);
 	hl_add_root((void**)&g$_haxe_Log);
 	hl_add_root((void**)&g$_components_tool_ToolFunction);
@@ -5904,6 +5892,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxd_EventKind_EPush);
 	hl_add_root((void**)&g$hxd_EventKind_ERelease);
 	hl_add_root((void**)&g$hxd_EventKind_EKeyDown);
+	hl_add_root((void**)&g$_h3d_col_Point);
 	hl_add_root((void**)&g$hxd_SystemValue);
 	hl_add_root((void**)&g$hxd_SystemValue_IsWindowed);
 	hl_add_root((void**)&g$afbe7cb);
@@ -5948,6 +5937,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_h3d_shader_ScreenShader);
 	hl_add_root((void**)&g$_h3d_pass_ScreenFx);
 	hl_add_root((void**)&g$_h3d_pass_Border);
+	hl_add_root((void**)&g$hxsl_Channel);
 	hl_add_root((void**)&g$_h3d_shader_DirShadow);
 	hl_add_root((void**)&g$h3d_pass_ShadowSamplingKind);
 	hl_add_root((void**)&g$_h3d_pass_Blur);
@@ -5972,6 +5962,9 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_h3d_mat_TextureArray);
 	hl_add_root((void**)&g$h3d_mat_TextureFlags_IsArray);
 	hl_add_root((void**)&g$_h3d_shader_Blur);
+	hl_add_root((void**)&g$hxsl_Channel_Unknown);
+	hl_add_root((void**)&g$hxsl_Channel_PackedFloat);
+	hl_add_root((void**)&g$hxsl_Channel_PackedNormal);
 	hl_add_root((void**)&g$_h3d_pass__Border_BorderShader);
 	hl_add_root((void**)&g$_h3d_prim_RawPrimitive);
 	hl_add_root((void**)&g$_h3d_pass__Copy_ArrayCopyShader);
@@ -6277,7 +6270,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_Type);
 	hl_add_root((void**)&g$__Xml_XmlType_Impl_);
 	hl_add_root((void**)&g$_hxd_InteractiveScene);
-	hl_add_root((void**)&g$29a4c6e);
 	hl_add_root((void**)&g$components_ui_Icon_PLAY);
 	hl_add_root((void**)&g$components_ui_Icon_PAUSE);
 	hl_add_root((void**)&g$components_ui_Icon_STOP);
@@ -6330,6 +6322,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$h2d_BlendMode_Sub);
 	hl_add_root((void**)&g$h2d_BlendMode_Max);
 	hl_add_root((void**)&g$h2d_BlendMode_Min);
+	hl_add_root((void**)&g$29a4c6e);
 	hl_add_root((void**)&g$h2d_LineHeightMode_TextOnly);
 	hl_add_root((void**)&g$h2d_ImageVerticalAlign_Top);
 	hl_add_root((void**)&g$h2d_ImageVerticalAlign_Middle);
@@ -6895,15 +6888,6 @@ vbyte string$da58c2e[] = {118,0,101,0,99,0,51,0,32,0,109,0,51,0,120,0,52,0,109,0
 // The application was unable to create an OpenGL context\nfor y...
 vbyte string$ed3530b[] = {84,0,104,0,101,0,32,0,97,0,112,0,112,0,108,0,105,0,99,0,97,0,116,0,105,0,111,0,110,0,32,0,119,0,97,0,115,0,32,0,117,0,110,0,97,0,98,0,108,0,101,0,32,0,116,0,111,0,32,0,99,0,114,0,101,0,97,0,116,0,101,0,32,0,97,0,110,0,32,0,79,0,112,0,101,0,110,0,71,0,76,0,32,0,99,0,111,0,110,0,116,0,101,0,120,0,116,0,10,0,102,0,111,0,114,0,32,0,121,0,111,0,117,0,114,0,32\
 	,0,0,0};
-// HXSLH2NvbXBvbmVudHMuc3RhZ2UuTFJDYW52YXNTaGFkZXIMAQVpbnB1dA0B...
-vbyte string$47ea800[] = {72,0,88,0,83,0,76,0,72,0,50,0,78,0,118,0,98,0,88,0,66,0,118,0,98,0,109,0,86,0,117,0,100,0,72,0,77,0,117,0,99,0,51,0,82,0,104,0,90,0,50,0,85,0,117,0,84,0,70,0,74,0,68,0,89,0,87,0,53,0,50,0,89,0,88,0,78,0,84,0,97,0,71,0,70,0,107,0,90,0,88,0,73,0,77,0,65,0,81,0,86,0,112,0,98,0,110,0,66,0,49,0,100,0,65,0,48,0,66,0,65,0,81,0,73,0,67\
-	,0,100,0,88,0,89,0,70,0,67,0,103,0,69,0,66,0,65,0,65,0,69,0,65,0,65,0,65,0,77,0,77,0,89,0,50,0,70,0,115,0,89,0,51,0,86,0,115,0,89,0,88,0,82,0,108,0,90,0,70,0,86,0,87,0,66,0,81,0,111,0,69,0,65,0,65,0,65,0,69,0,67,0,110,0,66,0,112,0,101,0,71,0,86,0,115,0,81,0,50,0,57,0,115,0,98,0,51,0,73,0,70,0,68,0,65,0,81,0,65,0,65,0,65,0,85,0,74\
-	,0,99,0,51,0,66,0,108,0,89,0,48,0,78,0,118,0,98,0,71,0,57,0,121,0,66,0,81,0,115,0,69,0,65,0,65,0,65,0,71,0,66,0,109,0,100,0,115,0,98,0,50,0,74,0,104,0,98,0,65,0,48,0,67,0,65,0,81,0,99,0,69,0,100,0,71,0,108,0,116,0,90,0,81,0,77,0,65,0,66,0,103,0,65,0,65,0,65,0,65,0,65,0,73,0,66,0,72,0,104,0,119,0,98,0,51,0,77,0,68,0,65,0,103,0,65,0,65\
-	,0,67,0,81,0,82,0,53,0,99,0,71,0,57,0,122,0,65,0,119,0,73,0,65,0,65,0,65,0,111,0,72,0,100,0,71,0,86,0,52,0,100,0,72,0,86,0,121,0,90,0,81,0,111,0,67,0,65,0,65,0,65,0,76,0,66,0,71,0,49,0,118,0,90,0,71,0,85,0,66,0,65,0,103,0,65,0,65,0,68,0,66,0,66,0,121,0,90,0,87,0,120,0,104,0,100,0,71,0,108,0,50,0,90,0,86,0,66,0,118,0,99,0,50,0,108,0,48\
-	,0,97,0,87,0,57,0,117,0,66,0,81,0,115,0,69,0,65,0,65,0,65,0,78,0,66,0,110,0,90,0,108,0,99,0,110,0,82,0,108,0,101,0,65,0,52,0,71,0,65,0,65,0,65,0,79,0,67,0,71,0,90,0,121,0,89,0,87,0,100,0,116,0,90,0,87,0,53,0,48,0,68,0,103,0,89,0,65,0,65,0,65,0,73,0,65,0,68,0,81,0,65,0,65,0,66,0,81,0,73,0,71,0,66,0,65,0,111,0,67,0,68,0,65,0,85,0,76\
-	,0,67,0,65,0,65,0,68,0,66,0,103,0,69,0,74,0,65,0,119,0,77,0,79,0,65,0,81,0,73,0,72,0,65,0,119,0,77,0,66,0,65,0,53,0,113,0,90,0,109,0,90,0,109,0,90,0,109,0,98,0,107,0,47,0,65,0,119,0,77,0,68,0,66,0,103,0,81,0,67,0,65,0,119,0,85,0,75,0,65,0,103,0,73,0,70,0,67,0,103,0,85,0,75,0,65,0,65,0,69,0,79,0,65,0,65,0,65,0,70,0,65,0,103,0,115,0,71\
-	,0,66,0,81,0,111,0,74,0,65,0,121,0,69,0,79,0,65,0,103,0,73,0,75,0,67,0,103,0,73,0,68,0,66,0,81,0,111,0,70,0,68,0,65,0,119,0,65,0,65,0,119,0,69,0,68,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,68,0,65,0,103,0,85,0,67,0,68,0,65,0,65,0,78,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,76,0,66,0,103,0,85,0,67,0,67,0,119,0,69,0,66\
-	,0,65,0,103,0,65,0,65,0,65,0,65,0,65,0,66,0,65,0,103,0,85,0,66,0,66,0,111,0,65,0,75,0,65,0,103,0,77,0,70,0,67,0,103,0,65,0,65,0,65,0,119,0,69,0,68,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,65,0,52,0,68,0,56,0,68,0,65,0,119,0,65,0,70,0,65,0,65,0,65,0,65,0,65,0,65,0,0,0};
 // HXSLF2gzZC5zaGFkZXIuU2NyZWVuU2hhZGVyBwEFaW5wdXQNAQICCHBvc2l0...
 vbyte string$10c9b0c[] = {72,0,88,0,83,0,76,0,70,0,50,0,103,0,122,0,90,0,67,0,53,0,122,0,97,0,71,0,70,0,107,0,90,0,88,0,73,0,117,0,85,0,50,0,78,0,121,0,90,0,87,0,86,0,117,0,85,0,50,0,104,0,104,0,90,0,71,0,86,0,121,0,66,0,119,0,69,0,70,0,97,0,87,0,53,0,119,0,100,0,88,0,81,0,78,0,65,0,81,0,73,0,67,0,67,0,72,0,66,0,118,0,99,0,50,0,108,0,48,0,97,0,87,0,57,0,117\
 	,0,66,0,81,0,111,0,66,0,65,0,81,0,65,0,68,0,65,0,110,0,86,0,50,0,66,0,81,0,111,0,66,0,65,0,81,0,65,0,66,0,65,0,65,0,65,0,69,0,66,0,87,0,90,0,115,0,97,0,88,0,66,0,90,0,65,0,119,0,73,0,65,0,65,0,65,0,85,0,71,0,98,0,51,0,86,0,48,0,99,0,72,0,86,0,48,0,68,0,81,0,73,0,67,0,66,0,103,0,104,0,119,0,98,0,51,0,78,0,112,0,100,0,71,0,108,0,118\

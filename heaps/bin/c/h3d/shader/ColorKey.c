@@ -2,50 +2,23 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/ColorKey.h>
-#include <hxsl/Globals.h>
-void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$h3d_Vector;
 void h3d_Vector_new(h3d__Vector,double*,double*,double*,double*);
 void hxsl_Shader_new(hxsl__Shader);
-
-void h3d_shader_ColorKey_updateConstants(h3d__shader__ColorKey r0,hxsl__Globals r1) {
-	int r2;
-	r2 = 0;
-	r0->constBits = r2;
-	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
-	return;
-}
-
-vdynamic* h3d_shader_ColorKey_getParamValue(h3d__shader__ColorKey r0,int r1) {
-	h3d__Vector r3;
-	vdynamic *r4;
-	int r2;
-	r2 = 0;
-	if( r1 != r2 ) goto label$79fb3ea_2_4;
-	r3 = r0->colorKey__;
-	return ((vdynamic*)r3);
-	label$79fb3ea_2_4:
-	r4 = NULL;
-	return r4;
-}
-
-double h3d_shader_ColorKey_getParamFloatValue(h3d__shader__ColorKey r0,int r1) {
-	double r2;
-	r2 = 0.;
-	return r2;
-}
+#include <hxsl/Globals.h>
+void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 
 void h3d_shader_ColorKey_new(h3d__shader__ColorKey r0,int* r1) {
 	h3d__Vector r3;
 	double r9, r12;
 	double *r4, *r5, *r6, *r7;
 	int r2, r10, r11;
-	if( r1 ) goto label$79fb3ea_4_3;
+	if( r1 ) goto label$79fb3ea_1_3;
 	r2 = 0;
-	goto label$79fb3ea_4_4;
-	label$79fb3ea_4_3:
+	goto label$79fb3ea_1_4;
+	label$79fb3ea_1_3:
 	r2 = *r1;
-	label$79fb3ea_4_4:
+	label$79fb3ea_1_4:
 	r3 = (h3d__Vector)hl_alloc_obj(&t$h3d_Vector);
 	r4 = NULL;
 	r5 = NULL;
@@ -85,5 +58,32 @@ void h3d_shader_ColorKey_new(h3d__shader__ColorKey r0,int* r1) {
 	r9 = r9 / r12;
 	r3->w = r9;
 	return;
+}
+
+void h3d_shader_ColorKey_updateConstants(h3d__shader__ColorKey r0,hxsl__Globals r1) {
+	int r2;
+	r2 = 0;
+	r0->constBits = r2;
+	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
+	return;
+}
+
+vdynamic* h3d_shader_ColorKey_getParamValue(h3d__shader__ColorKey r0,int r1) {
+	h3d__Vector r3;
+	vdynamic *r4;
+	int r2;
+	r2 = 0;
+	if( r1 != r2 ) goto label$79fb3ea_3_4;
+	r3 = r0->colorKey__;
+	return ((vdynamic*)r3);
+	label$79fb3ea_3_4:
+	r4 = NULL;
+	return r4;
+}
+
+double h3d_shader_ColorKey_getParamFloatValue(h3d__shader__ColorKey r0,int r1) {
+	double r2;
+	r2 = 0.;
+	return r2;
 }
 

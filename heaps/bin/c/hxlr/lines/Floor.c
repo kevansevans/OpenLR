@@ -6,12 +6,15 @@ void hxlr_lines_LineBase_new(hxlr__lines__LineBase,h2d__col__Point,h2d__col__Poi
 #include <hxlr/rider/ContactPoint.h>
 
 void hxlr_lines_Floor_new(hxlr__lines__Floor r0,h2d__col__Point r1,h2d__col__Point r2,bool r3) {
-	vdynamic *r5;
-	int r6;
-	r5 = NULL;
-	hxlr_lines_LineBase_new(((hxlr__lines__LineBase)r0),r1,r2,r3,r5);
-	r6 = 0;
-	r0->type = r6;
+	bool r5;
+	vdynamic *r6;
+	int r7;
+	r6 = NULL;
+	hxlr_lines_LineBase_new(((hxlr__lines__LineBase)r0),r1,r2,r3,r6);
+	r7 = 0;
+	r0->type = r7;
+	r5 = true;
+	r0->tangible = r5;
 	return;
 }
 

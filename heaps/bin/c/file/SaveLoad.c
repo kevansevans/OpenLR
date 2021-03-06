@@ -4,7 +4,7 @@
 #include <file/SaveLoad.h>
 #include <hl/types/ArrayObj.h>
 #include <_std/Main.h>
-#include <components/managers/Grid.h>
+#include <hxlr/engine/Grid.h>
 #include <hxlr/lines/LineBase.h>
 #include <h2d/col/Point.h>
 #include <haxe/ds/StringMap.h>
@@ -114,7 +114,7 @@ void hxlr_lines_Accel_new(hxlr__lines__Accel,h2d__col__Point,h2d__col__Point,boo
 extern hl_type t$hxlr_lines_Scenery;
 void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
 void hxlr_lines_LineBase_setLim(hxlr__lines__LineBase,int);
-void components_managers_Grid_register(components__managers__Grid,hxlr__lines__LineBase);
+void hxlr_engine_Grid_register(hxlr__engine__Grid,hxlr__lines__LineBase);
 void components_stage_Canvas_drawLineGraphic(components__stage__Canvas,hxlr__lines__LineBase);
 extern hl_type t$vrt_45af8a6;
 extern String s$playerdata;
@@ -126,7 +126,6 @@ void file_SaveLoad_new(file__SaveLoad r0) {
 void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	bool *r32;
 	components__managers__Riders r18;
-	components__managers__Grid r8;
 	String r5, r28, r29;
 	Date r27;
 	haxe__ds__StringMap r17;
@@ -135,6 +134,7 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	hl_type *r26;
 	bool r20;
 	components__sledder__Bosh r22;
+	hxlr__engine__Grid r8;
 	hxlr__rider__RiderBase r21;
 	$Main r6;
 	h2d__col__Point r24;
@@ -669,7 +669,6 @@ void file_SaveLoad_loadTrack(file__SaveLoad r0,String r1,vdynamic* r2) {
 }
 
 void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
-	components__managers__Grid r27;
 	components__managers__Riders r11;
 	String r4, r5;
 	hxlr__lines__Scenery r26;
@@ -677,6 +676,7 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 	bool r3;
 	hxlr__lines__Floor r23;
 	haxe__format__JsonParser r8;
+	hxlr__engine__Grid r27;
 	hxlr__lines__Accel r25;
 	$Main r10;
 	h2d__col__Point r12, r24;
@@ -850,7 +850,7 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 	r10 = ($Main)g$_Main;
 	r27 = r10->grid;
 	if( r27 == NULL ) hl_null_access();
-	components_managers_Grid_register(r27,r22);
+	hxlr_engine_Grid_register(r27,r22);
 	r10 = ($Main)g$_Main;
 	r28 = r10->canvas;
 	if( r28 == NULL ) hl_null_access();

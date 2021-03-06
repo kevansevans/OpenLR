@@ -18,9 +18,10 @@ void hxlr_rider_AirPoint_iterate(hxlr__rider__AirPoint,h2d__col__Point);
 #include <hxlr/rider/Stick.h>
 void hxlr_rider_Stick_satisfy(hxlr__rider__Stick,vdynamic*);
 #include <haxe/ds/StringMap.h>
-#include <components/managers/Grid.h>
+#include <hxlr/engine/Grid.h>
+#include <hxlr/engine/Cell.h>
 #include <hxlr/lines/LineBase.h>
-vvirtual* components_managers_Grid_registryPosition(double,double);
+vvirtual* hxlr_engine_Cell_getInfo(double,double);
 extern String s$x;
 extern hl_type t$_i32;
 #include <hl/natives.h>
@@ -28,8 +29,6 @@ String String___alloc__(vbyte*,int);
 String String___add__(String,String);
 extern String s$y;
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
-extern hl_type t$vrt_f6fd8f3;
-extern hl_type t$hl_types_ArrayObj;
 void components_sledder_Bosh_updateEyeball(components__sledder__Bosh,int);
 void h2d_Graphics_clear(h2d__Graphics);
 void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
@@ -406,21 +405,22 @@ void components_sledder_Bosh_constrain(components__sledder__Bosh r0) {
 }
 
 void components_sledder_Bosh_collide(components__sledder__Bosh r0) {
-	components__managers__Grid r23;
-	String r17, r21;
-	haxe__ds__StringMap r22;
-	vvirtual *r10, *r25;
+	String r17, r20;
+	haxe__ds__StringMap r21;
+	vvirtual *r10;
 	hl__types__ArrayObj r3, r6;
-	$Main r24;
+	hxlr__engine__Grid r22;
+	hxlr__engine__Cell r24;
+	$Main r23;
 	h2d__col__Point r12;
-	hxlr__lines__LineBase r27;
+	hxlr__lines__LineBase r26;
 	hxlr__rider__ContactPoint r7;
 	double r11, r13;
-	int *r19;
+	int *r18;
 	vdynamic *r8;
-	vbyte *r20;
+	vbyte *r19;
 	varray *r9;
-	int r1, r4, r5, r14, r15, r16, r18, r26;
+	int r1, r4, r5, r14, r15, r16, r25;
 	r1 = 0;
 	r3 = r0->contactPoints;
 	label$ebdfb18_5_2:
@@ -444,7 +444,7 @@ void components_sledder_Bosh_collide(components__sledder__Bosh r0) {
 	r12 = r7->pos;
 	if( r12 == NULL ) hl_null_access();
 	r13 = r12->y;
-	r10 = components_managers_Grid_registryPosition(r11,r13);
+	r10 = hxlr_engine_Cell_getInfo(r11,r13);
 	r4 = -1;
 	label$ebdfb18_5_23:
 	r14 = 2;
@@ -459,59 +459,59 @@ void components_sledder_Bosh_collide(components__sledder__Bosh r0) {
 	++r14;
 	r17 = (String)s$x;
 	if( r10 == NULL ) hl_null_access();
-	r18 = hl_vfields(r10)[2] ? (*(int*)(hl_vfields(r10)[2])) : (int)hl_dyn_geti(r10->value,120/*x*/,&t$_i32);
-	r16 = r5 + r18;
-	r19 = &r16;
-	r20 = hl_itos(r16,r19);
-	r21 = String___alloc__(r20,r16);
-	r17 = String___add__(r17,r21);
-	r21 = (String)s$y;
-	r17 = String___add__(r17,r21);
-	r18 = hl_vfields(r10)[3] ? (*(int*)(hl_vfields(r10)[3])) : (int)hl_dyn_geti(r10->value,121/*y*/,&t$_i32);
-	r16 = r15 + r18;
-	r19 = &r16;
-	r20 = hl_itos(r16,r19);
-	r21 = String___alloc__(r20,r16);
-	r17 = String___add__(r17,r21);
-	r24 = ($Main)g$_Main;
-	r23 = r24->grid;
-	if( r23 == NULL ) hl_null_access();
-	r22 = r23->registry;
+	r16 = hl_vfields(r10)[3] ? (*(int*)(hl_vfields(r10)[3])) : (int)hl_dyn_geti(r10->value,120/*x*/,&t$_i32);
+	r16 = r16 + r5;
+	r18 = &r16;
+	r19 = hl_itos(r16,r18);
+	r20 = String___alloc__(r19,r16);
+	r17 = String___add__(r17,r20);
+	r20 = (String)s$y;
+	r17 = String___add__(r17,r20);
+	r16 = hl_vfields(r10)[4] ? (*(int*)(hl_vfields(r10)[4])) : (int)hl_dyn_geti(r10->value,121/*y*/,&t$_i32);
+	r16 = r16 + r15;
+	r18 = &r16;
+	r19 = hl_itos(r16,r18);
+	r20 = String___alloc__(r19,r16);
+	r17 = String___add__(r17,r20);
+	r23 = ($Main)g$_Main;
+	r22 = r23->grid;
 	if( r22 == NULL ) hl_null_access();
-	r8 = haxe_ds_StringMap_get(r22,r17);
-	r25 = hl_to_virtual(&t$vrt_f6fd8f3,(vdynamic*)r8);
-	if( r25 ) goto label$ebdfb18_5_59;
+	r21 = r22->registry;
+	if( r21 == NULL ) hl_null_access();
+	r8 = haxe_ds_StringMap_get(r21,r17);
+	r24 = (hxlr__engine__Cell)r8;
+	if( r24 ) goto label$ebdfb18_5_59;
 	goto label$ebdfb18_5_29;
 	label$ebdfb18_5_59:
-	r24 = ($Main)g$_Main;
-	r23 = r24->grid;
-	if( r23 == NULL ) hl_null_access();
-	r22 = r23->registry;
+	r23 = ($Main)g$_Main;
+	r22 = r23->grid;
 	if( r22 == NULL ) hl_null_access();
-	r8 = haxe_ds_StringMap_get(r22,r17);
-	r25 = hl_to_virtual(&t$vrt_f6fd8f3,(vdynamic*)r8);
+	r21 = r22->registry;
+	if( r21 == NULL ) hl_null_access();
+	r8 = haxe_ds_StringMap_get(r21,r17);
+	r24 = (hxlr__engine__Cell)r8;
 	r16 = 0;
-	if( r25 == NULL ) hl_null_access();
-	r6 = hl_vfields(r25)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r25)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r25->value,-149576751/*hittable*/,&t$hl_types_ArrayObj);
+	if( r24 == NULL ) hl_null_access();
+	r6 = r24->tangible;
 	label$ebdfb18_5_69:
 	if( r6 == NULL ) hl_null_access();
-	r26 = r6->length;
-	if( r16 >= r26 ) goto label$ebdfb18_5_86;
-	r26 = r6->length;
-	if( ((unsigned)r16) < ((unsigned)r26) ) goto label$ebdfb18_5_77;
-	r27 = NULL;
+	r25 = r6->length;
+	if( r16 >= r25 ) goto label$ebdfb18_5_86;
+	r25 = r6->length;
+	if( ((unsigned)r16) < ((unsigned)r25) ) goto label$ebdfb18_5_77;
+	r26 = NULL;
 	goto label$ebdfb18_5_80;
 	label$ebdfb18_5_77:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r16];
-	r27 = (hxlr__lines__LineBase)r8;
+	r26 = (hxlr__lines__LineBase)r8;
 	label$ebdfb18_5_80:
 	++r16;
-	if( r27 ) goto label$ebdfb18_5_83;
+	if( r26 ) goto label$ebdfb18_5_83;
 	goto label$ebdfb18_5_69;
 	label$ebdfb18_5_83:
-	if( r27 == NULL ) hl_null_access();
-	((void (*)(hxlr__lines__LineBase,hxlr__rider__ContactPoint))r27->$type->vobj_proto[1])(r27,r7);
+	if( r26 == NULL ) hl_null_access();
+	((void (*)(hxlr__lines__LineBase,hxlr__rider__ContactPoint))r26->$type->vobj_proto[1])(r26,r7);
 	goto label$ebdfb18_5_69;
 	label$ebdfb18_5_86:
 	goto label$ebdfb18_5_29;
