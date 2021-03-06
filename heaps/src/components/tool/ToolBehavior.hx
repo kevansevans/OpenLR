@@ -1,4 +1,5 @@
 package components.tool;
+import hxlr.enums.LineType;
 import hxlr.lines.Undefined;
 import components.managers.Grid;
 import hxlr.lines.Floor;
@@ -418,10 +419,20 @@ class ToolBehavior
 	{
 		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10 && color != LineColor.SCENE) return;
 		
+		var type:LineType = LineType.NULL;
+		switch (color) {
+			case 0:
+				type = LineType.FLOOR;
+			case 1:
+				type = LineType.ACCEL;
+			case 2:
+				type = LineType.SCENE;
+		}
+		
 		if (leftIsDown) {
-			Main.canvas.addLine(color, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
+			Main.canvas.addLine(type, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
 		} else if (rightIsDown) {
-			Main.canvas.addLine(color, mouseEnd.x, mouseEnd.y, mouseStart.x, mouseStart.y, !shifted);
+			Main.canvas.addLine(type, mouseEnd.x, mouseEnd.y, mouseStart.x, mouseStart.y, !shifted);
 		}
 	}
 	

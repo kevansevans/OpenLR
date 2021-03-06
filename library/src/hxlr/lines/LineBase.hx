@@ -1,12 +1,8 @@
 package hxlr.lines;
 
+import hxlr.enums.LineType;
+import hxlr.math.Point;
 import hxlr.rider.ContactPoint;
-import components.tool.ToolBehavior.LineColor;
-import enums.LineDrawMode;
-import h2d.Graphics;
-import h2d.Object;
-
-import h2d.col.Point;
 
 /**
  * ...
@@ -19,7 +15,7 @@ class LineBase
 	public var start:Point;
 	public var end:Point;
 	
-	public var type:LineColor;
+	public var type:LineType;
 	
 	public var keyList:Array<String>;
 	
@@ -112,7 +108,7 @@ class LineBase
 }
 
 typedef LineSave = {
-	var linetype:LineColor;
+	var linetype:LineType;
 	var startPoint:Point;
 	var endPoint:Point;
 	var inverted:Bool;

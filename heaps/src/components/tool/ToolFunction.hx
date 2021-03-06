@@ -1,6 +1,7 @@
 package components.tool;
 
 import hxlr.lines.LineBase;
+import hxlr.enums.LineType;
 import h2d.col.Point;
 import components.managers.Grid;
 import components.stage.Canvas.DrawMode;
@@ -43,7 +44,17 @@ class ToolFunction
                 {
 					if (Main.toolControl.colorEraser) {
 						
-						if (line.type == Main.toolControl.color) {
+						var type:LineType = LineType.NULL;
+						switch (Main.toolControl.color) {
+							case 0:
+								type = LineType.FLOOR;
+							case 1:
+								type = LineType.ACCEL;
+							case 2:
+								type = LineType.SCENE;
+						}
+						
+						if (line.type == type) {
 							tryDispose(line);
 						}
 						
@@ -63,11 +74,11 @@ class ToolFunction
 			case FULL_EDIT | PLAYBACK :
 				Main.grid.unregister(_line);
 			case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
-				if (_line.type != LineColor.SCENE) {
+				if (_line.type != LineType.SCENE) {
 					Main.grid.unregister(_line);
 				}
 			case SCENERY_EDIT | SCENERY_PLAYBACK :
-				if (_line.type == LineColor.SCENE) {
+				if (_line.type == LineType.SCENE) {
 					Main.grid.unregister(_line);
 				}
 		}

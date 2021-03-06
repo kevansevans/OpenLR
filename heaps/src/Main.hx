@@ -1,5 +1,6 @@
 package;
 
+import hxlr.enums.LineType;
 import hxlr.scripts.PhysFloor;
 
 import components.stage.Camera;
@@ -229,7 +230,26 @@ class Main extends App
 		var arg21:ConsoleArgDesc = {t: ABool, opt: true, name : "inverted"};
 		var arg22:ConsoleArgDesc = {t: AInt, opt: true, name : "limit mode"};
 		console.addCommand(Commands.drawLine, "add line to track", [arg5, arg6, arg7, arg8, arg9, arg21, arg22], function(?_type:Int, ?_x1:Float, ?_y1:Float, ?_x2:Float, ?_y2:Float, ?_invert:Bool, ?_lim:Int) {
-			var type = _type == null ? toolControl.color : _type;
+			var type:LineType = LineType.NULL;
+			if (_type == null) {
+				switch (toolControl.color) {
+					case 0:
+						type = LineType.FLOOR;
+					case 1:
+						type = LineType.ACCEL;
+					case 2:
+						type = LineType.SCENE;
+				}
+			} else {
+				switch (_type) {
+					case 0:
+						type = LineType.FLOOR;
+					case 1:
+						type = LineType.ACCEL;
+					case 2:
+						type = LineType.SCENE;
+				}
+			}
 			var x1 = _x1 == null ? canvas.mouseX : _x1;
 			var y1 = _y1 == null ? canvas.mouseY : _y1;
 			var x2 = _x2 == null ? x1 + 10 : _x2;

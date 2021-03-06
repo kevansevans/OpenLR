@@ -4,6 +4,7 @@ import hxlr.lines.LineBase;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
+import hxlr.enums.LineType;
 import components.managers.Grid;
 import enums.LineDrawMode;
 import format.agal.Data.Reg;
@@ -88,15 +89,16 @@ class Canvas extends Scene
 		y += -(oldMouseY * (newScale - oldScale));
 	}
 	
-	public function redrawLines(_type:Int) {
+	public function redrawLines(_type:LineType) {
 		
 		switch (_type) {
-			case 0 | 1 :
+			case LineType.FLOOR | LineType.ACCEL :
 				rideLayer.clear();
 				colorLayer.clear();
-			case 2 :
+			case LineType.SCENE :
 				sceneColorLayer.clear();
 				scenePlaybackLayer.clear();
+			default :
 		}
 		
 		for (line in Main.grid.lines) {
@@ -114,7 +116,7 @@ class Canvas extends Scene
 		
 		switch (_line.type) {
 			
-			case 0 :
+			case LineType.FLOOR :
 				
 				previewLayer.lineStyle(2, 0x0066FF);
 				previewLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
@@ -126,7 +128,7 @@ class Canvas extends Scene
 				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
 				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
 				
-			case 1 :
+			case LineType.ACCEL :
 				
 				previewLayer.lineStyle(2, 0xCC0000);
 				previewLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
@@ -140,7 +142,7 @@ class Canvas extends Scene
 				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
 				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
 				
-			case 2 :
+			case LineType.SCENE :
 				
 				previewLayer.lineStyle(2, 0);
 				previewLayer.moveTo(_line.start.x, _line.start.y);
@@ -171,7 +173,7 @@ class Canvas extends Scene
 		
 		switch (_line.type) {
 			
-			case 0 :
+			case LineType.FLOOR :
 				
 				rideLayer.lineStyle(2, 0);
 				rideLayer.moveTo(_line.start.x, _line.start.y);
@@ -183,7 +185,7 @@ class Canvas extends Scene
 				colorLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
 				colorLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
 				
-			case 1 :
+			case LineType.ACCEL :
 				
 				rideLayer.lineStyle(2, 0);
 				rideLayer.moveTo(_line.start.x, _line.start.y);
@@ -198,7 +200,7 @@ class Canvas extends Scene
 				colorLayer.lineTo(_line.end.x - _line.dx * _line.invDistance * 5, _line.end.y - _line.dy * _line.invDistance * 5);
 				
 				
-			case 2 :
+			case LineType.SCENE :
 				
 				sceneColorLayer.lineStyle(2, 0x00CC00);
 				sceneColorLayer.moveTo(_line.start.x, _line.start.y);
@@ -222,16 +224,16 @@ class Canvas extends Scene
 		
 	}
 	
-	public function addLine(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1, ?_lineID:Int = -1) {
+	public function addLine(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1, ?_lineID:Int = -1) {
 		
 		var line:LineBase = null;
 		switch (_type) {
 			
-			case 0:
+			case LineType.FLOOR:
 				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-			case 1 :
+			case LineType.ACCEL :
 				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-			case 2 :
+			case LineType.SCENE :
 				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
 			default :
 			
