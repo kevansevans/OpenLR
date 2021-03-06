@@ -9,15 +9,13 @@ import hxlr.math.Point;
  */
 class AirPoint extends ContactPoint
 {
-
-	public var airFriction:Float;
 	
 	public function new(_x:Float, _y:Float, _af:Float) 
 	{
 		
 		super(_x, _y);
 		
-		airFriction = _af;
+		friction = _af;
 		
 	}
 	
@@ -26,8 +24,8 @@ class AirPoint extends ContactPoint
 		
 		var g = _gravity == null ? gravity : _gravity;
 		
-		dir.x = (pos.x - vel.x) * airFriction + g.x;
-		dir.y = (pos.y - vel.y) * airFriction + g.y;
+		dir.x = (pos.x - vel.x) * friction + g.x;
+		dir.y = (pos.y - vel.y) * friction + g.y;
 		
 		vel = pos.clone();
 		
