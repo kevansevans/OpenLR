@@ -3,10 +3,10 @@ package hxlr.enums;
 /**
  * @author Kaelan
  */
-enum StickType {
-	STANDARD;
-	REPELL;
-	ATTRACT;
-	FLOPPY;
-	SCARF;
+enum abstract StickType(String) from String to String {
+	var STANDARD:String;
+	var REPELL:String;
+	var ATTRACT:String;
+	var FLOPPY:String;
+	var SCARF:String;
 }
