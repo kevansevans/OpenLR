@@ -37,7 +37,7 @@ class Cell
 	public var info:CellInfo;
 	
 	public var allLines:Array<LineBase>;
-	public var tangible:Array<LineBase>;
+	public var collidable:Array<LineBase>;
 	public var intangible:Array<LineBase>;
 	
 	public function new(_info:CellInfo) 
@@ -45,19 +45,20 @@ class Cell
 		info = _info;
 		
 		allLines = new Array();
-		tangible = new Array();
+		collidable = new Array();
 		intangible = new Array();
 	}
 	
 	public function addLine(_line:LineBase) {
 		
+		if (allLines.contains(_line)) return;
+		
 		allLines.push(_line);
 		
-		switch (_line.tangible) {
-			case true :
-				tangible[_line.id] = _line;
-			case false :
-				intangible[_line.id] = _line;
+		if (_line.tangible) {
+			collidable[_line.id] = _line;
+		} else {
+			intangible[_line.id] = _line;
 		}
 		
 		if (!cellList.contains(this)) cellList.push(this);
@@ -72,7 +73,7 @@ class Cell
 		
 		switch (_line.tangible) {
 			case true :
-				tangible.remove(_line);
+				collidable.remove(_line);
 			case false :
 				intangible.remove(_line);
 		}
