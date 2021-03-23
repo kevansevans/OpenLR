@@ -97,8 +97,6 @@ class Grid
 		++lineCount;
 		++lineIDCount;
 		++subTypeCount[_line.type];
-		
-		Main.simulation.updateSim();
 	}
 	
 	function storeLine(_line:LineBase, _info:CellInfo)
