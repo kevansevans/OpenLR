@@ -17,7 +17,7 @@ class ContactPoint
 	
 	public var friction:Float;
 	
-	public function new(_x:Float = 0.0, _y:Float = 0.0, _friction:Float = 0.0) 
+	public function new(_x:Float = 0.0, _y:Float = 0.0, _friction:Float = 0.0)
 	{
 		pos = new Point(_x, _y);
 		dir = new Point();
@@ -43,7 +43,8 @@ class ContactPoint
 	{
 		var object:PointContainer = {
 			position : pos,
-			velocity : vel
+			velocity : vel,
+			friction : friction
 		}
 		return object;
 	}
@@ -51,6 +52,7 @@ class ContactPoint
 	public function deserialize(_object:PointContainer) {
 		pos = _object.position;
 		vel = _object.velocity;
+		friction = _object.friction;
 	}
 	
 }
@@ -58,4 +60,5 @@ class ContactPoint
 typedef PointContainer = {
 	var position:Point;
 	var velocity:Point;
+	var friction:Float;
 }
