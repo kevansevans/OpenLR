@@ -12,11 +12,13 @@ typedef RiderStruct =
 	var scale:Float;
 	var contactPoints:Array<AnchorPoint>;
 	var scarfPoints:Array<AnchorPoint>;
+	var scarfAnchor:Int;
 	var bones:Array<BoneStruct>;
-	var scarf:Scarf;
 	var colors:Array<Int>;
 	var x_grav:Float;
 	var y_grav:Float;
+	var x_vel:Float;
+	var y_vel:Float;
 }
 
 typedef AnchorPoint = {
