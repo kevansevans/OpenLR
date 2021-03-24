@@ -101,7 +101,7 @@ class RiderBase
 		}
 		scarves.unshift(new Stick(contactPoints[struct.scarfAnchor], airPoints[0], StickType.SCARF, this));
 		
-		focusPoint = contactPoints[4];
+		focusPoint = contactPoints[struct.camera];
 		
 		crashed = false;
 	}

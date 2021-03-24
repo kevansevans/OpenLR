@@ -13,6 +13,7 @@ typedef RiderStruct =
 	var contactPoints:Array<AnchorPoint>;
 	var scarfPoints:Array<AnchorPoint>;
 	var scarfAnchor:Int;
+	var camera:Int;
 	var bones:Array<BoneStruct>;
 	var colors:Array<Int>;
 	var x_grav:Float;
