@@ -1,6 +1,9 @@
 package;
 
+import haxe.Json;
+import hxlr.Constants;
 import hxlr.enums.LineType;
+import hxlr.rider.RiderStruct;
 import hxlr.scripts.PhysFloor;
 import hxlr.engine.Grid;
 

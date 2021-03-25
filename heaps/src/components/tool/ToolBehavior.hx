@@ -326,11 +326,11 @@ class ToolBehavior
 			
 			for (_x in -1...2) for (_y in -1...2) {
 				
-				var key:String = Cell.getInfo(_x, _y).key;
+				var key:String = Cell.getInfo(_x + _pos.x , _y + _pos.y).key;
 				if (Main.grid.registry[key] == null) continue;
 				
 				var chunk = Main.grid.registry[key];
-				for (line in chunk.tangible) {
+				for (line in chunk.collidable) {
 					
 					if (line == null) continue;
 					

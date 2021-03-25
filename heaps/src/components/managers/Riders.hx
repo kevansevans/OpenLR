@@ -27,7 +27,7 @@ class Riders
 	}
 	
 	public function deleteAllRiders() {
-		for (rider in riders) rider.delete();
+		//for (rider in riders) rider.delete();
 	}
 	
 	public function addNewRider(_name:String, _start:Point, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>)
@@ -100,7 +100,7 @@ class Riders
 	}
 	
 	public function removeRider(_name:String) {
-		riders[_name].delete();
+		//riders[_name].delete();
 		
 		#if js
 		if (Main.p2p.connected) {
@@ -118,7 +118,7 @@ class Riders
 	}
 	
 	public function P2PRemoveRider(_name:String) {
-		riders[_name].delete();
+		//riders[_name].delete();
 	}
 	
 	public function P2PUpdateRider() {
