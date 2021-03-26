@@ -27,6 +27,8 @@ class RiderBase
 	public var constraints:Array<Stick>;
 	public var scarves:Array<Stick>;
 	
+	public var limits:Array<FakieLimit>;
+	
 	public var crashed(default, set):Null<Bool> = false;
 	public var invincible:Bool = false;
 	

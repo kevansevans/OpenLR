@@ -1,8 +1,6 @@
 package hxlr.rider;
 
 import hxlr.enums.StickType;
-import hxlr.math.Point;
-import hxlr.rider.ContactPoint;
 
 /**
  * @author Kaelan
@@ -15,11 +13,21 @@ typedef RiderStruct =
 	var scarfAnchor:Int;
 	var camera:Int;
 	var bones:Array<BoneStruct>;
+	var limits:Array<FakieLimit>;
 	var colors:Array<Int>;
 	var x_grav:Float;
 	var y_grav:Float;
 	var x_vel:Float;
 	var y_vel:Float;
+}
+
+typedef FakieLimit = {
+	var point_a:Int;
+	var point_b:Int;
+	var point_c:Int;
+	var point_d:Int;
+	var threshold:Int;
+	var lessThan:Bool;
 }
 
 typedef AnchorPoint = {

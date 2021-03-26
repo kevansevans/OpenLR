@@ -73,6 +73,16 @@ class Constants
 				{a: 5, b: 8, type: StickType.REPELL, crashable: false},		//Shoulder to Foot A
 				{a: 5, b: 9, type: StickType.REPELL, crashable: false},		//Shoulder to Foot B
 			],
+			limits : [
+				{
+					point_a : 3,
+					point_b : 0,
+					point_c : 1,
+					point_d : 0,
+					threshold : 0,
+					lessThan : true
+				},
+			],
 			scarfAnchor : 5,
 			colors : [
 				0xD20202,

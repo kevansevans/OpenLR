@@ -1,13 +1,8 @@
 package components.sledder;
 
 import hxlr.Constants;
-import hxlr.rider.ContactPoint;
-import hxlr.rider.AirPoint;
-import hxlr.rider.Stick;
 import hxlr.math.Point;
 import hxlr.rider.RiderBase;
-import hxlr.engine.Grid;
-import hxlr.engine.Cell;
 
 import h3d.Vector;
 import h2d.Graphics;
@@ -100,10 +95,26 @@ class Bosh extends RiderBase
 			}
 		}
 		
-		var fakiex = contactPoints[3].pos.x - contactPoints[0].pos.x;
-		var fakiey = contactPoints[3].pos.y - contactPoints[0].pos.y;
-		if (fakiex * (contactPoints[1].pos.y - contactPoints[0].pos.y) - fakiey * (contactPoints[1].pos.x - contactPoints[0].pos.x) < 0) {
-			crashed = true;
+		checkLimits();
+		
+	}
+	
+	override public function checkLimits():Void 
+	{
+		for (def in limits) {
+			
+			var x_distA = contactPoints[def.point_a].pos.x - contactPoints[def.point_b].pos.x;
+			var y_distA = contactPoints[def.point_a].pos.y - contactPoints[def.point_b].pos.y;
+			var x_distB = contactPoints[def.point_c].pos.x - contactPoints[def.point_d].pos.x;
+			var y_distB = contactPoints[def.point_c].pos.y - contactPoints[def.point_d].pos.y;
+			
+			switch (def.lessThan) {
+				case true :
+					if (x_distA * y_distB - y_distA * x_distB < def.threshold) crashed = true;
+				case false :
+					if (x_distA * y_distB - y_distA * x_distB > def.threshold) crashed = true;
+			}
+			
 		}
 	}
 	
