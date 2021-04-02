@@ -4,7 +4,6 @@ import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
 import hxlr.lines.LineBase;
-import hxlr.lines.LineBase.LineSave;
 import hxlr.rider.RiderBase;
 
 import components.sledder.Bosh;
@@ -151,7 +150,23 @@ class SaveLoad
 		if (loadObject.song != null) Main.audio.loadAudio(loadObject.song);
 		
 		for (line in loadObject.lines) {
-			Main.canvas.addLine(line.linetype, line.startPoint.x, line.startPoint.y, line.endPoint.x, line.endPoint.y, line.inverted, line.limitMode, line.lineID);
+			
+			var limSet = [line.leftExtended, line.rightExtended];
+			var lim = 0;
+			switch (limSet) {
+				case [false, false] :
+					lim = 0;
+				case [true, false] :
+					lim = 1;
+				case [false, true] :
+					lim = 2;
+				case [true, true] :
+					lim = 3;
+				default :
+					lim = 0;
+			}
+			
+			Main.canvas.addLine(line.type, line.x1, line.y1, line.x2, line.y2, line.flipped, lim, line.id);
 		}
 		
 		for (rider in loadObject.riders) {
@@ -173,44 +188,48 @@ class SaveLoad
 			var str:String = File.getBytes('./saves/${_fileName}.json').toString();
 			var loadObject:Dynamic = Json.parse(str);
 			
-			Main.trackName = loadObject.label;
-			Main.authorName = loadObject.creator;
-			
-			Main.riders.addNewRider("Bosh", new Point(loadObject.startPosition.x, loadObject.startPosition.y));
-			
-			var lineArray:Array<Dynamic> = loadObject.lines;
-			lineArray.reverse();
-			for (lineObject in lineArray) {
-				var lim:Int = 0;
-				if (!lineObject.leftExtended && !lineObject.rightExtended) {
-					lim = 0;
-				} else if (lineObject.leftExtended && !lineObject.rightExtended) {
-					lim = 1;
-				} else if (!lineObject.leftExtended && lineObject.rightExtended) {
-					lim = 2;
-				} else if (lineObject.leftExtended && lineObject.rightExtended) {
-					lim = 3;
-				}
-				
-				var line:LineBase = null;
-				switch (lineObject.type) {
-					case 0:
-						line = new Floor(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
-					case 1 :
-						line = new Accel(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
-					case 2 :
-						line = new Scenery(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
-					default :
-						continue;
-				}
-				line.setLim(lim);
-				//line.id = lineObject.id;
-				Main.grid.register(line);
-				Main.canvas.drawLineGraphic(line);
-			}
+			loadJSONObject(loadObject);
 		}
 		
 		#end
+	}
+	
+	public function loadJSONObject(loadObject:Dynamic) {
+		Main.trackName = loadObject.label;
+		Main.authorName = loadObject.creator;
+		
+		Main.riders.addNewRider("Bosh", new Point(loadObject.startPosition.x, loadObject.startPosition.y));
+		
+		var lineArray:Array<Dynamic> = loadObject.lines;
+		lineArray.reverse();
+		for (lineObject in lineArray) {
+			var lim:Int = 0;
+			if (!lineObject.leftExtended && !lineObject.rightExtended) {
+				lim = 0;
+			} else if (lineObject.leftExtended && !lineObject.rightExtended) {
+				lim = 1;
+			} else if (!lineObject.leftExtended && lineObject.rightExtended) {
+				lim = 2;
+			} else if (lineObject.leftExtended && lineObject.rightExtended) {
+				lim = 3;
+			}
+			
+			var line:LineBase = null;
+			switch (lineObject.type) {
+				case 0:
+					line = new Floor(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
+				case 1 :
+					line = new Accel(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
+				case 2 :
+					line = new Scenery(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
+				default :
+					continue;
+			}
+			line.setLim(lim);
+			//line.id = lineObject.id;
+			Main.grid.register(line);
+			Main.canvas.drawLineGraphic(line);
+		}
 	}
 	
 	public function saveUserInfo() {
@@ -234,7 +253,7 @@ class SaveLoad
 }
 
 typedef SaveData = {
-	var lines:Array<LineSave>;
+	var lines:Array<LineStruct>;
 	var riders:Array<RiderSave>;
 	var name:Null<String>;
 	var author:Null<String>;
