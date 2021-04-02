@@ -67,13 +67,13 @@ class Canvas extends Scene
 	}
 	
 	public function setCanvasPosition(_x:Float, _y:Float, ?_log:Bool = true) {
-		setPosition(_x, _y);
+		addCanvasPosition(_x, _y);
 		if (_log) Main.console.log("Set canvas position to: " + _x + " " + _y, 0x0000BB);
 	}
 	
 	public function addCanvasPosition(_x:Float, _y:Float) {
-		x += _x;
-		y += _y;
+		x -= _x;
+		y -= _y;
 	}
 	
 	public function zoomCanvas(wheelDelta:Int):Void 
