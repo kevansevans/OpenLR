@@ -7,34 +7,18 @@
 #include <_std/Main.h>
 extern $Main g$_Main;
 void h2d_Interactive_focus(h2d__Interactive);
-#include <hl/types/ArrayDyn.h>
-#include <haxe/Log.h>
 #include <components/stage/Canvas.h>
-#include <components/tool/ToolFunction.h>
 #include <components/managers/Simulation.h>
-extern haxe__$Log g$_haxe_Log;
-extern hl_type t$_i32;
-extern hl_type t$vrt_329ffa8;
-extern String s$3b33a12;
-extern hl_type t$String;
-extern String s$components_tool_ToolBehavior;
-extern String s$mouseDown;
-extern hl_type t$vrt_eaa6a3b;
 extern hl_type t$h2d_col_Point;
 #include <h2d/Scene.h>
 double h2d_Scene_get_mouseX(h2d__Scene);
 double h2d_Scene_get_mouseY(h2d__Scene);
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
-void components_tool_ToolBehavior_snap(components__tool__ToolBehavior,h2d__col__Point);
-extern components__tool__$ToolFunction g$_components_tool_ToolFunction;
 void components_managers_Simulation_backSim(components__managers__Simulation);
 void components_managers_Simulation_stepSim(components__managers__Simulation);
 void components_stage_Canvas_zoomCanvas(components__stage__Canvas,int);
 #include <h2d/Object.h>
 void h2d_Object_removeChildren(h2d__Object);
-#include <hl/natives.h>
-void components_tool_ToolBehavior_drawLine(components__tool__ToolBehavior);
-void components_tool_ToolBehavior_updatePreview(components__tool__ToolBehavior);
 void components_stage_Canvas_addCanvasPosition(components__stage__Canvas,double,double);
 #include <h2d/Graphics.h>
 #include <hxlr/lines/Undefined.h>
@@ -43,6 +27,7 @@ void components_stage_Canvas_addCanvasPosition(components__stage__Canvas,double,
 #include <hxlr/lines/Scenery.h>
 void h2d_Graphics_clear(h2d__Graphics);
 extern venum* g$components_tool_ToolMode_ERASER;
+#include <hl/natives.h>
 extern hl_type t$hxlr_lines_Undefined;
 void hxlr_lines_Undefined_new(hxlr__lines__Undefined,h2d__col__Point,h2d__col__Point,bool,vdynamic*);
 extern hl_type t$hxlr_lines_Floor;
@@ -52,28 +37,13 @@ void hxlr_lines_Accel_new(hxlr__lines__Accel,h2d__col__Point,h2d__col__Point,boo
 extern hl_type t$hxlr_lines_Scenery;
 void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
 void components_stage_Canvas_drawPreviewLine(components__stage__Canvas,hxlr__lines__LineBase);
-extern venum* g$components_tool_ToolMode_LINE;
-#include <haxe/ds/StringMap.h>
-#include <hxlr/engine/Grid.h>
-#include <hxlr/engine/Cell.h>
-#include <hl/types/ArrayObj.h>
-vvirtual* hxlr_engine_Cell_getInfo(double,double);
-vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
-extern hl_type t$_f64;
-hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
-double components_tool_ToolBehavior_get_gridSnapDistance(components__tool__ToolBehavior);
-void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*,vdynamic*);
 #include <hxd/EventKind.h>
 #include <components/stage/DrawMode.h>
 #include <components/managers/Musicplayer.h>
-#include <components/stage/LRConsole.h>
-#include <components/ui/Toolbar.h>
-#include <components/ui/Icon.h>
 #include <components/managers/Riders.h>
 #include <components/stage/Camera.h>
 #include <h3d/Engine.h>
 #include <hxlr/rider/RiderBase.h>
-extern String s$keyInputDown;
 venum* components_stage_Canvas_get_drawMode(components__stage__Canvas);
 extern venum* g$994fdec;
 venum* components_stage_Canvas_set_drawMode(components__stage__Canvas,venum*);
@@ -85,47 +55,37 @@ extern venum* g$6537d82;
 void components_managers_Musicplayer_stopMusic(components__managers__Musicplayer);
 void components_managers_Simulation_pauseSim(components__managers__Simulation);
 void components_managers_Simulation_resumeSim(components__managers__Simulation);
-void components_tool_ToolBehavior_updateCursor(components__tool__ToolBehavior);
-extern String s$Line_type_set_to_Normal;
-#include <h2d/Console.h>
-void h2d_Console_log(h2d__Console,String,vdynamic*);
-extern String s$Line_type_set_to_Accel;
-extern String s$Line_type_set_to_Scenery;
-void components_tool_ToolBehavior_setToolEraser(components__tool__ToolBehavior);
-extern venum* g$components_ui_Icon_ERASER;
-void components_ui_Toolbar_externalUpdate(components__ui__Toolbar,venum*);
 void components_managers_Simulation_setFlagState(components__managers__Simulation);
-void components_tool_ToolBehavior_setToolPencil(components__tool__ToolBehavior);
-extern venum* g$components_ui_Icon_PENCIL;
 void components_managers_Simulation_startSim(components__managers__Simulation);
-void components_tool_ToolBehavior_setToolLine(components__tool__ToolBehavior);
-extern venum* g$components_ui_Icon_LINE;
 void components_managers_Simulation_endSim(components__managers__Simulation);
 void components_managers_Riders_resetPositions(components__managers__Riders);
-double Math_max(double,double);
-extern String s$Ruler_width_set_to_;
-String String___alloc__(vbyte*,int);
-String String___add__(String,String);
-extern String s$Max_left_bitshift_reached;
 void components_managers_Simulation_updateSim(components__managers__Simulation);
 void components_managers_Musicplayer_playMusic(components__managers__Musicplayer,int);
 h2d__col__Point h2d_Object_localToGlobal(h2d__Object,h2d__col__Point);
+#include <components/stage/LRConsole.h>
 extern String s$Color_eraser_;
 extern String s$on;
 extern String s$off;
+String String___add__(String,String);
+#include <h2d/Console.h>
+void h2d_Console_log(h2d__Console,String,vdynamic*);
+void components_tool_ToolBehavior_updateCursor(components__tool__ToolBehavior);
 extern String s$Tool_set_to_Eraser;
+extern hl_type t$_i32;
 extern venum* g$components_tool_ToolMode_PENCIL;
 extern String s$Tool_set_to_Pencil;
+extern venum* g$components_tool_ToolMode_LINE;
 extern String s$Tool_set_to_Line;
+extern venum* g$hxd_Cursor_Default;
+venum* h2d_Interactive_set_cursor(h2d__Interactive,venum*);
 void components_tool_ToolBehavior_updatePencilCursor(components__tool__ToolBehavior);
 void components_tool_ToolBehavior_updateLineCursor(components__tool__ToolBehavior);
 void components_tool_ToolBehavior_updateEraserCursor(components__tool__ToolBehavior);
-venum* h2d_Interactive_set_cursor(h2d__Interactive,venum*);
-extern venum* g$hxd_Cursor_Default;
 #include <hxd/res/Loader.h>
 #include <hxd/res/Resource.h>
 #include <hxd/res/Image.h>
 #include <hxd/CustomCursor.h>
+#include <hl/types/ArrayObj.h>
 extern hl_type t$fun_b4832bf;
 extern hl_type t$fun_112ee0a;
 hxd__res__Loader hxd_Res_get_loader(void);
@@ -135,6 +95,7 @@ hxd__res__Resource hxd_res_Loader_loadCache(hxd__res__Loader,String,hl__Class);
 hxd__BitmapData hxd_res_Image_toBitmap(hxd__res__Image);
 extern hl_type t$hxd_CustomCursor;
 extern hl_type t$hxd_BitmapData;
+hl__types__ArrayObj hl_types_ArrayObj_alloc(varray*);
 void hxd_CustomCursor_new(hxd__CustomCursor,hl__types__ArrayObj,double,int,int);
 extern hl_type t$hxd_Cursor;
 extern String s$tool_pencilRed_png;
@@ -158,173 +119,53 @@ void components_tool_ToolBehavior_new__$1(hxd__Event r0) {
 }
 
 void components_tool_ToolBehavior_mouseDown(components__tool__ToolBehavior r0,hxd__Event r1) {
-	String r8;
-	vvirtual *r7, *r9;
-	venum *r20;
-	bool r10;
-	components__tool__$ToolFunction r24;
-	haxe__$Log r5;
-	$Main r14;
-	h2d__col__Point r11;
-	components__stage__Canvas r13;
-	components__managers__Simulation r29;
-	double r12, r16, r18, r19, r21, r22, r25, r26, r27, r28;
-	vclosure *r4, *r23;
-	double *r15, *r17;
-	vdynamic *r6;
+	bool r4;
+	$Main r8;
+	h2d__col__Point r5;
+	components__stage__Canvas r7;
+	components__managers__Simulation r12;
+	double r6, r10;
+	double *r9, *r11;
 	int r3;
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->button;
 	switch(r3) {
 		default:
-			r5 = (haxe__$Log)g$_haxe_Log;
-			r4 = r5->trace;
-			if( r4 == NULL ) hl_null_access();
-			r3 = r1->button;
-			r6 = hl_alloc_dynamic(&t$_i32);
-			r6->v.i = r3;
-			r7 = hl_alloc_virtual(&t$vrt_329ffa8);
-			r8 = (String)s$3b33a12;
-			if( hl_vfields(r7)[1] ) *(String*)(hl_vfields(r7)[1]) = (String)r8; else hl_dyn_setp(r7->value,37969014/*fileName*/,&t$String,r8);
-			r3 = 161;
-			if( hl_vfields(r7)[2] ) *(int*)(hl_vfields(r7)[2]) = (int)r3; else hl_dyn_seti(r7->value,371360620/*lineNumber*/,&t$_i32,r3);
-			r8 = (String)s$components_tool_ToolBehavior;
-			if( hl_vfields(r7)[0] ) *(String*)(hl_vfields(r7)[0]) = (String)r8; else hl_dyn_setp(r7->value,-63073762/*className*/,&t$String,r8);
-			r8 = (String)s$mouseDown;
-			if( hl_vfields(r7)[3] ) *(String*)(hl_vfields(r7)[3]) = (String)r8; else hl_dyn_setp(r7->value,302979532/*methodName*/,&t$String,r8);
-			r9 = hl_to_virtual(&t$vrt_eaa6a3b,(vdynamic*)r7);
-			r4->hasValue ? ((void (*)(vdynamic*,vdynamic*,vvirtual*))r4->fun)((vdynamic*)r4->value,r6,r9) : ((void (*)(vdynamic*,vvirtual*))r4->fun)(r6,r9);
-			goto label$80df762_2_130;
+			goto label$80df762_2_31;
 		case 0:
-			r10 = true;
-			r0->leftIsDown = r10;
-			r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r12 = h2d_Scene_get_mouseX(((h2d__Scene)r13));
-			r15 = &r12;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r16 = h2d_Scene_get_mouseY(((h2d__Scene)r13));
-			r17 = &r16;
-			h2d_col_Point_new(r11,r15,r17);
-			r0->mouseStart = r11;
-			r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r18 = h2d_Scene_get_mouseX(((h2d__Scene)r13));
-			r15 = &r18;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r19 = h2d_Scene_get_mouseY(((h2d__Scene)r13));
-			r17 = &r19;
-			h2d_col_Point_new(r11,r15,r17);
-			r0->mouseEnd = r11;
-			r20 = r0->tool;
-			if( r20 == NULL ) hl_null_access();
-			r3 = HL__ENUM_INDEX__(r20);
-			switch(r3) {
-				default:
-				case 0:
-					goto label$80df762_2_68;
-				case 1:
-				case 2:
-					r11 = r0->mouseStart;
-					components_tool_ToolBehavior_snap(r0,r11);
-					goto label$80df762_2_68;
-				case 3:
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r21 = h2d_Scene_get_mouseX(((h2d__Scene)r13));
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r22 = h2d_Scene_get_mouseY(((h2d__Scene)r13));
-					r24 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
-					r23 = r24->erase;
-					if( r23 == NULL ) hl_null_access();
-					r23->hasValue ? ((void (*)(vdynamic*,double,double))r23->fun)((vdynamic*)r23->value,r21,r22) : ((void (*)(double,double))r23->fun)(r21,r22);
-			}
-			label$80df762_2_68:
-			goto label$80df762_2_130;
+			return;
 		case 1:
-			r10 = true;
-			r0->rightIsDown = r10;
-			r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r21 = h2d_Scene_get_mouseX(((h2d__Scene)r13));
-			r15 = &r21;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r22 = h2d_Scene_get_mouseY(((h2d__Scene)r13));
-			r17 = &r22;
-			h2d_col_Point_new(r11,r15,r17);
-			r0->mouseStart = r11;
-			r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r25 = h2d_Scene_get_mouseX(((h2d__Scene)r13));
-			r15 = &r25;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r26 = h2d_Scene_get_mouseY(((h2d__Scene)r13));
-			r17 = &r26;
-			h2d_col_Point_new(r11,r15,r17);
-			r0->mouseEnd = r11;
-			r20 = r0->tool;
-			if( r20 == NULL ) hl_null_access();
-			r3 = HL__ENUM_INDEX__(r20);
-			switch(r3) {
-				default:
-				case 0:
-					goto label$80df762_2_104;
-				case 1:
-				case 2:
-					r11 = r0->mouseStart;
-					components_tool_ToolBehavior_snap(r0,r11);
-			}
-			label$80df762_2_104:
-			goto label$80df762_2_130;
+			return;
 		case 2:
-			r10 = true;
-			r0->middleIsDown = r10;
-			r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r27 = h2d_Scene_get_mouseX(((h2d__Scene)r13));
-			r15 = &r27;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r28 = h2d_Scene_get_mouseY(((h2d__Scene)r13));
-			r17 = &r28;
-			h2d_col_Point_new(r11,r15,r17);
-			r0->mouseStart = r11;
-			goto label$80df762_2_130;
+			r4 = true;
+			r0->middleIsDown = r4;
+			r5 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r6 = h2d_Scene_get_mouseX(((h2d__Scene)r7));
+			r9 = &r6;
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r10 = h2d_Scene_get_mouseY(((h2d__Scene)r7));
+			r11 = &r10;
+			h2d_col_Point_new(r5,r9,r11);
+			r0->mouseStart = r5;
+			goto label$80df762_2_31;
 		case 3:
-			r14 = ($Main)g$_Main;
-			r29 = r14->simulation;
-			if( r29 == NULL ) hl_null_access();
-			components_managers_Simulation_backSim(r29);
-			goto label$80df762_2_130;
+			r8 = ($Main)g$_Main;
+			r12 = r8->simulation;
+			if( r12 == NULL ) hl_null_access();
+			components_managers_Simulation_backSim(r12);
+			goto label$80df762_2_31;
 		case 4:
-			r14 = ($Main)g$_Main;
-			r29 = r14->simulation;
-			if( r29 == NULL ) hl_null_access();
-			components_managers_Simulation_stepSim(r29);
+			r8 = ($Main)g$_Main;
+			r12 = r8->simulation;
+			if( r12 == NULL ) hl_null_access();
+			components_managers_Simulation_stepSim(r12);
 	}
-	label$80df762_2_130:
+	label$80df762_2_31:
 	return;
 }
 
@@ -359,13 +200,11 @@ void components_tool_ToolBehavior_mouseWheel(components__tool__ToolBehavior r0,h
 void components_tool_ToolBehavior_mouseMove(components__tool__ToolBehavior r0,hxd__Event r1) {
 	venum *r7;
 	bool r8;
-	components__tool__$ToolFunction r23;
 	h2d__Object r3;
 	$Main r5;
 	h2d__col__Point r9;
 	components__stage__Canvas r4;
-	vclosure *r22;
-	double r10, r12, r14, r15, r16, r17, r18, r19, r20, r21, r24, r25, r26, r27;
+	double r10, r12, r14, r15, r16, r17;
 	double *r11, *r13;
 	int r6;
 	r5 = ($Main)g$_Main;
@@ -379,188 +218,76 @@ void components_tool_ToolBehavior_mouseMove(components__tool__ToolBehavior r0,hx
 	r6 = HL__ENUM_INDEX__(r7);
 	switch(r6) {
 		default:
-			goto label$80df762_4_122;
+			goto label$80df762_4_15;
 		case 0:
-			goto label$80df762_4_122;
+			goto label$80df762_4_15;
 		case 1:
-			r8 = r0->leftIsDown;
-			if( r8 ) goto label$80df762_4_16;
-			r8 = r0->rightIsDown;
-			if( !r8 ) goto label$80df762_4_86;
-			label$80df762_4_16:
-			r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r10 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
-			r11 = &r10;
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r12 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
-			r13 = &r12;
-			h2d_col_Point_new(r9,r11,r13);
-			r0->mouseEnd = r9;
-			r9 = r0->mouseEnd;
-			if( r9 == NULL ) hl_null_access();
-			r14 = r9->x;
-			r9 = r0->mouseStart;
-			if( r9 == NULL ) hl_null_access();
-			r15 = r9->x;
-			r14 = r14 - r15;
-			r15 = 2.;
-			r14 = hl_math_pow(r14,r15);
-			r9 = r0->mouseEnd;
-			if( r9 == NULL ) hl_null_access();
-			r15 = r9->y;
-			r9 = r0->mouseStart;
-			if( r9 == NULL ) hl_null_access();
-			r16 = r9->y;
-			r15 = r15 - r16;
-			r16 = 2.;
-			r15 = hl_math_pow(r15,r16);
-			r14 = r14 + r15;
-			r14 = hl_math_sqrt(r14);
-			r15 = 10.;
-			r16 = 1.;
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r17 = r4->scaleX;
-			r16 = r16 / r17;
-			r15 = r15 * r16;
-			if( !(r15 < r14) ) goto label$80df762_4_85;
-			components_tool_ToolBehavior_drawLine(r0);
-			r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r14 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
-			r11 = &r14;
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r15 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
-			r13 = &r15;
-			h2d_col_Point_new(r9,r11,r13);
-			r0->mouseStart = r9;
-			r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r16 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
-			r11 = &r16;
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r17 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
-			r13 = &r17;
-			h2d_col_Point_new(r9,r11,r13);
-			r0->mouseEnd = r9;
-			label$80df762_4_85:
-			components_tool_ToolBehavior_updatePreview(r0);
-			label$80df762_4_86:
-			goto label$80df762_4_122;
+			return;
 		case 2:
-			r8 = r0->leftIsDown;
-			if( r8 ) goto label$80df762_4_91;
-			r8 = r0->rightIsDown;
-			if( !r8 ) goto label$80df762_4_107;
-			label$80df762_4_91:
-			r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r18 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
-			r11 = &r18;
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r19 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
-			r13 = &r19;
-			h2d_col_Point_new(r9,r11,r13);
-			r0->mouseEnd = r9;
-			r9 = r0->mouseEnd;
-			components_tool_ToolBehavior_snap(r0,r9);
-			components_tool_ToolBehavior_updatePreview(r0);
-			label$80df762_4_107:
-			goto label$80df762_4_122;
+			return;
 		case 3:
-			r8 = r0->leftIsDown;
-			if( !r8 ) goto label$80df762_4_122;
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r20 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
-			r5 = ($Main)g$_Main;
-			r4 = r5->canvas;
-			if( r4 == NULL ) hl_null_access();
-			r21 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
-			r23 = (components__tool__$ToolFunction)g$_components_tool_ToolFunction;
-			r22 = r23->erase;
-			if( r22 == NULL ) hl_null_access();
-			r22->hasValue ? ((void (*)(vdynamic*,double,double))r22->fun)((vdynamic*)r22->value,r20,r21) : ((void (*)(double,double))r22->fun)(r20,r21);
+			return;
 	}
-	label$80df762_4_122:
+	label$80df762_4_15:
 	r8 = r0->middleIsDown;
-	if( !r8 ) goto label$80df762_4_180;
+	if( !r8 ) goto label$80df762_4_73;
 	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas;
 	if( r4 == NULL ) hl_null_access();
-	r20 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
-	r11 = &r20;
+	r10 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
+	r11 = &r10;
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas;
 	if( r4 == NULL ) hl_null_access();
-	r21 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
-	r13 = &r21;
+	r12 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
+	r13 = &r12;
 	h2d_col_Point_new(r9,r11,r13);
 	r0->mouseEnd = r9;
 	r9 = r0->mouseStart;
 	if( r9 == NULL ) hl_null_access();
-	r24 = r9->x;
+	r14 = r9->x;
 	r9 = r0->mouseEnd;
 	if( r9 == NULL ) hl_null_access();
-	r25 = r9->x;
-	r24 = r24 - r25;
-	r24 = -r24;
+	r15 = r9->x;
+	r14 = r14 - r15;
+	r14 = -r14;
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas;
 	if( r4 == NULL ) hl_null_access();
-	r25 = r4->scaleX;
-	r24 = r24 * r25;
+	r15 = r4->scaleX;
+	r14 = r14 * r15;
 	r9 = r0->mouseStart;
 	if( r9 == NULL ) hl_null_access();
-	r25 = r9->y;
+	r15 = r9->y;
 	r9 = r0->mouseEnd;
 	if( r9 == NULL ) hl_null_access();
-	r26 = r9->y;
-	r25 = r25 - r26;
-	r25 = -r25;
+	r16 = r9->y;
+	r15 = r15 - r16;
+	r15 = -r15;
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas;
 	if( r4 == NULL ) hl_null_access();
-	r26 = r4->scaleX;
-	r25 = r25 * r26;
+	r16 = r4->scaleX;
+	r15 = r15 * r16;
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas;
 	if( r4 == NULL ) hl_null_access();
-	components_stage_Canvas_addCanvasPosition(r4,r24,r25);
+	components_stage_Canvas_addCanvasPosition(r4,r14,r15);
 	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas;
 	if( r4 == NULL ) hl_null_access();
-	r26 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
-	r11 = &r26;
+	r16 = h2d_Scene_get_mouseX(((h2d__Scene)r4));
+	r11 = &r16;
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas;
 	if( r4 == NULL ) hl_null_access();
-	r27 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
-	r13 = &r27;
+	r17 = h2d_Scene_get_mouseY(((h2d__Scene)r4));
+	r13 = &r17;
 	h2d_col_Point_new(r9,r11,r13);
 	r0->mouseStart = r9;
-	label$80df762_4_180:
+	label$80df762_4_73:
 	return;
 }
 
@@ -703,548 +430,54 @@ void components_tool_ToolBehavior_updatePreview(components__tool__ToolBehavior r
 }
 
 void components_tool_ToolBehavior_mouseUp(components__tool__ToolBehavior r0,hxd__Event r1) {
-	venum *r4, *r6;
-	bool r7;
-	h2d__Object r8;
-	$Main r10;
-	h2d__col__Point r5;
-	components__stage__Canvas r9;
+	bool r4;
+	h2d__Object r5;
+	$Main r7;
+	components__stage__Canvas r6;
 	int r3;
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->button;
 	switch(r3) {
 		default:
-			goto label$80df762_6_25;
+			goto label$80df762_6_7;
 		case 0:
 		case 1:
-			r4 = r0->tool;
-			if( r4 == NULL ) hl_null_access();
-			r3 = HL__ENUM_INDEX__(r4);
-			switch(r3) {
-				default:
-					goto label$80df762_6_22;
-				case 0:
-					goto label$80df762_6_22;
-				case 1:
-				case 2:
-					r5 = r0->mouseStart;
-					if( !r5 ) goto label$80df762_6_14;
-					r5 = r0->mouseEnd;
-					if( r5 ) goto label$80df762_6_15;
-					label$80df762_6_14:
-					return;
-					label$80df762_6_15:
-					r4 = r0->tool;
-					r6 = (venum*)g$components_tool_ToolMode_LINE;
-					if( r4 != r6 ) goto label$80df762_6_20;
-					r5 = r0->mouseEnd;
-					components_tool_ToolBehavior_snap(r0,r5);
-					label$80df762_6_20:
-					components_tool_ToolBehavior_drawLine(r0);
-					goto label$80df762_6_22;
-				case 3:
-					break;
-			}
-			label$80df762_6_22:
-			goto label$80df762_6_25;
+			return;
 		case 2:
-			r7 = false;
-			r0->middleIsDown = r7;
+			r4 = false;
+			r0->middleIsDown = r4;
 	}
-	label$80df762_6_25:
-	r7 = false;
-	r0->leftIsDown = r7;
-	r7 = false;
-	r0->rightIsDown = r7;
-	r10 = ($Main)g$_Main;
-	r9 = r10->canvas;
-	if( r9 == NULL ) hl_null_access();
-	r8 = r9->preview;
-	if( r8 == NULL ) hl_null_access();
-	h2d_Object_removeChildren(r8);
+	label$80df762_6_7:
+	r4 = false;
+	r0->leftIsDown = r4;
+	r4 = false;
+	r0->rightIsDown = r4;
+	r7 = ($Main)g$_Main;
+	r6 = r7->canvas;
+	if( r6 == NULL ) hl_null_access();
+	r5 = r6->preview;
+	if( r5 == NULL ) hl_null_access();
+	h2d_Object_removeChildren(r5);
 	components_tool_ToolBehavior_updatePreview(r0);
 	return;
 }
 
-void components_tool_ToolBehavior_snap(components__tool__ToolBehavior r0,h2d__col__Point r1) {
-	String r21;
-	hl__types__ArrayObj r27;
-	haxe__ds__StringMap r24;
-	vvirtual *r22;
-	hl_type *r34;
-	bool r13;
-	hxlr__engine__Grid r25;
-	hxlr__engine__Cell r26;
-	$Main r17;
-	h2d__col__Point r9;
-	hxlr__lines__LineBase r29;
-	components__stage__Canvas r16;
-	double r8, r10, r11, r12, r14, r15, r23, r31, r32, r36, r38, r39, r40, r41, r42, r43, r44, r45, r46;
-	double *r35, *r37;
-	vdynamic *r5, *r6, *r7, *r33, *r47;
-	varray *r30;
-	int r3, r4, r18, r19, r20, r28;
-	r3 = r0->color;
-	r4 = 3;
-	if( r3 == r4 ) goto label$80df762_7_6;
-	r3 = r0->color;
-	r4 = 2;
-	if( r3 != r4 ) goto label$80df762_7_7;
-	label$80df762_7_6:
-	return;
-	label$80df762_7_7:
-	r6 = NULL;
-	r7 = NULL;
-	if( r1 == NULL ) hl_null_access();
-	r8 = r1->x;
-	r10 = r1->y;
-	r11 = r1->x;
-	r12 = r1->y;
-	r13 = r0->lineSnapping;
-	if( !r13 ) goto label$80df762_7_132;
-	r14 = r0->snapDistance;
-	r17 = ($Main)g$_Main;
-	r16 = r17->canvas;
-	if( r16 == NULL ) hl_null_access();
-	r15 = r16->scaleX;
-	r14 = r14 / r15;
-	r3 = -1;
-	label$80df762_7_23:
-	r18 = 2;
-	if( r3 >= r18 ) goto label$80df762_7_132;
-	r4 = r3;
-	++r3;
-	r18 = -1;
-	label$80df762_7_29:
-	r20 = 2;
-	if( r18 >= r20 ) goto label$80df762_7_131;
-	r19 = r18;
-	++r18;
-	r15 = (double)r4;
-	r23 = (double)r19;
-	r22 = hxlr_engine_Cell_getInfo(r15,r23);
-	if( r22 == NULL ) hl_null_access();
-	r21 = hl_vfields(r22)[2] ? (*(String*)(hl_vfields(r22)[2])) : (String)hl_dyn_getp(r22->value,5343647/*key*/,&t$String);
-	r17 = ($Main)g$_Main;
-	r25 = r17->grid;
-	if( r25 == NULL ) hl_null_access();
-	r24 = r25->registry;
-	if( r24 == NULL ) hl_null_access();
-	r5 = haxe_ds_StringMap_get(r24,r21);
-	r26 = (hxlr__engine__Cell)r5;
-	if( r26 ) goto label$80df762_7_48;
-	goto label$80df762_7_29;
-	label$80df762_7_48:
-	r17 = ($Main)g$_Main;
-	r25 = r17->grid;
-	if( r25 == NULL ) hl_null_access();
-	r24 = r25->registry;
-	if( r24 == NULL ) hl_null_access();
-	r5 = haxe_ds_StringMap_get(r24,r21);
-	r26 = (hxlr__engine__Cell)r5;
-	r20 = 0;
-	if( r26 == NULL ) hl_null_access();
-	r27 = r26->tangible;
-	label$80df762_7_58:
-	if( r27 == NULL ) hl_null_access();
-	r28 = r27->length;
-	if( r20 >= r28 ) goto label$80df762_7_130;
-	r28 = r27->length;
-	if( ((unsigned)r20) < ((unsigned)r28) ) goto label$80df762_7_66;
-	r29 = NULL;
-	goto label$80df762_7_69;
-	label$80df762_7_66:
-	r30 = r27->array;
-	r5 = ((vdynamic**)(r30 + 1))[r20];
-	r29 = (hxlr__lines__LineBase)r5;
-	label$80df762_7_69:
-	++r20;
-	if( r29 ) goto label$80df762_7_72;
-	goto label$80df762_7_58;
-	label$80df762_7_72:
-	if( r29 == NULL ) hl_null_access();
-	r9 = r29->start;
-	if( r9 == NULL ) hl_null_access();
-	r23 = r9->x;
-	r15 = r8 - r23;
-	r23 = 2.;
-	r15 = hl_math_pow(r15,r23);
-	r9 = r29->start;
-	if( r9 == NULL ) hl_null_access();
-	r31 = r9->y;
-	r23 = r10 - r31;
-	r31 = 2.;
-	r23 = hl_math_pow(r23,r31);
-	r15 = r15 + r23;
-	r15 = hl_math_sqrt(r15);
-	r9 = r29->end;
-	if( r9 == NULL ) hl_null_access();
-	r31 = r9->x;
-	r23 = r8 - r31;
-	r31 = 2.;
-	r23 = hl_math_pow(r23,r31);
-	r9 = r29->end;
-	if( r9 == NULL ) hl_null_access();
-	r32 = r9->y;
-	r31 = r10 - r32;
-	r32 = 2.;
-	r31 = hl_math_pow(r31,r32);
-	r23 = r23 + r31;
-	r23 = hl_math_sqrt(r23);
-	if( r14 >= r15 ) goto label$80df762_7_105;
-	if( !(r14 >= r23) ) goto label$80df762_7_115;
-	if( !(r15 < r23) ) goto label$80df762_7_115;
-	if( !(r14 >= r15) ) goto label$80df762_7_115;
-	label$80df762_7_105:
-	r9 = r29->start;
-	if( r9 == NULL ) hl_null_access();
-	r31 = r9->x;
-	r8 = r31;
-	r9 = r29->start;
-	if( r9 == NULL ) hl_null_access();
-	r31 = r9->y;
-	r10 = r31;
-	r33 = hl_alloc_dynamic(&t$_f64);
-	r33->v.d = r15;
-	r6 = r33;
-	label$80df762_7_115:
-	if( r14 >= r23 ) goto label$80df762_7_119;
-	if( !(r14 >= r15) ) goto label$80df762_7_129;
-	if( !(r23 < r15) ) goto label$80df762_7_129;
-	if( !(r14 >= r23) ) goto label$80df762_7_129;
-	label$80df762_7_119:
-	r9 = r29->end;
-	if( r9 == NULL ) hl_null_access();
-	r31 = r9->x;
-	r8 = r31;
-	r9 = r29->end;
-	if( r9 == NULL ) hl_null_access();
-	r31 = r9->y;
-	r10 = r31;
-	r33 = hl_alloc_dynamic(&t$_f64);
-	r33->v.d = r23;
-	r6 = r33;
-	label$80df762_7_129:
-	goto label$80df762_7_58;
-	label$80df762_7_130:
-	goto label$80df762_7_29;
-	label$80df762_7_131:
-	goto label$80df762_7_23;
-	label$80df762_7_132:
-	r13 = r0->gridSnapping;
-	if( !r13 ) goto label$80df762_7_262;
-	r17 = ($Main)g$_Main;
-	r16 = r17->canvas;
-	if( r16 == NULL ) hl_null_access();
-	r14 = h2d_Scene_get_mouseY(((h2d__Scene)r16));
-	r17 = ($Main)g$_Main;
-	r3 = r17->viewGridSize;
-	r15 = (double)r3;
-	r14 = r14 / r15;
-	r3 = hl_math_ceil(r14);
-	r17 = ($Main)g$_Main;
-	r4 = r17->viewGridSize;
-	r3 = r3 * r4;
-	r14 = (double)r3;
-	r17 = ($Main)g$_Main;
-	r16 = r17->canvas;
-	if( r16 == NULL ) hl_null_access();
-	r15 = h2d_Scene_get_mouseX(((h2d__Scene)r16));
-	r17 = ($Main)g$_Main;
-	r3 = r17->viewGridSize;
-	r23 = (double)r3;
-	r15 = r15 / r23;
-	r3 = hl_math_ceil(r15);
-	r17 = ($Main)g$_Main;
-	r4 = r17->viewGridSize;
-	r3 = r3 * r4;
-	r15 = (double)r3;
-	r17 = ($Main)g$_Main;
-	r16 = r17->canvas;
-	if( r16 == NULL ) hl_null_access();
-	r23 = h2d_Scene_get_mouseY(((h2d__Scene)r16));
-	r17 = ($Main)g$_Main;
-	r3 = r17->viewGridSize;
-	r31 = (double)r3;
-	r23 = r23 / r31;
-	r3 = hl_math_floor(r23);
-	r17 = ($Main)g$_Main;
-	r4 = r17->viewGridSize;
-	r3 = r3 * r4;
-	r23 = (double)r3;
-	r17 = ($Main)g$_Main;
-	r16 = r17->canvas;
-	if( r16 == NULL ) hl_null_access();
-	r31 = h2d_Scene_get_mouseX(((h2d__Scene)r16));
-	r17 = ($Main)g$_Main;
-	r3 = r17->viewGridSize;
-	r32 = (double)r3;
-	r31 = r31 / r32;
-	r3 = hl_math_floor(r31);
-	r17 = ($Main)g$_Main;
-	r4 = r17->viewGridSize;
-	r3 = r3 * r4;
-	r31 = (double)r3;
-	r34 = &t$h2d_col_Point;
-	r3 = 4;
-	r30 = hl_alloc_array(r34,r3);
-	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r32 = r15;
-	r35 = &r32;
-	r36 = r14;
-	r37 = &r36;
-	h2d_col_Point_new(r9,r35,r37);
-	r3 = 0;
-	((h2d__col__Point*)(r30 + 1))[r3] = r9;
-	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r38 = r31;
-	r35 = &r38;
-	r39 = r14;
-	r37 = &r39;
-	h2d_col_Point_new(r9,r35,r37);
-	r3 = 1;
-	((h2d__col__Point*)(r30 + 1))[r3] = r9;
-	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r40 = r15;
-	r35 = &r40;
-	r41 = r23;
-	r37 = &r41;
-	h2d_col_Point_new(r9,r35,r37);
-	r3 = 2;
-	((h2d__col__Point*)(r30 + 1))[r3] = r9;
-	r9 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r42 = r31;
-	r35 = &r42;
-	r43 = r23;
-	r37 = &r43;
-	h2d_col_Point_new(r9,r35,r37);
-	r3 = 3;
-	((h2d__col__Point*)(r30 + 1))[r3] = r9;
-	r27 = hl_types_ArrayObj_alloc(r30);
-	r33 = NULL;
-	r3 = 0;
-	label$80df762_7_224:
-	if( r27 == NULL ) hl_null_access();
-	r18 = r27->length;
-	if( r3 >= r18 ) goto label$80df762_7_262;
-	r18 = r27->length;
-	if( ((unsigned)r3) < ((unsigned)r18) ) goto label$80df762_7_232;
-	r9 = NULL;
-	goto label$80df762_7_235;
-	label$80df762_7_232:
-	r30 = r27->array;
-	r5 = ((vdynamic**)(r30 + 1))[r3];
-	r9 = (h2d__col__Point)r5;
-	label$80df762_7_235:
-	++r3;
-	if( r9 == NULL ) hl_null_access();
-	r45 = r9->x;
-	r44 = r11 - r45;
-	r45 = 2.;
-	r44 = hl_math_pow(r44,r45);
-	r46 = r9->y;
-	r45 = r12 - r46;
-	r46 = 2.;
-	r45 = hl_math_pow(r45,r46);
-	r44 = r44 + r45;
-	r44 = hl_math_sqrt(r44);
-	r46 = components_tool_ToolBehavior_get_gridSnapDistance(r0);
-	if( !(r46 < r44) ) goto label$80df762_7_250;
-	goto label$80df762_7_224;
-	label$80df762_7_250:
-	if( !r33 ) goto label$80df762_7_253;
-	r46 = r33 ? r33->v.d : 0;
-	if( !(r46 >= r44) ) goto label$80df762_7_261;
-	label$80df762_7_253:
-	r47 = hl_alloc_dynamic(&t$_f64);
-	r47->v.d = r44;
-	r33 = r47;
-	r47 = hl_alloc_dynamic(&t$_f64);
-	r47->v.d = r44;
-	r7 = r47;
-	r45 = r9->x;
-	r11 = r45;
-	r45 = r9->y;
-	r12 = r45;
-	label$80df762_7_261:
-	goto label$80df762_7_224;
-	label$80df762_7_262:
-	if( r6 ) goto label$80df762_7_265;
-	if( r7 ) goto label$80df762_7_265;
-	return;
-	label$80df762_7_265:
-	if( r6 ) goto label$80df762_7_270;
-	if( r1 == NULL ) hl_null_access();
-	r1->x = r11;
-	r1->y = r12;
-	goto label$80df762_7_285;
-	label$80df762_7_270:
-	if( r7 ) goto label$80df762_7_275;
-	if( r1 == NULL ) hl_null_access();
-	r1->x = r8;
-	r1->y = r10;
-	goto label$80df762_7_285;
-	label$80df762_7_275:
-	r14 = r6 ? r6->v.d : 0;
-	r15 = r7 ? r7->v.d : 0;
-	if( !(r15 >= r14) ) goto label$80df762_7_282;
-	if( r1 == NULL ) hl_null_access();
-	r1->x = r8;
-	r1->y = r10;
-	goto label$80df762_7_285;
-	label$80df762_7_282:
-	if( r1 == NULL ) hl_null_access();
-	r1->x = r11;
-	r1->y = r12;
-	label$80df762_7_285:
-	return;
-}
-
-double components_tool_ToolBehavior_get_gridSnapDistance(components__tool__ToolBehavior r0) {
-	$Main r3;
-	double r1, r4;
-	int r2;
-	r3 = ($Main)g$_Main;
-	r2 = r3->viewGridSize;
-	r1 = (double)r2;
-	r4 = 2.;
-	r1 = r1 / r4;
-	return r1;
-}
-
-void components_tool_ToolBehavior_drawLine(components__tool__ToolBehavior r0) {
-	bool r10;
-	$Main r7;
-	h2d__col__Point r3;
-	components__stage__Canvas r6;
-	double r2, r4, r5, r11;
-	vdynamic *r12, *r13, *r14;
-	int r8, r9;
-	r3 = r0->mouseEnd;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->x;
-	r3 = r0->mouseStart;
-	if( r3 == NULL ) hl_null_access();
-	r4 = r3->x;
-	r2 = r2 - r4;
-	r4 = 2.;
-	r2 = hl_math_pow(r2,r4);
-	r3 = r0->mouseEnd;
-	if( r3 == NULL ) hl_null_access();
-	r4 = r3->y;
-	r3 = r0->mouseStart;
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->y;
-	r4 = r4 - r5;
-	r5 = 2.;
-	r4 = hl_math_pow(r4,r5);
-	r2 = r2 + r4;
-	r2 = hl_math_sqrt(r2);
-	r7 = ($Main)g$_Main;
-	r6 = r7->canvas;
-	if( r6 == NULL ) hl_null_access();
-	r4 = r6->scaleX;
-	r2 = r2 * r4;
-	r4 = 10.;
-	if( !(r2 < r4) ) goto label$80df762_9_31;
-	r8 = r0->color;
-	r9 = 2;
-	if( r8 == r9 ) goto label$80df762_9_31;
-	return;
-	label$80df762_9_31:
-	r8 = 3;
-	r9 = r0->color;
-	switch(r9) {
-		default:
-			goto label$80df762_9_43;
-		case 0:
-			r9 = 0;
-			r8 = r9;
-			goto label$80df762_9_43;
-		case 1:
-			r9 = 1;
-			r8 = r9;
-			goto label$80df762_9_43;
-		case 2:
-			r9 = 2;
-			r8 = r9;
-	}
-	label$80df762_9_43:
-	r10 = r0->leftIsDown;
-	if( !r10 ) goto label$80df762_9_66;
-	r7 = ($Main)g$_Main;
-	r6 = r7->canvas;
-	if( r6 == NULL ) hl_null_access();
-	r3 = r0->mouseStart;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->x;
-	r3 = r0->mouseStart;
-	if( r3 == NULL ) hl_null_access();
-	r4 = r3->y;
-	r3 = r0->mouseEnd;
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->x;
-	r3 = r0->mouseEnd;
-	if( r3 == NULL ) hl_null_access();
-	r11 = r3->y;
-	r10 = r0->shifted;
-	r12 = hl_alloc_dynbool(r10);
-	r13 = NULL;
-	r14 = NULL;
-	components_stage_Canvas_addLine(r6,r8,r2,r4,r5,r11,r12,r13,r14);
-	goto label$80df762_9_89;
-	label$80df762_9_66:
-	r10 = r0->rightIsDown;
-	if( !r10 ) goto label$80df762_9_89;
-	r7 = ($Main)g$_Main;
-	r6 = r7->canvas;
-	if( r6 == NULL ) hl_null_access();
-	r3 = r0->mouseEnd;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->x;
-	r3 = r0->mouseEnd;
-	if( r3 == NULL ) hl_null_access();
-	r4 = r3->y;
-	r3 = r0->mouseStart;
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->x;
-	r3 = r0->mouseStart;
-	if( r3 == NULL ) hl_null_access();
-	r11 = r3->y;
-	r10 = r0->shifted;
-	r10 = !r10;
-	r12 = hl_alloc_dynbool(r10);
-	r13 = NULL;
-	r14 = NULL;
-	components_stage_Canvas_addLine(r6,r8,r2,r4,r5,r11,r12,r13,r14);
-	label$80df762_9_89:
-	return;
-}
-
 void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0,hxd__Event r1) {
-	components__managers__Riders r22;
-	String r9, r28;
-	vvirtual *r8, *r10;
-	venum *r4, *r12, *r21;
-	bool r16;
-	components__managers__Musicplayer r17;
-	haxe__$Log r6;
-	hxlr__rider__RiderBase r36;
-	$Main r14;
-	h3d__Engine r34;
-	h2d__col__Point r29;
-	components__stage__Canvas r13;
-	double r24, r25, r33, r35, r37;
-	components__ui__Toolbar r20;
-	components__managers__Simulation r15;
-	vclosure *r5;
-	double *r30, *r31;
-	int *r26;
-	vdynamic *r7, *r19;
-	components__stage__Camera r32;
-	vbyte *r27;
-	components__stage__LRConsole r18;
-	int r3, r11, r23;
+	String r18;
+	components__managers__Riders r12;
+	venum *r4, *r6;
+	bool r10;
+	components__managers__Musicplayer r11;
+	hxlr__rider__RiderBase r23;
+	$Main r8;
+	h3d__Engine r21;
+	h2d__col__Point r13;
+	components__stage__Canvas r7;
+	double r14, r16, r20, r22, r24;
+	components__managers__Simulation r9;
+	double *r15, *r17;
+	components__stage__Camera r19;
+	int r3, r5;
 	if( r1 == NULL ) hl_null_access();
 	r4 = r1->kind;
 	if( r4 == NULL ) hl_null_access();
@@ -1259,517 +492,339 @@ void components_tool_ToolBehavior_keyInputDown(components__tool__ToolBehavior r0
 		case 5:
 		case 6:
 		case 7:
-			goto label$80df762_10_457;
+			goto label$80df762_7_297;
 		case 8:
-			r6 = (haxe__$Log)g$_haxe_Log;
-			r5 = r6->trace;
-			if( r5 == NULL ) hl_null_access();
 			r3 = r1->keyCode;
-			r7 = hl_alloc_dynamic(&t$_i32);
-			r7->v.i = r3;
-			r8 = hl_alloc_virtual(&t$vrt_329ffa8);
-			r9 = (String)s$3b33a12;
-			if( hl_vfields(r8)[1] ) *(String*)(hl_vfields(r8)[1]) = (String)r9; else hl_dyn_setp(r8->value,37969014/*fileName*/,&t$String,r9);
-			r3 = 439;
-			if( hl_vfields(r8)[2] ) *(int*)(hl_vfields(r8)[2]) = (int)r3; else hl_dyn_seti(r8->value,371360620/*lineNumber*/,&t$_i32,r3);
-			r9 = (String)s$components_tool_ToolBehavior;
-			if( hl_vfields(r8)[0] ) *(String*)(hl_vfields(r8)[0]) = (String)r9; else hl_dyn_setp(r8->value,-63073762/*className*/,&t$String,r9);
-			r9 = (String)s$keyInputDown;
-			if( hl_vfields(r8)[3] ) *(String*)(hl_vfields(r8)[3]) = (String)r9; else hl_dyn_setp(r8->value,302979532/*methodName*/,&t$String,r9);
-			r10 = hl_to_virtual(&t$vrt_eaa6a3b,(vdynamic*)r8);
-			r5->hasValue ? ((void (*)(vdynamic*,vdynamic*,vvirtual*))r5->fun)((vdynamic*)r5->value,r7,r10) : ((void (*)(vdynamic*,vvirtual*))r5->fun)(r7,r10);
-			r3 = r1->keyCode;
-			r11 = 9;
-			if( r11 == r3 ) goto label$80df762_10_60;
-			r11 = 17;
-			if( r11 == r3 ) goto label$80df762_10_104;
-			r11 = 32;
-			if( r11 == r3 ) goto label$80df762_10_114;
-			r11 = 49;
-			if( r11 == r3 ) goto label$80df762_10_134;
-			r11 = 50;
-			if( r11 == r3 ) goto label$80df762_10_145;
-			r11 = 51;
-			if( r11 == r3 ) goto label$80df762_10_156;
-			r11 = 65;
-			if( r11 == r3 ) goto label$80df762_10_167;
-			r11 = 68;
-			if( r11 == r3 ) goto label$80df762_10_172;
-			r11 = 69;
-			if( r11 == r3 ) goto label$80df762_10_177;
-			r11 = 70;
-			if( r11 == r3 ) goto label$80df762_10_184;
-			r11 = 81;
-			if( r11 == r3 ) goto label$80df762_10_189;
-			r11 = 83;
-			if( r11 == r3 ) goto label$80df762_10_196;
-			r11 = 87;
-			if( r11 == r3 ) goto label$80df762_10_201;
-			r11 = 88;
-			if( r11 == r3 ) goto label$80df762_10_208;
-			r11 = 219;
-			if( r11 == r3 ) goto label$80df762_10_217;
-			r11 = 221;
-			if( r11 == r3 ) goto label$80df762_10_268;
-			r11 = 272;
-			if( r11 == r3 ) goto label$80df762_10_315;
-			r11 = 528;
-			if( r11 == r3 ) goto label$80df762_10_318;
-			goto label$80df762_10_322;
-			label$80df762_10_60:
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r12 = components_stage_Canvas_get_drawMode(r13);
-			if( r12 == NULL ) hl_null_access();
-			r3 = HL__ENUM_INDEX__(r12);
+			r5 = 9;
+			if( r5 == r3 ) goto label$80df762_7_44;
+			r5 = 17;
+			if( r5 == r3 ) goto label$80df762_7_88;
+			r5 = 32;
+			if( r5 == r3 ) goto label$80df762_7_98;
+			r5 = 49;
+			if( r5 == r3 ) goto label$80df762_7_118;
+			r5 = 50;
+			if( r5 == r3 ) goto label$80df762_7_119;
+			r5 = 51;
+			if( r5 == r3 ) goto label$80df762_7_120;
+			r5 = 65;
+			if( r5 == r3 ) goto label$80df762_7_121;
+			r5 = 68;
+			if( r5 == r3 ) goto label$80df762_7_126;
+			r5 = 69;
+			if( r5 == r3 ) goto label$80df762_7_131;
+			r5 = 70;
+			if( r5 == r3 ) goto label$80df762_7_132;
+			r5 = 81;
+			if( r5 == r3 ) goto label$80df762_7_137;
+			r5 = 83;
+			if( r5 == r3 ) goto label$80df762_7_138;
+			r5 = 87;
+			if( r5 == r3 ) goto label$80df762_7_143;
+			r5 = 88;
+			if( r5 == r3 ) goto label$80df762_7_144;
+			r5 = 219;
+			if( r5 == r3 ) goto label$80df762_7_153;
+			r5 = 221;
+			if( r5 == r3 ) goto label$80df762_7_154;
+			r5 = 272;
+			if( r5 == r3 ) goto label$80df762_7_155;
+			r5 = 528;
+			if( r5 == r3 ) goto label$80df762_7_158;
+			goto label$80df762_7_162;
+			label$80df762_7_44:
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r6 = components_stage_Canvas_get_drawMode(r7);
+			if( r6 == NULL ) hl_null_access();
+			r3 = HL__ENUM_INDEX__(r6);
 			switch(r3) {
 				default:
-					goto label$80df762_10_103;
+					goto label$80df762_7_87;
 				case 0:
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r12 = (venum*)g$994fdec;
-					r12 = components_stage_Canvas_set_drawMode(r13,r12);
-					goto label$80df762_10_103;
+					r8 = ($Main)g$_Main;
+					r7 = r8->canvas;
+					if( r7 == NULL ) hl_null_access();
+					r6 = (venum*)g$994fdec;
+					r6 = components_stage_Canvas_set_drawMode(r7,r6);
+					goto label$80df762_7_87;
 				case 1:
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r12 = (venum*)g$92fe76c;
-					r12 = components_stage_Canvas_set_drawMode(r13,r12);
-					goto label$80df762_10_103;
+					r8 = ($Main)g$_Main;
+					r7 = r8->canvas;
+					if( r7 == NULL ) hl_null_access();
+					r6 = (venum*)g$92fe76c;
+					r6 = components_stage_Canvas_set_drawMode(r7,r6);
+					goto label$80df762_7_87;
 				case 2:
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r12 = (venum*)g$ab5747c;
-					r12 = components_stage_Canvas_set_drawMode(r13,r12);
-					goto label$80df762_10_103;
+					r8 = ($Main)g$_Main;
+					r7 = r8->canvas;
+					if( r7 == NULL ) hl_null_access();
+					r6 = (venum*)g$ab5747c;
+					r6 = components_stage_Canvas_set_drawMode(r7,r6);
+					goto label$80df762_7_87;
 				case 3:
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r12 = (venum*)g$ba7542c;
-					r12 = components_stage_Canvas_set_drawMode(r13,r12);
-					goto label$80df762_10_103;
+					r8 = ($Main)g$_Main;
+					r7 = r8->canvas;
+					if( r7 == NULL ) hl_null_access();
+					r6 = (venum*)g$ba7542c;
+					r6 = components_stage_Canvas_set_drawMode(r7,r6);
+					goto label$80df762_7_87;
 				case 4:
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r12 = (venum*)g$2a65ad1;
-					r12 = components_stage_Canvas_set_drawMode(r13,r12);
-					goto label$80df762_10_103;
+					r8 = ($Main)g$_Main;
+					r7 = r8->canvas;
+					if( r7 == NULL ) hl_null_access();
+					r6 = (venum*)g$2a65ad1;
+					r6 = components_stage_Canvas_set_drawMode(r7,r6);
+					goto label$80df762_7_87;
 				case 5:
-					r14 = ($Main)g$_Main;
-					r13 = r14->canvas;
-					if( r13 == NULL ) hl_null_access();
-					r12 = (venum*)g$6537d82;
-					r12 = components_stage_Canvas_set_drawMode(r13,r12);
+					r8 = ($Main)g$_Main;
+					r7 = r8->canvas;
+					if( r7 == NULL ) hl_null_access();
+					r6 = (venum*)g$6537d82;
+					r6 = components_stage_Canvas_set_drawMode(r7,r6);
 			}
-			label$80df762_10_103:
-			goto label$80df762_10_322;
-			label$80df762_10_104:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			r16 = true;
-			r15->rewinding = r16;
-			r14 = ($Main)g$_Main;
-			r17 = r14->audio;
-			if( r17 == NULL ) hl_null_access();
-			components_managers_Musicplayer_stopMusic(r17);
-			goto label$80df762_10_322;
-			label$80df762_10_114:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			r16 = r15->paused;
-			if( r16 ) goto label$80df762_10_124;
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_pauseSim(r15);
-			goto label$80df762_10_133;
-			label$80df762_10_124:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			r16 = r15->paused;
-			if( !r16 ) goto label$80df762_10_133;
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_resumeSim(r15);
-			label$80df762_10_133:
-			goto label$80df762_10_322;
-			label$80df762_10_134:
-			r3 = 0;
-			r0->color = r3;
-			components_tool_ToolBehavior_updateCursor(r0);
-			r14 = ($Main)g$_Main;
-			r18 = r14->console;
-			if( r18 == NULL ) hl_null_access();
-			r9 = (String)s$Line_type_set_to_Normal;
-			r3 = 26367;
-			r19 = hl_alloc_dynamic(&t$_i32);
-			r19->v.i = r3;
-			h2d_Console_log(((h2d__Console)r18),r9,r19);
-			goto label$80df762_10_322;
-			label$80df762_10_145:
-			r3 = 1;
-			r0->color = r3;
-			components_tool_ToolBehavior_updateCursor(r0);
-			r14 = ($Main)g$_Main;
-			r18 = r14->console;
-			if( r18 == NULL ) hl_null_access();
-			r9 = (String)s$Line_type_set_to_Accel;
-			r3 = 13369344;
-			r19 = hl_alloc_dynamic(&t$_i32);
-			r19->v.i = r3;
-			h2d_Console_log(((h2d__Console)r18),r9,r19);
-			goto label$80df762_10_322;
-			label$80df762_10_156:
-			r3 = 2;
-			r0->color = r3;
-			components_tool_ToolBehavior_updateCursor(r0);
-			r14 = ($Main)g$_Main;
-			r18 = r14->console;
-			if( r18 == NULL ) hl_null_access();
-			r9 = (String)s$Line_type_set_to_Scenery;
-			r3 = 52224;
-			r19 = hl_alloc_dynamic(&t$_i32);
-			r19->v.i = r3;
-			h2d_Console_log(((h2d__Console)r18),r9,r19);
-			goto label$80df762_10_322;
-			label$80df762_10_167:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_backSim(r15);
-			goto label$80df762_10_322;
-			label$80df762_10_172:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_stepSim(r15);
-			goto label$80df762_10_322;
-			label$80df762_10_177:
-			components_tool_ToolBehavior_setToolEraser(r0);
-			r14 = ($Main)g$_Main;
-			r20 = r14->toolbar;
-			if( r20 == NULL ) hl_null_access();
-			r21 = (venum*)g$components_ui_Icon_ERASER;
-			components_ui_Toolbar_externalUpdate(r20,r21);
-			goto label$80df762_10_322;
-			label$80df762_10_184:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_setFlagState(r15);
-			goto label$80df762_10_322;
-			label$80df762_10_189:
-			components_tool_ToolBehavior_setToolPencil(r0);
-			r14 = ($Main)g$_Main;
-			r20 = r14->toolbar;
-			if( r20 == NULL ) hl_null_access();
-			r21 = (venum*)g$components_ui_Icon_PENCIL;
-			components_ui_Toolbar_externalUpdate(r20,r21);
-			goto label$80df762_10_322;
-			label$80df762_10_196:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_startSim(r15);
-			goto label$80df762_10_322;
-			label$80df762_10_201:
-			components_tool_ToolBehavior_setToolLine(r0);
-			r14 = ($Main)g$_Main;
-			r20 = r14->toolbar;
-			if( r20 == NULL ) hl_null_access();
-			r21 = (venum*)g$components_ui_Icon_LINE;
-			components_ui_Toolbar_externalUpdate(r20,r21);
-			goto label$80df762_10_322;
-			label$80df762_10_208:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_endSim(r15);
-			r14 = ($Main)g$_Main;
-			r22 = r14->riders;
-			if( r22 == NULL ) hl_null_access();
-			components_managers_Riders_resetPositions(r22);
-			goto label$80df762_10_322;
-			label$80df762_10_217:
-			r14 = ($Main)g$_Main;
-			r3 = r14->viewGridSize;
-			r11 = 1;
-			if( r3 != r11 ) goto label$80df762_10_222;
+			label$80df762_7_87:
+			goto label$80df762_7_162;
+			label$80df762_7_88:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			r10 = true;
+			r9->rewinding = r10;
+			r8 = ($Main)g$_Main;
+			r11 = r8->audio;
+			if( r11 == NULL ) hl_null_access();
+			components_managers_Musicplayer_stopMusic(r11);
+			goto label$80df762_7_162;
+			label$80df762_7_98:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			r10 = r9->paused;
+			if( r10 ) goto label$80df762_7_108;
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_pauseSim(r9);
+			goto label$80df762_7_117;
+			label$80df762_7_108:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			r10 = r9->paused;
+			if( !r10 ) goto label$80df762_7_117;
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_resumeSim(r9);
+			label$80df762_7_117:
+			goto label$80df762_7_162;
+			label$80df762_7_118:
 			return;
-			label$80df762_10_222:
-			r16 = r0->shifted;
-			if( !r16 ) goto label$80df762_10_241;
-			r3 = 2;
-			label$80df762_10_225:
-			r16 = true;
-			if( !r16 ) goto label$80df762_10_240;
-			r14 = ($Main)g$_Main;
-			r23 = r14->viewGridSize;
-			if( r3 < r23 ) goto label$80df762_10_236;
-			r23 = 1;
-			r11 = r3 >> r23;
-			r14 = ($Main)g$_Main;
-			r14->viewGridSize = r11;
-			goto label$80df762_10_240;
-			label$80df762_10_236:
-			r23 = 1;
-			r11 = r3 << r23;
-			r3 = r11;
-			goto label$80df762_10_225;
-			label$80df762_10_240:
-			goto label$80df762_10_254;
-			label$80df762_10_241:
-			r14 = ($Main)g$_Main;
-			r3 = r14->viewGridSize;
-			r11 = 1;
-			r3 = r3 - r11;
-			r14->viewGridSize = r3;
-			r14 = ($Main)g$_Main;
-			r3 = r14->viewGridSize;
-			r24 = (double)r3;
-			r25 = 1.;
-			r24 = Math_max(r24,r25);
-			r3 = (int)r24;
-			r14 = ($Main)g$_Main;
-			r14->viewGridSize = r3;
-			label$80df762_10_254:
-			r14 = ($Main)g$_Main;
-			r18 = r14->console;
-			if( r18 == NULL ) hl_null_access();
-			r9 = (String)s$Ruler_width_set_to_;
-			r14 = ($Main)g$_Main;
-			r3 = r14->viewGridSize;
-			r26 = &r3;
-			r27 = hl_itos(r3,r26);
-			r28 = String___alloc__(r27,r3);
-			r9 = String___add__(r9,r28);
-			r3 = 26367;
-			r19 = hl_alloc_dynamic(&t$_i32);
-			r19->v.i = r3;
-			h2d_Console_log(((h2d__Console)r18),r9,r19);
-			goto label$80df762_10_322;
-			label$80df762_10_268:
-			r16 = r0->shifted;
-			if( !r16 ) goto label$80df762_10_296;
-			r3 = 2;
-			label$80df762_10_271:
-			r16 = true;
-			if( !r16 ) goto label$80df762_10_295;
-			r14 = ($Main)g$_Main;
-			r23 = r14->viewGridSize;
-			if( r23 < r3 ) goto label$80df762_10_291;
-			r23 = 1;
-			r11 = r3 << r23;
-			r3 = r11;
-			r23 = 0;
-			if( r11 != r23 ) goto label$80df762_10_290;
-			r14 = ($Main)g$_Main;
-			r18 = r14->console;
-			if( r18 == NULL ) hl_null_access();
-			r9 = (String)s$Max_left_bitshift_reached;
-			r11 = 16711680;
-			r19 = hl_alloc_dynamic(&t$_i32);
-			r19->v.i = r11;
-			h2d_Console_log(((h2d__Console)r18),r9,r19);
-			goto label$80df762_10_295;
-			label$80df762_10_290:
-			goto label$80df762_10_294;
-			label$80df762_10_291:
-			r14 = ($Main)g$_Main;
-			r14->viewGridSize = r3;
-			goto label$80df762_10_295;
-			label$80df762_10_294:
-			goto label$80df762_10_271;
-			label$80df762_10_295:
-			goto label$80df762_10_301;
-			label$80df762_10_296:
-			r14 = ($Main)g$_Main;
-			r3 = r14->viewGridSize;
-			r11 = 1;
-			r3 = r3 + r11;
-			r14->viewGridSize = r3;
-			label$80df762_10_301:
-			r14 = ($Main)g$_Main;
-			r18 = r14->console;
-			if( r18 == NULL ) hl_null_access();
-			r9 = (String)s$Ruler_width_set_to_;
-			r14 = ($Main)g$_Main;
-			r3 = r14->viewGridSize;
-			r26 = &r3;
-			r27 = hl_itos(r3,r26);
-			r28 = String___alloc__(r27,r3);
-			r9 = String___add__(r9,r28);
-			r3 = 26367;
-			r19 = hl_alloc_dynamic(&t$_i32);
-			r19->v.i = r3;
-			h2d_Console_log(((h2d__Console)r18),r9,r19);
-			goto label$80df762_10_322;
-			label$80df762_10_315:
-			r16 = true;
-			r0->shifted = r16;
-			goto label$80df762_10_322;
-			label$80df762_10_318:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			components_managers_Simulation_updateSim(r15);
-			label$80df762_10_322:
-			goto label$80df762_10_457;
+			label$80df762_7_119:
+			return;
+			label$80df762_7_120:
+			return;
+			label$80df762_7_121:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_backSim(r9);
+			goto label$80df762_7_162;
+			label$80df762_7_126:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_stepSim(r9);
+			goto label$80df762_7_162;
+			label$80df762_7_131:
+			return;
+			label$80df762_7_132:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_setFlagState(r9);
+			goto label$80df762_7_162;
+			label$80df762_7_137:
+			return;
+			label$80df762_7_138:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_startSim(r9);
+			goto label$80df762_7_162;
+			label$80df762_7_143:
+			return;
+			label$80df762_7_144:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_endSim(r9);
+			r8 = ($Main)g$_Main;
+			r12 = r8->riders;
+			if( r12 == NULL ) hl_null_access();
+			components_managers_Riders_resetPositions(r12);
+			goto label$80df762_7_162;
+			label$80df762_7_153:
+			return;
+			label$80df762_7_154:
+			return;
+			label$80df762_7_155:
+			r10 = true;
+			r0->shifted = r10;
+			goto label$80df762_7_162;
+			label$80df762_7_158:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			components_managers_Simulation_updateSim(r9);
+			label$80df762_7_162:
+			goto label$80df762_7_297;
 		case 9:
 			r3 = r1->keyCode;
-			r11 = 17;
-			if( r11 == r3 ) goto label$80df762_10_333;
-			r11 = 35;
-			if( r11 == r3 ) goto label$80df762_10_347;
-			r11 = 36;
-			if( r11 == r3 ) goto label$80df762_10_368;
-			r11 = 272;
-			if( r11 == r3 ) goto label$80df762_10_455;
-			goto label$80df762_10_457;
-			label$80df762_10_333:
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			r16 = false;
-			r15->rewinding = r16;
-			r14 = ($Main)g$_Main;
-			r17 = r14->audio;
-			if( r17 == NULL ) hl_null_access();
-			r14 = ($Main)g$_Main;
-			r15 = r14->simulation;
-			if( r15 == NULL ) hl_null_access();
-			r3 = r15->frames;
-			components_managers_Musicplayer_playMusic(r17,r3);
-			goto label$80df762_10_457;
-			label$80df762_10_347:
-			r29 = r0->lastViewedPosition;
-			if( !r29 ) goto label$80df762_10_367;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
+			r5 = 17;
+			if( r5 == r3 ) goto label$80df762_7_173;
+			r5 = 35;
+			if( r5 == r3 ) goto label$80df762_7_187;
+			r5 = 36;
+			if( r5 == r3 ) goto label$80df762_7_208;
+			r5 = 272;
+			if( r5 == r3 ) goto label$80df762_7_295;
+			goto label$80df762_7_297;
+			label$80df762_7_173:
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			r10 = false;
+			r9->rewinding = r10;
+			r8 = ($Main)g$_Main;
+			r11 = r8->audio;
+			if( r11 == NULL ) hl_null_access();
+			r8 = ($Main)g$_Main;
+			r9 = r8->simulation;
+			if( r9 == NULL ) hl_null_access();
+			r3 = r9->frames;
+			components_managers_Musicplayer_playMusic(r11,r3);
+			goto label$80df762_7_297;
+			label$80df762_7_187:
+			r13 = r0->lastViewedPosition;
+			if( !r13 ) goto label$80df762_7_207;
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r10 = true;
+			r7->posChanged = r10;
+			r13 = r0->lastViewedPosition;
 			if( r13 == NULL ) hl_null_access();
-			r16 = true;
-			r13->posChanged = r16;
-			r29 = r0->lastViewedPosition;
-			if( r29 == NULL ) hl_null_access();
-			r24 = r29->x;
-			r13->x = r24;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
+			r14 = r13->x;
+			r7->x = r14;
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r10 = true;
+			r7->posChanged = r10;
+			r13 = r0->lastViewedPosition;
 			if( r13 == NULL ) hl_null_access();
-			r16 = true;
-			r13->posChanged = r16;
-			r29 = r0->lastViewedPosition;
-			if( r29 == NULL ) hl_null_access();
-			r24 = r29->y;
-			r13->y = r24;
-			label$80df762_10_367:
-			goto label$80df762_10_457;
-			label$80df762_10_368:
-			r29 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
+			r14 = r13->y;
+			r7->y = r14;
+			label$80df762_7_207:
+			goto label$80df762_7_297;
+			label$80df762_7_208:
+			r13 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r14 = r7->x;
+			r15 = &r14;
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r16 = r7->y;
+			r17 = &r16;
+			h2d_col_Point_new(r13,r15,r17);
+			r0->lastViewedPosition = r13;
+			r8 = ($Main)g$_Main;
+			r19 = r8->camera;
+			if( r19 == NULL ) hl_null_access();
+			r18 = r19->riderFollow;
+			if( r18 ) goto label$80df762_7_253;
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r10 = true;
+			r7->posChanged = r10;
+			r8 = ($Main)g$_Main;
+			r21 = r8->locengine;
+			if( r21 == NULL ) hl_null_access();
+			r3 = r21->width;
+			r20 = (double)r3;
+			r22 = 2.;
+			r20 = r20 / r22;
+			r7->x = r20;
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r10 = true;
+			r7->posChanged = r10;
+			r8 = ($Main)g$_Main;
+			r21 = r8->locengine;
+			if( r21 == NULL ) hl_null_access();
+			r3 = r21->height;
+			r20 = (double)r3;
+			r22 = 2.;
+			r20 = r20 / r22;
+			r7->y = r20;
+			goto label$80df762_7_294;
+			label$80df762_7_253:
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r8 = ($Main)g$_Main;
+			r19 = r8->camera;
+			if( r19 == NULL ) hl_null_access();
+			r23 = r19->rider;
+			if( r23 == NULL ) hl_null_access();
+			r13 = r23->startPos;
+			r13 = h2d_Object_localToGlobal(((h2d__Object)r7),r13);
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r10 = true;
+			r7->posChanged = r10;
 			if( r13 == NULL ) hl_null_access();
-			r24 = r13->x;
-			r30 = &r24;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r25 = r13->y;
-			r31 = &r25;
-			h2d_col_Point_new(r29,r30,r31);
-			r0->lastViewedPosition = r29;
-			r14 = ($Main)g$_Main;
-			r32 = r14->camera;
-			if( r32 == NULL ) hl_null_access();
-			r9 = r32->riderFollow;
-			if( r9 ) goto label$80df762_10_413;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r16 = true;
-			r13->posChanged = r16;
-			r14 = ($Main)g$_Main;
-			r34 = r14->locengine;
-			if( r34 == NULL ) hl_null_access();
-			r3 = r34->width;
-			r33 = (double)r3;
-			r35 = 2.;
-			r33 = r33 / r35;
-			r13->x = r33;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r16 = true;
-			r13->posChanged = r16;
-			r14 = ($Main)g$_Main;
-			r34 = r14->locengine;
-			if( r34 == NULL ) hl_null_access();
-			r3 = r34->height;
-			r33 = (double)r3;
-			r35 = 2.;
-			r33 = r33 / r35;
-			r13->y = r33;
-			goto label$80df762_10_454;
-			label$80df762_10_413:
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r14 = ($Main)g$_Main;
-			r32 = r14->camera;
-			if( r32 == NULL ) hl_null_access();
-			r36 = r32->rider;
-			if( r36 == NULL ) hl_null_access();
-			r29 = r36->startPos;
-			r29 = h2d_Object_localToGlobal(((h2d__Object)r13),r29);
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r16 = true;
-			r13->posChanged = r16;
-			if( r29 == NULL ) hl_null_access();
-			r33 = r29->x;
-			r14 = ($Main)g$_Main;
-			r34 = r14->locengine;
-			if( r34 == NULL ) hl_null_access();
-			r3 = r34->width;
-			r35 = (double)r3;
-			r37 = 2.;
-			r35 = r35 / r37;
-			r33 = r33 + r35;
-			r13->x = r33;
-			r14 = ($Main)g$_Main;
-			r13 = r14->canvas;
-			if( r13 == NULL ) hl_null_access();
-			r16 = true;
-			r13->posChanged = r16;
-			r33 = r29->y;
-			r14 = ($Main)g$_Main;
-			r34 = r14->locengine;
-			if( r34 == NULL ) hl_null_access();
-			r3 = r34->height;
-			r35 = (double)r3;
-			r37 = 2.;
-			r35 = r35 / r37;
-			r33 = r33 + r35;
-			r13->y = r33;
-			label$80df762_10_454:
-			goto label$80df762_10_457;
-			label$80df762_10_455:
-			r16 = false;
-			r0->shifted = r16;
+			r20 = r13->x;
+			r8 = ($Main)g$_Main;
+			r21 = r8->locengine;
+			if( r21 == NULL ) hl_null_access();
+			r3 = r21->width;
+			r22 = (double)r3;
+			r24 = 2.;
+			r22 = r22 / r24;
+			r20 = r20 + r22;
+			r7->x = r20;
+			r8 = ($Main)g$_Main;
+			r7 = r8->canvas;
+			if( r7 == NULL ) hl_null_access();
+			r10 = true;
+			r7->posChanged = r10;
+			r20 = r13->y;
+			r8 = ($Main)g$_Main;
+			r21 = r8->locengine;
+			if( r21 == NULL ) hl_null_access();
+			r3 = r21->height;
+			r22 = (double)r3;
+			r24 = 2.;
+			r22 = r22 / r24;
+			r20 = r20 + r22;
+			r7->y = r20;
+			label$80df762_7_294:
+			goto label$80df762_7_297;
+			label$80df762_7_295:
+			r10 = false;
+			r0->shifted = r10;
 	}
-	label$80df762_10_457:
+	label$80df762_7_297:
 	return;
 }
 
@@ -1783,7 +838,7 @@ void components_tool_ToolBehavior_setToolEraser(components__tool__ToolBehavior r
 	components__stage__LRConsole r5;
 	r2 = r0->tool;
 	r3 = (venum*)g$components_tool_ToolMode_ERASER;
-	if( r2 != r3 ) goto label$80df762_11_19;
+	if( r2 != r3 ) goto label$80df762_8_19;
 	r4 = r0->colorEraser;
 	r4 = !r4;
 	r0->colorEraser = r4;
@@ -1793,16 +848,16 @@ void components_tool_ToolBehavior_setToolEraser(components__tool__ToolBehavior r
 	r7 = (String)s$Color_eraser_;
 	r4 = r0->colorEraser;
 	r9 = true;
-	if( r4 != r9 ) goto label$80df762_11_15;
+	if( r4 != r9 ) goto label$80df762_8_15;
 	r8 = (String)s$on;
-	goto label$80df762_11_16;
-	label$80df762_11_15:
+	goto label$80df762_8_16;
+	label$80df762_8_15:
 	r8 = (String)s$off;
-	label$80df762_11_16:
+	label$80df762_8_16:
 	r7 = String___add__(r7,r8);
 	r10 = NULL;
 	h2d_Console_log(((h2d__Console)r5),r7,r10);
-	label$80df762_11_19:
+	label$80df762_8_19:
 	r2 = (venum*)g$components_tool_ToolMode_ERASER;
 	r0->tool = r2;
 	components_tool_ToolBehavior_updateCursor(r0);
@@ -1860,7 +915,9 @@ void components_tool_ToolBehavior_setToolLine(components__tool__ToolBehavior r0)
 }
 
 void components_tool_ToolBehavior_updateCursor(components__tool__ToolBehavior r0) {
-	venum *r3;
+	venum *r3, *r4;
+	$Main r6;
+	h2d__Interactive r5;
 	int r2;
 	r3 = r0->tool;
 	if( r3 == NULL ) hl_null_access();
@@ -1868,17 +925,22 @@ void components_tool_ToolBehavior_updateCursor(components__tool__ToolBehavior r0
 	switch(r2) {
 		default:
 		case 0:
-			goto label$80df762_14_10;
+			r6 = ($Main)g$_Main;
+			r5 = r6->canvas_interaction;
+			if( r5 == NULL ) hl_null_access();
+			r4 = (venum*)g$hxd_Cursor_Default;
+			r4 = h2d_Interactive_set_cursor(r5,r4);
+			goto label$80df762_11_15;
 		case 1:
 			components_tool_ToolBehavior_updatePencilCursor(r0);
-			goto label$80df762_14_10;
+			goto label$80df762_11_15;
 		case 2:
 			components_tool_ToolBehavior_updateLineCursor(r0);
-			goto label$80df762_14_10;
+			goto label$80df762_11_15;
 		case 3:
 			components_tool_ToolBehavior_updateEraserCursor(r0);
 	}
-	label$80df762_14_10:
+	label$80df762_11_15:
 	return;
 }
 
@@ -1889,14 +951,14 @@ void components_tool_ToolBehavior_updateEraserCursor(components__tool__ToolBehav
 	h2d__Interactive r4;
 	int r6;
 	r2 = r0->colorEraser;
-	if( r2 ) goto label$80df762_15_8;
+	if( r2 ) goto label$80df762_12_8;
 	r5 = ($Main)g$_Main;
 	r4 = r5->canvas_interaction;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r0->cursorEraser;
 	r3 = h2d_Interactive_set_cursor(r4,r3);
-	goto label$80df762_15_33;
-	label$80df762_15_8:
+	goto label$80df762_12_33;
+	label$80df762_12_8:
 	r6 = r0->color;
 	switch(r6) {
 		default:
@@ -1905,21 +967,21 @@ void components_tool_ToolBehavior_updateEraserCursor(components__tool__ToolBehav
 			if( r4 == NULL ) hl_null_access();
 			r3 = (venum*)g$hxd_Cursor_Default;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_15_33;
+			goto label$80df762_12_33;
 		case 0:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
 			if( r4 == NULL ) hl_null_access();
 			r3 = r0->cursorEraserBlue;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_15_33;
+			goto label$80df762_12_33;
 		case 1:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
 			if( r4 == NULL ) hl_null_access();
 			r3 = r0->cursorEraserRed;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_15_33;
+			goto label$80df762_12_33;
 		case 2:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
@@ -1927,7 +989,7 @@ void components_tool_ToolBehavior_updateEraserCursor(components__tool__ToolBehav
 			r3 = r0->cursorEraserGreen;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
 	}
-	label$80df762_15_33:
+	label$80df762_12_33:
 	return;
 }
 
@@ -1944,21 +1006,21 @@ void components_tool_ToolBehavior_updateLineCursor(components__tool__ToolBehavio
 			if( r4 == NULL ) hl_null_access();
 			r3 = (venum*)g$hxd_Cursor_Default;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_16_25;
+			goto label$80df762_13_25;
 		case 0:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
 			if( r4 == NULL ) hl_null_access();
 			r3 = r0->cursorLineBlue;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_16_25;
+			goto label$80df762_13_25;
 		case 1:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
 			if( r4 == NULL ) hl_null_access();
 			r3 = r0->cursorLineRed;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_16_25;
+			goto label$80df762_13_25;
 		case 2:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
@@ -1966,7 +1028,7 @@ void components_tool_ToolBehavior_updateLineCursor(components__tool__ToolBehavio
 			r3 = r0->cursorLineGreen;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
 	}
-	label$80df762_16_25:
+	label$80df762_13_25:
 	return;
 }
 
@@ -1983,21 +1045,21 @@ void components_tool_ToolBehavior_updatePencilCursor(components__tool__ToolBehav
 			if( r4 == NULL ) hl_null_access();
 			r3 = (venum*)g$hxd_Cursor_Default;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_17_25;
+			goto label$80df762_14_25;
 		case 0:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
 			if( r4 == NULL ) hl_null_access();
 			r3 = r0->cursorPencilBlue;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_17_25;
+			goto label$80df762_14_25;
 		case 1:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
 			if( r4 == NULL ) hl_null_access();
 			r3 = r0->cursorPencilRed;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
-			goto label$80df762_17_25;
+			goto label$80df762_14_25;
 		case 2:
 			r5 = ($Main)g$_Main;
 			r4 = r5->canvas_interaction;
@@ -2005,28 +1067,28 @@ void components_tool_ToolBehavior_updatePencilCursor(components__tool__ToolBehav
 			r3 = r0->cursorPencilGreen;
 			r3 = h2d_Interactive_set_cursor(r4,r3);
 	}
-	label$80df762_17_25:
+	label$80df762_14_25:
 	return;
 }
 
 void components_tool_ToolBehavior_new(components__tool__ToolBehavior r0) {
-	String r13;
-	hl__types__ArrayObj r18;
-	hl_type *r20;
-	hxd__CustomCursor r17;
-	hxd__res__Resource r11;
-	venum *r3, *r16;
+	String r12;
+	hl__types__ArrayObj r17;
+	hl_type *r19;
+	hxd__CustomCursor r16;
+	hxd__res__Resource r10;
+	venum *r2, *r15;
 	bool r1;
-	hxd__BitmapData r10;
-	$Main r6;
-	hxd__res__Loader r8, r12, r22, r23, r24, r25, r26, r27, r28, r29;
-	hxd__res__$Image r14;
-	vclosure *r7;
-	double r2;
-	hxd__res__Image r15;
-	h2d__Interactive r5;
-	varray *r19;
-	int r4, r21;
+	hxd__BitmapData r9;
+	$Main r5;
+	hxd__res__Loader r7, r11, r22, r23, r24, r25, r26, r27, r28, r29;
+	hxd__res__$Image r13;
+	double r20;
+	vclosure *r6;
+	hxd__res__Image r14;
+	h2d__Interactive r4;
+	varray *r18;
+	int r3, r21;
 	static vclosure cl$0 = { &t$fun_b4832bf, components_tool_ToolBehavior_new__$1, 0 };
 	r1 = false;
 	r0->shifted = r1;
@@ -2038,301 +1100,299 @@ void components_tool_ToolBehavior_new(components__tool__ToolBehavior r0) {
 	r0->leftIsDown = r1;
 	r1 = false;
 	r0->colorEraser = r1;
-	r2 = 15.;
-	r0->snapDistance = r2;
 	r1 = false;
 	r0->gridSnapping = r1;
 	r1 = true;
 	r0->lineSnapping = r1;
-	r3 = (venum*)g$components_tool_ToolMode_PENCIL;
-	r0->tool = r3;
-	r4 = 0;
-	r0->color = r4;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
+	r2 = (venum*)g$components_tool_ToolMode_PENCIL;
+	r0->tool = r2;
+	r3 = 0;
+	r0->color = r3;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
 	r1 = true;
-	r5->enableRightButton = r1;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r7 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_keyInputDown,r0);
-	r5->onKeyDown = r7;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r7 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_keyInputDown,r0);
-	r5->onKeyUp = r7;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r7 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseDown,r0);
-	r5->onPush = r7;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r7 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseUp,r0);
-	r5->onRelease = r7;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r7 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseMove,r0);
-	r5->onMove = r7;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r7 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseWheel,r0);
-	r5->onWheel = r7;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r7 = &cl$0;
-	r5->onOver = r7;
-	r8 = hxd_Res_get_loader();
-	if( r8 == NULL ) hl_null_access();
-	r13 = (String)s$tool_pencilBlue_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r8,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapPencilBlue = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapPencilBlue;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 1;
+	r4->enableRightButton = r1;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r6 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_keyInputDown,r0);
+	r4->onKeyDown = r6;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r6 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_keyInputDown,r0);
+	r4->onKeyUp = r6;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r6 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseDown,r0);
+	r4->onPush = r6;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r6 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseUp,r0);
+	r4->onRelease = r6;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r6 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseMove,r0);
+	r4->onMove = r6;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r6 = hl_alloc_closure_ptr(&t$fun_112ee0a,components_tool_ToolBehavior_mouseWheel,r0);
+	r4->onWheel = r6;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r6 = &cl$0;
+	r4->onOver = r6;
+	r7 = hxd_Res_get_loader();
+	if( r7 == NULL ) hl_null_access();
+	r12 = (String)s$tool_pencilBlue_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r7,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapPencilBlue = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapPencilBlue;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 1;
 	r21 = 25;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorPencilBlue = r16;
-	r12 = hxd_Res_get_loader();
-	if( r12 == NULL ) hl_null_access();
-	r13 = (String)s$tool_pencilRed_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r12,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapPencilRed = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapPencilRed;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 1;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorPencilBlue = r15;
+	r11 = hxd_Res_get_loader();
+	if( r11 == NULL ) hl_null_access();
+	r12 = (String)s$tool_pencilRed_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r11,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapPencilRed = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapPencilRed;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 1;
 	r21 = 25;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorPencilRed = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorPencilRed = r15;
 	r22 = hxd_Res_get_loader();
 	if( r22 == NULL ) hl_null_access();
-	r13 = (String)s$tool_pencilGreen_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r22,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapPencilGreen = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapPencilGreen;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 1;
+	r12 = (String)s$tool_pencilGreen_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r22,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapPencilGreen = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapPencilGreen;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 1;
 	r21 = 25;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorPencilGreen = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorPencilGreen = r15;
 	r23 = hxd_Res_get_loader();
 	if( r23 == NULL ) hl_null_access();
-	r13 = (String)s$tool_lineBlue_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r23,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapLineBlue = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapLineBlue;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 12;
+	r12 = (String)s$tool_lineBlue_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r23,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapLineBlue = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapLineBlue;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 12;
 	r21 = 12;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorLineBlue = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorLineBlue = r15;
 	r24 = hxd_Res_get_loader();
 	if( r24 == NULL ) hl_null_access();
-	r13 = (String)s$tool_lineRed_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r24,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapLineRed = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapLineRed;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 12;
+	r12 = (String)s$tool_lineRed_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r24,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapLineRed = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapLineRed;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 12;
 	r21 = 12;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorLineRed = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorLineRed = r15;
 	r25 = hxd_Res_get_loader();
 	if( r25 == NULL ) hl_null_access();
-	r13 = (String)s$tool_lineGreen_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r25,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapLineGreen = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapLineGreen;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 12;
+	r12 = (String)s$tool_lineGreen_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r25,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapLineGreen = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapLineGreen;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 12;
 	r21 = 12;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorLineGreen = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorLineGreen = r15;
 	r26 = hxd_Res_get_loader();
 	if( r26 == NULL ) hl_null_access();
-	r13 = (String)s$tool_eraser_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r26,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapEraser = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapEraser;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 5;
+	r12 = (String)s$tool_eraser_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r26,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapEraser = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapEraser;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 5;
 	r21 = 5;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorEraser = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorEraser = r15;
 	r27 = hxd_Res_get_loader();
 	if( r27 == NULL ) hl_null_access();
-	r13 = (String)s$tool_eraserBlue_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r27,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapEraserBlue = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapEraserBlue;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 5;
+	r12 = (String)s$tool_eraserBlue_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r27,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapEraserBlue = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapEraserBlue;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 5;
 	r21 = 5;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorEraserBlue = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorEraserBlue = r15;
 	r28 = hxd_Res_get_loader();
 	if( r28 == NULL ) hl_null_access();
-	r13 = (String)s$tool_eraserRed_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r28,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapEraserRed = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapEraserRed;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 5;
+	r12 = (String)s$tool_eraserRed_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r28,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapEraserRed = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapEraserRed;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 5;
 	r21 = 5;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorEraserRed = r16;
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorEraserRed = r15;
 	r29 = hxd_Res_get_loader();
 	if( r29 == NULL ) hl_null_access();
-	r13 = (String)s$tool_eraserGreen_png;
-	r14 = (hxd__res__$Image)g$_hxd_res_Image;
-	r11 = hxd_res_Loader_loadCache(r29,r13,((hl__Class)r14));
-	r15 = (hxd__res__Image)r11;
-	if( r15 == NULL ) hl_null_access();
-	r10 = hxd_res_Image_toBitmap(r15);
-	r0->bitmapEraserGreen = r10;
-	r17 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
-	r20 = &t$hxd_BitmapData;
-	r4 = 1;
-	r19 = hl_alloc_array(r20,r4);
-	r10 = r0->bitmapEraserGreen;
-	r4 = 0;
-	((hxd__BitmapData*)(r19 + 1))[r4] = r10;
-	r18 = hl_types_ArrayObj_alloc(r19);
-	r2 = 0.;
-	r4 = 5;
+	r12 = (String)s$tool_eraserGreen_png;
+	r13 = (hxd__res__$Image)g$_hxd_res_Image;
+	r10 = hxd_res_Loader_loadCache(r29,r12,((hl__Class)r13));
+	r14 = (hxd__res__Image)r10;
+	if( r14 == NULL ) hl_null_access();
+	r9 = hxd_res_Image_toBitmap(r14);
+	r0->bitmapEraserGreen = r9;
+	r16 = (hxd__CustomCursor)hl_alloc_obj(&t$hxd_CustomCursor);
+	r19 = &t$hxd_BitmapData;
+	r3 = 1;
+	r18 = hl_alloc_array(r19,r3);
+	r9 = r0->bitmapEraserGreen;
+	r3 = 0;
+	((hxd__BitmapData*)(r18 + 1))[r3] = r9;
+	r17 = hl_types_ArrayObj_alloc(r18);
+	r20 = 0.;
+	r3 = 5;
 	r21 = 5;
-	hxd_CustomCursor_new(r17,r18,r2,r4,r21);
-	r16 = hl_alloc_enum(&t$hxd_Cursor,5);
-	((hxd_Cursor_Custom*)r16)->p0 = r17;
-	r0->cursorEraserGreen = r16;
-	r6 = ($Main)g$_Main;
-	r5 = r6->canvas_interaction;
-	if( r5 == NULL ) hl_null_access();
-	r16 = r0->cursorPencilBlue;
-	r16 = h2d_Interactive_set_cursor(r5,r16);
+	hxd_CustomCursor_new(r16,r17,r20,r3,r21);
+	r15 = hl_alloc_enum(&t$hxd_Cursor,5);
+	((hxd_Cursor_Custom*)r15)->p0 = r16;
+	r0->cursorEraserGreen = r15;
+	r5 = ($Main)g$_Main;
+	r4 = r5->canvas_interaction;
+	if( r4 == NULL ) hl_null_access();
+	r15 = r0->cursorPencilBlue;
+	r15 = h2d_Interactive_set_cursor(r4,r15);
 	return;
 }
 

@@ -7,7 +7,6 @@ typedef struct _hxlr__rider__Stick *hxlr__rider__Stick;
 #include <hl/BaseType.h>
 #include <_std/String.h>
 #include <hxlr/rider/ContactPoint.h>
-#include <hxlr/enums/StickType.h>
 #include <hxlr/rider/RiderBase.h>
 
 
@@ -30,7 +29,7 @@ struct _hxlr__rider__Stick {
 	bool crashable;
 	double endurance;
 	vclosure* constrain;
-	venum* type;
+	String type;
 	hxlr__rider__RiderBase rider;
 };
 #endif

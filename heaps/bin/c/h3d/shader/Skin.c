@@ -2,6 +2,7 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/Skin.h>
+void h3d_shader_SkinBase_new(h3d__shader__SkinBase);
 #include <hxsl/Globals.h>
 extern String s$MaxBones;
 extern String s$_is_out_of_range_;
@@ -12,7 +13,11 @@ extern String s$cedf8da;
 vdynamic* haxe_Exception_thrown(vdynamic*);
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_i32;
-void h3d_shader_SkinBase_new(h3d__shader__SkinBase);
+
+void h3d_shader_Skin_new(h3d__shader__Skin r0) {
+	h3d_shader_SkinBase_new(((h3d__shader__SkinBase)r0));
+	return;
+}
 
 void h3d_shader_Skin_updateConstants(h3d__shader__Skin r0,hxsl__Globals r1) {
 	String r7, r8;
@@ -26,7 +31,7 @@ void h3d_shader_Skin_updateConstants(h3d__shader__Skin r0,hxsl__Globals r1) {
 	r5 = 8;
 	r4 = ((unsigned)r2) >> r5;
 	r5 = 0;
-	if( r4 == r5 ) goto label$e2074a7_1_24;
+	if( r4 == r5 ) goto label$e2074a7_2_24;
 	r7 = (String)s$MaxBones;
 	r8 = (String)s$_is_out_of_range_;
 	r7 = String___add__(r7,r8);
@@ -44,7 +49,7 @@ void h3d_shader_Skin_updateConstants(h3d__shader__Skin r0,hxsl__Globals r1) {
 	r7 = String___add__(r7,r8);
 	r6 = haxe_Exception_thrown(((vdynamic*)r7));
 	hl_throw((vdynamic*)r6);
-	label$e2074a7_1_24:
+	label$e2074a7_2_24:
 	r4 = r0->constBits;
 	r4 = r4 | r2;
 	r0->constBits = r4;
@@ -58,7 +63,7 @@ vdynamic* h3d_shader_Skin_getParamValue(h3d__shader__Skin r0,int r1) {
 	int r2;
 	switch(r1) {
 		default:
-			goto label$e2074a7_2_7;
+			goto label$e2074a7_3_7;
 		case 0:
 			r2 = r0->MaxBones__;
 			r3 = hl_alloc_dynamic(&t$_i32);
@@ -68,7 +73,7 @@ vdynamic* h3d_shader_Skin_getParamValue(h3d__shader__Skin r0,int r1) {
 			r4 = r0->bonesMatrixes__;
 			return ((vdynamic*)r4);
 	}
-	label$e2074a7_2_7:
+	label$e2074a7_3_7:
 	r3 = NULL;
 	return r3;
 }
@@ -77,10 +82,5 @@ double h3d_shader_Skin_getParamFloatValue(h3d__shader__Skin r0,int r1) {
 	double r2;
 	r2 = 0.;
 	return r2;
-}
-
-void h3d_shader_Skin_new(h3d__shader__Skin r0) {
-	h3d_shader_SkinBase_new(((h3d__shader__SkinBase)r0));
-	return;
 }
 

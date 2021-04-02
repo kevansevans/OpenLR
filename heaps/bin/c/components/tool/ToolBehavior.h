@@ -47,8 +47,6 @@ struct _components__tool__ToolBehavior {
 	venum* cursorEraserGreen;
 	bool lineSnapping;
 	bool gridSnapping;
-	double gridSnapDistance;
-	double snapDistance;
 	bool colorEraser;
 	h2d__col__Point mouseStart;
 	h2d__col__Point mouseEnd;

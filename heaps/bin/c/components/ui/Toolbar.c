@@ -146,41 +146,6 @@ void components_ui_Toolbar_new(components__ui__Toolbar r0,h2d__Object r1) {
 	return;
 }
 
-void components_ui_Toolbar_externalUpdate(components__ui__Toolbar r0,venum* r1) {
-	components__ui__UIButton r3;
-	bool r2;
-	int r5;
-	r3 = r0->activetool;
-	if( r3 == NULL ) hl_null_access();
-	r2 = false;
-	r2 = components_ui_UIButton_set_selected(r3,r2);
-	if( r1 == NULL ) hl_null_access();
-	r5 = HL__ENUM_INDEX__(r1);
-	switch(r5) {
-		default:
-			goto label$f59b206_5_22;
-		case 0:
-			r3 = r0->pencil;
-			if( r3 == NULL ) hl_null_access();
-			r2 = true;
-			r2 = components_ui_UIButton_set_selected(r3,r2);
-			goto label$f59b206_5_22;
-		case 1:
-			r3 = r0->line;
-			if( r3 == NULL ) hl_null_access();
-			r2 = true;
-			r2 = components_ui_UIButton_set_selected(r3,r2);
-			goto label$f59b206_5_22;
-		case 2:
-			r3 = r0->eraser;
-			if( r3 == NULL ) hl_null_access();
-			r2 = true;
-			r2 = components_ui_UIButton_set_selected(r3,r2);
-	}
-	label$f59b206_5_22:
-	return;
-}
-
 void components_ui_Toolbar_sort(components__ui__Toolbar r0) {
 	components__ui__UIButton r8;
 	hl__types__ArrayObj r4;
@@ -193,21 +158,21 @@ void components_ui_Toolbar_sort(components__ui__Toolbar r0) {
 	r4 = r0->icons;
 	if( r4 == NULL ) hl_null_access();
 	r3 = r4->length;
-	label$f59b206_6_4:
-	if( r1 >= r3 ) goto label$f59b206_6_29;
+	label$f59b206_5_4:
+	if( r1 >= r3 ) goto label$f59b206_5_29;
 	r5 = r1;
 	++r1;
 	r4 = r0->icons;
 	if( r4 == NULL ) hl_null_access();
 	r7 = r4->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$f59b206_6_14;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$f59b206_5_14;
 	r8 = NULL;
-	goto label$f59b206_6_17;
-	label$f59b206_6_14:
+	goto label$f59b206_5_17;
+	label$f59b206_5_14:
 	r10 = r4->array;
 	r9 = ((vdynamic**)(r10 + 1))[r5];
 	r8 = (components__ui__UIButton)r9;
-	label$f59b206_6_17:
+	label$f59b206_5_17:
 	h2d_Object_addChild(((h2d__Object)r0),((h2d__Object)r8));
 	if( r8 == NULL ) hl_null_access();
 	r11 = true;
@@ -219,8 +184,8 @@ void components_ui_Toolbar_sort(components__ui__Toolbar r0) {
 	r6 = r6 + r7;
 	r12 = (double)r6;
 	r8->x = r12;
-	goto label$f59b206_6_4;
-	label$f59b206_6_29:
+	goto label$f59b206_5_4;
+	label$f59b206_5_29:
 	return;
 }
 

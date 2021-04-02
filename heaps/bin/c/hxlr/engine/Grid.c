@@ -9,16 +9,12 @@ vvirtual* hxlr_engine_Cell_getInfo(double,double);
 extern hl_type t$_i32;
 void hxlr_engine_Grid_storeLine(hxlr__engine__Grid,hxlr__lines__LineBase,vvirtual*);
 #include <hl/natives.h>
-#include <components/managers/Simulation.h>
-#include <_std/Main.h>
 void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
 void hl_types_ArrayBytes_Int___expand(hl__types__ArrayBytes_Int,int);
-extern $Main g$_Main;
-void components_managers_Simulation_updateSim(components__managers__Simulation);
 #include <hxlr/engine/Cell.h>
 extern hl_type t$String;
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
-extern hl_type t$vrt_e4dd42c;
+extern hl_type t$vrt_b840ca7;
 extern hl_type t$hxlr_engine_Cell;
 void hxlr_engine_Cell_new(hxlr__engine__Cell,vvirtual*);
 extern hl_type t$haxe_ds_StringMap;
@@ -259,8 +255,6 @@ void hxlr_engine_Grid_register(hxlr__engine__Grid r0,hxlr__lines__LineBase r1) {
 void hxlr_engine_Grid_addLine(hxlr__engine__Grid r0,hxlr__lines__LineBase r1) {
 	hl__types__ArrayObj r5;
 	hl__types__ArrayBytes_Int r8;
-	$Main r12;
-	components__managers__Simulation r11;
 	vdynamic *r3;
 	vbyte *r9;
 	varray *r7;
@@ -302,10 +296,6 @@ void hxlr_engine_Grid_addLine(hxlr__engine__Grid r0,hxlr__lines__LineBase r1) {
 	r10 = *(int*)(r9 + r6);
 	++r10;
 	*(int*)(r9 + r6) = r10;
-	r12 = ($Main)g$_Main;
-	r11 = r12->simulation;
-	if( r11 == NULL ) hl_null_access();
-	components_managers_Simulation_updateSim(r11);
 	return;
 }
 
@@ -331,13 +321,13 @@ void hxlr_engine_Grid_storeLine(hxlr__engine__Grid r0,hxlr__lines__LineBase r1,v
 	label$f3e15a3_3_11:
 	r8 = r5->f$1;
 	if( r8 ) goto label$f3e15a3_3_15;
-	r8 = hl_to_virtual(&t$vrt_e4dd42c,(vdynamic*)r5);
+	r8 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r5);
 	r5->f$1 = r8;
 	label$f3e15a3_3_15:
 	r6 = hl_vfields(r2)[2] ? (*(String*)(hl_vfields(r2)[2])) : (String)hl_dyn_getp(r2->value,5343647/*key*/,&t$String);
 	r7 = (hxlr__engine__Cell)hl_alloc_obj(&t$hxlr_engine_Cell);
 	hxlr_engine_Cell_new(r7,r2);
-	r5 = (haxe__ds__StringMap)hl_dyn_castp(&r8,&t$vrt_e4dd42c,&t$haxe_ds_StringMap);
+	r5 = (haxe__ds__StringMap)hl_dyn_castp(&r8,&t$vrt_b840ca7,&t$haxe_ds_StringMap);
 	if( r5 == NULL ) hl_null_access();
 	haxe_ds_StringMap_set(r5,r6,((vdynamic*)r7));
 	label$f3e15a3_3_21:

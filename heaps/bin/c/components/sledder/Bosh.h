@@ -8,8 +8,9 @@ typedef struct _components__sledder__Bosh *components__sledder__Bosh;
 #include <_std/String.h>
 #include <h3d/Vector.h>
 #include <hxlr/rider/RiderBase.h>
-#include <h2d/col/Point.h>
 #include <hl/types/ArrayObj.h>
+#include <hl/types/ArrayBytes_Int.h>
+#include <h2d/col/Point.h>
 #include <hxlr/rider/ContactPoint.h>
 #include <components/sledder/RiderScarf.h>
 #include <h2d/Graphics.h>
@@ -29,6 +30,7 @@ struct _components__sledder__$Bosh {
 };
 struct _components__sledder__Bosh {
 	hl_type *$type;
+	vvirtual* _struct;
 	h2d__col__Point startPos;
 	h2d__col__Point startVel;
 	h2d__col__Point gravity;
@@ -36,6 +38,7 @@ struct _components__sledder__Bosh {
 	hl__types__ArrayObj airPoints;
 	hl__types__ArrayObj constraints;
 	hl__types__ArrayObj scarves;
+	hl__types__ArrayObj limits;
 	vdynamic* crashed;
 	bool invincible;
 	vdynamic* enabledFrame;

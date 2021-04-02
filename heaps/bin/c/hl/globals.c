@@ -13,7 +13,6 @@
 #include <hl/Enum.h>
 #include <haxe/StackItem.h>
 #include <haxe/Exception.h>
-#include <_std/IntIterator.h>
 #include <hxd/BitmapInnerDataImpl.h>
 #include <hxd/BitmapData.h>
 #include <hxd/CustomCursor.h>
@@ -146,7 +145,6 @@
 #include <haxe/Timer.h>
 #include <hxd/Timer.h>
 #include <hxlr/rider/ContactPoint.h>
-#include <hxlr/enums/StickType.h>
 #include <hxlr/rider/Stick.h>
 #include <hxlr/rider/AirPoint.h>
 #include <hxlr/rider/RiderBase.h>
@@ -229,15 +227,13 @@
 #include <components/sledder/RiderPart.h>
 #include <components/sledder/RiderScarf.h>
 #include <components/sledder/Bosh.h>
-#include <components/sledder/BodyPart.h>
 #include <hxlr/engine/Cell.h>
+#include <components/sledder/BodyPart.h>
 #include <hxd/res/Image.h>
 #include <hxd/res/ImageInfo.h>
 #include <hxlr/lines/Floor.h>
 #include <hxlr/lines/Accel.h>
 #include <hxlr/lines/Scenery.h>
-#include <haxe/Log.h>
-#include <components/tool/ToolFunction.h>
 #include <hxlr/lines/Undefined.h>
 #include <components/ui/Icon.h>
 #include <haxe/format/JsonParser.h>
@@ -348,8 +344,6 @@
 #include <haxe/io/Error.h>
 #include <haxe/crypto/BaseCode.h>
 #include <haxe/crypto/Base64.h>
-#include <haxe/ds/GenericCell.h>
-#include <haxe/ds/GenericStack.h>
 #include <hl/NativeArrayIterator_Int.h>
 #include <hl/NativeArrayIterator_Dynamic.h>
 #include <hl/NativeArrayIterator.h>
@@ -381,15 +375,6 @@
 #include <hl/types/ArrayObjIterator.h>
 #include <hl/types/ArrayObjKeyValueIterator.h>
 #include <_std/Std.h>
-#include <hscript/Interp.h>
-#include <hscript/Const.h>
-#include <hscript/CType.h>
-#include <hscript/Expr.h>
-#include <hscript/Error.h>
-#include <haxe/IMap.h>
-#include <hscript/_Interp/Stop.h>
-#include <hscript/Parser.h>
-#include <hscript/Token.h>
 #include <hxd/Key.h>
 #include <sdl/GameController.h>
 #include <sdl/Event.h>
@@ -397,6 +382,7 @@
 #include <hxd/Save.h>
 #include <hxd/Platform.h>
 #include <hxd/System.h>
+#include <haxe/Log.h>
 #include <hxd/fmt/bfnt/Reader.h>
 #include <hxd/fmt/bfnt/Writer.h>
 #include <hxd/fmt/fbx/FbxProp.h>
@@ -453,7 +439,7 @@
 #include <hxd/snd/openal/PitchDriver.h>
 #include <hxd/snd/openal/ReverbDriver.h>
 #include <hxd/snd/openal/SpatializationDriver.h>
-#include <hxlr/scripts/PhysFloor.h>
+#include <hxlr/Constants.h>
 #include <hxsl/Error.h>
 #include <hxsl/Tools.h>
 #include <hxsl/BatchShader.h>
@@ -494,6 +480,7 @@
 #include <h2d/col/Collider.h>
 #include <h3d/col/Collider.h>
 #include <haxe/_CallStack/CallStack_Impl_.h>
+#include <haxe/IMap.h>
 #include <sys/thread/_Mutex/Mutex_Impl_.h>
 #include <sys/thread/_Deque/Deque_Impl_.h>
 #include <haxe/NativeStackTrace.h>
@@ -532,7 +519,7 @@
 #include <sdl/GL.h>
 #include <sys/io/File.h>
 extern hl_type t$String;
-extern vbyte string$fdb04ac[];
+extern vbyte string$c60af7f[];
 extern vbyte string$520de12[];
 extern vbyte string$71b4f2d[];
 extern vbyte string$652b44f[];
@@ -542,7 +529,6 @@ extern vbyte string$df02d9f[];
 extern vbyte string$05acd02[];
 extern vbyte string$6d67fc4[];
 extern vbyte string$45a8d8c[];
-extern vbyte string$e8c60e7[];
 extern vbyte string$12d631f[];
 extern vbyte string$d018942[];
 extern vbyte string$ffc96e5[];
@@ -607,7 +593,6 @@ String s$c3e97dd = 0;
 hl__$Enum g$_hl_Enum = 0;
 haxe__$StackItem g$haxe_StackItem = 0;
 haxe__$Exception g$_haxe_Exception = 0;
-$IntIterator g$_IntIterator = 0;
 hxd__$BitmapInnerDataImpl g$_hxd_BitmapInnerDataImpl = 0;
 hxd__$BitmapData g$_hxd_BitmapData = 0;
 hxd__$CustomCursor g$_hxd_CustomCursor = 0;
@@ -740,7 +725,6 @@ haxe__$MainEvent g$_haxe_MainEvent = 0;
 haxe__$Timer g$_haxe_Timer = 0;
 hxd__$Timer g$_hxd_Timer = 0;
 hxlr__rider__$ContactPoint g$_hxlr_rider_ContactPoint = 0;
-hxlr__enums__$StickType g$hxlr_enums_StickType = 0;
 hxlr__rider__$Stick g$_hxlr_rider_Stick = 0;
 hxlr__rider__$AirPoint g$_hxlr_rider_AirPoint = 0;
 hxlr__rider__$RiderBase g$_hxlr_rider_RiderBase = 0;
@@ -809,14 +793,14 @@ $Main g$_Main = 0;
 String s$Release = 0;
 hxd__res__$Loader g$_hxd_res_Loader = 0;
 hxd__fs__$EmbedFileSystem g$_hxd_fs_EmbedFileSystem = 0;
-String s$fdb04ac = 0;
-String s$OpenLR_ = 0;
+String s$c60af7f = 0;
 String s$Welcome_to_OpenLR_ = 0;
 String s$Press_to_toggle_console_ = 0;
 String s$a351128 = 0;
 String s$6c51ece = 0;
 String s$Press_X_to_stop_ = 0;
 String s$3f659a9 = 0;
+String s$OpenLR_ = 0;
 h2d__$ConsoleArg g$h2d_ConsoleArg = 0;
 String s$github = 0;
 String s$Link_to_github_page = 0;
@@ -967,8 +951,6 @@ String s$fbf0612 = 0;
 String s$enableCamera = 0;
 String s$15ecc9d = 0;
 String s$581a16d = 0;
-String s$get_ = 0;
-String s$set_ = 0;
 String s$Invalid_function_ = 0;
 $Math g$_Math = 0;
 String s$Can_t_add_ = 0;
@@ -1047,16 +1029,14 @@ String s$_does_not_exist = 0;
 String s$No_riders_in_current_track = 0;
 String s$Set_flag_on_frame_ = 0;
 String s$Disabled_flag = 0;
+String s$SCARF = 0;
+hxlr__engine__$Cell g$_hxlr_engine_Cell = 0;
 components__sledder__$BodyPart g$components_sledder_BodyPart = 0;
 venum* g$components_sledder_BodyPart_ARM = 0;
 venum* g$components_sledder_BodyPart_LEG = 0;
 venum* g$components_sledder_BodyPart_SLED = 0;
 venum* g$components_sledder_BodyPart_EYE = 0;
 venum* g$components_sledder_BodyPart_BODY = 0;
-hxlr__engine__$Cell g$_hxlr_engine_Cell = 0;
-venum* g$hxlr_enums_StickType_STANDARD = 0;
-venum* g$hxlr_enums_StickType_REPELL = 0;
-venum* g$hxlr_enums_StickType_SCARF = 0;
 venum* g$h2d_BlendMode_Alpha = 0;
 String s$Recursive_addChild = 0;
 String s$filterTemp = 0;
@@ -1075,7 +1055,6 @@ String s$a7cc641 = 0;
 String s$d97a1d0 = 0;
 venum* g$h2d_ScaleModeAlign_Center = 0;
 venum* g$6537d82 = 0;
-String s$Set_canvas_position_to_ = 0;
 hxlr__lines__$Floor g$_hxlr_lines_Floor = 0;
 hxlr__lines__$Accel g$_hxlr_lines_Accel = 0;
 hxlr__lines__$Scenery g$_hxlr_lines_Scenery = 0;
@@ -1138,27 +1117,12 @@ String s$tool_eraser_png = 0;
 String s$tool_eraserBlue_png = 0;
 String s$tool_eraserRed_png = 0;
 String s$tool_eraserGreen_png = 0;
-haxe__$Log g$_haxe_Log = 0;
-String s$3b33a12 = 0;
-String s$components_tool_ToolBehavior = 0;
-String s$mouseDown = 0;
-components__tool__$ToolFunction g$_components_tool_ToolFunction = 0;
 hxlr__lines__$Undefined g$_hxlr_lines_Undefined = 0;
-String s$keyInputDown = 0;
 venum* g$994fdec = 0;
 venum* g$92fe76c = 0;
 venum* g$ab5747c = 0;
 venum* g$ba7542c = 0;
 venum* g$2a65ad1 = 0;
-String s$Line_type_set_to_Normal = 0;
-String s$Line_type_set_to_Accel = 0;
-String s$Line_type_set_to_Scenery = 0;
-components__ui__$Icon g$components_ui_Icon = 0;
-venum* g$components_ui_Icon_ERASER = 0;
-venum* g$components_ui_Icon_PENCIL = 0;
-venum* g$components_ui_Icon_LINE = 0;
-String s$Ruler_width_set_to_ = 0;
-String s$Max_left_bitshift_reached = 0;
 String s$Color_eraser_ = 0;
 String s$on = 0;
 String s$off = 0;
@@ -1166,6 +1130,10 @@ String s$Tool_set_to_Eraser = 0;
 String s$Tool_set_to_Pencil = 0;
 String s$Tool_set_to_Line = 0;
 venum* g$hxd_Cursor_Default = 0;
+components__ui__$Icon g$components_ui_Icon = 0;
+venum* g$components_ui_Icon_PENCIL = 0;
+venum* g$components_ui_Icon_LINE = 0;
+venum* g$components_ui_Icon_ERASER = 0;
 String s$icon_pencil_png = 0;
 String s$icon_line_png = 0;
 String s$icon_eraser_png = 0;
@@ -1660,8 +1628,6 @@ haxe__crypto__$BaseCode g$_haxe_crypto_BaseCode = 0;
 haxe__crypto__$Base64 g$_haxe_crypto_Base64 = 0;
 String s$786d1e9 = 0;
 String s$BaseCode_invalid_encoded_char = 0;
-haxe__ds__$GenericCell g$_haxe_ds_GenericCell = 0;
-haxe__ds__$GenericStack g$_haxe_ds_GenericStack = 0;
 hl__$NativeArrayIterator_Int g$_hl_NativeArrayIterator_Int = 0;
 hl__$NativeArrayIterator_Dynamic g$_hl_NativeArrayIterator_Dynamic = 0;
 hl__$NativeArrayIterator g$_hl_NativeArrayIterator = 0;
@@ -1749,97 +1715,6 @@ hl__types__$ArrayObjIterator g$_hl_types_ArrayObjIterator = 0;
 hl__types__$ArrayObjKeyValueIterator g$1813e5a = 0;
 $Std g$_Std = 0;
 String s$2f43b42 = 0;
-hscript__$Interp g$_hscript_Interp = 0;
-String s$true = 0;
-String s$false = 0;
-String s$trace = 0;
-String s$hscript = 0;
-hscript__$Const g$hscript_Const = 0;
-hscript__$CType g$hscript_CType = 0;
-hscript__$Expr g$hscript_Expr = 0;
-String s$26b1722 = 0;
-String s$3389dae = 0;
-String s$0bcef9c = 0;
-String s$7e6a2af = 0;
-String s$9c16288 = 0;
-String s$22a1dae = 0;
-String s$b0cc462 = 0;
-String s$2063849 = 0;
-String s$de0219f = 0;
-String s$3a1e9b8 = 0;
-String s$a7eeaea = 0;
-String s$7d01044 = 0;
-String s$d3e6c58 = 0;
-String s$5984c55 = 0;
-String s$8fe8311 = 0;
-String s$a935f16 = 0;
-String s$2c1b5cf = 0;
-String s$831d020 = 0;
-String s$27e348a = 0;
-String s$586ae83 = 0;
-String s$475b29c = 0;
-String s$ad00eed = 0;
-String s$c8beaaf = 0;
-String s$17b82e6 = 0;
-hscript__$Error g$hscript_Error = 0;
-haxe__$IMap g$_haxe_IMap = 0;
-String s$Cast_error = 0;
-String s$25fb0be = 0;
-String s$cfab1ba = 0;
-hscript___Interp__$Stop g$hscript__Interp_Stop = 0;
-String s$Invalid_break = 0;
-String s$Invalid_continue = 0;
-venum* g$hscript__Interp_Stop_SBreak = 0;
-venum* g$hscript__Interp_Stop_SContinue = 0;
-String s$188c4b4 = 0;
-String s$_required_ = 0;
-String s$_for_function_ = 0;
-venum* g$hscript__Interp_Stop_SReturn = 0;
-String s$467a1c8 = 0;
-hl__BaseType g$_Int = 0;
-String s$_expected = 0;
-String s$Inconsistent_key_types = 0;
-hscript__$Parser g$_hscript_Parser = 0;
-String s$9c0ce25 = 0;
-String s$cc4b0fc = 0;
-String s$4c761f1 = 0;
-hscript__$Token g$hscript_Token = 0;
-venum* g$hscript_Token_TEof = 0;
-venum* g$hscript_Token_TComma = 0;
-String s$var = 0;
-venum* g$hscript_Token_TSemicolon = 0;
-venum* g$hscript_Token_TDoubleDot = 0;
-venum* g$hscript_Token_TBrClose = 0;
-venum* g$hscript_Token_TBkClose = 0;
-String s$__a_ = 0;
-String s$b4d4140 = 0;
-venum* g$hscript_Token_TPOpen = 0;
-venum* g$hscript_Token_TPClose = 0;
-String s$push = 0;
-venum* g$hscript_Expr_EBreak = 0;
-venum* g$hscript_Expr_EContinue = 0;
-String s$while = 0;
-String s$in = 0;
-String s$else = 0;
-String s$function = 0;
-String s$inline = 0;
-venum* g$hscript_Token_TBrOpen = 0;
-String s$catch = 0;
-String s$Dynamic = 0;
-venum* g$hscript_Token_TDot = 0;
-String s$eeca57d = 0;
-venum* g$bf6e6b2 = 0;
-venum* g$hscript_Token_TQuestion = 0;
-venum* g$hscript_Token_TBkOpen = 0;
-String s$Can_t_eval_ = 0;
-String s$if = 0;
-String s$Unclosed = 0;
-String s$350fd6e = 0;
-venum* g$e39246a = 0;
-String s$_eof_ = 0;
-String s$f95b70f = 0;
-String s$cbb184d = 0;
-String s$c0cb5f0 = 0;
 venum* g$hxd_PixelFormat_BGRA = 0;
 String s$Invalid_pixels_size = 0;
 hxd__$Key g$_hxd_Key = 0;
@@ -1884,6 +1759,7 @@ venum* g$hxd_EventKind_EWheel = 0;
 venum* g$hxd_EventKind_EKeyUp = 0;
 venum* g$hxd_EventKind_ETextInput = 0;
 String s$Unknown_font_signature_ = 0;
+haxe__$Log g$_haxe_Log = 0;
 String s$3d94573 = 0;
 String s$hxd_fmt_bfnt_FontParser_hx = 0;
 String s$hxd_fmt_bfnt_FontParser = 0;
@@ -1964,6 +1840,7 @@ String s$LayerElementBinormal_Binormals = 0;
 String s$LookAtProperty = 0;
 String s$_has_ = 0;
 String s$_parents_ = 0;
+String s$c0cb5f0 = 0;
 String s$Missing_ = 0;
 String s$_parent = 0;
 String s$_childs_ = 0;
@@ -2079,6 +1956,10 @@ String s$cbdffd8 = 0;
 String s$_expected_ = 0;
 String s$84484a8 = 0;
 String s$0138d5b = 0;
+String s$3389dae = 0;
+String s$f95b70f = 0;
+String s$cbb184d = 0;
+String s$_eof_ = 0;
 venum* g$hxd_fmt_fbx__Parser_Token_TEof = 0;
 String s$Unexpected_char_ = 0;
 String s$GAMMA = 0;
@@ -2234,9 +2115,10 @@ hxd__snd__openal__$SpatializationDriver g$8c7cab6 = 0;
 String s$1acc93d = 0;
 String s$ae8b669 = 0;
 String s$too_many_auxiliary_sends = 0;
-venum* g$hxlr_enums_StickType_ATTRACT = 0;
-hxlr__scripts__$PhysFloor g$_hxlr_scripts_PhysFloor = 0;
-String s$e8c60e7 = 0;
+hxlr__$Constants g$_hxlr_Constants = 0;
+String s$STANDARD = 0;
+String s$REPELL = 0;
+String s$ATTRACT = 0;
 hxsl__$Error g$_hxsl_Error = 0;
 String s$Error_ = 0;
 String s$0e1c8cd = 0;
@@ -2344,6 +2226,7 @@ String s$precision_lowp_sampler2DArray_ = 0;
 String s$samplerCube = 0;
 String s$struct_ = 0;
 String s$aea70ee = 0;
+String s$function = 0;
 String s$mat2 = 0;
 String s$4f65a8d = 0;
 String s$979e1f7 = 0;
@@ -2390,6 +2273,9 @@ String s$196b8e6 = 0;
 String s$9df2caa = 0;
 String s$_ushr_ = 0;
 venum* g$hxsl_TGlobal_Mod = 0;
+String s$25fb0be = 0;
+String s$cfab1ba = 0;
+String s$4c761f1 = 0;
 String s$_var_ = 0;
 String s$_0_ = 0;
 String s$clamp_ = 0;
@@ -2452,6 +2338,19 @@ String s$_entry_ = 0;
 String s$_needed_by_ = 0;
 String s$_is_unreachable = 0;
 String s$out = 0;
+String s$26b1722 = 0;
+String s$2063849 = 0;
+String s$de0219f = 0;
+String s$3a1e9b8 = 0;
+String s$a7eeaea = 0;
+String s$7e6a2af = 0;
+String s$d3e6c58 = 0;
+String s$7d01044 = 0;
+String s$9c16288 = 0;
+String s$22a1dae = 0;
+String s$b0cc462 = 0;
+String s$0bcef9c = 0;
+String s$467a1c8 = 0;
 String s$const = 0;
 String s$private = 0;
 String s$nullable = 0;
@@ -2521,10 +2420,12 @@ h3d__$IDrawable g$_h3d_IDrawable = 0;
 $Reflect g$_Reflect = 0;
 hl__CoreType g$_Float = 0;
 String s$Float = 0;
+hl__CoreType g$_Int = 0;
 String s$Int = 0;
 hl__CoreEnum g$_Bool = 0;
 String s$Bool = 0;
 hl__CoreType g$_Dynamic = 0;
+String s$Dynamic = 0;
 $StringTools g$_StringTools = 0;
 hl___Bytes__$Bytes_Impl_ g$_hl__Bytes_Bytes_Impl_ = 0;
 sys__$FileSystem g$_sys_FileSystem = 0;
@@ -2647,6 +2548,7 @@ String s$shader = 0;
 venum* g$h3d_pass_RenderMode_Static = 0;
 venum* g$haxe_StackItem_CFunction = 0;
 haxe___CallStack__$CallStack_Impl_ g$_haxe__CallStack_CallStack_Impl_ = 0;
+haxe__$IMap g$_haxe_IMap = 0;
 sys__thread___Mutex__$Mutex_Impl_ g$_sys_thread__Mutex_Mutex_Impl_ = 0;
 sys__thread___Deque__$Deque_Impl_ g$_sys_thread__Deque_Deque_Impl_ = 0;
 haxe__$NativeStackTrace g$_haxe_NativeStackTrace = 0;
@@ -2732,7 +2634,6 @@ hxd__res__$ImageInfoFlag g$hxd_res_ImageInfoFlag = 0;
 venum* g$hxd_res_ImageInfoFlag_IsCube = 0;
 venum* g$84acfe4 = 0;
 hxd__snd__$Driver g$_hxd_snd_Driver = 0;
-venum* g$hxlr_enums_StickType_FLOPPY = 0;
 venum* g$hxsl_VecType_VInt = 0;
 venum* g$hxsl_VecType_VBool = 0;
 venum* g$hxsl_Prec_Low = 0;
@@ -2914,14 +2815,14 @@ static struct _String const_s$g = {&t$String,(vbyte*)USTR("g"),1};
 static struct _String const_s$ = {&t$String,(vbyte*)USTR(""),0};
 static struct _String const_s$c3e97dd = {&t$String,(vbyte*)USTR("$"),1};
 static struct _String const_s$Release = {&t$String,(vbyte*)USTR("Release"),7};
-static struct _String const_s$fdb04ac = {&t$String,(vbyte*)string$fdb04ac,418};
-static struct _String const_s$OpenLR_ = {&t$String,(vbyte*)USTR("OpenLR - "),9};
+static struct _String const_s$c60af7f = {&t$String,(vbyte*)string$c60af7f,443};
 static struct _String const_s$Welcome_to_OpenLR_ = {&t$String,(vbyte*)USTR("Welcome to OpenLR: "),19};
 static struct _String const_s$Press_to_toggle_console_ = {&t$String,(vbyte*)USTR("Press / to toggle console..."),28};
 static struct _String const_s$a351128 = {&t$String,(vbyte*)USTR("https://github.com/kevansevans/OpenLR"),37};
 static struct _String const_s$6c51ece = {&t$String,(vbyte*)USTR("Press S to play, Space to toggle pause."),39};
 static struct _String const_s$Press_X_to_stop_ = {&t$String,(vbyte*)USTR("Press X to stop."),16};
 static struct _String const_s$3f659a9 = {&t$String,(vbyte*)USTR("Press 123 and QWE to cycle tools."),33};
+static struct _String const_s$OpenLR_ = {&t$String,(vbyte*)USTR("OpenLR - "),9};
 static struct _String const_s$github = {&t$String,(vbyte*)USTR("github"),6};
 static struct _String const_s$Link_to_github_page = {&t$String,(vbyte*)USTR("Link to github page"),19};
 static struct _String const_s$x_value = {&t$String,(vbyte*)USTR("x value"),7};
@@ -3063,8 +2964,6 @@ static struct _String const_s$fbf0612 = {&t$String,(vbyte*)USTR("Offset needs to
 static struct _String const_s$enableCamera = {&t$String,(vbyte*)USTR("enableCamera"),12};
 static struct _String const_s$15ecc9d = {&t$String,(vbyte*)USTR("Toggle camera on or off, and set rider to follow"),48};
 static struct _String const_s$581a16d = {&t$String,(vbyte*)USTR("A rider to follow has not been set, please specify a name."),58};
-static struct _String const_s$get_ = {&t$String,(vbyte*)USTR("get_"),4};
-static struct _String const_s$set_ = {&t$String,(vbyte*)USTR("set_"),4};
 static struct _String const_s$Invalid_function_ = {&t$String,(vbyte*)USTR("Invalid function "),17};
 static struct _String const_s$Can_t_add_ = {&t$String,(vbyte*)USTR("Can't add "),10};
 static struct _String const_s$84c4047 = {&t$String,(vbyte*)USTR("("),1};
@@ -3122,6 +3021,7 @@ static struct _String const_s$_does_not_exist = {&t$String,(vbyte*)USTR(" does n
 static struct _String const_s$No_riders_in_current_track = {&t$String,(vbyte*)USTR("No riders in current track"),26};
 static struct _String const_s$Set_flag_on_frame_ = {&t$String,(vbyte*)USTR("Set flag on frame "),18};
 static struct _String const_s$Disabled_flag = {&t$String,(vbyte*)USTR("Disabled flag"),13};
+static struct _String const_s$SCARF = {&t$String,(vbyte*)USTR("SCARF"),5};
 static struct _String const_s$Recursive_addChild = {&t$String,(vbyte*)USTR("Recursive addChild"),18};
 static struct _String const_s$filterTemp = {&t$String,(vbyte*)USTR("filterTemp"),10};
 static struct _String const_s$rider_body_png = {&t$String,(vbyte*)USTR("rider/body.png"),14};
@@ -3133,7 +3033,6 @@ static struct _String const_s$rider_eye0002_png = {&t$String,(vbyte*)USTR("rider
 static struct _String const_s$rider_eye0003_png = {&t$String,(vbyte*)USTR("rider/eye0003.png"),17};
 static struct _String const_s$a7cc641 = {&t$String,(vbyte*)USTR("Interactive cammera cannot be null!"),35};
 static struct _String const_s$d97a1d0 = {&t$String,(vbyte*)USTR("Current interactive Camera cannot be removed from camera list!"),62};
-static struct _String const_s$Set_canvas_position_to_ = {&t$String,(vbyte*)USTR("Set canvas position to: "),24};
 static struct _String const_s$Draw_mode_set_to_Edit = {&t$String,(vbyte*)USTR("Draw mode set to Edit"),21};
 static struct _String const_s$Draw_mode_set_to_Playback = {&t$String,(vbyte*)USTR("Draw mode set to Playback"),25};
 static struct _String const_s$Draw_mode_set_to_No_Scenery_Edit = {&t$String,(vbyte*)USTR("Draw mode set to No Scenery Edit"),32};
@@ -3192,15 +3091,6 @@ static struct _String const_s$tool_eraser_png = {&t$String,(vbyte*)USTR("tool/er
 static struct _String const_s$tool_eraserBlue_png = {&t$String,(vbyte*)USTR("tool/eraserBlue.png"),19};
 static struct _String const_s$tool_eraserRed_png = {&t$String,(vbyte*)USTR("tool/eraserRed.png"),18};
 static struct _String const_s$tool_eraserGreen_png = {&t$String,(vbyte*)USTR("tool/eraserGreen.png"),20};
-static struct _String const_s$3b33a12 = {&t$String,(vbyte*)USTR("src/components/tool/ToolBehavior.hx"),35};
-static struct _String const_s$components_tool_ToolBehavior = {&t$String,(vbyte*)USTR("components.tool.ToolBehavior"),28};
-static struct _String const_s$mouseDown = {&t$String,(vbyte*)USTR("mouseDown"),9};
-static struct _String const_s$keyInputDown = {&t$String,(vbyte*)USTR("keyInputDown"),12};
-static struct _String const_s$Line_type_set_to_Normal = {&t$String,(vbyte*)USTR("Line type set to Normal"),23};
-static struct _String const_s$Line_type_set_to_Accel = {&t$String,(vbyte*)USTR("Line type set to Accel"),22};
-static struct _String const_s$Line_type_set_to_Scenery = {&t$String,(vbyte*)USTR("Line type set to Scenery"),24};
-static struct _String const_s$Ruler_width_set_to_ = {&t$String,(vbyte*)USTR("Ruler width set to: "),20};
-static struct _String const_s$Max_left_bitshift_reached = {&t$String,(vbyte*)USTR("Max left bitshift reached"),25};
 static struct _String const_s$Color_eraser_ = {&t$String,(vbyte*)USTR("Color eraser "),13};
 static struct _String const_s$on = {&t$String,(vbyte*)USTR("on"),2};
 static struct _String const_s$off = {&t$String,(vbyte*)USTR("off"),3};
@@ -3528,68 +3418,6 @@ static struct _String const_s$Compression_failed = {&t$String,(vbyte*)USTR("Comp
 static struct _String const_s$3db6003 = {&t$String,(vbyte*)USTR("*."),2};
 static struct _String const_s$Invalid_array_index_ = {&t$String,(vbyte*)USTR("Invalid array index "),20};
 static struct _String const_s$2f43b42 = {&t$String,(vbyte*)USTR("..."),3};
-static struct _String const_s$true = {&t$String,(vbyte*)USTR("true"),4};
-static struct _String const_s$false = {&t$String,(vbyte*)USTR("false"),5};
-static struct _String const_s$trace = {&t$String,(vbyte*)USTR("trace"),5};
-static struct _String const_s$hscript = {&t$String,(vbyte*)USTR("hscript"),7};
-static struct _String const_s$26b1722 = {&t$String,(vbyte*)USTR("+"),1};
-static struct _String const_s$3389dae = {&t$String,(vbyte*)USTR("*"),1};
-static struct _String const_s$0bcef9c = {&t$String,(vbyte*)USTR("%"),1};
-static struct _String const_s$7e6a2af = {&t$String,(vbyte*)USTR("^"),1};
-static struct _String const_s$9c16288 = {&t$String,(vbyte*)USTR("<<"),2};
-static struct _String const_s$22a1dae = {&t$String,(vbyte*)USTR(">>"),2};
-static struct _String const_s$b0cc462 = {&t$String,(vbyte*)USTR(">>>"),3};
-static struct _String const_s$2063849 = {&t$String,(vbyte*)USTR("=="),2};
-static struct _String const_s$de0219f = {&t$String,(vbyte*)USTR("!="),2};
-static struct _String const_s$3a1e9b8 = {&t$String,(vbyte*)USTR(">="),2};
-static struct _String const_s$a7eeaea = {&t$String,(vbyte*)USTR("<="),2};
-static struct _String const_s$7d01044 = {&t$String,(vbyte*)USTR("||"),2};
-static struct _String const_s$d3e6c58 = {&t$String,(vbyte*)USTR("&&"),2};
-static struct _String const_s$5984c55 = {&t$String,(vbyte*)USTR("+="),2};
-static struct _String const_s$8fe8311 = {&t$String,(vbyte*)USTR("-="),2};
-static struct _String const_s$a935f16 = {&t$String,(vbyte*)USTR("*="),2};
-static struct _String const_s$2c1b5cf = {&t$String,(vbyte*)USTR("/="),2};
-static struct _String const_s$831d020 = {&t$String,(vbyte*)USTR("%="),2};
-static struct _String const_s$27e348a = {&t$String,(vbyte*)USTR("&="),2};
-static struct _String const_s$586ae83 = {&t$String,(vbyte*)USTR("|="),2};
-static struct _String const_s$475b29c = {&t$String,(vbyte*)USTR("^="),2};
-static struct _String const_s$ad00eed = {&t$String,(vbyte*)USTR("<<="),3};
-static struct _String const_s$c8beaaf = {&t$String,(vbyte*)USTR(">>="),3};
-static struct _String const_s$17b82e6 = {&t$String,(vbyte*)USTR(">>>="),4};
-static struct _String const_s$Cast_error = {&t$String,(vbyte*)USTR("Cast error"),10};
-static struct _String const_s$25fb0be = {&t$String,(vbyte*)USTR("++"),2};
-static struct _String const_s$cfab1ba = {&t$String,(vbyte*)USTR("--"),2};
-static struct _String const_s$Invalid_break = {&t$String,(vbyte*)USTR("Invalid break"),13};
-static struct _String const_s$Invalid_continue = {&t$String,(vbyte*)USTR("Invalid continue"),16};
-static struct _String const_s$188c4b4 = {&t$String,(vbyte*)USTR("Invalid number of parameters. Got "),34};
-static struct _String const_s$_required_ = {&t$String,(vbyte*)USTR(", required "),11};
-static struct _String const_s$_for_function_ = {&t$String,(vbyte*)USTR(" for function '"),15};
-static struct _String const_s$467a1c8 = {&t$String,(vbyte*)USTR("=>"),2};
-static struct _String const_s$_expected = {&t$String,(vbyte*)USTR("=> expected"),11};
-static struct _String const_s$Inconsistent_key_types = {&t$String,(vbyte*)USTR("Inconsistent key types"),22};
-static struct _String const_s$9c0ce25 = {&t$String,(vbyte*)USTR("+*/-=!><&|^%~"),13};
-static struct _String const_s$cc4b0fc = {&t$String,(vbyte*)USTR("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"),63};
-static struct _String const_s$4c761f1 = {&t$String,(vbyte*)USTR("~"),1};
-static struct _String const_s$var = {&t$String,(vbyte*)USTR("var"),3};
-static struct _String const_s$__a_ = {&t$String,(vbyte*)USTR("__a_"),4};
-static struct _String const_s$b4d4140 = {&t$String,(vbyte*)USTR("->"),2};
-static struct _String const_s$push = {&t$String,(vbyte*)USTR("push"),4};
-static struct _String const_s$while = {&t$String,(vbyte*)USTR("while"),5};
-static struct _String const_s$in = {&t$String,(vbyte*)USTR("in"),2};
-static struct _String const_s$else = {&t$String,(vbyte*)USTR("else"),4};
-static struct _String const_s$function = {&t$String,(vbyte*)USTR("function"),8};
-static struct _String const_s$inline = {&t$String,(vbyte*)USTR("inline"),6};
-static struct _String const_s$catch = {&t$String,(vbyte*)USTR("catch"),5};
-static struct _String const_s$Dynamic = {&t$String,(vbyte*)USTR("Dynamic"),7};
-static struct _String const_s$eeca57d = {&t$String,(vbyte*)USTR("Default values not allowed in function types"),44};
-static struct _String const_s$Can_t_eval_ = {&t$String,(vbyte*)USTR("Can't eval "),11};
-static struct _String const_s$if = {&t$String,(vbyte*)USTR("if"),2};
-static struct _String const_s$Unclosed = {&t$String,(vbyte*)USTR("Unclosed"),8};
-static struct _String const_s$350fd6e = {&t$String,(vbyte*)USTR("/**/"),4};
-static struct _String const_s$_eof_ = {&t$String,(vbyte*)USTR("<eof>"),5};
-static struct _String const_s$f95b70f = {&t$String,(vbyte*)USTR("{"),1};
-static struct _String const_s$cbb184d = {&t$String,(vbyte*)USTR("}"),1};
-static struct _String const_s$c0cb5f0 = {&t$String,(vbyte*)USTR(","),1};
 static struct _String const_s$Invalid_pixels_size = {&t$String,(vbyte*)USTR("Invalid pixels size"),19};
 static struct _String const_s$0a31f72 = {&t$String,(vbyte*)USTR("Unsupported format for this operation : "),40};
 static struct _String const_s$Cannot_convert_from_ = {&t$String,(vbyte*)USTR("Cannot convert from "),20};
@@ -3684,6 +3512,7 @@ static struct _String const_s$LayerElementBinormal_Binormals = {&t$String,(vbyte
 static struct _String const_s$LookAtProperty = {&t$String,(vbyte*)USTR("LookAtProperty"),14};
 static struct _String const_s$_has_ = {&t$String,(vbyte*)USTR(" has "),5};
 static struct _String const_s$_parents_ = {&t$String,(vbyte*)USTR(" parents "),9};
+static struct _String const_s$c0cb5f0 = {&t$String,(vbyte*)USTR(","),1};
 static struct _String const_s$Missing_ = {&t$String,(vbyte*)USTR("Missing "),8};
 static struct _String const_s$_parent = {&t$String,(vbyte*)USTR(" parent"),7};
 static struct _String const_s$_childs_ = {&t$String,(vbyte*)USTR(" childs "),8};
@@ -3778,6 +3607,10 @@ static struct _String const_s$cbdffd8 = {&t$String,(vbyte*)USTR("' ("),3};
 static struct _String const_s$_expected_ = {&t$String,(vbyte*)USTR(" expected)"),10};
 static struct _String const_s$84484a8 = {&t$String,(vbyte*)USTR(" (line "),7};
 static struct _String const_s$0138d5b = {&t$String,(vbyte*)USTR("Unexpected "),11};
+static struct _String const_s$3389dae = {&t$String,(vbyte*)USTR("*"),1};
+static struct _String const_s$f95b70f = {&t$String,(vbyte*)USTR("{"),1};
+static struct _String const_s$cbb184d = {&t$String,(vbyte*)USTR("}"),1};
+static struct _String const_s$_eof_ = {&t$String,(vbyte*)USTR("<eof>"),5};
 static struct _String const_s$Unexpected_char_ = {&t$String,(vbyte*)USTR("Unexpected char '"),17};
 static struct _String const_s$GAMMA = {&t$String,(vbyte*)USTR("GAMMA"),5};
 static struct _String const_s$1 = {&t$String,(vbyte*)USTR("1"),1};
@@ -3886,7 +3719,9 @@ static struct _String const_s$Failed_to_queue_buffers_ = {&t$String,(vbyte*)USTR
 static struct _String const_s$1acc93d = {&t$String,(vbyte*)USTR("could not create an ALEffect instance"),37};
 static struct _String const_s$ae8b669 = {&t$String,(vbyte*)USTR("could not create an ALEffectSlot instance"),41};
 static struct _String const_s$too_many_auxiliary_sends = {&t$String,(vbyte*)USTR("too many auxiliary sends"),24};
-static struct _String const_s$e8c60e7 = {&t$String,(vbyte*)string$e8c60e7,652};
+static struct _String const_s$STANDARD = {&t$String,(vbyte*)USTR("STANDARD"),8};
+static struct _String const_s$REPELL = {&t$String,(vbyte*)USTR("REPELL"),6};
+static struct _String const_s$ATTRACT = {&t$String,(vbyte*)USTR("ATTRACT"),7};
 static struct _String const_s$Error_ = {&t$String,(vbyte*)USTR("Error("),6};
 static struct _String const_s$0e1c8cd = {&t$String,(vbyte*)USTR(")@"),2};
 static struct _String const_s$I = {&t$String,(vbyte*)USTR("I"),1};
@@ -3929,6 +3764,7 @@ static struct _String const_s$precision_lowp_sampler2DArray_ = {&t$String,(vbyte
 static struct _String const_s$samplerCube = {&t$String,(vbyte*)USTR("samplerCube"),11};
 static struct _String const_s$struct_ = {&t$String,(vbyte*)USTR("struct { "),9};
 static struct _String const_s$aea70ee = {&t$String,(vbyte*)USTR(" }"),2};
+static struct _String const_s$function = {&t$String,(vbyte*)USTR("function"),8};
 static struct _String const_s$mat2 = {&t$String,(vbyte*)USTR("mat2"),4};
 static struct _String const_s$4f65a8d = {&t$String,(vbyte*)USTR(" { "),3};
 static struct _String const_s$979e1f7 = {&t$String,(vbyte*)USTR("; }"),3};
@@ -3974,6 +3810,9 @@ static struct _String const_s$lessThanEqual = {&t$String,(vbyte*)USTR("lessThanE
 static struct _String const_s$196b8e6 = {&t$String,(vbyte*)USTR("))"),2};
 static struct _String const_s$9df2caa = {&t$String,(vbyte*)USTR("int _ushr( int i, int j ) { return int(uint(i) >> uint(j)); }"),61};
 static struct _String const_s$_ushr_ = {&t$String,(vbyte*)USTR("_ushr("),6};
+static struct _String const_s$25fb0be = {&t$String,(vbyte*)USTR("++"),2};
+static struct _String const_s$cfab1ba = {&t$String,(vbyte*)USTR("--"),2};
+static struct _String const_s$4c761f1 = {&t$String,(vbyte*)USTR("~"),1};
 static struct _String const_s$_var_ = {&t$String,(vbyte*)USTR("/*var*/"),7};
 static struct _String const_s$_0_ = {&t$String,(vbyte*)USTR(", 0)"),4};
 static struct _String const_s$clamp_ = {&t$String,(vbyte*)USTR("clamp("),6};
@@ -4034,6 +3873,19 @@ static struct _String const_s$_entry_ = {&t$String,(vbyte*)USTR("<entry>"),7};
 static struct _String const_s$_needed_by_ = {&t$String,(vbyte*)USTR(" needed by "),11};
 static struct _String const_s$_is_unreachable = {&t$String,(vbyte*)USTR(" is unreachable"),15};
 static struct _String const_s$out = {&t$String,(vbyte*)USTR("out"),3};
+static struct _String const_s$26b1722 = {&t$String,(vbyte*)USTR("+"),1};
+static struct _String const_s$2063849 = {&t$String,(vbyte*)USTR("=="),2};
+static struct _String const_s$de0219f = {&t$String,(vbyte*)USTR("!="),2};
+static struct _String const_s$3a1e9b8 = {&t$String,(vbyte*)USTR(">="),2};
+static struct _String const_s$a7eeaea = {&t$String,(vbyte*)USTR("<="),2};
+static struct _String const_s$7e6a2af = {&t$String,(vbyte*)USTR("^"),1};
+static struct _String const_s$d3e6c58 = {&t$String,(vbyte*)USTR("&&"),2};
+static struct _String const_s$7d01044 = {&t$String,(vbyte*)USTR("||"),2};
+static struct _String const_s$9c16288 = {&t$String,(vbyte*)USTR("<<"),2};
+static struct _String const_s$22a1dae = {&t$String,(vbyte*)USTR(">>"),2};
+static struct _String const_s$b0cc462 = {&t$String,(vbyte*)USTR(">>>"),3};
+static struct _String const_s$0bcef9c = {&t$String,(vbyte*)USTR("%"),1};
+static struct _String const_s$467a1c8 = {&t$String,(vbyte*)USTR("=>"),2};
 static struct _String const_s$const = {&t$String,(vbyte*)USTR("const"),5};
 static struct _String const_s$private = {&t$String,(vbyte*)USTR("private"),7};
 static struct _String const_s$nullable = {&t$String,(vbyte*)USTR("nullable"),8};
@@ -4093,6 +3945,7 @@ static struct _String const_s$random = {&t$String,(vbyte*)USTR("random"),6};
 static struct _String const_s$Float = {&t$String,(vbyte*)USTR("Float"),5};
 static struct _String const_s$Int = {&t$String,(vbyte*)USTR("Int"),3};
 static struct _String const_s$Bool = {&t$String,(vbyte*)USTR("Bool"),4};
+static struct _String const_s$Dynamic = {&t$String,(vbyte*)USTR("Dynamic"),7};
 static struct _String const_s$shader = {&t$String,(vbyte*)USTR("shader"),6};
 static struct _String const_s$Array = {&t$String,(vbyte*)USTR("Array"),5};
 static struct _String const_s$hl_types_ArrayDyn = {&t$String,(vbyte*)USTR("hl.types.ArrayDyn"),17};
@@ -4217,14 +4070,14 @@ void hl_init_roots() {
 	s$ = &const_s$;
 	s$c3e97dd = &const_s$c3e97dd;
 	s$Release = &const_s$Release;
-	s$fdb04ac = &const_s$fdb04ac;
-	s$OpenLR_ = &const_s$OpenLR_;
+	s$c60af7f = &const_s$c60af7f;
 	s$Welcome_to_OpenLR_ = &const_s$Welcome_to_OpenLR_;
 	s$Press_to_toggle_console_ = &const_s$Press_to_toggle_console_;
 	s$a351128 = &const_s$a351128;
 	s$6c51ece = &const_s$6c51ece;
 	s$Press_X_to_stop_ = &const_s$Press_X_to_stop_;
 	s$3f659a9 = &const_s$3f659a9;
+	s$OpenLR_ = &const_s$OpenLR_;
 	s$github = &const_s$github;
 	s$Link_to_github_page = &const_s$Link_to_github_page;
 	s$x_value = &const_s$x_value;
@@ -4366,8 +4219,6 @@ void hl_init_roots() {
 	s$enableCamera = &const_s$enableCamera;
 	s$15ecc9d = &const_s$15ecc9d;
 	s$581a16d = &const_s$581a16d;
-	s$get_ = &const_s$get_;
-	s$set_ = &const_s$set_;
 	s$Invalid_function_ = &const_s$Invalid_function_;
 	s$Can_t_add_ = &const_s$Can_t_add_;
 	s$84c4047 = &const_s$84c4047;
@@ -4425,6 +4276,7 @@ void hl_init_roots() {
 	s$No_riders_in_current_track = &const_s$No_riders_in_current_track;
 	s$Set_flag_on_frame_ = &const_s$Set_flag_on_frame_;
 	s$Disabled_flag = &const_s$Disabled_flag;
+	s$SCARF = &const_s$SCARF;
 	s$Recursive_addChild = &const_s$Recursive_addChild;
 	s$filterTemp = &const_s$filterTemp;
 	s$rider_body_png = &const_s$rider_body_png;
@@ -4436,7 +4288,6 @@ void hl_init_roots() {
 	s$rider_eye0003_png = &const_s$rider_eye0003_png;
 	s$a7cc641 = &const_s$a7cc641;
 	s$d97a1d0 = &const_s$d97a1d0;
-	s$Set_canvas_position_to_ = &const_s$Set_canvas_position_to_;
 	s$Draw_mode_set_to_Edit = &const_s$Draw_mode_set_to_Edit;
 	s$Draw_mode_set_to_Playback = &const_s$Draw_mode_set_to_Playback;
 	s$Draw_mode_set_to_No_Scenery_Edit = &const_s$Draw_mode_set_to_No_Scenery_Edit;
@@ -4495,15 +4346,6 @@ void hl_init_roots() {
 	s$tool_eraserBlue_png = &const_s$tool_eraserBlue_png;
 	s$tool_eraserRed_png = &const_s$tool_eraserRed_png;
 	s$tool_eraserGreen_png = &const_s$tool_eraserGreen_png;
-	s$3b33a12 = &const_s$3b33a12;
-	s$components_tool_ToolBehavior = &const_s$components_tool_ToolBehavior;
-	s$mouseDown = &const_s$mouseDown;
-	s$keyInputDown = &const_s$keyInputDown;
-	s$Line_type_set_to_Normal = &const_s$Line_type_set_to_Normal;
-	s$Line_type_set_to_Accel = &const_s$Line_type_set_to_Accel;
-	s$Line_type_set_to_Scenery = &const_s$Line_type_set_to_Scenery;
-	s$Ruler_width_set_to_ = &const_s$Ruler_width_set_to_;
-	s$Max_left_bitshift_reached = &const_s$Max_left_bitshift_reached;
 	s$Color_eraser_ = &const_s$Color_eraser_;
 	s$on = &const_s$on;
 	s$off = &const_s$off;
@@ -4831,68 +4673,6 @@ void hl_init_roots() {
 	s$3db6003 = &const_s$3db6003;
 	s$Invalid_array_index_ = &const_s$Invalid_array_index_;
 	s$2f43b42 = &const_s$2f43b42;
-	s$true = &const_s$true;
-	s$false = &const_s$false;
-	s$trace = &const_s$trace;
-	s$hscript = &const_s$hscript;
-	s$26b1722 = &const_s$26b1722;
-	s$3389dae = &const_s$3389dae;
-	s$0bcef9c = &const_s$0bcef9c;
-	s$7e6a2af = &const_s$7e6a2af;
-	s$9c16288 = &const_s$9c16288;
-	s$22a1dae = &const_s$22a1dae;
-	s$b0cc462 = &const_s$b0cc462;
-	s$2063849 = &const_s$2063849;
-	s$de0219f = &const_s$de0219f;
-	s$3a1e9b8 = &const_s$3a1e9b8;
-	s$a7eeaea = &const_s$a7eeaea;
-	s$7d01044 = &const_s$7d01044;
-	s$d3e6c58 = &const_s$d3e6c58;
-	s$5984c55 = &const_s$5984c55;
-	s$8fe8311 = &const_s$8fe8311;
-	s$a935f16 = &const_s$a935f16;
-	s$2c1b5cf = &const_s$2c1b5cf;
-	s$831d020 = &const_s$831d020;
-	s$27e348a = &const_s$27e348a;
-	s$586ae83 = &const_s$586ae83;
-	s$475b29c = &const_s$475b29c;
-	s$ad00eed = &const_s$ad00eed;
-	s$c8beaaf = &const_s$c8beaaf;
-	s$17b82e6 = &const_s$17b82e6;
-	s$Cast_error = &const_s$Cast_error;
-	s$25fb0be = &const_s$25fb0be;
-	s$cfab1ba = &const_s$cfab1ba;
-	s$Invalid_break = &const_s$Invalid_break;
-	s$Invalid_continue = &const_s$Invalid_continue;
-	s$188c4b4 = &const_s$188c4b4;
-	s$_required_ = &const_s$_required_;
-	s$_for_function_ = &const_s$_for_function_;
-	s$467a1c8 = &const_s$467a1c8;
-	s$_expected = &const_s$_expected;
-	s$Inconsistent_key_types = &const_s$Inconsistent_key_types;
-	s$9c0ce25 = &const_s$9c0ce25;
-	s$cc4b0fc = &const_s$cc4b0fc;
-	s$4c761f1 = &const_s$4c761f1;
-	s$var = &const_s$var;
-	s$__a_ = &const_s$__a_;
-	s$b4d4140 = &const_s$b4d4140;
-	s$push = &const_s$push;
-	s$while = &const_s$while;
-	s$in = &const_s$in;
-	s$else = &const_s$else;
-	s$function = &const_s$function;
-	s$inline = &const_s$inline;
-	s$catch = &const_s$catch;
-	s$Dynamic = &const_s$Dynamic;
-	s$eeca57d = &const_s$eeca57d;
-	s$Can_t_eval_ = &const_s$Can_t_eval_;
-	s$if = &const_s$if;
-	s$Unclosed = &const_s$Unclosed;
-	s$350fd6e = &const_s$350fd6e;
-	s$_eof_ = &const_s$_eof_;
-	s$f95b70f = &const_s$f95b70f;
-	s$cbb184d = &const_s$cbb184d;
-	s$c0cb5f0 = &const_s$c0cb5f0;
 	s$Invalid_pixels_size = &const_s$Invalid_pixels_size;
 	s$0a31f72 = &const_s$0a31f72;
 	s$Cannot_convert_from_ = &const_s$Cannot_convert_from_;
@@ -4987,6 +4767,7 @@ void hl_init_roots() {
 	s$LookAtProperty = &const_s$LookAtProperty;
 	s$_has_ = &const_s$_has_;
 	s$_parents_ = &const_s$_parents_;
+	s$c0cb5f0 = &const_s$c0cb5f0;
 	s$Missing_ = &const_s$Missing_;
 	s$_parent = &const_s$_parent;
 	s$_childs_ = &const_s$_childs_;
@@ -5081,6 +4862,10 @@ void hl_init_roots() {
 	s$_expected_ = &const_s$_expected_;
 	s$84484a8 = &const_s$84484a8;
 	s$0138d5b = &const_s$0138d5b;
+	s$3389dae = &const_s$3389dae;
+	s$f95b70f = &const_s$f95b70f;
+	s$cbb184d = &const_s$cbb184d;
+	s$_eof_ = &const_s$_eof_;
 	s$Unexpected_char_ = &const_s$Unexpected_char_;
 	s$GAMMA = &const_s$GAMMA;
 	s$1 = &const_s$1;
@@ -5189,7 +4974,9 @@ void hl_init_roots() {
 	s$1acc93d = &const_s$1acc93d;
 	s$ae8b669 = &const_s$ae8b669;
 	s$too_many_auxiliary_sends = &const_s$too_many_auxiliary_sends;
-	s$e8c60e7 = &const_s$e8c60e7;
+	s$STANDARD = &const_s$STANDARD;
+	s$REPELL = &const_s$REPELL;
+	s$ATTRACT = &const_s$ATTRACT;
 	s$Error_ = &const_s$Error_;
 	s$0e1c8cd = &const_s$0e1c8cd;
 	s$I = &const_s$I;
@@ -5232,6 +5019,7 @@ void hl_init_roots() {
 	s$samplerCube = &const_s$samplerCube;
 	s$struct_ = &const_s$struct_;
 	s$aea70ee = &const_s$aea70ee;
+	s$function = &const_s$function;
 	s$mat2 = &const_s$mat2;
 	s$4f65a8d = &const_s$4f65a8d;
 	s$979e1f7 = &const_s$979e1f7;
@@ -5277,6 +5065,9 @@ void hl_init_roots() {
 	s$196b8e6 = &const_s$196b8e6;
 	s$9df2caa = &const_s$9df2caa;
 	s$_ushr_ = &const_s$_ushr_;
+	s$25fb0be = &const_s$25fb0be;
+	s$cfab1ba = &const_s$cfab1ba;
+	s$4c761f1 = &const_s$4c761f1;
 	s$_var_ = &const_s$_var_;
 	s$_0_ = &const_s$_0_;
 	s$clamp_ = &const_s$clamp_;
@@ -5337,6 +5128,19 @@ void hl_init_roots() {
 	s$_needed_by_ = &const_s$_needed_by_;
 	s$_is_unreachable = &const_s$_is_unreachable;
 	s$out = &const_s$out;
+	s$26b1722 = &const_s$26b1722;
+	s$2063849 = &const_s$2063849;
+	s$de0219f = &const_s$de0219f;
+	s$3a1e9b8 = &const_s$3a1e9b8;
+	s$a7eeaea = &const_s$a7eeaea;
+	s$7e6a2af = &const_s$7e6a2af;
+	s$d3e6c58 = &const_s$d3e6c58;
+	s$7d01044 = &const_s$7d01044;
+	s$9c16288 = &const_s$9c16288;
+	s$22a1dae = &const_s$22a1dae;
+	s$b0cc462 = &const_s$b0cc462;
+	s$0bcef9c = &const_s$0bcef9c;
+	s$467a1c8 = &const_s$467a1c8;
 	s$const = &const_s$const;
 	s$private = &const_s$private;
 	s$nullable = &const_s$nullable;
@@ -5396,6 +5200,7 @@ void hl_init_roots() {
 	s$Float = &const_s$Float;
 	s$Int = &const_s$Int;
 	s$Bool = &const_s$Bool;
+	s$Dynamic = &const_s$Dynamic;
 	s$shader = &const_s$shader;
 	s$Array = &const_s$Array;
 	s$hl_types_ArrayDyn = &const_s$hl_types_ArrayDyn;
@@ -5526,7 +5331,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hl_Enum);
 	hl_add_root((void**)&g$haxe_StackItem);
 	hl_add_root((void**)&g$_haxe_Exception);
-	hl_add_root((void**)&g$_IntIterator);
 	hl_add_root((void**)&g$_hxd_BitmapInnerDataImpl);
 	hl_add_root((void**)&g$_hxd_BitmapData);
 	hl_add_root((void**)&g$_hxd_CustomCursor);
@@ -5659,7 +5463,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_haxe_Timer);
 	hl_add_root((void**)&g$_hxd_Timer);
 	hl_add_root((void**)&g$_hxlr_rider_ContactPoint);
-	hl_add_root((void**)&g$hxlr_enums_StickType);
 	hl_add_root((void**)&g$_hxlr_rider_Stick);
 	hl_add_root((void**)&g$_hxlr_rider_AirPoint);
 	hl_add_root((void**)&g$_hxlr_rider_RiderBase);
@@ -5757,16 +5560,13 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_components_sledder_RiderPart);
 	hl_add_root((void**)&g$_components_sledder_RiderScarf);
 	hl_add_root((void**)&g$_components_sledder_Bosh);
+	hl_add_root((void**)&g$_hxlr_engine_Cell);
 	hl_add_root((void**)&g$components_sledder_BodyPart);
 	hl_add_root((void**)&g$components_sledder_BodyPart_ARM);
 	hl_add_root((void**)&g$components_sledder_BodyPart_LEG);
 	hl_add_root((void**)&g$components_sledder_BodyPart_SLED);
 	hl_add_root((void**)&g$components_sledder_BodyPart_EYE);
 	hl_add_root((void**)&g$components_sledder_BodyPart_BODY);
-	hl_add_root((void**)&g$_hxlr_engine_Cell);
-	hl_add_root((void**)&g$hxlr_enums_StickType_STANDARD);
-	hl_add_root((void**)&g$hxlr_enums_StickType_REPELL);
-	hl_add_root((void**)&g$hxlr_enums_StickType_SCARF);
 	hl_add_root((void**)&g$h2d_BlendMode_Alpha);
 	hl_add_root((void**)&g$_hxd_res_Image);
 	hl_add_root((void**)&g$_hxd_res_ImageInfo);
@@ -5778,19 +5578,17 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hxlr_lines_Accel);
 	hl_add_root((void**)&g$_hxlr_lines_Scenery);
 	hl_add_root((void**)&g$h2d_Align_MultilineRight);
-	hl_add_root((void**)&g$_haxe_Log);
-	hl_add_root((void**)&g$_components_tool_ToolFunction);
 	hl_add_root((void**)&g$_hxlr_lines_Undefined);
 	hl_add_root((void**)&g$994fdec);
 	hl_add_root((void**)&g$92fe76c);
 	hl_add_root((void**)&g$ab5747c);
 	hl_add_root((void**)&g$ba7542c);
 	hl_add_root((void**)&g$2a65ad1);
+	hl_add_root((void**)&g$hxd_Cursor_Default);
 	hl_add_root((void**)&g$components_ui_Icon);
-	hl_add_root((void**)&g$components_ui_Icon_ERASER);
 	hl_add_root((void**)&g$components_ui_Icon_PENCIL);
 	hl_add_root((void**)&g$components_ui_Icon_LINE);
-	hl_add_root((void**)&g$hxd_Cursor_Default);
+	hl_add_root((void**)&g$components_ui_Icon_ERASER);
 	hl_add_root((void**)&g$_haxe_format_JsonParser);
 	hl_add_root((void**)&g$_haxe_io_Input);
 	hl_add_root((void**)&g$_format_gif_Reader);
@@ -6016,8 +5814,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$haxe_io_Encoding_RawNative);
 	hl_add_root((void**)&g$_haxe_crypto_BaseCode);
 	hl_add_root((void**)&g$_haxe_crypto_Base64);
-	hl_add_root((void**)&g$_haxe_ds_GenericCell);
-	hl_add_root((void**)&g$_haxe_ds_GenericStack);
 	hl_add_root((void**)&g$_hl_NativeArrayIterator_Int);
 	hl_add_root((void**)&g$_hl_NativeArrayIterator_Dynamic);
 	hl_add_root((void**)&g$_hl_NativeArrayIterator);
@@ -6053,35 +5849,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hl_types_ArrayObjIterator);
 	hl_add_root((void**)&g$1813e5a);
 	hl_add_root((void**)&g$_Std);
-	hl_add_root((void**)&g$_hscript_Interp);
-	hl_add_root((void**)&g$hscript_Const);
-	hl_add_root((void**)&g$hscript_CType);
-	hl_add_root((void**)&g$hscript_Expr);
-	hl_add_root((void**)&g$hscript_Error);
-	hl_add_root((void**)&g$_haxe_IMap);
-	hl_add_root((void**)&g$hscript__Interp_Stop);
-	hl_add_root((void**)&g$hscript__Interp_Stop_SBreak);
-	hl_add_root((void**)&g$hscript__Interp_Stop_SContinue);
-	hl_add_root((void**)&g$hscript__Interp_Stop_SReturn);
-	hl_add_root((void**)&g$_Int);
-	hl_add_root((void**)&g$_hscript_Parser);
-	hl_add_root((void**)&g$hscript_Token);
-	hl_add_root((void**)&g$hscript_Token_TEof);
-	hl_add_root((void**)&g$hscript_Token_TComma);
-	hl_add_root((void**)&g$hscript_Token_TSemicolon);
-	hl_add_root((void**)&g$hscript_Token_TDoubleDot);
-	hl_add_root((void**)&g$hscript_Token_TBrClose);
-	hl_add_root((void**)&g$hscript_Token_TBkClose);
-	hl_add_root((void**)&g$hscript_Token_TPOpen);
-	hl_add_root((void**)&g$hscript_Token_TPClose);
-	hl_add_root((void**)&g$hscript_Expr_EBreak);
-	hl_add_root((void**)&g$hscript_Expr_EContinue);
-	hl_add_root((void**)&g$hscript_Token_TBrOpen);
-	hl_add_root((void**)&g$hscript_Token_TDot);
-	hl_add_root((void**)&g$bf6e6b2);
-	hl_add_root((void**)&g$hscript_Token_TQuestion);
-	hl_add_root((void**)&g$hscript_Token_TBkOpen);
-	hl_add_root((void**)&g$e39246a);
 	hl_add_root((void**)&g$hxd_PixelFormat_BGRA);
 	hl_add_root((void**)&g$_hxd_Key);
 	hl_add_root((void**)&g$_sdl_GameController);
@@ -6105,6 +5872,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxd_EventKind_EWheel);
 	hl_add_root((void**)&g$hxd_EventKind_EKeyUp);
 	hl_add_root((void**)&g$hxd_EventKind_ETextInput);
+	hl_add_root((void**)&g$_haxe_Log);
 	hl_add_root((void**)&g$_hxd_fmt_bfnt_Reader);
 	hl_add_root((void**)&g$_hxd_fmt_bfnt_Writer);
 	hl_add_root((void**)&g$hxd_fmt_fbx_FbxProp);
@@ -6180,8 +5948,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_hxd_snd_openal_PitchDriver);
 	hl_add_root((void**)&g$_hxd_snd_openal_ReverbDriver);
 	hl_add_root((void**)&g$8c7cab6);
-	hl_add_root((void**)&g$hxlr_enums_StickType_ATTRACT);
-	hl_add_root((void**)&g$_hxlr_scripts_PhysFloor);
+	hl_add_root((void**)&g$_hxlr_Constants);
 	hl_add_root((void**)&g$_hxsl_Error);
 	hl_add_root((void**)&g$_hxsl_Tools);
 	hl_add_root((void**)&g$_hxsl_BatchShader);
@@ -6262,6 +6029,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_h3d_IDrawable);
 	hl_add_root((void**)&g$_Reflect);
 	hl_add_root((void**)&g$_Float);
+	hl_add_root((void**)&g$_Int);
 	hl_add_root((void**)&g$_Bool);
 	hl_add_root((void**)&g$_Dynamic);
 	hl_add_root((void**)&g$_StringTools);
@@ -6385,6 +6153,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$h3d_pass_RenderMode_Static);
 	hl_add_root((void**)&g$haxe_StackItem_CFunction);
 	hl_add_root((void**)&g$_haxe__CallStack_CallStack_Impl_);
+	hl_add_root((void**)&g$_haxe_IMap);
 	hl_add_root((void**)&g$_sys_thread__Mutex_Mutex_Impl_);
 	hl_add_root((void**)&g$_sys_thread__Deque_Deque_Impl_);
 	hl_add_root((void**)&g$_haxe_NativeStackTrace);
@@ -6468,7 +6237,6 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$hxd_res_ImageInfoFlag_IsCube);
 	hl_add_root((void**)&g$84acfe4);
 	hl_add_root((void**)&g$_hxd_snd_Driver);
-	hl_add_root((void**)&g$hxlr_enums_StickType_FLOPPY);
 	hl_add_root((void**)&g$hxsl_VecType_VInt);
 	hl_add_root((void**)&g$hxsl_VecType_VBool);
 	hl_add_root((void**)&g$hxsl_Prec_Low);
@@ -6533,13 +6301,13 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_sys_io_File);
 }
 // oy5:soundoy11:connect.oggty14:disconnect.oggtgy4:tooloy15:pe...
-vbyte string$fdb04ac[] = {111,0,121,0,53,0,58,0,115,0,111,0,117,0,110,0,100,0,111,0,121,0,49,0,49,0,58,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,121,0,49,0,52,0,58,0,100,0,105,0,115,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,103,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108\
+vbyte string$c60af7f[] = {111,0,121,0,53,0,58,0,115,0,111,0,117,0,110,0,100,0,111,0,121,0,49,0,49,0,58,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,121,0,49,0,52,0,58,0,100,0,105,0,115,0,99,0,111,0,110,0,110,0,101,0,99,0,116,0,46,0,111,0,103,0,103,0,116,0,103,0,121,0,52,0,58,0,116,0,111,0,111,0,108,0,111,0,121,0,49,0,53,0,58,0,112,0,101,0,110,0,99,0,105,0,108\
 	,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,51,0,58,0,108,0,105,0,110,0,101,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103\
 	,0,116,0,121,0,49,0,51,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,52,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,66,0,108,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,108,0,105,0,110,0,101,0,82,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,50,0,58,0,108,0,105,0,110,0,101,0,66,0,108\
 	,0,117,0,101,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,50,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,109,0,112,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,53,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,71,0,114,0,101,0,101,0,110,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,48,0,58,0,101,0,114,0,97,0,115,0,101,0,114,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,52,0,58,0,105\
 	,0,99,0,111,0,110,0,111,0,121,0,56,0,58,0,108,0,105,0,110,0,101,0,46,0,112,0,110,0,103,0,116,0,82,0,49,0,52,0,116,0,121,0,49,0,48,0,58,0,112,0,101,0,110,0,99,0,105,0,108,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,114,0,105,0,100,0,101,0,114,0,111,0,121,0,55,0,58,0,108,0,101,0,103,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48\
 	,0,48,0,48,0,51,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,50,0,46,0,112,0,110,0,103,0,116,0,121,0,56,0,58,0,115,0,108,0,101,0,100,0,46,0,112,0,110,0,103,0,116,0,121,0,49,0,49,0,58,0,101,0,121,0,101,0,48,0,48,0,48,0,49,0,46,0,112,0,110,0,103,0,116,0,121,0,55,0,58,0,97,0,114,0,109,0,46,0,112,0,110,0,103,0,116,0,121\
-	,0,56,0,58,0,98,0,111,0,100,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,108,0,105,0,110,0,101,0,115,0,111,0,82,0,55,0,116,0,82,0,49,0,48,0,116,0,82,0,49,0,49,0,116,0,103,0,103,0,0,0};
+	,0,56,0,58,0,98,0,111,0,100,0,121,0,46,0,112,0,110,0,103,0,116,0,103,0,121,0,53,0,58,0,116,0,114,0,97,0,99,0,107,0,111,0,121,0,49,0,48,0,58,0,101,0,109,0,98,0,101,0,100,0,46,0,106,0,115,0,111,0,110,0,116,0,103,0,121,0,53,0,58,0,108,0,105,0,110,0,101,0,115,0,111,0,82,0,55,0,116,0,82,0,49,0,48,0,116,0,82,0,49,0,49,0,116,0,103,0,103,0,0,0};
 // Enable frame can not be greater than or equal to it's disabl...
 vbyte string$520de12[] = {69,0,110,0,97,0,98,0,108,0,101,0,32,0,102,0,114,0,97,0,109,0,101,0,32,0,99,0,97,0,110,0,32,0,110,0,111,0,116,0,32,0,98,0,101,0,32,0,103,0,114,0,101,0,97,0,116,0,101,0,114,0,32,0,116,0,104,0,97,0,110,0,32,0,111,0,114,0,32,0,101,0,113,0,117,0,97,0,108,0,32,0,116,0,111,0,32,0,105,0,116,0,39,0,115,0,32,0,100,0,105,0,115,0,97,0,98,0,108,0,101,0,100,0,32,0,102\
 	,0,114,0,97,0,109,0,101,0,44,0,32,0,0,0};
@@ -6833,18 +6601,6 @@ vbyte string$45a8d8c[] = {115,0,49,0,52,0,48,0,51,0,48,0,58,0,80,0,68,0,57,0,52,
 	,0,50,0,90,0,109,0,99,0,50,0,86,0,48,0,80,0,83,0,73,0,120,0,73,0,68,0,81,0,105,0,73,0,72,0,74,0,108,0,89,0,51,0,81,0,57,0,73,0,106,0,69,0,120,0,78,0,105,0,65,0,53,0,79,0,67,0,65,0,49,0,73,0,68,0,69,0,120,0,73,0,105,0,66,0,106,0,98,0,50,0,82,0,108,0,80,0,83,0,76,0,68,0,118,0,105,0,73,0,118,0,80,0,103,0,111,0,103,0,80,0,69,0,78,0,111,0,89\
 	,0,88,0,73,0,103,0,100,0,50,0,108,0,107,0,100,0,71,0,103,0,57,0,73,0,106,0,99,0,105,0,73,0,71,0,57,0,109,0,90,0,110,0,78,0,108,0,100,0,68,0,48,0,105,0,77,0,83,0,65,0,48,0,73,0,105,0,66,0,121,0,90,0,87,0,78,0,48,0,80,0,83,0,73,0,120,0,73,0,68,0,69,0,120,0,77,0,67,0,65,0,49,0,73,0,68,0,69,0,120,0,73,0,105,0,66,0,106,0,98,0,50,0,82,0,108,0,80\
 	,0,83,0,76,0,68,0,118,0,121,0,73,0,118,0,80,0,103,0,111,0,56,0,76,0,48,0,90,0,118,0,98,0,110,0,81,0,37,0,67,0,103,0,0,0};
-// \r\n\t\t\r\n\t\t\tvar _loc5 = _point.pos.x - start.x;\r\n\t\t\tvar _loc6 =...
-vbyte string$e8c60e7[] = {13,0,10,0,9,0,9,0,13,0,10,0,9,0,9,0,9,0,118,0,97,0,114,0,32,0,95,0,108,0,111,0,99,0,53,0,32,0,61,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,112,0,111,0,115,0,46,0,120,0,32,0,45,0,32,0,115,0,116,0,97,0,114,0,116,0,46,0,120,0,59,0,13,0,10,0,9,0,9,0,9,0,118,0,97,0,114,0,32,0,95,0,108,0,111,0,99,0,54,0,32,0,61,0,32,0,95,0,112,0,111\
-	,0,105,0,110,0,116,0,46,0,112,0,111,0,115,0,46,0,121,0,32,0,45,0,32,0,115,0,116,0,97,0,114,0,116,0,46,0,121,0,59,0,13,0,10,0,9,0,9,0,9,0,118,0,97,0,114,0,32,0,95,0,108,0,111,0,99,0,52,0,32,0,61,0,32,0,110,0,120,0,32,0,42,0,32,0,95,0,108,0,111,0,99,0,53,0,32,0,43,0,32,0,110,0,121,0,32,0,42,0,32,0,95,0,108,0,111,0,99,0,54,0,59,0,13,0,10,0,9\
-	,0,9,0,9,0,118,0,97,0,114,0,32,0,95,0,108,0,111,0,99,0,55,0,32,0,61,0,32,0,40,0,95,0,108,0,111,0,99,0,53,0,32,0,42,0,32,0,100,0,120,0,32,0,43,0,32,0,95,0,108,0,111,0,99,0,54,0,32,0,42,0,32,0,100,0,121,0,41,0,32,0,42,0,32,0,105,0,110,0,118,0,83,0,113,0,114,0,68,0,105,0,115,0,116,0,97,0,110,0,99,0,101,0,59,0,13,0,10,0,9,0,9,0,9,0,13,0,10\
-	,0,9,0,9,0,9,0,105,0,102,0,32,0,40,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,100,0,105,0,114,0,46,0,120,0,32,0,42,0,32,0,110,0,120,0,32,0,43,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,100,0,105,0,114,0,46,0,121,0,32,0,42,0,32,0,110,0,121,0,32,0,62,0,32,0,48,0,41,0,13,0,10,0,9,0,9,0,9,0,123,0,13,0,10,0,9,0,9,0,9,0,9,0,105,0,102,0,32\
-	,0,40,0,95,0,108,0,111,0,99,0,52,0,32,0,62,0,32,0,48,0,32,0,38,0,38,0,32,0,95,0,108,0,111,0,99,0,52,0,32,0,60,0,32,0,122,0,111,0,110,0,101,0,32,0,38,0,38,0,32,0,95,0,108,0,111,0,99,0,55,0,32,0,62,0,61,0,32,0,108,0,105,0,109,0,83,0,116,0,97,0,114,0,116,0,32,0,38,0,38,0,32,0,95,0,108,0,111,0,99,0,55,0,32,0,60,0,61,0,32,0,108,0,105,0,109,0,69\
-	,0,110,0,100,0,41,0,32,0,123,0,13,0,10,0,9,0,9,0,9,0,9,0,9,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,112,0,111,0,115,0,46,0,120,0,32,0,61,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,112,0,111,0,115,0,46,0,120,0,32,0,45,0,32,0,95,0,108,0,111,0,99,0,52,0,32,0,42,0,32,0,110,0,120,0,59,0,13,0,10,0,9,0,9,0,9,0,9,0,9,0,95,0,112,0,111,0,105\
-	,0,110,0,116,0,46,0,112,0,111,0,115,0,46,0,121,0,32,0,61,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,112,0,111,0,115,0,46,0,121,0,32,0,45,0,32,0,95,0,108,0,111,0,99,0,52,0,32,0,42,0,32,0,110,0,121,0,59,0,13,0,10,0,9,0,9,0,9,0,9,0,9,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,118,0,101,0,108,0,46,0,120,0,32,0,61,0,32,0,95,0,112,0,111,0,105,0,110\
-	,0,116,0,46,0,118,0,101,0,108,0,46,0,120,0,32,0,43,0,32,0,110,0,121,0,32,0,42,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,102,0,114,0,105,0,99,0,116,0,105,0,111,0,110,0,32,0,42,0,32,0,95,0,108,0,111,0,99,0,52,0,32,0,42,0,32,0,40,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,118,0,101,0,108,0,46,0,120,0,32,0,60,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46\
-	,0,112,0,111,0,115,0,46,0,120,0,32,0,63,0,32,0,49,0,32,0,58,0,32,0,45,0,49,0,41,0,59,0,13,0,10,0,9,0,9,0,9,0,9,0,9,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,118,0,101,0,108,0,46,0,121,0,32,0,61,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,118,0,101,0,108,0,46,0,121,0,32,0,45,0,32,0,110,0,120,0,32,0,42,0,32,0,95,0,112,0,111,0,105,0,110,0,116\
-	,0,46,0,102,0,114,0,105,0,99,0,116,0,105,0,111,0,110,0,32,0,42,0,32,0,95,0,108,0,111,0,99,0,52,0,32,0,42,0,32,0,40,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,118,0,101,0,108,0,46,0,121,0,32,0,60,0,32,0,95,0,112,0,111,0,105,0,110,0,116,0,46,0,112,0,111,0,115,0,46,0,121,0,32,0,63,0,32,0,45,0,49,0,32,0,58,0,32,0,49,0,41,0,59,0,13,0,10,0,9,0,9,0,9\
-	,0,9,0,125,0,13,0,10,0,9,0,9,0,9,0,125,0,13,0,10,0,9,0,9,0,0,0};
 // Dynamic access to an Array which size is not 4 components-al...
 vbyte string$12d631f[] = {68,0,121,0,110,0,97,0,109,0,105,0,99,0,32,0,97,0,99,0,99,0,101,0,115,0,115,0,32,0,116,0,111,0,32,0,97,0,110,0,32,0,65,0,114,0,114,0,97,0,121,0,32,0,119,0,104,0,105,0,99,0,104,0,32,0,115,0,105,0,122,0,101,0,32,0,105,0,115,0,32,0,110,0,111,0,116,0,32,0,52,0,32,0,99,0,111,0,109,0,112,0,111,0,110,0,101,0,110,0,116,0,115,0,45,0,97,0,108,0,105,0,103,0,110,0,101\
 	,0,100,0,32,0,105,0,115,0,32,0,110,0,111,0,116,0,32,0,97,0,108,0,108,0,111,0,119,0,101,0,100,0,0,0};
@@ -7300,6 +7056,9 @@ vbyte bytes$9656779[] = {
 };
 vbyte bytes$57b7f4b[] = {
 #  include "hl/bytes_87f8ae5f33355d3a3afd198207ee2281.h"
+};
+vbyte bytes$3bc44f2[] = {
+#  include "hl/bytes_644bc76f94771335cffb6aabdf24e91d.h"
 };
 vbyte bytes$5d4e496[] = {137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,10,0,0,0,10,8,6,0,0,0,141,50,207,189,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,65,100,111,98,101,32,73,109,97,103,101,82,101,97,100,121,113,201,101,60,0,0,0,86,73,68,65,84,120,218,98,100,64,0,127,32,46,96,64,5,19,128,120,35,178,64,61,16,255,199,129,235,97,138,236,241,40,130,97,144,26,134,243,68,40,60,207,8,101,16,4,76,12,68,2,144,194\
 	,11,68,168,187,0,11,22,66,110,244,135,233,152,143,71,209,124,116,227,227,129,248,62,146,130,251,80,49,48,0,8,48,0,196,97,49,242,96,125,155,120,0,0,0,0,73,69,78,68,174,66,96,130};

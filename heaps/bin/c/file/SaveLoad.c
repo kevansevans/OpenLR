@@ -6,11 +6,11 @@
 #include <_std/Main.h>
 #include <hxlr/engine/Grid.h>
 #include <hxlr/lines/LineBase.h>
-#include <h2d/col/Point.h>
 #include <haxe/ds/StringMap.h>
 #include <components/managers/Riders.h>
 #include <hxlr/rider/RiderBase.h>
 #include <components/sledder/Bosh.h>
+#include <h2d/col/Point.h>
 #include <_std/Date.h>
 extern hl_type t$vrt_9b9728c;
 extern hl_type t$hl_types_ArrayObj;
@@ -82,7 +82,7 @@ extern String s$_directory;
 void hl_types_ArrayObj_reverse(hl__types__ArrayObj);
 hl__types__ArrayObj String_split(String,String);
 void components_managers_Musicplayer_loadAudio(components__managers__Musicplayer,String);
-extern hl_type t$vrt_6946228;
+extern hl_type t$vrt_357780f;
 extern hl_type t$_bool;
 void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*,vdynamic*);
 void components_managers_Riders_addNewRider(components__managers__Riders,String,h2d__col__Point,vdynamic*,vdynamic*);
@@ -90,16 +90,17 @@ vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 void components_sledder_Bosh_setColor(components__sledder__Bosh,vdynamic*,vdynamic*);
 #include <haxe/io/Bytes.h>
 #include <haxe/format/JsonParser.h>
-#include <hl/types/ArrayDyn.h>
-#include <hxlr/lines/Floor.h>
-#include <hxlr/lines/Accel.h>
-#include <hxlr/lines/Scenery.h>
 extern String s$_json;
 haxe__io__Bytes sys_io_File_getBytes(String);
 String haxe_io_Bytes_toString(haxe__io__Bytes);
 extern hl_type t$haxe_format_JsonParser;
 void haxe_format_JsonParser_new(haxe__format__JsonParser,String);
 vdynamic* haxe_format_JsonParser_doParse(haxe__format__JsonParser);
+void file_SaveLoad_loadJSONObject(file__SaveLoad,vdynamic*);
+#include <hl/types/ArrayDyn.h>
+#include <hxlr/lines/Floor.h>
+#include <hxlr/lines/Accel.h>
+#include <hxlr/lines/Scenery.h>
 extern hl_type t$_dyn;
 extern String s$Bosh;
 extern hl_type t$ref_f64;
@@ -445,24 +446,24 @@ void file_SaveLoad_listTrackFiles(file__SaveLoad r0) {
 }
 
 void file_SaveLoad_loadTrack(file__SaveLoad r0,String r1,vdynamic* r2) {
-	components__managers__Riders r34;
+	components__managers__Riders r36;
 	bool *r11;
 	String r7, r8, r19;
-	haxe__ds__StringMap r35;
+	haxe__ds__StringMap r38;
 	hl__types__ArrayObj r15, r16;
-	vvirtual *r4, *r10, *r23, *r33;
-	bool r6, r20, r30;
-	components__sledder__Bosh r37;
+	vvirtual *r4, *r10, *r23, *r35;
+	bool r6, r20, r24, r25, r26;
+	components__sledder__Bosh r40;
 	components__managers__Musicplayer r21;
-	hxlr__rider__RiderBase r36;
+	hxlr__rider__RiderBase r39;
 	$Main r13;
-	h2d__col__Point r26;
-	components__stage__Canvas r24;
-	double r25, r27, r28, r29;
-	vdynamic *r9, *r14, *r31, *r32;
+	h2d__col__Point r37;
+	components__stage__Canvas r27;
+	double r28, r29, r30, r31;
+	vdynamic *r9, *r14, *r32, *r34;
 	varray *r18;
 	components__stage__LRConsole r12;
-	int r3, r17, r22;
+	int r3, r17, r22, r33;
 	if( r2 ) goto label$eb91429_4_3;
 	r3 = 0;
 	r2 = hl_alloc_dynamic(&t$_i32);
@@ -581,7 +582,7 @@ void file_SaveLoad_loadTrack(file__SaveLoad r0,String r1,vdynamic* r2) {
 	label$eb91429_4_101:
 	if( r15 == NULL ) hl_null_access();
 	r22 = r15->length;
-	if( r3 >= r22 ) goto label$eb91429_4_138;
+	if( r3 >= r22 ) goto label$eb91429_4_146;
 	r22 = r15->length;
 	if( ((unsigned)r3) < ((unsigned)r22) ) goto label$eb91429_4_109;
 	r23 = NULL;
@@ -589,103 +590,104 @@ void file_SaveLoad_loadTrack(file__SaveLoad r0,String r1,vdynamic* r2) {
 	label$eb91429_4_109:
 	r18 = r15->array;
 	r9 = ((vdynamic**)(r18 + 1))[r3];
-	r23 = hl_to_virtual(&t$vrt_6946228,(vdynamic*)r9);
+	r23 = hl_to_virtual(&t$vrt_357780f,(vdynamic*)r9);
 	label$eb91429_4_112:
 	++r3;
-	r13 = ($Main)g$_Main;
-	r24 = r13->canvas;
-	if( r24 == NULL ) hl_null_access();
 	if( r23 == NULL ) hl_null_access();
-	r17 = hl_vfields(r23)[4] ? (*(int*)(hl_vfields(r23)[4])) : (int)hl_dyn_geti(r23->value,-10939617/*linetype*/,&t$_i32);
-	r26 = hl_vfields(r23)[5] ? (*(h2d__col__Point*)(hl_vfields(r23)[5])) : (h2d__col__Point)hl_dyn_getp(r23->value,-492401522/*startPoint*/,&t$h2d_col_Point);
-	if( r26 == NULL ) hl_null_access();
-	r25 = r26->x;
-	r26 = hl_vfields(r23)[5] ? (*(h2d__col__Point*)(hl_vfields(r23)[5])) : (h2d__col__Point)hl_dyn_getp(r23->value,-492401522/*startPoint*/,&t$h2d_col_Point);
-	if( r26 == NULL ) hl_null_access();
-	r27 = r26->y;
-	r26 = hl_vfields(r23)[0] ? (*(h2d__col__Point*)(hl_vfields(r23)[0])) : (h2d__col__Point)hl_dyn_getp(r23->value,-460503568/*endPoint*/,&t$h2d_col_Point);
-	if( r26 == NULL ) hl_null_access();
-	r28 = r26->x;
-	r26 = hl_vfields(r23)[0] ? (*(h2d__col__Point*)(hl_vfields(r23)[0])) : (h2d__col__Point)hl_dyn_getp(r23->value,-460503568/*endPoint*/,&t$h2d_col_Point);
-	if( r26 == NULL ) hl_null_access();
-	r29 = r26->y;
-	r30 = hl_vfields(r23)[1] ? (*(bool*)(hl_vfields(r23)[1])) : (bool)hl_dyn_geti(r23->value,-181292811/*inverted*/,&t$_bool);
-	r31 = hl_alloc_dynbool(r30);
-	r22 = hl_vfields(r23)[2] ? (*(int*)(hl_vfields(r23)[2])) : (int)hl_dyn_geti(r23->value,22730947/*limitMode*/,&t$_i32);
+	r24 = hl_vfields(r23)[2] ? (*(bool*)(hl_vfields(r23)[2])) : (bool)hl_dyn_geti(r23->value,-501582255/*leftExtended*/,&t$_bool);
+	r25 = hl_vfields(r23)[3] ? (*(bool*)(hl_vfields(r23)[3])) : (bool)hl_dyn_geti(r23->value,249944511/*rightExtended*/,&t$_bool);
+	r17 = 0;
+	if( !r24 ) goto label$eb91429_4_125;
+	if( !r25 ) goto label$eb91429_4_122;
+	r22 = 3;
+	r17 = r22;
+	goto label$eb91429_4_124;
+	label$eb91429_4_122:
+	r22 = 1;
+	r17 = r22;
+	label$eb91429_4_124:
+	goto label$eb91429_4_131;
+	label$eb91429_4_125:
+	if( !r25 ) goto label$eb91429_4_129;
+	r22 = 2;
+	r17 = r22;
+	goto label$eb91429_4_131;
+	label$eb91429_4_129:
+	r22 = 0;
+	r17 = r22;
+	label$eb91429_4_131:
+	r13 = ($Main)g$_Main;
+	r27 = r13->canvas;
+	if( r27 == NULL ) hl_null_access();
+	r22 = hl_vfields(r23)[4] ? (*(int*)(hl_vfields(r23)[4])) : (int)hl_dyn_geti(r23->value,218690500/*type*/,&t$_i32);
+	r28 = hl_vfields(r23)[5] ? (*(double*)(hl_vfields(r23)[5])) : (double)hl_dyn_getd(r23->value,26809/*x1*/);
+	r29 = hl_vfields(r23)[7] ? (*(double*)(hl_vfields(r23)[7])) : (double)hl_dyn_getd(r23->value,27032/*y1*/);
+	r30 = hl_vfields(r23)[6] ? (*(double*)(hl_vfields(r23)[6])) : (double)hl_dyn_getd(r23->value,26810/*x2*/);
+	r31 = hl_vfields(r23)[8] ? (*(double*)(hl_vfields(r23)[8])) : (double)hl_dyn_getd(r23->value,27033/*y2*/);
+	r26 = hl_vfields(r23)[0] ? (*(bool*)(hl_vfields(r23)[0])) : (bool)hl_dyn_geti(r23->value,529034705/*flipped*/,&t$_bool);
+	r32 = hl_alloc_dynbool(r26);
 	r14 = hl_alloc_dynamic(&t$_i32);
-	r14->v.i = r22;
-	r22 = hl_vfields(r23)[3] ? (*(int*)(hl_vfields(r23)[3])) : (int)hl_dyn_geti(r23->value,-325042993/*lineID*/,&t$_i32);
-	r32 = hl_alloc_dynamic(&t$_i32);
-	r32->v.i = r22;
-	components_stage_Canvas_addLine(r24,r17,r25,r27,r28,r29,r31,r14,r32);
+	r14->v.i = r17;
+	r33 = hl_vfields(r23)[1] ? (*(int*)(hl_vfields(r23)[1])) : (int)hl_dyn_geti(r23->value,23515/*id*/,&t$_i32);
+	r34 = hl_alloc_dynamic(&t$_i32);
+	r34->v.i = r33;
+	components_stage_Canvas_addLine(r27,r22,r28,r29,r30,r31,r32,r14,r34);
 	goto label$eb91429_4_101;
-	label$eb91429_4_138:
+	label$eb91429_4_146:
 	r3 = 0;
 	if( r4 == NULL ) hl_null_access();
 	r15 = hl_vfields(r4)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,203975107/*riders*/,&t$hl_types_ArrayObj);
-	label$eb91429_4_141:
+	label$eb91429_4_149:
 	if( r15 == NULL ) hl_null_access();
 	r22 = r15->length;
-	if( r3 >= r22 ) goto label$eb91429_4_178;
+	if( r3 >= r22 ) goto label$eb91429_4_186;
 	r22 = r15->length;
-	if( ((unsigned)r3) < ((unsigned)r22) ) goto label$eb91429_4_149;
-	r33 = NULL;
-	goto label$eb91429_4_152;
-	label$eb91429_4_149:
+	if( ((unsigned)r3) < ((unsigned)r22) ) goto label$eb91429_4_157;
+	r35 = NULL;
+	goto label$eb91429_4_160;
+	label$eb91429_4_157:
 	r18 = r15->array;
 	r9 = ((vdynamic**)(r18 + 1))[r3];
-	r33 = hl_to_virtual(&t$vrt_9af152f,(vdynamic*)r9);
-	label$eb91429_4_152:
+	r35 = hl_to_virtual(&t$vrt_9af152f,(vdynamic*)r9);
+	label$eb91429_4_160:
 	++r3;
 	r13 = ($Main)g$_Main;
-	r34 = r13->riders;
-	if( r34 == NULL ) hl_null_access();
-	if( r33 == NULL ) hl_null_access();
-	r7 = hl_vfields(r33)[2] ? (*(String*)(hl_vfields(r33)[2])) : (String)hl_dyn_getp(r33->value,150958933/*name*/,&t$String);
-	r26 = hl_vfields(r33)[4] ? (*(h2d__col__Point*)(hl_vfields(r33)[4])) : (h2d__col__Point)hl_dyn_getp(r33->value,-492401522/*startPoint*/,&t$h2d_col_Point);
-	r14 = hl_vfields(r33)[3] ? (*(vdynamic**)(hl_vfields(r33)[3])) : (vdynamic*)hl_dyn_getp(r33->value,43667696/*startFrame*/,&t$nul_i32);
-	r32 = hl_vfields(r33)[5] ? (*(vdynamic**)(hl_vfields(r33)[5])) : (vdynamic*)hl_dyn_getp(r33->value,382054603/*stopFrame*/,&t$nul_i32);
-	components_managers_Riders_addNewRider(r34,r7,r26,r14,r32);
-	r13 = ($Main)g$_Main;
-	r34 = r13->riders;
-	if( r34 == NULL ) hl_null_access();
-	r35 = r34->riders;
+	r36 = r13->riders;
+	if( r36 == NULL ) hl_null_access();
 	if( r35 == NULL ) hl_null_access();
-	r7 = hl_vfields(r33)[2] ? (*(String*)(hl_vfields(r33)[2])) : (String)hl_dyn_getp(r33->value,150958933/*name*/,&t$String);
-	r9 = haxe_ds_StringMap_get(r35,r7);
-	r36 = (hxlr__rider__RiderBase)r9;
-	r37 = (components__sledder__Bosh)hl_dyn_castp(&r36,&t$hxlr_rider_RiderBase,&t$components_sledder_Bosh);
-	if( r37 == NULL ) hl_null_access();
-	r17 = hl_vfields(r33)[0] ? (*(int*)(hl_vfields(r33)[0])) : (int)hl_dyn_geti(r33->value,-427375335/*colora*/,&t$_i32);
+	r7 = hl_vfields(r35)[2] ? (*(String*)(hl_vfields(r35)[2])) : (String)hl_dyn_getp(r35->value,150958933/*name*/,&t$String);
+	r37 = hl_vfields(r35)[4] ? (*(h2d__col__Point*)(hl_vfields(r35)[4])) : (h2d__col__Point)hl_dyn_getp(r35->value,-492401522/*startPoint*/,&t$h2d_col_Point);
+	r14 = hl_vfields(r35)[3] ? (*(vdynamic**)(hl_vfields(r35)[3])) : (vdynamic*)hl_dyn_getp(r35->value,43667696/*startFrame*/,&t$nul_i32);
+	r34 = hl_vfields(r35)[5] ? (*(vdynamic**)(hl_vfields(r35)[5])) : (vdynamic*)hl_dyn_getp(r35->value,382054603/*stopFrame*/,&t$nul_i32);
+	components_managers_Riders_addNewRider(r36,r7,r37,r14,r34);
+	r13 = ($Main)g$_Main;
+	r36 = r13->riders;
+	if( r36 == NULL ) hl_null_access();
+	r38 = r36->riders;
+	if( r38 == NULL ) hl_null_access();
+	r7 = hl_vfields(r35)[2] ? (*(String*)(hl_vfields(r35)[2])) : (String)hl_dyn_getp(r35->value,150958933/*name*/,&t$String);
+	r9 = haxe_ds_StringMap_get(r38,r7);
+	r39 = (hxlr__rider__RiderBase)r9;
+	r40 = (components__sledder__Bosh)hl_dyn_castp(&r39,&t$hxlr_rider_RiderBase,&t$components_sledder_Bosh);
+	if( r40 == NULL ) hl_null_access();
+	r17 = hl_vfields(r35)[0] ? (*(int*)(hl_vfields(r35)[0])) : (int)hl_dyn_geti(r35->value,-427375335/*colora*/,&t$_i32);
 	r14 = hl_alloc_dynamic(&t$_i32);
 	r14->v.i = r17;
-	r17 = hl_vfields(r33)[1] ? (*(int*)(hl_vfields(r33)[1])) : (int)hl_dyn_geti(r33->value,-427375334/*colorb*/,&t$_i32);
-	r32 = hl_alloc_dynamic(&t$_i32);
-	r32->v.i = r17;
-	components_sledder_Bosh_setColor(r37,r14,r32);
-	goto label$eb91429_4_141;
-	label$eb91429_4_178:
+	r17 = hl_vfields(r35)[1] ? (*(int*)(hl_vfields(r35)[1])) : (int)hl_dyn_geti(r35->value,-427375334/*colorb*/,&t$_i32);
+	r34 = hl_alloc_dynamic(&t$_i32);
+	r34->v.i = r17;
+	components_sledder_Bosh_setColor(r40,r14,r34);
+	goto label$eb91429_4_149;
+	label$eb91429_4_186:
 	return;
 }
 
 void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
-	components__managers__Riders r11;
 	String r4, r5;
-	hxlr__lines__Scenery r26;
 	haxe__io__Bytes r7;
 	bool r3;
-	hxlr__lines__Floor r23;
 	haxe__format__JsonParser r8;
-	hxlr__engine__Grid r27;
-	hxlr__lines__Accel r25;
-	$Main r10;
-	h2d__col__Point r12, r24;
-	hxlr__lines__LineBase r22;
-	components__stage__Canvas r28;
-	hl__types__ArrayDyn r17;
-	double *r13, *r14;
-	vdynamic *r6, *r9, *r15, *r16, *r21;
-	int r18, r19, r20;
+	vdynamic *r6;
 	r4 = (String)s$_saves_;
 	r4 = String___add__(r4,r1);
 	r5 = (String)s$_json;
@@ -704,159 +706,179 @@ void file_SaveLoad_loadJSON(file__SaveLoad r0,String r1) {
 	r8 = (haxe__format__JsonParser)hl_alloc_obj(&t$haxe_format_JsonParser);
 	haxe_format_JsonParser_new(r8,r4);
 	r6 = haxe_format_JsonParser_doParse(r8);
+	file_SaveLoad_loadJSONObject(r0,r6);
+	return;
+}
+
+void file_SaveLoad_loadJSONObject(file__SaveLoad r0,vdynamic* r1) {
+	components__managers__Riders r6;
+	String r3;
+	hxlr__lines__Scenery r22;
+	bool r17;
+	hxlr__lines__Floor r19;
+	hxlr__engine__Grid r23;
+	hxlr__lines__Accel r21;
+	$Main r4;
+	h2d__col__Point r7, r20;
+	hxlr__lines__LineBase r18;
+	components__stage__Canvas r24;
+	hl__types__ArrayDyn r12;
+	double *r8, *r9;
+	vdynamic *r2, *r10, *r11, *r16;
+	int r13, r14, r15;
+	if( r1 == NULL ) hl_null_access();
+	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,263131011/*label*/,&t$_dyn);
+	r3 = (String)hl_dyn_castp(&r2,&t$_dyn,&t$String);
+	r4 = ($Main)g$_Main;
+	r4->trackName = r3;
+	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,292208300/*creator*/,&t$_dyn);
+	r3 = (String)hl_dyn_castp(&r2,&t$_dyn,&t$String);
+	r4 = ($Main)g$_Main;
+	r4->authorName = r3;
+	r4 = ($Main)g$_Main;
+	r6 = r4->riders;
 	if( r6 == NULL ) hl_null_access();
-	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r6,263131011/*label*/,&t$_dyn);
-	r5 = (String)hl_dyn_castp(&r9,&t$_dyn,&t$String);
-	r10 = ($Main)g$_Main;
-	r10->trackName = r5;
-	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r6,292208300/*creator*/,&t$_dyn);
-	r5 = (String)hl_dyn_castp(&r9,&t$_dyn,&t$String);
-	r10 = ($Main)g$_Main;
-	r10->authorName = r5;
-	r10 = ($Main)g$_Main;
-	r11 = r10->riders;
-	if( r11 == NULL ) hl_null_access();
-	r5 = (String)s$Bosh;
-	r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r6,-273284442/*startPosition*/,&t$_dyn);
-	if( r9 == NULL ) hl_null_access();
-	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,120/*x*/,&t$_dyn);
-	r13 = (double*)hl_dyn_castp(&r9,&t$_dyn,&t$ref_f64);
-	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r6,-273284442/*startPosition*/,&t$_dyn);
-	if( r9 == NULL ) hl_null_access();
-	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,121/*y*/,&t$_dyn);
-	r14 = (double*)hl_dyn_castp(&r9,&t$_dyn,&t$ref_f64);
-	h2d_col_Point_new(r12,r13,r14);
-	r15 = NULL;
-	r16 = NULL;
-	components_managers_Riders_addNewRider(r11,r5,r12,r15,r16);
-	r9 = (vdynamic*)hl_dyn_getp((vdynamic*)r6,352444302/*lines*/,&t$_dyn);
-	r17 = (hl__types__ArrayDyn)hl_dyn_castp(&r9,&t$_dyn,&t$hl_types_ArrayDyn);
-	if( r17 == NULL ) hl_null_access();
-	hl_types_ArrayDyn_reverse(r17);
-	r18 = 0;
-	label$eb91429_5_48:
-	if( r17 == NULL ) hl_null_access();
-	r20 = hl_types_ArrayDyn_get_length(r17);
-	if( r18 >= r20 ) goto label$eb91429_5_159;
-	r9 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r17->$type->vobj_proto[0])(r17,r18);
-	++r18;
-	r19 = 0;
-	if( r9 == NULL ) hl_null_access();
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_65;
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_65;
-	r20 = 0;
-	r19 = r20;
-	goto label$eb91429_5_91;
-	label$eb91429_5_65:
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_74;
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_74;
-	r20 = 1;
-	r19 = r20;
-	goto label$eb91429_5_91;
-	label$eb91429_5_74:
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( r3 ) goto label$eb91429_5_83;
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_83;
-	r20 = 2;
-	r19 = r20;
-	goto label$eb91429_5_91;
-	label$eb91429_5_83:
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,-501582255/*leftExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_91;
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,249944511/*rightExtended*/,&t$_dyn);
-	r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-	if( !r3 ) goto label$eb91429_5_91;
-	r20 = 3;
-	r19 = r20;
-	label$eb91429_5_91:
-	r22 = NULL;
-	r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,218690500/*type*/,&t$_dyn);
-	r20 = (int)hl_dyn_casti(&r21,&t$_dyn,&t$_i32);
-	switch(r20) {
+	r3 = (String)s$Bosh;
+	r7 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,-273284442/*startPosition*/,&t$_dyn);
+	if( r2 == NULL ) hl_null_access();
+	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,120/*x*/,&t$_dyn);
+	r8 = (double*)hl_dyn_castp(&r2,&t$_dyn,&t$ref_f64);
+	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,-273284442/*startPosition*/,&t$_dyn);
+	if( r2 == NULL ) hl_null_access();
+	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,121/*y*/,&t$_dyn);
+	r9 = (double*)hl_dyn_castp(&r2,&t$_dyn,&t$ref_f64);
+	h2d_col_Point_new(r7,r8,r9);
+	r10 = NULL;
+	r11 = NULL;
+	components_managers_Riders_addNewRider(r6,r3,r7,r10,r11);
+	r2 = (vdynamic*)hl_dyn_getp((vdynamic*)r1,352444302/*lines*/,&t$_dyn);
+	r12 = (hl__types__ArrayDyn)hl_dyn_castp(&r2,&t$_dyn,&t$hl_types_ArrayDyn);
+	if( r12 == NULL ) hl_null_access();
+	hl_types_ArrayDyn_reverse(r12);
+	r13 = 0;
+	label$eb91429_6_31:
+	if( r12 == NULL ) hl_null_access();
+	r15 = hl_types_ArrayDyn_get_length(r12);
+	if( r13 >= r15 ) goto label$eb91429_6_142;
+	r2 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r12->$type->vobj_proto[0])(r12,r13);
+	++r13;
+	r14 = 0;
+	if( r2 == NULL ) hl_null_access();
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,-501582255/*leftExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( r17 ) goto label$eb91429_6_48;
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,249944511/*rightExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( r17 ) goto label$eb91429_6_48;
+	r15 = 0;
+	r14 = r15;
+	goto label$eb91429_6_74;
+	label$eb91429_6_48:
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,-501582255/*leftExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( !r17 ) goto label$eb91429_6_57;
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,249944511/*rightExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( r17 ) goto label$eb91429_6_57;
+	r15 = 1;
+	r14 = r15;
+	goto label$eb91429_6_74;
+	label$eb91429_6_57:
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,-501582255/*leftExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( r17 ) goto label$eb91429_6_66;
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,249944511/*rightExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( !r17 ) goto label$eb91429_6_66;
+	r15 = 2;
+	r14 = r15;
+	goto label$eb91429_6_74;
+	label$eb91429_6_66:
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,-501582255/*leftExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( !r17 ) goto label$eb91429_6_74;
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,249944511/*rightExtended*/,&t$_dyn);
+	r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+	if( !r17 ) goto label$eb91429_6_74;
+	r15 = 3;
+	r14 = r15;
+	label$eb91429_6_74:
+	r18 = NULL;
+	r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,218690500/*type*/,&t$_dyn);
+	r15 = (int)hl_dyn_casti(&r16,&t$_dyn,&t$_i32);
+	switch(r15) {
 		default:
-			goto label$eb91429_5_48;
+			goto label$eb91429_6_31;
 		case 0:
-			r23 = (hxlr__lines__Floor)hl_alloc_obj(&t$hxlr_lines_Floor);
-			r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26809/*x1*/,&t$_dyn);
-			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,27032/*y1*/,&t$_dyn);
-			r14 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			h2d_col_Point_new(r12,r13,r14);
-			r24 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26810/*x2*/,&t$_dyn);
-			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,27033/*y2*/,&t$_dyn);
-			r14 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			h2d_col_Point_new(r24,r13,r14);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,529034705/*flipped*/,&t$_dyn);
-			r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-			hxlr_lines_Floor_new(r23,r12,r24,r3);
-			r22 = ((hxlr__lines__LineBase)r23);
-			goto label$eb91429_5_149;
+			r19 = (hxlr__lines__Floor)hl_alloc_obj(&t$hxlr_lines_Floor);
+			r7 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,26809/*x1*/,&t$_dyn);
+			r8 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,27032/*y1*/,&t$_dyn);
+			r9 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			h2d_col_Point_new(r7,r8,r9);
+			r20 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,26810/*x2*/,&t$_dyn);
+			r8 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,27033/*y2*/,&t$_dyn);
+			r9 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			h2d_col_Point_new(r20,r8,r9);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,529034705/*flipped*/,&t$_dyn);
+			r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+			hxlr_lines_Floor_new(r19,r7,r20,r17);
+			r18 = ((hxlr__lines__LineBase)r19);
+			goto label$eb91429_6_132;
 		case 1:
-			r25 = (hxlr__lines__Accel)hl_alloc_obj(&t$hxlr_lines_Accel);
-			r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26809/*x1*/,&t$_dyn);
-			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,27032/*y1*/,&t$_dyn);
-			r14 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			h2d_col_Point_new(r12,r13,r14);
-			r24 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26810/*x2*/,&t$_dyn);
-			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,27033/*y2*/,&t$_dyn);
-			r14 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			h2d_col_Point_new(r24,r13,r14);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,529034705/*flipped*/,&t$_dyn);
-			r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-			hxlr_lines_Accel_new(r25,r12,r24,r3);
-			r22 = ((hxlr__lines__LineBase)r25);
-			goto label$eb91429_5_149;
+			r21 = (hxlr__lines__Accel)hl_alloc_obj(&t$hxlr_lines_Accel);
+			r7 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,26809/*x1*/,&t$_dyn);
+			r8 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,27032/*y1*/,&t$_dyn);
+			r9 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			h2d_col_Point_new(r7,r8,r9);
+			r20 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,26810/*x2*/,&t$_dyn);
+			r8 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,27033/*y2*/,&t$_dyn);
+			r9 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			h2d_col_Point_new(r20,r8,r9);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,529034705/*flipped*/,&t$_dyn);
+			r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+			hxlr_lines_Accel_new(r21,r7,r20,r17);
+			r18 = ((hxlr__lines__LineBase)r21);
+			goto label$eb91429_6_132;
 		case 2:
-			r26 = (hxlr__lines__Scenery)hl_alloc_obj(&t$hxlr_lines_Scenery);
-			r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26809/*x1*/,&t$_dyn);
-			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,27032/*y1*/,&t$_dyn);
-			r14 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			h2d_col_Point_new(r12,r13,r14);
-			r24 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,26810/*x2*/,&t$_dyn);
-			r13 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,27033/*y2*/,&t$_dyn);
-			r14 = (double*)hl_dyn_castp(&r21,&t$_dyn,&t$ref_f64);
-			h2d_col_Point_new(r24,r13,r14);
-			r21 = (vdynamic*)hl_dyn_getp((vdynamic*)r9,529034705/*flipped*/,&t$_dyn);
-			r3 = (bool)hl_dyn_casti(&r21,&t$_dyn,&t$_bool);
-			hxlr_lines_Scenery_new(r26,r12,r24,r3);
-			r22 = ((hxlr__lines__LineBase)r26);
+			r22 = (hxlr__lines__Scenery)hl_alloc_obj(&t$hxlr_lines_Scenery);
+			r7 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,26809/*x1*/,&t$_dyn);
+			r8 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,27032/*y1*/,&t$_dyn);
+			r9 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			h2d_col_Point_new(r7,r8,r9);
+			r20 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,26810/*x2*/,&t$_dyn);
+			r8 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,27033/*y2*/,&t$_dyn);
+			r9 = (double*)hl_dyn_castp(&r16,&t$_dyn,&t$ref_f64);
+			h2d_col_Point_new(r20,r8,r9);
+			r16 = (vdynamic*)hl_dyn_getp((vdynamic*)r2,529034705/*flipped*/,&t$_dyn);
+			r17 = (bool)hl_dyn_casti(&r16,&t$_dyn,&t$_bool);
+			hxlr_lines_Scenery_new(r22,r7,r20,r17);
+			r18 = ((hxlr__lines__LineBase)r22);
 	}
-	label$eb91429_5_149:
-	hxlr_lines_LineBase_setLim(r22,r19);
-	r10 = ($Main)g$_Main;
-	r27 = r10->grid;
-	if( r27 == NULL ) hl_null_access();
-	hxlr_engine_Grid_register(r27,r22);
-	r10 = ($Main)g$_Main;
-	r28 = r10->canvas;
-	if( r28 == NULL ) hl_null_access();
-	components_stage_Canvas_drawLineGraphic(r28,r22);
-	goto label$eb91429_5_48;
-	label$eb91429_5_159:
+	label$eb91429_6_132:
+	hxlr_lines_LineBase_setLim(r18,r14);
+	r4 = ($Main)g$_Main;
+	r23 = r4->grid;
+	if( r23 == NULL ) hl_null_access();
+	hxlr_engine_Grid_register(r23,r18);
+	r4 = ($Main)g$_Main;
+	r24 = r4->canvas;
+	if( r24 == NULL ) hl_null_access();
+	components_stage_Canvas_drawLineGraphic(r24,r18);
+	goto label$eb91429_6_31;
+	label$eb91429_6_142:
 	return;
 }
 
@@ -890,12 +912,12 @@ void file_SaveLoad_loadUserInfo(file__SaveLoad r0) {
 	r5 = &r4;
 	r1 = hxd_Save_load(((vdynamic*)r2),r3,r5);
 	r2 = hl_to_virtual(&t$vrt_45af8a6,(vdynamic*)r1);
-	if( !r2 ) goto label$eb91429_7_11;
+	if( !r2 ) goto label$eb91429_8_11;
 	if( r2 == NULL ) hl_null_access();
 	r3 = hl_vfields(r2)[0] ? (*(String*)(hl_vfields(r2)[0])) : (String)hl_dyn_getp(r2->value,150958933/*name*/,&t$String);
 	r7 = ($Main)g$_Main;
 	r7->authorName = r3;
-	label$eb91429_7_11:
+	label$eb91429_8_11:
 	return;
 }
 

@@ -14,10 +14,10 @@ extern hl_type t$String;
 extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 #include <hxlr/lines/LineBase.h>
+bool hl_types_ArrayObj_contains(hl__types__ArrayObj,vdynamic*);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
 extern hxlr__engine__$Cell g$_hxlr_engine_Cell;
-bool hl_types_ArrayObj_contains(hl__types__ArrayObj,vdynamic*);
 bool hl_types_ArrayObj_remove(hl__types__ArrayObj,vdynamic*);
 
 vvirtual* hxlr_engine_Cell_getInfo(double r0,double r1) {
@@ -82,7 +82,7 @@ void hxlr_engine_Cell_new(hxlr__engine__Cell r0,vvirtual* r1) {
 	r0->allLines = r2;
 	r2 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r2);
-	r0->tangible = r2;
+	r0->collidable = r2;
 	r2 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r2);
 	r0->intangible = r2;
@@ -91,50 +91,56 @@ void hxlr_engine_Cell_new(hxlr__engine__Cell r0,vvirtual* r1) {
 
 void hxlr_engine_Cell_addLine(hxlr__engine__Cell r0,hxlr__lines__LineBase r1) {
 	hxlr__engine__$Cell r9;
-	hl__types__ArrayObj r3;
-	bool r5;
+	hl__types__ArrayObj r4;
+	bool r3;
 	vdynamic *r6;
 	varray *r8;
-	int r2, r7;
-	r3 = r0->allLines;
-	if( r3 == NULL ) hl_null_access();
-	r2 = hl_types_ArrayObj_push(r3,((vdynamic*)r1));
+	int r5, r7;
+	r4 = r0->allLines;
+	if( r4 == NULL ) hl_null_access();
+	r3 = hl_types_ArrayObj_contains(r4,((vdynamic*)r1));
+	if( !r3 ) goto label$f139353_3_5;
+	return;
+	label$f139353_3_5:
+	r4 = r0->allLines;
+	if( r4 == NULL ) hl_null_access();
+	r5 = hl_types_ArrayObj_push(r4,((vdynamic*)r1));
 	if( r1 == NULL ) hl_null_access();
-	r5 = r1->tangible;
-	if( !r5 ) goto label$f139353_3_16;
-	r3 = r0->tangible;
-	if( r3 == NULL ) hl_null_access();
+	r3 = r1->tangible;
+	if( !r3 ) goto label$f139353_3_21;
+	r4 = r0->collidable;
+	if( r4 == NULL ) hl_null_access();
 	r6 = r1->id;
-	r2 = r6 ? r6->v.i : 0;
-	r7 = r3->length;
-	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$f139353_3_13;
-	hl_types_ArrayObj___expand(r3,r2);
-	label$f139353_3_13:
-	r8 = r3->array;
-	((hxlr__lines__LineBase*)(r8 + 1))[r2] = r1;
-	goto label$f139353_3_25;
-	label$f139353_3_16:
-	r3 = r0->intangible;
-	if( r3 == NULL ) hl_null_access();
+	r5 = r6 ? r6->v.i : 0;
+	r7 = r4->length;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$f139353_3_18;
+	hl_types_ArrayObj___expand(r4,r5);
+	label$f139353_3_18:
+	r8 = r4->array;
+	((hxlr__lines__LineBase*)(r8 + 1))[r5] = r1;
+	goto label$f139353_3_30;
+	label$f139353_3_21:
+	r4 = r0->intangible;
+	if( r4 == NULL ) hl_null_access();
 	r6 = r1->id;
-	r2 = r6 ? r6->v.i : 0;
-	r7 = r3->length;
-	if( ((unsigned)r2) < ((unsigned)r7) ) goto label$f139353_3_23;
-	hl_types_ArrayObj___expand(r3,r2);
-	label$f139353_3_23:
-	r8 = r3->array;
-	((hxlr__lines__LineBase*)(r8 + 1))[r2] = r1;
-	label$f139353_3_25:
+	r5 = r6 ? r6->v.i : 0;
+	r7 = r4->length;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$f139353_3_28;
+	hl_types_ArrayObj___expand(r4,r5);
+	label$f139353_3_28:
+	r8 = r4->array;
+	((hxlr__lines__LineBase*)(r8 + 1))[r5] = r1;
+	label$f139353_3_30:
 	r9 = (hxlr__engine__$Cell)g$_hxlr_engine_Cell;
-	r3 = r9->cellList;
-	if( r3 == NULL ) hl_null_access();
-	r5 = hl_types_ArrayObj_contains(r3,((vdynamic*)r0));
-	if( r5 ) goto label$f139353_3_34;
+	r4 = r9->cellList;
+	if( r4 == NULL ) hl_null_access();
+	r3 = hl_types_ArrayObj_contains(r4,((vdynamic*)r0));
+	if( r3 ) goto label$f139353_3_39;
 	r9 = (hxlr__engine__$Cell)g$_hxlr_engine_Cell;
-	r3 = r9->cellList;
-	if( r3 == NULL ) hl_null_access();
-	r2 = hl_types_ArrayObj_push(r3,((vdynamic*)r0));
-	label$f139353_3_34:
+	r4 = r9->cellList;
+	if( r4 == NULL ) hl_null_access();
+	r5 = hl_types_ArrayObj_push(r4,((vdynamic*)r0));
+	label$f139353_3_39:
 	return;
 }
 
@@ -155,7 +161,7 @@ void hxlr_engine_Cell_removeLine(hxlr__engine__Cell r0,hxlr__lines__LineBase r1)
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->tangible;
 	if( !r3 ) goto label$f139353_4_15;
-	r4 = r0->tangible;
+	r4 = r0->collidable;
 	if( r4 == NULL ) hl_null_access();
 	r3 = hl_types_ArrayObj_remove(r4,((vdynamic*)r1));
 	goto label$f139353_4_18;

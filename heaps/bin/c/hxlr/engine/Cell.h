@@ -23,7 +23,7 @@ struct _hxlr__engine__Cell {
 	hl_type *$type;
 	vvirtual* info;
 	hl__types__ArrayObj allLines;
-	hl__types__ArrayObj tangible;
+	hl__types__ArrayObj collidable;
 	hl__types__ArrayObj intangible;
 };
 #endif

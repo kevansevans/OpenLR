@@ -5,7 +5,6 @@
 #include <components/managers/Riders.h>
 #include <_std/Main.h>
 #include <components/stage/LRConsole.h>
-#include <components/managers/Musicplayer.h>
 #include <components/stage/Camera.h>
 extern $Main g$_Main;
 extern String s$No_riders_in_current_track;
@@ -13,11 +12,11 @@ extern hl_type t$_i32;
 #include <h2d/Console.h>
 void h2d_Console_log(h2d__Console,String,vdynamic*);
 void components_managers_Simulation_restoreState(components__managers__Simulation,int);
-void components_managers_Musicplayer_stopMusic(components__managers__Musicplayer);
-void components_managers_Musicplayer_playMusic(components__managers__Musicplayer,int);
 void components_stage_Camera_start(components__stage__Camera);
 void components_managers_Simulation_stepSim(components__managers__Simulation);
+#include <components/managers/Musicplayer.h>
 void components_stage_Camera_stop(components__stage__Camera);
+void components_managers_Musicplayer_stopMusic(components__managers__Musicplayer);
 double components_managers_Simulation_get_desiredSimSpeed(components__managers__Simulation);
 void components_managers_Riders_stepRiders(components__managers__Riders);
 void components_managers_Simulation_recordGlobalSimState(components__managers__Simulation);
@@ -44,9 +43,9 @@ extern hl_type t$vrt_5caddc6;
 void components_managers_Simulation_recordRiderState(components__managers__Simulation,hxlr__rider__RiderBase,int);
 extern hl_type t$_bool;
 bool hxlr_rider_RiderBase_set_crashed(hxlr__rider__RiderBase,bool);
-extern hl_type t$vrt_6c2da0f;
+extern hl_type t$vrt_5d2f518;
 void hxlr_rider_ContactPoint_deserialize(hxlr__rider__ContactPoint,vvirtual*);
-extern hl_type t$vrt_e4dd42c;
+extern hl_type t$vrt_b840ca7;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 extern hl_type t$haxe_ds_ObjectMap;
 void haxe_ds_ObjectMap_set(haxe__ds__ObjectMap,vdynamic*,vdynamic*);
@@ -61,11 +60,10 @@ void components_managers_Simulation_startSim(components__managers__Simulation r0
 	String r7;
 	components__managers__Riders r3;
 	bool r9;
-	components__managers__Musicplayer r11;
 	$Main r4;
 	double r10;
 	vdynamic *r8;
-	components__stage__Camera r12;
+	components__stage__Camera r11;
 	components__stage__LRConsole r6;
 	int r2, r5;
 	r4 = ($Main)g$_Main;
@@ -100,25 +98,14 @@ void components_managers_Simulation_startSim(components__managers__Simulation r0
 	components_managers_Simulation_restoreState(r0,r2);
 	label$d8284df_1_27:
 	r4 = ($Main)g$_Main;
-	r11 = r4->audio;
+	r11 = r4->camera;
 	if( r11 == NULL ) hl_null_access();
-	components_managers_Musicplayer_stopMusic(r11);
-	r4 = ($Main)g$_Main;
-	r11 = r4->audio;
-	if( r11 == NULL ) hl_null_access();
-	r2 = r0->frames;
-	components_managers_Musicplayer_playMusic(r11,r2);
-	r4 = ($Main)g$_Main;
-	r12 = r4->camera;
-	if( r12 == NULL ) hl_null_access();
-	components_stage_Camera_start(r12);
+	components_stage_Camera_start(r11);
 	return;
 }
 
 void components_managers_Simulation_pauseSim(components__managers__Simulation r0) {
 	bool r2;
-	components__managers__Musicplayer r3;
-	$Main r4;
 	r2 = r0->playing;
 	if( r2 ) goto label$d8284df_2_6;
 	r2 = r0->paused;
@@ -126,10 +113,6 @@ void components_managers_Simulation_pauseSim(components__managers__Simulation r0
 	components_managers_Simulation_startSim(r0);
 	return;
 	label$d8284df_2_6:
-	r4 = ($Main)g$_Main;
-	r3 = r4->audio;
-	if( r3 == NULL ) hl_null_access();
-	components_managers_Musicplayer_stopMusic(r3);
 	r2 = false;
 	r0->playing = r2;
 	r2 = true;
@@ -139,18 +122,10 @@ void components_managers_Simulation_pauseSim(components__managers__Simulation r0
 
 void components_managers_Simulation_resumeSim(components__managers__Simulation r0) {
 	bool r1;
-	components__managers__Musicplayer r3;
-	$Main r4;
-	int r5;
 	r1 = true;
 	r0->playing = r1;
 	r1 = false;
 	r0->paused = r1;
-	r4 = ($Main)g$_Main;
-	r3 = r4->audio;
-	if( r3 == NULL ) hl_null_access();
-	r5 = r0->frames;
-	components_managers_Musicplayer_playMusic(r3,r5);
 	return;
 }
 
@@ -432,7 +407,7 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	label$d8284df_12_64:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r21];
-	r24 = hl_to_virtual(&t$vrt_6c2da0f,(vdynamic*)r11);
+	r24 = hl_to_virtual(&t$vrt_5d2f518,(vdynamic*)r11);
 	label$d8284df_12_67:
 	hxlr_rider_ContactPoint_deserialize(r23,r24);
 	goto label$d8284df_12_42;
@@ -469,7 +444,7 @@ void components_managers_Simulation_restoreState(components__managers__Simulatio
 	label$d8284df_12_96:
 	r19 = r16->array;
 	r11 = ((vdynamic**)(r19 + 1))[r21];
-	r24 = hl_to_virtual(&t$vrt_6c2da0f,(vdynamic*)r11);
+	r24 = hl_to_virtual(&t$vrt_5d2f518,(vdynamic*)r11);
 	label$d8284df_12_99:
 	hxlr_rider_ContactPoint_deserialize(((hxlr__rider__ContactPoint)r25),r24);
 	goto label$d8284df_12_74;
@@ -533,12 +508,12 @@ void components_managers_Simulation_recordRiderState(components__managers__Simul
 	label$d8284df_14_9:
 	r7 = r5->f$1;
 	if( r7 ) goto label$d8284df_14_13;
-	r7 = hl_to_virtual(&t$vrt_e4dd42c,(vdynamic*)r5);
+	r7 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r5);
 	r5->f$1 = r7;
 	label$d8284df_14_13:
 	r6 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
 	hl_types_ArrayObj_new(r6);
-	r5 = (haxe__ds__ObjectMap)hl_dyn_castp(&r7,&t$vrt_e4dd42c,&t$haxe_ds_ObjectMap);
+	r5 = (haxe__ds__ObjectMap)hl_dyn_castp(&r7,&t$vrt_b840ca7,&t$haxe_ds_ObjectMap);
 	if( r5 == NULL ) hl_null_access();
 	haxe_ds_ObjectMap_set(r5,((vdynamic*)r1),((vdynamic*)r6));
 	label$d8284df_14_18:

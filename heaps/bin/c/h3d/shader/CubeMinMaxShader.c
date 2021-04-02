@@ -2,21 +2,12 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <h3d/shader/CubeMinMaxShader.h>
-extern hl_type t$h3d_Matrix;
-void h3d_Matrix_new(h3d__Matrix);
-void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 #include <hxsl/Globals.h>
 void hxsl_Shader_updateConstantsFinal(hxsl__Shader,hxsl__Globals);
 extern hl_type t$_f64;
-
-void h3d_shader_CubeMinMaxShader_new(h3d__shader__CubeMinMaxShader r0) {
-	h3d__Matrix r1;
-	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
-	h3d_Matrix_new(r1);
-	r0->mat__ = r1;
-	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
-	return;
-}
+extern hl_type t$h3d_Matrix;
+void h3d_Matrix_new(h3d__Matrix);
+void h3d_shader_ScreenShader_new(h3d__shader__ScreenShader);
 
 void h3d_shader_CubeMinMaxShader_updateConstants(h3d__shader__CubeMinMaxShader r0,hxsl__Globals r1) {
 	bool r4;
@@ -24,12 +15,12 @@ void h3d_shader_CubeMinMaxShader_updateConstants(h3d__shader__CubeMinMaxShader r
 	r2 = 0;
 	r0->constBits = r2;
 	r4 = r0->isMax__;
-	if( !r4 ) goto label$82fd479_2_8;
+	if( !r4 ) goto label$82fd479_1_8;
 	r2 = r0->constBits;
 	r5 = 1;
 	r2 = r2 | r5;
 	r0->constBits = r2;
-	label$82fd479_2_8:
+	label$82fd479_1_8:
 	hxsl_Shader_updateConstantsFinal(((hxsl__Shader)r0),r1);
 	return;
 }
@@ -42,7 +33,7 @@ vdynamic* h3d_shader_CubeMinMaxShader_getParamValue(h3d__shader__CubeMinMaxShade
 	h3d__mat__Texture r4;
 	switch(r1) {
 		default:
-			goto label$82fd479_3_14;
+			goto label$82fd479_2_14;
 		case 0:
 			r2 = r0->flipY__;
 			r3 = hl_alloc_dynamic(&t$_f64);
@@ -62,7 +53,7 @@ vdynamic* h3d_shader_CubeMinMaxShader_getParamValue(h3d__shader__CubeMinMaxShade
 			r6 = r0->mat__;
 			return ((vdynamic*)r6);
 	}
-	label$82fd479_3_14:
+	label$82fd479_2_14:
 	r3 = NULL;
 	return r3;
 }
@@ -71,11 +62,20 @@ double h3d_shader_CubeMinMaxShader_getParamFloatValue(h3d__shader__CubeMinMaxSha
 	double r3;
 	int r2;
 	r2 = 0;
-	if( r1 != r2 ) goto label$82fd479_4_4;
+	if( r1 != r2 ) goto label$82fd479_3_4;
 	r3 = r0->flipY__;
 	return r3;
-	label$82fd479_4_4:
+	label$82fd479_3_4:
 	r3 = 0.;
 	return r3;
+}
+
+void h3d_shader_CubeMinMaxShader_new(h3d__shader__CubeMinMaxShader r0) {
+	h3d__Matrix r1;
+	r1 = (h3d__Matrix)hl_alloc_obj(&t$h3d_Matrix);
+	h3d_Matrix_new(r1);
+	r0->mat__ = r1;
+	h3d_shader_ScreenShader_new(((h3d__shader__ScreenShader)r0));
+	return;
 }
 

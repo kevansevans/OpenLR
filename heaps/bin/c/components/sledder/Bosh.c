@@ -2,34 +2,25 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <components/sledder/Bosh.h>
-#include <h2d/Object.h>
-#include <components/stage/Canvas.h>
-#include <_std/Main.h>
-void hxlr_rider_RiderBase_delete(hxlr__rider__RiderBase);
-extern $Main g$_Main;
 #include <components/managers/Simulation.h>
+#include <_std/Main.h>
+extern $Main g$_Main;
 void components_sledder_Bosh_iterate(components__sledder__Bosh);
 void components_sledder_Bosh_constrain(components__sledder__Bosh);
-void components_sledder_Bosh_collide(components__sledder__Bosh);
+void hxlr_rider_RiderBase_collide(hxlr__rider__RiderBase);
 void components_sledder_Bosh_constrainScarf(components__sledder__Bosh);
+void components_sledder_Bosh_checkLimits(components__sledder__Bosh);
+extern hl_type t$vrt_c85b526;
+extern hl_type t$_i32;
+extern hl_type t$_bool;
 bool hxlr_rider_RiderBase_set_crashed(hxlr__rider__RiderBase,bool);
 #include <hxlr/rider/AirPoint.h>
 void hxlr_rider_AirPoint_iterate(hxlr__rider__AirPoint,h2d__col__Point);
 #include <hxlr/rider/Stick.h>
 void hxlr_rider_Stick_satisfy(hxlr__rider__Stick,vdynamic*);
-#include <haxe/ds/StringMap.h>
-#include <hxlr/engine/Grid.h>
-#include <hxlr/engine/Cell.h>
-#include <hxlr/lines/LineBase.h>
-vvirtual* hxlr_engine_Cell_getInfo(double,double);
-extern String s$x;
-extern hl_type t$_i32;
-#include <hl/natives.h>
-String String___alloc__(vbyte*,int);
-String String___add__(String,String);
-extern String s$y;
-vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
+#include <components/stage/Canvas.h>
 void components_sledder_Bosh_updateEyeball(components__sledder__Bosh,int);
+#include <hl/natives.h>
 void h2d_Graphics_clear(h2d__Graphics);
 void h2d_Graphics_lineStyle(h2d__Graphics,double*,int*,double*);
 void h2d_Graphics_flush(h2d__Graphics);
@@ -41,25 +32,16 @@ double h2d_Anim_set_currentFrame(h2d__Anim,double);
 double utils_TableRNG_getRandomNormal(utils__TableRNG,String);
 double utils_TableRNG_getRandomNormalDecrease(utils__TableRNG,String);
 void components_sledder_RiderScarf_setColor(components__sledder__RiderScarf,vdynamic*,vdynamic*);
-void components_sledder_Bosh_init(components__sledder__Bosh);
-#include <hxlr/enums/StickType.h>
-extern hl_type t$hxlr_rider_ContactPoint;
-void hxlr_rider_ContactPoint_new(hxlr__rider__ContactPoint,double*,double*,double*);
-int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
-extern hl_type t$hxlr_rider_AirPoint;
-void hxlr_rider_AirPoint_new(hxlr__rider__AirPoint,double,double,double);
-extern hl_type t$hxlr_rider_Stick;
-extern venum* g$hxlr_enums_StickType_STANDARD;
-void hxlr_rider_Stick_new(hxlr__rider__Stick,hxlr__rider__ContactPoint,hxlr__rider__ContactPoint,venum*,hxlr__rider__RiderBase);
-extern venum* g$hxlr_enums_StickType_REPELL;
-extern venum* g$hxlr_enums_StickType_SCARF;
+void hxlr_rider_RiderBase_init(hxlr__rider__RiderBase);
+#include <h2d/Object.h>
 #include <h2d/Font.h>
 #include <components/sledder/BodyPart.h>
 extern hl_type t$_f64;
 extern String s$Bosh;
-void hxlr_rider_RiderBase_new(hxlr__rider__RiderBase);
+vvirtual* hxlr_Constants_defaultRider(void);
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
+void hxlr_rider_RiderBase_new(hxlr__rider__RiderBase,vvirtual*,h2d__col__Point,String);
 extern hl_type t$h2d_Graphics;
 void h2d_Graphics_new(h2d__Graphics,h2d__Object);
 extern hl_type t$h2d_HtmlText;
@@ -78,246 +60,238 @@ extern hl_type t$components_sledder_RiderScarf;
 void components_sledder_RiderScarf_new(components__sledder__RiderScarf);
 void h2d_Object_addChild(h2d__Object,h2d__Object);
 
-void components_sledder_Bosh_delete(components__sledder__Bosh r0) {
-	h2d__Object r2;
-	components__sledder__RiderPart r5;
-	$Main r4;
-	components__stage__Canvas r3;
-	hxlr_rider_RiderBase_delete(((hxlr__rider__RiderBase)r0));
-	r4 = ($Main)g$_Main;
-	r3 = r4->canvas;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->sledderLayer;
-	if( r2 == NULL ) hl_null_access();
-	r5 = r0->leftArm;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r2->$type->vobj_proto[6])(r2,r5);
-	r4 = ($Main)g$_Main;
-	r3 = r4->canvas;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->sledderLayer;
-	if( r2 == NULL ) hl_null_access();
-	r5 = r0->leftLeg;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r2->$type->vobj_proto[6])(r2,r5);
-	r4 = ($Main)g$_Main;
-	r3 = r4->canvas;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->sledderLayer;
-	if( r2 == NULL ) hl_null_access();
-	r5 = r0->sled;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r2->$type->vobj_proto[6])(r2,r5);
-	r4 = ($Main)g$_Main;
-	r3 = r4->canvas;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->sledderLayer;
-	if( r2 == NULL ) hl_null_access();
-	r5 = r0->body;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r2->$type->vobj_proto[6])(r2,r5);
-	r4 = ($Main)g$_Main;
-	r3 = r4->canvas;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->sledderLayer;
-	if( r2 == NULL ) hl_null_access();
-	r5 = r0->rightArm;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r2->$type->vobj_proto[6])(r2,r5);
-	r4 = ($Main)g$_Main;
-	r3 = r4->canvas;
-	if( r3 == NULL ) hl_null_access();
-	r2 = r3->sledderLayer;
-	if( r2 == NULL ) hl_null_access();
-	r5 = r0->rightLeg;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r2->$type->vobj_proto[6])(r2,r5);
+void components_sledder_Bosh_step(components__sledder__Bosh r0) {
+	bool r2;
+	$Main r6;
+	components__managers__Simulation r5;
+	vdynamic *r3;
+	int r4, r7;
+	r2 = r0->enabled;
+	if( !r2 ) goto label$ebdfb18_1_34;
+	r3 = r0->enabledFrame;
+	if( !r3 ) goto label$ebdfb18_1_11;
+	r6 = ($Main)g$_Main;
+	r5 = r6->simulation;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->frames;
+	r3 = r0->enabledFrame;
+	r7 = r3 ? r3->v.i : 0;
+	if( r4 < r7 ) goto label$ebdfb18_1_34;
+	label$ebdfb18_1_11:
+	r3 = r0->disableFrame;
+	if( !r3 ) goto label$ebdfb18_1_20;
+	r6 = ($Main)g$_Main;
+	r5 = r6->simulation;
+	if( r5 == NULL ) hl_null_access();
+	r4 = r5->frames;
+	r3 = r0->disableFrame;
+	r7 = r3 ? r3->v.i : 0;
+	if( r4 >= r7 ) goto label$ebdfb18_1_34;
+	label$ebdfb18_1_20:
+	components_sledder_Bosh_iterate(r0);
+	components_sledder_Bosh_constrain(r0);
+	hxlr_rider_RiderBase_collide(((hxlr__rider__RiderBase)r0));
+	components_sledder_Bosh_constrain(r0);
+	hxlr_rider_RiderBase_collide(((hxlr__rider__RiderBase)r0));
+	components_sledder_Bosh_constrain(r0);
+	hxlr_rider_RiderBase_collide(((hxlr__rider__RiderBase)r0));
+	components_sledder_Bosh_constrain(r0);
+	hxlr_rider_RiderBase_collide(((hxlr__rider__RiderBase)r0));
+	components_sledder_Bosh_constrain(r0);
+	hxlr_rider_RiderBase_collide(((hxlr__rider__RiderBase)r0));
+	components_sledder_Bosh_constrain(r0);
+	hxlr_rider_RiderBase_collide(((hxlr__rider__RiderBase)r0));
+	components_sledder_Bosh_constrainScarf(r0);
+	label$ebdfb18_1_34:
+	components_sledder_Bosh_checkLimits(r0);
 	return;
 }
 
-void components_sledder_Bosh_step(components__sledder__Bosh r0) {
-	hl__types__ArrayObj r10;
-	bool r2;
-	$Main r6;
-	h2d__col__Point r9;
-	hxlr__rider__ContactPoint r11;
-	double r8, r14, r15, r16, r17, r18;
-	components__managers__Simulation r5;
-	vdynamic *r3, *r12, *r19;
-	varray *r13;
-	int r4, r7;
-	r2 = r0->enabled;
-	if( !r2 ) goto label$ebdfb18_2_34;
-	r3 = r0->enabledFrame;
-	if( !r3 ) goto label$ebdfb18_2_11;
-	r6 = ($Main)g$_Main;
-	r5 = r6->simulation;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->frames;
-	r3 = r0->enabledFrame;
-	r7 = r3 ? r3->v.i : 0;
-	if( r4 < r7 ) goto label$ebdfb18_2_34;
-	label$ebdfb18_2_11:
-	r3 = r0->disableFrame;
-	if( !r3 ) goto label$ebdfb18_2_20;
-	r6 = ($Main)g$_Main;
-	r5 = r6->simulation;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->frames;
-	r3 = r0->disableFrame;
-	r7 = r3 ? r3->v.i : 0;
-	if( r4 >= r7 ) goto label$ebdfb18_2_34;
-	label$ebdfb18_2_20:
-	components_sledder_Bosh_iterate(r0);
-	components_sledder_Bosh_constrain(r0);
-	components_sledder_Bosh_collide(r0);
-	components_sledder_Bosh_constrain(r0);
-	components_sledder_Bosh_collide(r0);
-	components_sledder_Bosh_constrain(r0);
-	components_sledder_Bosh_collide(r0);
-	components_sledder_Bosh_constrain(r0);
-	components_sledder_Bosh_collide(r0);
-	components_sledder_Bosh_constrain(r0);
-	components_sledder_Bosh_collide(r0);
-	components_sledder_Bosh_constrain(r0);
-	components_sledder_Bosh_collide(r0);
-	components_sledder_Bosh_constrainScarf(r0);
-	label$ebdfb18_2_34:
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 3;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_41;
-	r11 = NULL;
-	goto label$ebdfb18_2_44;
-	label$ebdfb18_2_41:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_44:
+void components_sledder_Bosh_checkLimits(components__sledder__Bosh r0) {
+	vvirtual *r7;
+	hl__types__ArrayObj r3, r6;
+	bool r17;
+	h2d__col__Point r11;
+	hxlr__rider__ContactPoint r12;
+	double r10, r13, r14, r15, r16, r18;
+	vdynamic *r8, *r19;
+	varray *r9;
+	int r1, r4, r5;
+	r1 = 0;
+	r3 = r0->limits;
+	label$ebdfb18_2_2:
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->length;
+	if( r1 >= r5 ) goto label$ebdfb18_2_153;
+	r5 = r3->length;
+	if( ((unsigned)r1) < ((unsigned)r5) ) goto label$ebdfb18_2_10;
+	r7 = NULL;
+	goto label$ebdfb18_2_13;
+	label$ebdfb18_2_10:
+	r9 = r3->array;
+	r8 = ((vdynamic**)(r9 + 1))[r1];
+	r7 = hl_to_virtual(&t$vrt_c85b526,(vdynamic*)r8);
+	label$ebdfb18_2_13:
+	++r1;
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	if( r7 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[1] ? (*(int*)(hl_vfields(r7)[1])) : (int)hl_dyn_geti(r7->value,287423612/*point_a*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_22;
+	r12 = NULL;
+	goto label$ebdfb18_2_25;
+	label$ebdfb18_2_22:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_25:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
 	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r8 = r9->x;
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 0;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_55;
-	r11 = NULL;
-	goto label$ebdfb18_2_58;
-	label$ebdfb18_2_55:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_58:
+	r10 = r11->x;
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[2] ? (*(int*)(hl_vfields(r7)[2])) : (int)hl_dyn_geti(r7->value,287423613/*point_b*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_36;
+	r12 = NULL;
+	goto label$ebdfb18_2_39;
+	label$ebdfb18_2_36:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_39:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
 	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r14 = r9->x;
-	r8 = r8 - r14;
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 3;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_70;
-	r11 = NULL;
-	goto label$ebdfb18_2_73;
-	label$ebdfb18_2_70:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_73:
+	r13 = r11->x;
+	r10 = r10 - r13;
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[1] ? (*(int*)(hl_vfields(r7)[1])) : (int)hl_dyn_geti(r7->value,287423612/*point_a*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_51;
+	r12 = NULL;
+	goto label$ebdfb18_2_54;
+	label$ebdfb18_2_51:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_54:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
 	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r14 = r9->y;
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 0;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_84;
-	r11 = NULL;
-	goto label$ebdfb18_2_87;
-	label$ebdfb18_2_84:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_87:
+	r13 = r11->y;
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[2] ? (*(int*)(hl_vfields(r7)[2])) : (int)hl_dyn_geti(r7->value,287423613/*point_b*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_65;
+	r12 = NULL;
+	goto label$ebdfb18_2_68;
+	label$ebdfb18_2_65:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_68:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
 	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r15 = r9->y;
+	r14 = r11->y;
+	r13 = r13 - r14;
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[3] ? (*(int*)(hl_vfields(r7)[3])) : (int)hl_dyn_geti(r7->value,287423614/*point_c*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_80;
+	r12 = NULL;
+	goto label$ebdfb18_2_83;
+	label$ebdfb18_2_80:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_83:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
+	if( r11 == NULL ) hl_null_access();
+	r14 = r11->x;
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[4] ? (*(int*)(hl_vfields(r7)[4])) : (int)hl_dyn_geti(r7->value,287423615/*point_d*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_94;
+	r12 = NULL;
+	goto label$ebdfb18_2_97;
+	label$ebdfb18_2_94:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_97:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
+	if( r11 == NULL ) hl_null_access();
+	r15 = r11->x;
 	r14 = r14 - r15;
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 1;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_99;
-	r11 = NULL;
-	goto label$ebdfb18_2_102;
-	label$ebdfb18_2_99:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_102:
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[3] ? (*(int*)(hl_vfields(r7)[3])) : (int)hl_dyn_geti(r7->value,287423614/*point_c*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_109;
+	r12 = NULL;
+	goto label$ebdfb18_2_112;
+	label$ebdfb18_2_109:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_112:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
 	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r16 = r9->y;
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 0;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_113;
-	r11 = NULL;
-	goto label$ebdfb18_2_116;
-	label$ebdfb18_2_113:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_116:
+	r15 = r11->y;
+	r6 = r0->contactPoints;
+	if( r6 == NULL ) hl_null_access();
+	r4 = hl_vfields(r7)[4] ? (*(int*)(hl_vfields(r7)[4])) : (int)hl_dyn_geti(r7->value,287423615/*point_d*/,&t$_i32);
+	r5 = r6->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$ebdfb18_2_123;
+	r12 = NULL;
+	goto label$ebdfb18_2_126;
+	label$ebdfb18_2_123:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r4];
+	r12 = (hxlr__rider__ContactPoint)r8;
+	label$ebdfb18_2_126:
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->pos;
 	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r17 = r9->y;
-	r16 = r16 - r17;
-	r15 = r8 * r16;
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 1;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_129;
-	r11 = NULL;
-	goto label$ebdfb18_2_132;
-	label$ebdfb18_2_129:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_132:
-	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r17 = r9->x;
-	r10 = r0->contactPoints;
-	if( r10 == NULL ) hl_null_access();
-	r4 = 0;
-	r7 = r10->length;
-	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$ebdfb18_2_143;
-	r11 = NULL;
-	goto label$ebdfb18_2_146;
-	label$ebdfb18_2_143:
-	r13 = r10->array;
-	r12 = ((vdynamic**)(r13 + 1))[r4];
-	r11 = (hxlr__rider__ContactPoint)r12;
-	label$ebdfb18_2_146:
-	if( r11 == NULL ) hl_null_access();
-	r9 = r11->pos;
-	if( r9 == NULL ) hl_null_access();
-	r18 = r9->x;
-	r17 = r17 - r18;
-	r16 = r14 * r17;
+	r16 = r11->y;
 	r15 = r15 - r16;
-	r16 = 0.;
-	if( !(r15 < r16) ) goto label$ebdfb18_2_158;
-	r2 = true;
-	r2 = hxlr_rider_RiderBase_set_crashed(((hxlr__rider__RiderBase)r0),r2);
-	r19 = hl_alloc_dynbool(r2);
-	label$ebdfb18_2_158:
+	r17 = hl_vfields(r7)[0] ? (*(bool*)(hl_vfields(r7)[0])) : (bool)hl_dyn_geti(r7->value,-214671526/*lessThan*/,&t$_bool);
+	if( !r17 ) goto label$ebdfb18_2_143;
+	r16 = r10 * r15;
+	r18 = r13 * r14;
+	r16 = r16 - r18;
+	r4 = hl_vfields(r7)[5] ? (*(int*)(hl_vfields(r7)[5])) : (int)hl_dyn_geti(r7->value,346276912/*threshold*/,&t$_i32);
+	r18 = (double)r4;
+	if( !(r16 < r18) ) goto label$ebdfb18_2_142;
+	r17 = true;
+	r17 = hxlr_rider_RiderBase_set_crashed(((hxlr__rider__RiderBase)r0),r17);
+	r19 = hl_alloc_dynbool(r17);
+	label$ebdfb18_2_142:
+	goto label$ebdfb18_2_152;
+	label$ebdfb18_2_143:
+	r16 = r10 * r15;
+	r18 = r13 * r14;
+	r16 = r16 - r18;
+	r4 = hl_vfields(r7)[5] ? (*(int*)(hl_vfields(r7)[5])) : (int)hl_dyn_geti(r7->value,346276912/*threshold*/,&t$_i32);
+	r18 = (double)r4;
+	if( !(r18 < r16) ) goto label$ebdfb18_2_152;
+	r17 = true;
+	r17 = hxlr_rider_RiderBase_set_crashed(((hxlr__rider__RiderBase)r0),r17);
+	r19 = hl_alloc_dynbool(r17);
+	label$ebdfb18_2_152:
+	goto label$ebdfb18_2_2;
+	label$ebdfb18_2_153:
 	return;
 }
 
@@ -404,125 +378,6 @@ void components_sledder_Bosh_constrain(components__sledder__Bosh r0) {
 	return;
 }
 
-void components_sledder_Bosh_collide(components__sledder__Bosh r0) {
-	String r17, r20;
-	haxe__ds__StringMap r21;
-	vvirtual *r10;
-	hl__types__ArrayObj r3, r6;
-	hxlr__engine__Grid r22;
-	hxlr__engine__Cell r24;
-	$Main r23;
-	h2d__col__Point r12;
-	hxlr__lines__LineBase r26;
-	hxlr__rider__ContactPoint r7;
-	double r11, r13;
-	int *r18;
-	vdynamic *r8;
-	vbyte *r19;
-	varray *r9;
-	int r1, r4, r5, r14, r15, r16, r25;
-	r1 = 0;
-	r3 = r0->contactPoints;
-	label$ebdfb18_5_2:
-	if( r3 == NULL ) hl_null_access();
-	r5 = r3->length;
-	if( r1 >= r5 ) goto label$ebdfb18_5_89;
-	r5 = r3->length;
-	if( ((unsigned)r1) < ((unsigned)r5) ) goto label$ebdfb18_5_10;
-	r7 = NULL;
-	goto label$ebdfb18_5_13;
-	label$ebdfb18_5_10:
-	r9 = r3->array;
-	r8 = ((vdynamic**)(r9 + 1))[r1];
-	r7 = (hxlr__rider__ContactPoint)r8;
-	label$ebdfb18_5_13:
-	++r1;
-	if( r7 == NULL ) hl_null_access();
-	r12 = r7->pos;
-	if( r12 == NULL ) hl_null_access();
-	r11 = r12->x;
-	r12 = r7->pos;
-	if( r12 == NULL ) hl_null_access();
-	r13 = r12->y;
-	r10 = hxlr_engine_Cell_getInfo(r11,r13);
-	r4 = -1;
-	label$ebdfb18_5_23:
-	r14 = 2;
-	if( r4 >= r14 ) goto label$ebdfb18_5_88;
-	r5 = r4;
-	++r4;
-	r14 = -1;
-	label$ebdfb18_5_29:
-	r16 = 2;
-	if( r14 >= r16 ) goto label$ebdfb18_5_87;
-	r15 = r14;
-	++r14;
-	r17 = (String)s$x;
-	if( r10 == NULL ) hl_null_access();
-	r16 = hl_vfields(r10)[3] ? (*(int*)(hl_vfields(r10)[3])) : (int)hl_dyn_geti(r10->value,120/*x*/,&t$_i32);
-	r16 = r16 + r5;
-	r18 = &r16;
-	r19 = hl_itos(r16,r18);
-	r20 = String___alloc__(r19,r16);
-	r17 = String___add__(r17,r20);
-	r20 = (String)s$y;
-	r17 = String___add__(r17,r20);
-	r16 = hl_vfields(r10)[4] ? (*(int*)(hl_vfields(r10)[4])) : (int)hl_dyn_geti(r10->value,121/*y*/,&t$_i32);
-	r16 = r16 + r15;
-	r18 = &r16;
-	r19 = hl_itos(r16,r18);
-	r20 = String___alloc__(r19,r16);
-	r17 = String___add__(r17,r20);
-	r23 = ($Main)g$_Main;
-	r22 = r23->grid;
-	if( r22 == NULL ) hl_null_access();
-	r21 = r22->registry;
-	if( r21 == NULL ) hl_null_access();
-	r8 = haxe_ds_StringMap_get(r21,r17);
-	r24 = (hxlr__engine__Cell)r8;
-	if( r24 ) goto label$ebdfb18_5_59;
-	goto label$ebdfb18_5_29;
-	label$ebdfb18_5_59:
-	r23 = ($Main)g$_Main;
-	r22 = r23->grid;
-	if( r22 == NULL ) hl_null_access();
-	r21 = r22->registry;
-	if( r21 == NULL ) hl_null_access();
-	r8 = haxe_ds_StringMap_get(r21,r17);
-	r24 = (hxlr__engine__Cell)r8;
-	r16 = 0;
-	if( r24 == NULL ) hl_null_access();
-	r6 = r24->tangible;
-	label$ebdfb18_5_69:
-	if( r6 == NULL ) hl_null_access();
-	r25 = r6->length;
-	if( r16 >= r25 ) goto label$ebdfb18_5_86;
-	r25 = r6->length;
-	if( ((unsigned)r16) < ((unsigned)r25) ) goto label$ebdfb18_5_77;
-	r26 = NULL;
-	goto label$ebdfb18_5_80;
-	label$ebdfb18_5_77:
-	r9 = r6->array;
-	r8 = ((vdynamic**)(r9 + 1))[r16];
-	r26 = (hxlr__lines__LineBase)r8;
-	label$ebdfb18_5_80:
-	++r16;
-	if( r26 ) goto label$ebdfb18_5_83;
-	goto label$ebdfb18_5_69;
-	label$ebdfb18_5_83:
-	if( r26 == NULL ) hl_null_access();
-	((void (*)(hxlr__lines__LineBase,hxlr__rider__ContactPoint))r26->$type->vobj_proto[1])(r26,r7);
-	goto label$ebdfb18_5_69;
-	label$ebdfb18_5_86:
-	goto label$ebdfb18_5_29;
-	label$ebdfb18_5_87:
-	goto label$ebdfb18_5_23;
-	label$ebdfb18_5_88:
-	goto label$ebdfb18_5_2;
-	label$ebdfb18_5_89:
-	return;
-}
-
 void components_sledder_Bosh_constrainScarf(components__sledder__Bosh r0) {
 	hxlr__rider__Stick r5;
 	hl__types__ArrayObj r3;
@@ -531,25 +386,25 @@ void components_sledder_Bosh_constrainScarf(components__sledder__Bosh r0) {
 	int r1, r4;
 	r1 = 0;
 	r3 = r0->scarves;
-	label$ebdfb18_6_2:
+	label$ebdfb18_5_2:
 	if( r3 == NULL ) hl_null_access();
 	r4 = r3->length;
-	if( r1 >= r4 ) goto label$ebdfb18_6_18;
+	if( r1 >= r4 ) goto label$ebdfb18_5_18;
 	r4 = r3->length;
-	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$ebdfb18_6_10;
+	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$ebdfb18_5_10;
 	r5 = NULL;
-	goto label$ebdfb18_6_13;
-	label$ebdfb18_6_10:
+	goto label$ebdfb18_5_13;
+	label$ebdfb18_5_10:
 	r7 = r3->array;
 	r6 = ((vdynamic**)(r7 + 1))[r1];
 	r5 = (hxlr__rider__Stick)r6;
-	label$ebdfb18_6_13:
+	label$ebdfb18_5_13:
 	++r1;
 	if( r5 == NULL ) hl_null_access();
 	r8 = r0->crashed;
 	hxlr_rider_Stick_satisfy(r5,r8);
-	goto label$ebdfb18_6_2;
-	label$ebdfb18_6_18:
+	goto label$ebdfb18_5_2;
+	label$ebdfb18_5_18:
 	return;
 }
 
@@ -585,14 +440,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_13;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_13;
 	r10 = NULL;
-	goto label$ebdfb18_7_16;
-	label$ebdfb18_7_13:
+	goto label$ebdfb18_6_16;
+	label$ebdfb18_6_13:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_16:
+	label$ebdfb18_6_16:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -606,14 +461,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_32;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_32;
 	r10 = NULL;
-	goto label$ebdfb18_7_35;
-	label$ebdfb18_7_32:
+	goto label$ebdfb18_6_35;
+	label$ebdfb18_6_32:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_35:
+	label$ebdfb18_6_35:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -627,14 +482,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 0;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_51;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_51;
 	r10 = NULL;
-	goto label$ebdfb18_7_54;
-	label$ebdfb18_7_51:
+	goto label$ebdfb18_6_54;
+	label$ebdfb18_6_51:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_54:
+	label$ebdfb18_6_54:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -648,14 +503,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 0;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_70;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_70;
 	r10 = NULL;
-	goto label$ebdfb18_7_73;
-	label$ebdfb18_7_70:
+	goto label$ebdfb18_6_73;
+	label$ebdfb18_6_70:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_73:
+	label$ebdfb18_6_73:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -670,14 +525,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_90;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_90;
 	r10 = NULL;
-	goto label$ebdfb18_7_93;
-	label$ebdfb18_7_90:
+	goto label$ebdfb18_6_93;
+	label$ebdfb18_6_90:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_93:
+	label$ebdfb18_6_93:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -696,14 +551,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_114;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_114;
 	r10 = NULL;
-	goto label$ebdfb18_7_117;
-	label$ebdfb18_7_114:
+	goto label$ebdfb18_6_117;
+	label$ebdfb18_6_114:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_117:
+	label$ebdfb18_6_117:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -722,14 +577,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_138;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_138;
 	r10 = NULL;
-	goto label$ebdfb18_7_141;
-	label$ebdfb18_7_138:
+	goto label$ebdfb18_6_141;
+	label$ebdfb18_6_138:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_141:
+	label$ebdfb18_6_141:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -748,14 +603,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_162;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_162;
 	r10 = NULL;
-	goto label$ebdfb18_7_165;
-	label$ebdfb18_7_162:
+	goto label$ebdfb18_6_165;
+	label$ebdfb18_6_162:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_165:
+	label$ebdfb18_6_165:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -773,14 +628,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_185;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_185;
 	r10 = NULL;
-	goto label$ebdfb18_7_188;
-	label$ebdfb18_7_185:
+	goto label$ebdfb18_6_188;
+	label$ebdfb18_6_185:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_188:
+	label$ebdfb18_6_188:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -789,14 +644,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_199;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_199;
 	r10 = NULL;
-	goto label$ebdfb18_7_202;
-	label$ebdfb18_7_199:
+	goto label$ebdfb18_6_202;
+	label$ebdfb18_6_199:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_202:
+	label$ebdfb18_6_202:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -806,14 +661,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_214;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_214;
 	r10 = NULL;
-	goto label$ebdfb18_7_217;
-	label$ebdfb18_7_214:
+	goto label$ebdfb18_6_217;
+	label$ebdfb18_6_214:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_217:
+	label$ebdfb18_6_217:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -822,14 +677,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_228;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_228;
 	r10 = NULL;
-	goto label$ebdfb18_7_231;
-	label$ebdfb18_7_228:
+	goto label$ebdfb18_6_231;
+	label$ebdfb18_6_228:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_231:
+	label$ebdfb18_6_231:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -845,14 +700,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 3;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_249;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_249;
 	r10 = NULL;
-	goto label$ebdfb18_7_252;
-	label$ebdfb18_7_249:
+	goto label$ebdfb18_6_252;
+	label$ebdfb18_6_249:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_252:
+	label$ebdfb18_6_252:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -861,14 +716,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 0;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_263;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_263;
 	r10 = NULL;
-	goto label$ebdfb18_7_266;
-	label$ebdfb18_7_263:
+	goto label$ebdfb18_6_266;
+	label$ebdfb18_6_263:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_266:
+	label$ebdfb18_6_266:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -878,14 +733,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 3;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_278;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_278;
 	r10 = NULL;
-	goto label$ebdfb18_7_281;
-	label$ebdfb18_7_278:
+	goto label$ebdfb18_6_281;
+	label$ebdfb18_6_278:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_281:
+	label$ebdfb18_6_281:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -894,14 +749,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 0;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_292;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_292;
 	r10 = NULL;
-	goto label$ebdfb18_7_295;
-	label$ebdfb18_7_292:
+	goto label$ebdfb18_6_295;
+	label$ebdfb18_6_292:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_295:
+	label$ebdfb18_6_295:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -917,14 +772,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 6;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_313;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_313;
 	r10 = NULL;
-	goto label$ebdfb18_7_316;
-	label$ebdfb18_7_313:
+	goto label$ebdfb18_6_316;
+	label$ebdfb18_6_313:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_316:
+	label$ebdfb18_6_316:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -933,14 +788,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_327;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_327;
 	r10 = NULL;
-	goto label$ebdfb18_7_330;
-	label$ebdfb18_7_327:
+	goto label$ebdfb18_6_330;
+	label$ebdfb18_6_327:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_330:
+	label$ebdfb18_6_330:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -950,14 +805,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 6;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_342;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_342;
 	r10 = NULL;
-	goto label$ebdfb18_7_345;
-	label$ebdfb18_7_342:
+	goto label$ebdfb18_6_345;
+	label$ebdfb18_6_342:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_345:
+	label$ebdfb18_6_345:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -966,14 +821,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_356;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_356;
 	r10 = NULL;
-	goto label$ebdfb18_7_359;
-	label$ebdfb18_7_356:
+	goto label$ebdfb18_6_359;
+	label$ebdfb18_6_356:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_359:
+	label$ebdfb18_6_359:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -989,14 +844,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 7;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_377;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_377;
 	r10 = NULL;
-	goto label$ebdfb18_7_380;
-	label$ebdfb18_7_377:
+	goto label$ebdfb18_6_380;
+	label$ebdfb18_6_377:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_380:
+	label$ebdfb18_6_380:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1005,14 +860,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_391;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_391;
 	r10 = NULL;
-	goto label$ebdfb18_7_394;
-	label$ebdfb18_7_391:
+	goto label$ebdfb18_6_394;
+	label$ebdfb18_6_391:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_394:
+	label$ebdfb18_6_394:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1022,14 +877,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 7;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_406;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_406;
 	r10 = NULL;
-	goto label$ebdfb18_7_409;
-	label$ebdfb18_7_406:
+	goto label$ebdfb18_6_409;
+	label$ebdfb18_6_406:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_409:
+	label$ebdfb18_6_409:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1038,14 +893,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 5;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_420;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_420;
 	r10 = NULL;
-	goto label$ebdfb18_7_423;
-	label$ebdfb18_7_420:
+	goto label$ebdfb18_6_423;
+	label$ebdfb18_6_420:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_423:
+	label$ebdfb18_6_423:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1061,14 +916,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 8;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_441;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_441;
 	r10 = NULL;
-	goto label$ebdfb18_7_444;
-	label$ebdfb18_7_441:
+	goto label$ebdfb18_6_444;
+	label$ebdfb18_6_441:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_444:
+	label$ebdfb18_6_444:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1077,14 +932,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_455;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_455;
 	r10 = NULL;
-	goto label$ebdfb18_7_458;
-	label$ebdfb18_7_455:
+	goto label$ebdfb18_6_458;
+	label$ebdfb18_6_455:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_458:
+	label$ebdfb18_6_458:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1094,14 +949,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 8;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_470;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_470;
 	r10 = NULL;
-	goto label$ebdfb18_7_473;
-	label$ebdfb18_7_470:
+	goto label$ebdfb18_6_473;
+	label$ebdfb18_6_470:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_473:
+	label$ebdfb18_6_473:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1110,14 +965,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_484;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_484;
 	r10 = NULL;
-	goto label$ebdfb18_7_487;
-	label$ebdfb18_7_484:
+	goto label$ebdfb18_6_487;
+	label$ebdfb18_6_484:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_487:
+	label$ebdfb18_6_487:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1133,14 +988,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 9;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_505;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_505;
 	r10 = NULL;
-	goto label$ebdfb18_7_508;
-	label$ebdfb18_7_505:
+	goto label$ebdfb18_6_508;
+	label$ebdfb18_6_505:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_508:
+	label$ebdfb18_6_508:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1149,14 +1004,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_519;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_519;
 	r10 = NULL;
-	goto label$ebdfb18_7_522;
-	label$ebdfb18_7_519:
+	goto label$ebdfb18_6_522;
+	label$ebdfb18_6_519:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_522:
+	label$ebdfb18_6_522:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1166,14 +1021,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 9;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_534;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_534;
 	r10 = NULL;
-	goto label$ebdfb18_7_537;
-	label$ebdfb18_7_534:
+	goto label$ebdfb18_6_537;
+	label$ebdfb18_6_534:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_537:
+	label$ebdfb18_6_537:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1182,14 +1037,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 4;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_548;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_548;
 	r10 = NULL;
-	goto label$ebdfb18_7_551;
-	label$ebdfb18_7_548:
+	goto label$ebdfb18_6_551;
+	label$ebdfb18_6_548:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_551:
+	label$ebdfb18_6_551:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1205,7 +1060,7 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	h2d_Graphics_clear(r17);
 	r18 = r0->crashed;
 	r14 = r18 ? r18->v.b : 0;
-	if( r14 ) goto label$ebdfb18_7_806;
+	if( r14 ) goto label$ebdfb18_6_806;
 	r17 = r0->gfx;
 	if( r17 == NULL ) hl_null_access();
 	r6 = 0.25;
@@ -1217,30 +1072,30 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 16;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_581;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_581;
 	r22 = NULL;
-	goto label$ebdfb18_7_584;
-	label$ebdfb18_7_581:
+	goto label$ebdfb18_6_584;
+	label$ebdfb18_6_581:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r22 = (hxlr__rider__Stick)r11;
-	label$ebdfb18_7_584:
+	label$ebdfb18_6_584:
 	if( r22 == NULL ) hl_null_access();
 	r14 = r22->enabled;
-	if( !r14 ) goto label$ebdfb18_7_690;
+	if( !r14 ) goto label$ebdfb18_6_690;
 	r17 = r0->gfx;
 	r8 = r0->contactPoints;
 	if( r8 == NULL ) hl_null_access();
 	r2 = 6;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_595;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_595;
 	r10 = NULL;
-	goto label$ebdfb18_7_598;
-	label$ebdfb18_7_595:
+	goto label$ebdfb18_6_598;
+	label$ebdfb18_6_595:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_598:
+	label$ebdfb18_6_598:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1249,14 +1104,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 6;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_609;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_609;
 	r10 = NULL;
-	goto label$ebdfb18_7_612;
-	label$ebdfb18_7_609:
+	goto label$ebdfb18_6_612;
+	label$ebdfb18_6_609:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_612:
+	label$ebdfb18_6_612:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1289,14 +1144,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 3;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_647;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_647;
 	r10 = NULL;
-	goto label$ebdfb18_7_650;
-	label$ebdfb18_7_647:
+	goto label$ebdfb18_6_650;
+	label$ebdfb18_6_647:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_650:
+	label$ebdfb18_6_650:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1305,14 +1160,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 3;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_661;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_661;
 	r10 = NULL;
-	goto label$ebdfb18_7_664;
-	label$ebdfb18_7_661:
+	goto label$ebdfb18_6_664;
+	label$ebdfb18_6_661:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_664:
+	label$ebdfb18_6_664:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1339,35 +1194,35 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r32 = r32 + r33;
 	r21 = &r32;
 	h2d_Graphics_addVertex(r17,r15,r16,r25,r26,r27,r28,r19,r21);
-	label$ebdfb18_7_690:
+	label$ebdfb18_6_690:
 	r8 = r0->constraints;
 	if( r8 == NULL ) hl_null_access();
 	r2 = 17;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_697;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_697;
 	r22 = NULL;
-	goto label$ebdfb18_7_700;
-	label$ebdfb18_7_697:
+	goto label$ebdfb18_6_700;
+	label$ebdfb18_6_697:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r22 = (hxlr__rider__Stick)r11;
-	label$ebdfb18_7_700:
+	label$ebdfb18_6_700:
 	if( r22 == NULL ) hl_null_access();
 	r14 = r22->enabled;
-	if( !r14 ) goto label$ebdfb18_7_806;
+	if( !r14 ) goto label$ebdfb18_6_806;
 	r17 = r0->gfx;
 	r8 = r0->contactPoints;
 	if( r8 == NULL ) hl_null_access();
 	r2 = 7;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_711;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_711;
 	r10 = NULL;
-	goto label$ebdfb18_7_714;
-	label$ebdfb18_7_711:
+	goto label$ebdfb18_6_714;
+	label$ebdfb18_6_711:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_714:
+	label$ebdfb18_6_714:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1376,14 +1231,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 7;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_725;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_725;
 	r10 = NULL;
-	goto label$ebdfb18_7_728;
-	label$ebdfb18_7_725:
+	goto label$ebdfb18_6_728;
+	label$ebdfb18_6_725:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_728:
+	label$ebdfb18_6_728:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1416,14 +1271,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 3;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_763;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_763;
 	r10 = NULL;
-	goto label$ebdfb18_7_766;
-	label$ebdfb18_7_763:
+	goto label$ebdfb18_6_766;
+	label$ebdfb18_6_763:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_766:
+	label$ebdfb18_6_766:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1432,14 +1287,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r2 = 3;
 	r9 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_7_777;
+	if( ((unsigned)r2) < ((unsigned)r9) ) goto label$ebdfb18_6_777;
 	r10 = NULL;
-	goto label$ebdfb18_7_780;
-	label$ebdfb18_7_777:
+	goto label$ebdfb18_6_780;
+	label$ebdfb18_6_777:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r2];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_780:
+	label$ebdfb18_6_780:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1466,7 +1321,7 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r36 = r36 + r37;
 	r21 = &r36;
 	h2d_Graphics_addVertex(r17,r15,r16,r25,r26,r27,r28,r19,r21);
-	label$ebdfb18_7_806:
+	label$ebdfb18_6_806:
 	r17 = r0->gfx;
 	if( r17 == NULL ) hl_null_access();
 	r2 = 2;
@@ -1475,13 +1330,13 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
 	r39 = r40->colorB;
-	if( r39 ) goto label$ebdfb18_7_817;
+	if( r39 ) goto label$ebdfb18_6_817;
 	r20 = NULL;
-	goto label$ebdfb18_7_819;
-	label$ebdfb18_7_817:
+	goto label$ebdfb18_6_819;
+	label$ebdfb18_6_817:
 	r2 = r39 ? r39->v.i : 0;
 	r20 = &r2;
-	label$ebdfb18_7_819:
+	label$ebdfb18_6_819:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
@@ -1489,14 +1344,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r9 = 5;
 	r41 = r8->length;
-	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_7_829;
+	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_6_829;
 	r10 = NULL;
-	goto label$ebdfb18_7_832;
-	label$ebdfb18_7_829:
+	goto label$ebdfb18_6_832;
+	label$ebdfb18_6_829:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_832:
+	label$ebdfb18_6_832:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1505,14 +1360,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r9 = 5;
 	r41 = r8->length;
-	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_7_843;
+	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_6_843;
 	r10 = NULL;
-	goto label$ebdfb18_7_846;
-	label$ebdfb18_7_843:
+	goto label$ebdfb18_6_846;
+	label$ebdfb18_6_843:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_846:
+	label$ebdfb18_6_846:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1545,14 +1400,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r9 = 0;
 	r41 = r8->length;
-	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_7_881;
+	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_6_881;
 	r45 = NULL;
-	goto label$ebdfb18_7_884;
-	label$ebdfb18_7_881:
+	goto label$ebdfb18_6_884;
+	label$ebdfb18_6_881:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_884:
+	label$ebdfb18_6_884:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1561,14 +1416,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r9 = 0;
 	r41 = r8->length;
-	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_7_895;
+	if( ((unsigned)r9) < ((unsigned)r41) ) goto label$ebdfb18_6_895;
 	r45 = NULL;
-	goto label$ebdfb18_7_898;
-	label$ebdfb18_7_895:
+	goto label$ebdfb18_6_898;
+	label$ebdfb18_6_895:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r9];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_898:
+	label$ebdfb18_6_898:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1603,13 +1458,13 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
 	r39 = r40->colorA;
-	if( r39 ) goto label$ebdfb18_7_935;
+	if( r39 ) goto label$ebdfb18_6_935;
 	r20 = NULL;
-	goto label$ebdfb18_7_937;
-	label$ebdfb18_7_935:
+	goto label$ebdfb18_6_937;
+	label$ebdfb18_6_935:
 	r9 = r39 ? r39->v.i : 0;
 	r20 = &r9;
-	label$ebdfb18_7_937:
+	label$ebdfb18_6_937:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
@@ -1617,14 +1472,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r41 = 0;
 	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_7_947;
+	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_6_947;
 	r45 = NULL;
-	goto label$ebdfb18_7_950;
-	label$ebdfb18_7_947:
+	goto label$ebdfb18_6_950;
+	label$ebdfb18_6_947:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_950:
+	label$ebdfb18_6_950:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1633,14 +1488,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r41 = 0;
 	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_7_961;
+	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_6_961;
 	r45 = NULL;
-	goto label$ebdfb18_7_964;
-	label$ebdfb18_7_961:
+	goto label$ebdfb18_6_964;
+	label$ebdfb18_6_961:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_964:
+	label$ebdfb18_6_964:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1673,14 +1528,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r41 = 1;
 	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_7_999;
+	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_6_999;
 	r45 = NULL;
-	goto label$ebdfb18_7_1002;
-	label$ebdfb18_7_999:
+	goto label$ebdfb18_6_1002;
+	label$ebdfb18_6_999:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1002:
+	label$ebdfb18_6_1002:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1689,14 +1544,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r41 = 1;
 	r48 = r8->length;
-	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_7_1013;
+	if( ((unsigned)r41) < ((unsigned)r48) ) goto label$ebdfb18_6_1013;
 	r45 = NULL;
-	goto label$ebdfb18_7_1016;
-	label$ebdfb18_7_1013:
+	goto label$ebdfb18_6_1016;
+	label$ebdfb18_6_1013:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r41];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1016:
+	label$ebdfb18_6_1016:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1731,13 +1586,13 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
 	r39 = r40->colorB;
-	if( r39 ) goto label$ebdfb18_7_1053;
+	if( r39 ) goto label$ebdfb18_6_1053;
 	r20 = NULL;
-	goto label$ebdfb18_7_1055;
-	label$ebdfb18_7_1053:
+	goto label$ebdfb18_6_1055;
+	label$ebdfb18_6_1053:
 	r41 = r39 ? r39->v.i : 0;
 	r20 = &r41;
-	label$ebdfb18_7_1055:
+	label$ebdfb18_6_1055:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
@@ -1745,14 +1600,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r48 = 1;
 	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_7_1065;
+	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_6_1065;
 	r45 = NULL;
-	goto label$ebdfb18_7_1068;
-	label$ebdfb18_7_1065:
+	goto label$ebdfb18_6_1068;
+	label$ebdfb18_6_1065:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r48];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1068:
+	label$ebdfb18_6_1068:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1761,14 +1616,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r48 = 1;
 	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_7_1079;
+	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_6_1079;
 	r45 = NULL;
-	goto label$ebdfb18_7_1082;
-	label$ebdfb18_7_1079:
+	goto label$ebdfb18_6_1082;
+	label$ebdfb18_6_1079:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r48];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1082:
+	label$ebdfb18_6_1082:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1801,14 +1656,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r48 = 2;
 	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_7_1117;
+	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_6_1117;
 	r45 = NULL;
-	goto label$ebdfb18_7_1120;
-	label$ebdfb18_7_1117:
+	goto label$ebdfb18_6_1120;
+	label$ebdfb18_6_1117:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r48];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1120:
+	label$ebdfb18_6_1120:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1817,14 +1672,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r48 = 2;
 	r54 = r8->length;
-	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_7_1131;
+	if( ((unsigned)r48) < ((unsigned)r54) ) goto label$ebdfb18_6_1131;
 	r45 = NULL;
-	goto label$ebdfb18_7_1134;
-	label$ebdfb18_7_1131:
+	goto label$ebdfb18_6_1134;
+	label$ebdfb18_6_1131:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r48];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1134:
+	label$ebdfb18_6_1134:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1859,13 +1714,13 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
 	r39 = r40->colorA;
-	if( r39 ) goto label$ebdfb18_7_1171;
+	if( r39 ) goto label$ebdfb18_6_1171;
 	r20 = NULL;
-	goto label$ebdfb18_7_1173;
-	label$ebdfb18_7_1171:
+	goto label$ebdfb18_6_1173;
+	label$ebdfb18_6_1171:
 	r48 = r39 ? r39->v.i : 0;
 	r20 = &r48;
-	label$ebdfb18_7_1173:
+	label$ebdfb18_6_1173:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
@@ -1873,14 +1728,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r54 = 2;
 	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_7_1183;
+	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_6_1183;
 	r45 = NULL;
-	goto label$ebdfb18_7_1186;
-	label$ebdfb18_7_1183:
+	goto label$ebdfb18_6_1186;
+	label$ebdfb18_6_1183:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r54];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1186:
+	label$ebdfb18_6_1186:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1889,14 +1744,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r54 = 2;
 	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_7_1197;
+	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_6_1197;
 	r45 = NULL;
-	goto label$ebdfb18_7_1200;
-	label$ebdfb18_7_1197:
+	goto label$ebdfb18_6_1200;
+	label$ebdfb18_6_1197:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r54];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1200:
+	label$ebdfb18_6_1200:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1929,14 +1784,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r54 = 3;
 	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_7_1235;
+	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_6_1235;
 	r45 = NULL;
-	goto label$ebdfb18_7_1238;
-	label$ebdfb18_7_1235:
+	goto label$ebdfb18_6_1238;
+	label$ebdfb18_6_1235:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r54];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1238:
+	label$ebdfb18_6_1238:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1945,14 +1800,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r54 = 3;
 	r60 = r8->length;
-	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_7_1249;
+	if( ((unsigned)r54) < ((unsigned)r60) ) goto label$ebdfb18_6_1249;
 	r45 = NULL;
-	goto label$ebdfb18_7_1252;
-	label$ebdfb18_7_1249:
+	goto label$ebdfb18_6_1252;
+	label$ebdfb18_6_1249:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r54];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1252:
+	label$ebdfb18_6_1252:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -1987,13 +1842,13 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
 	r39 = r40->colorB;
-	if( r39 ) goto label$ebdfb18_7_1289;
+	if( r39 ) goto label$ebdfb18_6_1289;
 	r20 = NULL;
-	goto label$ebdfb18_7_1291;
-	label$ebdfb18_7_1289:
+	goto label$ebdfb18_6_1291;
+	label$ebdfb18_6_1289:
 	r54 = r39 ? r39->v.i : 0;
 	r20 = &r54;
-	label$ebdfb18_7_1291:
+	label$ebdfb18_6_1291:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
@@ -2001,14 +1856,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r60 = 3;
 	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_7_1301;
+	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_6_1301;
 	r45 = NULL;
-	goto label$ebdfb18_7_1304;
-	label$ebdfb18_7_1301:
+	goto label$ebdfb18_6_1304;
+	label$ebdfb18_6_1301:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r60];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1304:
+	label$ebdfb18_6_1304:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2017,14 +1872,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r60 = 3;
 	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_7_1315;
+	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_6_1315;
 	r45 = NULL;
-	goto label$ebdfb18_7_1318;
-	label$ebdfb18_7_1315:
+	goto label$ebdfb18_6_1318;
+	label$ebdfb18_6_1315:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r60];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1318:
+	label$ebdfb18_6_1318:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2057,14 +1912,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r60 = 4;
 	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_7_1353;
+	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_6_1353;
 	r45 = NULL;
-	goto label$ebdfb18_7_1356;
-	label$ebdfb18_7_1353:
+	goto label$ebdfb18_6_1356;
+	label$ebdfb18_6_1353:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r60];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1356:
+	label$ebdfb18_6_1356:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2073,14 +1928,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r60 = 4;
 	r66 = r8->length;
-	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_7_1367;
+	if( ((unsigned)r60) < ((unsigned)r66) ) goto label$ebdfb18_6_1367;
 	r45 = NULL;
-	goto label$ebdfb18_7_1370;
-	label$ebdfb18_7_1367:
+	goto label$ebdfb18_6_1370;
+	label$ebdfb18_6_1367:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r60];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1370:
+	label$ebdfb18_6_1370:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2115,13 +1970,13 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r40 = r0->neckscarf;
 	if( r40 == NULL ) hl_null_access();
 	r39 = r40->colorA;
-	if( r39 ) goto label$ebdfb18_7_1407;
+	if( r39 ) goto label$ebdfb18_6_1407;
 	r20 = NULL;
-	goto label$ebdfb18_7_1409;
-	label$ebdfb18_7_1407:
+	goto label$ebdfb18_6_1409;
+	label$ebdfb18_6_1407:
 	r60 = r39 ? r39->v.i : 0;
 	r20 = &r60;
-	label$ebdfb18_7_1409:
+	label$ebdfb18_6_1409:
 	r21 = NULL;
 	h2d_Graphics_lineStyle(r17,r19,r20,r21);
 	r17 = r0->gfx;
@@ -2129,14 +1984,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r66 = 4;
 	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_7_1419;
+	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_6_1419;
 	r45 = NULL;
-	goto label$ebdfb18_7_1422;
-	label$ebdfb18_7_1419:
+	goto label$ebdfb18_6_1422;
+	label$ebdfb18_6_1419:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r66];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1422:
+	label$ebdfb18_6_1422:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2145,14 +2000,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r66 = 4;
 	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_7_1433;
+	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_6_1433;
 	r45 = NULL;
-	goto label$ebdfb18_7_1436;
-	label$ebdfb18_7_1433:
+	goto label$ebdfb18_6_1436;
+	label$ebdfb18_6_1433:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r66];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1436:
+	label$ebdfb18_6_1436:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2185,14 +2040,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r66 = 5;
 	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_7_1471;
+	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_6_1471;
 	r45 = NULL;
-	goto label$ebdfb18_7_1474;
-	label$ebdfb18_7_1471:
+	goto label$ebdfb18_6_1474;
+	label$ebdfb18_6_1471:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r66];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1474:
+	label$ebdfb18_6_1474:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2201,14 +2056,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r66 = 5;
 	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_7_1485;
+	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_6_1485;
 	r45 = NULL;
-	goto label$ebdfb18_7_1488;
-	label$ebdfb18_7_1485:
+	goto label$ebdfb18_6_1488;
+	label$ebdfb18_6_1485:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r66];
 	r45 = (hxlr__rider__AirPoint)r11;
-	label$ebdfb18_7_1488:
+	label$ebdfb18_6_1488:
 	if( r45 == NULL ) hl_null_access();
 	r7 = r45->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2256,14 +2111,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r66 = 1;
 	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_7_1538;
+	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_6_1538;
 	r10 = NULL;
-	goto label$ebdfb18_7_1541;
-	label$ebdfb18_7_1538:
+	goto label$ebdfb18_6_1541;
+	label$ebdfb18_6_1538:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r66];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_1541:
+	label$ebdfb18_6_1541:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2277,14 +2132,14 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	if( r8 == NULL ) hl_null_access();
 	r66 = 1;
 	r72 = r8->length;
-	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_7_1557;
+	if( ((unsigned)r66) < ((unsigned)r72) ) goto label$ebdfb18_6_1557;
 	r10 = NULL;
-	goto label$ebdfb18_7_1560;
-	label$ebdfb18_7_1557:
+	goto label$ebdfb18_6_1560;
+	label$ebdfb18_6_1557:
 	r12 = r8->array;
 	r11 = ((vdynamic**)(r12 + 1))[r66];
 	r10 = (hxlr__rider__ContactPoint)r11;
-	label$ebdfb18_7_1560:
+	label$ebdfb18_6_1560:
 	if( r10 == NULL ) hl_null_access();
 	r7 = r10->pos;
 	if( r7 == NULL ) hl_null_access();
@@ -2303,20 +2158,20 @@ void components_sledder_Bosh_renderRider(components__sledder__Bosh r0) {
 	r78->rotation = r27;
 	r18 = r0->crashed;
 	r14 = r18 ? r18->v.b : 0;
-	if( !r14 ) goto label$ebdfb18_7_1585;
+	if( !r14 ) goto label$ebdfb18_6_1585;
 	r78 = r0->nameField;
 	if( r78 == NULL ) hl_null_access();
 	r82 = (components__sledder__$Bosh)g$_components_sledder_Bosh;
 	r81 = r82->RED;
 	r78->color = r81;
-	goto label$ebdfb18_7_1590;
-	label$ebdfb18_7_1585:
+	goto label$ebdfb18_6_1590;
+	label$ebdfb18_6_1585:
 	r78 = r0->nameField;
 	if( r78 == NULL ) hl_null_access();
 	r82 = (components__sledder__$Bosh)g$_components_sledder_Bosh;
 	r81 = r82->WHITE;
 	r78->color = r81;
-	label$ebdfb18_7_1590:
+	label$ebdfb18_6_1590:
 	return;
 }
 
@@ -2331,62 +2186,62 @@ void components_sledder_Bosh_updateEyeball(components__sledder__Bosh r0,int r1) 
 	vdynamic *r4;
 	int r3;
 	r3 = r0->prevFrame;
-	if( r1 != r3 ) goto label$ebdfb18_8_3;
+	if( r1 != r3 ) goto label$ebdfb18_7_3;
 	return;
-	label$ebdfb18_8_3:
+	label$ebdfb18_7_3:
 	r4 = r0->crashed;
 	r5 = r4 ? r4->v.b : 0;
-	if( r5 ) goto label$ebdfb18_8_8;
+	if( r5 ) goto label$ebdfb18_7_8;
 	r5 = r0->undead;
-	if( !r5 ) goto label$ebdfb18_8_15;
-	label$ebdfb18_8_8:
+	if( !r5 ) goto label$ebdfb18_7_15;
+	label$ebdfb18_7_8:
 	r8 = r0->eye;
 	if( r8 == NULL ) hl_null_access();
 	r7 = r8->anim;
 	if( r7 == NULL ) hl_null_access();
 	r6 = 2.;
 	r6 = h2d_Anim_set_currentFrame(r7,r6);
-	goto label$ebdfb18_8_49;
-	label$ebdfb18_8_15:
+	goto label$ebdfb18_7_49;
+	label$ebdfb18_7_15:
 	r6 = 0.;
 	r3 = r0->prevFrame;
-	if( r3 >= r1 ) goto label$ebdfb18_8_25;
+	if( r3 >= r1 ) goto label$ebdfb18_7_25;
 	r11 = ($Main)g$_Main;
 	r10 = r11->rng;
 	if( r10 == NULL ) hl_null_access();
 	r12 = r0->name;
 	r9 = utils_TableRNG_getRandomNormal(r10,r12);
 	r6 = r9;
-	goto label$ebdfb18_8_33;
-	label$ebdfb18_8_25:
+	goto label$ebdfb18_7_33;
+	label$ebdfb18_7_25:
 	r3 = r0->prevFrame;
-	if( r1 >= r3 ) goto label$ebdfb18_8_33;
+	if( r1 >= r3 ) goto label$ebdfb18_7_33;
 	r11 = ($Main)g$_Main;
 	r10 = r11->rng;
 	if( r10 == NULL ) hl_null_access();
 	r12 = r0->name;
 	r9 = utils_TableRNG_getRandomNormalDecrease(r10,r12);
 	r6 = r9;
-	label$ebdfb18_8_33:
+	label$ebdfb18_7_33:
 	r13 = r0->blinkRate;
-	if( !(r6 < r13) ) goto label$ebdfb18_8_42;
+	if( !(r6 < r13) ) goto label$ebdfb18_7_42;
 	r8 = r0->eye;
 	if( r8 == NULL ) hl_null_access();
 	r7 = r8->anim;
 	if( r7 == NULL ) hl_null_access();
 	r9 = 1.;
 	r9 = h2d_Anim_set_currentFrame(r7,r9);
-	goto label$ebdfb18_8_48;
-	label$ebdfb18_8_42:
+	goto label$ebdfb18_7_48;
+	label$ebdfb18_7_42:
 	r8 = r0->eye;
 	if( r8 == NULL ) hl_null_access();
 	r7 = r8->anim;
 	if( r7 == NULL ) hl_null_access();
 	r9 = 0.;
 	r9 = h2d_Anim_set_currentFrame(r7,r9);
-	label$ebdfb18_8_48:
+	label$ebdfb18_7_48:
 	r0->prevFrame = r1;
-	label$ebdfb18_8_49:
+	label$ebdfb18_7_49:
 	return;
 }
 
@@ -2399,1334 +2254,7 @@ void components_sledder_Bosh_setColor(components__sledder__Bosh r0,vdynamic* r1,
 }
 
 void components_sledder_Bosh_reset(components__sledder__Bosh r0) {
-	components_sledder_Bosh_init(r0);
-	return;
-}
-
-void components_sledder_Bosh_init(components__sledder__Bosh r0) {
-	hxlr__rider__Stick r48, r50, r51, r53, r54;
-	hl__types__ArrayObj r2, r41;
-	venum *r49;
-	bool r52;
-	hxlr__rider__AirPoint r35, r46;
-	h2d__col__Point r44, r47;
-	hxlr__rider__ContactPoint r3, r45;
-	double r4, r6, r8, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r36, r37, r38;
-	vdynamic *r42, *r55;
-	double *r5, *r7, *r9;
-	varray *r43;
-	int r1, r39, r40;
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 0;
-	r4 = (double)r1;
-	r5 = &r4;
-	r1 = 0;
-	r6 = (double)r1;
-	r7 = &r6;
-	r8 = 0.80000000000000004;
-	r9 = &r8;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 0;
-	r11 = (double)r1;
-	r5 = &r11;
-	r1 = 10;
-	r12 = (double)r1;
-	r7 = &r12;
-	r9 = NULL;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 30;
-	r13 = (double)r1;
-	r5 = &r13;
-	r1 = 10;
-	r14 = (double)r1;
-	r7 = &r14;
-	r9 = NULL;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 35;
-	r15 = (double)r1;
-	r5 = &r15;
-	r1 = 0;
-	r16 = (double)r1;
-	r7 = &r16;
-	r9 = NULL;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 10;
-	r17 = (double)r1;
-	r5 = &r17;
-	r1 = 0;
-	r18 = (double)r1;
-	r7 = &r18;
-	r19 = 0.80000000000000004;
-	r9 = &r19;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 10;
-	r20 = (double)r1;
-	r5 = &r20;
-	r1 = -11;
-	r21 = (double)r1;
-	r7 = &r21;
-	r22 = 0.80000000000000004;
-	r9 = &r22;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 23;
-	r23 = (double)r1;
-	r5 = &r23;
-	r1 = -10;
-	r24 = (double)r1;
-	r7 = &r24;
-	r25 = 0.10000000000000001;
-	r9 = &r25;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 23;
-	r26 = (double)r1;
-	r5 = &r26;
-	r1 = -10;
-	r27 = (double)r1;
-	r7 = &r27;
-	r28 = 0.10000000000000001;
-	r9 = &r28;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 20;
-	r29 = (double)r1;
-	r5 = &r29;
-	r1 = 10;
-	r30 = (double)r1;
-	r7 = &r30;
-	r1 = 0;
-	r31 = (double)r1;
-	r9 = &r31;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r3 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
-	r1 = 20;
-	r32 = (double)r1;
-	r5 = &r32;
-	r1 = 10;
-	r33 = (double)r1;
-	r7 = &r33;
-	r1 = 0;
-	r34 = (double)r1;
-	r9 = &r34;
-	hxlr_rider_ContactPoint_new(r3,r5,r7,r9);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r3));
-	r2 = r0->airPoints;
-	if( r2 == NULL ) hl_null_access();
-	r35 = (hxlr__rider__AirPoint)hl_alloc_obj(&t$hxlr_rider_AirPoint);
-	r36 = 7.;
-	r37 = -10.;
-	r38 = 0.90000000000000002;
-	hxlr_rider_AirPoint_new(r35,r36,r37,r38);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r35));
-	r2 = r0->airPoints;
-	if( r2 == NULL ) hl_null_access();
-	r35 = (hxlr__rider__AirPoint)hl_alloc_obj(&t$hxlr_rider_AirPoint);
-	r36 = 3.;
-	r37 = -10.;
-	r38 = 0.90000000000000002;
-	hxlr_rider_AirPoint_new(r35,r36,r37,r38);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r35));
-	r2 = r0->airPoints;
-	if( r2 == NULL ) hl_null_access();
-	r35 = (hxlr__rider__AirPoint)hl_alloc_obj(&t$hxlr_rider_AirPoint);
-	r36 = 0.;
-	r37 = -10.;
-	r38 = 0.90000000000000002;
-	hxlr_rider_AirPoint_new(r35,r36,r37,r38);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r35));
-	r2 = r0->airPoints;
-	if( r2 == NULL ) hl_null_access();
-	r35 = (hxlr__rider__AirPoint)hl_alloc_obj(&t$hxlr_rider_AirPoint);
-	r36 = -4.;
-	r37 = -10.;
-	r38 = 0.90000000000000002;
-	hxlr_rider_AirPoint_new(r35,r36,r37,r38);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r35));
-	r2 = r0->airPoints;
-	if( r2 == NULL ) hl_null_access();
-	r35 = (hxlr__rider__AirPoint)hl_alloc_obj(&t$hxlr_rider_AirPoint);
-	r36 = -7.;
-	r37 = -10.;
-	r38 = 0.90000000000000002;
-	hxlr_rider_AirPoint_new(r35,r36,r37,r38);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r35));
-	r2 = r0->airPoints;
-	if( r2 == NULL ) hl_null_access();
-	r35 = (hxlr__rider__AirPoint)hl_alloc_obj(&t$hxlr_rider_AirPoint);
-	r36 = -11.;
-	r37 = -10.;
-	r38 = 0.90000000000000002;
-	hxlr_rider_AirPoint_new(r35,r36,r37,r38);
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r35));
-	r1 = 0;
-	r2 = r0->contactPoints;
-	label$ebdfb18_11_179:
-	if( r2 == NULL ) hl_null_access();
-	r40 = r2->length;
-	if( r1 >= r40 ) goto label$ebdfb18_11_205;
-	r40 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r40) ) goto label$ebdfb18_11_187;
-	r3 = NULL;
-	goto label$ebdfb18_11_190;
-	label$ebdfb18_11_187:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_190:
-	++r1;
-	if( r3 == NULL ) hl_null_access();
-	r44 = r3->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->x;
-	r37 = 0.5;
-	r36 = r36 * r37;
-	r44->x = r36;
-	r44 = r3->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->y;
-	r37 = 0.5;
-	r36 = r36 * r37;
-	r44->y = r36;
-	goto label$ebdfb18_11_179;
-	label$ebdfb18_11_205:
-	r1 = 0;
-	r2 = r0->airPoints;
-	label$ebdfb18_11_207:
-	if( r2 == NULL ) hl_null_access();
-	r40 = r2->length;
-	if( r1 >= r40 ) goto label$ebdfb18_11_233;
-	r40 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r40) ) goto label$ebdfb18_11_215;
-	r35 = NULL;
-	goto label$ebdfb18_11_218;
-	label$ebdfb18_11_215:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_218:
-	++r1;
-	if( r35 == NULL ) hl_null_access();
-	r44 = r35->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->x;
-	r37 = 0.5;
-	r36 = r36 * r37;
-	r44->x = r36;
-	r44 = r35->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->y;
-	r37 = 0.5;
-	r36 = r36 * r37;
-	r44->y = r36;
-	goto label$ebdfb18_11_207;
-	label$ebdfb18_11_233:
-	r1 = 0;
-	r2 = r0->contactPoints;
-	label$ebdfb18_11_235:
-	if( r2 == NULL ) hl_null_access();
-	r40 = r2->length;
-	if( r1 >= r40 ) goto label$ebdfb18_11_281;
-	r40 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r40) ) goto label$ebdfb18_11_243;
-	r3 = NULL;
-	goto label$ebdfb18_11_246;
-	label$ebdfb18_11_243:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_246:
-	++r1;
-	if( r3 == NULL ) hl_null_access();
-	r44 = r3->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->x;
-	r47 = r0->startPos;
-	if( r47 == NULL ) hl_null_access();
-	r37 = r47->x;
-	r36 = r36 + r37;
-	r44->x = r36;
-	r44 = r3->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->y;
-	r47 = r0->startPos;
-	if( r47 == NULL ) hl_null_access();
-	r37 = r47->y;
-	r36 = r36 + r37;
-	r44->y = r36;
-	r44 = r3->vel;
-	if( r44 == NULL ) hl_null_access();
-	r47 = r3->pos;
-	if( r47 == NULL ) hl_null_access();
-	r36 = r47->x;
-	r47 = r0->startVel;
-	if( r47 == NULL ) hl_null_access();
-	r37 = r47->x;
-	r36 = r36 - r37;
-	r44->x = r36;
-	r44 = r3->vel;
-	if( r44 == NULL ) hl_null_access();
-	r47 = r3->pos;
-	if( r47 == NULL ) hl_null_access();
-	r36 = r47->y;
-	r44->y = r36;
-	goto label$ebdfb18_11_235;
-	label$ebdfb18_11_281:
-	r1 = 0;
-	r2 = r0->airPoints;
-	label$ebdfb18_11_283:
-	if( r2 == NULL ) hl_null_access();
-	r40 = r2->length;
-	if( r1 >= r40 ) goto label$ebdfb18_11_329;
-	r40 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r40) ) goto label$ebdfb18_11_291;
-	r35 = NULL;
-	goto label$ebdfb18_11_294;
-	label$ebdfb18_11_291:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_294:
-	++r1;
-	if( r35 == NULL ) hl_null_access();
-	r44 = r35->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->x;
-	r47 = r0->startPos;
-	if( r47 == NULL ) hl_null_access();
-	r37 = r47->x;
-	r36 = r36 + r37;
-	r44->x = r36;
-	r44 = r35->pos;
-	if( r44 == NULL ) hl_null_access();
-	r36 = r44->y;
-	r47 = r0->startPos;
-	if( r47 == NULL ) hl_null_access();
-	r37 = r47->y;
-	r36 = r36 + r37;
-	r44->y = r36;
-	r44 = r35->vel;
-	if( r44 == NULL ) hl_null_access();
-	r47 = r35->pos;
-	if( r47 == NULL ) hl_null_access();
-	r36 = r47->x;
-	r47 = r0->startVel;
-	if( r47 == NULL ) hl_null_access();
-	r37 = r47->x;
-	r36 = r36 - r37;
-	r44->x = r36;
-	r44 = r35->vel;
-	if( r44 == NULL ) hl_null_access();
-	r47 = r35->pos;
-	if( r47 == NULL ) hl_null_access();
-	r36 = r47->y;
-	r44->y = r36;
-	goto label$ebdfb18_11_283;
-	label$ebdfb18_11_329:
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 0;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_339;
-	r3 = NULL;
-	goto label$ebdfb18_11_342;
-	label$ebdfb18_11_339:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_342:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 1;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_349;
-	r45 = NULL;
-	goto label$ebdfb18_11_352;
-	label$ebdfb18_11_349:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_352:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 1;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_365;
-	r3 = NULL;
-	goto label$ebdfb18_11_368;
-	label$ebdfb18_11_365:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_368:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_375;
-	r45 = NULL;
-	goto label$ebdfb18_11_378;
-	label$ebdfb18_11_375:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_378:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_391;
-	r3 = NULL;
-	goto label$ebdfb18_11_394;
-	label$ebdfb18_11_391:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_394:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 3;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_401;
-	r45 = NULL;
-	goto label$ebdfb18_11_404;
-	label$ebdfb18_11_401:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_404:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 3;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_417;
-	r3 = NULL;
-	goto label$ebdfb18_11_420;
-	label$ebdfb18_11_417:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_420:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 0;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_427;
-	r45 = NULL;
-	goto label$ebdfb18_11_430;
-	label$ebdfb18_11_427:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_430:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 0;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_443;
-	r3 = NULL;
-	goto label$ebdfb18_11_446;
-	label$ebdfb18_11_443:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_446:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_453;
-	r45 = NULL;
-	goto label$ebdfb18_11_456;
-	label$ebdfb18_11_453:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_456:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 3;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_469;
-	r3 = NULL;
-	goto label$ebdfb18_11_472;
-	label$ebdfb18_11_469:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_472:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 1;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_479;
-	r45 = NULL;
-	goto label$ebdfb18_11_482;
-	label$ebdfb18_11_479:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_482:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 0;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_495;
-	r3 = NULL;
-	goto label$ebdfb18_11_498;
-	label$ebdfb18_11_495:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_498:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_505;
-	r45 = NULL;
-	goto label$ebdfb18_11_508;
-	label$ebdfb18_11_505:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_508:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 1;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_521;
-	r3 = NULL;
-	goto label$ebdfb18_11_524;
-	label$ebdfb18_11_521:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_524:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_531;
-	r45 = NULL;
-	goto label$ebdfb18_11_534;
-	label$ebdfb18_11_531:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_534:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_547;
-	r3 = NULL;
-	goto label$ebdfb18_11_550;
-	label$ebdfb18_11_547:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_550:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_557;
-	r45 = NULL;
-	goto label$ebdfb18_11_560;
-	label$ebdfb18_11_557:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_560:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 6;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_570;
-	r48 = NULL;
-	goto label$ebdfb18_11_573;
-	label$ebdfb18_11_570:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r48 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_573:
-	if( r48 == NULL ) hl_null_access();
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 7;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_581;
-	r50 = NULL;
-	goto label$ebdfb18_11_584;
-	label$ebdfb18_11_581:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r50 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_584:
-	if( r50 == NULL ) hl_null_access();
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 8;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_592;
-	r51 = NULL;
-	goto label$ebdfb18_11_595;
-	label$ebdfb18_11_592:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r51 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_595:
-	if( r51 == NULL ) hl_null_access();
-	r52 = true;
-	r51->crashable = r52;
-	r50->crashable = r52;
-	r48->crashable = r52;
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_610;
-	r3 = NULL;
-	goto label$ebdfb18_11_613;
-	label$ebdfb18_11_610:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_613:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_620;
-	r45 = NULL;
-	goto label$ebdfb18_11_623;
-	label$ebdfb18_11_620:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_623:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_636;
-	r3 = NULL;
-	goto label$ebdfb18_11_639;
-	label$ebdfb18_11_636:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_639:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 6;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_646;
-	r45 = NULL;
-	goto label$ebdfb18_11_649;
-	label$ebdfb18_11_646:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_649:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_662;
-	r3 = NULL;
-	goto label$ebdfb18_11_665;
-	label$ebdfb18_11_662:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_665:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 7;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_672;
-	r45 = NULL;
-	goto label$ebdfb18_11_675;
-	label$ebdfb18_11_672:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_675:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_688;
-	r3 = NULL;
-	goto label$ebdfb18_11_691;
-	label$ebdfb18_11_688:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_691:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 8;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_698;
-	r45 = NULL;
-	goto label$ebdfb18_11_701;
-	label$ebdfb18_11_698:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_701:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_714;
-	r3 = NULL;
-	goto label$ebdfb18_11_717;
-	label$ebdfb18_11_714:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_717:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 9;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_724;
-	r45 = NULL;
-	goto label$ebdfb18_11_727;
-	label$ebdfb18_11_724:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_727:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_740;
-	r3 = NULL;
-	goto label$ebdfb18_11_743;
-	label$ebdfb18_11_740:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_743:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 7;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_750;
-	r45 = NULL;
-	goto label$ebdfb18_11_753;
-	label$ebdfb18_11_750:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_753:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_766;
-	r3 = NULL;
-	goto label$ebdfb18_11_769;
-	label$ebdfb18_11_766:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_769:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 0;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_776;
-	r45 = NULL;
-	goto label$ebdfb18_11_779;
-	label$ebdfb18_11_776:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_779:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 3;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_792;
-	r3 = NULL;
-	goto label$ebdfb18_11_795;
-	label$ebdfb18_11_792:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_795:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 6;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_802;
-	r45 = NULL;
-	goto label$ebdfb18_11_805;
-	label$ebdfb18_11_802:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_805:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 3;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_818;
-	r3 = NULL;
-	goto label$ebdfb18_11_821;
-	label$ebdfb18_11_818:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_821:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 7;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_828;
-	r45 = NULL;
-	goto label$ebdfb18_11_831;
-	label$ebdfb18_11_828:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_831:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 8;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_844;
-	r3 = NULL;
-	goto label$ebdfb18_11_847;
-	label$ebdfb18_11_844:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_847:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_854;
-	r45 = NULL;
-	goto label$ebdfb18_11_857;
-	label$ebdfb18_11_854:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_857:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 9;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_870;
-	r3 = NULL;
-	goto label$ebdfb18_11_873;
-	label$ebdfb18_11_870:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_873:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_880;
-	r45 = NULL;
-	goto label$ebdfb18_11_883;
-	label$ebdfb18_11_880:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_883:
-	r49 = (venum*)g$hxlr_enums_StickType_STANDARD;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 15;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_893;
-	r48 = NULL;
-	goto label$ebdfb18_11_896;
-	label$ebdfb18_11_893:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r48 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_896:
-	if( r48 == NULL ) hl_null_access();
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 16;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_904;
-	r50 = NULL;
-	goto label$ebdfb18_11_907;
-	label$ebdfb18_11_904:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r50 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_907:
-	if( r50 == NULL ) hl_null_access();
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 17;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_915;
-	r51 = NULL;
-	goto label$ebdfb18_11_918;
-	label$ebdfb18_11_915:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r51 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_918:
-	if( r51 == NULL ) hl_null_access();
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 18;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_926;
-	r53 = NULL;
-	goto label$ebdfb18_11_929;
-	label$ebdfb18_11_926:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r53 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_929:
-	if( r53 == NULL ) hl_null_access();
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 19;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_937;
-	r54 = NULL;
-	goto label$ebdfb18_11_940;
-	label$ebdfb18_11_937:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r54 = (hxlr__rider__Stick)r42;
-	label$ebdfb18_11_940:
-	if( r54 == NULL ) hl_null_access();
-	r52 = true;
-	r54->crashable = r52;
-	r53->crashable = r52;
-	r51->crashable = r52;
-	r50->crashable = r52;
-	r48->crashable = r52;
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_957;
-	r3 = NULL;
-	goto label$ebdfb18_11_960;
-	label$ebdfb18_11_957:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_960:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 8;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_967;
-	r45 = NULL;
-	goto label$ebdfb18_11_970;
-	label$ebdfb18_11_967:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_970:
-	r49 = (venum*)g$hxlr_enums_StickType_REPELL;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->constraints;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_983;
-	r3 = NULL;
-	goto label$ebdfb18_11_986;
-	label$ebdfb18_11_983:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_986:
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 9;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_993;
-	r45 = NULL;
-	goto label$ebdfb18_11_996;
-	label$ebdfb18_11_993:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r45 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_996:
-	r49 = (venum*)g$hxlr_enums_StickType_REPELL;
-	hxlr_rider_Stick_new(r48,r3,r45,r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->scarves;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->contactPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1009;
-	r3 = NULL;
-	goto label$ebdfb18_11_1012;
-	label$ebdfb18_11_1009:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_1012:
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 0;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1019;
-	r35 = NULL;
-	goto label$ebdfb18_11_1022;
-	label$ebdfb18_11_1019:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1022:
-	r49 = (venum*)g$hxlr_enums_StickType_SCARF;
-	hxlr_rider_Stick_new(r48,r3,((hxlr__rider__ContactPoint)r35),r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->scarves;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 0;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1035;
-	r35 = NULL;
-	goto label$ebdfb18_11_1038;
-	label$ebdfb18_11_1035:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1038:
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 1;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1045;
-	r46 = NULL;
-	goto label$ebdfb18_11_1048;
-	label$ebdfb18_11_1045:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r46 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1048:
-	r49 = (venum*)g$hxlr_enums_StickType_SCARF;
-	hxlr_rider_Stick_new(r48,((hxlr__rider__ContactPoint)r35),((hxlr__rider__ContactPoint)r46),r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->scarves;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 1;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1061;
-	r35 = NULL;
-	goto label$ebdfb18_11_1064;
-	label$ebdfb18_11_1061:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1064:
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1071;
-	r46 = NULL;
-	goto label$ebdfb18_11_1074;
-	label$ebdfb18_11_1071:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r46 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1074:
-	r49 = (venum*)g$hxlr_enums_StickType_SCARF;
-	hxlr_rider_Stick_new(r48,((hxlr__rider__ContactPoint)r35),((hxlr__rider__ContactPoint)r46),r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->scarves;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 2;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1087;
-	r35 = NULL;
-	goto label$ebdfb18_11_1090;
-	label$ebdfb18_11_1087:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1090:
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 3;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1097;
-	r46 = NULL;
-	goto label$ebdfb18_11_1100;
-	label$ebdfb18_11_1097:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r46 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1100:
-	r49 = (venum*)g$hxlr_enums_StickType_SCARF;
-	hxlr_rider_Stick_new(r48,((hxlr__rider__ContactPoint)r35),((hxlr__rider__ContactPoint)r46),r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->scarves;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 3;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1113;
-	r35 = NULL;
-	goto label$ebdfb18_11_1116;
-	label$ebdfb18_11_1113:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1116:
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1123;
-	r46 = NULL;
-	goto label$ebdfb18_11_1126;
-	label$ebdfb18_11_1123:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r46 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1126:
-	r49 = (venum*)g$hxlr_enums_StickType_SCARF;
-	hxlr_rider_Stick_new(r48,((hxlr__rider__ContactPoint)r35),((hxlr__rider__ContactPoint)r46),r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r2 = r0->scarves;
-	if( r2 == NULL ) hl_null_access();
-	r48 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1139;
-	r35 = NULL;
-	goto label$ebdfb18_11_1142;
-	label$ebdfb18_11_1139:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r35 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1142:
-	r41 = r0->airPoints;
-	if( r41 == NULL ) hl_null_access();
-	r1 = 5;
-	r39 = r41->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1149;
-	r46 = NULL;
-	goto label$ebdfb18_11_1152;
-	label$ebdfb18_11_1149:
-	r43 = r41->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r46 = (hxlr__rider__AirPoint)r42;
-	label$ebdfb18_11_1152:
-	r49 = (venum*)g$hxlr_enums_StickType_SCARF;
-	hxlr_rider_Stick_new(r48,((hxlr__rider__ContactPoint)r35),((hxlr__rider__ContactPoint)r46),r49,((hxlr__rider__RiderBase)r0));
-	r1 = hl_types_ArrayObj_push(r2,((vdynamic*)r48));
-	r52 = false;
-	r52 = hxlr_rider_RiderBase_set_crashed(((hxlr__rider__RiderBase)r0),r52);
-	r55 = hl_alloc_dynbool(r52);
-	r2 = r0->contactPoints;
-	if( r2 == NULL ) hl_null_access();
-	r1 = 4;
-	r39 = r2->length;
-	if( ((unsigned)r1) < ((unsigned)r39) ) goto label$ebdfb18_11_1165;
-	r3 = NULL;
-	goto label$ebdfb18_11_1168;
-	label$ebdfb18_11_1165:
-	r43 = r2->array;
-	r42 = ((vdynamic**)(r43 + 1))[r1];
-	r3 = (hxlr__rider__ContactPoint)r42;
-	label$ebdfb18_11_1168:
-	r0->focusPoint = r3;
+	hxlr_rider_RiderBase_init(((hxlr__rider__RiderBase)r0));
 	return;
 }
 
@@ -3753,205 +2281,206 @@ int components_sledder_Bosh_get_colorB(components__sledder__Bosh r0) {
 }
 
 void components_sledder_Bosh_new(components__sledder__Bosh r0,vdynamic* r1,vdynamic* r2,String r3,vdynamic* r4,vdynamic* r5) {
-	utils__TableRNG r25, r26;
-	String r7, r27;
-	venum *r29;
-	h2d__Graphics r19;
+	utils__TableRNG r24, r25;
+	String r7, r26;
+	vvirtual *r11;
+	venum *r28;
+	h2d__Graphics r18;
 	bool r9;
-	h2d__Object r20;
-	components__sledder__RiderPart r28, r31;
-	h2d__HtmlText r23;
-	h2d__Font r24;
-	$Main r22;
-	h2d__col__Point r11;
-	components__stage__Canvas r21;
-	double r6, r14, r15, r16, r17, r18, r32;
-	double *r12, *r13;
-	components__sledder__RiderScarf r30;
+	h2d__Object r19;
+	components__sledder__RiderPart r27, r30;
+	h2d__HtmlText r22;
+	h2d__Font r23;
+	$Main r21;
+	h2d__col__Point r12;
+	components__stage__Canvas r20;
+	double r6, r15, r16, r17, r31;
+	double *r13, *r14;
+	components__sledder__RiderScarf r29;
 	int r8;
-	if( r1 ) goto label$ebdfb18_14_3;
+	if( r1 ) goto label$ebdfb18_12_3;
 	r6 = 0.;
 	r1 = hl_alloc_dynamic(&t$_f64);
 	r1->v.d = r6;
-	label$ebdfb18_14_3:
-	if( r2 ) goto label$ebdfb18_14_6;
+	label$ebdfb18_12_3:
+	if( r2 ) goto label$ebdfb18_12_6;
 	r6 = 0.;
 	r2 = hl_alloc_dynamic(&t$_f64);
 	r2->v.d = r6;
-	label$ebdfb18_14_6:
-	if( r3 ) goto label$ebdfb18_14_9;
+	label$ebdfb18_12_6:
+	if( r3 ) goto label$ebdfb18_12_9;
 	r7 = (String)s$Bosh;
 	r3 = r7;
-	label$ebdfb18_14_9:
+	label$ebdfb18_12_9:
 	r8 = 0;
 	r0->prevFrame = r8;
 	r6 = 0.10000000000000001;
 	r0->blinkRate = r6;
 	r9 = false;
 	r0->undead = r9;
-	hxlr_rider_RiderBase_new(((hxlr__rider__RiderBase)r0));
-	r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	if( r1 ) goto label$ebdfb18_14_20;
-	r12 = NULL;
-	goto label$ebdfb18_14_22;
-	label$ebdfb18_14_20:
-	r6 = r1 ? r1->v.d : 0;
-	r12 = &r6;
-	label$ebdfb18_14_22:
-	if( r2 ) goto label$ebdfb18_14_25;
+	r11 = hxlr_Constants_defaultRider();
+	r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	if( r1 ) goto label$ebdfb18_12_20;
 	r13 = NULL;
-	goto label$ebdfb18_14_27;
-	label$ebdfb18_14_25:
-	r14 = r2 ? r2->v.d : 0;
-	r13 = &r14;
-	label$ebdfb18_14_27:
-	h2d_col_Point_new(r11,r12,r13);
-	r0->startPos = r11;
+	goto label$ebdfb18_12_22;
+	label$ebdfb18_12_20:
+	r6 = r1 ? r1->v.d : 0;
+	r13 = &r6;
+	label$ebdfb18_12_22:
+	if( r2 ) goto label$ebdfb18_12_25;
+	r14 = NULL;
+	goto label$ebdfb18_12_27;
+	label$ebdfb18_12_25:
+	r15 = r2 ? r2->v.d : 0;
+	r14 = &r15;
+	label$ebdfb18_12_27:
+	h2d_col_Point_new(r12,r13,r14);
+	hxlr_rider_RiderBase_new(((hxlr__rider__RiderBase)r0),r11,r12,r3);
+	r12 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	if( r1 ) goto label$ebdfb18_12_33;
+	r13 = NULL;
+	goto label$ebdfb18_12_35;
+	label$ebdfb18_12_33:
+	r16 = r1 ? r1->v.d : 0;
+	r13 = &r16;
+	label$ebdfb18_12_35:
+	if( r2 ) goto label$ebdfb18_12_38;
+	r14 = NULL;
+	goto label$ebdfb18_12_40;
+	label$ebdfb18_12_38:
+	r17 = r2 ? r2->v.d : 0;
+	r14 = &r17;
+	label$ebdfb18_12_40:
+	h2d_col_Point_new(r12,r13,r14);
+	r0->startPos = r12;
 	r0->name = r3;
 	r0->enabledFrame = r4;
 	r0->disableFrame = r5;
-	r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r15 = 0.40000000000000002;
-	r12 = &r15;
-	r8 = 0;
-	r16 = (double)r8;
-	r13 = &r16;
-	h2d_col_Point_new(r11,r12,r13);
-	r0->startVel = r11;
-	r11 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r8 = 0;
-	r17 = (double)r8;
-	r12 = &r17;
-	r18 = 0.17499999999999999;
-	r13 = &r18;
-	h2d_col_Point_new(r11,r12,r13);
-	r0->gravity = r11;
-	components_sledder_Bosh_init(r0);
-	r19 = (h2d__Graphics)hl_alloc_obj(&t$h2d_Graphics);
-	r20 = NULL;
-	h2d_Graphics_new(r19,r20);
-	r0->gfx = r19;
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r18 = (h2d__Graphics)hl_alloc_obj(&t$h2d_Graphics);
+	r19 = NULL;
+	h2d_Graphics_new(r18,r19);
+	r0->gfx = r18;
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r19 = r0->gfx;
-	((void (*)(h2d__Object,h2d__Graphics))r20->$type->vobj_proto[1])(r20,r19);
-	r23 = (h2d__HtmlText)hl_alloc_obj(&t$h2d_HtmlText);
-	r24 = hxd_res_DefaultFont_get();
-	r20 = NULL;
-	h2d_HtmlText_new(r23,r24,r20);
-	r0->nameField = r23;
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r18 = r0->gfx;
+	((void (*)(h2d__Object,h2d__Graphics))r19->$type->vobj_proto[1])(r19,r18);
+	r22 = (h2d__HtmlText)hl_alloc_obj(&t$h2d_HtmlText);
+	r23 = hxd_res_DefaultFont_get();
+	r19 = NULL;
+	h2d_HtmlText_new(r22,r23,r19);
+	r0->nameField = r22;
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r23 = r0->nameField;
-	((void (*)(h2d__Object,h2d__HtmlText))r20->$type->vobj_proto[1])(r20,r23);
-	r22 = ($Main)g$_Main;
-	r25 = r22->rng;
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r22 = r0->nameField;
+	((void (*)(h2d__Object,h2d__HtmlText))r19->$type->vobj_proto[1])(r19,r22);
+	r21 = ($Main)g$_Main;
+	r24 = r21->rng;
+	if( r24 == NULL ) hl_null_access();
+	r21 = ($Main)g$_Main;
+	r25 = r21->rng;
 	if( r25 == NULL ) hl_null_access();
-	r22 = ($Main)g$_Main;
-	r26 = r22->rng;
-	if( r26 == NULL ) hl_null_access();
-	r27 = NULL;
-	r8 = utils_TableRNG_getRandom(r26,r27);
-	utils_TableRNG_setKeyOffset(r25,r3,r8);
-	r28 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
-	r29 = (venum*)g$components_sledder_BodyPart_ARM;
-	components_sledder_RiderPart_new(r28,r29);
-	r0->leftArm = r28;
-	r28 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
-	r29 = (venum*)g$components_sledder_BodyPart_LEG;
-	components_sledder_RiderPart_new(r28,r29);
-	r0->leftLeg = r28;
-	r28 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
-	r29 = (venum*)g$components_sledder_BodyPart_SLED;
-	components_sledder_RiderPart_new(r28,r29);
-	r0->sled = r28;
-	r28 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
-	r29 = (venum*)g$components_sledder_BodyPart_EYE;
-	components_sledder_RiderPart_new(r28,r29);
-	r0->eye = r28;
-	r28 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
-	r29 = (venum*)g$components_sledder_BodyPart_BODY;
-	components_sledder_RiderPart_new(r28,r29);
-	r0->body = r28;
-	r30 = (components__sledder__RiderScarf)hl_alloc_obj(&t$components_sledder_RiderScarf);
-	components_sledder_RiderScarf_new(r30);
-	r0->neckscarf = r30;
-	r28 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
-	r29 = (venum*)g$components_sledder_BodyPart_ARM;
-	components_sledder_RiderPart_new(r28,r29);
-	r0->rightArm = r28;
-	r28 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
-	r29 = (venum*)g$components_sledder_BodyPart_LEG;
-	components_sledder_RiderPart_new(r28,r29);
-	r0->rightLeg = r28;
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r26 = NULL;
+	r8 = utils_TableRNG_getRandom(r25,r26);
+	utils_TableRNG_setKeyOffset(r24,r3,r8);
+	r27 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
+	r28 = (venum*)g$components_sledder_BodyPart_ARM;
+	components_sledder_RiderPart_new(r27,r28);
+	r0->leftArm = r27;
+	r27 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
+	r28 = (venum*)g$components_sledder_BodyPart_LEG;
+	components_sledder_RiderPart_new(r27,r28);
+	r0->leftLeg = r27;
+	r27 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
+	r28 = (venum*)g$components_sledder_BodyPart_SLED;
+	components_sledder_RiderPart_new(r27,r28);
+	r0->sled = r27;
+	r27 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
+	r28 = (venum*)g$components_sledder_BodyPart_EYE;
+	components_sledder_RiderPart_new(r27,r28);
+	r0->eye = r27;
+	r27 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
+	r28 = (venum*)g$components_sledder_BodyPart_BODY;
+	components_sledder_RiderPart_new(r27,r28);
+	r0->body = r27;
+	r29 = (components__sledder__RiderScarf)hl_alloc_obj(&t$components_sledder_RiderScarf);
+	components_sledder_RiderScarf_new(r29);
+	r0->neckscarf = r29;
+	r27 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
+	r28 = (venum*)g$components_sledder_BodyPart_ARM;
+	components_sledder_RiderPart_new(r27,r28);
+	r0->rightArm = r27;
+	r27 = (components__sledder__RiderPart)hl_alloc_obj(&t$components_sledder_RiderPart);
+	r28 = (venum*)g$components_sledder_BodyPart_LEG;
+	components_sledder_RiderPart_new(r27,r28);
+	r0->rightLeg = r27;
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r28 = r0->leftArm;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r20->$type->vobj_proto[1])(r20,r28);
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r27 = r0->leftArm;
+	((void (*)(h2d__Object,components__sledder__RiderPart))r19->$type->vobj_proto[1])(r19,r27);
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r28 = r0->leftLeg;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r20->$type->vobj_proto[1])(r20,r28);
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r27 = r0->leftLeg;
+	((void (*)(h2d__Object,components__sledder__RiderPart))r19->$type->vobj_proto[1])(r19,r27);
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r28 = r0->sled;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r20->$type->vobj_proto[1])(r20,r28);
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r27 = r0->sled;
+	((void (*)(h2d__Object,components__sledder__RiderPart))r19->$type->vobj_proto[1])(r19,r27);
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r28 = r0->body;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r20->$type->vobj_proto[1])(r20,r28);
-	r28 = r0->body;
-	if( r28 == NULL ) hl_null_access();
-	r31 = r0->eye;
-	h2d_Object_addChild(((h2d__Object)r28),((h2d__Object)r31));
-	r28 = r0->body;
-	if( r28 == NULL ) hl_null_access();
-	r30 = r0->neckscarf;
-	h2d_Object_addChild(((h2d__Object)r28),((h2d__Object)r30));
-	r30 = r0->neckscarf;
-	if( r30 == NULL ) hl_null_access();
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r27 = r0->body;
+	((void (*)(h2d__Object,components__sledder__RiderPart))r19->$type->vobj_proto[1])(r19,r27);
+	r27 = r0->body;
+	if( r27 == NULL ) hl_null_access();
+	r30 = r0->eye;
+	h2d_Object_addChild(((h2d__Object)r27),((h2d__Object)r30));
+	r27 = r0->body;
+	if( r27 == NULL ) hl_null_access();
+	r29 = r0->neckscarf;
+	h2d_Object_addChild(((h2d__Object)r27),((h2d__Object)r29));
+	r29 = r0->neckscarf;
+	if( r29 == NULL ) hl_null_access();
 	r9 = true;
-	r30->posChanged = r9;
-	r32 = 105.;
-	r30->x = r32;
-	r30 = r0->neckscarf;
-	if( r30 == NULL ) hl_null_access();
+	r29->posChanged = r9;
+	r31 = 105.;
+	r29->x = r31;
+	r29 = r0->neckscarf;
+	if( r29 == NULL ) hl_null_access();
 	r9 = true;
-	r30->posChanged = r9;
-	r32 = -59.;
-	r30->y = r32;
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r29->posChanged = r9;
+	r31 = -59.;
+	r29->y = r31;
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r28 = r0->rightArm;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r20->$type->vobj_proto[1])(r20,r28);
-	r22 = ($Main)g$_Main;
-	r21 = r22->canvas;
-	if( r21 == NULL ) hl_null_access();
-	r20 = r21->sledderLayer;
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r27 = r0->rightArm;
+	((void (*)(h2d__Object,components__sledder__RiderPart))r19->$type->vobj_proto[1])(r19,r27);
+	r21 = ($Main)g$_Main;
+	r20 = r21->canvas;
 	if( r20 == NULL ) hl_null_access();
-	r28 = r0->rightLeg;
-	((void (*)(h2d__Object,components__sledder__RiderPart))r20->$type->vobj_proto[1])(r20,r28);
+	r19 = r20->sledderLayer;
+	if( r19 == NULL ) hl_null_access();
+	r27 = r0->rightLeg;
+	((void (*)(h2d__Object,components__sledder__RiderPart))r19->$type->vobj_proto[1])(r19,r27);
 	return;
 }
 

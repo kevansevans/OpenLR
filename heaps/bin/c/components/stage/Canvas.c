@@ -11,15 +11,6 @@ vvirtual* haxe_ds_StringMap_iterator(haxe__ds__StringMap);
 extern hl_type t$vrt_6dd9082;
 extern hl_type t$fun_bf7849e;
 extern hl_type t$fun_8ae12a9;
-#include <components/stage/LRConsole.h>
-extern String s$Set_canvas_position_to_;
-#include <hl/natives.h>
-String String___alloc__(vbyte*,int);
-String String___add__(String,String);
-extern String s$7215ee9;
-extern hl_type t$_i32;
-#include <h2d/Console.h>
-void h2d_Console_log(h2d__Console,String,vdynamic*);
 double h2d_Scene_get_mouseX(h2d__Scene);
 double h2d_Scene_get_mouseY(h2d__Scene);
 double Math_max(double,double);
@@ -34,6 +25,7 @@ void h2d_Graphics_drawCircle(h2d__Graphics,double,double,double,int*);
 #include <hxlr/lines/Accel.h>
 #include <hxlr/lines/Scenery.h>
 #include <hxlr/engine/Grid.h>
+extern hl_type t$_i32;
 extern hl_type t$hxlr_lines_Floor;
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
@@ -44,8 +36,11 @@ extern hl_type t$hxlr_lines_Scenery;
 void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
 void hxlr_lines_LineBase_setLim(hxlr__lines__LineBase,int);
 void hxlr_engine_Grid_register(hxlr__engine__Grid,hxlr__lines__LineBase);
+#include <components/stage/LRConsole.h>
 bool h2d_Object_set_visible(h2d__Object,bool);
 extern String s$Draw_mode_set_to_Edit;
+#include <h2d/Console.h>
+void h2d_Console_log(h2d__Console,String,vdynamic*);
 extern String s$Draw_mode_set_to_Playback;
 extern String s$Draw_mode_set_to_No_Scenery_Edit;
 extern String s$cb653d7;
@@ -84,52 +79,9 @@ void components_stage_Canvas_drawRiders(components__stage__Canvas r0) {
 		r8 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r5->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
 	if( r8 == NULL ) hl_null_access();
-	((void (*)(hxlr__rider__RiderBase))r8->$type->vobj_proto[3])(r8);
+	((void (*)(hxlr__rider__RiderBase))r8->$type->vobj_proto[2])(r8);
 	goto label$ae2bdbd_1_7;
 	label$ae2bdbd_1_15:
-	return;
-}
-
-void components_stage_Canvas_setCanvasPosition(components__stage__Canvas r0,double r1,double r2,vdynamic* r3) {
-	String r8, r12;
-	bool r4;
-	$Main r7;
-	vdynamic *r13;
-	int *r10;
-	vbyte *r11;
-	int r9;
-	components__stage__LRConsole r6;
-	if( r3 ) goto label$ae2bdbd_2_3;
-	r4 = true;
-	r3 = hl_alloc_dynbool(r4);
-	label$ae2bdbd_2_3:
-	r4 = true;
-	r0->posChanged = r4;
-	r0->x = r1;
-	r4 = true;
-	r0->posChanged = r4;
-	r0->y = r2;
-	r4 = r3 ? r3->v.b : 0;
-	if( !r4 ) goto label$ae2bdbd_2_28;
-	r7 = ($Main)g$_Main;
-	r6 = r7->console;
-	if( r6 == NULL ) hl_null_access();
-	r8 = (String)s$Set_canvas_position_to_;
-	r10 = &r9;
-	r11 = hl_ftos(r1,r10);
-	r12 = String___alloc__(r11,r9);
-	r8 = String___add__(r8,r12);
-	r12 = (String)s$7215ee9;
-	r8 = String___add__(r8,r12);
-	r10 = &r9;
-	r11 = hl_ftos(r2,r10);
-	r12 = String___alloc__(r11,r9);
-	r8 = String___add__(r8,r12);
-	r9 = 187;
-	r13 = hl_alloc_dynamic(&t$_i32);
-	r13->v.i = r9;
-	h2d_Console_log(((h2d__Console)r6),r8,r13);
-	label$ae2bdbd_2_28:
 	return;
 }
 
@@ -159,12 +111,12 @@ void components_stage_Canvas_zoomCanvas(components__stage__Canvas r0,int r1) {
 	r5 = h2d_Scene_get_mouseY(((h2d__Scene)r0));
 	r6 = r0->scaleX;
 	r8 = 0;
-	if( r8 >= r1 ) goto label$ae2bdbd_4_8;
+	if( r8 >= r1 ) goto label$ae2bdbd_3_8;
 	r7 = 0.82499999999999996;
-	goto label$ae2bdbd_4_9;
-	label$ae2bdbd_4_8:
+	goto label$ae2bdbd_3_9;
+	label$ae2bdbd_3_8:
 	r7 = 1.125;
-	label$ae2bdbd_4_9:
+	label$ae2bdbd_3_9:
 	r6 = r6 * r7;
 	r7 = 0.01;
 	r6 = Math_max(r6,r7);
@@ -281,7 +233,7 @@ void components_stage_Canvas_drawPreviewLine(components__stage__Canvas r0,hxlr__
 			r23 = r23 + r24;
 			r10 = &r23;
 			h2d_Graphics_addVertex(r3,r11,r13,r16,r17,r18,r19,r8,r10);
-			goto label$ae2bdbd_5_681;
+			goto label$ae2bdbd_4_681;
 		case 0:
 			r3 = r0->previewLayer;
 			if( r3 == NULL ) hl_null_access();
@@ -449,7 +401,7 @@ void components_stage_Canvas_drawPreviewLine(components__stage__Canvas r0,hxlr__
 			r39 = r5;
 			r9 = &r39;
 			h2d_Graphics_drawCircle(r3,r14,r15,r4,r9);
-			goto label$ae2bdbd_5_681;
+			goto label$ae2bdbd_4_681;
 		case 1:
 			r3 = r0->previewLayer;
 			if( r3 == NULL ) hl_null_access();
@@ -707,7 +659,7 @@ void components_stage_Canvas_drawPreviewLine(components__stage__Canvas r0,hxlr__
 			r57 = r5;
 			r9 = &r57;
 			h2d_Graphics_drawCircle(r3,r16,r17,r4,r9);
-			goto label$ae2bdbd_5_681;
+			goto label$ae2bdbd_4_681;
 		case 2:
 			r3 = r0->previewLayer;
 			if( r3 == NULL ) hl_null_access();
@@ -890,7 +842,7 @@ void components_stage_Canvas_drawPreviewLine(components__stage__Canvas r0,hxlr__
 			r9 = &r73;
 			h2d_Graphics_drawCircle(r3,r18,r19,r4,r9);
 	}
-	label$ae2bdbd_5_681:
+	label$ae2bdbd_4_681:
 	return;
 }
 
@@ -975,7 +927,7 @@ void components_stage_Canvas_drawLineGraphic(components__stage__Canvas r0,hxlr__
 			r23 = r23 + r24;
 			r10 = &r23;
 			h2d_Graphics_addVertex(r6,r11,r13,r16,r17,r18,r19,r8,r10);
-			goto label$ae2bdbd_6_678;
+			goto label$ae2bdbd_5_678;
 		case 0:
 			r6 = r0->rideLayer;
 			if( r6 == NULL ) hl_null_access();
@@ -1143,7 +1095,7 @@ void components_stage_Canvas_drawLineGraphic(components__stage__Canvas r0,hxlr__
 			r37 = r37 + r38;
 			r10 = &r37;
 			h2d_Graphics_addVertex(r6,r14,r15,r18,r19,r24,r30,r8,r10);
-			goto label$ae2bdbd_6_678;
+			goto label$ae2bdbd_5_678;
 		case 1:
 			r6 = r0->rideLayer;
 			if( r6 == NULL ) hl_null_access();
@@ -1401,7 +1353,7 @@ void components_stage_Canvas_drawLineGraphic(components__stage__Canvas r0,hxlr__
 			r55 = r55 + r56;
 			r10 = &r55;
 			h2d_Graphics_addVertex(r6,r16,r17,r24,r30,r38,r44,r8,r10);
-			goto label$ae2bdbd_6_678;
+			goto label$ae2bdbd_5_678;
 		case 2:
 			r6 = r0->sceneColorLayer;
 			if( r6 == NULL ) hl_null_access();
@@ -1584,7 +1536,7 @@ void components_stage_Canvas_drawLineGraphic(components__stage__Canvas r0,hxlr__
 			r9 = &r73;
 			h2d_Graphics_drawCircle(r6,r18,r19,r2,r9);
 	}
-	label$ae2bdbd_6_678:
+	label$ae2bdbd_5_678:
 	return;
 }
 
@@ -1601,24 +1553,24 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 	vdynamic *r32;
 	double *r16, *r18;
 	int r10;
-	if( r6 ) goto label$ae2bdbd_7_3;
+	if( r6 ) goto label$ae2bdbd_6_3;
 	r9 = false;
 	r6 = hl_alloc_dynbool(r9);
-	label$ae2bdbd_7_3:
-	if( r7 ) goto label$ae2bdbd_7_6;
+	label$ae2bdbd_6_3:
+	if( r7 ) goto label$ae2bdbd_6_6;
 	r10 = -1;
 	r7 = hl_alloc_dynamic(&t$_i32);
 	r7->v.i = r10;
-	label$ae2bdbd_7_6:
-	if( r8 ) goto label$ae2bdbd_7_9;
+	label$ae2bdbd_6_6:
+	if( r8 ) goto label$ae2bdbd_6_9;
 	r10 = -1;
 	r8 = hl_alloc_dynamic(&t$_i32);
 	r8->v.i = r10;
-	label$ae2bdbd_7_9:
+	label$ae2bdbd_6_9:
 	r11 = NULL;
 	switch(r1) {
 		default:
-			goto label$ae2bdbd_7_62;
+			goto label$ae2bdbd_6_62;
 		case 0:
 			r13 = (hxlr__lines__Floor)hl_alloc_obj(&t$hxlr_lines_Floor);
 			r14 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
@@ -1636,7 +1588,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 			r9 = r6 ? r6->v.b : 0;
 			hxlr_lines_Floor_new(r13,r14,r19,r9);
 			r11 = ((hxlr__lines__LineBase)r13);
-			goto label$ae2bdbd_7_62;
+			goto label$ae2bdbd_6_62;
 		case 1:
 			r22 = (hxlr__lines__Accel)hl_alloc_obj(&t$hxlr_lines_Accel);
 			r14 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
@@ -1654,7 +1606,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 			r9 = r6 ? r6->v.b : 0;
 			hxlr_lines_Accel_new(r22,r14,r19,r9);
 			r11 = ((hxlr__lines__LineBase)r22);
-			goto label$ae2bdbd_7_62;
+			goto label$ae2bdbd_6_62;
 		case 2:
 			r27 = (hxlr__lines__Scenery)hl_alloc_obj(&t$hxlr_lines_Scenery);
 			r14 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
@@ -1673,22 +1625,22 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 			hxlr_lines_Scenery_new(r27,r14,r19,r9);
 			r11 = ((hxlr__lines__LineBase)r27);
 	}
-	label$ae2bdbd_7_62:
+	label$ae2bdbd_6_62:
 	r10 = -1;
 	r32 = hl_alloc_dynamic(&t$_i32);
 	r32->v.i = r10;
-	if( r7 == r32 || (r7 && r32 && (r7->v.i == r32->v.i)) ) goto label$ae2bdbd_7_68;
+	if( r7 == r32 || (r7 && r32 && (r7->v.i == r32->v.i)) ) goto label$ae2bdbd_6_68;
 	if( r11 == NULL ) hl_null_access();
 	r10 = r7 ? r7->v.i : 0;
 	hxlr_lines_LineBase_setLim(r11,r10);
-	label$ae2bdbd_7_68:
+	label$ae2bdbd_6_68:
 	r10 = -1;
 	r32 = hl_alloc_dynamic(&t$_i32);
 	r32->v.i = r10;
-	if( r8 == r32 || (r8 && r32 && (r8->v.i == r32->v.i)) ) goto label$ae2bdbd_7_73;
+	if( r8 == r32 || (r8 && r32 && (r8->v.i == r32->v.i)) ) goto label$ae2bdbd_6_73;
 	if( r11 == NULL ) hl_null_access();
 	r11->id = r8;
-	label$ae2bdbd_7_73:
+	label$ae2bdbd_6_73:
 	components_stage_Canvas_drawLineGraphic(r0,r11);
 	r34 = ($Main)g$_Main;
 	r33 = r34->grid;
@@ -1715,7 +1667,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 	r3 = HL__ENUM_INDEX__(r1);
 	switch(r3) {
 		default:
-			goto label$ae2bdbd_9_141;
+			goto label$ae2bdbd_8_141;
 		case 0:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -1739,7 +1691,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$Draw_mode_set_to_Edit;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_9_141;
+			goto label$ae2bdbd_8_141;
 		case 1:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -1763,7 +1715,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$Draw_mode_set_to_Playback;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_9_141;
+			goto label$ae2bdbd_8_141;
 		case 2:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -1787,7 +1739,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$Draw_mode_set_to_No_Scenery_Edit;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_9_141;
+			goto label$ae2bdbd_8_141;
 		case 3:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -1811,7 +1763,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$cb653d7;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_9_141;
+			goto label$ae2bdbd_8_141;
 		case 4:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -1835,7 +1787,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r8 = (String)s$2504e23;
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
-			goto label$ae2bdbd_9_141;
+			goto label$ae2bdbd_8_141;
 		case 5:
 			r5 = r0->colorLayer;
 			if( r5 == NULL ) hl_null_access();
@@ -1860,7 +1812,7 @@ venum* components_stage_Canvas_set_drawMode(components__stage__Canvas r0,venum* 
 			r9 = NULL;
 			h2d_Console_log(((h2d__Console)r6),r8,r9);
 	}
-	label$ae2bdbd_9_141:
+	label$ae2bdbd_8_141:
 	r0->drawMode = r1;
 	return r1;
 }

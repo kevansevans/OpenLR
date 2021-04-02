@@ -25,7 +25,6 @@ struct _hxlr__rider__AirPoint {
 	h2d__col__Point dir;
 	h2d__col__Point gravity;
 	double friction;
-	double airFriction;
 };
 #endif
 

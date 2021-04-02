@@ -21,7 +21,6 @@ void fun$init(void);
 #  include <_std/StringBuf.c>
 #  include <hl/types/ArrayObj.c>
 #  include <haxe/Exception.c>
-#  include <_std/IntIterator.c>
 #  include <hxd/BitmapInnerDataImpl.c>
 #  include <hxd/BitmapData.c>
 #  include <hxd/CustomCursor.c>
@@ -201,9 +200,6 @@ void fun$init(void);
 #  include <hxlr/lines/Floor.c>
 #  include <hxlr/lines/Accel.c>
 #  include <hxlr/lines/Scenery.c>
-#  include <haxe/Log.c>
-#  include <hl/types/ArrayDyn.c>
-#  include <components/tool/ToolFunction.c>
 #  include <hxlr/lines/Undefined.c>
 #  include <haxe/format/JsonParser.c>
 #  include <haxe/io/Input.c>
@@ -234,6 +230,7 @@ void fun$init(void);
 #  include <h3d/col/Sphere.c>
 #  include <haxe/ds/BalancedTree.c>
 #  include <haxe/ds/TreeNode.c>
+#  include <hl/types/ArrayDyn.c>
 #  include <haxe/ds/EnumValueMap.c>
 #  include <hxsl/GlslOut.c>
 #  include <h3d/mat/Defaults.c>
@@ -286,8 +283,6 @@ void fun$init(void);
 #  include <haxe/Unserializer.c>
 #  include <haxe/crypto/BaseCode.c>
 #  include <haxe/crypto/Base64.c>
-#  include <haxe/ds/GenericCell.c>
-#  include <haxe/ds/GenericStack.c>
 #  include <hl/NativeArrayIterator_Int.c>
 #  include <hl/NativeArrayIterator_Dynamic.c>
 #  include <hl/NativeArrayIterator.c>
@@ -318,14 +313,13 @@ void fun$init(void);
 #  include <hl/types/ArrayObjIterator.c>
 #  include <hl/types/ArrayObjKeyValueIterator.c>
 #  include <_std/Std.c>
-#  include <hscript/Interp.c>
-#  include <hscript/Parser.c>
 #  include <hxd/Key.c>
 #  include <sdl/GameController.c>
 #  include <sdl/Event.c>
 #  include <hxd/Pad.c>
 #  include <hxd/Save.c>
 #  include <hxd/System.c>
+#  include <haxe/Log.c>
 #  include <hxd/fmt/bfnt/Reader.c>
 #  include <hxd/fmt/bfnt/Writer.c>
 #  include <hxd/fmt/fbx/TmpObject.c>
@@ -379,7 +373,7 @@ void fun$init(void);
 #  include <hxd/snd/openal/PitchDriver.c>
 #  include <hxd/snd/openal/ReverbDriver.c>
 #  include <hxd/snd/openal/SpatializationDriver.c>
-#  include <hxlr/scripts/PhysFloor.c>
+#  include <hxlr/Constants.c>
 #  include <hxsl/Error.c>
 #  include <hxsl/Tools.c>
 #  include <hxsl/BatchShader.c>

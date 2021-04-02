@@ -2,12 +2,425 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxlr/rider/RiderBase.h>
-extern hl_type t$h2d_col_Point;
-void h2d_col_Point_new(h2d__col__Point,double*,double*);
+#include <hxlr/rider/AirPoint.h>
+#include <hxlr/rider/Stick.h>
 extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
+extern hl_type t$vrt_a46e643;
+extern hl_type t$hxlr_rider_ContactPoint;
+void hxlr_rider_ContactPoint_new(hxlr__rider__ContactPoint,double*,double*,double*);
+int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
+extern hl_type t$hxlr_rider_AirPoint;
+void hxlr_rider_AirPoint_new(hxlr__rider__AirPoint,double,double,double);
+extern hl_type t$vrt_c7fcfb4;
+extern hl_type t$hxlr_rider_Stick;
+extern hl_type t$_i32;
+extern hl_type t$String;
+void hxlr_rider_Stick_new(hxlr__rider__Stick,hxlr__rider__ContactPoint,hxlr__rider__ContactPoint,String,hxlr__rider__RiderBase);
+extern hl_type t$_bool;
+extern String s$SCARF;
+void hl_types_ArrayObj_unshift(hl__types__ArrayObj,vdynamic*);
+bool hxlr_rider_RiderBase_set_crashed(hxlr__rider__RiderBase,bool);
+#include <haxe/ds/StringMap.h>
+#include <hxlr/engine/Grid.h>
+#include <_std/Main.h>
+#include <hxlr/engine/Cell.h>
+#include <hxlr/lines/LineBase.h>
+vvirtual* hxlr_engine_Cell_getInfo(double,double);
+extern String s$x;
+#include <hl/natives.h>
+String String___alloc__(vbyte*,int);
+String String___add__(String,String);
+extern String s$y;
+extern $Main g$_Main;
+vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
+extern hl_type t$h2d_col_Point;
+void h2d_col_Point_new(h2d__col__Point,double*,double*);
 
 void hxlr_rider_RiderBase_init(hxlr__rider__RiderBase r0) {
+	String r28;
+	hxlr__rider__Stick r27;
+	vvirtual *r4, *r8, *r26;
+	hl__types__ArrayObj r1, r7;
+	bool r29;
+	hxlr__rider__AirPoint r18, r25;
+	h2d__col__Point r22, r24;
+	hxlr__rider__ContactPoint r11, r23;
+	double r12, r14, r16, r19, r20, r21;
+	double *r13, *r15, *r17;
+	vdynamic *r9, *r32;
+	varray *r10;
+	int r3, r5, r6, r30, r31;
+	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r1);
+	r0->contactPoints = r1;
+	r3 = 0;
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r1 = hl_vfields(r4)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,205043939/*contactPoints*/,&t$hl_types_ArrayObj);
+	label$6dad55e_1_7:
+	if( r1 == NULL ) hl_null_access();
+	r6 = r1->length;
+	if( r3 >= r6 ) goto label$6dad55e_1_32;
+	r6 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$6dad55e_1_15;
+	r8 = NULL;
+	goto label$6dad55e_1_18;
+	label$6dad55e_1_15:
+	r10 = r1->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r8 = hl_to_virtual(&t$vrt_a46e643,(vdynamic*)r9);
+	label$6dad55e_1_18:
+	++r3;
+	r7 = r0->contactPoints;
+	if( r7 == NULL ) hl_null_access();
+	r11 = (hxlr__rider__ContactPoint)hl_alloc_obj(&t$hxlr_rider_ContactPoint);
+	if( r8 == NULL ) hl_null_access();
+	r12 = hl_vfields(r8)[1] ? (*(double*)(hl_vfields(r8)[1])) : (double)hl_dyn_getd(r8->value,120/*x*/);
+	r13 = &r12;
+	r14 = hl_vfields(r8)[2] ? (*(double*)(hl_vfields(r8)[2])) : (double)hl_dyn_getd(r8->value,121/*y*/);
+	r15 = &r14;
+	r16 = hl_vfields(r8)[0] ? (*(double*)(hl_vfields(r8)[0])) : (double)hl_dyn_getd(r8->value,22860/*fr*/);
+	r17 = &r16;
+	hxlr_rider_ContactPoint_new(r11,r13,r15,r17);
+	r5 = hl_types_ArrayObj_push(r7,((vdynamic*)r11));
+	goto label$6dad55e_1_7;
+	label$6dad55e_1_32:
+	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r1);
+	r0->airPoints = r1;
+	r3 = 0;
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r1 = hl_vfields(r4)[7] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[7])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,66452823/*scarfPoints*/,&t$hl_types_ArrayObj);
+	label$6dad55e_1_39:
+	if( r1 == NULL ) hl_null_access();
+	r6 = r1->length;
+	if( r3 >= r6 ) goto label$6dad55e_1_61;
+	r6 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$6dad55e_1_47;
+	r8 = NULL;
+	goto label$6dad55e_1_50;
+	label$6dad55e_1_47:
+	r10 = r1->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r8 = hl_to_virtual(&t$vrt_a46e643,(vdynamic*)r9);
+	label$6dad55e_1_50:
+	++r3;
+	r7 = r0->airPoints;
+	if( r7 == NULL ) hl_null_access();
+	r18 = (hxlr__rider__AirPoint)hl_alloc_obj(&t$hxlr_rider_AirPoint);
+	if( r8 == NULL ) hl_null_access();
+	r19 = hl_vfields(r8)[1] ? (*(double*)(hl_vfields(r8)[1])) : (double)hl_dyn_getd(r8->value,120/*x*/);
+	r20 = hl_vfields(r8)[2] ? (*(double*)(hl_vfields(r8)[2])) : (double)hl_dyn_getd(r8->value,121/*y*/);
+	r21 = hl_vfields(r8)[0] ? (*(double*)(hl_vfields(r8)[0])) : (double)hl_dyn_getd(r8->value,22860/*fr*/);
+	hxlr_rider_AirPoint_new(r18,r19,r20,r21);
+	r5 = hl_types_ArrayObj_push(r7,((vdynamic*)r18));
+	goto label$6dad55e_1_39;
+	label$6dad55e_1_61:
+	r3 = 0;
+	r1 = r0->contactPoints;
+	label$6dad55e_1_63:
+	if( r1 == NULL ) hl_null_access();
+	r6 = r1->length;
+	if( r3 >= r6 ) goto label$6dad55e_1_125;
+	r6 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$6dad55e_1_71;
+	r11 = NULL;
+	goto label$6dad55e_1_74;
+	label$6dad55e_1_71:
+	r10 = r1->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r11 = (hxlr__rider__ContactPoint)r9;
+	label$6dad55e_1_74:
+	++r3;
+	if( r11 == NULL ) hl_null_access();
+	r22 = r11->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->x;
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r20 = hl_vfields(r4)[5] ? (*(double*)(hl_vfields(r4)[5])) : (double)hl_dyn_getd(r4->value,416206873/*scale*/);
+	r19 = r19 * r20;
+	r22->x = r19;
+	r22 = r11->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->y;
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r20 = hl_vfields(r4)[5] ? (*(double*)(hl_vfields(r4)[5])) : (double)hl_dyn_getd(r4->value,416206873/*scale*/);
+	r19 = r19 * r20;
+	r22->y = r19;
+	r22 = r11->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->x;
+	r24 = r0->startPos;
+	if( r24 == NULL ) hl_null_access();
+	r20 = r24->x;
+	r19 = r19 + r20;
+	r22->x = r19;
+	r22 = r11->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->y;
+	r24 = r0->startPos;
+	if( r24 == NULL ) hl_null_access();
+	r20 = r24->y;
+	r19 = r19 + r20;
+	r22->y = r19;
+	r22 = r11->vel;
+	if( r22 == NULL ) hl_null_access();
+	r24 = r11->pos;
+	if( r24 == NULL ) hl_null_access();
+	r19 = r24->x;
+	r24 = r0->startVel;
+	if( r24 == NULL ) hl_null_access();
+	r20 = r24->x;
+	r19 = r19 - r20;
+	r22->x = r19;
+	r22 = r11->vel;
+	if( r22 == NULL ) hl_null_access();
+	r24 = r11->pos;
+	if( r24 == NULL ) hl_null_access();
+	r19 = r24->y;
+	r22->y = r19;
+	goto label$6dad55e_1_63;
+	label$6dad55e_1_125:
+	r3 = 0;
+	r1 = r0->airPoints;
+	label$6dad55e_1_127:
+	if( r1 == NULL ) hl_null_access();
+	r6 = r1->length;
+	if( r3 >= r6 ) goto label$6dad55e_1_189;
+	r6 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$6dad55e_1_135;
+	r18 = NULL;
+	goto label$6dad55e_1_138;
+	label$6dad55e_1_135:
+	r10 = r1->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r18 = (hxlr__rider__AirPoint)r9;
+	label$6dad55e_1_138:
+	++r3;
+	if( r18 == NULL ) hl_null_access();
+	r22 = r18->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->x;
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r20 = hl_vfields(r4)[5] ? (*(double*)(hl_vfields(r4)[5])) : (double)hl_dyn_getd(r4->value,416206873/*scale*/);
+	r19 = r19 * r20;
+	r22->x = r19;
+	r22 = r18->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->y;
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r20 = hl_vfields(r4)[5] ? (*(double*)(hl_vfields(r4)[5])) : (double)hl_dyn_getd(r4->value,416206873/*scale*/);
+	r19 = r19 * r20;
+	r22->y = r19;
+	r22 = r18->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->x;
+	r24 = r0->startPos;
+	if( r24 == NULL ) hl_null_access();
+	r20 = r24->x;
+	r19 = r19 + r20;
+	r22->x = r19;
+	r22 = r18->pos;
+	if( r22 == NULL ) hl_null_access();
+	r19 = r22->y;
+	r24 = r0->startPos;
+	if( r24 == NULL ) hl_null_access();
+	r20 = r24->y;
+	r19 = r19 + r20;
+	r22->y = r19;
+	r22 = r18->vel;
+	if( r22 == NULL ) hl_null_access();
+	r24 = r18->pos;
+	if( r24 == NULL ) hl_null_access();
+	r19 = r24->x;
+	r24 = r0->startVel;
+	if( r24 == NULL ) hl_null_access();
+	r20 = r24->x;
+	r19 = r19 - r20;
+	r22->x = r19;
+	r22 = r18->vel;
+	if( r22 == NULL ) hl_null_access();
+	r24 = r18->pos;
+	if( r24 == NULL ) hl_null_access();
+	r19 = r24->y;
+	r22->y = r19;
+	goto label$6dad55e_1_127;
+	label$6dad55e_1_189:
+	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r1);
+	r0->constraints = r1;
+	r3 = 0;
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r1 = hl_vfields(r4)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,-151562331/*bones*/,&t$hl_types_ArrayObj);
+	label$6dad55e_1_196:
+	if( r1 == NULL ) hl_null_access();
+	r6 = r1->length;
+	if( r3 >= r6 ) goto label$6dad55e_1_238;
+	r6 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$6dad55e_1_204;
+	r26 = NULL;
+	goto label$6dad55e_1_207;
+	label$6dad55e_1_204:
+	r10 = r1->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r26 = hl_to_virtual(&t$vrt_c7fcfb4,(vdynamic*)r9);
+	label$6dad55e_1_207:
+	++r3;
+	r27 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
+	r7 = r0->contactPoints;
+	if( r7 == NULL ) hl_null_access();
+	if( r26 == NULL ) hl_null_access();
+	r5 = hl_vfields(r26)[0] ? (*(int*)(hl_vfields(r26)[0])) : (int)hl_dyn_geti(r26->value,97/*a*/,&t$_i32);
+	r6 = r7->length;
+	if( ((unsigned)r5) < ((unsigned)r6) ) goto label$6dad55e_1_217;
+	r11 = NULL;
+	goto label$6dad55e_1_220;
+	label$6dad55e_1_217:
+	r10 = r7->array;
+	r9 = ((vdynamic**)(r10 + 1))[r5];
+	r11 = (hxlr__rider__ContactPoint)r9;
+	label$6dad55e_1_220:
+	r7 = r0->contactPoints;
+	if( r7 == NULL ) hl_null_access();
+	r5 = hl_vfields(r26)[1] ? (*(int*)(hl_vfields(r26)[1])) : (int)hl_dyn_geti(r26->value,98/*b*/,&t$_i32);
+	r6 = r7->length;
+	if( ((unsigned)r5) < ((unsigned)r6) ) goto label$6dad55e_1_227;
+	r23 = NULL;
+	goto label$6dad55e_1_230;
+	label$6dad55e_1_227:
+	r10 = r7->array;
+	r9 = ((vdynamic**)(r10 + 1))[r5];
+	r23 = (hxlr__rider__ContactPoint)r9;
+	label$6dad55e_1_230:
+	r28 = hl_vfields(r26)[3] ? (*(String*)(hl_vfields(r26)[3])) : (String)hl_dyn_getp(r26->value,218690500/*type*/,&t$String);
+	hxlr_rider_Stick_new(r27,r11,r23,r28,r0);
+	r29 = hl_vfields(r26)[2] ? (*(bool*)(hl_vfields(r26)[2])) : (bool)hl_dyn_geti(r26->value,-359420671/*crashable*/,&t$_bool);
+	r27->crashable = r29;
+	r7 = r0->constraints;
+	if( r7 == NULL ) hl_null_access();
+	r5 = hl_types_ArrayObj_push(r7,((vdynamic*)r27));
+	goto label$6dad55e_1_196;
+	label$6dad55e_1_238:
+	r1 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r1);
+	r0->scarves = r1;
+	r3 = 0;
+	r1 = r0->airPoints;
+	if( r1 == NULL ) hl_null_access();
+	r5 = r1->length;
+	label$6dad55e_1_245:
+	if( r3 >= r5 ) goto label$6dad55e_1_289;
+	r6 = r3;
+	++r3;
+	r1 = r0->airPoints;
+	if( r1 == NULL ) hl_null_access();
+	r31 = 1;
+	r30 = r6 + r31;
+	r31 = r1->length;
+	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$6dad55e_1_257;
+	r18 = NULL;
+	goto label$6dad55e_1_260;
+	label$6dad55e_1_257:
+	r10 = r1->array;
+	r9 = ((vdynamic**)(r10 + 1))[r30];
+	r18 = (hxlr__rider__AirPoint)r9;
+	label$6dad55e_1_260:
+	if( r18 ) goto label$6dad55e_1_262;
+	goto label$6dad55e_1_289;
+	label$6dad55e_1_262:
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r27 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
+	r7 = r0->airPoints;
+	if( r7 == NULL ) hl_null_access();
+	r31 = r7->length;
+	if( ((unsigned)r6) < ((unsigned)r31) ) goto label$6dad55e_1_271;
+	r18 = NULL;
+	goto label$6dad55e_1_274;
+	label$6dad55e_1_271:
+	r10 = r7->array;
+	r9 = ((vdynamic**)(r10 + 1))[r6];
+	r18 = (hxlr__rider__AirPoint)r9;
+	label$6dad55e_1_274:
+	r7 = r0->airPoints;
+	if( r7 == NULL ) hl_null_access();
+	r31 = 1;
+	r30 = r6 + r31;
+	r31 = r7->length;
+	if( ((unsigned)r30) < ((unsigned)r31) ) goto label$6dad55e_1_282;
+	r25 = NULL;
+	goto label$6dad55e_1_285;
+	label$6dad55e_1_282:
+	r10 = r7->array;
+	r9 = ((vdynamic**)(r10 + 1))[r30];
+	r25 = (hxlr__rider__AirPoint)r9;
+	label$6dad55e_1_285:
+	r28 = (String)s$SCARF;
+	hxlr_rider_Stick_new(r27,((hxlr__rider__ContactPoint)r18),((hxlr__rider__ContactPoint)r25),r28,r0);
+	r30 = hl_types_ArrayObj_push(r1,((vdynamic*)r27));
+	goto label$6dad55e_1_245;
+	label$6dad55e_1_289:
+	r1 = r0->scarves;
+	if( r1 == NULL ) hl_null_access();
+	r27 = (hxlr__rider__Stick)hl_alloc_obj(&t$hxlr_rider_Stick);
+	r7 = r0->contactPoints;
+	if( r7 == NULL ) hl_null_access();
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r3 = hl_vfields(r4)[6] ? (*(int*)(hl_vfields(r4)[6])) : (int)hl_dyn_geti(r4->value,-315022443/*scarfAnchor*/,&t$_i32);
+	r5 = r7->length;
+	if( ((unsigned)r3) < ((unsigned)r5) ) goto label$6dad55e_1_301;
+	r11 = NULL;
+	goto label$6dad55e_1_304;
+	label$6dad55e_1_301:
+	r10 = r7->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r11 = (hxlr__rider__ContactPoint)r9;
+	label$6dad55e_1_304:
+	r7 = r0->airPoints;
+	if( r7 == NULL ) hl_null_access();
+	r3 = 0;
+	r5 = r7->length;
+	if( ((unsigned)r3) < ((unsigned)r5) ) goto label$6dad55e_1_311;
+	r18 = NULL;
+	goto label$6dad55e_1_314;
+	label$6dad55e_1_311:
+	r10 = r7->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r18 = (hxlr__rider__AirPoint)r9;
+	label$6dad55e_1_314:
+	r28 = (String)s$SCARF;
+	hxlr_rider_Stick_new(r27,r11,((hxlr__rider__ContactPoint)r18),r28,r0);
+	hl_types_ArrayObj_unshift(r1,((vdynamic*)r27));
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r1 = hl_vfields(r4)[4] ? (*(hl__types__ArrayObj*)(hl_vfields(r4)[4])) : (hl__types__ArrayObj)hl_dyn_getp(r4->value,-335924008/*limits*/,&t$hl_types_ArrayObj);
+	r0->limits = r1;
+	r1 = r0->contactPoints;
+	if( r1 == NULL ) hl_null_access();
+	r4 = r0->_struct;
+	if( r4 == NULL ) hl_null_access();
+	r3 = hl_vfields(r4)[1] ? (*(int*)(hl_vfields(r4)[1])) : (int)hl_dyn_geti(r4->value,-141802085/*camera*/,&t$_i32);
+	r5 = r1->length;
+	if( ((unsigned)r3) < ((unsigned)r5) ) goto label$6dad55e_1_330;
+	r11 = NULL;
+	goto label$6dad55e_1_333;
+	label$6dad55e_1_330:
+	r10 = r1->array;
+	r9 = ((vdynamic**)(r10 + 1))[r3];
+	r11 = (hxlr__rider__ContactPoint)r9;
+	label$6dad55e_1_333:
+	r0->focusPoint = r11;
+	r29 = false;
+	r29 = hxlr_rider_RiderBase_set_crashed(r0,r29);
+	r32 = hl_alloc_dynbool(r29);
 	return;
 }
 
@@ -19,11 +432,126 @@ void hxlr_rider_RiderBase_step(hxlr__rider__RiderBase r0) {
 	return;
 }
 
-void hxlr_rider_RiderBase_renderRider(hxlr__rider__RiderBase r0) {
+void hxlr_rider_RiderBase_collide(hxlr__rider__RiderBase r0) {
+	String r17, r20;
+	haxe__ds__StringMap r21;
+	vvirtual *r10;
+	hl__types__ArrayObj r3, r6;
+	hxlr__engine__Grid r22;
+	hxlr__engine__Cell r24;
+	$Main r23;
+	h2d__col__Point r12;
+	hxlr__lines__LineBase r26;
+	hxlr__rider__ContactPoint r7;
+	double r11, r13;
+	int *r18;
+	vdynamic *r8;
+	vbyte *r19;
+	varray *r9;
+	int r1, r4, r5, r14, r15, r16, r25;
+	r1 = 0;
+	r3 = r0->contactPoints;
+	label$6dad55e_4_2:
+	if( r3 == NULL ) hl_null_access();
+	r5 = r3->length;
+	if( r1 >= r5 ) goto label$6dad55e_4_89;
+	r5 = r3->length;
+	if( ((unsigned)r1) < ((unsigned)r5) ) goto label$6dad55e_4_10;
+	r7 = NULL;
+	goto label$6dad55e_4_13;
+	label$6dad55e_4_10:
+	r9 = r3->array;
+	r8 = ((vdynamic**)(r9 + 1))[r1];
+	r7 = (hxlr__rider__ContactPoint)r8;
+	label$6dad55e_4_13:
+	++r1;
+	if( r7 == NULL ) hl_null_access();
+	r12 = r7->pos;
+	if( r12 == NULL ) hl_null_access();
+	r11 = r12->x;
+	r12 = r7->pos;
+	if( r12 == NULL ) hl_null_access();
+	r13 = r12->y;
+	r10 = hxlr_engine_Cell_getInfo(r11,r13);
+	r4 = -1;
+	label$6dad55e_4_23:
+	r14 = 2;
+	if( r4 >= r14 ) goto label$6dad55e_4_88;
+	r5 = r4;
+	++r4;
+	r14 = -1;
+	label$6dad55e_4_29:
+	r16 = 2;
+	if( r14 >= r16 ) goto label$6dad55e_4_87;
+	r15 = r14;
+	++r14;
+	r17 = (String)s$x;
+	if( r10 == NULL ) hl_null_access();
+	r16 = hl_vfields(r10)[3] ? (*(int*)(hl_vfields(r10)[3])) : (int)hl_dyn_geti(r10->value,120/*x*/,&t$_i32);
+	r16 = r16 + r5;
+	r18 = &r16;
+	r19 = hl_itos(r16,r18);
+	r20 = String___alloc__(r19,r16);
+	r17 = String___add__(r17,r20);
+	r20 = (String)s$y;
+	r17 = String___add__(r17,r20);
+	r16 = hl_vfields(r10)[4] ? (*(int*)(hl_vfields(r10)[4])) : (int)hl_dyn_geti(r10->value,121/*y*/,&t$_i32);
+	r16 = r16 + r15;
+	r18 = &r16;
+	r19 = hl_itos(r16,r18);
+	r20 = String___alloc__(r19,r16);
+	r17 = String___add__(r17,r20);
+	r23 = ($Main)g$_Main;
+	r22 = r23->grid;
+	if( r22 == NULL ) hl_null_access();
+	r21 = r22->registry;
+	if( r21 == NULL ) hl_null_access();
+	r8 = haxe_ds_StringMap_get(r21,r17);
+	r24 = (hxlr__engine__Cell)r8;
+	if( r24 ) goto label$6dad55e_4_59;
+	goto label$6dad55e_4_29;
+	label$6dad55e_4_59:
+	r23 = ($Main)g$_Main;
+	r22 = r23->grid;
+	if( r22 == NULL ) hl_null_access();
+	r21 = r22->registry;
+	if( r21 == NULL ) hl_null_access();
+	r8 = haxe_ds_StringMap_get(r21,r17);
+	r24 = (hxlr__engine__Cell)r8;
+	r16 = 0;
+	if( r24 == NULL ) hl_null_access();
+	r6 = r24->collidable;
+	label$6dad55e_4_69:
+	if( r6 == NULL ) hl_null_access();
+	r25 = r6->length;
+	if( r16 >= r25 ) goto label$6dad55e_4_86;
+	r25 = r6->length;
+	if( ((unsigned)r16) < ((unsigned)r25) ) goto label$6dad55e_4_77;
+	r26 = NULL;
+	goto label$6dad55e_4_80;
+	label$6dad55e_4_77:
+	r9 = r6->array;
+	r8 = ((vdynamic**)(r9 + 1))[r16];
+	r26 = (hxlr__lines__LineBase)r8;
+	label$6dad55e_4_80:
+	++r16;
+	if( r26 ) goto label$6dad55e_4_83;
+	goto label$6dad55e_4_69;
+	label$6dad55e_4_83:
+	if( r26 == NULL ) hl_null_access();
+	((void (*)(hxlr__lines__LineBase,hxlr__rider__ContactPoint))r26->$type->vobj_proto[1])(r26,r7);
+	goto label$6dad55e_4_69;
+	label$6dad55e_4_86:
+	goto label$6dad55e_4_29;
+	label$6dad55e_4_87:
+	goto label$6dad55e_4_23;
+	label$6dad55e_4_88:
+	goto label$6dad55e_4_2;
+	label$6dad55e_4_89:
 	return;
 }
 
-void hxlr_rider_RiderBase_delete(hxlr__rider__RiderBase r0) {
+void hxlr_rider_RiderBase_renderRider(hxlr__rider__RiderBase r0) {
 	return;
 }
 
@@ -43,42 +571,46 @@ bool hxlr_rider_RiderBase_set_crashed(hxlr__rider__RiderBase r0,bool r1) {
 	return r2;
 }
 
-void hxlr_rider_RiderBase_new(hxlr__rider__RiderBase r0) {
-	hl__types__ArrayObj r10;
-	bool r1;
-	h2d__col__Point r3;
-	double r5, r7;
-	double *r6, *r8;
-	vdynamic *r2;
-	int r4;
-	r1 = true;
-	r0->enabled = r1;
-	r1 = false;
-	r0->invincible = r1;
-	r1 = false;
-	r2 = hl_alloc_dynbool(r1);
-	r0->crashed = r2;
-	r3 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r4 = 0;
-	r5 = (double)r4;
-	r6 = &r5;
-	r4 = 0;
-	r7 = (double)r4;
-	r8 = &r7;
-	h2d_col_Point_new(r3,r6,r8);
-	r0->startPos = r3;
-	r10 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r10);
-	r0->contactPoints = r10;
-	r10 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r10);
-	r0->airPoints = r10;
-	r10 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r10);
-	r0->constraints = r10;
-	r10 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r10);
-	r0->scarves = r10;
+void hxlr_rider_RiderBase_new(hxlr__rider__RiderBase r0,vvirtual* r1,h2d__col__Point r2,String r3) {
+	vvirtual *r6;
+	bool r4;
+	h2d__col__Point r7;
+	double r8, r10, r13, r14;
+	double *r9, *r11;
+	vdynamic *r5;
+	r4 = true;
+	r0->enabled = r4;
+	r4 = false;
+	r0->invincible = r4;
+	r4 = false;
+	r5 = hl_alloc_dynbool(r4);
+	r0->crashed = r5;
+	r0->_struct = r1;
+	r0->startPos = r2;
+	r7 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	r6 = r0->_struct;
+	if( r6 == NULL ) hl_null_access();
+	r8 = hl_vfields(r6)[9] ? (*(double*)(hl_vfields(r6)[9])) : (double)hl_dyn_getd(r6->value,389727456/*x_vel*/);
+	r9 = &r8;
+	r6 = r0->_struct;
+	if( r6 == NULL ) hl_null_access();
+	r10 = hl_vfields(r6)[11] ? (*(double*)(hl_vfields(r6)[11])) : (double)hl_dyn_getd(r6->value,-358524841/*y_vel*/);
+	r11 = &r10;
+	h2d_col_Point_new(r7,r9,r11);
+	r0->startVel = r7;
+	r7 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	r6 = r0->_struct;
+	if( r6 == NULL ) hl_null_access();
+	r13 = hl_vfields(r6)[8] ? (*(double*)(hl_vfields(r6)[8])) : (double)hl_dyn_getd(r6->value,-229623737/*x_grav*/);
+	r9 = &r13;
+	r6 = r0->_struct;
+	if( r6 == NULL ) hl_null_access();
+	r14 = hl_vfields(r6)[10] ? (*(double*)(hl_vfields(r6)[10])) : (double)hl_dyn_getd(r6->value,413898160/*y_grav*/);
+	r11 = &r14;
+	h2d_col_Point_new(r7,r9,r11);
+	r0->gravity = r7;
+	r0->name = r3;
+	hxlr_rider_RiderBase_init(r0);
 	return;
 }
 

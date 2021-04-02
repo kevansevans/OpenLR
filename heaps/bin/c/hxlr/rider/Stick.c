@@ -7,8 +7,9 @@ bool hxlr_rider_RiderBase_set_crashed(hxlr__rider__RiderBase,bool);
 #include <hl/natives.h>
 extern hl_type t$_f64;
 void hxlr_rider_Stick_setRestLength(hxlr__rider__Stick);
-extern venum* g$hxlr_enums_StickType_REPELL;
-extern venum* g$hxlr_enums_StickType_ATTRACT;
+extern String s$REPELL;
+int String___compare(String,vdynamic*);
+extern String s$ATTRACT;
 extern hl_type t$fun_3056ea6;
 extern hl_type t$fun_a94e020;
 
@@ -317,68 +318,92 @@ bool hxlr_rider_Stick_scarf(hxlr__rider__Stick r0,vdynamic* r1) {
 	return r13;
 }
 
-venum* hxlr_rider_Stick_set_type(hxlr__rider__Stick r0,venum* r1) {
-	venum *r3;
-	vclosure *r7, *r8;
+String hxlr_rider_Stick_set_type(hxlr__rider__Stick r0,String r1) {
+	String r3;
+	vclosure *r10, *r11;
 	double r4, r5;
-	int r6;
+	vbyte *r8, *r9;
+	int r6, r7;
 	hxlr_rider_Stick_setRestLength(r0);
-	r3 = (venum*)g$hxlr_enums_StickType_REPELL;
-	if( r1 == r3 ) goto label$d68056b_7_5;
-	r3 = (venum*)g$hxlr_enums_StickType_ATTRACT;
-	if( r1 != r3 ) goto label$d68056b_7_9;
+	r3 = (String)s$REPELL;
+	if( r1 == r3 || (r1 && r3 && String___compare(r1,(vdynamic*)r3) == 0) ) goto label$d68056b_7_5;
+	r3 = (String)s$ATTRACT;
+	if( r1 != r3 && (!r1 || !r3 || String___compare(r1,(vdynamic*)r3) != 0) ) goto label$d68056b_7_9;
 	label$d68056b_7_5:
 	r4 = r0->restLength;
 	r5 = 0.5;
 	r4 = r4 * r5;
 	r0->restLength = r4;
 	label$d68056b_7_9:
-	if( r1 == NULL ) hl_null_access();
-	r6 = HL__ENUM_INDEX__(r1);
-	switch(r6) {
-		default:
-		case 2:
-		case 3:
-			r7 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_noConstrain,r0);
-			if( r7 ) goto label$d68056b_7_16;
-			r8 = NULL;
-			goto label$d68056b_7_17;
-			label$d68056b_7_16:
-			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r7);
-			label$d68056b_7_17:
-			r0->constrain = r8;
-			goto label$d68056b_7_39;
-		case 0:
-			r7 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_standard,r0);
-			if( r7 ) goto label$d68056b_7_23;
-			r8 = NULL;
-			goto label$d68056b_7_24;
-			label$d68056b_7_23:
-			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r7);
-			label$d68056b_7_24:
-			r0->constrain = r8;
-			goto label$d68056b_7_39;
-		case 1:
-			r7 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_repell,r0);
-			if( r7 ) goto label$d68056b_7_30;
-			r8 = NULL;
-			goto label$d68056b_7_31;
-			label$d68056b_7_30:
-			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r7);
-			label$d68056b_7_31:
-			r0->constrain = r8;
-			goto label$d68056b_7_39;
-		case 4:
-			r7 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_scarf,r0);
-			if( r7 ) goto label$d68056b_7_37;
-			r8 = NULL;
-			goto label$d68056b_7_38;
-			label$d68056b_7_37:
-			r8 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r7);
-			label$d68056b_7_38:
-			r0->constrain = r8;
-	}
-	label$d68056b_7_39:
+	if( !r1 ) goto label$d68056b_7_18;
+	r6 = r1->length;
+	r7 = 6;
+	if( r6 != r7 ) goto label$d68056b_7_18;
+	r8 = r1->bytes;
+	r9 = (vbyte*)USTR("REPELL");
+	r6 = hl_string_compare(r8,r9,r6);
+	r7 = 0;
+	if( r6 == r7 ) goto label$d68056b_7_43;
+	label$d68056b_7_18:
+	if( !r1 ) goto label$d68056b_7_27;
+	r6 = r1->length;
+	r7 = 5;
+	if( r6 != r7 ) goto label$d68056b_7_27;
+	r8 = r1->bytes;
+	r9 = (vbyte*)USTR("SCARF");
+	r6 = hl_string_compare(r8,r9,r6);
+	r7 = 0;
+	if( r6 == r7 ) goto label$d68056b_7_50;
+	label$d68056b_7_27:
+	if( !r1 ) goto label$d68056b_7_36;
+	r6 = r1->length;
+	r7 = 8;
+	if( r6 != r7 ) goto label$d68056b_7_36;
+	r8 = r1->bytes;
+	r9 = (vbyte*)USTR("STANDARD");
+	r6 = hl_string_compare(r8,r9,r6);
+	r7 = 0;
+	if( r6 == r7 ) goto label$d68056b_7_57;
+	label$d68056b_7_36:
+	r10 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_noConstrain,r0);
+	if( r10 ) goto label$d68056b_7_40;
+	r11 = NULL;
+	goto label$d68056b_7_41;
+	label$d68056b_7_40:
+	r11 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r10);
+	label$d68056b_7_41:
+	r0->constrain = r11;
+	goto label$d68056b_7_63;
+	label$d68056b_7_43:
+	r10 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_repell,r0);
+	if( r10 ) goto label$d68056b_7_47;
+	r11 = NULL;
+	goto label$d68056b_7_48;
+	label$d68056b_7_47:
+	r11 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r10);
+	label$d68056b_7_48:
+	r0->constrain = r11;
+	goto label$d68056b_7_63;
+	label$d68056b_7_50:
+	r10 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_scarf,r0);
+	if( r10 ) goto label$d68056b_7_54;
+	r11 = NULL;
+	goto label$d68056b_7_55;
+	label$d68056b_7_54:
+	r11 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r10);
+	label$d68056b_7_55:
+	r0->constrain = r11;
+	goto label$d68056b_7_63;
+	label$d68056b_7_57:
+	r10 = hl_alloc_closure_ptr(&t$fun_3056ea6,hxlr_rider_Stick_standard,r0);
+	if( r10 ) goto label$d68056b_7_61;
+	r11 = NULL;
+	goto label$d68056b_7_62;
+	label$d68056b_7_61:
+	r11 = hl_alloc_closure_ptr(&t$fun_a94e020,hxlr_rider_Stick_set_type__$1,r10);
+	label$d68056b_7_62:
+	r0->constrain = r11;
+	label$d68056b_7_63:
 	r0->type = r1;
 	return r1;
 }
@@ -417,8 +442,8 @@ void hxlr_rider_Stick_setRestLength(hxlr__rider__Stick r0) {
 	return;
 }
 
-void hxlr_rider_Stick_new(hxlr__rider__Stick r0,hxlr__rider__ContactPoint r1,hxlr__rider__ContactPoint r2,venum* r3,hxlr__rider__RiderBase r4) {
-	venum *r6;
+void hxlr_rider_Stick_new(hxlr__rider__Stick r0,hxlr__rider__ContactPoint r1,hxlr__rider__ContactPoint r2,String r3,hxlr__rider__RiderBase r4) {
+	String r6;
 	bool r5;
 	double r7, r8;
 	r5 = false;

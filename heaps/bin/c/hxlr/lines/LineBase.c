@@ -5,12 +5,12 @@
 #include <hl/natives.h>
 double Math_min(double,double);
 #include <hxlr/rider/ContactPoint.h>
-extern hl_type t$vrt_5f3dcc1;
-extern hl_type t$_i32;
-extern hl_type t$h2d_col_Point;
-extern hl_type t$_bool;
+extern hl_type t$vrt_2c5ae37;
 extern hl_type t$nul_i32;
-extern hl_type t$vrt_6946228;
+extern hl_type t$_i32;
+extern hl_type t$_bool;
+extern hl_type t$vrt_357780f;
+extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
 extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
@@ -145,26 +145,73 @@ void hxlr_lines_LineBase_collide(hxlr__lines__LineBase r0,hxlr__rider__ContactPo
 }
 
 vvirtual* hxlr_lines_LineBase_toSaveObject(hxlr__lines__LineBase r0) {
-	vvirtual *r1, *r6;
-	bool r4;
-	h2d__col__Point r3;
-	vdynamic *r5;
-	int r2;
-	r1 = hl_alloc_virtual(&t$vrt_5f3dcc1);
-	r2 = r0->type;
-	if( hl_vfields(r1)[4] ) *(int*)(hl_vfields(r1)[4]) = (int)r2; else hl_dyn_seti(r1->value,-10939617/*linetype*/,&t$_i32,r2);
-	r3 = r0->start;
-	if( hl_vfields(r1)[5] ) *(h2d__col__Point*)(hl_vfields(r1)[5]) = (h2d__col__Point)r3; else hl_dyn_setp(r1->value,-492401522/*startPoint*/,&t$h2d_col_Point,r3);
-	r3 = r0->end;
-	if( hl_vfields(r1)[0] ) *(h2d__col__Point*)(hl_vfields(r1)[0]) = (h2d__col__Point)r3; else hl_dyn_setp(r1->value,-460503568/*endPoint*/,&t$h2d_col_Point,r3);
+	vvirtual *r5, *r9;
+	bool r2, r3, r4;
+	h2d__col__Point r8;
+	double r7;
+	vdynamic *r6;
+	int r1;
+	r1 = r0->limType;
+	switch(r1) {
+		default:
+			r3 = false;
+			r2 = r3;
+			goto label$bbc0197_4_10;
+		case 1:
+		case 3:
+			r3 = true;
+			r2 = r3;
+			goto label$bbc0197_4_10;
+		case 0:
+		case 2:
+			r3 = false;
+			r2 = r3;
+	}
+	label$bbc0197_4_10:
+	r1 = r0->limType;
+	switch(r1) {
+		default:
+			r4 = false;
+			r3 = r4;
+			goto label$bbc0197_4_20;
+		case 0:
+		case 1:
+			r4 = false;
+			r3 = r4;
+			goto label$bbc0197_4_20;
+		case 2:
+		case 3:
+			r4 = true;
+			r3 = r4;
+	}
+	label$bbc0197_4_20:
+	r5 = hl_alloc_virtual(&t$vrt_2c5ae37);
+	r6 = r0->id;
+	if( hl_vfields(r5)[1] ) *(vdynamic**)(hl_vfields(r5)[1]) = (vdynamic*)r6; else hl_dyn_setp(r5->value,23515/*id*/,&t$nul_i32,r6);
+	r1 = r0->type;
+	if( hl_vfields(r5)[4] ) *(int*)(hl_vfields(r5)[4]) = (int)r1; else hl_dyn_seti(r5->value,218690500/*type*/,&t$_i32,r1);
+	r8 = r0->start;
+	if( r8 == NULL ) hl_null_access();
+	r7 = r8->x;
+	if( hl_vfields(r5)[5] ) *(double*)(hl_vfields(r5)[5]) = (double)r7; else hl_dyn_setd(r5->value,26809/*x1*/,r7);
+	r8 = r0->start;
+	if( r8 == NULL ) hl_null_access();
+	r7 = r8->y;
+	if( hl_vfields(r5)[7] ) *(double*)(hl_vfields(r5)[7]) = (double)r7; else hl_dyn_setd(r5->value,27032/*y1*/,r7);
+	r8 = r0->end;
+	if( r8 == NULL ) hl_null_access();
+	r7 = r8->x;
+	if( hl_vfields(r5)[6] ) *(double*)(hl_vfields(r5)[6]) = (double)r7; else hl_dyn_setd(r5->value,26810/*x2*/,r7);
+	r8 = r0->end;
+	if( r8 == NULL ) hl_null_access();
+	r7 = r8->y;
+	if( hl_vfields(r5)[8] ) *(double*)(hl_vfields(r5)[8]) = (double)r7; else hl_dyn_setd(r5->value,27033/*y2*/,r7);
 	r4 = r0->shifted;
-	if( hl_vfields(r1)[1] ) *(bool*)(hl_vfields(r1)[1]) = (bool)r4; else hl_dyn_seti(r1->value,-181292811/*inverted*/,&t$_bool,r4);
-	r2 = r0->limType;
-	if( hl_vfields(r1)[2] ) *(int*)(hl_vfields(r1)[2]) = (int)r2; else hl_dyn_seti(r1->value,22730947/*limitMode*/,&t$_i32,r2);
-	r5 = r0->id;
-	if( hl_vfields(r1)[3] ) *(vdynamic**)(hl_vfields(r1)[3]) = (vdynamic*)r5; else hl_dyn_setp(r1->value,-325042993/*lineID*/,&t$nul_i32,r5);
-	r6 = hl_to_virtual(&t$vrt_6946228,(vdynamic*)r1);
-	return r6;
+	if( hl_vfields(r5)[0] ) *(bool*)(hl_vfields(r5)[0]) = (bool)r4; else hl_dyn_seti(r5->value,529034705/*flipped*/,&t$_bool,r4);
+	if( hl_vfields(r5)[2] ) *(bool*)(hl_vfields(r5)[2]) = (bool)r2; else hl_dyn_seti(r5->value,-501582255/*leftExtended*/,&t$_bool,r2);
+	if( hl_vfields(r5)[3] ) *(bool*)(hl_vfields(r5)[3]) = (bool)r3; else hl_dyn_seti(r5->value,249944511/*rightExtended*/,&t$_bool,r3);
+	r9 = hl_to_virtual(&t$vrt_357780f,(vdynamic*)r5);
+	return r9;
 }
 
 void hxlr_lines_LineBase_new(hxlr__lines__LineBase r0,h2d__col__Point r1,h2d__col__Point r2,bool r3,vdynamic* r4) {

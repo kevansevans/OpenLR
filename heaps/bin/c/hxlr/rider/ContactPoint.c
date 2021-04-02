@@ -4,7 +4,7 @@
 #include <hxlr/rider/ContactPoint.h>
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
-extern hl_type t$vrt_6c2da0f;
+extern hl_type t$vrt_5d2f518;
 
 void hxlr_rider_ContactPoint_new(hxlr__rider__ContactPoint r0,double* r1,double* r2,double* r3) {
 	h2d__col__Point r7;
@@ -113,21 +113,27 @@ void hxlr_rider_ContactPoint_iterate(hxlr__rider__ContactPoint r0,h2d__col__Poin
 vvirtual* hxlr_rider_ContactPoint_serialize(hxlr__rider__ContactPoint r0) {
 	vvirtual *r1;
 	h2d__col__Point r2;
-	r1 = hl_alloc_virtual(&t$vrt_6c2da0f);
+	double r3;
+	r1 = hl_alloc_virtual(&t$vrt_5d2f518);
 	r2 = r0->pos;
-	if( hl_vfields(r1)[0] ) *(h2d__col__Point*)(hl_vfields(r1)[0]) = (h2d__col__Point)r2; else hl_dyn_setp(r1->value,-352673756/*position*/,&t$h2d_col_Point,r2);
+	if( hl_vfields(r1)[1] ) *(h2d__col__Point*)(hl_vfields(r1)[1]) = (h2d__col__Point)r2; else hl_dyn_setp(r1->value,-352673756/*position*/,&t$h2d_col_Point,r2);
 	r2 = r0->vel;
-	if( hl_vfields(r1)[1] ) *(h2d__col__Point*)(hl_vfields(r1)[1]) = (h2d__col__Point)r2; else hl_dyn_setp(r1->value,519963165/*velocity*/,&t$h2d_col_Point,r2);
+	if( hl_vfields(r1)[2] ) *(h2d__col__Point*)(hl_vfields(r1)[2]) = (h2d__col__Point)r2; else hl_dyn_setp(r1->value,519963165/*velocity*/,&t$h2d_col_Point,r2);
+	r3 = r0->friction;
+	if( hl_vfields(r1)[0] ) *(double*)(hl_vfields(r1)[0]) = (double)r3; else hl_dyn_setd(r1->value,-137791637/*friction*/,r3);
 	return r1;
 }
 
 void hxlr_rider_ContactPoint_deserialize(hxlr__rider__ContactPoint r0,vvirtual* r1) {
 	h2d__col__Point r2;
+	double r3;
 	if( r1 == NULL ) hl_null_access();
-	r2 = hl_vfields(r1)[0] ? (*(h2d__col__Point*)(hl_vfields(r1)[0])) : (h2d__col__Point)hl_dyn_getp(r1->value,-352673756/*position*/,&t$h2d_col_Point);
+	r2 = hl_vfields(r1)[1] ? (*(h2d__col__Point*)(hl_vfields(r1)[1])) : (h2d__col__Point)hl_dyn_getp(r1->value,-352673756/*position*/,&t$h2d_col_Point);
 	r0->pos = r2;
-	r2 = hl_vfields(r1)[1] ? (*(h2d__col__Point*)(hl_vfields(r1)[1])) : (h2d__col__Point)hl_dyn_getp(r1->value,519963165/*velocity*/,&t$h2d_col_Point);
+	r2 = hl_vfields(r1)[2] ? (*(h2d__col__Point*)(hl_vfields(r1)[2])) : (h2d__col__Point)hl_dyn_getp(r1->value,519963165/*velocity*/,&t$h2d_col_Point);
 	r0->vel = r2;
+	r3 = hl_vfields(r1)[0] ? (*(double*)(hl_vfields(r1)[0])) : (double)hl_dyn_getd(r1->value,-137791637/*friction*/);
+	r0->friction = r3;
 	return;
 }
 

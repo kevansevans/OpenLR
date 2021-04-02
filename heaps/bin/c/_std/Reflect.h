@@ -20,13 +20,10 @@ struct _$Reflect {
 	vclosure* hasField;
 	vclosure* field;
 	vclosure* setField;
-	vclosure* getProperty;
-	vclosure* setProperty;
 	vclosure* callMethod;
 	vclosure* fields;
 	vclosure* isObject;
 	vclosure* isEnumValue;
-	vclosure* _makeVarArgs;
 };
 struct _Reflect {
 	hl_type *$type;

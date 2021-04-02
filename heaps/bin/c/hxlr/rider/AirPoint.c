@@ -15,7 +15,7 @@ void hxlr_rider_AirPoint_new(hxlr__rider__AirPoint r0,double r1,double r2,double
 	r8 = &r7;
 	r9 = NULL;
 	hxlr_rider_ContactPoint_new(((hxlr__rider__ContactPoint)r0),r6,r8,r9);
-	r0->airFriction = r3;
+	r0->friction = r3;
 	return;
 }
 
@@ -38,7 +38,7 @@ void hxlr_rider_AirPoint_iterate(hxlr__rider__AirPoint r0,h2d__col__Point r1) {
 	if( r6 == NULL ) hl_null_access();
 	r7 = r6->x;
 	r5 = r5 - r7;
-	r7 = r0->airFriction;
+	r7 = r0->friction;
 	r5 = r5 * r7;
 	if( r2 == NULL ) hl_null_access();
 	r7 = r2->x;
@@ -53,7 +53,7 @@ void hxlr_rider_AirPoint_iterate(hxlr__rider__AirPoint r0,h2d__col__Point r1) {
 	if( r6 == NULL ) hl_null_access();
 	r7 = r6->y;
 	r5 = r5 - r7;
-	r7 = r0->airFriction;
+	r7 = r0->friction;
 	r5 = r5 * r7;
 	r7 = r2->y;
 	r5 = r5 + r7;
