@@ -49,8 +49,8 @@ class Simulation
 		else restoreState(0);
 		
 		#if hl
-		Main.audio.stopMusic();
-		Main.audio.playMusic(frames);
+		//Main.audio.stopMusic();
+		//Main.audio.playMusic(frames);
 		#end
 		
 		Main.camera.start();
@@ -62,7 +62,7 @@ class Simulation
 			return;
 		}
 		#if hl
-		Main.audio.stopMusic();
+		//Main.audio.stopMusic();
 		#end
 		playing = false;
 		paused = true;
@@ -71,7 +71,7 @@ class Simulation
 		playing = true;
 		paused = false;
 		#if hl
-		Main.audio.playMusic(frames);
+		//Main.audio.playMusic(frames);
 		#end
 	}
 	
