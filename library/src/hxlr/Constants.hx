@@ -10,6 +10,9 @@ import hxlr.enums.StickType;
 class Constants 
 {
 
+	public static var minLineSize:Int = 10;
+	public static var minSnapDistance:Int = 10;
+	
 	public static var x_gravity:Float = 0;
 	public static var y_gravity:Float = 0.175;
 	public static var x_velocity:Float = 0.4;
@@ -85,12 +88,12 @@ class Constants
 			],
 			scarfAnchor : 5,
 			colors : [
-				0xD20202,
+				0xD20202, //First five are reserved for the "neck" graphic
 				0xFFFFFF,
 				0xD20202,
 				0xFFFFFF,
 				0xD20202,
-				0xFFFFFF,
+				0xFFFFFF, // First Scarf Point
 				0xD20202,
 				0xFFFFFF,
 				0xD20202,

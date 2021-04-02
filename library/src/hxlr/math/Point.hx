@@ -20,7 +20,7 @@ class Point
 		y = _y;
 	}
 	
-	public function clone() {
+	public function clone():Point {
 		return new Point(this.x, this.y);
 	}
 	
@@ -30,7 +30,7 @@ class Point
 		return this;
 	}
 	
-	public function subtract(_point:Point):Point {
+	public function sub(_point:Point):Point {
 		this.x -= _point.x;
 		this.y -= _point.y;
 		return this;

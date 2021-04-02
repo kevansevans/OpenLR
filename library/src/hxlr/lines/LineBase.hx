@@ -95,24 +95,44 @@ class LineBase
 		
 	}
 	
-	public function toSaveObject():LineSave {
-		var save:LineSave = {
-			linetype : type,
-			startPoint : start,
-			endPoint : end,
-			inverted : shifted,
-			limitMode : limType,
-			lineID : id
+	public function toSaveObject():LineStruct {
+		var save:LineStruct = {
+			id : id,
+			type : type,
+			x1 : start.x,
+			y1 : start.y,
+			x2 : end.x,
+			y2 : end.y,
+			flipped : shifted,
+			leftExtended : switch(limType){
+				case 0 | 2:
+					false;
+				case 1 | 3:
+					true;
+				default :
+					false;
+			},
+			rightExtended : switch(limType){
+				case 0 | 1:
+					false;
+				case 2 | 3:
+					true;
+				default :
+					false;
+			},
 		}
 		return save;
 	}
 }
 
-typedef LineSave = {
-	var linetype:LineType;
-	var startPoint:Point;
-	var endPoint:Point;
-	var inverted:Bool;
-	var limitMode:Int;
-	var lineID:Int;
+typedef LineStruct = {
+	var id:Int;
+	var type:LineType;
+	var x1:Float;
+	var y1:Float;
+	var x2:Float;
+	var y2:Float;
+	var flipped:Bool;
+	var leftExtended:Bool;
+	var rightExtended:Bool;
 }

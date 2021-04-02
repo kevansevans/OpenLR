@@ -103,15 +103,24 @@ class RiderBase
 		}
 		scarves.unshift(new Stick(contactPoints[struct.scarfAnchor], airPoints[0], StickType.SCARF, this));
 		
+		limits = struct.limits;
+		
 		focusPoint = contactPoints[struct.camera];
 		
 		crashed = false;
 	}
 	public function reset() {}
+	
 	public function step() {}
+	
 	public function iterate() {}
+	
+	public function checkLimits() {}
+	
 	public function constrain() {}
+	
 	public function constrainScarf() {}
+	
 	public function collide() {
 		
 		for (point in contactPoints) {
