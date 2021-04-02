@@ -14,7 +14,6 @@
 -lib heaps
 -lib hlsdl
 -lib hlopenal
--lib hscript
 -hl bin/hl/hlboot.dat
 
 --next
@@ -22,5 +21,4 @@
 -lib heaps
 -lib hlsdl
 -lib hlopenal
--lib hscript
 -hl bin/c/main.c

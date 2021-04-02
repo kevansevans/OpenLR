@@ -1,10 +1,10 @@
 package;
 
 import haxe.Json;
+import hxd.res.Resource;
 import hxlr.Constants;
 import hxlr.enums.LineType;
 import hxlr.rider.RiderStruct;
-import hxlr.scripts.PhysFloor;
 import hxlr.engine.Grid;
 
 import components.stage.Camera;
@@ -34,7 +34,7 @@ import hxd.System;
 
 import haxe.Json;
 
-#if js
+#if (js && !embeded_track)
 import network.WebRTC;
 #end
 
@@ -101,7 +101,7 @@ class Main extends App
 	
 	public static var camera:Camera;
 	
-	#if js
+	#if (js && !embeded_track)
 	public static var p2p:WebRTC;
 	#end
 	
@@ -114,8 +114,6 @@ class Main extends App
 		#else
 		build = "Release";
 		#end
-		
-		PhysFloor.build();
 		
 		new Main();
 	}
@@ -138,13 +136,9 @@ class Main extends App
 	{
 		super.init();
 		
-		
-		
 		Main.locengine = engine;
 		
 		Res.initEmbed();
-		
-		hxd.Window.getInstance().title = "OpenLR - " + Main.build;
 		
 		engine.backgroundColor = 0xFFCCCCCC;
 		
@@ -159,13 +153,15 @@ class Main extends App
 		canvas.x = engine.width / 2;
 		canvas.y = engine.height / 2;
 		
-		//polyCanvas = new PolyCanvas(s3d);
-		
 		canvas_interaction = new Interactive(engine.width, engine.height, s2d);
 		
 		toolControl = new ToolBehavior();
 		
+		#if embeded_track
+		console = new LRConsole(DefaultFont.get());
+		#else
 		console = new LRConsole(DefaultFont.get(), s2d);
+		#end
 		setConsoleActions();
 		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
 		console.log("Press / to toggle console...", 0x333333);
@@ -184,7 +180,7 @@ class Main extends App
 		saveload.loadUserInfo();
 		
 		#if hl
-		audio = new Musicplayer();
+		//audio = new Musicplayer();
 		#end
 		
 		//must load these last!
@@ -195,15 +191,37 @@ class Main extends App
 		textinfo.info.x = engine.width - textinfo.info.textWidth - 5;
 		textinfo.info.y = 5;
 		
-		#if js
+		#if (js && !embeded_track)
 		p2p = new WebRTC();
 		#end
 		
+		#if embeded_track
+		toolbar = new Toolbar();
+		#else
 		toolbar = new Toolbar(s2d);
+		#end
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 3;
 		
 		camera = new Camera();
+		
+		#if !embeded_track
+		
+		hxd.Window.getInstance().title = "OpenLR - " + Main.build;
+		
+		#else
+		
+		var trackString = Res.track.embed.entry.getText();
+		var saveObject:Dynamic = Json.parse(trackString);
+		saveload.loadJSONObject(saveObject);
+		
+		console.runCommand("enableCamera true Bosh");
+		console.runCommand("setCanvasPosition " + '${riders.riders["Bosh"].startPos.x} ${riders.riders["Bosh"].startPos.y}');
+		
+		hxd.Window.getInstance().title = "OpenLR - " + Main.trackName;
+		
+		canvas.drawMode = DrawMode.PLAYBACK;
+		#end
 	}
 	
 	//EVERYTHING is a console command if and when possible.
@@ -214,7 +232,7 @@ class Main extends App
 		var arg1:ConsoleArgDesc = {t: AFloat, opt: false, name : "x value"};
 		var arg2:ConsoleArgDesc = {t: AFloat, opt: false, name : "y value"};
 		console.addCommand(Commands.setCanvasPosition, "Sets the position of the canvas", [arg1, arg2], function(_x:Float, _y:Float){
-			canvas.setCanvasPosition(_x, _y);
+			canvas.addCanvasPosition(_x, _y);
 		});
 		console.addCommand(Commands.version, "show current build version", [], function() { console.log(Main.build, 0x0000BB); });
 		var arg3:ConsoleArgDesc = {t: AInt, opt: true, name : "size"};
@@ -392,7 +410,7 @@ class Main extends App
 		});
 		console.addCommand(Commands.loadTrack, "Load track with specified name", [arg18, arg19], function(_name:String, ?_offset:Int = 0) {
 			
-			#if js
+			#if (js && !embeded_track)
 			if (p2p.connected) {
 				if (!p2p.isHost) {
 					console.log("Only the host is allowed to use this command.", 0xFF0000);
@@ -418,7 +436,7 @@ class Main extends App
 		});
 		console.addCommand(Commands.newTrack, "New track. Will save if track name has been set", [], function() {
 			
-			#if js
+			#if (js && !embeded_track)
 			if (p2p.connected) {
 				if (!p2p.isHost) {
 					console.log("Only the host is allowed to use this command.", 0xFF0000);
@@ -440,7 +458,7 @@ class Main extends App
 		});
 		console.addCommand(Commands.importJSONSave, "Load valid JSON tracks", [arg20], function(_name:String) {
 			
-			#if js
+			#if (js && !embeded_track)
 			if (p2p.connected) {
 				if (!p2p.isHost) {
 					console.log("Only the host is allowed to use this command.", 0xFF0000);
@@ -508,7 +526,7 @@ class Main extends App
 			}
 			audio.offset = _offset;
 		});
-		#if js
+		#if (js && !embeded_track)
 		var argServerName:ConsoleArgDesc = {t: AString, opt: true, name : "ID Name"};
 		console.addCommand('createServer', "Creates P2P server through WebRTC", [argServerName], function(?_name:String) {
 			if (authorName == null) {
@@ -572,8 +590,6 @@ class Main extends App
 		
 		updateGridLines();
 		
-		//canvas.updateLines();
-		
 		if (simulation.playing && !simulation.rewinding) {
 			simulation.playSim(dt);
 		} else if (simulation.rewinding) {
@@ -584,7 +600,7 @@ class Main extends App
 			simulation.liveUpdateTick();
 		}
 		
-		#if js
+		#if (js && !embeded_track)
 		if (p2p.connected) p2p.updateCursor();
 		#end
 		
@@ -644,6 +660,10 @@ class Main extends App
 		var y_originValue:Null<Float> = null;
 		
 		ruler.clear();
+		
+		#if embeded_track
+		return;
+		#end
 		
 		for (x in 0...(engine.width * 10)) {
 			ruler.lineStyle(2, 0xBBBBBB);

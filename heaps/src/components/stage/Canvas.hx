@@ -67,13 +67,13 @@ class Canvas extends Scene
 	}
 	
 	public function setCanvasPosition(_x:Float, _y:Float, ?_log:Bool = true) {
-		addCanvasPosition(_x, _y);
+		setCanvasPosition(_x, _y);
 		if (_log) Main.console.log("Set canvas position to: " + _x + " " + _y, 0x0000BB);
 	}
 	
 	public function addCanvasPosition(_x:Float, _y:Float) {
-		x -= _x;
-		y -= _y;
+		x += _x;
+		y += _y;
 	}
 	
 	public function zoomCanvas(wheelDelta:Int):Void 
@@ -245,7 +245,7 @@ class Canvas extends Scene
 		
 		Main.grid.register(line);
 		
-		#if js
+		#if (js && !embeded_track)
 		
 		if (Main.p2p.connected) Main.p2p.updateLineInfo(NetAction.lineDownload, [
 			line.type,
@@ -311,7 +311,7 @@ class Canvas extends Scene
 		return drawMode = _mode;
 	}
 	
-	#if js
+	#if (js && !embeded_track)
 	public function P2PLineAdd(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
 		var line:LineBase = null;
 		switch (_type) {

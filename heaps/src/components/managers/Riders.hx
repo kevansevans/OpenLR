@@ -20,10 +20,12 @@ class Riders
 	{
 		riders = new Map();
 		
+		#if !embeded_track
 		var defaultRider:RiderBase = new Bosh();
 		riders[defaultRider.name] = defaultRider;
 		
 		++riderCount;
+		#end
 	}
 	
 	public function deleteAllRiders() {
@@ -46,7 +48,7 @@ class Riders
 		++riderCount;
 		Main.simulation.recordGlobalSimState();
 		
-		#if js
+		#if (js && !embeded_track)
 		
 		if (Main.p2p.connected) {
 			
@@ -102,7 +104,7 @@ class Riders
 	public function removeRider(_name:String) {
 		//riders[_name].delete();
 		
-		#if js
+		#if (js && !embeded_track)
 		if (Main.p2p.connected) {
 			Main.p2p.updateRiderData(NetAction.removeRider, [_name]);
 		}

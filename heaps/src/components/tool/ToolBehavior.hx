@@ -118,6 +118,10 @@ class ToolBehavior
 			
 			case 0:
 				
+				#if !embeded_track
+				return;
+				#end
+				
 				leftIsDown = true;
 				mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 				mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
@@ -136,6 +140,10 @@ class ToolBehavior
 						
 				}
 			case 1 :
+				
+				#if !embeded_track
+				return;
+				#end
 				
 				rightIsDown = true;
 				mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
@@ -158,7 +166,7 @@ class ToolBehavior
 			case 4 :
 				Main.simulation.stepSim();
 			default:
-				trace(event.button);
+				
 		}
 	}
 	
@@ -182,6 +190,10 @@ class ToolBehavior
 				
 			case PENCIL :
 				
+				#if !embeded_track
+				return;
+				#end
+				
 				if (leftIsDown || rightIsDown) {
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
@@ -198,6 +210,10 @@ class ToolBehavior
 				
 			case LINE :
 				
+				#if !embeded_track
+				return;
+				#end
+				
 				if (leftIsDown || rightIsDown) {
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
@@ -209,6 +225,10 @@ class ToolBehavior
 				}
 				
 			case ERASER :
+				
+				#if !embeded_track
+				return;
+				#end
 				
 				if (leftIsDown) {
 					
@@ -234,7 +254,6 @@ class ToolBehavior
 	public var tempLine:LineBase;
 	
 	function updatePreview() {
-		
 		
 		if (!leftIsDown && !rightIsDown) {
 			Main.canvas.previewLayer.clear();
@@ -283,6 +302,10 @@ class ToolBehavior
 		switch (event.button) {
 			
 			case 0 | 1:
+				
+				#if !embeded_track
+				return;
+				#end
 				
 				switch (tool) {
 					case NONE :
@@ -438,6 +461,11 @@ class ToolBehavior
 			case EKeyDown :
 				switch (event.keyCode) {
 					case Key.QWERTY_BRACKET_RIGHT :
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						if (shifted) {
 							var zoom:Int = 2;
 							while (true) {
@@ -457,6 +485,11 @@ class ToolBehavior
 						}
 						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.QWERTY_BRACKET_LEFT :
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						if (Main.viewGridSize == 1) return;
 						if (shifted) {
 							var zoom:Int = 2;
@@ -474,12 +507,27 @@ class ToolBehavior
 						}
 						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.Q:
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						setToolPencil();
 						Main.toolbar.externalUpdate(Icon.PENCIL);
 					case Key.W:
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						setToolLine();
 						Main.toolbar.externalUpdate(Icon.LINE);
 					case Key.E:
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						setToolEraser();
 						Main.toolbar.externalUpdate(Icon.ERASER);
 					case Key.A :
@@ -496,14 +544,29 @@ class ToolBehavior
 						Main.simulation.setFlagState();
 						
 					case Key.NUMBER_1 :
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						color = FLOOR;
 						updateCursor();
 						Main.console.log("Line type set to Normal", 0x0066FF);
 					case Key.NUMBER_2 :
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						color = ACCEL;
 						updateCursor();
 						Main.console.log("Line type set to Accel", 0xCC0000);
 					case Key.NUMBER_3 :
+						
+						#if !embeded_track
+						return;
+						#end
+						
 						color = SCENE;
 						updateCursor();
 						Main.console.log("Line type set to Scenery", 0x00CC00);
@@ -613,13 +676,16 @@ class ToolBehavior
 	function updateCursor():Void 
 	{
 		switch (tool) {
+			#if !embeded_track
 			case PENCIL :
 				updatePencilCursor();
 			case LINE :
 				updateLineCursor();
 			case ERASER :
 				updateEraserCursor();
+			#end
 			default :
+				Main.canvas_interaction.cursor = Default;
 		}
 	}
 	
