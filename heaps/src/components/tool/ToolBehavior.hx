@@ -436,7 +436,6 @@ class ToolBehavior
 	{
 		switch (event.kind) {
 			case EKeyDown :
-				trace(event.keyCode);
 				switch (event.keyCode) {
 					case Key.QWERTY_BRACKET_RIGHT :
 						if (shifted) {
