@@ -1,6 +1,7 @@
 package hxlr.lines;
 
 import hxlr.enums.LineType;
+import hxlr.math.geom.Line;
 import hxlr.math.geom.Point;
 import hxlr.rider.ContactPoint;
 
@@ -8,12 +9,9 @@ import hxlr.rider.ContactPoint;
  * ...
  * @author Kaelan
  */
-class LineBase
+class LineBase extends Line
 {
 	public var id:Null<Int>;
-	
-	public var start:Point;
-	public var end:Point;
 	
 	public var type:LineType;
 	public var tangible:Bool = false;
@@ -44,8 +42,7 @@ class LineBase
 	
 	public function new(_start:Point, _end:Point, _shift:Bool, ?_lim:Int = 0)
 	{
-		start = _start;
-		end = _end;
+		super(_start, _end);
 		
 		gfxEnd = new Point(end.x - start.x, end.y - start.y);
 		
