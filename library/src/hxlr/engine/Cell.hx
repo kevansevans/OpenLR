@@ -2,7 +2,7 @@ package hxlr.engine;
 
 import hxlr.enums.LineType;
 import hxlr.lines.LineBase;
-import hxlr.math.Point;
+import hxlr.math.geom.Point;
 
 /**
  * ...

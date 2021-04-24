@@ -1,7 +1,7 @@
 package hxlr.lines;
 
 import hxlr.rider.ContactPoint;
-import hxlr.math.Point;
+import hxlr.math.geom.Point;
 
 /**
  * ...

@@ -1,6 +1,6 @@
 package hxlr.lines;
 
-import hxlr.math.Point;
+import hxlr.math.geom.Point;
 
 /**
  * ...
