@@ -7,7 +7,7 @@ import hxlr.math.geom.Point;
  * ...
  * @author Kaelan
  */
-class Accel extends LineBase 
+class Accel extends LineObject 
 {
 	public var accConst:Float = 0.1;
 	var accx:Float;

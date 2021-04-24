@@ -3,7 +3,7 @@ package file;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
-import hxlr.lines.LineBase;
+import hxlr.lines.LineObject;
 import hxlr.rider.RiderBase;
 
 import components.sledder.Bosh;
@@ -214,7 +214,7 @@ class SaveLoad
 				lim = 3;
 			}
 			
-			var line:LineBase = null;
+			var line:LineObject = null;
 			switch (lineObject.type) {
 				case 0:
 					line = new Floor(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);

@@ -9,7 +9,7 @@ import hxlr.rider.ContactPoint;
  * ...
  * @author Kaelan
  */
-class LineBase extends Line
+class LineObject extends Line
 {
 	public var id:Null<Int>;
 	
@@ -37,8 +37,8 @@ class LineBase extends Line
 	public var limEnd:Float = 0;
 	public var limValue:Float = 0;
 	
-	public var prevLine:LineBase;
-	public var nextLine:LineBase;
+	public var prevLine:LineObject;
+	public var nextLine:LineObject;
 	
 	public function new(_start:Point, _end:Point, _shift:Bool, ?_lim:Int = 0)
 	{

@@ -6,7 +6,7 @@ import hxlr.engine.Grid;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
-import hxlr.lines.LineBase;
+import hxlr.lines.LineObject;
 import components.tool.ToolFunction;
 import components.ui.Toolbar.Icon;
 import hxd.BitmapData;
@@ -251,7 +251,7 @@ class ToolBehavior
 		}
 	}
 	
-	public var tempLine:LineBase;
+	public var tempLine:LineObject;
 	
 	function updatePreview() {
 		

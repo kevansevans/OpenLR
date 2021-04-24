@@ -1,6 +1,6 @@
 package components.stage;
 
-import hxlr.lines.LineBase;
+import hxlr.lines.LineObject;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
@@ -106,7 +106,7 @@ class Canvas extends Scene
 		}
 	}
 	
-	public function drawPreviewLine(_line:LineBase) {
+	public function drawPreviewLine(_line:LineObject) {
 		
 		previewLayer.clear();
 		
@@ -165,7 +165,7 @@ class Canvas extends Scene
 		
 	}
 	
-	public function drawLineGraphic(_line:LineBase) {
+	public function drawLineGraphic(_line:LineObject) {
 		
 		var lineCapRadius:Float = 0.0025;
 		var lineCapSegment:Int = 15;
@@ -225,7 +225,7 @@ class Canvas extends Scene
 	
 	public function addLine(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1, ?_lineID:Int = -1) {
 		
-		var line:LineBase = null;
+		var line:LineObject = null;
 		switch (_type) {
 			
 			case LineType.FLOOR:
@@ -313,7 +313,7 @@ class Canvas extends Scene
 	
 	#if (js && !embeded_track)
 	public function P2PLineAdd(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
-		var line:LineBase = null;
+		var line:LineObject = null;
 		switch (_type) {
 			case 0:
 				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);

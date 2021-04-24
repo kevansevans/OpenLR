@@ -1,7 +1,7 @@
 package hxlr.engine;
 
 import hxlr.enums.LineType;
-import hxlr.lines.LineBase;
+import hxlr.lines.LineObject;
 import hxlr.math.geom.Point;
 
 /**
@@ -36,9 +36,9 @@ class Cell
 	
 	public var info:CellInfo;
 	
-	public var allLines:Array<LineBase>;
-	public var collidable:Array<LineBase>;
-	public var intangible:Array<LineBase>;
+	public var allLines:Array<LineObject>;
+	public var collidable:Array<LineObject>;
+	public var intangible:Array<LineObject>;
 	
 	public function new(_info:CellInfo) 
 	{
@@ -49,7 +49,7 @@ class Cell
 		intangible = new Array();
 	}
 	
-	public function addLine(_line:LineBase) {
+	public function addLine(_line:LineObject) {
 		
 		if (allLines.contains(_line)) return;
 		
@@ -65,7 +65,7 @@ class Cell
 		
 	}
 	
-	public function removeLine(_line:LineBase) {
+	public function removeLine(_line:LineObject) {
 		
 		if (!allLines.contains(_line)) return;
 		

@@ -6,7 +6,7 @@ import hxlr.math.geom.Point;
  * ...
  * @author Kaelan
  */
-class Scenery extends LineBase 
+class Scenery extends LineObject 
 {
 
 	public function new(_start:Point, _end:Point, _shift:Bool) 

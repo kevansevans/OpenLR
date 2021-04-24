@@ -1,6 +1,6 @@
 package components.tool;
 
-import hxlr.lines.LineBase;
+import hxlr.lines.LineObject;
 import hxlr.enums.LineType;
 import h2d.col.Point;
 import hxlr.engine.Grid;
@@ -68,7 +68,7 @@ class ToolFunction
 		}
 	}
 	
-	public static function tryDispose(_line:LineBase) {
+	public static function tryDispose(_line:LineObject) {
 		
 		switch (Main.canvas.drawMode) {
 			case FULL_EDIT | PLAYBACK :

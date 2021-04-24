@@ -1,6 +1,6 @@
 package network;
 
-import hxlr.lines.LineBase;
+import hxlr.lines.LineObject;
 import h2d.Console;
 import haxe.ds.Map;
 import network.NetAction;

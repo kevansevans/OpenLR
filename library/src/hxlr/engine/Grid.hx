@@ -2,7 +2,7 @@ package hxlr.engine;
 
 import hxlr.engine.Cell;
 import hxlr.enums.LineType;
-import hxlr.lines.LineBase;
+import hxlr.lines.LineObject;
 
 /**
  * ...
@@ -16,7 +16,7 @@ class Grid
 	public static var subTypeCount:Array<Int> = new Array();
 	
 	public static var registry:Map<String, Cell>;
-	public static var lines:Array<LineBase>;
+	public static var lines:Array<LineObject>;
 	
 	public function new() 
 	{
@@ -24,7 +24,7 @@ class Grid
 		lines = new Array();
 	}
 	
-	public static function register(_line:LineBase)
+	public static function register(_line:LineObject)
 	{
 		addLine(_line);
 		
@@ -90,7 +90,7 @@ class Grid
 		}
 	}
 	
-	public static function addLine(_line:LineBase):Void 
+	public static function addLine(_line:LineObject):Void 
 	{
 		if (_line.id == null) _line.id = lineIDCount;
 		lines[_line.id] = _line;
@@ -99,7 +99,7 @@ class Grid
 		++subTypeCount[_line.type];
 	}
 	
-	static function storeLine(_line:LineBase, _info:CellInfo)
+	static function storeLine(_line:LineObject, _info:CellInfo)
 	{
 		if (registry[_info.key] == null) {
 			registry[_info.key] = new Cell(_info);
@@ -112,7 +112,7 @@ class Grid
 		for (line in lines) unregister(line);
 	}
 	
-	public static function unregister(_line:LineBase) {
+	public static function unregister(_line:LineObject) {
 		
 		if (_line == null) return;
 		

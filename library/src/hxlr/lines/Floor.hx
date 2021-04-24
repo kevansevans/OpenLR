@@ -8,7 +8,7 @@ import hxlr.math.geom.Point;
  * ...
  * @author Kaelan
  */
-class Floor extends LineBase 
+class Floor extends LineObject 
 {
 	
 	public function new(_start:Point, _end:Point, _shift:Bool) 

@@ -6,7 +6,7 @@ import hxlr.math.geom.Point;
  * ...
  * @author Kaelan
  */
-class Undefined extends LineBase 
+class Undefined extends LineObject 
 {
 
 	public function new(_start:Point, _end:Point, _shift:Bool, ?_lim:Int=0) 
