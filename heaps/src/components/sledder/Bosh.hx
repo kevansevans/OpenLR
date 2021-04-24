@@ -1,7 +1,7 @@
 package components.sledder;
 
 import hxlr.Constants;
-import hxlr.math.Point;
+import hxlr.math.geom.Point;
 import hxlr.rider.RiderBase;
 
 import h3d.Vector;

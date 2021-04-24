@@ -1,6 +1,6 @@
 package hxlr.rider;
 
-import hxlr.math.Point;
+import hxlr.math.geom.Point;
 
 /**
  * ...
