@@ -11,12 +11,12 @@ import hxlr.lines.LineBase;
 class Grid 
 {
 
-	public var lineCount:Int = 0;
-	public var lineIDCount:Int = 0;
-	public var subTypeCount:Array<Int> = new Array();
+	public static var lineCount:Int = 0;
+	public static var lineIDCount:Int = 0;
+	public static var subTypeCount:Array<Int> = new Array();
 	
-	public var registry:Map<String, Cell>;
-	public var lines:Array<LineBase>;
+	public static var registry:Map<String, Cell>;
+	public static var lines:Array<LineBase>;
 	
 	public function new() 
 	{
@@ -24,7 +24,7 @@ class Grid
 		lines = new Array();
 	}
 	
-	public function register(_line:LineBase)
+	public static function register(_line:LineBase)
 	{
 		addLine(_line);
 		
@@ -90,7 +90,7 @@ class Grid
 		}
 	}
 	
-	public function addLine(_line:LineBase):Void 
+	public static function addLine(_line:LineBase):Void 
 	{
 		if (_line.id == null) _line.id = lineIDCount;
 		lines[_line.id] = _line;
@@ -99,7 +99,7 @@ class Grid
 		++subTypeCount[_line.type];
 	}
 	
-	function storeLine(_line:LineBase, _info:CellInfo)
+	static function storeLine(_line:LineBase, _info:CellInfo)
 	{
 		if (registry[_info.key] == null) {
 			registry[_info.key] = new Cell(_info);
@@ -108,11 +108,11 @@ class Grid
 		_line.keyList.push(_info.key);
 	}
 	
-	public function deleteTrack() {
+	public static function deleteTrack() {
 		for (line in lines) unregister(line);
 	}
 	
-	public function unregister(_line:LineBase) {
+	public static function unregister(_line:LineBase) {
 		
 		if (_line == null) return;
 		

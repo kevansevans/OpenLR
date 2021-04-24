@@ -2,12 +2,13 @@ package hxlr.rider;
 
 import haxe.PosInfos;
 import hxlr.enums.StickType;
-import hxlr.math.Point;
+import hxlr.math.geom.Point;
 import hxlr.rider.AirPoint;
 import hxlr.rider.ContactPoint;
 import hxlr.rider.RiderStruct;
 import hxlr.rider.Stick;
 import hxlr.engine.Cell;
+import hxlr.engine.Grid;
 
 /**
  * ...
@@ -127,9 +128,9 @@ class RiderBase
 			var gridPos = Cell.getInfo(point.pos.x, point.pos.y);
 			for (_x in -1...2) for (_y in -1...2) {
 				var key:String = 'x${gridPos.x + _x}y${gridPos.y + _y}';
-				if (Main.grid.registry[key] == null) continue;
+				if (Grid.registry[key] == null) continue;
 				else {
-					var register = Main.grid.registry[key];
+					var register = Grid.registry[key];
 					for (line in register.collidable) {
 						
 						if (line == null) continue;
