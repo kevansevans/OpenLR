@@ -100,7 +100,7 @@ class Canvas extends Scene
 			default :
 		}
 		
-		for (line in Main.grid.lines) {
+		for (line in Grid.lines) {
 			if (line == null) continue;
 			drawLineGraphic(line);
 		}
@@ -243,7 +243,7 @@ class Canvas extends Scene
 		
 		drawLineGraphic(line);
 		
-		Main.grid.register(line);
+		Grid.register(line);
 		
 		#if (js && !embeded_track)
 		
@@ -327,7 +327,7 @@ class Canvas extends Scene
 			
 		}
 		drawLineGraphic(line);
-		Main.grid.register(line);
+		Grid.register(line);
 	}
 	#end
 }

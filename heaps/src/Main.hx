@@ -279,7 +279,7 @@ class Main extends App
 		var arg29:ConsoleArgDesc = {t: AInt, opt: false, name : "Line Index"};
 		console.addCommand(Commands.removeLine, "remove specified line", [arg29], function(?_index:Int) {
 			if (_index != null) {
-				grid.unregister(grid.lines[_index]);
+				Grid.unregister(Grid.lines[_index]);
 			}
 		});
 		var arg10:ConsoleArgDesc = {t: AString, opt: false, name : "Tool"};
@@ -321,10 +321,10 @@ class Main extends App
 		console.addCommand(Commands.showGrid, "Toggle grid visibility", [arg14], function(_visible:Bool) { ruler.visible = _visible; });
 		console.addCommand(Commands.trackInfo, "Print track info", [], function() {
 			console.log("===");
-			console.log("Lines " + grid.lineCount);
-			console.log("Floor " + grid.subTypeCount[LineType.FLOOR]);
-			console.log("Accel " + grid.subTypeCount[LineType.ACCEL]);
-			console.log("Scene " + grid.subTypeCount[LineType.SCENE]);
+			console.log("Lines " + Grid.lineCount);
+			console.log("Floor " + Grid.subTypeCount[LineType.FLOOR]);
+			console.log("Accel " + Grid.subTypeCount[LineType.ACCEL]);
+			console.log("Scene " + Grid.subTypeCount[LineType.SCENE]);
 			console.log("===");
 		});
 		console.addCommand(Commands.playTrack, "Start simulation", [], function() {simulation.startSim(); });
@@ -420,7 +420,7 @@ class Main extends App
 			#end
 			
 			if (trackName != null) console.runCommand("saveTrack");
-			grid.deleteTrack();
+			Grid.deleteTrack();
 			riders.deleteAllRiders();
 			saveload.loadTrack(_name, _offset); 
 		});
@@ -446,7 +446,7 @@ class Main extends App
 			#end
 			
 			if (trackName != null) console.runCommand("saveTrack");
-			grid.deleteTrack();
+			Grid.deleteTrack();
 			riders.deleteAllRiders();
 			riders.addNewRider("Bosh", new h2d.col.Point(0, 0));
 			trackName = null;
@@ -469,7 +469,7 @@ class Main extends App
 			
 			if (trackName != null) console.runCommand("saveTrack");
 			
-			grid.deleteTrack();
+			Grid.deleteTrack();
 			riders.deleteAllRiders();
 			saveload.loadJSON(_name);
 		});
@@ -540,7 +540,7 @@ class Main extends App
 				console.log('Please set author name with /name before joining server', 0xFF0000);
 				return;
 			}
-			if (grid.lineCount > 0) {
+			if (Grid.lineCount > 0) {
 				console.runCommand(Commands.saveTrack + ' ${Date.now().getTime()}');
 				console.runCommand(Commands.newTrack);
 			}

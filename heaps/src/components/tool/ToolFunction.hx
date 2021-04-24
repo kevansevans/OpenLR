@@ -25,8 +25,8 @@ class ToolFunction
 			
 			key = Cell.getInfo(_x + _xg, _y + _yg).key;
 			
-			if (Main.grid.registry[key] == null) continue;
-			var storage = Main.grid.registry[key];
+			if (Grid.registry[key] == null) continue;
+			var storage = Grid.registry[key];
 			
 			for (line in storage.allLines) {
 				
@@ -72,14 +72,14 @@ class ToolFunction
 		
 		switch (Main.canvas.drawMode) {
 			case FULL_EDIT | PLAYBACK :
-				Main.grid.unregister(_line);
+				Grid.unregister(_line);
 			case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 				if (_line.type != LineType.SCENE) {
-					Main.grid.unregister(_line);
+					Grid.unregister(_line);
 				}
 			case SCENERY_EDIT | SCENERY_PLAYBACK :
 				if (_line.type == LineType.SCENE) {
-					Main.grid.unregister(_line);
+					Grid.unregister(_line);
 				}
 		}
 		

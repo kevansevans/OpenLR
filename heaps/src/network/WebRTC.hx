@@ -6,6 +6,7 @@ import haxe.ds.Map;
 import network.NetAction;
 import network.PeerCursor;
 import haxe.Json;
+import hxlr.engine.Grid;
 
 #if js
 import peerjs.DataConnection;
@@ -141,7 +142,7 @@ class WebRTC
 					
 				case deleteLine :
 					
-					//Main.grid.P2Punregister(Main.grid.lines[packet.data[0]]);
+					//Grid.P2Punregister(Grid.lines[packet.data[0]]);
 					
 				case addNewCursor :
 					
@@ -281,9 +282,9 @@ class WebRTC
 		
 		var lineIndex:Int = 0;
 		var lineCount:Int = 0;
-		while (lineCount < Main.grid.lineCount) {
+		while (lineCount < Grid.lineCount) {
 			
-			if (Main.grid.lines[lineIndex] == null) {
+			if (Grid.lines[lineIndex] == null) {
 				++lineIndex;
 				continue;
 			}
@@ -292,18 +293,18 @@ class WebRTC
 				action : NetAction.lineDownload,
 				peername : Main.authorName,
 				data : [
-					Main.grid.lines[lineIndex].type,
-					Main.grid.lines[lineIndex].start.x,
-					Main.grid.lines[lineIndex].start.y,
-					Main.grid.lines[lineIndex].end.x,
-					Main.grid.lines[lineIndex].end.y,
-					Main.grid.lines[lineIndex].shifted,
-					Main.grid.lines[lineIndex].limType
+					Grid.lines[lineIndex].type,
+					Grid.lines[lineIndex].start.x,
+					Grid.lines[lineIndex].start.y,
+					Grid.lines[lineIndex].end.x,
+					Grid.lines[lineIndex].end.y,
+					Grid.lines[lineIndex].shifted,
+					Grid.lines[lineIndex].limType
 				],
 				localecho : true,
 				globalecho : false,
 				echoinfo : [
-					'Downloaded line ${lineCount} of ${Main.grid.lineCount} from ${Main.authorName}',
+					'Downloaded line ${lineCount} of ${Grid.lineCount} from ${Main.authorName}',
 				],
 			};
 			

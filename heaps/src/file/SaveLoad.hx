@@ -1,5 +1,6 @@
 package file;
 
+import hxlr.engine.Grid;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
@@ -42,7 +43,7 @@ class SaveLoad
 			song : Main.songName
 		}
 		
-		for (line in Main.grid.lines) {
+		for (line in Grid.lines) {
 			if (line == null) continue;
 			saveObject.lines.push(line.toSaveObject());
 		}
@@ -227,7 +228,7 @@ class SaveLoad
 			}
 			line.setLim(lim);
 			//line.id = lineObject.id;
-			Main.grid.register(line);
+			Grid.register(line);
 			Main.canvas.drawLineGraphic(line);
 		}
 	}

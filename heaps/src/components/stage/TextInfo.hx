@@ -6,6 +6,7 @@ import h3d.Engine;
 import h3d.Vector;
 import hxd.Res;
 import hxd.res.DefaultFont;
+import hxlr.engine.Grid;
 
 /**
  * ...
@@ -29,10 +30,10 @@ class TextInfo
 		info.text = (Main.trackName == null ? 'Untitled' : Main.trackName) + ' : ${Math.floor(1/framerate)}FPS\n';
 		info.text += 'Draw calls: ${Main.locengine.drawCalls}\n';
 		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
-		info.text += 'Lines: ${Main.grid.lineCount}\n';
-		info.text += 'Floor: ${Main.grid.subTypeCount[LineType.FLOOR]}${getLineVisibility(FLOOR)}\n';
-		info.text += 'Accel: ${Main.grid.subTypeCount[LineType.ACCEL]}${getLineVisibility(ACCEL)}\n';
-		info.text += 'Scene: ${Main.grid.subTypeCount[LineType.SCENE]}${getLineVisibility(SCENE)}\n';
+		info.text += 'Lines: ${Grid.lineCount}\n';
+		info.text += 'Floor: ${Grid.subTypeCount[LineType.FLOOR]}${getLineVisibility(FLOOR)}\n';
+		info.text += 'Accel: ${Grid.subTypeCount[LineType.ACCEL]}${getLineVisibility(ACCEL)}\n';
+		info.text += 'Scene: ${Grid.subTypeCount[LineType.SCENE]}${getLineVisibility(SCENE)}\n';
 		
 	}
 	
