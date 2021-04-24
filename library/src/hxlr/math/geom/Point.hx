@@ -1,4 +1,4 @@
-package hxlr.math;
+package hxlr.math.geom;
 
 /**
  * ...
@@ -7,7 +7,7 @@ package hxlr.math;
 
 #if heaps
 typedef Point = h2d.col.Point;
-#else if openfl
+#elseif openfl
 typedef Point = openfl.geom.Point;
 #else
 class Point
