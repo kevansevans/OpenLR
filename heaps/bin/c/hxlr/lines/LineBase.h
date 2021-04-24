@@ -6,6 +6,7 @@ typedef struct _hxlr__lines__LineBase *hxlr__lines__LineBase;
 #include <hl/Class.h>
 #include <hl/BaseType.h>
 #include <_std/String.h>
+#include <hxlr/math/geom/Line.h>
 #include <h2d/col/Point.h>
 #include <hl/types/ArrayObj.h>
 
@@ -20,9 +21,9 @@ struct _hxlr__lines__$LineBase {
 };
 struct _hxlr__lines__LineBase {
 	hl_type *$type;
-	vdynamic* id;
 	h2d__col__Point start;
 	h2d__col__Point end;
+	vdynamic* id;
 	int type;
 	bool tangible;
 	hl__types__ArrayObj keyList;

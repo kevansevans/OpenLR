@@ -24,7 +24,6 @@ void h2d_Graphics_drawCircle(h2d__Graphics,double,double,double,int*);
 #include <hxlr/lines/Floor.h>
 #include <hxlr/lines/Accel.h>
 #include <hxlr/lines/Scenery.h>
-#include <hxlr/engine/Grid.h>
 extern hl_type t$_i32;
 extern hl_type t$hxlr_lines_Floor;
 extern hl_type t$h2d_col_Point;
@@ -35,7 +34,7 @@ void hxlr_lines_Accel_new(hxlr__lines__Accel,h2d__col__Point,h2d__col__Point,boo
 extern hl_type t$hxlr_lines_Scenery;
 void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
 void hxlr_lines_LineBase_setLim(hxlr__lines__LineBase,int);
-void hxlr_engine_Grid_register(hxlr__engine__Grid,hxlr__lines__LineBase);
+void hxlr_engine_Grid_register(hxlr__lines__LineBase);
 #include <components/stage/LRConsole.h>
 bool h2d_Object_set_visible(h2d__Object,bool);
 extern String s$Draw_mode_set_to_Edit;
@@ -1544,9 +1543,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 	hxlr__lines__Scenery r27;
 	bool r9;
 	hxlr__lines__Floor r13;
-	hxlr__engine__Grid r33;
 	hxlr__lines__Accel r22;
-	$Main r34;
 	h2d__col__Point r14, r19;
 	hxlr__lines__LineBase r11;
 	double r15, r17, r20, r21, r23, r24, r25, r26, r28, r29, r30, r31;
@@ -1642,10 +1639,7 @@ void components_stage_Canvas_addLine(components__stage__Canvas r0,int r1,double 
 	r11->id = r8;
 	label$ae2bdbd_6_73:
 	components_stage_Canvas_drawLineGraphic(r0,r11);
-	r34 = ($Main)g$_Main;
-	r33 = r34->grid;
-	if( r33 == NULL ) hl_null_access();
-	hxlr_engine_Grid_register(r33,r11);
+	hxlr_engine_Grid_register(r11);
 	return;
 }
 

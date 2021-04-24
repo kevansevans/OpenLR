@@ -2,9 +2,6 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxd/fmt/fbx/HMDOut.h>
-#include <h3d/anim/LinearObject.h>
-extern hl_type t$h3d_anim_LinearObject;
-extern hl_type t$_dyn;
 void haxe_io_Bytes_set(haxe__io__Bytes,int,int);
 double haxe_io_Bytes_getFloat(haxe__io__Bytes,int);
 #include <h3d/anim/Joint.h>
@@ -65,6 +62,7 @@ extern hl_type t$vrt_97d249e;
 extern hl_type t$h3d_col_Bounds;
 void h3d_col_Bounds_new(h3d__col__Bounds);
 hl__types__ArrayBytes_hl_F32 hl_types_ArrayBase_allocF32(vbyte*,int);
+extern hl_type t$_dyn;
 void hl_types_ArrayBytes_Int_new(hl__types__ArrayBytes_Int);
 hl__types__ArrayBytes_Int hxd_fmt_fbx_Geometry_getPolygons(hxd__fmt__fbx__Geometry);
 extern hl_type t$haxe_ds_IntMap;
@@ -203,6 +201,7 @@ void hxd_fmt_hmd_SkinSplit_new(hxd__fmt__hmd__SkinSplit);
 extern hl_type t$h3d_Quat;
 void h3d_Quat_new(h3d__Quat,double*,double*,double*,double*);
 void h3d_Quat_initRotateMatrix(h3d__Quat,h3d__Matrix);
+#include <h3d/anim/LinearObject.h>
 #include <h3d/anim/LinearFrame.h>
 #include <h3d/anim/Animation.h>
 #include <hxd/fmt/hmd/Animation.h>
@@ -216,8 +215,10 @@ extern hl_type t$hxd_fmt_hmd_AnimationEvent;
 extern hl_type t$vrt_8c19931;
 void hxd_fmt_hmd_AnimationEvent_new(hxd__fmt__hmd__AnimationEvent);
 extern hl_type t$String;
+int hxd_fmt_fbx_HMDOut_makeAnimation__$2(vclosure*,vdynamic*,vdynamic*);
 extern hl_type t$fun_b73ceee;
 void hl_types_ArrayObj_sort(hl__types__ArrayObj,vclosure*);
+extern hl_type t$h3d_anim_LinearObject;
 void hxd_fmt_hmd_AnimationObject_new(hxd__fmt__hmd__AnimationObject);
 void hxd_fmt_fbx_BaseLibrary_leftHandConvert(hxd__fmt__fbx__BaseLibrary);
 void hxd_fmt_fbx_BaseLibrary_autoMerge(hxd__fmt__fbx__BaseLibrary);
@@ -231,15 +232,6 @@ h3d__anim__Animation hxd_fmt_fbx_BaseLibrary_loadAnimation(hxd__fmt__fbx__BaseLi
 haxe__io__Bytes haxe_io_BytesOutput_getBytes(haxe__io__BytesOutput);
 haxe__io__Bytes haxe_io_Bytes_alloc(int);
 void hxd_fmt_fbx_BaseLibrary_new(hxd__fmt__fbx__BaseLibrary,String);
-
-int hxd_fmt_fbx_HMDOut_makeAnimation__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
-	h3d__anim__LinearObject r3, r4;
-	int r5;
-	r3 = (h3d__anim__LinearObject)hl_dyn_castp(&r1,&t$_dyn,&t$h3d_anim_LinearObject);
-	r4 = (h3d__anim__LinearObject)hl_dyn_castp(&r2,&t$_dyn,&t$h3d_anim_LinearObject);
-	r5 = r0->hasValue ? ((int (*)(vdynamic*,h3d__anim__LinearObject,h3d__anim__LinearObject))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(h3d__anim__LinearObject,h3d__anim__LinearObject))r0->fun)(r3,r4);
-	return r5;
-}
 
 double hxd_fmt_fbx_HMDOut_int32tof(hxd__fmt__fbx__HMDOut r0,int r1) {
 	haxe__io__Bytes r3;
@@ -285,10 +277,10 @@ bool hxd_fmt_fbx_HMDOut_keepJoint(hxd__fmt__fbx__HMDOut r0,h3d__anim__Joint r1) 
 	bool r3;
 	EReg r4;
 	r3 = r0->optimizeSkin;
-	if( r3 ) goto label$d09e03a_3_4;
+	if( r3 ) goto label$d09e03a_2_4;
 	r3 = true;
 	return r3;
-	label$d09e03a_3_4:
+	label$d09e03a_2_4:
 	r4 = (EReg)hl_alloc_obj(&t$EReg);
 	r5 = (String)s$_Bip00_0_9_;
 	r6 = (String)s$;
@@ -296,18 +288,18 @@ bool hxd_fmt_fbx_HMDOut_keepJoint(hxd__fmt__fbx__HMDOut r0,h3d__anim__Joint r1) 
 	if( r1 == NULL ) hl_null_access();
 	r5 = r1->name;
 	r3 = EReg_match(r4,r5);
-	if( r3 ) goto label$d09e03a_3_19;
+	if( r3 ) goto label$d09e03a_2_19;
 	r4 = (EReg)hl_alloc_obj(&t$EReg);
 	r5 = (String)s$_Bone_0_9_0_9_0_9_;
 	r6 = (String)s$;
 	EReg_new(r4,r5,r6);
 	r5 = r1->name;
 	r3 = EReg_match(r4,r5);
-	if( !r3 ) goto label$d09e03a_3_21;
-	label$d09e03a_3_19:
+	if( !r3 ) goto label$d09e03a_2_21;
+	label$d09e03a_2_19:
 	r3 = false;
 	return r3;
-	label$d09e03a_3_21:
+	label$d09e03a_2_21:
 	r3 = true;
 	return r3;
 }
@@ -384,23 +376,23 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r11 = hl_vfields(r6)[1] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r6)[1])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r6->value,240071313/*vidx*/,&t$hl_types_ArrayBytes_Int);
 	if( r11 == NULL ) hl_null_access();
 	r15 = r11->length;
-	label$d09e03a_4_59:
-	if( r10 >= r15 ) goto label$d09e03a_4_278;
+	label$d09e03a_3_59:
+	if( r10 >= r15 ) goto label$d09e03a_3_278;
 	r16 = r10;
 	++r10;
 	if( r6 == NULL ) hl_null_access();
 	r11 = hl_vfields(r6)[1] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r6)[1])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r6->value,240071313/*vidx*/,&t$hl_types_ArrayBytes_Int);
 	if( r11 == NULL ) hl_null_access();
 	r18 = r11->length;
-	if( ((unsigned)r16) < ((unsigned)r18) ) goto label$d09e03a_4_70;
+	if( ((unsigned)r16) < ((unsigned)r18) ) goto label$d09e03a_3_70;
 	r17 = 0;
-	goto label$d09e03a_4_74;
-	label$d09e03a_4_70:
+	goto label$d09e03a_3_74;
+	label$d09e03a_3_70:
 	r14 = r11->bytes;
 	r18 = 2;
 	r18 = r16 << r18;
 	r17 = *(int*)(r14 + r18);
-	label$d09e03a_4_74:
+	label$d09e03a_3_74:
 	if( r7 == NULL ) hl_null_access();
 	r14 = r7->buffer;
 	r18 = r9;
@@ -409,15 +401,15 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r21 = 3;
 	r20 = r17 * r21;
 	r21 = r2->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_4_85;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_3_85;
 	r22 = 0.;
-	goto label$d09e03a_4_89;
-	label$d09e03a_4_85:
+	goto label$d09e03a_3_89;
+	label$d09e03a_3_85:
 	r23 = r2->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r22 = *(double*)(r23 + r21);
-	label$d09e03a_4_89:
+	label$d09e03a_3_89:
 	r24 = (float)r22;
 	r21 = 2;
 	r21 = r18 << r21;
@@ -430,15 +422,15 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r21 = 1;
 	r20 = r20 + r21;
 	r21 = r2->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_4_104;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_3_104;
 	r22 = 0.;
-	goto label$d09e03a_4_108;
-	label$d09e03a_4_104:
+	goto label$d09e03a_3_108;
+	label$d09e03a_3_104:
 	r23 = r2->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r22 = *(double*)(r23 + r21);
-	label$d09e03a_4_108:
+	label$d09e03a_3_108:
 	r24 = (float)r22;
 	r21 = 2;
 	r21 = r18 << r21;
@@ -451,15 +443,15 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r21 = 2;
 	r20 = r20 + r21;
 	r21 = r2->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_4_123;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_3_123;
 	r22 = 0.;
-	goto label$d09e03a_4_127;
-	label$d09e03a_4_123:
+	goto label$d09e03a_3_127;
+	label$d09e03a_3_123:
 	r23 = r2->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r22 = *(double*)(r23 + r21);
-	label$d09e03a_4_127:
+	label$d09e03a_3_127:
 	r24 = (float)r22;
 	r21 = 2;
 	r21 = r18 << r21;
@@ -471,15 +463,15 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r21 = 3;
 	r20 = r16 * r21;
 	r21 = r4->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_4_141;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_3_141;
 	r22 = 0.;
-	goto label$d09e03a_4_145;
-	label$d09e03a_4_141:
+	goto label$d09e03a_3_145;
+	label$d09e03a_3_141:
 	r23 = r4->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r22 = *(double*)(r23 + r21);
-	label$d09e03a_4_145:
+	label$d09e03a_3_145:
 	r24 = (float)r22;
 	r21 = 2;
 	r21 = r18 << r21;
@@ -492,15 +484,15 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r21 = 1;
 	r20 = r20 + r21;
 	r21 = r4->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_4_160;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_3_160;
 	r22 = 0.;
-	goto label$d09e03a_4_164;
-	label$d09e03a_4_160:
+	goto label$d09e03a_3_164;
+	label$d09e03a_3_160:
 	r23 = r4->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r22 = *(double*)(r23 + r21);
-	label$d09e03a_4_164:
+	label$d09e03a_3_164:
 	r24 = (float)r22;
 	r21 = 2;
 	r21 = r18 << r21;
@@ -513,15 +505,15 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r21 = 2;
 	r20 = r20 + r21;
 	r21 = r4->length;
-	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_4_179;
+	if( ((unsigned)r20) < ((unsigned)r21) ) goto label$d09e03a_3_179;
 	r22 = 0.;
-	goto label$d09e03a_4_183;
-	label$d09e03a_4_179:
+	goto label$d09e03a_3_183;
+	label$d09e03a_3_179:
 	r23 = r4->bytes;
 	r21 = 3;
 	r21 = r20 << r21;
 	r22 = *(double*)(r23 + r21);
-	label$d09e03a_4_183:
+	label$d09e03a_3_183:
 	r24 = (float)r22;
 	r21 = 2;
 	r21 = r18 << r21;
@@ -529,55 +521,55 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	if( r5 == NULL ) hl_null_access();
 	r18 = 0;
 	r20 = r5->length;
-	if( ((unsigned)r18) < ((unsigned)r20) ) goto label$d09e03a_4_193;
+	if( ((unsigned)r18) < ((unsigned)r20) ) goto label$d09e03a_3_193;
 	r25 = NULL;
-	goto label$d09e03a_4_196;
-	label$d09e03a_4_193:
+	goto label$d09e03a_3_196;
+	label$d09e03a_3_193:
 	r27 = r5->array;
 	r26 = ((vdynamic**)(r27 + 1))[r18];
 	r25 = hl_to_virtual(&t$vrt_55821a7,(vdynamic*)r26);
-	label$d09e03a_4_196:
+	label$d09e03a_3_196:
 	if( r25 == NULL ) hl_null_access();
 	r11 = hl_vfields(r25)[0] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r25)[0])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r25->value,-32204280/*index*/,&t$hl_types_ArrayBytes_Int);
 	if( r11 == NULL ) hl_null_access();
 	r20 = r11->length;
-	if( ((unsigned)r16) < ((unsigned)r20) ) goto label$d09e03a_4_203;
+	if( ((unsigned)r16) < ((unsigned)r20) ) goto label$d09e03a_3_203;
 	r18 = 0;
-	goto label$d09e03a_4_207;
-	label$d09e03a_4_203:
+	goto label$d09e03a_3_207;
+	label$d09e03a_3_203:
 	r14 = r11->bytes;
 	r20 = 2;
 	r20 = r16 << r20;
 	r18 = *(int*)(r14 + r20);
-	label$d09e03a_4_207:
+	label$d09e03a_3_207:
 	r14 = r7->buffer;
 	r20 = r9;
 	++r9;
 	r21 = 0;
 	r28 = r5->length;
-	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_4_215;
+	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_3_215;
 	r25 = NULL;
-	goto label$d09e03a_4_218;
-	label$d09e03a_4_215:
+	goto label$d09e03a_3_218;
+	label$d09e03a_3_215:
 	r27 = r5->array;
 	r26 = ((vdynamic**)(r27 + 1))[r21];
 	r25 = hl_to_virtual(&t$vrt_55821a7,(vdynamic*)r26);
-	label$d09e03a_4_218:
+	label$d09e03a_3_218:
 	if( r25 == NULL ) hl_null_access();
 	r19 = hl_vfields(r25)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r25)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r25->value,263652588/*values*/,&t$hl_types_ArrayBytes_Float);
 	if( r19 == NULL ) hl_null_access();
 	r28 = 2;
 	r21 = r18 * r28;
 	r28 = r19->length;
-	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_4_227;
+	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_3_227;
 	r22 = 0.;
-	goto label$d09e03a_4_231;
-	label$d09e03a_4_227:
+	goto label$d09e03a_3_231;
+	label$d09e03a_3_227:
 	r23 = r19->bytes;
 	r28 = 3;
 	r28 = r21 << r28;
 	r22 = *(double*)(r23 + r28);
-	label$d09e03a_4_231:
+	label$d09e03a_3_231:
 	r24 = (float)r22;
 	r28 = 2;
 	r28 = r20 << r28;
@@ -587,14 +579,14 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	++r9;
 	r21 = 0;
 	r28 = r5->length;
-	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_4_243;
+	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_3_243;
 	r25 = NULL;
-	goto label$d09e03a_4_246;
-	label$d09e03a_4_243:
+	goto label$d09e03a_3_246;
+	label$d09e03a_3_243:
 	r27 = r5->array;
 	r26 = ((vdynamic**)(r27 + 1))[r21];
 	r25 = hl_to_virtual(&t$vrt_55821a7,(vdynamic*)r26);
-	label$d09e03a_4_246:
+	label$d09e03a_3_246:
 	if( r25 == NULL ) hl_null_access();
 	r19 = hl_vfields(r25)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r25)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r25->value,263652588/*values*/,&t$hl_types_ArrayBytes_Float);
 	if( r19 == NULL ) hl_null_access();
@@ -603,15 +595,15 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r28 = 1;
 	r21 = r21 + r28;
 	r28 = r19->length;
-	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_4_257;
+	if( ((unsigned)r21) < ((unsigned)r28) ) goto label$d09e03a_3_257;
 	r22 = 0.;
-	goto label$d09e03a_4_261;
-	label$d09e03a_4_257:
+	goto label$d09e03a_3_261;
+	label$d09e03a_3_257:
 	r23 = r19->bytes;
 	r28 = 3;
 	r28 = r21 << r28;
 	r22 = *(double*)(r23 + r28);
-	label$d09e03a_4_261:
+	label$d09e03a_3_261:
 	r24 = (float)r22;
 	r28 = 2;
 	r28 = r20 << r28;
@@ -628,8 +620,8 @@ vbyte* hxd_fmt_fbx_HMDOut_buildTangents(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__
 	r28 = 2;
 	r28 = r16 << r28;
 	*(int*)(r14 + r28) = r16;
-	goto label$d09e03a_4_59;
-	label$d09e03a_4_278:
+	goto label$d09e03a_3_59;
+	label$d09e03a_3_278:
 	if( r7 == NULL ) hl_null_access();
 	r29 = NULL;
 	hl_Mikktspace_compute(r7,r29);
@@ -668,44 +660,44 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r9 = hxd_fmt_fbx_Geometry_getUVs(r1);
 	r10 = hxd_fmt_fbx_Geometry_getColors(r1);
 	r11 = hxd_fmt_fbx_Geometry_getMaterials(r1);
-	if( !r10 ) goto label$d09e03a_5_35;
+	if( !r10 ) goto label$d09e03a_4_35;
 	r13 = false;
 	r14 = 0;
 	if( r10 == NULL ) hl_null_access();
 	r15 = hl_vfields(r10)[1] ? (*(hl__types__ArrayBytes_Float*)(hl_vfields(r10)[1])) : (hl__types__ArrayBytes_Float)hl_dyn_getp(r10->value,263652588/*values*/,&t$hl_types_ArrayBytes_Float);
-	label$d09e03a_5_13:
+	label$d09e03a_4_13:
 	if( r15 == NULL ) hl_null_access();
 	r17 = r15->length;
-	if( r14 >= r17 ) goto label$d09e03a_5_32;
+	if( r14 >= r17 ) goto label$d09e03a_4_32;
 	r17 = r15->length;
-	if( ((unsigned)r14) < ((unsigned)r17) ) goto label$d09e03a_5_21;
+	if( ((unsigned)r14) < ((unsigned)r17) ) goto label$d09e03a_4_21;
 	r18 = 0.;
-	goto label$d09e03a_5_25;
-	label$d09e03a_5_21:
+	goto label$d09e03a_4_25;
+	label$d09e03a_4_21:
 	r19 = r15->bytes;
 	r17 = 3;
 	r17 = r14 << r17;
 	r18 = *(double*)(r19 + r17);
-	label$d09e03a_5_25:
+	label$d09e03a_4_25:
 	++r14;
 	r21 = 0.98999999999999999;
-	if( !(r18 < r21) ) goto label$d09e03a_5_31;
+	if( !(r18 < r21) ) goto label$d09e03a_4_31;
 	r22 = true;
 	r13 = r22;
-	goto label$d09e03a_5_32;
-	label$d09e03a_5_31:
-	goto label$d09e03a_5_13;
-	label$d09e03a_5_32:
-	if( r13 ) goto label$d09e03a_5_35;
+	goto label$d09e03a_4_32;
+	label$d09e03a_4_31:
+	goto label$d09e03a_4_13;
+	label$d09e03a_4_32:
+	if( r13 ) goto label$d09e03a_4_35;
 	r12 = NULL;
 	r10 = r12;
-	label$d09e03a_5_35:
-	if( !r4 ) goto label$d09e03a_5_38;
+	label$d09e03a_4_35:
+	if( !r4 ) goto label$d09e03a_4_38;
 	r19 = hxd_fmt_fbx_HMDOut_buildTangents(r0,r1);
-	goto label$d09e03a_5_39;
-	label$d09e03a_5_38:
+	goto label$d09e03a_4_39;
+	label$d09e03a_4_38:
 	r19 = NULL;
-	label$d09e03a_5_39:
+	label$d09e03a_4_39:
 	if( r5 == NULL ) hl_null_access();
 	r25 = &t$hxd_fmt_hmd_GeometryFormat;
 	r14 = 1;
@@ -718,7 +710,7 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	((hxd__fmt__hmd__GeometryFormat*)(r24 + 1))[r14] = r26;
 	r23 = hl_types_ArrayObj_alloc(r24);
 	r5->vertexFormat = r23;
-	if( !r8 ) goto label$d09e03a_5_59;
+	if( !r8 ) goto label$d09e03a_4_59;
 	r23 = r5->vertexFormat;
 	if( r23 == NULL ) hl_null_access();
 	r26 = (hxd__fmt__hmd__GeometryFormat)hl_alloc_obj(&t$hxd_fmt_hmd_GeometryFormat);
@@ -726,8 +718,8 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r14 = 3;
 	hxd_fmt_hmd_GeometryFormat_new(r26,r27,r14);
 	r14 = hl_types_ArrayObj_push(r23,((vdynamic*)r26));
-	label$d09e03a_5_59:
-	if( !r19 ) goto label$d09e03a_5_67;
+	label$d09e03a_4_59:
+	if( !r19 ) goto label$d09e03a_4_67;
 	r23 = r5->vertexFormat;
 	if( r23 == NULL ) hl_null_access();
 	r26 = (hxd__fmt__hmd__GeometryFormat)hl_alloc_obj(&t$hxd_fmt_hmd_GeometryFormat);
@@ -735,12 +727,12 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r14 = 3;
 	hxd_fmt_hmd_GeometryFormat_new(r26,r27,r14);
 	r14 = hl_types_ArrayObj_push(r23,((vdynamic*)r26));
-	label$d09e03a_5_67:
+	label$d09e03a_4_67:
 	r14 = 0;
 	if( r9 == NULL ) hl_null_access();
 	r16 = r9->length;
-	label$d09e03a_5_70:
-	if( r14 >= r16 ) goto label$d09e03a_5_95;
+	label$d09e03a_4_70:
+	if( r14 >= r16 ) goto label$d09e03a_4_95;
 	r17 = r14;
 	++r14;
 	if( r5 == NULL ) hl_null_access();
@@ -749,10 +741,10 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r26 = (hxd__fmt__hmd__GeometryFormat)hl_alloc_obj(&t$hxd_fmt_hmd_GeometryFormat);
 	r27 = (String)s$uv;
 	r31 = 0;
-	if( r17 != r31 ) goto label$d09e03a_5_83;
+	if( r17 != r31 ) goto label$d09e03a_4_83;
 	r30 = (String)s$;
-	goto label$d09e03a_5_90;
-	label$d09e03a_5_83:
+	goto label$d09e03a_4_90;
+	label$d09e03a_4_83:
 	r30 = (String)s$;
 	r31 = 1;
 	r29 = r17 + r31;
@@ -760,14 +752,14 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r28 = hl_itos(r29,r32);
 	r33 = String___alloc__(r28,r29);
 	r30 = String___add__(r30,r33);
-	label$d09e03a_5_90:
+	label$d09e03a_4_90:
 	r27 = String___add__(r27,r30);
 	r29 = 2;
 	hxd_fmt_hmd_GeometryFormat_new(r26,r27,r29);
 	r29 = hl_types_ArrayObj_push(r23,((vdynamic*)r26));
-	goto label$d09e03a_5_70;
-	label$d09e03a_5_95:
-	if( !r10 ) goto label$d09e03a_5_104;
+	goto label$d09e03a_4_70;
+	label$d09e03a_4_95:
+	if( !r10 ) goto label$d09e03a_4_104;
 	if( r5 == NULL ) hl_null_access();
 	r23 = r5->vertexFormat;
 	if( r23 == NULL ) hl_null_access();
@@ -776,19 +768,19 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r14 = 3;
 	hxd_fmt_hmd_GeometryFormat_new(r26,r27,r14);
 	r14 = hl_types_ArrayObj_push(r23,((vdynamic*)r26));
-	label$d09e03a_5_104:
-	if( !r2 ) goto label$d09e03a_5_205;
+	label$d09e03a_4_104:
+	if( !r2 ) goto label$d09e03a_4_205;
 	r14 = r0->bonesPerVertex;
 	r16 = 0;
-	if( r16 >= r14 ) goto label$d09e03a_5_111;
+	if( r16 >= r14 ) goto label$d09e03a_4_111;
 	r14 = r0->bonesPerVertex;
 	r16 = 4;
-	if( r16 >= r14 ) goto label$d09e03a_5_114;
-	label$d09e03a_5_111:
+	if( r16 >= r14 ) goto label$d09e03a_4_114;
+	label$d09e03a_4_111:
 	r27 = (String)s$assert;
 	r34 = haxe_Exception_thrown(((vdynamic*)r27));
 	hl_throw((vdynamic*)r34);
-	label$d09e03a_5_114:
+	label$d09e03a_4_114:
 	if( r5 == NULL ) hl_null_access();
 	r23 = r5->vertexFormat;
 	if( r23 == NULL ) hl_null_access();
@@ -824,15 +816,15 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r16 = 1;
 	r14 = r14 - r16;
 	r16 = r35->length;
-	if( ((unsigned)r14) < ((unsigned)r16) ) goto label$d09e03a_5_152;
+	if( ((unsigned)r14) < ((unsigned)r16) ) goto label$d09e03a_4_152;
 	r14 = 0;
-	goto label$d09e03a_5_156;
-	label$d09e03a_5_152:
+	goto label$d09e03a_4_156;
+	label$d09e03a_4_152:
 	r28 = r35->bytes;
 	r16 = 2;
 	r16 = r14 << r16;
 	r14 = *(int*)(r28 + r16);
-	label$d09e03a_5_156:
+	label$d09e03a_4_156:
 	hxd_fmt_hmd_GeometryFormat_new(r26,r27,r14);
 	r14 = hl_types_ArrayObj_push(r23,((vdynamic*)r26));
 	r23 = r5->vertexFormat;
@@ -840,7 +832,7 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r26 = (hxd__fmt__hmd__GeometryFormat)hl_alloc_obj(&t$hxd_fmt_hmd_GeometryFormat);
 	r27 = (String)s$indexes;
 	r13 = r0->floatSkinIndexes;
-	if( !r13 ) goto label$d09e03a_5_202;
+	if( !r13 ) goto label$d09e03a_4_202;
 	r14 = 16;
 	r28 = hl_alloc_bytes(r14);
 	r14 = 0;
@@ -871,39 +863,39 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r16 = 1;
 	r14 = r14 - r16;
 	r16 = r35->length;
-	if( ((unsigned)r14) < ((unsigned)r16) ) goto label$d09e03a_5_197;
+	if( ((unsigned)r14) < ((unsigned)r16) ) goto label$d09e03a_4_197;
 	r14 = 0;
-	goto label$d09e03a_5_201;
-	label$d09e03a_5_197:
+	goto label$d09e03a_4_201;
+	label$d09e03a_4_197:
 	r28 = r35->bytes;
 	r16 = 2;
 	r16 = r14 << r16;
 	r14 = *(int*)(r28 + r16);
-	label$d09e03a_5_201:
-	goto label$d09e03a_5_203;
-	label$d09e03a_5_202:
+	label$d09e03a_4_201:
+	goto label$d09e03a_4_203;
+	label$d09e03a_4_202:
 	r14 = 9;
-	label$d09e03a_5_203:
+	label$d09e03a_4_203:
 	hxd_fmt_hmd_GeometryFormat_new(r26,r27,r14);
 	r14 = hl_types_ArrayObj_push(r23,((vdynamic*)r26));
-	label$d09e03a_5_205:
+	label$d09e03a_4_205:
 	r14 = 0;
 	r16 = 0;
 	if( r5 == NULL ) hl_null_access();
 	r23 = r5->vertexFormat;
-	label$d09e03a_5_209:
+	label$d09e03a_4_209:
 	if( r23 == NULL ) hl_null_access();
 	r29 = r23->length;
-	if( r16 >= r29 ) goto label$d09e03a_5_228;
+	if( r16 >= r29 ) goto label$d09e03a_4_228;
 	r29 = r23->length;
-	if( ((unsigned)r16) < ((unsigned)r29) ) goto label$d09e03a_5_217;
+	if( ((unsigned)r16) < ((unsigned)r29) ) goto label$d09e03a_4_217;
 	r26 = NULL;
-	goto label$d09e03a_5_220;
-	label$d09e03a_5_217:
+	goto label$d09e03a_4_220;
+	label$d09e03a_4_217:
 	r24 = r23->array;
 	r34 = ((vdynamic**)(r24 + 1))[r16];
 	r26 = (hxd__fmt__hmd__GeometryFormat)r34;
-	label$d09e03a_5_220:
+	label$d09e03a_4_220:
 	++r16;
 	if( r26 == NULL ) hl_null_access();
 	r29 = r26->format;
@@ -911,8 +903,8 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r29 = r29 & r31;
 	r17 = r14 + r29;
 	r14 = r17;
-	goto label$d09e03a_5_209;
-	label$d09e03a_5_228:
+	goto label$d09e03a_4_209;
+	label$d09e03a_4_228:
 	if( r5 == NULL ) hl_null_access();
 	r5->vertexStride = r14;
 	r16 = 0;
@@ -923,46 +915,46 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r38 = (hl__types__ArrayBytes_hl_F32)hl_alloc_obj(&t$hl_types_ArrayBytes_hl_F32);
 	hl_types_ArrayBytes_hl_F32_new(r38);
 	r29 = 0;
-	if( r29 >= r16 ) goto label$d09e03a_5_252;
+	if( r29 >= r16 ) goto label$d09e03a_4_252;
 	r29 = r38->length;
-	if( r29 >= r16 ) goto label$d09e03a_5_252;
+	if( r29 >= r16 ) goto label$d09e03a_4_252;
 	r29 = 1;
 	r17 = r16 - r29;
 	r18 = 0.;
 	r40 = (float)r18;
 	r29 = r38->length;
-	if( ((unsigned)r17) < ((unsigned)r29) ) goto label$d09e03a_5_248;
+	if( ((unsigned)r17) < ((unsigned)r29) ) goto label$d09e03a_4_248;
 	hl_types_ArrayBytes_hl_F32___expand(r38,r17);
-	label$d09e03a_5_248:
+	label$d09e03a_4_248:
 	r28 = r38->bytes;
 	r29 = 2;
 	r29 = r17 << r29;
 	*(float*)(r28 + r29) = r40;
-	label$d09e03a_5_252:
+	label$d09e03a_4_252:
 	r39 = r38;
 	r25 = &t$hl_types_ArrayBytes_Int;
 	r17 = 0;
 	r24 = hl_alloc_array(r25,r17);
 	r23 = hl_types_ArrayObj_alloc(r24);
-	if( !r2 ) goto label$d09e03a_5_283;
+	if( !r2 ) goto label$d09e03a_4_283;
 	if( r2 == NULL ) hl_null_access();
 	r36 = r2->splitJoints;
-	if( !r36 ) goto label$d09e03a_5_283;
+	if( !r36 ) goto label$d09e03a_4_283;
 	r17 = 0;
 	r36 = r2->splitJoints;
-	label$d09e03a_5_263:
+	label$d09e03a_4_263:
 	if( r36 == NULL ) hl_null_access();
 	r31 = r36->length;
-	if( r17 >= r31 ) goto label$d09e03a_5_283;
+	if( r17 >= r31 ) goto label$d09e03a_4_283;
 	r31 = r36->length;
-	if( ((unsigned)r17) < ((unsigned)r31) ) goto label$d09e03a_5_271;
+	if( ((unsigned)r17) < ((unsigned)r31) ) goto label$d09e03a_4_271;
 	r41 = NULL;
-	goto label$d09e03a_5_274;
-	label$d09e03a_5_271:
+	goto label$d09e03a_4_274;
+	label$d09e03a_4_271:
 	r24 = r36->array;
 	r34 = ((vdynamic**)(r24 + 1))[r17];
 	r41 = hl_to_virtual(&t$vrt_97d249e,(vdynamic*)r34);
-	label$d09e03a_5_274:
+	label$d09e03a_4_274:
 	++r17;
 	if( r23 == NULL ) hl_null_access();
 	r29 = 0;
@@ -971,8 +963,8 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r29 = 0;
 	r35 = hl_types_ArrayBase_allocI32(r28,r29);
 	r29 = hl_types_ArrayObj_push(r23,((vdynamic*)r35));
-	goto label$d09e03a_5_263;
-	label$d09e03a_5_283:
+	goto label$d09e03a_4_263;
+	label$d09e03a_4_283:
 	if( r5 == NULL ) hl_null_access();
 	r42 = (h3d__col__Bounds)hl_alloc_obj(&t$h3d_col_Bounds);
 	h3d_col_Bounds_new(r42);
@@ -983,21 +975,21 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r17 = 0;
 	r43 = hl_types_ArrayBase_allocF32(r28,r17);
 	r29 = 0;
-	if( r29 >= r14 ) goto label$d09e03a_5_306;
+	if( r29 >= r14 ) goto label$d09e03a_4_306;
 	if( r43 == NULL ) hl_null_access();
 	r29 = 1;
 	r17 = r14 - r29;
 	r34 = NULL;
 	r40 = (float)hl_dyn_castf(&r34,&t$_dyn);
 	r29 = r43->length;
-	if( ((unsigned)r17) < ((unsigned)r29) ) goto label$d09e03a_5_302;
+	if( ((unsigned)r17) < ((unsigned)r29) ) goto label$d09e03a_4_302;
 	hl_types_ArrayBytes_hl_F32___expand(r43,r17);
-	label$d09e03a_5_302:
+	label$d09e03a_4_302:
 	r28 = r43->bytes;
 	r29 = 2;
 	r29 = r17 << r29;
 	*(float*)(r28 + r29) = r40;
-	label$d09e03a_5_306:
+	label$d09e03a_4_306:
 	r44 = r43;
 	r35 = (hl__types__ArrayBytes_Int)hl_alloc_obj(&t$hl_types_ArrayBytes_Int);
 	hl_types_ArrayBytes_Int_new(r35);
@@ -1014,33 +1006,33 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r47 = 0;
 	if( r45 == NULL ) hl_null_access();
 	r48 = r45->length;
-	label$d09e03a_5_322:
-	if( r47 >= r48 ) goto label$d09e03a_5_1203;
+	label$d09e03a_4_322:
+	if( r47 >= r48 ) goto label$d09e03a_4_1203;
 	r50 = r47;
 	++r47;
 	if( r45 == NULL ) hl_null_access();
 	r52 = r45->length;
-	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_5_331;
+	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_4_331;
 	r51 = 0;
-	goto label$d09e03a_5_335;
-	label$d09e03a_5_331:
+	goto label$d09e03a_4_335;
+	label$d09e03a_4_331:
 	r28 = r45->bytes;
 	r52 = 2;
 	r52 = r50 << r52;
 	r51 = *(int*)(r28 + r52);
-	label$d09e03a_5_335:
+	label$d09e03a_4_335:
 	++r17;
 	r53 = 0;
-	if( r51 < r53 ) goto label$d09e03a_5_339;
-	goto label$d09e03a_5_322;
-	label$d09e03a_5_339:
+	if( r51 < r53 ) goto label$d09e03a_4_339;
+	goto label$d09e03a_4_322;
+	label$d09e03a_4_339:
 	r53 = -r51;
 	r54 = 1;
 	r53 = r53 - r54;
 	r54 = r45->length;
-	if( ((unsigned)r50) < ((unsigned)r54) ) goto label$d09e03a_5_345;
+	if( ((unsigned)r50) < ((unsigned)r54) ) goto label$d09e03a_4_345;
 	hl_types_ArrayBytes_Int___expand(r45,r50);
-	label$d09e03a_5_345:
+	label$d09e03a_4_345:
 	r28 = r45->bytes;
 	r54 = 2;
 	r54 = r50 << r54;
@@ -1050,65 +1042,65 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r52 = r52 + r53;
 	r53 = 0;
 	r54 = r17;
-	label$d09e03a_5_354:
-	if( r53 >= r54 ) goto label$d09e03a_5_1040;
+	label$d09e03a_4_354:
+	if( r53 >= r54 ) goto label$d09e03a_4_1040;
 	r55 = r53;
 	++r53;
 	r56 = r55 + r52;
 	if( r45 == NULL ) hl_null_access();
 	r58 = r45->length;
-	if( ((unsigned)r56) < ((unsigned)r58) ) goto label$d09e03a_5_364;
+	if( ((unsigned)r56) < ((unsigned)r58) ) goto label$d09e03a_4_364;
 	r57 = 0;
-	goto label$d09e03a_5_368;
-	label$d09e03a_5_364:
+	goto label$d09e03a_4_368;
+	label$d09e03a_4_364:
 	r28 = r45->bytes;
 	r58 = 2;
 	r58 = r56 << r58;
 	r57 = *(int*)(r28 + r58);
-	label$d09e03a_5_368:
+	label$d09e03a_4_368:
 	r58 = 0;
 	if( r7 == NULL ) hl_null_access();
 	r60 = 3;
 	r59 = r57 * r60;
 	r60 = r7->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_376;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_376;
 	r61 = 0.;
-	goto label$d09e03a_5_380;
-	label$d09e03a_5_376:
+	goto label$d09e03a_4_380;
+	label$d09e03a_4_376:
 	r28 = r7->bytes;
 	r60 = 3;
 	r60 = r59 << r60;
 	r61 = *(double*)(r28 + r60);
-	label$d09e03a_5_380:
+	label$d09e03a_4_380:
 	r60 = 3;
 	r59 = r57 * r60;
 	r60 = 1;
 	r59 = r59 + r60;
 	r60 = r7->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_388;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_388;
 	r62 = 0.;
-	goto label$d09e03a_5_392;
-	label$d09e03a_5_388:
+	goto label$d09e03a_4_392;
+	label$d09e03a_4_388:
 	r28 = r7->bytes;
 	r60 = 3;
 	r60 = r59 << r60;
 	r62 = *(double*)(r28 + r60);
-	label$d09e03a_5_392:
+	label$d09e03a_4_392:
 	r60 = 3;
 	r59 = r57 * r60;
 	r60 = 2;
 	r59 = r59 + r60;
 	r60 = r7->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_400;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_400;
 	r63 = 0.;
-	goto label$d09e03a_5_404;
-	label$d09e03a_5_400:
+	goto label$d09e03a_4_404;
+	label$d09e03a_4_400:
 	r28 = r7->bytes;
 	r60 = 3;
 	r60 = r59 << r60;
 	r63 = *(double*)(r28 + r60);
-	label$d09e03a_5_404:
-	if( !r37 ) goto label$d09e03a_5_439;
+	label$d09e03a_4_404:
+	if( !r37 ) goto label$d09e03a_4_439;
 	if( r37 == NULL ) hl_null_access();
 	r65 = r37->_11;
 	r64 = r61 * r65;
@@ -1143,15 +1135,15 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r61 = r64;
 	r62 = r65;
 	r63 = r66;
-	label$d09e03a_5_439:
+	label$d09e03a_4_439:
 	if( r44 == NULL ) hl_null_access();
 	r59 = r58;
 	++r58;
 	r40 = (float)r61;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_446;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_446;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_446:
+	label$d09e03a_4_446:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1160,9 +1152,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	++r58;
 	r40 = (float)r62;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_456;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_456;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_456:
+	label$d09e03a_4_456:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1171,9 +1163,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	++r58;
 	r40 = (float)r63;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_466;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_466;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_466:
+	label$d09e03a_4_466:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1182,78 +1174,78 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r42 = r5->bounds;
 	if( r42 == NULL ) hl_null_access();
 	r65 = r42->xMin;
-	if( !(r61 < r65) ) goto label$d09e03a_5_476;
+	if( !(r61 < r65) ) goto label$d09e03a_4_476;
 	r42->xMin = r61;
-	label$d09e03a_5_476:
+	label$d09e03a_4_476:
 	r65 = r42->xMax;
-	if( !(r65 < r61) ) goto label$d09e03a_5_479;
+	if( !(r65 < r61) ) goto label$d09e03a_4_479;
 	r42->xMax = r61;
-	label$d09e03a_5_479:
+	label$d09e03a_4_479:
 	r65 = r42->yMin;
-	if( !(r62 < r65) ) goto label$d09e03a_5_482;
+	if( !(r62 < r65) ) goto label$d09e03a_4_482;
 	r42->yMin = r62;
-	label$d09e03a_5_482:
+	label$d09e03a_4_482:
 	r65 = r42->yMax;
-	if( !(r65 < r62) ) goto label$d09e03a_5_485;
+	if( !(r65 < r62) ) goto label$d09e03a_4_485;
 	r42->yMax = r62;
-	label$d09e03a_5_485:
+	label$d09e03a_4_485:
 	r65 = r42->zMin;
-	if( !(r63 < r65) ) goto label$d09e03a_5_488;
+	if( !(r63 < r65) ) goto label$d09e03a_4_488;
 	r42->zMin = r63;
-	label$d09e03a_5_488:
+	label$d09e03a_4_488:
 	r65 = r42->zMax;
-	if( !(r65 < r63) ) goto label$d09e03a_5_491;
+	if( !(r65 < r63) ) goto label$d09e03a_4_491;
 	r42->zMax = r63;
-	label$d09e03a_5_491:
-	if( !r8 ) goto label$d09e03a_5_557;
+	label$d09e03a_4_491:
+	if( !r8 ) goto label$d09e03a_4_557;
 	if( r8 == NULL ) hl_null_access();
 	r60 = 3;
 	r59 = r56 * r60;
 	r60 = r8->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_499;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_499;
 	r64 = 0.;
-	goto label$d09e03a_5_503;
-	label$d09e03a_5_499:
+	goto label$d09e03a_4_503;
+	label$d09e03a_4_499:
 	r28 = r8->bytes;
 	r60 = 3;
 	r60 = r59 << r60;
 	r64 = *(double*)(r28 + r60);
-	label$d09e03a_5_503:
+	label$d09e03a_4_503:
 	r60 = 3;
 	r59 = r56 * r60;
 	r60 = 1;
 	r59 = r59 + r60;
 	r60 = r8->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_511;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_511;
 	r65 = 0.;
-	goto label$d09e03a_5_515;
-	label$d09e03a_5_511:
+	goto label$d09e03a_4_515;
+	label$d09e03a_4_511:
 	r28 = r8->bytes;
 	r60 = 3;
 	r60 = r59 << r60;
 	r65 = *(double*)(r28 + r60);
-	label$d09e03a_5_515:
+	label$d09e03a_4_515:
 	r60 = 3;
 	r59 = r56 * r60;
 	r60 = 2;
 	r59 = r59 + r60;
 	r60 = r8->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_523;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_523;
 	r66 = 0.;
-	goto label$d09e03a_5_527;
-	label$d09e03a_5_523:
+	goto label$d09e03a_4_527;
+	label$d09e03a_4_523:
 	r28 = r8->bytes;
 	r60 = 3;
 	r60 = r59 << r60;
 	r66 = *(double*)(r28 + r60);
-	label$d09e03a_5_527:
+	label$d09e03a_4_527:
 	r59 = r58;
 	++r58;
 	r40 = (float)r64;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_533;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_533;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_533:
+	label$d09e03a_4_533:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1262,9 +1254,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	++r58;
 	r40 = (float)r65;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_543;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_543;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_543:
+	label$d09e03a_4_543:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1273,15 +1265,15 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	++r58;
 	r40 = (float)r66;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_553;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_553;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_553:
+	label$d09e03a_4_553:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
 	*(float*)(r28 + r60) = r40;
-	label$d09e03a_5_557:
-	if( !r19 ) goto label$d09e03a_5_662;
+	label$d09e03a_4_557:
+	if( !r19 ) goto label$d09e03a_4_662;
 	r59 = r58;
 	++r58;
 	r69 = 4;
@@ -1293,9 +1285,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r64 = hxd_fmt_fbx_BaseLibrary_round(((hxd__fmt__fbx__BaseLibrary)r0),r64);
 	r40 = (float)r64;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_571;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_571;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_571:
+	label$d09e03a_4_571:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1313,9 +1305,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r64 = hxd_fmt_fbx_BaseLibrary_round(((hxd__fmt__fbx__BaseLibrary)r0),r64);
 	r40 = (float)r64;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_590;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_590;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_590:
+	label$d09e03a_4_590:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1333,9 +1325,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r64 = hxd_fmt_fbx_BaseLibrary_round(((hxd__fmt__fbx__BaseLibrary)r0),r64);
 	r40 = (float)r64;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_609;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_609;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_609:
+	label$d09e03a_4_609:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1349,13 +1341,13 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r40 = *(float*)(r19 + r60);
 	r59 = 0;
 	r70 = (float)r59;
-	if( !(r40 < r70) ) goto label$d09e03a_5_662;
+	if( !(r40 < r70) ) goto label$d09e03a_4_662;
 	r60 = 3;
 	r59 = r58 - r60;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_628;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_628;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_628:
+	label$d09e03a_4_628:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1367,9 +1359,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r60 = 2;
 	r59 = r58 - r60;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_641;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_641;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_641:
+	label$d09e03a_4_641:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1381,9 +1373,9 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r60 = 1;
 	r59 = r58 - r60;
 	r60 = r44->length;
-	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_5_654;
+	if( ((unsigned)r59) < ((unsigned)r60) ) goto label$d09e03a_4_654;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r59);
-	label$d09e03a_5_654:
+	label$d09e03a_4_654:
 	r28 = r44->bytes;
 	r60 = 2;
 	r60 = r59 << r60;
@@ -1392,35 +1384,35 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r70 = (float)r64;
 	r40 = r40 * r70;
 	*(float*)(r28 + r60) = r40;
-	label$d09e03a_5_662:
+	label$d09e03a_4_662:
 	r59 = 0;
-	label$d09e03a_5_663:
+	label$d09e03a_4_663:
 	if( r9 == NULL ) hl_null_access();
 	r69 = r9->length;
-	if( r59 >= r69 ) goto label$d09e03a_5_736;
+	if( r59 >= r69 ) goto label$d09e03a_4_736;
 	r69 = r9->length;
-	if( ((unsigned)r59) < ((unsigned)r69) ) goto label$d09e03a_5_671;
+	if( ((unsigned)r59) < ((unsigned)r69) ) goto label$d09e03a_4_671;
 	r12 = NULL;
-	goto label$d09e03a_5_674;
-	label$d09e03a_5_671:
+	goto label$d09e03a_4_674;
+	label$d09e03a_4_671:
 	r24 = r9->array;
 	r34 = ((vdynamic**)(r24 + 1))[r59];
 	r12 = hl_to_virtual(&t$vrt_55821a7,(vdynamic*)r34);
-	label$d09e03a_5_674:
+	label$d09e03a_4_674:
 	++r59;
 	if( r12 == NULL ) hl_null_access();
 	r49 = hl_vfields(r12)[0] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r12)[0])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r12->value,-32204280/*index*/,&t$hl_types_ArrayBytes_Int);
 	if( r49 == NULL ) hl_null_access();
 	r69 = r49->length;
-	if( ((unsigned)r56) < ((unsigned)r69) ) goto label$d09e03a_5_682;
+	if( ((unsigned)r56) < ((unsigned)r69) ) goto label$d09e03a_4_682;
 	r60 = 0;
-	goto label$d09e03a_5_686;
-	label$d09e03a_5_682:
+	goto label$d09e03a_4_686;
+	label$d09e03a_4_682:
 	r28 = r49->bytes;
 	r69 = 2;
 	r69 = r56 << r69;
 	r60 = *(int*)(r28 + r69);
-	label$d09e03a_5_686:
+	label$d09e03a_4_686:
 	if( r44 == NULL ) hl_null_access();
 	r69 = r58;
 	++r58;
@@ -1429,20 +1421,20 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r72 = 2;
 	r71 = r60 * r72;
 	r72 = r15->length;
-	if( ((unsigned)r71) < ((unsigned)r72) ) goto label$d09e03a_5_697;
+	if( ((unsigned)r71) < ((unsigned)r72) ) goto label$d09e03a_4_697;
 	r64 = 0.;
-	goto label$d09e03a_5_701;
-	label$d09e03a_5_697:
+	goto label$d09e03a_4_701;
+	label$d09e03a_4_697:
 	r28 = r15->bytes;
 	r72 = 3;
 	r72 = r71 << r72;
 	r64 = *(double*)(r28 + r72);
-	label$d09e03a_5_701:
+	label$d09e03a_4_701:
 	r40 = (float)r64;
 	r71 = r44->length;
-	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_5_705;
+	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_4_705;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r69);
-	label$d09e03a_5_705:
+	label$d09e03a_4_705:
 	r28 = r44->bytes;
 	r71 = 2;
 	r71 = r69 << r71;
@@ -1457,41 +1449,41 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r72 = 1;
 	r71 = r71 + r72;
 	r72 = r15->length;
-	if( ((unsigned)r71) < ((unsigned)r72) ) goto label$d09e03a_5_722;
+	if( ((unsigned)r71) < ((unsigned)r72) ) goto label$d09e03a_4_722;
 	r65 = 0.;
-	goto label$d09e03a_5_726;
-	label$d09e03a_5_722:
+	goto label$d09e03a_4_726;
+	label$d09e03a_4_722:
 	r28 = r15->bytes;
 	r72 = 3;
 	r72 = r71 << r72;
 	r65 = *(double*)(r28 + r72);
-	label$d09e03a_5_726:
+	label$d09e03a_4_726:
 	r64 = r64 - r65;
 	r40 = (float)r64;
 	r71 = r44->length;
-	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_5_731;
+	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_4_731;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r69);
-	label$d09e03a_5_731:
+	label$d09e03a_4_731:
 	r28 = r44->bytes;
 	r71 = 2;
 	r71 = r69 << r71;
 	*(float*)(r28 + r71) = r40;
-	goto label$d09e03a_5_663;
-	label$d09e03a_5_736:
-	if( !r10 ) goto label$d09e03a_5_819;
+	goto label$d09e03a_4_663;
+	label$d09e03a_4_736:
+	if( !r10 ) goto label$d09e03a_4_819;
 	if( r10 == NULL ) hl_null_access();
 	r49 = hl_vfields(r10)[0] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r10)[0])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r10->value,-32204280/*index*/,&t$hl_types_ArrayBytes_Int);
 	if( r49 == NULL ) hl_null_access();
 	r60 = r49->length;
-	if( ((unsigned)r56) < ((unsigned)r60) ) goto label$d09e03a_5_744;
+	if( ((unsigned)r56) < ((unsigned)r60) ) goto label$d09e03a_4_744;
 	r59 = 0;
-	goto label$d09e03a_5_748;
-	label$d09e03a_5_744:
+	goto label$d09e03a_4_748;
+	label$d09e03a_4_744:
 	r28 = r49->bytes;
 	r60 = 2;
 	r60 = r56 << r60;
 	r59 = *(int*)(r28 + r60);
-	label$d09e03a_5_748:
+	label$d09e03a_4_748:
 	if( r44 == NULL ) hl_null_access();
 	r60 = r58;
 	++r58;
@@ -1500,20 +1492,20 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r71 = 4;
 	r69 = r59 * r71;
 	r71 = r15->length;
-	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_5_759;
+	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_4_759;
 	r64 = 0.;
-	goto label$d09e03a_5_763;
-	label$d09e03a_5_759:
+	goto label$d09e03a_4_763;
+	label$d09e03a_4_759:
 	r28 = r15->bytes;
 	r71 = 3;
 	r71 = r69 << r71;
 	r64 = *(double*)(r28 + r71);
-	label$d09e03a_5_763:
+	label$d09e03a_4_763:
 	r40 = (float)r64;
 	r69 = r44->length;
-	if( ((unsigned)r60) < ((unsigned)r69) ) goto label$d09e03a_5_767;
+	if( ((unsigned)r60) < ((unsigned)r69) ) goto label$d09e03a_4_767;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r60);
-	label$d09e03a_5_767:
+	label$d09e03a_4_767:
 	r28 = r44->bytes;
 	r69 = 2;
 	r69 = r60 << r69;
@@ -1527,20 +1519,20 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r71 = 1;
 	r69 = r69 + r71;
 	r71 = r15->length;
-	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_5_783;
+	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_4_783;
 	r64 = 0.;
-	goto label$d09e03a_5_787;
-	label$d09e03a_5_783:
+	goto label$d09e03a_4_787;
+	label$d09e03a_4_783:
 	r28 = r15->bytes;
 	r71 = 3;
 	r71 = r69 << r71;
 	r64 = *(double*)(r28 + r71);
-	label$d09e03a_5_787:
+	label$d09e03a_4_787:
 	r40 = (float)r64;
 	r69 = r44->length;
-	if( ((unsigned)r60) < ((unsigned)r69) ) goto label$d09e03a_5_791;
+	if( ((unsigned)r60) < ((unsigned)r69) ) goto label$d09e03a_4_791;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r60);
-	label$d09e03a_5_791:
+	label$d09e03a_4_791:
 	r28 = r44->bytes;
 	r69 = 2;
 	r69 = r60 << r69;
@@ -1554,34 +1546,34 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r71 = 2;
 	r69 = r69 + r71;
 	r71 = r15->length;
-	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_5_807;
+	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_4_807;
 	r64 = 0.;
-	goto label$d09e03a_5_811;
-	label$d09e03a_5_807:
+	goto label$d09e03a_4_811;
+	label$d09e03a_4_807:
 	r28 = r15->bytes;
 	r71 = 3;
 	r71 = r69 << r71;
 	r64 = *(double*)(r28 + r71);
-	label$d09e03a_5_811:
+	label$d09e03a_4_811:
 	r40 = (float)r64;
 	r69 = r44->length;
-	if( ((unsigned)r60) < ((unsigned)r69) ) goto label$d09e03a_5_815;
+	if( ((unsigned)r60) < ((unsigned)r69) ) goto label$d09e03a_4_815;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r60);
-	label$d09e03a_5_815:
+	label$d09e03a_4_815:
 	r28 = r44->bytes;
 	r69 = 2;
 	r69 = r60 << r69;
 	*(float*)(r28 + r69) = r40;
-	label$d09e03a_5_819:
-	if( !r2 ) goto label$d09e03a_5_918;
+	label$d09e03a_4_819:
+	if( !r2 ) goto label$d09e03a_4_918;
 	if( r2 == NULL ) hl_null_access();
 	r60 = r2->bonesPerVertex;
 	r59 = r57 * r60;
 	r60 = 0;
 	r69 = 0;
 	r71 = r2->bonesPerVertex;
-	label$d09e03a_5_826:
-	if( r69 >= r71 ) goto label$d09e03a_5_870;
+	label$d09e03a_4_826:
+	if( r69 >= r71 ) goto label$d09e03a_4_870;
 	r72 = r69;
 	++r69;
 	if( r44 == NULL ) hl_null_access();
@@ -1592,20 +1584,20 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	if( r15 == NULL ) hl_null_access();
 	r74 = r59 + r72;
 	r75 = r15->length;
-	if( ((unsigned)r74) < ((unsigned)r75) ) goto label$d09e03a_5_841;
+	if( ((unsigned)r74) < ((unsigned)r75) ) goto label$d09e03a_4_841;
 	r64 = 0.;
-	goto label$d09e03a_5_845;
-	label$d09e03a_5_841:
+	goto label$d09e03a_4_845;
+	label$d09e03a_4_841:
 	r28 = r15->bytes;
 	r75 = 3;
 	r75 = r74 << r75;
 	r64 = *(double*)(r28 + r75);
-	label$d09e03a_5_845:
+	label$d09e03a_4_845:
 	r40 = (float)r64;
 	r74 = r44->length;
-	if( ((unsigned)r73) < ((unsigned)r74) ) goto label$d09e03a_5_849;
+	if( ((unsigned)r73) < ((unsigned)r74) ) goto label$d09e03a_4_849;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r73);
-	label$d09e03a_5_849:
+	label$d09e03a_4_849:
 	r28 = r44->bytes;
 	r74 = 2;
 	r74 = r73 << r74;
@@ -1614,29 +1606,29 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	if( r49 == NULL ) hl_null_access();
 	r73 = r59 + r72;
 	r74 = r49->length;
-	if( ((unsigned)r73) < ((unsigned)r74) ) goto label$d09e03a_5_860;
+	if( ((unsigned)r73) < ((unsigned)r74) ) goto label$d09e03a_4_860;
 	r73 = 0;
-	goto label$d09e03a_5_864;
-	label$d09e03a_5_860:
+	goto label$d09e03a_4_864;
+	label$d09e03a_4_860:
 	r28 = r49->bytes;
 	r74 = 2;
 	r74 = r73 << r74;
 	r73 = *(int*)(r28 + r74);
-	label$d09e03a_5_864:
+	label$d09e03a_4_864:
 	r74 = 8;
 	r74 = r74 * r72;
 	r73 = r73 << r74;
 	r73 = r73 | r60;
 	r60 = r73;
-	goto label$d09e03a_5_826;
-	label$d09e03a_5_870:
+	goto label$d09e03a_4_826;
+	label$d09e03a_4_870:
 	r13 = r0->floatSkinIndexes;
-	if( !r13 ) goto label$d09e03a_5_906;
+	if( !r13 ) goto label$d09e03a_4_906;
 	r69 = 0;
 	if( r2 == NULL ) hl_null_access();
 	r71 = r2->bonesPerVertex;
-	label$d09e03a_5_875:
-	if( r69 >= r71 ) goto label$d09e03a_5_905;
+	label$d09e03a_4_875:
+	if( r69 >= r71 ) goto label$d09e03a_4_905;
 	r72 = r69;
 	++r69;
 	if( r44 == NULL ) hl_null_access();
@@ -1647,67 +1639,67 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	if( r49 == NULL ) hl_null_access();
 	r74 = r59 + r72;
 	r75 = r49->length;
-	if( ((unsigned)r74) < ((unsigned)r75) ) goto label$d09e03a_5_890;
+	if( ((unsigned)r74) < ((unsigned)r75) ) goto label$d09e03a_4_890;
 	r74 = 0;
-	goto label$d09e03a_5_894;
-	label$d09e03a_5_890:
+	goto label$d09e03a_4_894;
+	label$d09e03a_4_890:
 	r28 = r49->bytes;
 	r75 = 2;
 	r75 = r74 << r75;
 	r74 = *(int*)(r28 + r75);
-	label$d09e03a_5_894:
+	label$d09e03a_4_894:
 	r75 = 3;
 	r74 = r74 * r75;
 	r40 = (float)r74;
 	r74 = r44->length;
-	if( ((unsigned)r73) < ((unsigned)r74) ) goto label$d09e03a_5_900;
+	if( ((unsigned)r73) < ((unsigned)r74) ) goto label$d09e03a_4_900;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r73);
-	label$d09e03a_5_900:
+	label$d09e03a_4_900:
 	r28 = r44->bytes;
 	r74 = 2;
 	r74 = r73 << r74;
 	*(float*)(r28 + r74) = r40;
-	goto label$d09e03a_5_875;
-	label$d09e03a_5_905:
-	goto label$d09e03a_5_918;
-	label$d09e03a_5_906:
+	goto label$d09e03a_4_875;
+	label$d09e03a_4_905:
+	goto label$d09e03a_4_918;
+	label$d09e03a_4_906:
 	if( r44 == NULL ) hl_null_access();
 	r69 = r58;
 	++r58;
 	r64 = hxd_fmt_fbx_HMDOut_int32tof(r0,r60);
 	r40 = (float)r64;
 	r71 = r44->length;
-	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_5_914;
+	if( ((unsigned)r69) < ((unsigned)r71) ) goto label$d09e03a_4_914;
 	hl_types_ArrayBytes_hl_F32___expand(r44,r69);
-	label$d09e03a_5_914:
+	label$d09e03a_4_914:
 	r28 = r44->bytes;
 	r71 = 2;
 	r71 = r69 << r71;
 	*(float*)(r28 + r71) = r40;
-	label$d09e03a_5_918:
+	label$d09e03a_4_918:
 	r64 = 0.;
 	r59 = 0;
 	r60 = r14;
-	label$d09e03a_5_921:
-	if( r59 >= r60 ) goto label$d09e03a_5_938;
+	label$d09e03a_4_921:
+	if( r59 >= r60 ) goto label$d09e03a_4_938;
 	r69 = r59;
 	++r59;
 	if( r44 == NULL ) hl_null_access();
 	r72 = r44->length;
-	if( ((unsigned)r69) < ((unsigned)r72) ) goto label$d09e03a_5_930;
+	if( ((unsigned)r69) < ((unsigned)r72) ) goto label$d09e03a_4_930;
 	r40 = 0.;
-	goto label$d09e03a_5_934;
-	label$d09e03a_5_930:
+	goto label$d09e03a_4_934;
+	label$d09e03a_4_930:
 	r28 = r44->bytes;
 	r72 = 2;
 	r72 = r69 << r72;
 	r40 = *(float*)(r28 + r72);
-	label$d09e03a_5_934:
+	label$d09e03a_4_934:
 	r66 = (double)r40;
 	r65 = r64 + r66;
 	r64 = r65;
-	goto label$d09e03a_5_921;
-	label$d09e03a_5_938:
+	goto label$d09e03a_4_921;
+	label$d09e03a_4_938:
 	r66 = 100.;
 	r65 = r64 * r66;
 	r66 = 268435455.;
@@ -1717,7 +1709,7 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	if( r46 == NULL ) hl_null_access();
 	r34 = haxe_ds_IntMap_get(r46,r59);
 	r49 = (hl__types__ArrayBytes_Int)hl_dyn_castp(&r34,&t$_dyn,&t$hl_types_ArrayBytes_Int);
-	if( r49 ) goto label$d09e03a_5_955;
+	if( r49 ) goto label$d09e03a_4_955;
 	r60 = 0;
 	r28 = hl_alloc_bytes(r60);
 	r60 = 0;
@@ -1725,71 +1717,71 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r77 = hl_types_ArrayBase_allocI32(r28,r60);
 	r49 = r77;
 	haxe_ds_IntMap_set(r46,r59,((vdynamic*)r77));
-	label$d09e03a_5_955:
+	label$d09e03a_4_955:
 	r60 = 0;
-	label$d09e03a_5_956:
+	label$d09e03a_4_956:
 	if( r49 == NULL ) hl_null_access();
 	r71 = r49->length;
-	if( r60 >= r71 ) goto label$d09e03a_5_1007;
+	if( r60 >= r71 ) goto label$d09e03a_4_1007;
 	r71 = r49->length;
-	if( ((unsigned)r60) < ((unsigned)r71) ) goto label$d09e03a_5_964;
+	if( ((unsigned)r60) < ((unsigned)r71) ) goto label$d09e03a_4_964;
 	r69 = 0;
-	goto label$d09e03a_5_968;
-	label$d09e03a_5_964:
+	goto label$d09e03a_4_968;
+	label$d09e03a_4_964:
 	r28 = r49->bytes;
 	r71 = 2;
 	r71 = r60 << r71;
 	r69 = *(int*)(r28 + r71);
-	label$d09e03a_5_968:
+	label$d09e03a_4_968:
 	++r60;
 	r13 = true;
 	r71 = r69 * r14;
 	r72 = 0;
 	r73 = r14;
-	label$d09e03a_5_973:
-	if( r72 >= r73 ) goto label$d09e03a_5_1002;
+	label$d09e03a_4_973:
+	if( r72 >= r73 ) goto label$d09e03a_4_1002;
 	r74 = r72;
 	++r72;
 	if( r39 == NULL ) hl_null_access();
 	r75 = r71;
 	++r71;
 	r78 = r39->length;
-	if( ((unsigned)r75) < ((unsigned)r78) ) goto label$d09e03a_5_984;
+	if( ((unsigned)r75) < ((unsigned)r78) ) goto label$d09e03a_4_984;
 	r40 = 0.;
-	goto label$d09e03a_5_988;
-	label$d09e03a_5_984:
+	goto label$d09e03a_4_988;
+	label$d09e03a_4_984:
 	r28 = r39->bytes;
 	r78 = 2;
 	r78 = r75 << r78;
 	r40 = *(float*)(r28 + r78);
-	label$d09e03a_5_988:
+	label$d09e03a_4_988:
 	if( r44 == NULL ) hl_null_access();
 	r78 = r44->length;
-	if( ((unsigned)r74) < ((unsigned)r78) ) goto label$d09e03a_5_993;
+	if( ((unsigned)r74) < ((unsigned)r78) ) goto label$d09e03a_4_993;
 	r70 = 0.;
-	goto label$d09e03a_5_997;
-	label$d09e03a_5_993:
+	goto label$d09e03a_4_997;
+	label$d09e03a_4_993:
 	r28 = r44->bytes;
 	r78 = 2;
 	r78 = r74 << r78;
 	r70 = *(float*)(r28 + r78);
-	label$d09e03a_5_997:
-	if( r40 == r70 ) goto label$d09e03a_5_1001;
+	label$d09e03a_4_997:
+	if( r40 == r70 ) goto label$d09e03a_4_1001;
 	r22 = false;
 	r13 = r22;
-	goto label$d09e03a_5_1002;
-	label$d09e03a_5_1001:
-	goto label$d09e03a_5_973;
-	label$d09e03a_5_1002:
-	if( !r13 ) goto label$d09e03a_5_1006;
+	goto label$d09e03a_4_1002;
+	label$d09e03a_4_1001:
+	goto label$d09e03a_4_973;
+	label$d09e03a_4_1002:
+	if( !r13 ) goto label$d09e03a_4_1006;
 	r79 = hl_alloc_dynamic(&t$_i32);
 	r79->v.i = r69;
 	r76 = r79;
-	goto label$d09e03a_5_1007;
-	label$d09e03a_5_1006:
-	goto label$d09e03a_5_956;
-	label$d09e03a_5_1007:
-	if( r76 ) goto label$d09e03a_5_1036;
+	goto label$d09e03a_4_1007;
+	label$d09e03a_4_1006:
+	goto label$d09e03a_4_956;
+	label$d09e03a_4_1007:
+	if( r76 ) goto label$d09e03a_4_1036;
 	if( r5 == NULL ) hl_null_access();
 	r60 = r5->vertexCount;
 	r79 = hl_alloc_dynamic(&t$_i32);
@@ -1800,43 +1792,43 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r5->vertexCount = r60;
 	r60 = 0;
 	r69 = r14;
-	label$d09e03a_5_1017:
-	if( r60 >= r69 ) goto label$d09e03a_5_1033;
+	label$d09e03a_4_1017:
+	if( r60 >= r69 ) goto label$d09e03a_4_1033;
 	r71 = r60;
 	++r60;
 	if( r39 == NULL ) hl_null_access();
 	if( r44 == NULL ) hl_null_access();
 	r73 = r44->length;
-	if( ((unsigned)r71) < ((unsigned)r73) ) goto label$d09e03a_5_1027;
+	if( ((unsigned)r71) < ((unsigned)r73) ) goto label$d09e03a_4_1027;
 	r40 = 0.;
-	goto label$d09e03a_5_1031;
-	label$d09e03a_5_1027:
+	goto label$d09e03a_4_1031;
+	label$d09e03a_4_1027:
 	r28 = r44->bytes;
 	r73 = 2;
 	r73 = r71 << r73;
 	r40 = *(float*)(r28 + r73);
-	label$d09e03a_5_1031:
+	label$d09e03a_4_1031:
 	r72 = hl_types_ArrayBytes_hl_F32_push(r39,r40);
-	goto label$d09e03a_5_1017;
-	label$d09e03a_5_1033:
+	goto label$d09e03a_4_1017;
+	label$d09e03a_4_1033:
 	if( r49 == NULL ) hl_null_access();
 	r60 = r76 ? r76->v.i : 0;
 	r60 = hl_types_ArrayBytes_Int_push(r49,r60);
-	label$d09e03a_5_1036:
+	label$d09e03a_4_1036:
 	if( r35 == NULL ) hl_null_access();
 	r60 = r76 ? r76->v.i : 0;
 	r60 = hl_types_ArrayBytes_Int_push(r35,r60);
-	goto label$d09e03a_5_354;
-	label$d09e03a_5_1040:
-	if( !r2 ) goto label$d09e03a_5_1110;
+	goto label$d09e03a_4_354;
+	label$d09e03a_4_1040:
+	if( !r2 ) goto label$d09e03a_4_1110;
 	if( r2 == NULL ) hl_null_access();
 	r36 = r2->splitJoints;
-	if( !r36 ) goto label$d09e03a_5_1110;
+	if( !r36 ) goto label$d09e03a_4_1110;
 	r53 = 0;
 	r55 = 2;
 	r54 = r17 - r55;
-	label$d09e03a_5_1047:
-	if( r53 >= r54 ) goto label$d09e03a_5_1109;
+	label$d09e03a_4_1047:
+	if( r53 >= r54 ) goto label$d09e03a_4_1109;
 	r55 = r53;
 	++r53;
 	if( r23 == NULL ) hl_null_access();
@@ -1846,103 +1838,103 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r56 = r31;
 	++r31;
 	r57 = r49->length;
-	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_5_1061;
+	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_4_1061;
 	r56 = 0;
-	goto label$d09e03a_5_1065;
-	label$d09e03a_5_1061:
+	goto label$d09e03a_4_1065;
+	label$d09e03a_4_1061:
 	r28 = r49->bytes;
 	r57 = 2;
 	r57 = r56 << r57;
 	r56 = *(int*)(r28 + r57);
-	label$d09e03a_5_1065:
+	label$d09e03a_4_1065:
 	r57 = r23->length;
-	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_5_1069;
+	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_4_1069;
 	r49 = NULL;
-	goto label$d09e03a_5_1072;
-	label$d09e03a_5_1069:
+	goto label$d09e03a_4_1072;
+	label$d09e03a_4_1069:
 	r24 = r23->array;
 	r34 = ((vdynamic**)(r24 + 1))[r56];
 	r49 = (hl__types__ArrayBytes_Int)hl_dyn_castp(&r34,&t$_dyn,&t$hl_types_ArrayBytes_Int);
-	label$d09e03a_5_1072:
+	label$d09e03a_4_1072:
 	if( r49 == NULL ) hl_null_access();
 	if( r35 == NULL ) hl_null_access();
 	r56 = r52 + r55;
 	r57 = r35->length;
-	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_5_1079;
+	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_4_1079;
 	r56 = 0;
-	goto label$d09e03a_5_1083;
-	label$d09e03a_5_1079:
+	goto label$d09e03a_4_1083;
+	label$d09e03a_4_1079:
 	r28 = r35->bytes;
 	r57 = 2;
 	r57 = r56 << r57;
 	r56 = *(int*)(r28 + r57);
-	label$d09e03a_5_1083:
+	label$d09e03a_4_1083:
 	r56 = hl_types_ArrayBytes_Int_push(r49,r56);
 	r56 = r52 + r17;
 	r57 = 1;
 	r56 = r56 - r57;
 	r57 = r35->length;
-	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_5_1091;
+	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_4_1091;
 	r56 = 0;
-	goto label$d09e03a_5_1095;
-	label$d09e03a_5_1091:
+	goto label$d09e03a_4_1095;
+	label$d09e03a_4_1091:
 	r28 = r35->bytes;
 	r57 = 2;
 	r57 = r56 << r57;
 	r56 = *(int*)(r28 + r57);
-	label$d09e03a_5_1095:
+	label$d09e03a_4_1095:
 	r56 = hl_types_ArrayBytes_Int_push(r49,r56);
 	r56 = r52 + r55;
 	r57 = 1;
 	r56 = r56 + r57;
 	r57 = r35->length;
-	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_5_1103;
+	if( ((unsigned)r56) < ((unsigned)r57) ) goto label$d09e03a_4_1103;
 	r56 = 0;
-	goto label$d09e03a_5_1107;
-	label$d09e03a_5_1103:
+	goto label$d09e03a_4_1107;
+	label$d09e03a_4_1103:
 	r28 = r35->bytes;
 	r57 = 2;
 	r57 = r56 << r57;
 	r56 = *(int*)(r28 + r57);
-	label$d09e03a_5_1107:
+	label$d09e03a_4_1107:
 	r56 = hl_types_ArrayBytes_Int_push(r49,r56);
-	goto label$d09e03a_5_1047;
-	label$d09e03a_5_1109:
-	goto label$d09e03a_5_1192;
-	label$d09e03a_5_1110:
-	if( r11 ) goto label$d09e03a_5_1114;
+	goto label$d09e03a_4_1047;
+	label$d09e03a_4_1109:
+	goto label$d09e03a_4_1192;
+	label$d09e03a_4_1110:
+	if( r11 ) goto label$d09e03a_4_1114;
 	r54 = 0;
 	r53 = r54;
-	goto label$d09e03a_5_1128;
-	label$d09e03a_5_1114:
+	goto label$d09e03a_4_1128;
+	label$d09e03a_4_1114:
 	if( r11 == NULL ) hl_null_access();
 	r55 = r11->length;
-	if( ((unsigned)r29) < ((unsigned)r55) ) goto label$d09e03a_5_1119;
+	if( ((unsigned)r29) < ((unsigned)r55) ) goto label$d09e03a_4_1119;
 	r54 = 0;
-	goto label$d09e03a_5_1123;
-	label$d09e03a_5_1119:
+	goto label$d09e03a_4_1123;
+	label$d09e03a_4_1119:
 	r28 = r11->bytes;
 	r55 = 2;
 	r55 = r29 << r55;
 	r54 = *(int*)(r28 + r55);
-	label$d09e03a_5_1123:
+	label$d09e03a_4_1123:
 	r53 = r54;
 	r54 = r11->length;
 	r55 = 1;
-	if( r55 >= r54 ) goto label$d09e03a_5_1128;
+	if( r55 >= r54 ) goto label$d09e03a_4_1128;
 	++r29;
-	label$d09e03a_5_1128:
+	label$d09e03a_4_1128:
 	if( r23 == NULL ) hl_null_access();
 	r55 = r23->length;
-	if( ((unsigned)r53) < ((unsigned)r55) ) goto label$d09e03a_5_1133;
+	if( ((unsigned)r53) < ((unsigned)r55) ) goto label$d09e03a_4_1133;
 	r49 = NULL;
-	goto label$d09e03a_5_1136;
-	label$d09e03a_5_1133:
+	goto label$d09e03a_4_1136;
+	label$d09e03a_4_1133:
 	r24 = r23->array;
 	r34 = ((vdynamic**)(r24 + 1))[r53];
 	r49 = (hl__types__ArrayBytes_Int)hl_dyn_castp(&r34,&t$_dyn,&t$hl_types_ArrayBytes_Int);
-	label$d09e03a_5_1136:
-	if( r49 ) goto label$d09e03a_5_1148;
+	label$d09e03a_4_1136:
+	if( r49 ) goto label$d09e03a_4_1148;
 	r54 = 0;
 	r28 = hl_alloc_bytes(r54);
 	r54 = 0;
@@ -1950,76 +1942,76 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r77 = hl_types_ArrayBase_allocI32(r28,r54);
 	r49 = r77;
 	r55 = r23->length;
-	if( ((unsigned)r53) < ((unsigned)r55) ) goto label$d09e03a_5_1146;
+	if( ((unsigned)r53) < ((unsigned)r55) ) goto label$d09e03a_4_1146;
 	hl_types_ArrayObj___expand(r23,r53);
-	label$d09e03a_5_1146:
+	label$d09e03a_4_1146:
 	r24 = r23->array;
 	((hl__types__ArrayBytes_Int*)(r24 + 1))[r53] = r77;
-	label$d09e03a_5_1148:
+	label$d09e03a_4_1148:
 	r54 = 0;
 	r56 = 2;
 	r55 = r17 - r56;
-	label$d09e03a_5_1151:
-	if( r54 >= r55 ) goto label$d09e03a_5_1192;
+	label$d09e03a_4_1151:
+	if( r54 >= r55 ) goto label$d09e03a_4_1192;
 	r56 = r54;
 	++r54;
 	if( r49 == NULL ) hl_null_access();
 	if( r35 == NULL ) hl_null_access();
 	r57 = r52 + r56;
 	r58 = r35->length;
-	if( ((unsigned)r57) < ((unsigned)r58) ) goto label$d09e03a_5_1162;
+	if( ((unsigned)r57) < ((unsigned)r58) ) goto label$d09e03a_4_1162;
 	r57 = 0;
-	goto label$d09e03a_5_1166;
-	label$d09e03a_5_1162:
+	goto label$d09e03a_4_1166;
+	label$d09e03a_4_1162:
 	r28 = r35->bytes;
 	r58 = 2;
 	r58 = r57 << r58;
 	r57 = *(int*)(r28 + r58);
-	label$d09e03a_5_1166:
+	label$d09e03a_4_1166:
 	r57 = hl_types_ArrayBytes_Int_push(r49,r57);
 	r57 = r52 + r17;
 	r58 = 1;
 	r57 = r57 - r58;
 	r58 = r35->length;
-	if( ((unsigned)r57) < ((unsigned)r58) ) goto label$d09e03a_5_1174;
+	if( ((unsigned)r57) < ((unsigned)r58) ) goto label$d09e03a_4_1174;
 	r57 = 0;
-	goto label$d09e03a_5_1178;
-	label$d09e03a_5_1174:
+	goto label$d09e03a_4_1178;
+	label$d09e03a_4_1174:
 	r28 = r35->bytes;
 	r58 = 2;
 	r58 = r57 << r58;
 	r57 = *(int*)(r28 + r58);
-	label$d09e03a_5_1178:
+	label$d09e03a_4_1178:
 	r57 = hl_types_ArrayBytes_Int_push(r49,r57);
 	r57 = r52 + r56;
 	r58 = 1;
 	r57 = r57 + r58;
 	r58 = r35->length;
-	if( ((unsigned)r57) < ((unsigned)r58) ) goto label$d09e03a_5_1186;
+	if( ((unsigned)r57) < ((unsigned)r58) ) goto label$d09e03a_4_1186;
 	r57 = 0;
-	goto label$d09e03a_5_1190;
-	label$d09e03a_5_1186:
+	goto label$d09e03a_4_1190;
+	label$d09e03a_4_1186:
 	r28 = r35->bytes;
 	r58 = 2;
 	r58 = r57 << r58;
 	r57 = *(int*)(r28 + r58);
-	label$d09e03a_5_1190:
+	label$d09e03a_4_1190:
 	r57 = hl_types_ArrayBytes_Int_push(r49,r57);
-	goto label$d09e03a_5_1151;
-	label$d09e03a_5_1192:
+	goto label$d09e03a_4_1151;
+	label$d09e03a_4_1192:
 	if( r45 == NULL ) hl_null_access();
 	r55 = r45->length;
-	if( ((unsigned)r50) < ((unsigned)r55) ) goto label$d09e03a_5_1196;
+	if( ((unsigned)r50) < ((unsigned)r55) ) goto label$d09e03a_4_1196;
 	hl_types_ArrayBytes_Int___expand(r45,r50);
-	label$d09e03a_5_1196:
+	label$d09e03a_4_1196:
 	r28 = r45->bytes;
 	r55 = 2;
 	r55 = r50 << r55;
 	*(int*)(r28 + r55) = r51;
 	r53 = 0;
 	r17 = r53;
-	goto label$d09e03a_5_322;
-	label$d09e03a_5_1203:
+	goto label$d09e03a_4_322;
+	label$d09e03a_4_1203:
 	if( r5 == NULL ) hl_null_access();
 	if( r3 == NULL ) hl_null_access();
 	r81 = r3->b;
@@ -2029,34 +2021,34 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r47 = 0;
 	if( r39 == NULL ) hl_null_access();
 	r48 = r39->length;
-	label$d09e03a_5_1212:
-	if( r47 >= r48 ) goto label$d09e03a_5_1235;
+	label$d09e03a_4_1212:
+	if( r47 >= r48 ) goto label$d09e03a_4_1235;
 	r50 = r47;
 	++r47;
 	if( r39 == NULL ) hl_null_access();
 	r52 = r39->length;
-	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_5_1221;
+	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_4_1221;
 	r40 = 0.;
-	goto label$d09e03a_5_1225;
-	label$d09e03a_5_1221:
+	goto label$d09e03a_4_1225;
+	label$d09e03a_4_1221:
 	r28 = r39->bytes;
 	r52 = 2;
 	r52 = r50 << r52;
 	r40 = *(float*)(r28 + r52);
-	label$d09e03a_5_1225:
+	label$d09e03a_4_1225:
 	r61 = (double)r40;
 	r82 = r0->dataOut;
 	if( r82 == NULL ) hl_null_access();
 	r63 = 0.;
-	if( r61 != r63 ) goto label$d09e03a_5_1232;
+	if( r61 != r63 ) goto label$d09e03a_4_1232;
 	r62 = 0.;
-	goto label$d09e03a_5_1233;
-	label$d09e03a_5_1232:
+	goto label$d09e03a_4_1233;
+	label$d09e03a_4_1232:
 	r62 = r61;
-	label$d09e03a_5_1233:
+	label$d09e03a_4_1233:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r82),r62);
-	goto label$d09e03a_5_1212;
-	label$d09e03a_5_1235:
+	goto label$d09e03a_4_1212;
+	label$d09e03a_4_1235:
 	if( r5 == NULL ) hl_null_access();
 	if( r3 == NULL ) hl_null_access();
 	r81 = r3->b;
@@ -2077,31 +2069,31 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	r47 = 0;
 	r48 = r5->vertexCount;
 	r50 = 65536;
-	if( r48 > r50 ) goto label$d09e03a_5_1258;
+	if( r48 > r50 ) goto label$d09e03a_4_1258;
 	r13 = false;
-	goto label$d09e03a_5_1259;
-	label$d09e03a_5_1258:
+	goto label$d09e03a_4_1259;
+	label$d09e03a_4_1258:
 	r13 = true;
-	label$d09e03a_5_1259:
+	label$d09e03a_4_1259:
 	r48 = 0;
-	label$d09e03a_5_1260:
+	label$d09e03a_4_1260:
 	if( r23 == NULL ) hl_null_access();
 	r51 = r23->length;
-	if( r48 >= r51 ) goto label$d09e03a_5_1322;
+	if( r48 >= r51 ) goto label$d09e03a_4_1322;
 	r51 = r23->length;
-	if( ((unsigned)r48) < ((unsigned)r51) ) goto label$d09e03a_5_1268;
+	if( ((unsigned)r48) < ((unsigned)r51) ) goto label$d09e03a_4_1268;
 	r77 = NULL;
-	goto label$d09e03a_5_1271;
-	label$d09e03a_5_1268:
+	goto label$d09e03a_4_1271;
+	label$d09e03a_4_1268:
 	r24 = r23->array;
 	r34 = ((vdynamic**)(r24 + 1))[r48];
 	r77 = (hl__types__ArrayBytes_Int)hl_dyn_castp(&r34,&t$_dyn,&t$hl_types_ArrayBytes_Int);
-	label$d09e03a_5_1271:
+	label$d09e03a_4_1271:
 	++r48;
-	if( r77 ) goto label$d09e03a_5_1275;
+	if( r77 ) goto label$d09e03a_4_1275;
 	++r47;
-	goto label$d09e03a_5_1260;
-	label$d09e03a_5_1275:
+	goto label$d09e03a_4_1260;
+	label$d09e03a_4_1275:
 	if( r49 == NULL ) hl_null_access();
 	r50 = r47;
 	++r47;
@@ -2112,58 +2104,58 @@ vvirtual* hxd_fmt_fbx_HMDOut_buildGeom(hxd__fmt__fbx__HMDOut r0,hxd__fmt__fbx__G
 	if( r77 == NULL ) hl_null_access();
 	r50 = r77->length;
 	r50 = hl_types_ArrayBytes_Int_push(r80,r50);
-	if( !r13 ) goto label$d09e03a_5_1304;
+	if( !r13 ) goto label$d09e03a_4_1304;
 	r50 = 0;
-	label$d09e03a_5_1287:
+	label$d09e03a_4_1287:
 	if( r77 == NULL ) hl_null_access();
 	r52 = r77->length;
-	if( r50 >= r52 ) goto label$d09e03a_5_1303;
+	if( r50 >= r52 ) goto label$d09e03a_4_1303;
 	r52 = r77->length;
-	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_5_1295;
+	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_4_1295;
 	r51 = 0;
-	goto label$d09e03a_5_1299;
-	label$d09e03a_5_1295:
+	goto label$d09e03a_4_1299;
+	label$d09e03a_4_1295:
 	r28 = r77->bytes;
 	r52 = 2;
 	r52 = r50 << r52;
 	r51 = *(int*)(r28 + r52);
-	label$d09e03a_5_1299:
+	label$d09e03a_4_1299:
 	++r50;
 	if( r3 == NULL ) hl_null_access();
 	haxe_io_Output_writeInt32(((haxe__io__Output)r3),r51);
-	goto label$d09e03a_5_1287;
-	label$d09e03a_5_1303:
-	goto label$d09e03a_5_1321;
-	label$d09e03a_5_1304:
+	goto label$d09e03a_4_1287;
+	label$d09e03a_4_1303:
+	goto label$d09e03a_4_1321;
+	label$d09e03a_4_1304:
 	r50 = 0;
-	label$d09e03a_5_1305:
+	label$d09e03a_4_1305:
 	if( r77 == NULL ) hl_null_access();
 	r52 = r77->length;
-	if( r50 >= r52 ) goto label$d09e03a_5_1321;
+	if( r50 >= r52 ) goto label$d09e03a_4_1321;
 	r52 = r77->length;
-	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_5_1313;
+	if( ((unsigned)r50) < ((unsigned)r52) ) goto label$d09e03a_4_1313;
 	r51 = 0;
-	goto label$d09e03a_5_1317;
-	label$d09e03a_5_1313:
+	goto label$d09e03a_4_1317;
+	label$d09e03a_4_1313:
 	r28 = r77->bytes;
 	r52 = 2;
 	r52 = r50 << r52;
 	r51 = *(int*)(r28 + r52);
-	label$d09e03a_5_1317:
+	label$d09e03a_4_1317:
 	++r50;
 	if( r3 == NULL ) hl_null_access();
 	haxe_io_Output_writeUInt16(((haxe__io__Output)r3),r51);
-	goto label$d09e03a_5_1305;
-	label$d09e03a_5_1321:
-	goto label$d09e03a_5_1260;
-	label$d09e03a_5_1322:
-	if( !r2 ) goto label$d09e03a_5_1328;
+	goto label$d09e03a_4_1305;
+	label$d09e03a_4_1321:
+	goto label$d09e03a_4_1260;
+	label$d09e03a_4_1322:
+	if( !r2 ) goto label$d09e03a_4_1328;
 	if( r2 == NULL ) hl_null_access();
 	r36 = r2->splitJoints;
-	if( !r36 ) goto label$d09e03a_5_1328;
+	if( !r36 ) goto label$d09e03a_4_1328;
 	r77 = NULL;
 	r49 = r77;
-	label$d09e03a_5_1328:
+	label$d09e03a_4_1328:
 	r83 = hl_alloc_virtual(&t$vrt_b900b41);
 	if( hl_vfields(r83)[0] ) *(hxd__fmt__hmd__Geometry*)(hl_vfields(r83)[0]) = (hxd__fmt__hmd__Geometry)r5; else hl_dyn_setp(r83->value,103/*g*/,&t$hxd_fmt_hmd_Geometry,r5);
 	if( hl_vfields(r83)[1] ) *(hl__types__ArrayBytes_Int*)(hl_vfields(r83)[1]) = (hl__types__ArrayBytes_Int)r49; else hl_dyn_setp(r83->value,-536103710/*materials*/,&t$hl_types_ArrayBytes_Int,r49);
@@ -2180,131 +2172,131 @@ void hxd_fmt_fbx_HMDOut_addModels__$1(venum* r0,hxd__fmt__fbx__TmpObject r1) {
 	int r5, r7, r10;
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->isJoint;
-	if( !r3 ) goto label$d09e03a_6_7;
+	if( !r3 ) goto label$d09e03a_5_7;
 	r6 = ((Enumt$ctx_c145030*)r0)->p1;
 	if( r6 == NULL ) hl_null_access();
 	r5 = hl_types_ArrayObj_push(r6,((vdynamic*)r1));
-	goto label$d09e03a_6_77;
-	label$d09e03a_6_7:
+	goto label$d09e03a_5_77;
+	label$d09e03a_5_7:
 	r3 = false;
 	r6 = ((Enumt$ctx_c145030*)r0)->p3;
 	if( r6 == NULL ) hl_null_access();
 	r5 = 0;
 	r7 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$d09e03a_6_15;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$d09e03a_5_15;
 	r6 = NULL;
-	goto label$d09e03a_6_18;
-	label$d09e03a_6_15:
+	goto label$d09e03a_5_18;
+	label$d09e03a_5_15:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r5];
 	r6 = (hl__types__ArrayObj)hl_dyn_castp(&r8,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_6_18:
-	if( r6 ) goto label$d09e03a_6_41;
+	label$d09e03a_5_18:
+	if( r6 ) goto label$d09e03a_5_41;
 	r5 = 0;
 	r6 = r1->childs;
-	label$d09e03a_6_21:
+	label$d09e03a_5_21:
 	if( r6 == NULL ) hl_null_access();
 	r10 = r6->length;
-	if( r5 >= r10 ) goto label$d09e03a_6_40;
+	if( r5 >= r10 ) goto label$d09e03a_5_40;
 	r10 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$d09e03a_6_29;
+	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$d09e03a_5_29;
 	r4 = NULL;
-	goto label$d09e03a_6_32;
-	label$d09e03a_6_29:
+	goto label$d09e03a_5_32;
+	label$d09e03a_5_29:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r5];
 	r4 = (hxd__fmt__fbx__TmpObject)r8;
-	label$d09e03a_6_32:
+	label$d09e03a_5_32:
 	++r5;
 	if( r4 == NULL ) hl_null_access();
 	r12 = r4->isJoint;
-	if( !r12 ) goto label$d09e03a_6_39;
+	if( !r12 ) goto label$d09e03a_5_39;
 	r12 = true;
 	r3 = r12;
-	goto label$d09e03a_6_40;
-	label$d09e03a_6_39:
-	goto label$d09e03a_6_21;
-	label$d09e03a_6_40:
-	goto label$d09e03a_6_60;
-	label$d09e03a_6_41:
+	goto label$d09e03a_5_40;
+	label$d09e03a_5_39:
+	goto label$d09e03a_5_21;
+	label$d09e03a_5_40:
+	goto label$d09e03a_5_60;
+	label$d09e03a_5_41:
 	r6 = ((Enumt$ctx_c145030*)r0)->p3;
 	if( r6 == NULL ) hl_null_access();
 	r5 = 0;
 	r7 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$d09e03a_6_48;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$d09e03a_5_48;
 	r6 = NULL;
-	goto label$d09e03a_6_51;
-	label$d09e03a_6_48:
+	goto label$d09e03a_5_51;
+	label$d09e03a_5_48:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r5];
 	r6 = (hl__types__ArrayObj)hl_dyn_castp(&r8,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_6_51:
+	label$d09e03a_5_51:
 	if( r6 == NULL ) hl_null_access();
 	r13 = NULL;
 	r5 = hl_types_ArrayObj_indexOf(r6,((vdynamic*)r1),r13);
 	r7 = 0;
-	if( r5 >= r7 ) goto label$d09e03a_6_58;
+	if( r5 >= r7 ) goto label$d09e03a_5_58;
 	r12 = false;
-	goto label$d09e03a_6_59;
-	label$d09e03a_6_58:
+	goto label$d09e03a_5_59;
+	label$d09e03a_5_58:
 	r12 = true;
-	label$d09e03a_6_59:
+	label$d09e03a_5_59:
 	r3 = r12;
-	label$d09e03a_6_60:
-	if( !r3 ) goto label$d09e03a_6_65;
+	label$d09e03a_5_60:
+	if( !r3 ) goto label$d09e03a_5_65;
 	r6 = ((Enumt$ctx_c145030*)r0)->p2;
 	if( r6 == NULL ) hl_null_access();
 	r5 = hl_types_ArrayObj_push(r6,((vdynamic*)r1));
-	goto label$d09e03a_6_77;
-	label$d09e03a_6_65:
+	goto label$d09e03a_5_77;
+	label$d09e03a_5_65:
 	r6 = ((Enumt$ctx_c145030*)r0)->p0;
 	if( r6 == NULL ) hl_null_access();
 	r5 = 0;
 	r7 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$d09e03a_6_72;
+	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$d09e03a_5_72;
 	r6 = NULL;
-	goto label$d09e03a_6_75;
-	label$d09e03a_6_72:
+	goto label$d09e03a_5_75;
+	label$d09e03a_5_72:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r5];
 	r6 = (hl__types__ArrayObj)hl_dyn_castp(&r8,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_6_75:
+	label$d09e03a_5_75:
 	if( r6 == NULL ) hl_null_access();
 	r5 = hl_types_ArrayObj_push(r6,((vdynamic*)r1));
-	label$d09e03a_6_77:
+	label$d09e03a_5_77:
 	r5 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r6 = r1->childs;
-	label$d09e03a_6_80:
+	label$d09e03a_5_80:
 	if( r6 == NULL ) hl_null_access();
 	r10 = r6->length;
-	if( r5 >= r10 ) goto label$d09e03a_6_105;
+	if( r5 >= r10 ) goto label$d09e03a_5_105;
 	r10 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$d09e03a_6_88;
+	if( ((unsigned)r5) < ((unsigned)r10) ) goto label$d09e03a_5_88;
 	r4 = NULL;
-	goto label$d09e03a_6_91;
-	label$d09e03a_6_88:
+	goto label$d09e03a_5_91;
+	label$d09e03a_5_88:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r5];
 	r4 = (hxd__fmt__fbx__TmpObject)r8;
-	label$d09e03a_6_91:
+	label$d09e03a_5_91:
 	++r5;
 	r11 = ((Enumt$ctx_c145030*)r0)->p4;
 	if( r11 == NULL ) hl_null_access();
 	r7 = 0;
 	r10 = r11->length;
-	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$d09e03a_6_99;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$d09e03a_5_99;
 	r14 = NULL;
-	goto label$d09e03a_6_102;
-	label$d09e03a_6_99:
+	goto label$d09e03a_5_102;
+	label$d09e03a_5_99:
 	r9 = r11->array;
 	r8 = ((vdynamic**)(r9 + 1))[r7];
 	r14 = (vclosure*)r8;
-	label$d09e03a_6_102:
+	label$d09e03a_5_102:
 	if( r14 == NULL ) hl_null_access();
 	r14->hasValue ? ((void (*)(vdynamic*,hxd__fmt__fbx__TmpObject))r14->fun)((vdynamic*)r14->value,r4) : ((void (*)(hxd__fmt__fbx__TmpObject))r14->fun)(r4);
-	goto label$d09e03a_6_80;
-	label$d09e03a_6_105:
+	goto label$d09e03a_5_80;
+	label$d09e03a_5_105:
 	return;
 }
 
@@ -2322,25 +2314,25 @@ vvirtual* hxd_fmt_fbx_HMDOut_addModels__$2(venum* r0,hxd__fmt__fbx__TmpObject r1
 	r2 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r3 = r1->childs;
-	label$d09e03a_7_3:
+	label$d09e03a_6_3:
 	if( r3 == NULL ) hl_null_access();
 	r6 = r3->length;
-	if( r2 >= r6 ) goto label$d09e03a_7_43;
+	if( r2 >= r6 ) goto label$d09e03a_6_43;
 	r6 = r3->length;
-	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_7_11;
+	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_6_11;
 	r4 = NULL;
-	goto label$d09e03a_7_14;
-	label$d09e03a_7_11:
+	goto label$d09e03a_6_14;
+	label$d09e03a_6_11:
 	r9 = r3->array;
 	r8 = ((vdynamic**)(r9 + 1))[r2];
 	r4 = (hxd__fmt__fbx__TmpObject)r8;
-	label$d09e03a_7_14:
+	label$d09e03a_6_14:
 	++r2;
 	if( r4 == NULL ) hl_null_access();
 	r10 = r4->isJoint;
-	if( r10 ) goto label$d09e03a_7_19;
-	goto label$d09e03a_7_3;
-	label$d09e03a_7_19:
+	if( r10 ) goto label$d09e03a_6_19;
+	goto label$d09e03a_6_3;
+	label$d09e03a_6_19:
 	r12 = ((Enumt$ctx_bc28faf*)r0)->p1;
 	if( r12 == NULL ) hl_null_access();
 	r11 = r4->model;
@@ -2348,28 +2340,28 @@ vvirtual* hxd_fmt_fbx_HMDOut_addModels__$2(venum* r0,hxd__fmt__fbx__TmpObject r1
 	r10 = true;
 	r14 = hl_alloc_dynbool(r10);
 	r11 = hxd_fmt_fbx_BaseLibrary_getParent(((hxd__fmt__fbx__BaseLibrary)r12),r11,r13,r14);
-	if( !r11 ) goto label$d09e03a_7_28;
+	if( !r11 ) goto label$d09e03a_6_28;
 	return r11;
-	label$d09e03a_7_28:
+	label$d09e03a_6_28:
 	r7 = ((Enumt$ctx_bc28faf*)r0)->p0;
 	if( r7 == NULL ) hl_null_access();
 	r5 = 0;
 	r6 = r7->length;
-	if( ((unsigned)r5) < ((unsigned)r6) ) goto label$d09e03a_7_35;
+	if( ((unsigned)r5) < ((unsigned)r6) ) goto label$d09e03a_6_35;
 	r16 = NULL;
-	goto label$d09e03a_7_38;
-	label$d09e03a_7_35:
+	goto label$d09e03a_6_38;
+	label$d09e03a_6_35:
 	r9 = r7->array;
 	r8 = ((vdynamic**)(r9 + 1))[r5];
 	r16 = (vclosure*)r8;
-	label$d09e03a_7_38:
+	label$d09e03a_6_38:
 	if( r16 == NULL ) hl_null_access();
 	r15 = r16->hasValue ? ((vvirtual* (*)(vdynamic*,hxd__fmt__fbx__TmpObject))r16->fun)((vdynamic*)r16->value,r4) : ((vvirtual* (*)(hxd__fmt__fbx__TmpObject))r16->fun)(r4);
-	if( !r15 ) goto label$d09e03a_7_42;
+	if( !r15 ) goto label$d09e03a_6_42;
 	return r15;
-	label$d09e03a_7_42:
-	goto label$d09e03a_7_3;
-	label$d09e03a_7_43:
+	label$d09e03a_6_42:
+	goto label$d09e03a_6_3;
+	label$d09e03a_6_43:
 	r11 = NULL;
 	return r11;
 }
@@ -2479,45 +2471,45 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	((Enumt$ctx_c145030*)r18)->p4 = (hl__types__ArrayObj)r14;
 	r16 = hl_alloc_closure_ptr(&t$fun_0bbae2c,hxd_fmt_fbx_HMDOut_addModels__$1,r18);
 	r19 = r14->length;
-	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_10_49;
+	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_9_49;
 	hl_types_ArrayObj___expand(r14,r15);
-	label$d09e03a_10_49:
+	label$d09e03a_9_49:
 	r7 = r14->array;
 	((vclosure**)(r7 + 1))[r15] = r16;
 	r15 = 0;
 	r19 = r14->length;
-	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_10_56;
+	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_9_56;
 	r16 = NULL;
-	goto label$d09e03a_10_59;
-	label$d09e03a_10_56:
+	goto label$d09e03a_9_59;
+	label$d09e03a_9_56:
 	r7 = r14->array;
 	r20 = ((vdynamic**)(r7 + 1))[r15];
 	r16 = (vclosure*)r20;
-	label$d09e03a_10_59:
+	label$d09e03a_9_59:
 	if( r16 == NULL ) hl_null_access();
 	r16->hasValue ? ((void (*)(vdynamic*,hxd__fmt__fbx__TmpObject))r16->fun)((vdynamic*)r16->value,r4) : ((void (*)(hxd__fmt__fbx__TmpObject))r16->fun)(r4);
 	r15 = 0;
-	label$d09e03a_10_62:
+	label$d09e03a_9_62:
 	if( r11 == NULL ) hl_null_access();
 	r22 = r11->length;
-	if( r15 >= r22 ) goto label$d09e03a_10_109;
+	if( r15 >= r22 ) goto label$d09e03a_9_109;
 	r22 = r11->length;
-	if( ((unsigned)r15) < ((unsigned)r22) ) goto label$d09e03a_10_70;
+	if( ((unsigned)r15) < ((unsigned)r22) ) goto label$d09e03a_9_70;
 	r21 = NULL;
-	goto label$d09e03a_10_73;
-	label$d09e03a_10_70:
+	goto label$d09e03a_9_73;
+	label$d09e03a_9_70:
 	r7 = r11->array;
 	r20 = ((vdynamic**)(r7 + 1))[r15];
 	r21 = (hxd__fmt__fbx__TmpObject)r20;
-	label$d09e03a_10_73:
+	label$d09e03a_9_73:
 	++r15;
 	if( r21 == NULL ) hl_null_access();
 	r23 = r21->isMesh;
-	if( !r23 ) goto label$d09e03a_10_80;
+	if( !r23 ) goto label$d09e03a_9_80;
 	r25 = (String)s$assert;
 	r20 = haxe_Exception_thrown(((vdynamic*)r25));
 	hl_throw((vdynamic*)r20);
-	label$d09e03a_10_80:
+	label$d09e03a_9_80:
 	r26 = (h3d__anim__Joint)hl_alloc_obj(&t$h3d_anim_Joint);
 	h3d_anim_Joint_new(r26);
 	r28 = r21->model;
@@ -2530,7 +2522,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r26->name = r25;
 	r21->joint = r26;
 	r24 = r21->parent;
-	if( !r24 ) goto label$d09e03a_10_108;
+	if( !r24 ) goto label$d09e03a_9_108;
 	r24 = r21->parent;
 	if( r24 == NULL ) hl_null_access();
 	r30 = r24->joint;
@@ -2538,7 +2530,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r24 = r21->parent;
 	if( r24 == NULL ) hl_null_access();
 	r23 = r24->isJoint;
-	if( !r23 ) goto label$d09e03a_10_108;
+	if( !r23 ) goto label$d09e03a_9_108;
 	r24 = r21->parent;
 	if( r24 == NULL ) hl_null_access();
 	r29 = r24->joint;
@@ -2546,9 +2538,9 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r17 = r29->subs;
 	if( r17 == NULL ) hl_null_access();
 	r19 = hl_types_ArrayObj_push(r17,((vdynamic*)r26));
-	label$d09e03a_10_108:
-	goto label$d09e03a_10_62;
-	label$d09e03a_10_109:
+	label$d09e03a_9_108:
+	goto label$d09e03a_9_62;
+	label$d09e03a_9_109:
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0;
 	r8 = &t$hxd_fmt_fbx_TmpObject;
@@ -2556,25 +2548,25 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r7 = hl_alloc_array(r8,r19);
 	r31 = hl_types_ArrayObj_alloc(r7);
 	r19 = r13->length;
-	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_10_118;
+	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_9_118;
 	hl_types_ArrayObj___expand(r13,r15);
-	label$d09e03a_10_118:
+	label$d09e03a_9_118:
 	r7 = r13->array;
 	((hl__types__ArrayObj*)(r7 + 1))[r15] = r31;
 	r15 = 0;
-	label$d09e03a_10_121:
+	label$d09e03a_9_121:
 	if( r12 == NULL ) hl_null_access();
 	r22 = r12->length;
-	if( r15 >= r22 ) goto label$d09e03a_10_312;
+	if( r15 >= r22 ) goto label$d09e03a_9_312;
 	r22 = r12->length;
-	if( ((unsigned)r15) < ((unsigned)r22) ) goto label$d09e03a_10_129;
+	if( ((unsigned)r15) < ((unsigned)r22) ) goto label$d09e03a_9_129;
 	r21 = NULL;
-	goto label$d09e03a_10_132;
-	label$d09e03a_10_129:
+	goto label$d09e03a_9_132;
+	label$d09e03a_9_129:
 	r7 = r12->array;
 	r20 = ((vdynamic**)(r7 + 1))[r15];
 	r21 = (hxd__fmt__fbx__TmpObject)r20;
-	label$d09e03a_10_132:
+	label$d09e03a_9_132:
 	++r15;
 	r8 = &t$fun_3d2cf75;
 	r19 = 1;
@@ -2590,26 +2582,26 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	((Enumt$ctx_bc28faf*)r33)->p1 = (hxd__fmt__fbx__HMDOut)r2;
 	r32 = hl_alloc_closure_ptr(&t$fun_cba2127,hxd_fmt_fbx_HMDOut_addModels__$2,r33);
 	r22 = r17->length;
-	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_10_149;
+	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_9_149;
 	hl_types_ArrayObj___expand(r17,r19);
-	label$d09e03a_10_149:
+	label$d09e03a_9_149:
 	r7 = r17->array;
 	((vclosure**)(r7 + 1))[r19] = r32;
 	r19 = 0;
 	r22 = r17->length;
-	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_10_156;
+	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_9_156;
 	r32 = NULL;
-	goto label$d09e03a_10_159;
-	label$d09e03a_10_156:
+	goto label$d09e03a_9_159;
+	label$d09e03a_9_156:
 	r7 = r17->array;
 	r20 = ((vdynamic**)(r7 + 1))[r19];
 	r32 = (vclosure*)r20;
-	label$d09e03a_10_159:
+	label$d09e03a_9_159:
 	if( r32 == NULL ) hl_null_access();
 	r28 = r32->hasValue ? ((vvirtual* (*)(vdynamic*,hxd__fmt__fbx__TmpObject))r32->fun)((vdynamic*)r32->value,r21) : ((vvirtual* (*)(hxd__fmt__fbx__TmpObject))r32->fun)(r21);
-	if( r28 ) goto label$d09e03a_10_163;
-	goto label$d09e03a_10_121;
-	label$d09e03a_10_163:
+	if( r28 ) goto label$d09e03a_9_163;
+	goto label$d09e03a_9_121;
+	label$d09e03a_9_163:
 	r25 = (String)s$Deformer;
 	r35 = NULL;
 	r34 = hxd_fmt_fbx_BaseLibrary_getParent(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25,r35);
@@ -2618,156 +2610,156 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r31 == NULL ) hl_null_access();
 	r19 = r31->length;
 	r22 = 0;
-	if( r19 != r22 ) goto label$d09e03a_10_173;
-	goto label$d09e03a_10_121;
-	label$d09e03a_10_173:
+	if( r19 != r22 ) goto label$d09e03a_9_173;
+	goto label$d09e03a_9_121;
+	label$d09e03a_9_173:
 	r19 = r31->length;
 	r22 = 1;
-	if( r22 >= r19 ) goto label$d09e03a_10_179;
+	if( r22 >= r19 ) goto label$d09e03a_9_179;
 	r25 = (String)s$9676d02;
 	r20 = haxe_Exception_thrown(((vdynamic*)r25));
 	hl_throw((vdynamic*)r20);
-	label$d09e03a_10_179:
+	label$d09e03a_9_179:
 	r19 = 0;
 	r22 = r31->length;
-	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_10_184;
+	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_9_184;
 	r36 = NULL;
-	goto label$d09e03a_10_187;
-	label$d09e03a_10_184:
+	goto label$d09e03a_9_187;
+	label$d09e03a_9_184:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r19];
 	r36 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r20);
-	label$d09e03a_10_187:
+	label$d09e03a_9_187:
 	r25 = (String)s$Model;
 	r37 = hxd_fmt_fbx_BaseLibrary_getParents(((hxd__fmt__fbx__BaseLibrary)r0),r36,r25);
 	if( r37 == NULL ) hl_null_access();
 	r19 = r37->length;
 	r22 = 0;
-	if( r19 != r22 ) goto label$d09e03a_10_194;
-	goto label$d09e03a_10_121;
-	label$d09e03a_10_194:
+	if( r19 != r22 ) goto label$d09e03a_9_194;
+	goto label$d09e03a_9_121;
+	label$d09e03a_9_194:
 	r19 = r37->length;
 	r22 = 1;
-	if( r22 >= r19 ) goto label$d09e03a_10_200;
+	if( r22 >= r19 ) goto label$d09e03a_9_200;
 	r25 = (String)s$a27f32d;
 	r20 = haxe_Exception_thrown(((vdynamic*)r25));
 	hl_throw((vdynamic*)r20);
-	label$d09e03a_10_200:
+	label$d09e03a_9_200:
 	r19 = 0;
 	r22 = r37->length;
-	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_10_205;
+	if( ((unsigned)r19) < ((unsigned)r22) ) goto label$d09e03a_9_205;
 	r36 = NULL;
-	goto label$d09e03a_10_208;
-	label$d09e03a_10_205:
+	goto label$d09e03a_9_208;
+	label$d09e03a_9_205:
 	r7 = r37->array;
 	r20 = ((vdynamic**)(r7 + 1))[r19];
 	r36 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r20);
-	label$d09e03a_10_208:
+	label$d09e03a_9_208:
 	r19 = 0;
-	label$d09e03a_10_209:
+	label$d09e03a_9_209:
 	if( r6 == NULL ) hl_null_access();
 	r39 = 0;
 	r40 = r6->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_216;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_216;
 	r38 = NULL;
-	goto label$d09e03a_10_219;
-	label$d09e03a_10_216:
+	goto label$d09e03a_9_219;
+	label$d09e03a_9_216:
 	r7 = r6->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r38 = (hl__types__ArrayObj)hl_dyn_castp(&r20,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_10_219:
+	label$d09e03a_9_219:
 	if( r38 == NULL ) hl_null_access();
 	r39 = r38->length;
-	if( r19 >= r39 ) goto label$d09e03a_10_311;
+	if( r19 >= r39 ) goto label$d09e03a_9_311;
 	r22 = 0;
 	r39 = r6->length;
-	if( ((unsigned)r22) < ((unsigned)r39) ) goto label$d09e03a_10_227;
+	if( ((unsigned)r22) < ((unsigned)r39) ) goto label$d09e03a_9_227;
 	r38 = NULL;
-	goto label$d09e03a_10_230;
-	label$d09e03a_10_227:
+	goto label$d09e03a_9_230;
+	label$d09e03a_9_227:
 	r7 = r6->array;
 	r20 = ((vdynamic**)(r7 + 1))[r22];
 	r38 = (hl__types__ArrayObj)hl_dyn_castp(&r20,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_10_230:
+	label$d09e03a_9_230:
 	if( r38 == NULL ) hl_null_access();
 	r39 = r38->length;
-	if( ((unsigned)r19) < ((unsigned)r39) ) goto label$d09e03a_10_235;
+	if( ((unsigned)r19) < ((unsigned)r39) ) goto label$d09e03a_9_235;
 	r24 = NULL;
-	goto label$d09e03a_10_238;
-	label$d09e03a_10_235:
+	goto label$d09e03a_9_238;
+	label$d09e03a_9_235:
 	r7 = r38->array;
 	r20 = ((vdynamic**)(r7 + 1))[r19];
 	r24 = (hxd__fmt__fbx__TmpObject)r20;
-	label$d09e03a_10_238:
+	label$d09e03a_9_238:
 	++r19;
 	if( r24 == NULL ) hl_null_access();
 	r41 = r24->model;
-	if( r41 != r36 && (!r41 || !r36 || !r41->value || !r36->value || r41->value != r36->value) ) goto label$d09e03a_10_310;
+	if( r41 != r36 && (!r41 || !r36 || !r41->value || !r36->value || r41->value != r36->value) ) goto label$d09e03a_9_310;
 	if( r13 == NULL ) hl_null_access();
 	r22 = 0;
 	r39 = r13->length;
-	if( ((unsigned)r22) < ((unsigned)r39) ) goto label$d09e03a_10_248;
+	if( ((unsigned)r22) < ((unsigned)r39) ) goto label$d09e03a_9_248;
 	r38 = NULL;
-	goto label$d09e03a_10_251;
-	label$d09e03a_10_248:
+	goto label$d09e03a_9_251;
+	label$d09e03a_9_248:
 	r7 = r13->array;
 	r20 = ((vdynamic**)(r7 + 1))[r22];
 	r38 = (hl__types__ArrayObj)hl_dyn_castp(&r20,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_10_251:
+	label$d09e03a_9_251:
 	if( r38 == NULL ) hl_null_access();
 	r22 = hl_types_ArrayObj_push(r38,((vdynamic*)r21));
 	r24->skin = r21;
 	if( r21 == NULL ) hl_null_access();
 	r41 = r21->model;
-	if( r41 ) goto label$d09e03a_10_258;
+	if( r41 ) goto label$d09e03a_9_258;
 	r21->model = r36;
-	label$d09e03a_10_258:
+	label$d09e03a_9_258:
 	r22 = hxd_fmt_fbx_FbxTools_getId(r36);
 	hxd_fmt_fbx_BaseLibrary_ignoreMissingObject(((hxd__fmt__fbx__BaseLibrary)r0),r22);
 	r42 = r21->parent;
-	if( r42 == r24 ) goto label$d09e03a_10_275;
+	if( r42 == r24 ) goto label$d09e03a_9_275;
 	r44 = r24->parent;
 	if( r44 == NULL ) hl_null_access();
 	r38 = r44->childs;
 	if( r38 == NULL ) hl_null_access();
 	r23 = hl_types_ArrayObj_remove(r38,((vdynamic*)r24));
 	r24->parent = r42;
-	if( !r42 ) goto label$d09e03a_10_274;
+	if( !r42 ) goto label$d09e03a_9_274;
 	if( r42 == NULL ) hl_null_access();
 	r38 = r42->childs;
 	if( r38 == NULL ) hl_null_access();
 	r22 = hl_types_ArrayObj_push(r38,((vdynamic*)r24));
-	goto label$d09e03a_10_275;
-	label$d09e03a_10_274:
+	goto label$d09e03a_9_275;
+	label$d09e03a_9_274:
 	r4 = r24;
-	label$d09e03a_10_275:
-	if( !r42 ) goto label$d09e03a_10_280;
+	label$d09e03a_9_275:
+	if( !r42 ) goto label$d09e03a_9_280;
 	if( r42 == NULL ) hl_null_access();
 	r38 = r42->childs;
 	if( r38 == NULL ) hl_null_access();
 	r23 = hl_types_ArrayObj_remove(r38,((vdynamic*)r21));
-	label$d09e03a_10_280:
+	label$d09e03a_9_280:
 	r22 = 0;
 	r38 = r21->childs;
 	if( r38 == NULL ) hl_null_access();
 	r38 = hl_types_ArrayObj_copy(r38);
-	label$d09e03a_10_284:
+	label$d09e03a_9_284:
 	if( r38 == NULL ) hl_null_access();
 	r40 = r38->length;
-	if( r22 >= r40 ) goto label$d09e03a_10_309;
+	if( r22 >= r40 ) goto label$d09e03a_9_309;
 	r40 = r38->length;
-	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_10_292;
+	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_9_292;
 	r44 = NULL;
-	goto label$d09e03a_10_295;
-	label$d09e03a_10_292:
+	goto label$d09e03a_9_295;
+	label$d09e03a_9_292:
 	r7 = r38->array;
 	r20 = ((vdynamic**)(r7 + 1))[r22];
 	r44 = (hxd__fmt__fbx__TmpObject)r20;
-	label$d09e03a_10_295:
+	label$d09e03a_9_295:
 	++r22;
 	if( r44 == NULL ) hl_null_access();
 	r23 = r44->isJoint;
-	if( r23 ) goto label$d09e03a_10_308;
+	if( r23 ) goto label$d09e03a_9_308;
 	if( r21 == NULL ) hl_null_access();
 	r45 = r21->childs;
 	if( r45 == NULL ) hl_null_access();
@@ -2777,18 +2769,18 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r45 == NULL ) hl_null_access();
 	r39 = hl_types_ArrayObj_push(r45,((vdynamic*)r44));
 	r44->parent = r24;
-	label$d09e03a_10_308:
-	goto label$d09e03a_10_284;
-	label$d09e03a_10_309:
-	goto label$d09e03a_10_311;
-	label$d09e03a_10_310:
-	goto label$d09e03a_10_209;
-	label$d09e03a_10_311:
-	goto label$d09e03a_10_121;
-	label$d09e03a_10_312:
-	if( r1 ) goto label$d09e03a_10_314;
+	label$d09e03a_9_308:
+	goto label$d09e03a_9_284;
+	label$d09e03a_9_309:
+	goto label$d09e03a_9_311;
+	label$d09e03a_9_310:
+	goto label$d09e03a_9_209;
+	label$d09e03a_9_311:
+	goto label$d09e03a_9_121;
+	label$d09e03a_9_312:
+	if( r1 ) goto label$d09e03a_9_314;
 	return;
-	label$d09e03a_10_314:
+	label$d09e03a_9_314:
 	if( r6 == NULL ) hl_null_access();
 	r15 = 0;
 	r8 = &t$hxd_fmt_fbx_TmpObject;
@@ -2796,9 +2788,9 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r7 = hl_alloc_array(r8,r19);
 	r31 = hl_types_ArrayObj_alloc(r7);
 	r19 = r6->length;
-	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_10_323;
+	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_9_323;
 	hl_types_ArrayObj___expand(r6,r15);
-	label$d09e03a_10_323:
+	label$d09e03a_9_323:
 	r7 = r6->array;
 	((hl__types__ArrayObj*)(r7 + 1))[r15] = r31;
 	if( r4 == NULL ) hl_null_access();
@@ -2806,41 +2798,41 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r17 == NULL ) hl_null_access();
 	r15 = r17->length;
 	r19 = 1;
-	if( r19 < r15 ) goto label$d09e03a_10_347;
+	if( r19 < r15 ) goto label$d09e03a_9_347;
 	r28 = r4->model;
-	if( r28 ) goto label$d09e03a_10_347;
+	if( r28 ) goto label$d09e03a_9_347;
 	r17 = r4->childs;
 	if( r17 == NULL ) hl_null_access();
 	r15 = 0;
 	r19 = r17->length;
-	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_10_340;
+	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_9_340;
 	r21 = NULL;
-	goto label$d09e03a_10_343;
-	label$d09e03a_10_340:
+	goto label$d09e03a_9_343;
+	label$d09e03a_9_340:
 	r7 = r17->array;
 	r20 = ((vdynamic**)(r7 + 1))[r15];
 	r21 = (hxd__fmt__fbx__TmpObject)r20;
-	label$d09e03a_10_343:
+	label$d09e03a_9_343:
 	r4 = r21;
 	if( r21 == NULL ) hl_null_access();
 	r24 = NULL;
 	r21->parent = r24;
-	label$d09e03a_10_347:
-	if( !r4 ) goto label$d09e03a_10_359;
+	label$d09e03a_9_347:
+	if( !r4 ) goto label$d09e03a_9_359;
 	if( r14 == NULL ) hl_null_access();
 	r15 = 0;
 	r19 = r14->length;
-	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_10_354;
+	if( ((unsigned)r15) < ((unsigned)r19) ) goto label$d09e03a_9_354;
 	r16 = NULL;
-	goto label$d09e03a_10_357;
-	label$d09e03a_10_354:
+	goto label$d09e03a_9_357;
+	label$d09e03a_9_354:
 	r7 = r14->array;
 	r20 = ((vdynamic**)(r7 + 1))[r15];
 	r16 = (vclosure*)r20;
-	label$d09e03a_10_357:
+	label$d09e03a_9_357:
 	if( r16 == NULL ) hl_null_access();
 	r16->hasValue ? ((void (*)(vdynamic*,hxd__fmt__fbx__TmpObject))r16->fun)((vdynamic*)r16->value,r4) : ((void (*)(hxd__fmt__fbx__TmpObject))r16->fun)(r4);
-	label$d09e03a_10_359:
+	label$d09e03a_9_359:
 	r46 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 	haxe_ds_IntMap_new(r46);
 	r47 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
@@ -2849,19 +2841,19 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r28 = r0->root;
 	r25 = (String)s$Objects_Geometry;
 	r17 = hxd_fmt_fbx_FbxTools_getAll(r28,r25);
-	label$d09e03a_10_367:
+	label$d09e03a_9_367:
 	if( r17 == NULL ) hl_null_access();
 	r22 = r17->length;
-	if( r15 >= r22 ) goto label$d09e03a_10_391;
+	if( r15 >= r22 ) goto label$d09e03a_9_391;
 	r22 = r17->length;
-	if( ((unsigned)r15) < ((unsigned)r22) ) goto label$d09e03a_10_375;
+	if( ((unsigned)r15) < ((unsigned)r22) ) goto label$d09e03a_9_375;
 	r28 = NULL;
-	goto label$d09e03a_10_378;
-	label$d09e03a_10_375:
+	goto label$d09e03a_9_378;
+	label$d09e03a_9_375:
 	r7 = r17->array;
 	r20 = ((vdynamic**)(r7 + 1))[r15];
 	r28 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r20);
-	label$d09e03a_10_378:
+	label$d09e03a_9_378:
 	++r15;
 	if( r47 == NULL ) hl_null_access();
 	r19 = hxd_fmt_fbx_FbxTools_getId(r28);
@@ -2874,49 +2866,49 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r51 = hl_alloc_closure_ptr(&t$fun_2c98a83,hxd_fmt_fbx_HMDOut_addModels__$4,r52);
 	if( hl_vfields(r49)[1] ) *(vclosure**)(hl_vfields(r49)[1]) = (vclosure*)r51; else hl_dyn_setp(r49->value,513740757/*vertexCount*/,&t$fun_9c2ac14,r51);
 	haxe_ds_IntMap_set(r47,r19,((vdynamic*)r49));
-	goto label$d09e03a_10_367;
-	label$d09e03a_10_391:
+	goto label$d09e03a_9_367;
+	label$d09e03a_9_391:
 	r48 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 	haxe_ds_IntMap_new(r48);
 	r53 = (haxe__ds__IntMap)hl_alloc_obj(&t$haxe_ds_IntMap);
 	haxe_ds_IntMap_new(r53);
 	r15 = 0;
 	r19 = 0;
-	label$d09e03a_10_397:
+	label$d09e03a_9_397:
 	if( r6 == NULL ) hl_null_access();
 	r39 = 0;
 	r40 = r6->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_404;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_404;
 	r17 = NULL;
-	goto label$d09e03a_10_407;
-	label$d09e03a_10_404:
+	goto label$d09e03a_9_407;
+	label$d09e03a_9_404:
 	r7 = r6->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r17 = (hl__types__ArrayObj)hl_dyn_castp(&r20,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_10_407:
+	label$d09e03a_9_407:
 	if( r17 == NULL ) hl_null_access();
 	r39 = r17->length;
-	if( r19 >= r39 ) goto label$d09e03a_10_1108;
+	if( r19 >= r39 ) goto label$d09e03a_9_1108;
 	r22 = 0;
 	r39 = r6->length;
-	if( ((unsigned)r22) < ((unsigned)r39) ) goto label$d09e03a_10_415;
+	if( ((unsigned)r22) < ((unsigned)r39) ) goto label$d09e03a_9_415;
 	r17 = NULL;
-	goto label$d09e03a_10_418;
-	label$d09e03a_10_415:
+	goto label$d09e03a_9_418;
+	label$d09e03a_9_415:
 	r7 = r6->array;
 	r20 = ((vdynamic**)(r7 + 1))[r22];
 	r17 = (hl__types__ArrayObj)hl_dyn_castp(&r20,&t$_dyn,&t$hl_types_ArrayObj);
-	label$d09e03a_10_418:
+	label$d09e03a_9_418:
 	if( r17 == NULL ) hl_null_access();
 	r39 = r17->length;
-	if( ((unsigned)r19) < ((unsigned)r39) ) goto label$d09e03a_10_423;
+	if( ((unsigned)r19) < ((unsigned)r39) ) goto label$d09e03a_9_423;
 	r21 = NULL;
-	goto label$d09e03a_10_426;
-	label$d09e03a_10_423:
+	goto label$d09e03a_9_426;
+	label$d09e03a_9_423:
 	r7 = r17->array;
 	r20 = ((vdynamic**)(r7 + 1))[r19];
 	r21 = (hxd__fmt__fbx__TmpObject)r20;
-	label$d09e03a_10_426:
+	label$d09e03a_9_426:
 	++r19;
 	if( r21 == NULL ) hl_null_access();
 	r22 = r15;
@@ -2925,131 +2917,131 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r54 = (hxd__fmt__hmd__Model)hl_alloc_obj(&t$hxd_fmt_hmd_Model);
 	hxd_fmt_hmd_Model_new(r54);
 	r24 = r21->skin;
-	if( r24 ) goto label$d09e03a_10_437;
+	if( r24 ) goto label$d09e03a_9_437;
 	r24 = r21;
-	goto label$d09e03a_10_438;
-	label$d09e03a_10_437:
+	goto label$d09e03a_9_438;
+	label$d09e03a_9_437:
 	r24 = r21->skin;
-	label$d09e03a_10_438:
+	label$d09e03a_9_438:
 	r28 = r21->model;
-	if( r28 ) goto label$d09e03a_10_442;
+	if( r28 ) goto label$d09e03a_9_442;
 	r25 = NULL;
-	goto label$d09e03a_10_444;
-	label$d09e03a_10_442:
+	goto label$d09e03a_9_444;
+	label$d09e03a_9_442:
 	r28 = r21->model;
 	r25 = hxd_fmt_fbx_FbxTools_getName(r28);
-	label$d09e03a_10_444:
+	label$d09e03a_9_444:
 	r54->name = r25;
 	r42 = r21->parent;
-	if( !r42 ) goto label$d09e03a_10_451;
+	if( !r42 ) goto label$d09e03a_9_451;
 	r42 = r21->parent;
 	if( r42 == NULL ) hl_null_access();
 	r23 = r42->isJoint;
-	if( !r23 ) goto label$d09e03a_10_453;
-	label$d09e03a_10_451:
+	if( !r23 ) goto label$d09e03a_9_453;
+	label$d09e03a_9_451:
 	r22 = -1;
-	goto label$d09e03a_10_456;
-	label$d09e03a_10_453:
+	goto label$d09e03a_9_456;
+	label$d09e03a_9_453:
 	r42 = r21->parent;
 	if( r42 == NULL ) hl_null_access();
 	r22 = r42->index;
-	label$d09e03a_10_456:
+	label$d09e03a_9_456:
 	r54->parent = r22;
 	r42 = r21->parent;
-	if( !r42 ) goto label$d09e03a_10_468;
+	if( !r42 ) goto label$d09e03a_9_468;
 	r42 = r21->parent;
 	if( r42 == NULL ) hl_null_access();
 	r23 = r42->isJoint;
-	if( !r23 ) goto label$d09e03a_10_468;
+	if( !r23 ) goto label$d09e03a_9_468;
 	r42 = r21->parent;
 	if( r42 == NULL ) hl_null_access();
 	r28 = r42->model;
 	r25 = hxd_fmt_fbx_FbxTools_getName(r28);
-	goto label$d09e03a_10_469;
-	label$d09e03a_10_468:
+	goto label$d09e03a_9_469;
+	label$d09e03a_9_468:
 	r25 = NULL;
-	label$d09e03a_10_469:
+	label$d09e03a_9_469:
 	r54->follow = r25;
 	if( r24 == NULL ) hl_null_access();
 	r28 = r24->model;
-	if( r28 ) goto label$d09e03a_10_476;
+	if( r28 ) goto label$d09e03a_9_476;
 	r27 = (hxd__fmt__fbx__DefaultMatrixes)hl_alloc_obj(&t$hxd_fmt_fbx_DefaultMatrixes);
 	hxd_fmt_fbx_DefaultMatrixes_new(r27);
-	goto label$d09e03a_10_478;
-	label$d09e03a_10_476:
+	goto label$d09e03a_9_478;
+	label$d09e03a_9_476:
 	r28 = r24->model;
 	r27 = hxd_fmt_fbx_BaseLibrary_getDefaultMatrixes(((hxd__fmt__fbx__BaseLibrary)r0),r28);
-	label$d09e03a_10_478:
+	label$d09e03a_9_478:
 	r55 = (hxd__fmt__hmd__Position)hl_alloc_obj(&t$hxd_fmt_hmd_Position);
 	hxd_fmt_hmd_Position_new(r55);
 	if( r27 == NULL ) hl_null_access();
 	r57 = r27->trans;
-	if( r57 ) goto label$d09e03a_10_485;
+	if( r57 ) goto label$d09e03a_9_485;
 	r56 = 0.;
-	goto label$d09e03a_10_489;
-	label$d09e03a_10_485:
+	goto label$d09e03a_9_489;
+	label$d09e03a_9_485:
 	r57 = r27->trans;
 	if( r57 == NULL ) hl_null_access();
 	r56 = r57->x;
 	r56 = -r56;
-	label$d09e03a_10_489:
+	label$d09e03a_9_489:
 	r55->x = r56;
 	r57 = r27->trans;
-	if( r57 ) goto label$d09e03a_10_494;
+	if( r57 ) goto label$d09e03a_9_494;
 	r56 = 0.;
-	goto label$d09e03a_10_497;
-	label$d09e03a_10_494:
+	goto label$d09e03a_9_497;
+	label$d09e03a_9_494:
 	r57 = r27->trans;
 	if( r57 == NULL ) hl_null_access();
 	r56 = r57->y;
-	label$d09e03a_10_497:
+	label$d09e03a_9_497:
 	r55->y = r56;
 	r57 = r27->trans;
-	if( r57 ) goto label$d09e03a_10_502;
+	if( r57 ) goto label$d09e03a_9_502;
 	r56 = 0.;
-	goto label$d09e03a_10_505;
-	label$d09e03a_10_502:
+	goto label$d09e03a_9_505;
+	label$d09e03a_9_502:
 	r57 = r27->trans;
 	if( r57 == NULL ) hl_null_access();
 	r56 = r57->z;
-	label$d09e03a_10_505:
+	label$d09e03a_9_505:
 	r55->z = r56;
 	r57 = r27->scale;
-	if( r57 ) goto label$d09e03a_10_510;
+	if( r57 ) goto label$d09e03a_9_510;
 	r56 = 1.;
-	goto label$d09e03a_10_513;
-	label$d09e03a_10_510:
+	goto label$d09e03a_9_513;
+	label$d09e03a_9_510:
 	r57 = r27->scale;
 	if( r57 == NULL ) hl_null_access();
 	r56 = r57->x;
-	label$d09e03a_10_513:
+	label$d09e03a_9_513:
 	r55->sx = r56;
 	r57 = r27->scale;
-	if( r57 ) goto label$d09e03a_10_518;
+	if( r57 ) goto label$d09e03a_9_518;
 	r56 = 1.;
-	goto label$d09e03a_10_521;
-	label$d09e03a_10_518:
+	goto label$d09e03a_9_521;
+	label$d09e03a_9_518:
 	r57 = r27->scale;
 	if( r57 == NULL ) hl_null_access();
 	r56 = r57->y;
-	label$d09e03a_10_521:
+	label$d09e03a_9_521:
 	r55->sy = r56;
 	r57 = r27->scale;
-	if( r57 ) goto label$d09e03a_10_526;
+	if( r57 ) goto label$d09e03a_9_526;
 	r56 = 1.;
-	goto label$d09e03a_10_529;
-	label$d09e03a_10_526:
+	goto label$d09e03a_9_529;
+	label$d09e03a_9_526:
 	r57 = r27->scale;
 	if( r57 == NULL ) hl_null_access();
 	r56 = r57->z;
-	label$d09e03a_10_529:
+	label$d09e03a_9_529:
 	r55->sz = r56;
 	r28 = r21->model;
-	if( !r28 ) goto label$d09e03a_10_641;
+	if( !r28 ) goto label$d09e03a_9_641;
 	r28 = r21->model;
 	r25 = hxd_fmt_fbx_FbxTools_getType(r28);
 	r58 = (String)s$Camera;
-	if( r25 != r58 && (!r25 || !r58 || String___compare(r25,(vdynamic*)r58) != 0) ) goto label$d09e03a_10_641;
+	if( r25 != r58 && (!r25 || !r58 || String___compare(r25,(vdynamic*)r58) != 0) ) goto label$d09e03a_9_641;
 	r28 = r21->model;
 	r25 = (String)s$NodeAttribute;
 	r35 = NULL;
@@ -3059,89 +3051,89 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r22 = 0;
 	r25 = (String)s$Properties70_P;
 	r17 = hxd_fmt_fbx_FbxTools_getAll(r28,r25);
-	label$d09e03a_10_545:
+	label$d09e03a_9_545:
 	if( r17 == NULL ) hl_null_access();
 	r40 = r17->length;
-	if( r22 >= r40 ) goto label$d09e03a_10_614;
+	if( r22 >= r40 ) goto label$d09e03a_9_614;
 	r40 = r17->length;
-	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_10_553;
+	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_9_553;
 	r34 = NULL;
-	goto label$d09e03a_10_556;
-	label$d09e03a_10_553:
+	goto label$d09e03a_9_556;
+	label$d09e03a_9_553:
 	r7 = r17->array;
 	r20 = ((vdynamic**)(r7 + 1))[r22];
 	r34 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r20);
-	label$d09e03a_10_556:
+	label$d09e03a_9_556:
 	++r22;
 	if( r34 == NULL ) hl_null_access();
 	r31 = hl_vfields(r34)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r34)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r34->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r39 = 0;
 	r40 = r31->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_565;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_565;
 	r60 = NULL;
-	goto label$d09e03a_10_568;
-	label$d09e03a_10_565:
+	goto label$d09e03a_9_568;
+	label$d09e03a_9_565:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r60 = (venum*)r20;
-	label$d09e03a_10_568:
+	label$d09e03a_9_568:
 	r25 = hxd_fmt_fbx_FbxTools_toString(r60);
-	if( !r25 ) goto label$d09e03a_10_578;
+	if( !r25 ) goto label$d09e03a_9_578;
 	r39 = r25->length;
 	r40 = 11;
-	if( r39 != r40 ) goto label$d09e03a_10_578;
+	if( r39 != r40 ) goto label$d09e03a_9_578;
 	r61 = r25->bytes;
 	r62 = (vbyte*)USTR("FieldOfView");
 	r39 = hl_string_compare(r61,r62,r39);
 	r40 = 0;
-	if( r39 == r40 ) goto label$d09e03a_10_588;
-	label$d09e03a_10_578:
-	if( !r25 ) goto label$d09e03a_10_587;
+	if( r39 == r40 ) goto label$d09e03a_9_588;
+	label$d09e03a_9_578:
+	if( !r25 ) goto label$d09e03a_9_587;
 	r39 = r25->length;
 	r40 = 15;
-	if( r39 != r40 ) goto label$d09e03a_10_587;
+	if( r39 != r40 ) goto label$d09e03a_9_587;
 	r61 = r25->bytes;
 	r62 = (vbyte*)USTR("FilmAspectRatio");
 	r39 = hl_string_compare(r61,r62,r39);
 	r40 = 0;
-	if( r39 == r40 ) goto label$d09e03a_10_601;
-	label$d09e03a_10_587:
-	goto label$d09e03a_10_613;
-	label$d09e03a_10_588:
+	if( r39 == r40 ) goto label$d09e03a_9_601;
+	label$d09e03a_9_587:
+	goto label$d09e03a_9_613;
+	label$d09e03a_9_588:
 	r31 = hl_vfields(r34)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r34)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r34->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r39 = 4;
 	r40 = r31->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_595;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_595;
 	r60 = NULL;
-	goto label$d09e03a_10_598;
-	label$d09e03a_10_595:
+	goto label$d09e03a_9_598;
+	label$d09e03a_9_595:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r60 = (venum*)r20;
-	label$d09e03a_10_598:
+	label$d09e03a_9_598:
 	r63 = hxd_fmt_fbx_FbxTools_toFloat(r60);
 	r56 = r63;
-	goto label$d09e03a_10_613;
-	label$d09e03a_10_601:
+	goto label$d09e03a_9_613;
+	label$d09e03a_9_601:
 	r31 = hl_vfields(r34)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r34)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r34->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r31 == NULL ) hl_null_access();
 	r39 = 4;
 	r40 = r31->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_608;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_608;
 	r60 = NULL;
-	goto label$d09e03a_10_611;
-	label$d09e03a_10_608:
+	goto label$d09e03a_9_611;
+	label$d09e03a_9_608:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r60 = (venum*)r20;
-	label$d09e03a_10_611:
+	label$d09e03a_9_611:
 	r63 = hxd_fmt_fbx_FbxTools_toFloat(r60);
 	r59 = r63;
-	label$d09e03a_10_613:
-	goto label$d09e03a_10_545;
-	label$d09e03a_10_614:
+	label$d09e03a_9_613:
+	goto label$d09e03a_9_545;
+	label$d09e03a_9_614:
 	r63 = 2.;
 	r65 = 0.5;
 	r64 = r56 * r65;
@@ -3159,19 +3151,19 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r63 = r63 / r64;
 	if( r54 == NULL ) hl_null_access();
 	r17 = r54->props;
-	if( r17 ) goto label$d09e03a_10_637;
+	if( r17 ) goto label$d09e03a_9_637;
 	r8 = &t$hxd_fmt_hmd_Property;
 	r22 = 0;
 	r7 = hl_alloc_array(r8,r22);
 	r17 = hl_types_ArrayObj_alloc(r7);
 	r54->props = r17;
-	label$d09e03a_10_637:
+	label$d09e03a_9_637:
 	r17 = r54->props;
 	if( r17 == NULL ) hl_null_access();
 	r66 = hl_alloc_enum(&t$hxd_fmt_hmd_Property,0);
 	((hxd_fmt_hmd_Property_CameraFOVY*)r66)->p0 = r63;
 	r22 = hl_types_ArrayObj_push(r17,((vdynamic*)r66));
-	label$d09e03a_10_641:
+	label$d09e03a_9_641:
 	if( r27 == NULL ) hl_null_access();
 	r23 = true;
 	r67 = hxd_fmt_fbx_DefaultMatrixes_toQuaternion(r27,r23);
@@ -3179,7 +3171,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	h3d_Quat_normalize(r67);
 	r56 = r67->w;
 	r59 = 0.;
-	if( !(r56 < r59) ) goto label$d09e03a_10_661;
+	if( !(r56 < r59) ) goto label$d09e03a_9_661;
 	r56 = r67->x;
 	r56 = -r56;
 	r67->x = r56;
@@ -3192,7 +3184,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r56 = r67->w;
 	r56 = -r56;
 	r67->w = r56;
-	label$d09e03a_10_661:
+	label$d09e03a_9_661:
 	if( r55 == NULL ) hl_null_access();
 	r56 = r67->x;
 	r55->qx = r56;
@@ -3210,9 +3202,9 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r22 = hl_types_ArrayObj_push(r17,((vdynamic*)r54));
 	if( r21 == NULL ) hl_null_access();
 	r23 = r21->isMesh;
-	if( r23 ) goto label$d09e03a_10_680;
-	goto label$d09e03a_10_397;
-	label$d09e03a_10_680:
+	if( r23 ) goto label$d09e03a_9_680;
+	goto label$d09e03a_9_397;
+	label$d09e03a_9_680:
 	r22 = 0;
 	r61 = hl_alloc_bytes(r22);
 	r22 = 0;
@@ -3223,25 +3215,25 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r28 = r21->model;
 	r25 = (String)s$Material;
 	r17 = hxd_fmt_fbx_BaseLibrary_getChilds(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25);
-	label$d09e03a_10_690:
+	label$d09e03a_9_690:
 	if( r17 == NULL ) hl_null_access();
 	r40 = r17->length;
-	if( r22 >= r40 ) goto label$d09e03a_10_907;
+	if( r22 >= r40 ) goto label$d09e03a_9_907;
 	r40 = r17->length;
-	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_10_698;
+	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_9_698;
 	r28 = NULL;
-	goto label$d09e03a_10_701;
-	label$d09e03a_10_698:
+	goto label$d09e03a_9_701;
+	label$d09e03a_9_698:
 	r7 = r17->array;
 	r20 = ((vdynamic**)(r7 + 1))[r22];
 	r28 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r20);
-	label$d09e03a_10_701:
+	label$d09e03a_9_701:
 	++r22;
 	if( r53 == NULL ) hl_null_access();
 	r39 = hxd_fmt_fbx_FbxTools_getId(r28);
 	r20 = haxe_ds_IntMap_get(r53,r39);
 	r70 = (vdynamic*)r20;
-	if( !r70 ) goto label$d09e03a_10_731;
+	if( !r70 ) goto label$d09e03a_9_731;
 	if( r69 == NULL ) hl_null_access();
 	r39 = r70 ? r70->v.i : 0;
 	r39 = hl_types_ArrayBytes_Int_push(r69,r39);
@@ -3251,26 +3243,26 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r31 == NULL ) hl_null_access();
 	r39 = r70 ? r70->v.i : 0;
 	r40 = r31->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_719;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_719;
 	r73 = NULL;
-	goto label$d09e03a_10_722;
-	label$d09e03a_10_719:
+	goto label$d09e03a_9_722;
+	label$d09e03a_9_719:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r73 = (hxd__fmt__hmd__Material)r20;
-	label$d09e03a_10_722:
+	label$d09e03a_9_722:
 	if( r73 == NULL ) hl_null_access();
 	r25 = r73->normalMap;
 	r58 = NULL;
-	if( r25 != r58 && (!r25 || !r58 || String___compare(r25,(vdynamic*)r58) != 0) ) goto label$d09e03a_10_728;
+	if( r25 != r58 && (!r25 || !r58 || String___compare(r25,(vdynamic*)r58) != 0) ) goto label$d09e03a_9_728;
 	r74 = false;
-	goto label$d09e03a_10_729;
-	label$d09e03a_10_728:
+	goto label$d09e03a_9_729;
+	label$d09e03a_9_728:
 	r74 = true;
-	label$d09e03a_10_729:
+	label$d09e03a_9_729:
 	r23 = r74;
-	goto label$d09e03a_10_690;
-	label$d09e03a_10_731:
+	goto label$d09e03a_9_690;
+	label$d09e03a_9_731:
 	r73 = (hxd__fmt__hmd__Material)hl_alloc_obj(&t$hxd_fmt_hmd_Material);
 	hxd_fmt_hmd_Material_new(r73);
 	r68 = r0->d;
@@ -3297,109 +3289,109 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r39 = 0;
 	r25 = (String)s$Properties70_P;
 	r31 = hxd_fmt_fbx_FbxTools_getAll(r28,r25);
-	label$d09e03a_10_756:
+	label$d09e03a_9_756:
 	if( r31 == NULL ) hl_null_access();
 	r76 = r31->length;
-	if( r39 >= r76 ) goto label$d09e03a_10_803;
+	if( r39 >= r76 ) goto label$d09e03a_9_803;
 	r76 = r31->length;
-	if( ((unsigned)r39) < ((unsigned)r76) ) goto label$d09e03a_10_764;
+	if( ((unsigned)r39) < ((unsigned)r76) ) goto label$d09e03a_9_764;
 	r34 = NULL;
-	goto label$d09e03a_10_767;
-	label$d09e03a_10_764:
+	goto label$d09e03a_9_767;
+	label$d09e03a_9_764:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r34 = hl_to_virtual(&t$vrt_0813dd2,(vdynamic*)r20);
-	label$d09e03a_10_767:
+	label$d09e03a_9_767:
 	++r39;
 	if( r34 == NULL ) hl_null_access();
 	r37 = hl_vfields(r34)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r34)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r34->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r37 == NULL ) hl_null_access();
 	r40 = 4;
 	r76 = r37->length;
-	if( ((unsigned)r40) < ((unsigned)r76) ) goto label$d09e03a_10_776;
+	if( ((unsigned)r40) < ((unsigned)r76) ) goto label$d09e03a_9_776;
 	r60 = NULL;
-	goto label$d09e03a_10_779;
-	label$d09e03a_10_776:
+	goto label$d09e03a_9_779;
+	label$d09e03a_9_776:
 	r7 = r37->array;
 	r20 = ((vdynamic**)(r7 + 1))[r40];
 	r60 = (venum*)r20;
-	label$d09e03a_10_779:
+	label$d09e03a_9_779:
 	r37 = hl_vfields(r34)[2] ? (*(hl__types__ArrayObj*)(hl_vfields(r34)[2])) : (hl__types__ArrayObj)hl_dyn_getp(r34->value,-393222421/*props*/,&t$hl_types_ArrayObj);
 	if( r37 == NULL ) hl_null_access();
 	r40 = 0;
 	r76 = r37->length;
-	if( ((unsigned)r40) < ((unsigned)r76) ) goto label$d09e03a_10_786;
+	if( ((unsigned)r40) < ((unsigned)r76) ) goto label$d09e03a_9_786;
 	r77 = NULL;
-	goto label$d09e03a_10_789;
-	label$d09e03a_10_786:
+	goto label$d09e03a_9_789;
+	label$d09e03a_9_786:
 	r7 = r37->array;
 	r20 = ((vdynamic**)(r7 + 1))[r40];
 	r77 = (venum*)r20;
-	label$d09e03a_10_789:
+	label$d09e03a_9_789:
 	r25 = hxd_fmt_fbx_FbxTools_toString(r77);
 	r58 = (String)s$Opacity;
-	if( r25 != r58 && (!r25 || !r58 || String___compare(r25,(vdynamic*)r58) != 0) ) goto label$d09e03a_10_802;
+	if( r25 != r58 && (!r25 || !r58 || String___compare(r25,(vdynamic*)r58) != 0) ) goto label$d09e03a_9_802;
 	r56 = hxd_fmt_fbx_FbxTools_toFloat(r60);
 	r63 = 1.;
-	if( !(r56 < r63) ) goto label$d09e03a_10_802;
+	if( !(r56 < r63) ) goto label$d09e03a_9_802;
 	r63 = 0.97999999999999998;
-	if( !(r63 < r56) ) goto label$d09e03a_10_802;
+	if( !(r63 < r56) ) goto label$d09e03a_9_802;
 	if( r73 == NULL ) hl_null_access();
 	r75 = r73->blendMode;
-	if( r75 ) goto label$d09e03a_10_802;
+	if( r75 ) goto label$d09e03a_9_802;
 	r75 = (venum*)g$h2d_BlendMode_Add;
 	r73->blendMode = r75;
-	label$d09e03a_10_802:
-	goto label$d09e03a_10_756;
-	label$d09e03a_10_803:
+	label$d09e03a_9_802:
+	goto label$d09e03a_9_756;
+	label$d09e03a_9_803:
 	r25 = (String)s$DiffuseColor;
 	r34 = hxd_fmt_fbx_BaseLibrary_getSpecChild(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25);
-	if( !r34 ) goto label$d09e03a_10_810;
+	if( !r34 ) goto label$d09e03a_9_810;
 	r25 = hxd_fmt_fbx_HMDOut_makeTexturePath(r0,r34);
-	if( !r25 ) goto label$d09e03a_10_810;
+	if( !r25 ) goto label$d09e03a_9_810;
 	if( r73 == NULL ) hl_null_access();
 	r73->diffuseTexture = r25;
-	label$d09e03a_10_810:
+	label$d09e03a_9_810:
 	if( r73 == NULL ) hl_null_access();
 	r25 = (String)s$NormalMap;
 	r36 = hxd_fmt_fbx_BaseLibrary_getSpecChild(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25);
 	r25 = hxd_fmt_fbx_HMDOut_makeTexturePath(r0,r36);
 	r73->normalMap = r25;
 	r25 = r73->normalMap;
-	if( !r25 ) goto label$d09e03a_10_819;
+	if( !r25 ) goto label$d09e03a_9_819;
 	r74 = true;
 	r23 = r74;
-	label$d09e03a_10_819:
+	label$d09e03a_9_819:
 	r25 = (String)s$SpecularFactor;
 	r36 = hxd_fmt_fbx_BaseLibrary_getSpecChild(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25);
-	if( r36 ) goto label$d09e03a_10_825;
+	if( r36 ) goto label$d09e03a_9_825;
 	r25 = (String)s$SpecularColor;
 	r41 = hxd_fmt_fbx_BaseLibrary_getSpecChild(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25);
 	r36 = r41;
-	label$d09e03a_10_825:
+	label$d09e03a_9_825:
 	r25 = hxd_fmt_fbx_HMDOut_makeTexturePath(r0,r36);
 	r73->specularTexture = r25;
 	r25 = r73->normalMap;
-	if( r25 ) goto label$d09e03a_10_831;
+	if( r25 ) goto label$d09e03a_9_831;
 	r25 = r73->specularTexture;
-	if( !r25 ) goto label$d09e03a_10_842;
-	label$d09e03a_10_831:
+	if( !r25 ) goto label$d09e03a_9_842;
+	label$d09e03a_9_831:
 	r31 = r73->props;
-	if( r31 ) goto label$d09e03a_10_838;
+	if( r31 ) goto label$d09e03a_9_838;
 	r8 = &t$hxd_fmt_hmd_Property;
 	r39 = 0;
 	r7 = hl_alloc_array(r8,r39);
 	r31 = hl_types_ArrayObj_alloc(r7);
 	r73->props = r31;
-	label$d09e03a_10_838:
+	label$d09e03a_9_838:
 	r31 = r73->props;
 	if( r31 == NULL ) hl_null_access();
 	r66 = (venum*)g$69da9ba;
 	r39 = hl_types_ArrayObj_push(r31,((vdynamic*)r66));
-	label$d09e03a_10_842:
+	label$d09e03a_9_842:
 	r25 = (String)s$TransparentColor;
 	r41 = hxd_fmt_fbx_BaseLibrary_getSpecChild(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25);
-	if( !r41 ) goto label$d09e03a_10_902;
+	if( !r41 ) goto label$d09e03a_9_902;
 	r25 = (String)s$FileName;
 	r78 = NULL;
 	r43 = hxd_fmt_fbx_FbxTools_get(r41,r25,r78);
@@ -3408,17 +3400,17 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r31 == NULL ) hl_null_access();
 	r39 = 0;
 	r40 = r31->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_856;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_856;
 	r60 = NULL;
-	goto label$d09e03a_10_859;
-	label$d09e03a_10_856:
+	goto label$d09e03a_9_859;
+	label$d09e03a_9_856:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r60 = (venum*)r20;
-	label$d09e03a_10_859:
+	label$d09e03a_9_859:
 	r25 = hxd_fmt_fbx_FbxTools_toString(r60);
 	r79 = (String)s$;
-	if( r25 == r79 || (r25 && r79 && String___compare(r25,(vdynamic*)r79) == 0) ) goto label$d09e03a_10_902;
+	if( r25 == r79 || (r25 && r79 && String___compare(r25,(vdynamic*)r79) == 0) ) goto label$d09e03a_9_902;
 	if( r25 == NULL ) hl_null_access();
 	r58 = String_toLowerCase(r25);
 	r25 = r58;
@@ -3428,7 +3420,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r31 == NULL ) hl_null_access();
 	r20 = hl_types_ArrayObj_pop(r31);
 	r58 = (String)r20;
-	if( !r34 ) goto label$d09e03a_10_899;
+	if( !r34 ) goto label$d09e03a_9_899;
 	r80 = (String)s$FileName;
 	r78 = NULL;
 	r43 = hxd_fmt_fbx_FbxTools_get(r34,r80,r78);
@@ -3437,40 +3429,40 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r31 == NULL ) hl_null_access();
 	r39 = 0;
 	r40 = r31->length;
-	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_10_883;
+	if( ((unsigned)r39) < ((unsigned)r40) ) goto label$d09e03a_9_883;
 	r60 = NULL;
-	goto label$d09e03a_10_886;
-	label$d09e03a_10_883:
+	goto label$d09e03a_9_886;
+	label$d09e03a_9_883:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r39];
 	r60 = (venum*)r20;
-	label$d09e03a_10_886:
+	label$d09e03a_9_886:
 	r80 = hxd_fmt_fbx_FbxTools_toString(r60);
 	if( r80 == NULL ) hl_null_access();
 	r80 = String_toLowerCase(r80);
-	if( r25 != r80 && (!r25 || !r80 || String___compare(r25,(vdynamic*)r80) != 0) ) goto label$d09e03a_10_899;
+	if( r25 != r80 && (!r25 || !r80 || String___compare(r25,(vdynamic*)r80) != 0) ) goto label$d09e03a_9_899;
 	r75 = r73->blendMode;
-	if( r75 ) goto label$d09e03a_10_898;
+	if( r75 ) goto label$d09e03a_9_898;
 	r80 = (String)s$jpg;
-	if( r58 == r80 || (r58 && r80 && String___compare(r58,(vdynamic*)r80) == 0) ) goto label$d09e03a_10_898;
+	if( r58 == r80 || (r58 && r80 && String___compare(r58,(vdynamic*)r80) == 0) ) goto label$d09e03a_9_898;
 	r80 = (String)s$jpeg;
-	if( r58 == r80 || (r58 && r80 && String___compare(r58,(vdynamic*)r80) == 0) ) goto label$d09e03a_10_898;
+	if( r58 == r80 || (r58 && r80 && String___compare(r58,(vdynamic*)r80) == 0) ) goto label$d09e03a_9_898;
 	r75 = (venum*)g$h2d_BlendMode_Alpha;
 	r73->blendMode = r75;
-	label$d09e03a_10_898:
-	goto label$d09e03a_10_902;
-	label$d09e03a_10_899:
+	label$d09e03a_9_898:
+	goto label$d09e03a_9_902;
+	label$d09e03a_9_899:
 	r79 = (String)s$05acd02;
 	r20 = haxe_Exception_thrown(((vdynamic*)r79));
 	hl_throw((vdynamic*)r20);
-	label$d09e03a_10_902:
+	label$d09e03a_9_902:
 	r75 = r73->blendMode;
-	if( r75 ) goto label$d09e03a_10_906;
+	if( r75 ) goto label$d09e03a_9_906;
 	r75 = (venum*)g$h2d_BlendMode_None;
 	r73->blendMode = r75;
-	label$d09e03a_10_906:
-	goto label$d09e03a_10_690;
-	label$d09e03a_10_907:
+	label$d09e03a_9_906:
+	goto label$d09e03a_9_690;
+	label$d09e03a_9_907:
 	if( r21 == NULL ) hl_null_access();
 	r28 = r21->model;
 	r25 = (String)s$Geometry;
@@ -3478,7 +3470,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r28 = hxd_fmt_fbx_BaseLibrary_getChild(((hxd__fmt__fbx__BaseLibrary)r0),r28,r25,r35);
 	r81 = NULL;
 	r42 = r21->skin;
-	if( !r42 ) goto label$d09e03a_10_1007;
+	if( !r42 ) goto label$d09e03a_9_1007;
 	r8 = &t$h3d_anim_Joint;
 	r22 = 0;
 	r7 = hl_alloc_array(r8,r22);
@@ -3487,29 +3479,29 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r42 = r21->skin;
 	if( r42 == NULL ) hl_null_access();
 	r31 = r42->childs;
-	label$d09e03a_10_923:
+	label$d09e03a_9_923:
 	if( r31 == NULL ) hl_null_access();
 	r40 = r31->length;
-	if( r22 >= r40 ) goto label$d09e03a_10_942;
+	if( r22 >= r40 ) goto label$d09e03a_9_942;
 	r40 = r31->length;
-	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_10_931;
+	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_9_931;
 	r42 = NULL;
-	goto label$d09e03a_10_934;
-	label$d09e03a_10_931:
+	goto label$d09e03a_9_934;
+	label$d09e03a_9_931:
 	r7 = r31->array;
 	r20 = ((vdynamic**)(r7 + 1))[r22];
 	r42 = (hxd__fmt__fbx__TmpObject)r20;
-	label$d09e03a_10_934:
+	label$d09e03a_9_934:
 	++r22;
 	if( r42 == NULL ) hl_null_access();
 	r74 = r42->isJoint;
-	if( !r74 ) goto label$d09e03a_10_941;
+	if( !r74 ) goto label$d09e03a_9_941;
 	if( r17 == NULL ) hl_null_access();
 	r26 = r42->joint;
 	r39 = hl_types_ArrayObj_push(r17,((vdynamic*)r26));
-	label$d09e03a_10_941:
-	goto label$d09e03a_10_923;
-	label$d09e03a_10_942:
+	label$d09e03a_9_941:
+	goto label$d09e03a_9_923;
+	label$d09e03a_9_942:
 	r22 = r0->bonesPerVertex;
 	r82 = hxd_fmt_fbx_BaseLibrary_createSkin(((hxd__fmt__fbx__BaseLibrary)r0),r46,r47,r17,r22);
 	r81 = r82;
@@ -3519,7 +3511,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r22 = r31->length;
 	r83 = (hxd__fmt__fbx__$BaseLibrary)g$_hxd_fmt_fbx_BaseLibrary;
 	r39 = r83->maxBonesPerSkin;
-	if( r39 >= r22 ) goto label$d09e03a_10_1002;
+	if( r39 >= r22 ) goto label$d09e03a_9_1002;
 	r84 = (hxd__fmt__fbx__Geometry)hl_alloc_obj(&t$hxd_fmt_fbx_Geometry);
 	hxd_fmt_fbx_Geometry_new(r84,((hxd__fmt__fbx__BaseLibrary)r0),r28);
 	r85 = hxd_fmt_fbx_Geometry_getIndexes(r84);
@@ -3533,62 +3525,62 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r39 = 0;
 	if( r85 == NULL ) hl_null_access();
 	r86 = hl_vfields(r85)[0] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r85)[0])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r85->value,5243965/*idx*/,&t$hl_types_ArrayBytes_Int);
-	label$d09e03a_10_965:
+	label$d09e03a_9_965:
 	if( r86 == NULL ) hl_null_access();
 	r76 = r86->length;
-	if( r39 >= r76 ) goto label$d09e03a_10_992;
+	if( r39 >= r76 ) goto label$d09e03a_9_992;
 	r76 = r86->length;
-	if( ((unsigned)r39) < ((unsigned)r76) ) goto label$d09e03a_10_973;
+	if( ((unsigned)r39) < ((unsigned)r76) ) goto label$d09e03a_9_973;
 	r40 = 0;
-	goto label$d09e03a_10_977;
-	label$d09e03a_10_973:
+	goto label$d09e03a_9_977;
+	label$d09e03a_9_973:
 	r61 = r86->bytes;
 	r76 = 2;
 	r76 = r39 << r76;
 	r40 = *(int*)(r61 + r76);
-	label$d09e03a_10_977:
+	label$d09e03a_9_977:
 	++r39;
 	if( r72 == NULL ) hl_null_access();
 	if( r85 == NULL ) hl_null_access();
 	r88 = hl_vfields(r85)[1] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r85)[1])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r85->value,240071313/*vidx*/,&t$hl_types_ArrayBytes_Int);
 	if( r88 == NULL ) hl_null_access();
 	r89 = r88->length;
-	if( ((unsigned)r40) < ((unsigned)r89) ) goto label$d09e03a_10_986;
+	if( ((unsigned)r40) < ((unsigned)r89) ) goto label$d09e03a_9_986;
 	r76 = 0;
-	goto label$d09e03a_10_990;
-	label$d09e03a_10_986:
+	goto label$d09e03a_9_990;
+	label$d09e03a_9_986:
 	r61 = r88->bytes;
 	r89 = 2;
 	r89 = r40 << r89;
 	r76 = *(int*)(r61 + r89);
-	label$d09e03a_10_990:
+	label$d09e03a_9_990:
 	r76 = hl_types_ArrayBytes_Int_push(r72,r76);
-	goto label$d09e03a_10_965;
-	label$d09e03a_10_992:
+	goto label$d09e03a_9_965;
+	label$d09e03a_9_992:
 	if( r81 == NULL ) hl_null_access();
 	if( r69 == NULL ) hl_null_access();
 	r40 = r69->length;
 	r76 = 1;
-	if( r76 >= r40 ) goto label$d09e03a_10_1000;
+	if( r76 >= r40 ) goto label$d09e03a_9_1000;
 	if( r84 == NULL ) hl_null_access();
 	r87 = hxd_fmt_fbx_Geometry_getMaterialByTriangle(r84);
-	goto label$d09e03a_10_1001;
-	label$d09e03a_10_1000:
+	goto label$d09e03a_9_1001;
+	label$d09e03a_9_1000:
 	r87 = NULL;
-	label$d09e03a_10_1001:
+	label$d09e03a_9_1001:
 	r74 = h3d_anim_Skin_split(r81,r22,r72,r87);
-	label$d09e03a_10_1002:
+	label$d09e03a_9_1002:
 	if( r54 == NULL ) hl_null_access();
 	if( r21 == NULL ) hl_null_access();
 	r42 = r21->skin;
 	r90 = hxd_fmt_fbx_HMDOut_makeSkin(r0,r81,r42);
 	r54->skin = r90;
-	label$d09e03a_10_1007:
+	label$d09e03a_9_1007:
 	if( r48 == NULL ) hl_null_access();
 	r22 = hxd_fmt_fbx_FbxTools_getId(r28);
 	r20 = haxe_ds_IntMap_get(r48,r22);
 	r91 = hl_to_virtual(&t$vrt_9464f5b,(vdynamic*)r20);
-	if( r91 ) goto label$d09e03a_10_1035;
+	if( r91 ) goto label$d09e03a_9_1035;
 	r84 = (hxd__fmt__fbx__Geometry)hl_alloc_obj(&t$hxd_fmt_fbx_Geometry);
 	hxd_fmt_fbx_Geometry_new(r84,((hxd__fmt__fbx__BaseLibrary)r0),r28);
 	r94 = r0->dataOut;
@@ -3612,7 +3604,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r22 = hl_types_ArrayObj_push(r17,((vdynamic*)r95));
 	r22 = hxd_fmt_fbx_FbxTools_getId(r28);
 	haxe_ds_IntMap_set(r48,r22,((vdynamic*)r92));
-	label$d09e03a_10_1035:
+	label$d09e03a_9_1035:
 	if( r54 == NULL ) hl_null_access();
 	if( r91 == NULL ) hl_null_access();
 	r22 = hl_vfields(r91)[0] ? (*(int*)(hl_vfields(r91)[0])) : (int)hl_dyn_geti(r91->value,5145602/*gid*/,&t$_i32);
@@ -3620,7 +3612,7 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	if( r69 == NULL ) hl_null_access();
 	r22 = r69->length;
 	r39 = 0;
-	if( r22 != r39 ) goto label$d09e03a_10_1069;
+	if( r22 != r39 ) goto label$d09e03a_9_1069;
 	r73 = (hxd__fmt__hmd__Material)hl_alloc_obj(&t$hxd_fmt_hmd_Material);
 	hxd_fmt_hmd_Material_new(r73);
 	r75 = (venum*)g$h2d_BlendMode_None;
@@ -3647,12 +3639,12 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r39 = 1;
 	r72 = hl_types_ArrayBase_allocI32(r61,r39);
 	r69 = r72;
-	label$d09e03a_10_1069:
+	label$d09e03a_9_1069:
 	r72 = hl_vfields(r91)[1] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r91)[1])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r91->value,-536103710/*materials*/,&t$hl_types_ArrayBytes_Int);
-	if( r72 ) goto label$d09e03a_10_1073;
+	if( r72 ) goto label$d09e03a_9_1073;
 	r54->materials = r69;
-	goto label$d09e03a_10_1107;
-	label$d09e03a_10_1073:
+	goto label$d09e03a_9_1107;
+	label$d09e03a_9_1073:
 	r22 = 0;
 	r61 = hl_alloc_bytes(r22);
 	r22 = 0;
@@ -3660,41 +3652,41 @@ void hxd_fmt_fbx_HMDOut_addModels(hxd__fmt__fbx__HMDOut r0,bool r1) {
 	r72 = hl_types_ArrayBase_allocI32(r61,r22);
 	r22 = 0;
 	r86 = hl_vfields(r91)[1] ? (*(hl__types__ArrayBytes_Int*)(hl_vfields(r91)[1])) : (hl__types__ArrayBytes_Int)hl_dyn_getp(r91->value,-536103710/*materials*/,&t$hl_types_ArrayBytes_Int);
-	label$d09e03a_10_1080:
+	label$d09e03a_9_1080:
 	if( r86 == NULL ) hl_null_access();
 	r40 = r86->length;
-	if( r22 >= r40 ) goto label$d09e03a_10_1105;
+	if( r22 >= r40 ) goto label$d09e03a_9_1105;
 	r40 = r86->length;
-	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_10_1088;
+	if( ((unsigned)r22) < ((unsigned)r40) ) goto label$d09e03a_9_1088;
 	r39 = 0;
-	goto label$d09e03a_10_1092;
-	label$d09e03a_10_1088:
+	goto label$d09e03a_9_1092;
+	label$d09e03a_9_1088:
 	r61 = r86->bytes;
 	r40 = 2;
 	r40 = r22 << r40;
 	r39 = *(int*)(r61 + r40);
-	label$d09e03a_10_1092:
+	label$d09e03a_9_1092:
 	++r22;
 	if( r72 == NULL ) hl_null_access();
 	if( r69 == NULL ) hl_null_access();
 	r76 = r69->length;
-	if( ((unsigned)r39) < ((unsigned)r76) ) goto label$d09e03a_10_1099;
+	if( ((unsigned)r39) < ((unsigned)r76) ) goto label$d09e03a_9_1099;
 	r40 = 0;
-	goto label$d09e03a_10_1103;
-	label$d09e03a_10_1099:
+	goto label$d09e03a_9_1103;
+	label$d09e03a_9_1099:
 	r61 = r69->bytes;
 	r76 = 2;
 	r76 = r39 << r76;
 	r40 = *(int*)(r61 + r76);
-	label$d09e03a_10_1103:
+	label$d09e03a_9_1103:
 	r40 = hl_types_ArrayBytes_Int_push(r72,r40);
-	goto label$d09e03a_10_1080;
-	label$d09e03a_10_1105:
+	goto label$d09e03a_9_1080;
+	label$d09e03a_9_1105:
 	if( r54 == NULL ) hl_null_access();
 	r54->materials = r72;
-	label$d09e03a_10_1107:
-	goto label$d09e03a_10_397;
-	label$d09e03a_10_1108:
+	label$d09e03a_9_1107:
+	goto label$d09e03a_9_397;
+	label$d09e03a_9_1108:
 	return;
 }
 
@@ -3708,10 +3700,10 @@ String hxd_fmt_fbx_HMDOut_makeTexturePath(hxd__fmt__fbx__HMDOut r0,vvirtual* r1)
 	vdynamic *r4, *r14;
 	varray *r10;
 	int r7, r8;
-	if( r1 ) goto label$d09e03a_11_3;
+	if( r1 ) goto label$d09e03a_10_3;
 	r3 = NULL;
 	return r3;
-	label$d09e03a_11_3:
+	label$d09e03a_10_3:
 	r3 = (String)s$FileName;
 	r6 = NULL;
 	r2 = hxd_fmt_fbx_FbxTools_get(r1,r3,r6);
@@ -3720,20 +3712,20 @@ String hxd_fmt_fbx_HMDOut_makeTexturePath(hxd__fmt__fbx__HMDOut r0,vvirtual* r1)
 	if( r5 == NULL ) hl_null_access();
 	r7 = 0;
 	r8 = r5->length;
-	if( ((unsigned)r7) < ((unsigned)r8) ) goto label$d09e03a_11_14;
+	if( ((unsigned)r7) < ((unsigned)r8) ) goto label$d09e03a_10_14;
 	r9 = NULL;
-	goto label$d09e03a_11_17;
-	label$d09e03a_11_14:
+	goto label$d09e03a_10_17;
+	label$d09e03a_10_14:
 	r10 = r5->array;
 	r4 = ((vdynamic**)(r10 + 1))[r7];
 	r9 = (venum*)r4;
-	label$d09e03a_11_17:
+	label$d09e03a_10_17:
 	r3 = hxd_fmt_fbx_FbxTools_toString(r9);
 	r12 = (String)s$;
-	if( r3 != r12 && (!r3 || !r12 || String___compare(r3,(vdynamic*)r12) != 0) ) goto label$d09e03a_11_22;
+	if( r3 != r12 && (!r3 || !r12 || String___compare(r3,(vdynamic*)r12) != 0) ) goto label$d09e03a_10_22;
 	r11 = NULL;
 	return r11;
-	label$d09e03a_11_22:
+	label$d09e03a_10_22:
 	if( r3 == NULL ) hl_null_access();
 	r12 = (String)s$28d397e;
 	r5 = String_split(r3,r12);
@@ -3742,35 +3734,35 @@ String hxd_fmt_fbx_HMDOut_makeTexturePath(hxd__fmt__fbx__HMDOut r0,vvirtual* r1)
 	r11 = hl_types_ArrayObj_join(r5,r11);
 	r3 = r11;
 	r13 = r0->absoluteTexturePath;
-	if( r13 ) goto label$d09e03a_11_57;
+	if( r13 ) goto label$d09e03a_10_57;
 	r11 = r0->filePath;
-	if( !r11 ) goto label$d09e03a_11_45;
+	if( !r11 ) goto label$d09e03a_10_45;
 	if( r3 == NULL ) hl_null_access();
 	r11 = String_toLowerCase(r3);
 	r12 = r0->filePath;
 	r13 = StringTools_startsWith(r11,r12);
-	if( !r13 ) goto label$d09e03a_11_45;
+	if( !r13 ) goto label$d09e03a_10_45;
 	r12 = r0->filePath;
 	if( r12 == NULL ) hl_null_access();
 	r7 = r12->length;
 	r14 = NULL;
 	r11 = String_substr(r3,r7,r14);
 	r3 = r11;
-	goto label$d09e03a_11_57;
-	label$d09e03a_11_45:
+	goto label$d09e03a_10_57;
+	label$d09e03a_10_45:
 	if( r3 == NULL ) hl_null_access();
 	r12 = (String)s$_res_;
 	r5 = String_split(r3,r12);
 	if( r5 == NULL ) hl_null_access();
 	r7 = r5->length;
 	r8 = 1;
-	if( r8 >= r7 ) goto label$d09e03a_11_57;
+	if( r8 >= r7 ) goto label$d09e03a_10_57;
 	r4 = hl_types_ArrayObj_shift(r5);
 	r11 = (String)r4;
 	r11 = (String)s$_res_;
 	r11 = hl_types_ArrayObj_join(r5,r11);
 	r3 = r11;
-	label$d09e03a_11_57:
+	label$d09e03a_10_57:
 	return r3;
 }
 
@@ -3807,19 +3799,19 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r10 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r7 = r1->allJoints;
-	label$d09e03a_12_14:
+	label$d09e03a_11_14:
 	if( r7 == NULL ) hl_null_access();
 	r12 = r7->length;
-	if( r10 >= r12 ) goto label$d09e03a_12_197;
+	if( r10 >= r12 ) goto label$d09e03a_11_197;
 	r12 = r7->length;
-	if( ((unsigned)r10) < ((unsigned)r12) ) goto label$d09e03a_12_22;
+	if( ((unsigned)r10) < ((unsigned)r12) ) goto label$d09e03a_11_22;
 	r14 = NULL;
-	goto label$d09e03a_12_25;
-	label$d09e03a_12_22:
+	goto label$d09e03a_11_25;
+	label$d09e03a_11_22:
 	r8 = r7->array;
 	r15 = ((vdynamic**)(r8 + 1))[r10];
 	r14 = (h3d__anim__Joint)r15;
-	label$d09e03a_12_25:
+	label$d09e03a_11_25:
 	++r10;
 	r16 = (hxd__fmt__hmd__SkinJoint)hl_alloc_obj(&t$hxd_fmt_hmd_SkinJoint);
 	hxd_fmt_hmd_SkinJoint_new(r16);
@@ -3827,14 +3819,14 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r5 = r14->name;
 	r16->name = r5;
 	r17 = r14->parent;
-	if( r17 ) goto label$d09e03a_12_35;
+	if( r17 ) goto label$d09e03a_11_35;
 	r11 = -1;
-	goto label$d09e03a_12_38;
-	label$d09e03a_12_35:
+	goto label$d09e03a_11_38;
+	label$d09e03a_11_35:
 	r17 = r14->parent;
 	if( r17 == NULL ) hl_null_access();
 	r11 = r17->index;
-	label$d09e03a_12_38:
+	label$d09e03a_11_38:
 	r16->parent = r11;
 	r11 = r14->bindIndex;
 	r16->bind = r11;
@@ -3842,7 +3834,7 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r18 = hxd_fmt_fbx_HMDOut_makePosition(r0,r19);
 	r16->position = r18;
 	r19 = r14->transPos;
-	if( !r19 ) goto label$d09e03a_12_192;
+	if( !r19 ) goto label$d09e03a_11_192;
 	r19 = r14->transPos;
 	r18 = hxd_fmt_fbx_HMDOut_makePosition(r0,r19);
 	r16->transpos = r18;
@@ -3850,25 +3842,25 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	if( r18 == NULL ) hl_null_access();
 	r20 = r18->sx;
 	r21 = 1.;
-	if( r20 != r21 ) goto label$d09e03a_12_64;
+	if( r20 != r21 ) goto label$d09e03a_11_64;
 	r18 = r16->transpos;
 	if( r18 == NULL ) hl_null_access();
 	r20 = r18->sy;
 	r21 = 1.;
-	if( r20 != r21 ) goto label$d09e03a_12_64;
+	if( r20 != r21 ) goto label$d09e03a_11_64;
 	r18 = r16->transpos;
 	if( r18 == NULL ) hl_null_access();
 	r20 = r18->sz;
 	r21 = 1.;
-	if( r20 == r21 ) goto label$d09e03a_12_192;
-	label$d09e03a_12_64:
+	if( r20 == r21 ) goto label$d09e03a_11_192;
+	label$d09e03a_11_64:
 	r19 = r14->transPos;
 	if( r19 == NULL ) hl_null_access();
 	r19 = h3d_Matrix_clone(r19);
 	if( r19 == NULL ) hl_null_access();
 	h3d_Matrix_transpose(r19);
 	r22 = NULL;
-	if( r22 ) goto label$d09e03a_12_78;
+	if( r22 ) goto label$d09e03a_11_78;
 	r23 = (h3d__Vector)hl_alloc_obj(&t$h3d_Vector);
 	r24 = NULL;
 	r25 = NULL;
@@ -3876,7 +3868,7 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r27 = NULL;
 	h3d_Vector_new(r23,r24,r25,r26,r27);
 	r22 = r23;
-	label$d09e03a_12_78:
+	label$d09e03a_11_78:
 	if( r22 == NULL ) hl_null_access();
 	r20 = r19->_11;
 	r21 = r19->_11;
@@ -3947,7 +3939,7 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r21 = r21 * r28;
 	r20 = r20 + r21;
 	r21 = 0.;
-	if( !(r20 < r21) ) goto label$d09e03a_12_161;
+	if( !(r20 < r21) ) goto label$d09e03a_11_161;
 	r20 = r22->x;
 	r21 = -1.;
 	r20 = r20 * r21;
@@ -3960,7 +3952,7 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r21 = -1.;
 	r20 = r20 * r21;
 	r22->z = r20;
-	label$d09e03a_12_161:
+	label$d09e03a_11_161:
 	r20 = 1.;
 	r21 = r22->x;
 	r20 = r20 / r21;
@@ -3992,16 +3984,16 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r29 = r22->z;
 	r29 = hxd_fmt_fbx_BaseLibrary_round(((hxd__fmt__fbx__BaseLibrary)r0),r29);
 	r18->sz = r29;
-	label$d09e03a_12_192:
+	label$d09e03a_11_192:
 	if( r3 == NULL ) hl_null_access();
 	r13 = r3->joints;
 	if( r13 == NULL ) hl_null_access();
 	r11 = hl_types_ArrayObj_push(r13,((vdynamic*)r16));
-	goto label$d09e03a_12_14;
-	label$d09e03a_12_197:
+	goto label$d09e03a_11_14;
+	label$d09e03a_11_197:
 	if( r1 == NULL ) hl_null_access();
 	r7 = r1->splitJoints;
-	if( !r7 ) goto label$d09e03a_12_256;
+	if( !r7 ) goto label$d09e03a_11_256;
 	if( r3 == NULL ) hl_null_access();
 	r9 = &t$hxd_fmt_hmd_SkinSplit;
 	r10 = 0;
@@ -4010,19 +4002,19 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r3->split = r7;
 	r10 = 0;
 	r7 = r1->splitJoints;
-	label$d09e03a_12_208:
+	label$d09e03a_11_208:
 	if( r7 == NULL ) hl_null_access();
 	r12 = r7->length;
-	if( r10 >= r12 ) goto label$d09e03a_12_256;
+	if( r10 >= r12 ) goto label$d09e03a_11_256;
 	r12 = r7->length;
-	if( ((unsigned)r10) < ((unsigned)r12) ) goto label$d09e03a_12_216;
+	if( ((unsigned)r10) < ((unsigned)r12) ) goto label$d09e03a_11_216;
 	r31 = NULL;
-	goto label$d09e03a_12_219;
-	label$d09e03a_12_216:
+	goto label$d09e03a_11_219;
+	label$d09e03a_11_216:
 	r8 = r7->array;
 	r15 = ((vdynamic**)(r8 + 1))[r10];
 	r31 = hl_to_virtual(&t$vrt_97d249e,(vdynamic*)r15);
-	label$d09e03a_12_219:
+	label$d09e03a_11_219:
 	++r10;
 	r32 = (hxd__fmt__hmd__SkinSplit)hl_alloc_obj(&t$hxd_fmt_hmd_SkinSplit);
 	hxd_fmt_hmd_SkinSplit_new(r32);
@@ -4036,34 +4028,34 @@ hxd__fmt__hmd__Skin hxd_fmt_fbx_HMDOut_makeSkin(hxd__fmt__fbx__HMDOut r0,h3d__an
 	r33 = hl_types_ArrayBase_allocI32(r34,r11);
 	r11 = 0;
 	r13 = hl_vfields(r31)[0] ? (*(hl__types__ArrayObj*)(hl_vfields(r31)[0])) : (hl__types__ArrayObj)hl_dyn_getp(r31->value,-251009446/*joints*/,&t$hl_types_ArrayObj);
-	label$d09e03a_12_232:
+	label$d09e03a_11_232:
 	if( r13 == NULL ) hl_null_access();
 	r35 = r13->length;
-	if( r11 >= r35 ) goto label$d09e03a_12_249;
+	if( r11 >= r35 ) goto label$d09e03a_11_249;
 	r35 = r13->length;
-	if( ((unsigned)r11) < ((unsigned)r35) ) goto label$d09e03a_12_240;
+	if( ((unsigned)r11) < ((unsigned)r35) ) goto label$d09e03a_11_240;
 	r14 = NULL;
-	goto label$d09e03a_12_243;
-	label$d09e03a_12_240:
+	goto label$d09e03a_11_243;
+	label$d09e03a_11_240:
 	r8 = r13->array;
 	r15 = ((vdynamic**)(r8 + 1))[r11];
 	r14 = (h3d__anim__Joint)r15;
-	label$d09e03a_12_243:
+	label$d09e03a_11_243:
 	++r11;
 	if( r33 == NULL ) hl_null_access();
 	if( r14 == NULL ) hl_null_access();
 	r12 = r14->index;
 	r12 = hl_types_ArrayBytes_Int_push(r33,r12);
-	goto label$d09e03a_12_232;
-	label$d09e03a_12_249:
+	goto label$d09e03a_11_232;
+	label$d09e03a_11_249:
 	if( r32 == NULL ) hl_null_access();
 	r32->joints = r33;
 	if( r3 == NULL ) hl_null_access();
 	r13 = r3->split;
 	if( r13 == NULL ) hl_null_access();
 	r11 = hl_types_ArrayObj_push(r13,((vdynamic*)r32));
-	goto label$d09e03a_12_208;
-	label$d09e03a_12_256:
+	goto label$d09e03a_11_208;
+	label$d09e03a_11_256:
 	return r3;
 }
 
@@ -4076,7 +4068,7 @@ hxd__fmt__hmd__Position hxd_fmt_fbx_HMDOut_makePosition(hxd__fmt__fbx__HMDOut r0
 	r2 = (hxd__fmt__hmd__Position)hl_alloc_obj(&t$hxd_fmt_hmd_Position);
 	hxd_fmt_hmd_Position_new(r2);
 	r4 = NULL;
-	if( r4 ) goto label$d09e03a_13_11;
+	if( r4 ) goto label$d09e03a_12_11;
 	r5 = (h3d__Vector)hl_alloc_obj(&t$h3d_Vector);
 	r6 = NULL;
 	r7 = NULL;
@@ -4084,7 +4076,7 @@ hxd__fmt__hmd__Position hxd_fmt_fbx_HMDOut_makePosition(hxd__fmt__fbx__HMDOut r0
 	r9 = NULL;
 	h3d_Vector_new(r5,r6,r7,r8,r9);
 	r4 = r5;
-	label$d09e03a_13_11:
+	label$d09e03a_12_11:
 	if( r4 == NULL ) hl_null_access();
 	if( r1 == NULL ) hl_null_access();
 	r10 = r1->_11;
@@ -4156,7 +4148,7 @@ hxd__fmt__hmd__Position hxd_fmt_fbx_HMDOut_makePosition(hxd__fmt__fbx__HMDOut r0
 	r11 = r11 * r12;
 	r10 = r10 + r11;
 	r11 = 0.;
-	if( !(r10 < r11) ) goto label$d09e03a_13_95;
+	if( !(r10 < r11) ) goto label$d09e03a_12_95;
 	r10 = r4->x;
 	r11 = -1.;
 	r10 = r10 * r11;
@@ -4169,7 +4161,7 @@ hxd__fmt__hmd__Position hxd_fmt_fbx_HMDOut_makePosition(hxd__fmt__fbx__HMDOut r0
 	r11 = -1.;
 	r10 = r10 * r11;
 	r4->z = r10;
-	label$d09e03a_13_95:
+	label$d09e03a_12_95:
 	r15 = (h3d__Quat)hl_alloc_obj(&t$h3d_Quat);
 	r6 = NULL;
 	r7 = NULL;
@@ -4180,7 +4172,7 @@ hxd__fmt__hmd__Position hxd_fmt_fbx_HMDOut_makePosition(hxd__fmt__fbx__HMDOut r0
 	h3d_Quat_normalize(r15);
 	r10 = r15->w;
 	r11 = 0.;
-	if( !(r10 < r11) ) goto label$d09e03a_13_118;
+	if( !(r10 < r11) ) goto label$d09e03a_12_118;
 	r10 = r15->x;
 	r10 = -r10;
 	r15->x = r10;
@@ -4193,7 +4185,7 @@ hxd__fmt__hmd__Position hxd_fmt_fbx_HMDOut_makePosition(hxd__fmt__fbx__HMDOut r0
 	r10 = r15->w;
 	r10 = -r10;
 	r15->w = r10;
-	label$d09e03a_13_118:
+	label$d09e03a_12_118:
 	r10 = r4->x;
 	r10 = hxd_fmt_fbx_BaseLibrary_round(((hxd__fmt__fbx__BaseLibrary)r0),r10);
 	r2->sx = r10;
@@ -4240,62 +4232,62 @@ void hxd_fmt_fbx_HMDOut_writeFrame(hxd__fmt__fbx__HMDOut r0,h3d__anim__LinearObj
 	if( r5 == NULL ) hl_null_access();
 	r4 = r5->version;
 	r6 = 3;
-	if( r4 >= r6 ) goto label$d09e03a_14_6;
+	if( r4 >= r6 ) goto label$d09e03a_13_6;
 	return;
-	label$d09e03a_14_6:
+	label$d09e03a_13_6:
 	if( r1 == NULL ) hl_null_access();
 	r8 = r1->frames;
-	if( !r8 ) goto label$d09e03a_14_136;
+	if( !r8 ) goto label$d09e03a_13_136;
 	r8 = r1->frames;
 	if( r8 == NULL ) hl_null_access();
 	r6 = r8->length;
-	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_14_15;
+	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_13_15;
 	r9 = NULL;
-	goto label$d09e03a_14_18;
-	label$d09e03a_14_15:
+	goto label$d09e03a_13_18;
+	label$d09e03a_13_15:
 	r10 = r8->array;
 	r7 = ((vdynamic**)(r10 + 1))[r2];
 	r9 = (h3d__anim__LinearFrame)r7;
-	label$d09e03a_14_18:
+	label$d09e03a_13_18:
 	r11 = r1->hasPosition;
-	if( !r11 ) goto label$d09e03a_14_48;
+	if( !r11 ) goto label$d09e03a_13_48;
 	if( r9 == NULL ) hl_null_access();
 	r12 = r9->tx;
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_28;
+	if( r12 != r15 ) goto label$d09e03a_13_28;
 	r14 = 0.;
-	goto label$d09e03a_14_29;
-	label$d09e03a_14_28:
+	goto label$d09e03a_13_29;
+	label$d09e03a_13_28:
 	r14 = r12;
-	label$d09e03a_14_29:
+	label$d09e03a_13_29:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
 	r12 = r9->ty;
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_37;
+	if( r12 != r15 ) goto label$d09e03a_13_37;
 	r14 = 0.;
-	goto label$d09e03a_14_38;
-	label$d09e03a_14_37:
+	goto label$d09e03a_13_38;
+	label$d09e03a_13_37:
 	r14 = r12;
-	label$d09e03a_14_38:
+	label$d09e03a_13_38:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
 	r12 = r9->tz;
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_46;
+	if( r12 != r15 ) goto label$d09e03a_13_46;
 	r14 = 0.;
-	goto label$d09e03a_14_47;
-	label$d09e03a_14_46:
+	goto label$d09e03a_13_47;
+	label$d09e03a_13_46:
 	r14 = r12;
-	label$d09e03a_14_47:
+	label$d09e03a_13_47:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
-	label$d09e03a_14_48:
+	label$d09e03a_13_48:
 	r11 = r1->hasRotation;
-	if( !r11 ) goto label$d09e03a_14_106;
+	if( !r11 ) goto label$d09e03a_13_106;
 	if( r9 == NULL ) hl_null_access();
 	r12 = r9->qx;
 	r14 = r9->qx;
@@ -4316,22 +4308,22 @@ void hxd_fmt_fbx_HMDOut_writeFrame(hxd__fmt__fbx__HMDOut r0,h3d__anim__LinearObj
 	r15 = r9->qw;
 	r14 = r12 * r15;
 	r15 = 0.;
-	if( !(r14 < r15) ) goto label$d09e03a_14_73;
+	if( !(r14 < r15) ) goto label$d09e03a_13_73;
 	r14 = -r12;
 	r12 = r14;
-	label$d09e03a_14_73:
+	label$d09e03a_13_73:
 	r14 = r9->qx;
 	r14 = r14 / r12;
 	r14 = hxd_fmt_fbx_BaseLibrary_round(((hxd__fmt__fbx__BaseLibrary)r0),r14);
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r16 = 0.;
-	if( r14 != r16 ) goto label$d09e03a_14_82;
+	if( r14 != r16 ) goto label$d09e03a_13_82;
 	r15 = 0.;
-	goto label$d09e03a_14_83;
-	label$d09e03a_14_82:
+	goto label$d09e03a_13_83;
+	label$d09e03a_13_82:
 	r15 = r14;
-	label$d09e03a_14_83:
+	label$d09e03a_13_83:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r15);
 	r14 = r9->qy;
 	r14 = r14 / r12;
@@ -4339,12 +4331,12 @@ void hxd_fmt_fbx_HMDOut_writeFrame(hxd__fmt__fbx__HMDOut r0,h3d__anim__LinearObj
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r16 = 0.;
-	if( r14 != r16 ) goto label$d09e03a_14_93;
+	if( r14 != r16 ) goto label$d09e03a_13_93;
 	r15 = 0.;
-	goto label$d09e03a_14_94;
-	label$d09e03a_14_93:
+	goto label$d09e03a_13_94;
+	label$d09e03a_13_93:
 	r15 = r14;
-	label$d09e03a_14_94:
+	label$d09e03a_13_94:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r15);
 	r14 = r9->qz;
 	r14 = r14 / r12;
@@ -4352,76 +4344,76 @@ void hxd_fmt_fbx_HMDOut_writeFrame(hxd__fmt__fbx__HMDOut r0,h3d__anim__LinearObj
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r16 = 0.;
-	if( r14 != r16 ) goto label$d09e03a_14_104;
+	if( r14 != r16 ) goto label$d09e03a_13_104;
 	r15 = 0.;
-	goto label$d09e03a_14_105;
-	label$d09e03a_14_104:
+	goto label$d09e03a_13_105;
+	label$d09e03a_13_104:
 	r15 = r14;
-	label$d09e03a_14_105:
+	label$d09e03a_13_105:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r15);
-	label$d09e03a_14_106:
+	label$d09e03a_13_106:
 	r11 = r1->hasScale;
-	if( !r11 ) goto label$d09e03a_14_136;
+	if( !r11 ) goto label$d09e03a_13_136;
 	if( r9 == NULL ) hl_null_access();
 	r12 = r9->sx;
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_116;
+	if( r12 != r15 ) goto label$d09e03a_13_116;
 	r14 = 0.;
-	goto label$d09e03a_14_117;
-	label$d09e03a_14_116:
+	goto label$d09e03a_13_117;
+	label$d09e03a_13_116:
 	r14 = r12;
-	label$d09e03a_14_117:
+	label$d09e03a_13_117:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
 	r12 = r9->sy;
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_125;
+	if( r12 != r15 ) goto label$d09e03a_13_125;
 	r14 = 0.;
-	goto label$d09e03a_14_126;
-	label$d09e03a_14_125:
+	goto label$d09e03a_13_126;
+	label$d09e03a_13_125:
 	r14 = r12;
-	label$d09e03a_14_126:
+	label$d09e03a_13_126:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
 	r12 = r9->sz;
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_134;
+	if( r12 != r15 ) goto label$d09e03a_13_134;
 	r14 = 0.;
-	goto label$d09e03a_14_135;
-	label$d09e03a_14_134:
+	goto label$d09e03a_13_135;
+	label$d09e03a_13_134:
 	r14 = r12;
-	label$d09e03a_14_135:
+	label$d09e03a_13_135:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
-	label$d09e03a_14_136:
+	label$d09e03a_13_136:
 	r17 = r1->uvs;
-	if( !r17 ) goto label$d09e03a_14_180;
+	if( !r17 ) goto label$d09e03a_13_180;
 	r17 = r1->uvs;
 	if( r17 == NULL ) hl_null_access();
 	r6 = 1;
 	r4 = r2 << r6;
 	r6 = r17->length;
-	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$d09e03a_14_146;
+	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$d09e03a_13_146;
 	r12 = 0.;
-	goto label$d09e03a_14_150;
-	label$d09e03a_14_146:
+	goto label$d09e03a_13_150;
+	label$d09e03a_13_146:
 	r18 = r17->bytes;
 	r6 = 3;
 	r6 = r4 << r6;
 	r12 = *(double*)(r18 + r6);
-	label$d09e03a_14_150:
+	label$d09e03a_13_150:
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_156;
+	if( r12 != r15 ) goto label$d09e03a_13_156;
 	r14 = 0.;
-	goto label$d09e03a_14_157;
-	label$d09e03a_14_156:
+	goto label$d09e03a_13_157;
+	label$d09e03a_13_156:
 	r14 = r12;
-	label$d09e03a_14_157:
+	label$d09e03a_13_157:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
 	r17 = r1->uvs;
 	if( r17 == NULL ) hl_null_access();
@@ -4430,76 +4422,76 @@ void hxd_fmt_fbx_HMDOut_writeFrame(hxd__fmt__fbx__HMDOut r0,h3d__anim__LinearObj
 	r6 = 1;
 	r4 = r4 + r6;
 	r6 = r17->length;
-	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$d09e03a_14_168;
+	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$d09e03a_13_168;
 	r12 = 0.;
-	goto label$d09e03a_14_172;
-	label$d09e03a_14_168:
+	goto label$d09e03a_13_172;
+	label$d09e03a_13_168:
 	r18 = r17->bytes;
 	r6 = 3;
 	r6 = r4 << r6;
 	r12 = *(double*)(r18 + r6);
-	label$d09e03a_14_172:
+	label$d09e03a_13_172:
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_178;
+	if( r12 != r15 ) goto label$d09e03a_13_178;
 	r14 = 0.;
-	goto label$d09e03a_14_179;
-	label$d09e03a_14_178:
+	goto label$d09e03a_13_179;
+	label$d09e03a_13_178:
 	r14 = r12;
-	label$d09e03a_14_179:
+	label$d09e03a_13_179:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
-	label$d09e03a_14_180:
+	label$d09e03a_13_180:
 	r17 = r1->alphas;
-	if( !r17 ) goto label$d09e03a_14_200;
+	if( !r17 ) goto label$d09e03a_13_200;
 	r17 = r1->alphas;
 	if( r17 == NULL ) hl_null_access();
 	r6 = r17->length;
-	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_14_188;
+	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_13_188;
 	r12 = 0.;
-	goto label$d09e03a_14_192;
-	label$d09e03a_14_188:
+	goto label$d09e03a_13_192;
+	label$d09e03a_13_188:
 	r18 = r17->bytes;
 	r6 = 3;
 	r6 = r2 << r6;
 	r12 = *(double*)(r18 + r6);
-	label$d09e03a_14_192:
+	label$d09e03a_13_192:
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_198;
+	if( r12 != r15 ) goto label$d09e03a_13_198;
 	r14 = 0.;
-	goto label$d09e03a_14_199;
-	label$d09e03a_14_198:
+	goto label$d09e03a_13_199;
+	label$d09e03a_13_198:
 	r14 = r12;
-	label$d09e03a_14_199:
+	label$d09e03a_13_199:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
-	label$d09e03a_14_200:
+	label$d09e03a_13_200:
 	r17 = r1->propValues;
-	if( !r17 ) goto label$d09e03a_14_220;
+	if( !r17 ) goto label$d09e03a_13_220;
 	r17 = r1->propValues;
 	if( r17 == NULL ) hl_null_access();
 	r6 = r17->length;
-	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_14_208;
+	if( ((unsigned)r2) < ((unsigned)r6) ) goto label$d09e03a_13_208;
 	r12 = 0.;
-	goto label$d09e03a_14_212;
-	label$d09e03a_14_208:
+	goto label$d09e03a_13_212;
+	label$d09e03a_13_208:
 	r18 = r17->bytes;
 	r6 = 3;
 	r6 = r2 << r6;
 	r12 = *(double*)(r18 + r6);
-	label$d09e03a_14_212:
+	label$d09e03a_13_212:
 	r13 = r0->dataOut;
 	if( r13 == NULL ) hl_null_access();
 	r15 = 0.;
-	if( r12 != r15 ) goto label$d09e03a_14_218;
+	if( r12 != r15 ) goto label$d09e03a_13_218;
 	r14 = 0.;
-	goto label$d09e03a_14_219;
-	label$d09e03a_14_218:
+	goto label$d09e03a_13_219;
+	label$d09e03a_13_218:
 	r14 = r12;
-	label$d09e03a_14_219:
+	label$d09e03a_13_219:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r13),r14);
-	label$d09e03a_14_220:
+	label$d09e03a_13_220:
 	return;
 }
 
@@ -4561,26 +4553,26 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r7 = r11->pos;
 	r2->dataPosition = r7;
 	r8 = r0->animationEvents;
-	if( !r8 ) goto label$d09e03a_16_56;
+	if( !r8 ) goto label$d09e03a_15_56;
 	r10 = &t$hxd_fmt_hmd_AnimationEvent;
 	r7 = 0;
 	r9 = hl_alloc_array(r10,r7);
 	r8 = hl_types_ArrayObj_alloc(r9);
 	r7 = 0;
 	r13 = r0->animationEvents;
-	label$d09e03a_16_32:
+	label$d09e03a_15_32:
 	if( r13 == NULL ) hl_null_access();
 	r15 = r13->length;
-	if( r7 >= r15 ) goto label$d09e03a_16_54;
+	if( r7 >= r15 ) goto label$d09e03a_15_54;
 	r15 = r13->length;
-	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$d09e03a_16_40;
+	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$d09e03a_15_40;
 	r17 = NULL;
-	goto label$d09e03a_16_43;
-	label$d09e03a_16_40:
+	goto label$d09e03a_15_43;
+	label$d09e03a_15_40:
 	r9 = r13->array;
 	r18 = ((vdynamic**)(r9 + 1))[r7];
 	r17 = hl_to_virtual(&t$vrt_8c19931,(vdynamic*)r18);
-	label$d09e03a_16_43:
+	label$d09e03a_15_43:
 	++r7;
 	r19 = (hxd__fmt__hmd__AnimationEvent)hl_alloc_obj(&t$hxd_fmt_hmd_AnimationEvent);
 	hxd_fmt_hmd_AnimationEvent_new(r19);
@@ -4591,40 +4583,40 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r19->data = r4;
 	if( r8 == NULL ) hl_null_access();
 	r14 = hl_types_ArrayObj_push(r8,((vdynamic*)r19));
-	goto label$d09e03a_16_32;
-	label$d09e03a_16_54:
+	goto label$d09e03a_15_32;
+	label$d09e03a_15_54:
 	if( r2 == NULL ) hl_null_access();
 	r2->events = r8;
-	label$d09e03a_16_56:
+	label$d09e03a_15_56:
 	if( r1 == NULL ) hl_null_access();
 	r8 = r1->objects;
 	if( r8 == NULL ) hl_null_access();
 	r20 = &cl$0;
-	if( r20 ) goto label$d09e03a_16_63;
+	if( r20 ) goto label$d09e03a_15_63;
 	r21 = NULL;
-	goto label$d09e03a_16_64;
-	label$d09e03a_16_63:
+	goto label$d09e03a_15_64;
+	label$d09e03a_15_63:
 	r21 = hl_alloc_closure_ptr(&t$fun_b73ceee,hxd_fmt_fbx_HMDOut_makeAnimation__$2,r20);
-	label$d09e03a_16_64:
+	label$d09e03a_15_64:
 	hl_types_ArrayObj_sort(r8,r21);
 	r10 = &t$h3d_anim_LinearObject;
 	r7 = 0;
 	r9 = hl_alloc_array(r10,r7);
 	r13 = hl_types_ArrayObj_alloc(r9);
 	r7 = 0;
-	label$d09e03a_16_70:
+	label$d09e03a_15_70:
 	if( r8 == NULL ) hl_null_access();
 	r15 = r8->length;
-	if( r7 >= r15 ) goto label$d09e03a_16_460;
+	if( r7 >= r15 ) goto label$d09e03a_15_460;
 	r15 = r8->length;
-	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$d09e03a_16_78;
+	if( ((unsigned)r7) < ((unsigned)r15) ) goto label$d09e03a_15_78;
 	r22 = NULL;
-	goto label$d09e03a_16_81;
-	label$d09e03a_16_78:
+	goto label$d09e03a_15_81;
+	label$d09e03a_15_78:
 	r9 = r8->array;
 	r18 = ((vdynamic**)(r9 + 1))[r7];
 	r22 = (h3d__anim__LinearObject)r18;
-	label$d09e03a_16_81:
+	label$d09e03a_15_81:
 	++r7;
 	r23 = (hxd__fmt__hmd__AnimationObject)hl_alloc_obj(&t$hxd_fmt_hmd_AnimationObject);
 	hxd_fmt_hmd_AnimationObject_new(r23);
@@ -4640,105 +4632,105 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r16 = hl_types_ArrayObj_alloc(r9);
 	r23->props = r16;
 	r16 = r22->frames;
-	if( !r16 ) goto label$d09e03a_16_271;
+	if( !r16 ) goto label$d09e03a_15_271;
 	r16 = r22->frames;
 	if( r16 == NULL ) hl_null_access();
 	r24 = r16->length;
 	r14 = r24;
 	r5 = r22->hasPosition;
-	if( r5 ) goto label$d09e03a_16_108;
+	if( r5 ) goto label$d09e03a_15_108;
 	r25 = r0->d;
 	if( r25 == NULL ) hl_null_access();
 	r24 = r25->version;
 	r26 = 3;
-	if( r24 >= r26 ) goto label$d09e03a_16_112;
-	label$d09e03a_16_108:
+	if( r24 >= r26 ) goto label$d09e03a_15_112;
+	label$d09e03a_15_108:
 	r24 = r23->flags;
 	r26 = 1;
 	r24 = r24 | r26;
 	r23->flags = r24;
-	label$d09e03a_16_112:
+	label$d09e03a_15_112:
 	r5 = r22->hasRotation;
-	if( !r5 ) goto label$d09e03a_16_118;
+	if( !r5 ) goto label$d09e03a_15_118;
 	r24 = r23->flags;
 	r26 = 2;
 	r24 = r24 | r26;
 	r23->flags = r24;
-	label$d09e03a_16_118:
+	label$d09e03a_15_118:
 	r5 = r22->hasScale;
-	if( !r5 ) goto label$d09e03a_16_124;
+	if( !r5 ) goto label$d09e03a_15_124;
 	r24 = r23->flags;
 	r26 = 4;
 	r24 = r24 | r26;
 	r23->flags = r24;
-	label$d09e03a_16_124:
+	label$d09e03a_15_124:
 	r25 = r0->d;
 	if( r25 == NULL ) hl_null_access();
 	r24 = r25->version;
 	r26 = 3;
-	if( r24 >= r26 ) goto label$d09e03a_16_271;
+	if( r24 >= r26 ) goto label$d09e03a_15_271;
 	r24 = 0;
 	r16 = r22->frames;
-	label$d09e03a_16_131:
+	label$d09e03a_15_131:
 	if( r16 == NULL ) hl_null_access();
 	r27 = r16->length;
-	if( r24 >= r27 ) goto label$d09e03a_16_271;
+	if( r24 >= r27 ) goto label$d09e03a_15_271;
 	r27 = r16->length;
-	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_16_139;
+	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_15_139;
 	r28 = NULL;
-	goto label$d09e03a_16_142;
-	label$d09e03a_16_139:
+	goto label$d09e03a_15_142;
+	label$d09e03a_15_139:
 	r9 = r16->array;
 	r18 = ((vdynamic**)(r9 + 1))[r24];
 	r28 = (h3d__anim__LinearFrame)r18;
-	label$d09e03a_16_142:
+	label$d09e03a_15_142:
 	++r24;
 	if( r23 == NULL ) hl_null_access();
 	r26 = r23->flags;
 	r27 = 1;
 	r26 = r26 & r27;
 	r27 = 0;
-	if( r26 == r27 ) goto label$d09e03a_16_177;
+	if( r26 == r27 ) goto label$d09e03a_15_177;
 	if( r28 == NULL ) hl_null_access();
 	r6 = r28->tx;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_157;
+	if( r6 != r30 ) goto label$d09e03a_15_157;
 	r29 = 0.;
-	goto label$d09e03a_16_158;
-	label$d09e03a_16_157:
+	goto label$d09e03a_15_158;
+	label$d09e03a_15_157:
 	r29 = r6;
-	label$d09e03a_16_158:
+	label$d09e03a_15_158:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
 	r6 = r28->ty;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_166;
+	if( r6 != r30 ) goto label$d09e03a_15_166;
 	r29 = 0.;
-	goto label$d09e03a_16_167;
-	label$d09e03a_16_166:
+	goto label$d09e03a_15_167;
+	label$d09e03a_15_166:
 	r29 = r6;
-	label$d09e03a_16_167:
+	label$d09e03a_15_167:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
 	r6 = r28->tz;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_175;
+	if( r6 != r30 ) goto label$d09e03a_15_175;
 	r29 = 0.;
-	goto label$d09e03a_16_176;
-	label$d09e03a_16_175:
+	goto label$d09e03a_15_176;
+	label$d09e03a_15_175:
 	r29 = r6;
-	label$d09e03a_16_176:
+	label$d09e03a_15_176:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
-	label$d09e03a_16_177:
+	label$d09e03a_15_177:
 	r26 = r23->flags;
 	r27 = 2;
 	r26 = r26 & r27;
 	r27 = 0;
-	if( r26 == r27 ) goto label$d09e03a_16_237;
+	if( r26 == r27 ) goto label$d09e03a_15_237;
 	if( r28 == NULL ) hl_null_access();
 	r6 = r28->qx;
 	r29 = r28->qx;
@@ -4758,22 +4750,22 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r6 = hl_math_sqrt(r6);
 	r29 = r28->qw;
 	r30 = 0.;
-	if( !(r29 < r30) ) goto label$d09e03a_16_204;
+	if( !(r29 < r30) ) goto label$d09e03a_15_204;
 	r29 = -r6;
 	r6 = r29;
-	label$d09e03a_16_204:
+	label$d09e03a_15_204:
 	r29 = r28->qx;
 	r29 = r29 / r6;
 	r29 = hxd_fmt_fbx_BaseLibrary_round(((hxd__fmt__fbx__BaseLibrary)r0),r29);
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r31 = 0.;
-	if( r29 != r31 ) goto label$d09e03a_16_213;
+	if( r29 != r31 ) goto label$d09e03a_15_213;
 	r30 = 0.;
-	goto label$d09e03a_16_214;
-	label$d09e03a_16_213:
+	goto label$d09e03a_15_214;
+	label$d09e03a_15_213:
 	r30 = r29;
-	label$d09e03a_16_214:
+	label$d09e03a_15_214:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r30);
 	r29 = r28->qy;
 	r29 = r29 / r6;
@@ -4781,12 +4773,12 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r31 = 0.;
-	if( r29 != r31 ) goto label$d09e03a_16_224;
+	if( r29 != r31 ) goto label$d09e03a_15_224;
 	r30 = 0.;
-	goto label$d09e03a_16_225;
-	label$d09e03a_16_224:
+	goto label$d09e03a_15_225;
+	label$d09e03a_15_224:
 	r30 = r29;
-	label$d09e03a_16_225:
+	label$d09e03a_15_225:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r30);
 	r29 = r28->qz;
 	r29 = r29 / r6;
@@ -4794,179 +4786,179 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r31 = 0.;
-	if( r29 != r31 ) goto label$d09e03a_16_235;
+	if( r29 != r31 ) goto label$d09e03a_15_235;
 	r30 = 0.;
-	goto label$d09e03a_16_236;
-	label$d09e03a_16_235:
+	goto label$d09e03a_15_236;
+	label$d09e03a_15_235:
 	r30 = r29;
-	label$d09e03a_16_236:
+	label$d09e03a_15_236:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r30);
-	label$d09e03a_16_237:
+	label$d09e03a_15_237:
 	r26 = r23->flags;
 	r27 = 4;
 	r26 = r26 & r27;
 	r27 = 0;
-	if( r26 == r27 ) goto label$d09e03a_16_270;
+	if( r26 == r27 ) goto label$d09e03a_15_270;
 	if( r28 == NULL ) hl_null_access();
 	r6 = r28->sx;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_250;
+	if( r6 != r30 ) goto label$d09e03a_15_250;
 	r29 = 0.;
-	goto label$d09e03a_16_251;
-	label$d09e03a_16_250:
+	goto label$d09e03a_15_251;
+	label$d09e03a_15_250:
 	r29 = r6;
-	label$d09e03a_16_251:
+	label$d09e03a_15_251:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
 	r6 = r28->sy;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_259;
+	if( r6 != r30 ) goto label$d09e03a_15_259;
 	r29 = 0.;
-	goto label$d09e03a_16_260;
-	label$d09e03a_16_259:
+	goto label$d09e03a_15_260;
+	label$d09e03a_15_259:
 	r29 = r6;
-	label$d09e03a_16_260:
+	label$d09e03a_15_260:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
 	r6 = r28->sz;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_268;
+	if( r6 != r30 ) goto label$d09e03a_15_268;
 	r29 = 0.;
-	goto label$d09e03a_16_269;
-	label$d09e03a_16_268:
+	goto label$d09e03a_15_269;
+	label$d09e03a_15_268:
 	r29 = r6;
-	label$d09e03a_16_269:
+	label$d09e03a_15_269:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
-	label$d09e03a_16_270:
-	goto label$d09e03a_16_131;
-	label$d09e03a_16_271:
+	label$d09e03a_15_270:
+	goto label$d09e03a_15_131;
+	label$d09e03a_15_271:
 	if( r22 == NULL ) hl_null_access();
 	r32 = r22->uvs;
-	if( !r32 ) goto label$d09e03a_16_326;
+	if( !r32 ) goto label$d09e03a_15_326;
 	if( r23 == NULL ) hl_null_access();
 	r24 = r23->flags;
 	r26 = 8;
 	r24 = r24 | r26;
 	r23->flags = r24;
 	r26 = 0;
-	if( r14 != r26 ) goto label$d09e03a_16_288;
+	if( r14 != r26 ) goto label$d09e03a_15_288;
 	r32 = r22->uvs;
 	if( r32 == NULL ) hl_null_access();
 	r24 = r32->length;
 	r26 = 1;
 	r24 = r24 >> r26;
 	r14 = r24;
-	goto label$d09e03a_16_297;
-	label$d09e03a_16_288:
+	goto label$d09e03a_15_297;
+	label$d09e03a_15_288:
 	r32 = r22->uvs;
 	if( r32 == NULL ) hl_null_access();
 	r26 = r32->length;
 	r27 = 1;
 	r26 = r26 >> r27;
-	if( r14 == r26 ) goto label$d09e03a_16_297;
+	if( r14 == r26 ) goto label$d09e03a_15_297;
 	r4 = (String)s$assert;
 	r18 = haxe_Exception_thrown(((vdynamic*)r4));
 	hl_throw((vdynamic*)r18);
-	label$d09e03a_16_297:
+	label$d09e03a_15_297:
 	r25 = r0->d;
 	if( r25 == NULL ) hl_null_access();
 	r24 = r25->version;
 	r26 = 3;
-	if( r24 >= r26 ) goto label$d09e03a_16_326;
+	if( r24 >= r26 ) goto label$d09e03a_15_326;
 	r24 = 0;
 	r32 = r22->uvs;
-	label$d09e03a_16_304:
+	label$d09e03a_15_304:
 	if( r32 == NULL ) hl_null_access();
 	r27 = r32->length;
-	if( r24 >= r27 ) goto label$d09e03a_16_326;
+	if( r24 >= r27 ) goto label$d09e03a_15_326;
 	r27 = r32->length;
-	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_16_312;
+	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_15_312;
 	r6 = 0.;
-	goto label$d09e03a_16_316;
-	label$d09e03a_16_312:
+	goto label$d09e03a_15_316;
+	label$d09e03a_15_312:
 	r33 = r32->bytes;
 	r27 = 3;
 	r27 = r24 << r27;
 	r6 = *(double*)(r33 + r27);
-	label$d09e03a_16_316:
+	label$d09e03a_15_316:
 	++r24;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_323;
+	if( r6 != r30 ) goto label$d09e03a_15_323;
 	r29 = 0.;
-	goto label$d09e03a_16_324;
-	label$d09e03a_16_323:
+	goto label$d09e03a_15_324;
+	label$d09e03a_15_323:
 	r29 = r6;
-	label$d09e03a_16_324:
+	label$d09e03a_15_324:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
-	goto label$d09e03a_16_304;
-	label$d09e03a_16_326:
+	goto label$d09e03a_15_304;
+	label$d09e03a_15_326:
 	if( r22 == NULL ) hl_null_access();
 	r32 = r22->alphas;
-	if( !r32 ) goto label$d09e03a_16_377;
+	if( !r32 ) goto label$d09e03a_15_377;
 	if( r23 == NULL ) hl_null_access();
 	r24 = r23->flags;
 	r26 = 16;
 	r24 = r24 | r26;
 	r23->flags = r24;
 	r26 = 0;
-	if( r14 != r26 ) goto label$d09e03a_16_341;
+	if( r14 != r26 ) goto label$d09e03a_15_341;
 	r32 = r22->alphas;
 	if( r32 == NULL ) hl_null_access();
 	r24 = r32->length;
 	r14 = r24;
-	goto label$d09e03a_16_348;
-	label$d09e03a_16_341:
+	goto label$d09e03a_15_348;
+	label$d09e03a_15_341:
 	r32 = r22->alphas;
 	if( r32 == NULL ) hl_null_access();
 	r26 = r32->length;
-	if( r14 == r26 ) goto label$d09e03a_16_348;
+	if( r14 == r26 ) goto label$d09e03a_15_348;
 	r4 = (String)s$assert;
 	r18 = haxe_Exception_thrown(((vdynamic*)r4));
 	hl_throw((vdynamic*)r18);
-	label$d09e03a_16_348:
+	label$d09e03a_15_348:
 	r25 = r0->d;
 	if( r25 == NULL ) hl_null_access();
 	r24 = r25->version;
 	r26 = 3;
-	if( r24 >= r26 ) goto label$d09e03a_16_377;
+	if( r24 >= r26 ) goto label$d09e03a_15_377;
 	r24 = 0;
 	r32 = r22->alphas;
-	label$d09e03a_16_355:
+	label$d09e03a_15_355:
 	if( r32 == NULL ) hl_null_access();
 	r27 = r32->length;
-	if( r24 >= r27 ) goto label$d09e03a_16_377;
+	if( r24 >= r27 ) goto label$d09e03a_15_377;
 	r27 = r32->length;
-	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_16_363;
+	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_15_363;
 	r6 = 0.;
-	goto label$d09e03a_16_367;
-	label$d09e03a_16_363:
+	goto label$d09e03a_15_367;
+	label$d09e03a_15_363:
 	r33 = r32->bytes;
 	r27 = 3;
 	r27 = r24 << r27;
 	r6 = *(double*)(r33 + r27);
-	label$d09e03a_16_367:
+	label$d09e03a_15_367:
 	++r24;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_374;
+	if( r6 != r30 ) goto label$d09e03a_15_374;
 	r29 = 0.;
-	goto label$d09e03a_16_375;
-	label$d09e03a_16_374:
+	goto label$d09e03a_15_375;
+	label$d09e03a_15_374:
 	r29 = r6;
-	label$d09e03a_16_375:
+	label$d09e03a_15_375:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
-	goto label$d09e03a_16_355;
-	label$d09e03a_16_377:
+	goto label$d09e03a_15_355;
+	label$d09e03a_15_377:
 	if( r22 == NULL ) hl_null_access();
 	r32 = r22->propValues;
-	if( !r32 ) goto label$d09e03a_16_432;
+	if( !r32 ) goto label$d09e03a_15_432;
 	if( r23 == NULL ) hl_null_access();
 	r24 = r23->flags;
 	r26 = 64;
@@ -4977,63 +4969,63 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r4 = r22->propName;
 	r24 = hl_types_ArrayObj_push(r16,((vdynamic*)r4));
 	r26 = 0;
-	if( r14 != r26 ) goto label$d09e03a_16_396;
+	if( r14 != r26 ) goto label$d09e03a_15_396;
 	r32 = r22->propValues;
 	if( r32 == NULL ) hl_null_access();
 	r24 = r32->length;
 	r14 = r24;
-	goto label$d09e03a_16_403;
-	label$d09e03a_16_396:
+	goto label$d09e03a_15_403;
+	label$d09e03a_15_396:
 	r32 = r22->propValues;
 	if( r32 == NULL ) hl_null_access();
 	r26 = r32->length;
-	if( r14 == r26 ) goto label$d09e03a_16_403;
+	if( r14 == r26 ) goto label$d09e03a_15_403;
 	r4 = (String)s$assert;
 	r18 = haxe_Exception_thrown(((vdynamic*)r4));
 	hl_throw((vdynamic*)r18);
-	label$d09e03a_16_403:
+	label$d09e03a_15_403:
 	r25 = r0->d;
 	if( r25 == NULL ) hl_null_access();
 	r24 = r25->version;
 	r26 = 3;
-	if( r24 >= r26 ) goto label$d09e03a_16_432;
+	if( r24 >= r26 ) goto label$d09e03a_15_432;
 	r24 = 0;
 	r32 = r22->propValues;
-	label$d09e03a_16_410:
+	label$d09e03a_15_410:
 	if( r32 == NULL ) hl_null_access();
 	r27 = r32->length;
-	if( r24 >= r27 ) goto label$d09e03a_16_432;
+	if( r24 >= r27 ) goto label$d09e03a_15_432;
 	r27 = r32->length;
-	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_16_418;
+	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_15_418;
 	r6 = 0.;
-	goto label$d09e03a_16_422;
-	label$d09e03a_16_418:
+	goto label$d09e03a_15_422;
+	label$d09e03a_15_418:
 	r33 = r32->bytes;
 	r27 = 3;
 	r27 = r24 << r27;
 	r6 = *(double*)(r33 + r27);
-	label$d09e03a_16_422:
+	label$d09e03a_15_422:
 	++r24;
 	r12 = r0->dataOut;
 	if( r12 == NULL ) hl_null_access();
 	r30 = 0.;
-	if( r6 != r30 ) goto label$d09e03a_16_429;
+	if( r6 != r30 ) goto label$d09e03a_15_429;
 	r29 = 0.;
-	goto label$d09e03a_16_430;
-	label$d09e03a_16_429:
+	goto label$d09e03a_15_430;
+	label$d09e03a_15_429:
 	r29 = r6;
-	label$d09e03a_16_430:
+	label$d09e03a_15_430:
 	haxe_io_Output_writeFloat(((haxe__io__Output)r12),r29);
-	goto label$d09e03a_16_410;
-	label$d09e03a_16_432:
+	goto label$d09e03a_15_410;
+	label$d09e03a_15_432:
 	r26 = 0;
-	if( r14 != r26 ) goto label$d09e03a_16_437;
+	if( r14 != r26 ) goto label$d09e03a_15_437;
 	r4 = (String)s$assert;
 	r18 = haxe_Exception_thrown(((vdynamic*)r4));
 	hl_throw((vdynamic*)r18);
-	label$d09e03a_16_437:
+	label$d09e03a_15_437:
 	r26 = 1;
-	if( r14 != r26 ) goto label$d09e03a_16_447;
+	if( r14 != r26 ) goto label$d09e03a_15_447;
 	if( r23 == NULL ) hl_null_access();
 	r24 = r23->flags;
 	r26 = 32;
@@ -5041,51 +5033,51 @@ hxd__fmt__hmd__Animation hxd_fmt_fbx_HMDOut_makeAnimation(hxd__fmt__fbx__HMDOut 
 	r23->flags = r24;
 	r24 = 0;
 	hxd_fmt_fbx_HMDOut_writeFrame(r0,r22,r24);
-	goto label$d09e03a_16_455;
-	label$d09e03a_16_447:
+	goto label$d09e03a_15_455;
+	label$d09e03a_15_447:
 	if( r1 == NULL ) hl_null_access();
 	r26 = r1->frameCount;
-	if( r14 == r26 ) goto label$d09e03a_16_453;
+	if( r14 == r26 ) goto label$d09e03a_15_453;
 	r4 = (String)s$assert;
 	r18 = haxe_Exception_thrown(((vdynamic*)r4));
 	hl_throw((vdynamic*)r18);
-	label$d09e03a_16_453:
+	label$d09e03a_15_453:
 	if( r13 == NULL ) hl_null_access();
 	r24 = hl_types_ArrayObj_push(r13,((vdynamic*)r22));
-	label$d09e03a_16_455:
+	label$d09e03a_15_455:
 	if( r2 == NULL ) hl_null_access();
 	r16 = r2->objects;
 	if( r16 == NULL ) hl_null_access();
 	r24 = hl_types_ArrayObj_push(r16,((vdynamic*)r23));
-	goto label$d09e03a_16_70;
-	label$d09e03a_16_460:
+	goto label$d09e03a_15_70;
+	label$d09e03a_15_460:
 	r7 = 0;
 	if( r1 == NULL ) hl_null_access();
 	r14 = r1->frameCount;
-	label$d09e03a_16_463:
-	if( r7 >= r14 ) goto label$d09e03a_16_483;
+	label$d09e03a_15_463:
+	if( r7 >= r14 ) goto label$d09e03a_15_483;
 	r15 = r7;
 	++r7;
 	r24 = 0;
-	label$d09e03a_16_468:
+	label$d09e03a_15_468:
 	if( r13 == NULL ) hl_null_access();
 	r27 = r13->length;
-	if( r24 >= r27 ) goto label$d09e03a_16_482;
+	if( r24 >= r27 ) goto label$d09e03a_15_482;
 	r27 = r13->length;
-	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_16_476;
+	if( ((unsigned)r24) < ((unsigned)r27) ) goto label$d09e03a_15_476;
 	r22 = NULL;
-	goto label$d09e03a_16_479;
-	label$d09e03a_16_476:
+	goto label$d09e03a_15_479;
+	label$d09e03a_15_476:
 	r9 = r13->array;
 	r18 = ((vdynamic**)(r9 + 1))[r24];
 	r22 = (h3d__anim__LinearObject)r18;
-	label$d09e03a_16_479:
+	label$d09e03a_15_479:
 	++r24;
 	hxd_fmt_fbx_HMDOut_writeFrame(r0,r22,r15);
-	goto label$d09e03a_16_468;
-	label$d09e03a_16_482:
-	goto label$d09e03a_16_463;
-	label$d09e03a_16_483:
+	goto label$d09e03a_15_468;
+	label$d09e03a_15_482:
+	goto label$d09e03a_15_463;
+	label$d09e03a_15_483:
 	return r2;
 }
 
@@ -5104,13 +5096,13 @@ hxd__fmt__hmd__Data hxd_fmt_fbx_HMDOut_toHMD(hxd__fmt__fbx__HMDOut r0,String r1,
 	vdynamic *r16;
 	varray *r10;
 	int r9, r13, r14;
-	if( r2 ) goto label$d09e03a_17_3;
+	if( r2 ) goto label$d09e03a_16_3;
 	r4 = false;
 	r0->optimizeSkin = r4;
-	label$d09e03a_17_3:
+	label$d09e03a_16_3:
 	hxd_fmt_fbx_BaseLibrary_leftHandConvert(((hxd__fmt__fbx__BaseLibrary)r0));
 	hxd_fmt_fbx_BaseLibrary_autoMerge(((hxd__fmt__fbx__BaseLibrary)r0));
-	if( !r1 ) goto label$d09e03a_17_21;
+	if( !r1 ) goto label$d09e03a_16_21;
 	if( r1 == NULL ) hl_null_access();
 	r7 = (String)s$28d397e;
 	r6 = String_split(r1,r7);
@@ -5122,11 +5114,11 @@ hxd__fmt__hmd__Data hxd_fmt_fbx_HMDOut_toHMD(hxd__fmt__fbx__HMDOut r0,String r1,
 	r1 = r5;
 	r7 = (String)s$6666cd7;
 	r4 = StringTools_endsWith(r5,r7);
-	if( r4 ) goto label$d09e03a_17_21;
+	if( r4 ) goto label$d09e03a_16_21;
 	r7 = (String)s$6666cd7;
 	r5 = String___add__(r5,r7);
 	r1 = r5;
-	label$d09e03a_17_21:
+	label$d09e03a_16_21:
 	r0->filePath = r1;
 	r8 = (hxd__fmt__hmd__Data)hl_alloc_obj(&t$hxd_fmt_hmd_Data);
 	hxd_fmt_hmd_Data_new(r8);
@@ -5169,33 +5161,33 @@ hxd__fmt__hmd__Data hxd_fmt_fbx_HMDOut_toHMD(hxd__fmt__fbx__HMDOut r0,String r1,
 	hxd_fmt_fbx_HMDOut_addModels(r0,r2);
 	r6 = hxd_fmt_fbx_BaseLibrary_getAnimationNames(((hxd__fmt__fbx__BaseLibrary)r0));
 	r9 = 0;
-	label$d09e03a_17_63:
+	label$d09e03a_16_63:
 	if( r6 == NULL ) hl_null_access();
 	r14 = r6->length;
-	if( r9 >= r14 ) goto label$d09e03a_17_86;
+	if( r9 >= r14 ) goto label$d09e03a_16_86;
 	r14 = r6->length;
-	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$d09e03a_17_71;
+	if( ((unsigned)r9) < ((unsigned)r14) ) goto label$d09e03a_16_71;
 	r5 = NULL;
-	goto label$d09e03a_17_74;
-	label$d09e03a_17_71:
+	goto label$d09e03a_16_74;
+	label$d09e03a_16_71:
 	r10 = r6->array;
 	r16 = ((vdynamic**)(r10 + 1))[r9];
 	r5 = (String)r16;
-	label$d09e03a_17_74:
+	label$d09e03a_16_74:
 	++r9;
 	r18 = NULL;
 	r19 = NULL;
 	r17 = hxd_fmt_fbx_BaseLibrary_loadAnimation(((hxd__fmt__fbx__BaseLibrary)r0),r5,r18,r19);
-	if( !r17 ) goto label$d09e03a_17_85;
+	if( !r17 ) goto label$d09e03a_16_85;
 	r8 = r0->d;
 	if( r8 == NULL ) hl_null_access();
 	r15 = r8->animations;
 	if( r15 == NULL ) hl_null_access();
 	r20 = hxd_fmt_fbx_HMDOut_makeAnimation(r0,r17);
 	r13 = hl_types_ArrayObj_push(r15,((vdynamic*)r20));
-	label$d09e03a_17_85:
-	goto label$d09e03a_17_63;
-	label$d09e03a_17_86:
+	label$d09e03a_16_85:
+	goto label$d09e03a_16_63;
+	label$d09e03a_16_86:
 	r8 = r0->d;
 	if( r8 == NULL ) hl_null_access();
 	r12 = r0->dataOut;
@@ -5219,5 +5211,14 @@ void hxd_fmt_fbx_HMDOut_new(hxd__fmt__fbx__HMDOut r0,String r1) {
 	r0->tmp = r3;
 	hxd_fmt_fbx_BaseLibrary_new(((hxd__fmt__fbx__BaseLibrary)r0),r1);
 	return;
+}
+
+int hxd_fmt_fbx_HMDOut_makeAnimation__$2(vclosure* r0,vdynamic* r1,vdynamic* r2) {
+	h3d__anim__LinearObject r3, r4;
+	int r5;
+	r3 = (h3d__anim__LinearObject)hl_dyn_castp(&r1,&t$_dyn,&t$h3d_anim_LinearObject);
+	r4 = (h3d__anim__LinearObject)hl_dyn_castp(&r2,&t$_dyn,&t$h3d_anim_LinearObject);
+	r5 = r0->hasValue ? ((int (*)(vdynamic*,h3d__anim__LinearObject,h3d__anim__LinearObject))r0->fun)((vdynamic*)r0->value,r3,r4) : ((int (*)(h3d__anim__LinearObject,h3d__anim__LinearObject))r0->fun)(r3,r4);
+	return r5;
 }
 

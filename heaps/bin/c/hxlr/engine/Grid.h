@@ -9,6 +9,7 @@ typedef struct _hxlr__engine__Grid *hxlr__engine__Grid;
 #include <hl/types/ArrayBytes_Int.h>
 #include <haxe/ds/StringMap.h>
 #include <hl/types/ArrayObj.h>
+#include <hxlr/lines/LineBase.h>
 
 
 struct _hxlr__engine__$Grid {
@@ -18,14 +19,19 @@ struct _hxlr__engine__$Grid {
 	varray* __implementedBy__;
 	String __name__;
 	vdynamic* __constructor__;
-};
-struct _hxlr__engine__Grid {
-	hl_type *$type;
 	int lineCount;
 	int lineIDCount;
 	hl__types__ArrayBytes_Int subTypeCount;
 	haxe__ds__StringMap registry;
 	hl__types__ArrayObj lines;
+	vclosure* _register;
+	vclosure* addLine;
+	vclosure* storeLine;
+	vclosure* deleteTrack;
+	vclosure* unregister;
+};
+struct _hxlr__engine__Grid {
+	hl_type *$type;
 };
 #endif
 

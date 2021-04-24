@@ -2,12 +2,16 @@
 #define HLC_BOOT
 #include <hlc.h>
 #include <hxlr/engine/Grid.h>
-#include <hxlr/lines/LineBase.h>
+extern hl_type t$haxe_ds_StringMap;
+void haxe_ds_StringMap_new(haxe__ds__StringMap);
+extern hxlr__engine__$Grid g$_hxlr_engine_Grid;
+extern hl_type t$hl_types_ArrayObj;
+void hl_types_ArrayObj_new(hl__types__ArrayObj);
 #include <h2d/col/Point.h>
-void hxlr_engine_Grid_addLine(hxlr__engine__Grid,hxlr__lines__LineBase);
+void hxlr_engine_Grid_addLine(hxlr__lines__LineBase);
 vvirtual* hxlr_engine_Cell_getInfo(double,double);
 extern hl_type t$_i32;
-void hxlr_engine_Grid_storeLine(hxlr__engine__Grid,hxlr__lines__LineBase,vvirtual*);
+void hxlr_engine_Grid_storeLine(hxlr__lines__LineBase,vvirtual*);
 #include <hl/natives.h>
 void hl_types_ArrayObj___expand(hl__types__ArrayObj,int);
 void hl_types_ArrayBytes_Int___expand(hl__types__ArrayBytes_Int,int);
@@ -17,451 +21,456 @@ vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 extern hl_type t$vrt_b840ca7;
 extern hl_type t$hxlr_engine_Cell;
 void hxlr_engine_Cell_new(hxlr__engine__Cell,vvirtual*);
-extern hl_type t$haxe_ds_StringMap;
 void haxe_ds_StringMap_set(haxe__ds__StringMap,String,vdynamic*);
 void hxlr_engine_Cell_addLine(hxlr__engine__Cell,hxlr__lines__LineBase);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
-void hxlr_engine_Grid_unregister(hxlr__engine__Grid,hxlr__lines__LineBase);
+void hxlr_engine_Grid_unregister(hxlr__lines__LineBase);
 void hxlr_engine_Cell_removeLine(hxlr__engine__Cell,hxlr__lines__LineBase);
-extern hl_type t$hl_types_ArrayBytes_Int;
-void hl_types_ArrayBytes_Int_new(hl__types__ArrayBytes_Int);
-void haxe_ds_StringMap_new(haxe__ds__StringMap);
-extern hl_type t$hl_types_ArrayObj;
-void hl_types_ArrayObj_new(hl__types__ArrayObj);
 
-void hxlr_engine_Grid_register(hxlr__engine__Grid r0,hxlr__lines__LineBase r1) {
-	vvirtual *r3, *r7, *r9;
-	bool r18;
-	h2d__col__Point r5;
-	double r4, r6, r15, r16, r17, r19, r20, r21, r22;
-	int r8, r10, r11, r12, r13, r14;
-	hxlr_engine_Grid_addLine(r0,r1);
-	if( r1 == NULL ) hl_null_access();
-	r5 = r1->start;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->x;
-	r5 = r1->start;
-	if( r5 == NULL ) hl_null_access();
-	r6 = r5->y;
-	r3 = hxlr_engine_Cell_getInfo(r4,r6);
-	r5 = r1->end;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->x;
-	r5 = r1->end;
-	if( r5 == NULL ) hl_null_access();
-	r6 = r5->y;
-	r7 = hxlr_engine_Cell_getInfo(r4,r6);
-	r4 = r1->dx;
-	r6 = 0.;
-	if( !(r6 < r4) ) goto label$f3e15a3_1_22;
-	if( r7 == NULL ) hl_null_access();
-	r8 = hl_vfields(r7)[3] ? (*(int*)(hl_vfields(r7)[3])) : (int)hl_dyn_geti(r7->value,120/*x*/,&t$_i32);
-	goto label$f3e15a3_1_24;
-	label$f3e15a3_1_22:
-	if( r3 == NULL ) hl_null_access();
-	r8 = hl_vfields(r3)[3] ? (*(int*)(hl_vfields(r3)[3])) : (int)hl_dyn_geti(r3->value,120/*x*/,&t$_i32);
-	label$f3e15a3_1_24:
-	r4 = r1->dx;
-	r6 = 0.;
-	if( !(r6 < r4) ) goto label$f3e15a3_1_30;
-	if( r3 == NULL ) hl_null_access();
-	r10 = hl_vfields(r3)[3] ? (*(int*)(hl_vfields(r3)[3])) : (int)hl_dyn_geti(r3->value,120/*x*/,&t$_i32);
-	goto label$f3e15a3_1_32;
-	label$f3e15a3_1_30:
-	if( r7 == NULL ) hl_null_access();
-	r10 = hl_vfields(r7)[3] ? (*(int*)(hl_vfields(r7)[3])) : (int)hl_dyn_geti(r7->value,120/*x*/,&t$_i32);
-	label$f3e15a3_1_32:
-	r4 = r1->dy;
-	r6 = 0.;
-	if( !(r6 < r4) ) goto label$f3e15a3_1_38;
-	if( r7 == NULL ) hl_null_access();
-	r11 = hl_vfields(r7)[4] ? (*(int*)(hl_vfields(r7)[4])) : (int)hl_dyn_geti(r7->value,121/*y*/,&t$_i32);
-	goto label$f3e15a3_1_40;
-	label$f3e15a3_1_38:
-	if( r3 == NULL ) hl_null_access();
-	r11 = hl_vfields(r3)[4] ? (*(int*)(hl_vfields(r3)[4])) : (int)hl_dyn_geti(r3->value,121/*y*/,&t$_i32);
-	label$f3e15a3_1_40:
-	r4 = r1->dy;
-	r6 = 0.;
-	if( !(r6 < r4) ) goto label$f3e15a3_1_46;
-	if( r3 == NULL ) hl_null_access();
-	r12 = hl_vfields(r3)[4] ? (*(int*)(hl_vfields(r3)[4])) : (int)hl_dyn_geti(r3->value,121/*y*/,&t$_i32);
-	goto label$f3e15a3_1_48;
-	label$f3e15a3_1_46:
-	if( r7 == NULL ) hl_null_access();
-	r12 = hl_vfields(r7)[4] ? (*(int*)(hl_vfields(r7)[4])) : (int)hl_dyn_geti(r7->value,121/*y*/,&t$_i32);
-	label$f3e15a3_1_48:
-	hxlr_engine_Grid_storeLine(r0,r1,r3);
-	r4 = r1->dx;
-	r6 = 0.;
-	if( r4 != r6 ) goto label$f3e15a3_1_55;
-	r4 = r1->dy;
-	r6 = 0.;
-	if( r4 == r6 ) goto label$f3e15a3_1_57;
-	label$f3e15a3_1_55:
-	if( r10 != r8 ) goto label$f3e15a3_1_58;
-	if( r12 != r11 ) goto label$f3e15a3_1_58;
-	label$f3e15a3_1_57:
-	return;
-	label$f3e15a3_1_58:
-	r5 = r1->start;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->x;
-	r5 = r1->start;
-	if( r5 == NULL ) hl_null_access();
-	r6 = r5->y;
-	r15 = 1.;
-	r16 = r1->dx;
-	r15 = r15 / r16;
-	r16 = 1.;
-	r17 = r1->dy;
-	r16 = r16 / r17;
-	label$f3e15a3_1_70:
-	r18 = true;
-	if( !r18 ) goto label$f3e15a3_1_184;
-	if( r3 == NULL ) hl_null_access();
-	r13 = hl_vfields(r3)[3] ? (*(int*)(hl_vfields(r3)[3])) : (int)hl_dyn_geti(r3->value,120/*x*/,&t$_i32);
-	r14 = 0;
-	if( r13 >= r14 ) goto label$f3e15a3_1_90;
-	if( r1 == NULL ) hl_null_access();
-	r19 = r1->dx;
-	r20 = 0.;
-	if( !(r20 < r19) ) goto label$f3e15a3_1_85;
-	r19 = 14.;
-	r20 = hl_vfields(r3)[0] ? (*(double*)(hl_vfields(r3)[0])) : (double)hl_dyn_getd(r3->value,23089/*gx*/);
-	r19 = r19 + r20;
-	goto label$f3e15a3_1_88;
-	label$f3e15a3_1_85:
-	r19 = -14.;
-	r20 = hl_vfields(r3)[0] ? (*(double*)(hl_vfields(r3)[0])) : (double)hl_dyn_getd(r3->value,23089/*gx*/);
-	r19 = r19 - r20;
-	label$f3e15a3_1_88:
-	r17 = r19;
-	goto label$f3e15a3_1_103;
-	label$f3e15a3_1_90:
-	if( r1 == NULL ) hl_null_access();
-	r19 = r1->dx;
-	r20 = 0.;
-	if( !(r20 < r19) ) goto label$f3e15a3_1_98;
-	r19 = 14.;
-	r20 = hl_vfields(r3)[0] ? (*(double*)(hl_vfields(r3)[0])) : (double)hl_dyn_getd(r3->value,23089/*gx*/);
-	r19 = r19 - r20;
-	goto label$f3e15a3_1_102;
-	label$f3e15a3_1_98:
-	r19 = hl_vfields(r3)[0] ? (*(double*)(hl_vfields(r3)[0])) : (double)hl_dyn_getd(r3->value,23089/*gx*/);
-	r20 = 1.;
-	r19 = r19 + r20;
-	r19 = -r19;
-	label$f3e15a3_1_102:
-	r17 = r19;
-	label$f3e15a3_1_103:
-	r13 = hl_vfields(r3)[4] ? (*(int*)(hl_vfields(r3)[4])) : (int)hl_dyn_geti(r3->value,121/*y*/,&t$_i32);
-	r14 = 0;
-	if( r13 >= r14 ) goto label$f3e15a3_1_118;
-	r20 = r1->dy;
-	r21 = 0.;
-	if( !(r21 < r20) ) goto label$f3e15a3_1_113;
-	r20 = 14.;
-	r21 = hl_vfields(r3)[1] ? (*(double*)(hl_vfields(r3)[1])) : (double)hl_dyn_getd(r3->value,23090/*gy*/);
-	r20 = r20 + r21;
-	goto label$f3e15a3_1_116;
-	label$f3e15a3_1_113:
-	r20 = -14.;
-	r21 = hl_vfields(r3)[1] ? (*(double*)(hl_vfields(r3)[1])) : (double)hl_dyn_getd(r3->value,23090/*gy*/);
-	r20 = r20 - r21;
-	label$f3e15a3_1_116:
-	r19 = r20;
-	goto label$f3e15a3_1_130;
-	label$f3e15a3_1_118:
-	r20 = r1->dy;
-	r21 = 0.;
-	if( !(r21 < r20) ) goto label$f3e15a3_1_125;
-	r20 = 14.;
-	r21 = hl_vfields(r3)[1] ? (*(double*)(hl_vfields(r3)[1])) : (double)hl_dyn_getd(r3->value,23090/*gy*/);
-	r20 = r20 - r21;
-	goto label$f3e15a3_1_129;
-	label$f3e15a3_1_125:
-	r20 = hl_vfields(r3)[1] ? (*(double*)(hl_vfields(r3)[1])) : (double)hl_dyn_getd(r3->value,23090/*gy*/);
-	r21 = 1.;
-	r20 = r20 + r21;
-	r20 = -r20;
-	label$f3e15a3_1_129:
-	r19 = r20;
-	label$f3e15a3_1_130:
-	r20 = r1->dx;
-	r21 = 0.;
-	if( r20 != r21 ) goto label$f3e15a3_1_136;
-	r20 = r6 + r19;
-	r6 = r20;
-	goto label$f3e15a3_1_170;
-	label$f3e15a3_1_136:
-	r20 = r1->dy;
-	r21 = 0.;
-	if( r20 != r21 ) goto label$f3e15a3_1_142;
-	r20 = r4 + r17;
-	r4 = r20;
-	goto label$f3e15a3_1_170;
-	label$f3e15a3_1_142:
-	r21 = r1->dy;
-	r21 = r21 * r17;
-	r21 = r21 * r15;
-	r20 = r6 + r21;
-	r21 = r20 - r6;
-	r21 = hl_math_abs(r21);
-	r22 = hl_math_abs(r19);
-	if( !(r21 < r22) ) goto label$f3e15a3_1_154;
-	r21 = r4 + r17;
-	r4 = r21;
-	r6 = r20;
-	goto label$f3e15a3_1_170;
-	label$f3e15a3_1_154:
-	r21 = r20 - r6;
-	r21 = hl_math_abs(r21);
-	r22 = hl_math_abs(r19);
-	if( r21 != r22 ) goto label$f3e15a3_1_163;
-	r21 = r4 + r17;
-	r4 = r21;
-	r21 = r6 + r19;
-	r6 = r21;
-	goto label$f3e15a3_1_170;
-	label$f3e15a3_1_163:
-	r22 = r1->dx;
-	r22 = r22 * r19;
-	r22 = r22 * r16;
-	r21 = r4 + r22;
-	r4 = r21;
-	r21 = r6 + r19;
-	r6 = r21;
-	label$f3e15a3_1_170:
-	r9 = hxlr_engine_Cell_getInfo(r4,r6);
-	r3 = r9;
-	if( r9 == NULL ) hl_null_access();
-	r13 = hl_vfields(r9)[3] ? (*(int*)(hl_vfields(r9)[3])) : (int)hl_dyn_geti(r9->value,120/*x*/,&t$_i32);
-	if( r13 < r10 ) goto label$f3e15a3_1_183;
-	r13 = hl_vfields(r9)[3] ? (*(int*)(hl_vfields(r9)[3])) : (int)hl_dyn_geti(r9->value,120/*x*/,&t$_i32);
-	if( r8 < r13 ) goto label$f3e15a3_1_183;
-	r13 = hl_vfields(r9)[4] ? (*(int*)(hl_vfields(r9)[4])) : (int)hl_dyn_geti(r9->value,121/*y*/,&t$_i32);
-	if( r13 < r12 ) goto label$f3e15a3_1_183;
-	r13 = hl_vfields(r9)[4] ? (*(int*)(hl_vfields(r9)[4])) : (int)hl_dyn_geti(r9->value,121/*y*/,&t$_i32);
-	if( r11 < r13 ) goto label$f3e15a3_1_183;
-	hxlr_engine_Grid_storeLine(r0,r1,r9);
-	goto label$f3e15a3_1_70;
-	label$f3e15a3_1_183:
-	return;
-	label$f3e15a3_1_184:
+void hxlr_engine_Grid_new(hxlr__engine__Grid r0) {
+	hl__types__ArrayObj r4;
+	hxlr__engine__$Grid r3;
+	haxe__ds__StringMap r1;
+	r1 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
+	haxe_ds_StringMap_new(r1);
+	r3 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r3->registry = r1;
+	r4 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
+	hl_types_ArrayObj_new(r4);
+	r3 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r3->lines = r4;
 	return;
 }
 
-void hxlr_engine_Grid_addLine(hxlr__engine__Grid r0,hxlr__lines__LineBase r1) {
+void hxlr_engine_Grid_register(hxlr__lines__LineBase r0) {
+	vvirtual *r2, *r6, *r8;
+	bool r17;
+	h2d__col__Point r4;
+	double r3, r5, r14, r15, r16, r18, r19, r20, r21;
+	int r7, r9, r10, r11, r12, r13;
+	hxlr_engine_Grid_addLine(r0);
+	if( r0 == NULL ) hl_null_access();
+	r4 = r0->start;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->x;
+	r4 = r0->start;
+	if( r4 == NULL ) hl_null_access();
+	r5 = r4->y;
+	r2 = hxlr_engine_Cell_getInfo(r3,r5);
+	r4 = r0->end;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->x;
+	r4 = r0->end;
+	if( r4 == NULL ) hl_null_access();
+	r5 = r4->y;
+	r6 = hxlr_engine_Cell_getInfo(r3,r5);
+	r3 = r0->dx;
+	r5 = 0.;
+	if( !(r5 < r3) ) goto label$f3e15a3_2_22;
+	if( r6 == NULL ) hl_null_access();
+	r7 = hl_vfields(r6)[3] ? (*(int*)(hl_vfields(r6)[3])) : (int)hl_dyn_geti(r6->value,120/*x*/,&t$_i32);
+	goto label$f3e15a3_2_24;
+	label$f3e15a3_2_22:
+	if( r2 == NULL ) hl_null_access();
+	r7 = hl_vfields(r2)[3] ? (*(int*)(hl_vfields(r2)[3])) : (int)hl_dyn_geti(r2->value,120/*x*/,&t$_i32);
+	label$f3e15a3_2_24:
+	r3 = r0->dx;
+	r5 = 0.;
+	if( !(r5 < r3) ) goto label$f3e15a3_2_30;
+	if( r2 == NULL ) hl_null_access();
+	r9 = hl_vfields(r2)[3] ? (*(int*)(hl_vfields(r2)[3])) : (int)hl_dyn_geti(r2->value,120/*x*/,&t$_i32);
+	goto label$f3e15a3_2_32;
+	label$f3e15a3_2_30:
+	if( r6 == NULL ) hl_null_access();
+	r9 = hl_vfields(r6)[3] ? (*(int*)(hl_vfields(r6)[3])) : (int)hl_dyn_geti(r6->value,120/*x*/,&t$_i32);
+	label$f3e15a3_2_32:
+	r3 = r0->dy;
+	r5 = 0.;
+	if( !(r5 < r3) ) goto label$f3e15a3_2_38;
+	if( r6 == NULL ) hl_null_access();
+	r10 = hl_vfields(r6)[4] ? (*(int*)(hl_vfields(r6)[4])) : (int)hl_dyn_geti(r6->value,121/*y*/,&t$_i32);
+	goto label$f3e15a3_2_40;
+	label$f3e15a3_2_38:
+	if( r2 == NULL ) hl_null_access();
+	r10 = hl_vfields(r2)[4] ? (*(int*)(hl_vfields(r2)[4])) : (int)hl_dyn_geti(r2->value,121/*y*/,&t$_i32);
+	label$f3e15a3_2_40:
+	r3 = r0->dy;
+	r5 = 0.;
+	if( !(r5 < r3) ) goto label$f3e15a3_2_46;
+	if( r2 == NULL ) hl_null_access();
+	r11 = hl_vfields(r2)[4] ? (*(int*)(hl_vfields(r2)[4])) : (int)hl_dyn_geti(r2->value,121/*y*/,&t$_i32);
+	goto label$f3e15a3_2_48;
+	label$f3e15a3_2_46:
+	if( r6 == NULL ) hl_null_access();
+	r11 = hl_vfields(r6)[4] ? (*(int*)(hl_vfields(r6)[4])) : (int)hl_dyn_geti(r6->value,121/*y*/,&t$_i32);
+	label$f3e15a3_2_48:
+	hxlr_engine_Grid_storeLine(r0,r2);
+	r3 = r0->dx;
+	r5 = 0.;
+	if( r3 != r5 ) goto label$f3e15a3_2_55;
+	r3 = r0->dy;
+	r5 = 0.;
+	if( r3 == r5 ) goto label$f3e15a3_2_57;
+	label$f3e15a3_2_55:
+	if( r9 != r7 ) goto label$f3e15a3_2_58;
+	if( r11 != r10 ) goto label$f3e15a3_2_58;
+	label$f3e15a3_2_57:
+	return;
+	label$f3e15a3_2_58:
+	r4 = r0->start;
+	if( r4 == NULL ) hl_null_access();
+	r3 = r4->x;
+	r4 = r0->start;
+	if( r4 == NULL ) hl_null_access();
+	r5 = r4->y;
+	r14 = 1.;
+	r15 = r0->dx;
+	r14 = r14 / r15;
+	r15 = 1.;
+	r16 = r0->dy;
+	r15 = r15 / r16;
+	label$f3e15a3_2_70:
+	r17 = true;
+	if( !r17 ) goto label$f3e15a3_2_184;
+	if( r2 == NULL ) hl_null_access();
+	r12 = hl_vfields(r2)[3] ? (*(int*)(hl_vfields(r2)[3])) : (int)hl_dyn_geti(r2->value,120/*x*/,&t$_i32);
+	r13 = 0;
+	if( r12 >= r13 ) goto label$f3e15a3_2_90;
+	if( r0 == NULL ) hl_null_access();
+	r18 = r0->dx;
+	r19 = 0.;
+	if( !(r19 < r18) ) goto label$f3e15a3_2_85;
+	r18 = 14.;
+	r19 = hl_vfields(r2)[0] ? (*(double*)(hl_vfields(r2)[0])) : (double)hl_dyn_getd(r2->value,23089/*gx*/);
+	r18 = r18 + r19;
+	goto label$f3e15a3_2_88;
+	label$f3e15a3_2_85:
+	r18 = -14.;
+	r19 = hl_vfields(r2)[0] ? (*(double*)(hl_vfields(r2)[0])) : (double)hl_dyn_getd(r2->value,23089/*gx*/);
+	r18 = r18 - r19;
+	label$f3e15a3_2_88:
+	r16 = r18;
+	goto label$f3e15a3_2_103;
+	label$f3e15a3_2_90:
+	if( r0 == NULL ) hl_null_access();
+	r18 = r0->dx;
+	r19 = 0.;
+	if( !(r19 < r18) ) goto label$f3e15a3_2_98;
+	r18 = 14.;
+	r19 = hl_vfields(r2)[0] ? (*(double*)(hl_vfields(r2)[0])) : (double)hl_dyn_getd(r2->value,23089/*gx*/);
+	r18 = r18 - r19;
+	goto label$f3e15a3_2_102;
+	label$f3e15a3_2_98:
+	r18 = hl_vfields(r2)[0] ? (*(double*)(hl_vfields(r2)[0])) : (double)hl_dyn_getd(r2->value,23089/*gx*/);
+	r19 = 1.;
+	r18 = r18 + r19;
+	r18 = -r18;
+	label$f3e15a3_2_102:
+	r16 = r18;
+	label$f3e15a3_2_103:
+	r12 = hl_vfields(r2)[4] ? (*(int*)(hl_vfields(r2)[4])) : (int)hl_dyn_geti(r2->value,121/*y*/,&t$_i32);
+	r13 = 0;
+	if( r12 >= r13 ) goto label$f3e15a3_2_118;
+	r19 = r0->dy;
+	r20 = 0.;
+	if( !(r20 < r19) ) goto label$f3e15a3_2_113;
+	r19 = 14.;
+	r20 = hl_vfields(r2)[1] ? (*(double*)(hl_vfields(r2)[1])) : (double)hl_dyn_getd(r2->value,23090/*gy*/);
+	r19 = r19 + r20;
+	goto label$f3e15a3_2_116;
+	label$f3e15a3_2_113:
+	r19 = -14.;
+	r20 = hl_vfields(r2)[1] ? (*(double*)(hl_vfields(r2)[1])) : (double)hl_dyn_getd(r2->value,23090/*gy*/);
+	r19 = r19 - r20;
+	label$f3e15a3_2_116:
+	r18 = r19;
+	goto label$f3e15a3_2_130;
+	label$f3e15a3_2_118:
+	r19 = r0->dy;
+	r20 = 0.;
+	if( !(r20 < r19) ) goto label$f3e15a3_2_125;
+	r19 = 14.;
+	r20 = hl_vfields(r2)[1] ? (*(double*)(hl_vfields(r2)[1])) : (double)hl_dyn_getd(r2->value,23090/*gy*/);
+	r19 = r19 - r20;
+	goto label$f3e15a3_2_129;
+	label$f3e15a3_2_125:
+	r19 = hl_vfields(r2)[1] ? (*(double*)(hl_vfields(r2)[1])) : (double)hl_dyn_getd(r2->value,23090/*gy*/);
+	r20 = 1.;
+	r19 = r19 + r20;
+	r19 = -r19;
+	label$f3e15a3_2_129:
+	r18 = r19;
+	label$f3e15a3_2_130:
+	r19 = r0->dx;
+	r20 = 0.;
+	if( r19 != r20 ) goto label$f3e15a3_2_136;
+	r19 = r5 + r18;
+	r5 = r19;
+	goto label$f3e15a3_2_170;
+	label$f3e15a3_2_136:
+	r19 = r0->dy;
+	r20 = 0.;
+	if( r19 != r20 ) goto label$f3e15a3_2_142;
+	r19 = r3 + r16;
+	r3 = r19;
+	goto label$f3e15a3_2_170;
+	label$f3e15a3_2_142:
+	r20 = r0->dy;
+	r20 = r20 * r16;
+	r20 = r20 * r14;
+	r19 = r5 + r20;
+	r20 = r19 - r5;
+	r20 = hl_math_abs(r20);
+	r21 = hl_math_abs(r18);
+	if( !(r20 < r21) ) goto label$f3e15a3_2_154;
+	r20 = r3 + r16;
+	r3 = r20;
+	r5 = r19;
+	goto label$f3e15a3_2_170;
+	label$f3e15a3_2_154:
+	r20 = r19 - r5;
+	r20 = hl_math_abs(r20);
+	r21 = hl_math_abs(r18);
+	if( r20 != r21 ) goto label$f3e15a3_2_163;
+	r20 = r3 + r16;
+	r3 = r20;
+	r20 = r5 + r18;
+	r5 = r20;
+	goto label$f3e15a3_2_170;
+	label$f3e15a3_2_163:
+	r21 = r0->dx;
+	r21 = r21 * r18;
+	r21 = r21 * r15;
+	r20 = r3 + r21;
+	r3 = r20;
+	r20 = r5 + r18;
+	r5 = r20;
+	label$f3e15a3_2_170:
+	r8 = hxlr_engine_Cell_getInfo(r3,r5);
+	r2 = r8;
+	if( r8 == NULL ) hl_null_access();
+	r12 = hl_vfields(r8)[3] ? (*(int*)(hl_vfields(r8)[3])) : (int)hl_dyn_geti(r8->value,120/*x*/,&t$_i32);
+	if( r12 < r9 ) goto label$f3e15a3_2_183;
+	r12 = hl_vfields(r8)[3] ? (*(int*)(hl_vfields(r8)[3])) : (int)hl_dyn_geti(r8->value,120/*x*/,&t$_i32);
+	if( r7 < r12 ) goto label$f3e15a3_2_183;
+	r12 = hl_vfields(r8)[4] ? (*(int*)(hl_vfields(r8)[4])) : (int)hl_dyn_geti(r8->value,121/*y*/,&t$_i32);
+	if( r12 < r11 ) goto label$f3e15a3_2_183;
+	r12 = hl_vfields(r8)[4] ? (*(int*)(hl_vfields(r8)[4])) : (int)hl_dyn_geti(r8->value,121/*y*/,&t$_i32);
+	if( r10 < r12 ) goto label$f3e15a3_2_183;
+	hxlr_engine_Grid_storeLine(r0,r8);
+	goto label$f3e15a3_2_70;
+	label$f3e15a3_2_183:
+	return;
+	label$f3e15a3_2_184:
+	return;
+}
+
+void hxlr_engine_Grid_addLine(hxlr__lines__LineBase r0) {
 	hl__types__ArrayObj r5;
+	hxlr__engine__$Grid r4;
 	hl__types__ArrayBytes_Int r8;
-	vdynamic *r3;
+	vdynamic *r2;
 	vbyte *r9;
 	varray *r7;
-	int r4, r6, r10;
-	if( r1 == NULL ) hl_null_access();
-	r3 = r1->id;
-	if( r3 ) goto label$f3e15a3_2_6;
-	r4 = r0->lineIDCount;
-	r3 = hl_alloc_dynamic(&t$_i32);
-	r3->v.i = r4;
-	r1->id = r3;
-	label$f3e15a3_2_6:
-	r5 = r0->lines;
+	int r3, r6, r10;
+	if( r0 == NULL ) hl_null_access();
+	r2 = r0->id;
+	if( r2 ) goto label$f3e15a3_3_7;
+	r4 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r3 = r4->lineIDCount;
+	r2 = hl_alloc_dynamic(&t$_i32);
+	r2->v.i = r3;
+	r0->id = r2;
+	label$f3e15a3_3_7:
+	r4 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r5 = r4->lines;
 	if( r5 == NULL ) hl_null_access();
-	r3 = r1->id;
-	r4 = r3 ? r3->v.i : 0;
+	r2 = r0->id;
+	r3 = r2 ? r2->v.i : 0;
 	r6 = r5->length;
-	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$f3e15a3_2_13;
-	hl_types_ArrayObj___expand(r5,r4);
-	label$f3e15a3_2_13:
+	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$f3e15a3_3_15;
+	hl_types_ArrayObj___expand(r5,r3);
+	label$f3e15a3_3_15:
 	r7 = r5->array;
-	((hxlr__lines__LineBase*)(r7 + 1))[r4] = r1;
-	r4 = r0->lineCount;
-	++r4;
-	r0->lineCount = r4;
-	r4 = r0->lineIDCount;
-	++r4;
-	r0->lineIDCount = r4;
-	r8 = r0->subTypeCount;
+	((hxlr__lines__LineBase*)(r7 + 1))[r3] = r0;
+	r4 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r3 = r4->lineCount;
+	++r3;
+	r4->lineCount = r3;
+	r4 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r3 = r4->lineIDCount;
+	++r3;
+	r4->lineIDCount = r3;
+	r4 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r8 = r4->subTypeCount;
 	if( r8 == NULL ) hl_null_access();
-	r4 = r1->type;
+	r3 = r0->type;
 	r6 = r8->length;
-	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$f3e15a3_2_27;
-	hl_types_ArrayBytes_Int___expand(r8,r4);
-	label$f3e15a3_2_27:
+	if( ((unsigned)r3) < ((unsigned)r6) ) goto label$f3e15a3_3_32;
+	hl_types_ArrayBytes_Int___expand(r8,r3);
+	label$f3e15a3_3_32:
 	r9 = r8->bytes;
 	r6 = 2;
-	r6 = r4 << r6;
+	r6 = r3 << r6;
 	r10 = *(int*)(r9 + r6);
 	++r10;
 	*(int*)(r9 + r6) = r10;
 	return;
 }
 
-void hxlr_engine_Grid_storeLine(hxlr__engine__Grid r0,hxlr__lines__LineBase r1,vvirtual* r2) {
+void hxlr_engine_Grid_storeLine(hxlr__lines__LineBase r0,vvirtual* r1) {
 	String r6;
 	hl__types__ArrayObj r10;
 	vvirtual *r8;
-	haxe__ds__StringMap r5;
+	hxlr__engine__$Grid r5;
+	haxe__ds__StringMap r4;
 	hxlr__engine__Cell r7;
-	vdynamic *r4;
+	vdynamic *r3;
 	int r9;
-	r5 = r0->registry;
-	if( r5 == NULL ) hl_null_access();
-	if( r2 == NULL ) hl_null_access();
-	r6 = hl_vfields(r2)[2] ? (*(String*)(hl_vfields(r2)[2])) : (String)hl_dyn_getp(r2->value,5343647/*key*/,&t$String);
-	r4 = haxe_ds_StringMap_get(r5,r6);
-	r7 = (hxlr__engine__Cell)r4;
-	if( r7 ) goto label$f3e15a3_3_21;
-	r5 = r0->registry;
-	if( r5 ) goto label$f3e15a3_3_11;
-	r8 = NULL;
-	goto label$f3e15a3_3_15;
-	label$f3e15a3_3_11:
-	r8 = r5->f$1;
-	if( r8 ) goto label$f3e15a3_3_15;
-	r8 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r5);
-	r5->f$1 = r8;
-	label$f3e15a3_3_15:
-	r6 = hl_vfields(r2)[2] ? (*(String*)(hl_vfields(r2)[2])) : (String)hl_dyn_getp(r2->value,5343647/*key*/,&t$String);
-	r7 = (hxlr__engine__Cell)hl_alloc_obj(&t$hxlr_engine_Cell);
-	hxlr_engine_Cell_new(r7,r2);
-	r5 = (haxe__ds__StringMap)hl_dyn_castp(&r8,&t$vrt_b840ca7,&t$haxe_ds_StringMap);
-	if( r5 == NULL ) hl_null_access();
-	haxe_ds_StringMap_set(r5,r6,((vdynamic*)r7));
-	label$f3e15a3_3_21:
-	r5 = r0->registry;
-	if( r5 == NULL ) hl_null_access();
-	r6 = hl_vfields(r2)[2] ? (*(String*)(hl_vfields(r2)[2])) : (String)hl_dyn_getp(r2->value,5343647/*key*/,&t$String);
-	r4 = haxe_ds_StringMap_get(r5,r6);
-	r7 = (hxlr__engine__Cell)r4;
-	if( r7 == NULL ) hl_null_access();
-	hxlr_engine_Cell_addLine(r7,r1);
+	r5 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r4 = r5->registry;
+	if( r4 == NULL ) hl_null_access();
 	if( r1 == NULL ) hl_null_access();
-	r10 = r1->keyList;
+	r6 = hl_vfields(r1)[2] ? (*(String*)(hl_vfields(r1)[2])) : (String)hl_dyn_getp(r1->value,5343647/*key*/,&t$String);
+	r3 = haxe_ds_StringMap_get(r4,r6);
+	r7 = (hxlr__engine__Cell)r3;
+	if( r7 ) goto label$f3e15a3_4_23;
+	r5 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r4 = r5->registry;
+	if( r4 ) goto label$f3e15a3_4_13;
+	r8 = NULL;
+	goto label$f3e15a3_4_17;
+	label$f3e15a3_4_13:
+	r8 = r4->f$1;
+	if( r8 ) goto label$f3e15a3_4_17;
+	r8 = hl_to_virtual(&t$vrt_b840ca7,(vdynamic*)r4);
+	r4->f$1 = r8;
+	label$f3e15a3_4_17:
+	r6 = hl_vfields(r1)[2] ? (*(String*)(hl_vfields(r1)[2])) : (String)hl_dyn_getp(r1->value,5343647/*key*/,&t$String);
+	r7 = (hxlr__engine__Cell)hl_alloc_obj(&t$hxlr_engine_Cell);
+	hxlr_engine_Cell_new(r7,r1);
+	r4 = (haxe__ds__StringMap)hl_dyn_castp(&r8,&t$vrt_b840ca7,&t$haxe_ds_StringMap);
+	if( r4 == NULL ) hl_null_access();
+	haxe_ds_StringMap_set(r4,r6,((vdynamic*)r7));
+	label$f3e15a3_4_23:
+	r5 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r4 = r5->registry;
+	if( r4 == NULL ) hl_null_access();
+	r6 = hl_vfields(r1)[2] ? (*(String*)(hl_vfields(r1)[2])) : (String)hl_dyn_getp(r1->value,5343647/*key*/,&t$String);
+	r3 = haxe_ds_StringMap_get(r4,r6);
+	r7 = (hxlr__engine__Cell)r3;
+	if( r7 == NULL ) hl_null_access();
+	hxlr_engine_Cell_addLine(r7,r0);
+	if( r0 == NULL ) hl_null_access();
+	r10 = r0->keyList;
 	if( r10 == NULL ) hl_null_access();
-	r6 = hl_vfields(r2)[2] ? (*(String*)(hl_vfields(r2)[2])) : (String)hl_dyn_getp(r2->value,5343647/*key*/,&t$String);
+	r6 = hl_vfields(r1)[2] ? (*(String*)(hl_vfields(r1)[2])) : (String)hl_dyn_getp(r1->value,5343647/*key*/,&t$String);
 	r9 = hl_types_ArrayObj_push(r10,((vdynamic*)r6));
 	return;
 }
 
-void hxlr_engine_Grid_deleteTrack(hxlr__engine__Grid r0) {
-	hl__types__ArrayObj r3;
+void hxlr_engine_Grid_deleteTrack() {
+	hxlr__engine__$Grid r3;
+	hl__types__ArrayObj r2;
 	hxlr__lines__LineBase r5;
 	vdynamic *r6;
 	varray *r7;
-	int r1, r4;
-	r1 = 0;
-	r3 = r0->lines;
-	label$f3e15a3_4_2:
-	if( r3 == NULL ) hl_null_access();
-	r4 = r3->length;
-	if( r1 >= r4 ) goto label$f3e15a3_4_16;
-	r4 = r3->length;
-	if( ((unsigned)r1) < ((unsigned)r4) ) goto label$f3e15a3_4_10;
+	int r0, r4;
+	r0 = 0;
+	r3 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r2 = r3->lines;
+	label$f3e15a3_5_3:
+	if( r2 == NULL ) hl_null_access();
+	r4 = r2->length;
+	if( r0 >= r4 ) goto label$f3e15a3_5_17;
+	r4 = r2->length;
+	if( ((unsigned)r0) < ((unsigned)r4) ) goto label$f3e15a3_5_11;
 	r5 = NULL;
-	goto label$f3e15a3_4_13;
-	label$f3e15a3_4_10:
-	r7 = r3->array;
-	r6 = ((vdynamic**)(r7 + 1))[r1];
+	goto label$f3e15a3_5_14;
+	label$f3e15a3_5_11:
+	r7 = r2->array;
+	r6 = ((vdynamic**)(r7 + 1))[r0];
 	r5 = (hxlr__lines__LineBase)r6;
-	label$f3e15a3_4_13:
-	++r1;
-	hxlr_engine_Grid_unregister(r0,r5);
-	goto label$f3e15a3_4_2;
-	label$f3e15a3_4_16:
+	label$f3e15a3_5_14:
+	++r0;
+	hxlr_engine_Grid_unregister(r5);
+	goto label$f3e15a3_5_3;
+	label$f3e15a3_5_17:
 	return;
 }
 
-void hxlr_engine_Grid_unregister(hxlr__engine__Grid r0,hxlr__lines__LineBase r1) {
-	String r9;
-	haxe__ds__StringMap r11;
-	hl__types__ArrayObj r6;
+void hxlr_engine_Grid_unregister(hxlr__lines__LineBase r0) {
+	String r8;
+	hxlr__engine__$Grid r11;
+	haxe__ds__StringMap r10;
+	hl__types__ArrayObj r5;
 	hl__types__ArrayBytes_Int r13;
 	hxlr__engine__Cell r12;
-	hxlr__lines__LineBase r3;
-	vdynamic *r4, *r15;
+	hxlr__lines__LineBase r2;
+	vdynamic *r3, *r15;
 	vbyte *r14;
-	varray *r10;
-	int r5, r7, r8;
-	if( r1 ) goto label$f3e15a3_5_2;
+	varray *r9;
+	int r4, r6, r7;
+	if( r0 ) goto label$f3e15a3_6_2;
 	return;
-	label$f3e15a3_5_2:
-	r5 = 0;
-	if( r1 == NULL ) hl_null_access();
-	r6 = r1->keyList;
-	label$f3e15a3_5_5:
-	if( r6 == NULL ) hl_null_access();
-	r8 = r6->length;
-	if( r5 >= r8 ) goto label$f3e15a3_5_24;
-	r8 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r8) ) goto label$f3e15a3_5_13;
-	r9 = NULL;
-	goto label$f3e15a3_5_16;
-	label$f3e15a3_5_13:
-	r10 = r6->array;
-	r4 = ((vdynamic**)(r10 + 1))[r5];
-	r9 = (String)r4;
-	label$f3e15a3_5_16:
-	++r5;
-	r11 = r0->registry;
-	if( r11 == NULL ) hl_null_access();
-	r4 = haxe_ds_StringMap_get(r11,r9);
-	r12 = (hxlr__engine__Cell)r4;
+	label$f3e15a3_6_2:
+	r4 = 0;
+	if( r0 == NULL ) hl_null_access();
+	r5 = r0->keyList;
+	label$f3e15a3_6_5:
+	if( r5 == NULL ) hl_null_access();
+	r7 = r5->length;
+	if( r4 >= r7 ) goto label$f3e15a3_6_25;
+	r7 = r5->length;
+	if( ((unsigned)r4) < ((unsigned)r7) ) goto label$f3e15a3_6_13;
+	r8 = NULL;
+	goto label$f3e15a3_6_16;
+	label$f3e15a3_6_13:
+	r9 = r5->array;
+	r3 = ((vdynamic**)(r9 + 1))[r4];
+	r8 = (String)r3;
+	label$f3e15a3_6_16:
+	++r4;
+	r11 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r10 = r11->registry;
+	if( r10 == NULL ) hl_null_access();
+	r3 = haxe_ds_StringMap_get(r10,r8);
+	r12 = (hxlr__engine__Cell)r3;
 	if( r12 == NULL ) hl_null_access();
-	hxlr_engine_Cell_removeLine(r12,r1);
-	goto label$f3e15a3_5_5;
-	label$f3e15a3_5_24:
-	r5 = r0->lineCount;
-	--r5;
-	r0->lineCount = r5;
-	r13 = r0->subTypeCount;
+	hxlr_engine_Cell_removeLine(r12,r0);
+	goto label$f3e15a3_6_5;
+	label$f3e15a3_6_25:
+	r11 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r4 = r11->lineCount;
+	--r4;
+	r11->lineCount = r4;
+	r11 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r13 = r11->subTypeCount;
 	if( r13 == NULL ) hl_null_access();
-	if( r1 == NULL ) hl_null_access();
-	r5 = r1->type;
-	r7 = r13->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$f3e15a3_5_34;
-	hl_types_ArrayBytes_Int___expand(r13,r5);
-	label$f3e15a3_5_34:
+	if( r0 == NULL ) hl_null_access();
+	r4 = r0->type;
+	r6 = r13->length;
+	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$f3e15a3_6_37;
+	hl_types_ArrayBytes_Int___expand(r13,r4);
+	label$f3e15a3_6_37:
 	r14 = r13->bytes;
-	r7 = 2;
-	r7 = r5 << r7;
-	r8 = *(int*)(r14 + r7);
-	--r8;
-	*(int*)(r14 + r7) = r8;
-	r6 = r0->lines;
-	if( r6 == NULL ) hl_null_access();
-	r15 = r1->id;
-	r5 = r15 ? r15->v.i : 0;
-	r3 = NULL;
-	r7 = r6->length;
-	if( ((unsigned)r5) < ((unsigned)r7) ) goto label$f3e15a3_5_48;
-	hl_types_ArrayObj___expand(r6,r5);
-	label$f3e15a3_5_48:
-	r10 = r6->array;
-	((hxlr__lines__LineBase*)(r10 + 1))[r5] = r3;
-	return;
-}
-
-void hxlr_engine_Grid_new(hxlr__engine__Grid r0) {
-	hl__types__ArrayObj r5;
-	haxe__ds__StringMap r4;
-	hl__types__ArrayBytes_Int r1;
-	int r3;
-	r1 = (hl__types__ArrayBytes_Int)hl_alloc_obj(&t$hl_types_ArrayBytes_Int);
-	hl_types_ArrayBytes_Int_new(r1);
-	r0->subTypeCount = r1;
-	r3 = 0;
-	r0->lineIDCount = r3;
-	r3 = 0;
-	r0->lineCount = r3;
-	r4 = (haxe__ds__StringMap)hl_alloc_obj(&t$haxe_ds_StringMap);
-	haxe_ds_StringMap_new(r4);
-	r0->registry = r4;
-	r5 = (hl__types__ArrayObj)hl_alloc_obj(&t$hl_types_ArrayObj);
-	hl_types_ArrayObj_new(r5);
-	r0->lines = r5;
+	r6 = 2;
+	r6 = r4 << r6;
+	r7 = *(int*)(r14 + r6);
+	--r7;
+	*(int*)(r14 + r6) = r7;
+	r11 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r5 = r11->lines;
+	if( r5 == NULL ) hl_null_access();
+	r15 = r0->id;
+	r4 = r15 ? r15->v.i : 0;
+	r2 = NULL;
+	r6 = r5->length;
+	if( ((unsigned)r4) < ((unsigned)r6) ) goto label$f3e15a3_6_52;
+	hl_types_ArrayObj___expand(r5,r4);
+	label$f3e15a3_6_52:
+	r9 = r5->array;
+	((hxlr__lines__LineBase*)(r9 + 1))[r4] = r2;
 	return;
 }
 

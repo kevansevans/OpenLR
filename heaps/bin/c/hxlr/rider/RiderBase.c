@@ -23,7 +23,6 @@ void hl_types_ArrayObj_unshift(hl__types__ArrayObj,vdynamic*);
 bool hxlr_rider_RiderBase_set_crashed(hxlr__rider__RiderBase,bool);
 #include <haxe/ds/StringMap.h>
 #include <hxlr/engine/Grid.h>
-#include <_std/Main.h>
 #include <hxlr/engine/Cell.h>
 #include <hxlr/lines/LineBase.h>
 vvirtual* hxlr_engine_Cell_getInfo(double,double);
@@ -32,7 +31,7 @@ extern String s$x;
 String String___alloc__(vbyte*,int);
 String String___add__(String,String);
 extern String s$y;
-extern $Main g$_Main;
+extern hxlr__engine__$Grid g$_hxlr_engine_Grid;
 vdynamic* haxe_ds_StringMap_get(haxe__ds__StringMap,String);
 extern hl_type t$h2d_col_Point;
 void h2d_col_Point_new(h2d__col__Point,double*,double*);
@@ -434,27 +433,26 @@ void hxlr_rider_RiderBase_step(hxlr__rider__RiderBase r0) {
 
 void hxlr_rider_RiderBase_collide(hxlr__rider__RiderBase r0) {
 	String r17, r20;
+	hxlr__engine__$Grid r22;
 	haxe__ds__StringMap r21;
 	vvirtual *r10;
 	hl__types__ArrayObj r3, r6;
-	hxlr__engine__Grid r22;
-	hxlr__engine__Cell r24;
-	$Main r23;
+	hxlr__engine__Cell r23;
 	h2d__col__Point r12;
-	hxlr__lines__LineBase r26;
+	hxlr__lines__LineBase r25;
 	hxlr__rider__ContactPoint r7;
 	double r11, r13;
 	int *r18;
 	vdynamic *r8;
 	vbyte *r19;
 	varray *r9;
-	int r1, r4, r5, r14, r15, r16, r25;
+	int r1, r4, r5, r14, r15, r16, r24;
 	r1 = 0;
 	r3 = r0->contactPoints;
 	label$6dad55e_4_2:
 	if( r3 == NULL ) hl_null_access();
 	r5 = r3->length;
-	if( r1 >= r5 ) goto label$6dad55e_4_89;
+	if( r1 >= r5 ) goto label$6dad55e_4_85;
 	r5 = r3->length;
 	if( ((unsigned)r1) < ((unsigned)r5) ) goto label$6dad55e_4_10;
 	r7 = NULL;
@@ -476,13 +474,13 @@ void hxlr_rider_RiderBase_collide(hxlr__rider__RiderBase r0) {
 	r4 = -1;
 	label$6dad55e_4_23:
 	r14 = 2;
-	if( r4 >= r14 ) goto label$6dad55e_4_88;
+	if( r4 >= r14 ) goto label$6dad55e_4_84;
 	r5 = r4;
 	++r4;
 	r14 = -1;
 	label$6dad55e_4_29:
 	r16 = 2;
-	if( r14 >= r16 ) goto label$6dad55e_4_87;
+	if( r14 >= r16 ) goto label$6dad55e_4_83;
 	r15 = r14;
 	++r14;
 	r17 = (String)s$x;
@@ -501,53 +499,49 @@ void hxlr_rider_RiderBase_collide(hxlr__rider__RiderBase r0) {
 	r19 = hl_itos(r16,r18);
 	r20 = String___alloc__(r19,r16);
 	r17 = String___add__(r17,r20);
-	r23 = ($Main)g$_Main;
-	r22 = r23->grid;
-	if( r22 == NULL ) hl_null_access();
+	r22 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r21 = r22->registry;
 	if( r21 == NULL ) hl_null_access();
 	r8 = haxe_ds_StringMap_get(r21,r17);
-	r24 = (hxlr__engine__Cell)r8;
-	if( r24 ) goto label$6dad55e_4_59;
+	r23 = (hxlr__engine__Cell)r8;
+	if( r23 ) goto label$6dad55e_4_57;
 	goto label$6dad55e_4_29;
-	label$6dad55e_4_59:
-	r23 = ($Main)g$_Main;
-	r22 = r23->grid;
-	if( r22 == NULL ) hl_null_access();
+	label$6dad55e_4_57:
+	r22 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r21 = r22->registry;
 	if( r21 == NULL ) hl_null_access();
 	r8 = haxe_ds_StringMap_get(r21,r17);
-	r24 = (hxlr__engine__Cell)r8;
+	r23 = (hxlr__engine__Cell)r8;
 	r16 = 0;
-	if( r24 == NULL ) hl_null_access();
-	r6 = r24->collidable;
-	label$6dad55e_4_69:
+	if( r23 == NULL ) hl_null_access();
+	r6 = r23->collidable;
+	label$6dad55e_4_65:
 	if( r6 == NULL ) hl_null_access();
-	r25 = r6->length;
-	if( r16 >= r25 ) goto label$6dad55e_4_86;
-	r25 = r6->length;
-	if( ((unsigned)r16) < ((unsigned)r25) ) goto label$6dad55e_4_77;
-	r26 = NULL;
-	goto label$6dad55e_4_80;
-	label$6dad55e_4_77:
+	r24 = r6->length;
+	if( r16 >= r24 ) goto label$6dad55e_4_82;
+	r24 = r6->length;
+	if( ((unsigned)r16) < ((unsigned)r24) ) goto label$6dad55e_4_73;
+	r25 = NULL;
+	goto label$6dad55e_4_76;
+	label$6dad55e_4_73:
 	r9 = r6->array;
 	r8 = ((vdynamic**)(r9 + 1))[r16];
-	r26 = (hxlr__lines__LineBase)r8;
-	label$6dad55e_4_80:
+	r25 = (hxlr__lines__LineBase)r8;
+	label$6dad55e_4_76:
 	++r16;
-	if( r26 ) goto label$6dad55e_4_83;
-	goto label$6dad55e_4_69;
-	label$6dad55e_4_83:
-	if( r26 == NULL ) hl_null_access();
-	((void (*)(hxlr__lines__LineBase,hxlr__rider__ContactPoint))r26->$type->vobj_proto[1])(r26,r7);
-	goto label$6dad55e_4_69;
-	label$6dad55e_4_86:
+	if( r25 ) goto label$6dad55e_4_79;
+	goto label$6dad55e_4_65;
+	label$6dad55e_4_79:
+	if( r25 == NULL ) hl_null_access();
+	((void (*)(hxlr__lines__LineBase,hxlr__rider__ContactPoint))r25->$type->vobj_proto[1])(r25,r7);
+	goto label$6dad55e_4_65;
+	label$6dad55e_4_82:
 	goto label$6dad55e_4_29;
-	label$6dad55e_4_87:
+	label$6dad55e_4_83:
 	goto label$6dad55e_4_23;
-	label$6dad55e_4_88:
+	label$6dad55e_4_84:
 	goto label$6dad55e_4_2;
-	label$6dad55e_4_89:
+	label$6dad55e_4_85:
 	return;
 }
 

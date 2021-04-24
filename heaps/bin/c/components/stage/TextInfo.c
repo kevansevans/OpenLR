@@ -31,6 +31,7 @@ extern String s$;
 String components_stage_TextInfo_timeStamp(components__stage__TextInfo,int);
 String components_stage_TextInfo_getSimState(components__stage__TextInfo);
 extern String s$ee59caa;
+extern hxlr__engine__$Grid g$_hxlr_engine_Grid;
 extern String s$b26fc71;
 String components_stage_TextInfo_getLineVisibility(components__stage__TextInfo,int);
 extern String s$95bfd39;
@@ -84,8 +85,8 @@ void components_stage_TextInfo_new(components__stage__TextInfo r0) {
 
 void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	String r1, r4, r10;
+	hxlr__engine__$Grid r14;
 	hl__types__ArrayBytes_Int r15;
-	hxlr__engine__Grid r14;
 	$Main r3;
 	h2d__Text r2;
 	h3d__Engine r12;
@@ -156,9 +157,7 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	if( r2 == NULL ) hl_null_access();
 	r1 = r2->text;
 	r4 = (String)s$ee59caa;
-	r3 = ($Main)g$_Main;
-	r14 = r3->grid;
-	if( r14 == NULL ) hl_null_access();
+	r14 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r5 = r14->lineCount;
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
@@ -172,22 +171,20 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	if( r2 == NULL ) hl_null_access();
 	r1 = r2->text;
 	r4 = (String)s$b26fc71;
-	r3 = ($Main)g$_Main;
-	r14 = r3->grid;
-	if( r14 == NULL ) hl_null_access();
+	r14 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r15 = r14->subTypeCount;
 	if( r15 == NULL ) hl_null_access();
 	r5 = 0;
 	r16 = r15->length;
-	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_86;
+	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_82;
 	r5 = 0;
-	goto label$47952d5_2_90;
-	label$47952d5_2_86:
+	goto label$47952d5_2_86;
+	label$47952d5_2_82:
 	r9 = r15->bytes;
 	r16 = 2;
 	r16 = r5 << r16;
 	r5 = *(int*)(r9 + r16);
-	label$47952d5_2_90:
+	label$47952d5_2_86:
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);
@@ -203,22 +200,20 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	if( r2 == NULL ) hl_null_access();
 	r1 = r2->text;
 	r4 = (String)s$95bfd39;
-	r3 = ($Main)g$_Main;
-	r14 = r3->grid;
-	if( r14 == NULL ) hl_null_access();
+	r14 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r15 = r14->subTypeCount;
 	if( r15 == NULL ) hl_null_access();
 	r5 = 1;
 	r16 = r15->length;
-	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_115;
+	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_109;
 	r5 = 0;
-	goto label$47952d5_2_119;
-	label$47952d5_2_115:
+	goto label$47952d5_2_113;
+	label$47952d5_2_109:
 	r9 = r15->bytes;
 	r16 = 2;
 	r16 = r5 << r16;
 	r5 = *(int*)(r9 + r16);
-	label$47952d5_2_119:
+	label$47952d5_2_113:
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);
@@ -234,22 +229,20 @@ void components_stage_TextInfo_update(components__stage__TextInfo r0) {
 	if( r2 == NULL ) hl_null_access();
 	r1 = r2->text;
 	r4 = (String)s$f6e44bc;
-	r3 = ($Main)g$_Main;
-	r14 = r3->grid;
-	if( r14 == NULL ) hl_null_access();
+	r14 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r15 = r14->subTypeCount;
 	if( r15 == NULL ) hl_null_access();
 	r5 = 2;
 	r16 = r15->length;
-	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_144;
+	if( ((unsigned)r5) < ((unsigned)r16) ) goto label$47952d5_2_136;
 	r5 = 0;
-	goto label$47952d5_2_148;
-	label$47952d5_2_144:
+	goto label$47952d5_2_140;
+	label$47952d5_2_136:
 	r9 = r15->bytes;
 	r16 = 2;
 	r16 = r5 << r16;
 	r5 = *(int*)(r9 + r16);
-	label$47952d5_2_148:
+	label$47952d5_2_140:
 	r8 = &r5;
 	r9 = hl_itos(r5,r8);
 	r10 = String___alloc__(r9,r5);

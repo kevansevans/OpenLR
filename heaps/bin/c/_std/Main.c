@@ -26,6 +26,8 @@ int Date_getSeconds(Date);
 #include <h2d/Font.h>
 #include <h2d/Text.h>
 #include <hxd/Window.h>
+#include <hxlr/file/AMF0Reader.h>
+#include <haxe/io/Bytes.h>
 void hxd_App_init(hxd__App);
 extern hl_type t$hxd_res_Loader;
 extern hl_type t$hxd_fs_EmbedFileSystem;
@@ -81,6 +83,10 @@ void components_stage_Camera_new(components__stage__Camera,String);
 hxd__Window hxd_Window_getInstance(void);
 extern String s$OpenLR_;
 String hxd_Window_set_title(hxd__Window,String);
+extern hl_type t$hxlr_file_AMF0Reader;
+extern String s$_saves_testA_sol;
+haxe__io__Bytes hxd_File_getBytes(String);
+void hxlr_file_AMF0Reader_new(hxlr__file__AMF0Reader,haxe__io__Bytes);
 void hxd_System_openURL(String);
 void components_stage_Canvas_addCanvasPosition(components__stage__Canvas,double,double);
 extern String s$Set_grid_size_to_;
@@ -92,8 +98,10 @@ extern hl_type t$_f64;
 double h2d_Scene_get_mouseY(h2d__Scene);
 void components_stage_Canvas_addLine(components__stage__Canvas,int,double,double,double,double,vdynamic*,vdynamic*,vdynamic*);
 #include <hl/types/ArrayObj.h>
+#include <hxlr/engine/Grid.h>
 #include <hxlr/lines/LineBase.h>
-void hxlr_engine_Grid_unregister(hxlr__engine__Grid,hxlr__lines__LineBase);
+extern hxlr__engine__$Grid g$_hxlr_engine_Grid;
+void hxlr_engine_Grid_unregister(hxlr__lines__LineBase);
 #include <components/tool/ToolMode.h>
 String String_toUpperCase(String);
 extern String s$;
@@ -143,7 +151,7 @@ extern String s$Saved_current_track_as_;
 extern String s$Saved_new_track_as_;
 extern String s$saveTrack;
 void h2d_Console_runCommand(h2d__Console,String);
-void hxlr_engine_Grid_deleteTrack(hxlr__engine__Grid);
+void hxlr_engine_Grid_deleteTrack(void);
 void components_managers_Riders_deleteAllRiders(components__managers__Riders);
 void file_SaveLoad_loadTrack(file__SaveLoad,String,vdynamic*);
 void file_SaveLoad_listTrackFiles(file__SaveLoad);
@@ -157,7 +165,6 @@ void file_SaveLoad_loadJSON(file__SaveLoad,String);
 String String_substr(String,int,vdynamic*);
 void file_SaveLoad_saveUserInfo(file__SaveLoad);
 extern String s$Author_name_set_to_;
-#include <haxe/io/Bytes.h>
 extern hl_type t$String;
 void components_managers_Musicplayer_loadAudioAsBytes(components__managers__Musicplayer,haxe__io__Bytes,String);
 extern hl_type t$fun_8c12973;
@@ -388,6 +395,7 @@ void Main_init(Main r0) {
 	String r7, r26;
 	vvirtual *r8, *r22;
 	h2d__Graphics r14;
+	haxe__io__Bytes r40;
 	bool r13;
 	h2d__Object r15;
 	h2d__Mask r16;
@@ -401,6 +409,7 @@ void Main_init(Main r0) {
 	h2d__RenderContext r11;
 	hxd__res__Loader r4;
 	h3d__Engine r2;
+	hxlr__file__AMF0Reader r39;
 	hxd__fs__EmbedFileSystem r5;
 	components__stage__Canvas r18;
 	components__ui__Toolbar r34, r35;
@@ -676,6 +685,10 @@ void Main_init(Main r0) {
 	r26 = r3->build;
 	r7 = String___add__(r7,r26);
 	r7 = hxd_Window_set_title(r38,r7);
+	r39 = (hxlr__file__AMF0Reader)hl_alloc_obj(&t$hxlr_file_AMF0Reader);
+	r7 = (String)s$_saves_testA_sol;
+	r40 = hxd_File_getBytes(r7);
+	hxlr_file_AMF0Reader_new(r39,r40);
 	return;
 }
 
@@ -924,34 +937,28 @@ void Main_setConsoleActions__$8(vdynamic* r0,vdynamic* r1,vdynamic* r2,vdynamic*
 }
 
 void Main_setConsoleActions__$9(vdynamic* r0) {
-	hl__types__ArrayObj r4;
-	hxlr__engine__Grid r2, r5;
-	$Main r3;
-	hxlr__lines__LineBase r8;
-	vdynamic *r9;
-	varray *r10;
-	int r6, r7;
-	if( !r0 ) goto label$36888b6_12_18;
-	r3 = ($Main)g$_Main;
-	r2 = r3->grid;
+	hxlr__engine__$Grid r3;
+	hl__types__ArrayObj r2;
+	hxlr__lines__LineBase r6;
+	vdynamic *r7;
+	varray *r8;
+	int r4, r5;
+	if( !r0 ) goto label$36888b6_12_13;
+	r3 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
+	r2 = r3->lines;
 	if( r2 == NULL ) hl_null_access();
-	r3 = ($Main)g$_Main;
-	r5 = r3->grid;
-	if( r5 == NULL ) hl_null_access();
-	r4 = r5->lines;
-	if( r4 == NULL ) hl_null_access();
-	r6 = r0 ? r0->v.i : 0;
-	r7 = r4->length;
-	if( ((unsigned)r6) < ((unsigned)r7) ) goto label$36888b6_12_14;
-	r8 = NULL;
-	goto label$36888b6_12_17;
-	label$36888b6_12_14:
-	r10 = r4->array;
-	r9 = ((vdynamic**)(r10 + 1))[r6];
-	r8 = (hxlr__lines__LineBase)r9;
-	label$36888b6_12_17:
-	hxlr_engine_Grid_unregister(r2,r8);
-	label$36888b6_12_18:
+	r4 = r0 ? r0->v.i : 0;
+	r5 = r2->length;
+	if( ((unsigned)r4) < ((unsigned)r5) ) goto label$36888b6_12_9;
+	r6 = NULL;
+	goto label$36888b6_12_12;
+	label$36888b6_12_9:
+	r8 = r2->array;
+	r7 = ((vdynamic**)(r8 + 1))[r4];
+	r6 = (hxlr__lines__LineBase)r7;
+	label$36888b6_12_12:
+	hxlr_engine_Grid_unregister(r6);
+	label$36888b6_12_13:
 	return;
 }
 
@@ -1328,8 +1335,8 @@ void Main_setConsoleActions__$15(Main r0,bool r1) {
 
 void Main_setConsoleActions__$16() {
 	String r3, r9;
+	hxlr__engine__$Grid r6;
 	hl__types__ArrayBytes_Int r10;
-	hxlr__engine__Grid r6;
 	$Main r2;
 	int *r7;
 	vdynamic *r4;
@@ -1346,9 +1353,7 @@ void Main_setConsoleActions__$16() {
 	r1 = r2->console;
 	if( r1 == NULL ) hl_null_access();
 	r3 = (String)s$ee6321b;
-	r2 = ($Main)g$_Main;
-	r6 = r2->grid;
-	if( r6 == NULL ) hl_null_access();
+	r6 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r5 = r6->lineCount;
 	r7 = &r5;
 	r8 = hl_itos(r5,r7);
@@ -1360,22 +1365,20 @@ void Main_setConsoleActions__$16() {
 	r1 = r2->console;
 	if( r1 == NULL ) hl_null_access();
 	r3 = (String)s$9eb5ce1;
-	r2 = ($Main)g$_Main;
-	r6 = r2->grid;
-	if( r6 == NULL ) hl_null_access();
+	r6 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r10 = r6->subTypeCount;
 	if( r10 == NULL ) hl_null_access();
 	r5 = 0;
 	r11 = r10->length;
-	if( ((unsigned)r5) < ((unsigned)r11) ) goto label$36888b6_19_34;
+	if( ((unsigned)r5) < ((unsigned)r11) ) goto label$36888b6_19_30;
 	r5 = 0;
-	goto label$36888b6_19_38;
-	label$36888b6_19_34:
+	goto label$36888b6_19_34;
+	label$36888b6_19_30:
 	r8 = r10->bytes;
 	r11 = 2;
 	r11 = r5 << r11;
 	r5 = *(int*)(r8 + r11);
-	label$36888b6_19_38:
+	label$36888b6_19_34:
 	r7 = &r5;
 	r8 = hl_itos(r5,r7);
 	r9 = String___alloc__(r8,r5);
@@ -1386,22 +1389,20 @@ void Main_setConsoleActions__$16() {
 	r1 = r2->console;
 	if( r1 == NULL ) hl_null_access();
 	r3 = (String)s$8b9e9e3;
-	r2 = ($Main)g$_Main;
-	r6 = r2->grid;
-	if( r6 == NULL ) hl_null_access();
+	r6 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r10 = r6->subTypeCount;
 	if( r10 == NULL ) hl_null_access();
 	r5 = 1;
 	r11 = r10->length;
-	if( ((unsigned)r5) < ((unsigned)r11) ) goto label$36888b6_19_58;
+	if( ((unsigned)r5) < ((unsigned)r11) ) goto label$36888b6_19_52;
 	r5 = 0;
-	goto label$36888b6_19_62;
-	label$36888b6_19_58:
+	goto label$36888b6_19_56;
+	label$36888b6_19_52:
 	r8 = r10->bytes;
 	r11 = 2;
 	r11 = r5 << r11;
 	r5 = *(int*)(r8 + r11);
-	label$36888b6_19_62:
+	label$36888b6_19_56:
 	r7 = &r5;
 	r8 = hl_itos(r5,r7);
 	r9 = String___alloc__(r8,r5);
@@ -1412,22 +1413,20 @@ void Main_setConsoleActions__$16() {
 	r1 = r2->console;
 	if( r1 == NULL ) hl_null_access();
 	r3 = (String)s$4aaf8b9;
-	r2 = ($Main)g$_Main;
-	r6 = r2->grid;
-	if( r6 == NULL ) hl_null_access();
+	r6 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r10 = r6->subTypeCount;
 	if( r10 == NULL ) hl_null_access();
 	r5 = 2;
 	r11 = r10->length;
-	if( ((unsigned)r5) < ((unsigned)r11) ) goto label$36888b6_19_82;
+	if( ((unsigned)r5) < ((unsigned)r11) ) goto label$36888b6_19_74;
 	r5 = 0;
-	goto label$36888b6_19_86;
-	label$36888b6_19_82:
+	goto label$36888b6_19_78;
+	label$36888b6_19_74:
 	r8 = r10->bytes;
 	r11 = 2;
 	r11 = r5 << r11;
 	r5 = *(int*)(r8 + r11);
-	label$36888b6_19_86:
+	label$36888b6_19_78:
 	r7 = &r5;
 	r8 = hl_itos(r5,r7);
 	r9 = String___alloc__(r8,r5);
@@ -2013,11 +2012,10 @@ void Main_setConsoleActions__$29(String r0) {
 }
 
 void Main_setConsoleActions__$30(String r0,vdynamic* r1) {
-	components__managers__Riders r8;
+	components__managers__Riders r7;
 	String r4;
-	hxlr__engine__Grid r7;
 	$Main r5;
-	file__SaveLoad r9;
+	file__SaveLoad r8;
 	components__stage__LRConsole r6;
 	int r2;
 	if( r1 ) goto label$36888b6_33_3;
@@ -2034,18 +2032,15 @@ void Main_setConsoleActions__$30(String r0,vdynamic* r1) {
 	r4 = (String)s$saveTrack;
 	h2d_Console_runCommand(((h2d__Console)r6),r4);
 	label$36888b6_33_11:
+	hxlr_engine_Grid_deleteTrack();
 	r5 = ($Main)g$_Main;
-	r7 = r5->grid;
+	r7 = r5->riders;
 	if( r7 == NULL ) hl_null_access();
-	hxlr_engine_Grid_deleteTrack(r7);
+	components_managers_Riders_deleteAllRiders(r7);
 	r5 = ($Main)g$_Main;
-	r8 = r5->riders;
+	r8 = r5->saveload;
 	if( r8 == NULL ) hl_null_access();
-	components_managers_Riders_deleteAllRiders(r8);
-	r5 = ($Main)g$_Main;
-	r9 = r5->saveload;
-	if( r9 == NULL ) hl_null_access();
-	file_SaveLoad_loadTrack(r9,r0,r1);
+	file_SaveLoad_loadTrack(r8,r0,r1);
 	return;
 }
 
@@ -2112,15 +2107,14 @@ void Main_setConsoleActions__$33(bool r0) {
 }
 
 void Main_setConsoleActions__$34() {
-	components__managers__Riders r5;
+	components__managers__Riders r4;
 	String r1;
-	hxlr__engine__Grid r4;
 	$Main r2;
-	h2d__col__Point r6;
-	double r8, r10;
-	vdynamic *r12, *r13;
-	double *r9, *r11;
-	int r7;
+	h2d__col__Point r5;
+	double r7, r9;
+	vdynamic *r11, *r12;
+	double *r8, *r10;
+	int r6;
 	components__stage__LRConsole r3;
 	r2 = ($Main)g$_Main;
 	r1 = r2->trackName;
@@ -2131,29 +2125,26 @@ void Main_setConsoleActions__$34() {
 	r1 = (String)s$saveTrack;
 	h2d_Console_runCommand(((h2d__Console)r3),r1);
 	label$36888b6_37_8:
+	hxlr_engine_Grid_deleteTrack();
 	r2 = ($Main)g$_Main;
-	r4 = r2->grid;
+	r4 = r2->riders;
 	if( r4 == NULL ) hl_null_access();
-	hxlr_engine_Grid_deleteTrack(r4);
+	components_managers_Riders_deleteAllRiders(r4);
 	r2 = ($Main)g$_Main;
-	r5 = r2->riders;
-	if( r5 == NULL ) hl_null_access();
-	components_managers_Riders_deleteAllRiders(r5);
-	r2 = ($Main)g$_Main;
-	r5 = r2->riders;
-	if( r5 == NULL ) hl_null_access();
+	r4 = r2->riders;
+	if( r4 == NULL ) hl_null_access();
 	r1 = (String)s$Bosh;
-	r6 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
-	r7 = 0;
-	r8 = (double)r7;
-	r9 = &r8;
-	r7 = 0;
-	r10 = (double)r7;
-	r11 = &r10;
-	h2d_col_Point_new(r6,r9,r11);
+	r5 = (h2d__col__Point)hl_alloc_obj(&t$h2d_col_Point);
+	r6 = 0;
+	r7 = (double)r6;
+	r8 = &r7;
+	r6 = 0;
+	r9 = (double)r6;
+	r10 = &r9;
+	h2d_col_Point_new(r5,r8,r10);
+	r11 = NULL;
 	r12 = NULL;
-	r13 = NULL;
-	components_managers_Riders_addNewRider(r5,r1,r6,r12,r13);
+	components_managers_Riders_addNewRider(r4,r1,r5,r11,r12);
 	r1 = NULL;
 	r2 = ($Main)g$_Main;
 	r2->trackName = r1;
@@ -2171,11 +2162,10 @@ void Main_setConsoleActions__$35(String r0,String r1) {
 }
 
 void Main_setConsoleActions__$36(String r0) {
-	components__managers__Riders r6;
+	components__managers__Riders r5;
 	String r2;
-	hxlr__engine__Grid r5;
 	$Main r3;
-	file__SaveLoad r7;
+	file__SaveLoad r6;
 	components__stage__LRConsole r4;
 	r3 = ($Main)g$_Main;
 	r2 = r3->trackName;
@@ -2186,18 +2176,15 @@ void Main_setConsoleActions__$36(String r0) {
 	r2 = (String)s$saveTrack;
 	h2d_Console_runCommand(((h2d__Console)r4),r2);
 	label$36888b6_39_8:
+	hxlr_engine_Grid_deleteTrack();
 	r3 = ($Main)g$_Main;
-	r5 = r3->grid;
+	r5 = r3->riders;
 	if( r5 == NULL ) hl_null_access();
-	hxlr_engine_Grid_deleteTrack(r5);
+	components_managers_Riders_deleteAllRiders(r5);
 	r3 = ($Main)g$_Main;
-	r6 = r3->riders;
+	r6 = r3->saveload;
 	if( r6 == NULL ) hl_null_access();
-	components_managers_Riders_deleteAllRiders(r6);
-	r3 = ($Main)g$_Main;
-	r7 = r3->saveload;
-	if( r7 == NULL ) hl_null_access();
-	file_SaveLoad_loadJSON(r7,r0);
+	file_SaveLoad_loadJSON(r6,r0);
 	return;
 }
 

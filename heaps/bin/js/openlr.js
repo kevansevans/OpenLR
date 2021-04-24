@@ -293,6 +293,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		_this.y = 3;
 		Main.camera = new components_stage_Camera();
 		hxd_Window.getInstance().set_title("OpenLR - " + Main.build);
+		new hxlr_file_AMF0Reader(hxd_File.getBytes("./saves/testA.sol"));
 	}
 	,setConsoleActions: function() {
 		var _gthis = this;
@@ -374,7 +375,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 		var arg29 = { t : h2d_ConsoleArg.AInt, opt : false, name : "Line Index"};
 		Main.console.addCommand("removeLine","remove specified line",[arg29],function(_index) {
 			if(_index != null) {
-				Main.grid.unregister(Main.grid.lines[_index]);
+				hxlr_engine_Grid.unregister(hxlr_engine_Grid.lines[_index]);
 			}
 		});
 		var arg10 = { t : h2d_ConsoleArg.AString, opt : false, name : "Tool"};
@@ -432,10 +433,10 @@ Main.prototype = $extend(hxd_App.prototype,{
 		});
 		Main.console.addCommand("trackInfo","Print track info",[],function() {
 			Main.console.log("===");
-			Main.console.log("Lines " + Main.grid.lineCount);
-			Main.console.log("Floor " + Main.grid.subTypeCount[0]);
-			Main.console.log("Accel " + Main.grid.subTypeCount[1]);
-			Main.console.log("Scene " + Main.grid.subTypeCount[2]);
+			Main.console.log("Lines " + hxlr_engine_Grid.lineCount);
+			Main.console.log("Floor " + hxlr_engine_Grid.subTypeCount[0]);
+			Main.console.log("Accel " + hxlr_engine_Grid.subTypeCount[1]);
+			Main.console.log("Scene " + hxlr_engine_Grid.subTypeCount[2]);
 			Main.console.log("===");
 		});
 		Main.console.addCommand("playTrack","Start simulation",[],function() {
@@ -551,7 +552,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 			if(Main.trackName != null) {
 				Main.console.runCommand("saveTrack");
 			}
-			Main.grid.deleteTrack();
+			hxlr_engine_Grid.deleteTrack();
 			Main.riders.deleteAllRiders();
 			Main.saveload.loadTrack(_name,_offset);
 		});
@@ -577,7 +578,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 			if(Main.trackName != null) {
 				Main.console.runCommand("saveTrack");
 			}
-			Main.grid.deleteTrack();
+			hxlr_engine_Grid.deleteTrack();
 			Main.riders.deleteAllRiders();
 			Main.riders.addNewRider("Bosh",new h2d_col_Point(0,0));
 			Main.trackName = null;
@@ -597,7 +598,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 			if(Main.trackName != null) {
 				Main.console.runCommand("saveTrack");
 			}
-			Main.grid.deleteTrack();
+			hxlr_engine_Grid.deleteTrack();
 			Main.riders.deleteAllRiders();
 			Main.saveload.loadJSON(_name);
 		});
@@ -645,7 +646,7 @@ Main.prototype = $extend(hxd_App.prototype,{
 				Main.console.log("Please set author name with /name before joining server",16711680);
 				return;
 			}
-			if(Main.grid.lineCount > 0) {
+			if(hxlr_engine_Grid.lineCount > 0) {
 				Main.console.runCommand("saveTrack" + (" " + new Date().getTime()));
 				Main.console.runCommand("newTrack");
 			}
@@ -1711,10 +1712,10 @@ hxlr_rider_RiderBase.prototype = {
 				while(_g3 < 2) {
 					var _y = _g3++;
 					var key = "x" + (gridPos.x + _x) + "y" + (gridPos.y + _y);
-					if(Main.grid.registry.h[key] == null) {
+					if(hxlr_engine_Grid.registry.h[key] == null) {
 						continue;
 					} else {
-						var register = Main.grid.registry.h[key];
+						var register = hxlr_engine_Grid.registry.h[key];
 						var _g4 = 0;
 						var _g5 = register.collidable;
 						while(_g4 < _g5.length) {
@@ -4236,7 +4237,7 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 			line.id = _lineID;
 		}
 		this.drawLineGraphic(line);
-		Main.grid.register(line);
+		hxlr_engine_Grid.register(line);
 		if(Main.p2p.connected) {
 			Main.p2p.updateLineInfo("lineDownload",[line.type,line.start.x,line.start.y,line.end.x,line.end.y,line.shifted,line.limType]);
 		}
@@ -4318,7 +4319,7 @@ components_stage_Canvas.prototype = $extend(h2d_Scene.prototype,{
 		default:
 		}
 		this.drawLineGraphic(line);
-		Main.grid.register(line);
+		hxlr_engine_Grid.register(line);
 	}
 	,__class__: components_stage_Canvas
 });
@@ -4807,13 +4808,13 @@ components_stage_TextInfo.prototype = {
 		var _g = this.info;
 		_g.set_text(_g.text + ("" + this.timeStamp(Main.simulation.frames) + " : " + this.getSimState() + "\n"));
 		var _g = this.info;
-		_g.set_text(_g.text + ("Lines: " + Main.grid.lineCount + "\n"));
+		_g.set_text(_g.text + ("Lines: " + hxlr_engine_Grid.lineCount + "\n"));
 		var _g = this.info;
-		_g.set_text(_g.text + ("Floor: " + Main.grid.subTypeCount[0] + this.getLineVisibility(0) + "\n"));
+		_g.set_text(_g.text + ("Floor: " + hxlr_engine_Grid.subTypeCount[0] + this.getLineVisibility(0) + "\n"));
 		var _g = this.info;
-		_g.set_text(_g.text + ("Accel: " + Main.grid.subTypeCount[1] + this.getLineVisibility(1) + "\n"));
+		_g.set_text(_g.text + ("Accel: " + hxlr_engine_Grid.subTypeCount[1] + this.getLineVisibility(1) + "\n"));
 		var _g = this.info;
-		_g.set_text(_g.text + ("Scene: " + Main.grid.subTypeCount[2] + this.getLineVisibility(2) + "\n"));
+		_g.set_text(_g.text + ("Scene: " + hxlr_engine_Grid.subTypeCount[2] + this.getLineVisibility(2) + "\n"));
 	}
 	,getLineVisibility: function(_line) {
 		switch(_line) {
@@ -5294,6 +5295,112 @@ hxlr_engine_Cell.prototype = {
 	}
 	,__class__: hxlr_engine_Cell
 };
+var hxlr_engine_Grid = function() {
+	hxlr_engine_Grid.registry = new haxe_ds_StringMap();
+	hxlr_engine_Grid.lines = [];
+};
+$hxClasses["hxlr.engine.Grid"] = hxlr_engine_Grid;
+hxlr_engine_Grid.__name__ = "hxlr.engine.Grid";
+hxlr_engine_Grid.register = function(_line) {
+	hxlr_engine_Grid.addLine(_line);
+	var start = hxlr_engine_Cell.getInfo(_line.start.x,_line.start.y);
+	var end = hxlr_engine_Cell.getInfo(_line.end.x,_line.end.y);
+	var right = _line.dx > 0 ? end.x : start.x;
+	var left = _line.dx > 0 ? start.x : end.x;
+	var bottom = _line.dy > 0 ? end.y : start.y;
+	var top = _line.dy > 0 ? start.y : end.y;
+	hxlr_engine_Grid.storeLine(_line,start);
+	if(_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) {
+		return;
+	}
+	var x = _line.start.x;
+	var y = _line.start.y;
+	var invDx = 1 / _line.dx;
+	var invDy = 1 / _line.dy;
+	var difX;
+	var difY;
+	while(true) {
+		if(start.x < 0) {
+			difX = _line.dx > 0 ? 14 + start.gx : -14 - start.gx;
+		} else {
+			difX = _line.dx > 0 ? 14 - start.gx : -(start.gx + 1);
+		}
+		if(start.y < 0) {
+			difY = _line.dy > 0 ? 14 + start.gy : -14 - start.gy;
+		} else {
+			difY = _line.dy > 0 ? 14 - start.gy : -(start.gy + 1);
+		}
+		if(_line.dx == 0) {
+			y += difY;
+		} else if(_line.dy == 0) {
+			x += difX;
+		} else {
+			var step = y + _line.dy * difX * invDx;
+			if(Math.abs(step - y) < Math.abs(difY)) {
+				x += difX;
+				y = step;
+			} else if(Math.abs(step - y) == Math.abs(difY)) {
+				x += difX;
+				y += difY;
+			} else {
+				x += _line.dx * difY * invDy;
+				y += difY;
+			}
+		}
+		start = hxlr_engine_Cell.getInfo(x,y);
+		if(start.x >= left && start.x <= right && start.y >= top && start.y <= bottom) {
+			hxlr_engine_Grid.storeLine(_line,start);
+			continue;
+		}
+		return;
+	}
+};
+hxlr_engine_Grid.addLine = function(_line) {
+	if(_line.id == null) {
+		_line.id = hxlr_engine_Grid.lineIDCount;
+	}
+	hxlr_engine_Grid.lines[_line.id] = _line;
+	++hxlr_engine_Grid.lineCount;
+	++hxlr_engine_Grid.lineIDCount;
+	++hxlr_engine_Grid.subTypeCount[_line.type];
+};
+hxlr_engine_Grid.storeLine = function(_line,_info) {
+	if(hxlr_engine_Grid.registry.h[_info.key] == null) {
+		var this1 = hxlr_engine_Grid.registry;
+		var k = _info.key;
+		var v = new hxlr_engine_Cell(_info);
+		this1.h[k] = v;
+	}
+	hxlr_engine_Grid.registry.h[_info.key].addLine(_line);
+	_line.keyList.push(_info.key);
+};
+hxlr_engine_Grid.deleteTrack = function() {
+	var _g = 0;
+	var _g1 = hxlr_engine_Grid.lines;
+	while(_g < _g1.length) {
+		var line = _g1[_g];
+		++_g;
+		hxlr_engine_Grid.unregister(line);
+	}
+};
+hxlr_engine_Grid.unregister = function(_line) {
+	if(_line == null) {
+		return;
+	}
+	var _g = 0;
+	var _g1 = _line.keyList;
+	while(_g < _g1.length) {
+		var key = _g1[_g];
+		++_g;
+		hxlr_engine_Grid.registry.h[key].removeLine(_line);
+	}
+	--hxlr_engine_Grid.lineCount;
+	--hxlr_engine_Grid.subTypeCount[_line.type];
+	hxlr_engine_Grid.lines[_line.id] = null;
+};
+hxlr_engine_Grid.prototype = {
+	__class__: hxlr_engine_Grid
+};
 var components_ui_Icon = $hxEnums["components.ui.Icon"] = { __ename__ : "components.ui.Icon", __constructs__ : ["PENCIL","LINE","ERASER","PLAY","PAUSE","STOP","SWATCH_BLUE","SWATCH_RED","SWATCH_GREEN"]
 	,PENCIL: {_hx_index:0,__enum__:"components.ui.Icon",toString:$estr}
 	,LINE: {_hx_index:1,__enum__:"components.ui.Icon",toString:$estr}
@@ -5442,7 +5549,7 @@ file_SaveLoad.prototype = {
 	saveTrack: function(_name) {
 		var saveObject = { lines : [], riders : [], name : Main.trackName, author : Main.authorName, song : Main.songName};
 		var _g = 0;
-		var _g1 = Main.grid.lines;
+		var _g1 = hxlr_engine_Grid.lines;
 		while(_g < _g1.length) {
 			var line = _g1[_g];
 			++_g;
@@ -28957,6 +29064,9 @@ hxd_File.browse = function(onSelect,options) {
 	};
 	input.click();
 };
+hxd_File.getBytes = function(path) {
+	throw haxe_Exception.thrown("Not supported");
+};
 var hxd__$FloatBuffer_Float32Expand = {};
 hxd__$FloatBuffer_Float32Expand._new = function(length) {
 	var this1 = { pos : length, array : new Float32Array(new ArrayBuffer(length << 2))};
@@ -36961,114 +37071,65 @@ hxlr_Constants.defaultRider = function() {
 	var rider = { scale : 0.5, x_grav : hxlr_Constants.x_gravity, y_grav : hxlr_Constants.y_gravity, x_vel : hxlr_Constants.x_velocity, y_vel : hxlr_Constants.y_velocity, camera : 4, contactPoints : [{ x : 0, y : 0, fr : 0.8},{ x : 0, y : 10, fr : 0},{ x : 30, y : 10, fr : 0},{ x : 35, y : 0, fr : 0},{ x : 10, y : 0, fr : 0.8},{ x : 10, y : -11, fr : 0.8},{ x : 23, y : -10, fr : 0.1},{ x : 23, y : -10, fr : 0.1},{ x : 20, y : 10, fr : 0},{ x : 20, y : 10, fr : 0}], scarfPoints : [{ x : 7, y : -10, fr : 0.9},{ x : 3, y : -10, fr : 0.9},{ x : 0, y : -10, fr : 0.9},{ x : -4, y : -10, fr : 0.9},{ x : -7, y : -10, fr : 0.9},{ x : -11, y : -10, fr : 0.9}], bones : [{ a : 0, b : 1, type : "STANDARD", crashable : false},{ a : 1, b : 2, type : "STANDARD", crashable : false},{ a : 2, b : 3, type : "STANDARD", crashable : false},{ a : 3, b : 0, type : "STANDARD", crashable : false},{ a : 0, b : 2, type : "STANDARD", crashable : false},{ a : 3, b : 1, type : "STANDARD", crashable : false},{ a : 0, b : 4, type : "STANDARD", crashable : true},{ a : 1, b : 4, type : "STANDARD", crashable : true},{ a : 2, b : 4, type : "STANDARD", crashable : true},{ a : 5, b : 4, type : "STANDARD", crashable : false},{ a : 5, b : 6, type : "STANDARD", crashable : false},{ a : 5, b : 7, type : "STANDARD", crashable : false},{ a : 4, b : 8, type : "STANDARD", crashable : false},{ a : 4, b : 9, type : "STANDARD", crashable : false},{ a : 5, b : 7, type : "STANDARD", crashable : false},{ a : 5, b : 0, type : "STANDARD", crashable : true},{ a : 3, b : 6, type : "STANDARD", crashable : true},{ a : 3, b : 7, type : "STANDARD", crashable : true},{ a : 8, b : 2, type : "STANDARD", crashable : true},{ a : 9, b : 2, type : "STANDARD", crashable : true},{ a : 5, b : 8, type : "REPELL", crashable : false},{ a : 5, b : 9, type : "REPELL", crashable : false}], limits : [{ point_a : 3, point_b : 0, point_c : 1, point_d : 0, threshold : 0, lessThan : true}], scarfAnchor : 5, colors : [13763074,16777215,13763074,16777215,13763074,16777215,13763074,16777215,13763074,16777215,13763074]};
 	return rider;
 };
-var hxlr_engine_Grid = function() {
-	this.subTypeCount = [];
-	this.lineIDCount = 0;
-	this.lineCount = 0;
-	this.registry = new haxe_ds_StringMap();
-	this.lines = [];
+var hxlr_file_AMF0Reader = function(_sol) {
+	this.pos = 0;
+	this.data = _sol;
+	var pos = this;
+	this.header = this.data.b[this.pos] << 8 | this.data.b[pos.pos += 1];
+	var pos = this;
+	var pos1 = this;
+	var pos2 = this;
+	var pos3 = this;
+	this.size = this.data.b[pos.pos += 1] << 24 | this.data.b[pos1.pos += 1] << 16 | this.data.b[pos2.pos += 1] << 8 | this.data.b[pos3.pos += 1];
+	if(this.size > this.data.length) {
+		haxe_Log.trace("Internal size value greater than file size!",{ fileName : "hxlr/file/AMF0Reader.hx", lineNumber : 33, className : "hxlr.file.AMF0Reader", methodName : "new"});
+		return;
+	}
+	var tcso = this;
+	var tcso1 = this.data.getString(tcso.pos += 1,4);
+	if(tcso1.toUpperCase() != "TCSO") {
+		haxe_Log.trace("Not a valid .sol/AMF0 file!",{ fileName : "hxlr/file/AMF0Reader.hx", lineNumber : 39, className : "hxlr.file.AMF0Reader", methodName : "new", customParams : [tcso1]});
+		return;
+	}
+	this.pos += 11;
+	var saveNameSize = this.data.b[this.pos];
+	var saveNameField = this;
+	var saveNameField1 = this.data.getString(saveNameField.pos += 1,saveNameSize);
+	if(saveNameField1 != "savedLines") {
+		haxe_Log.trace(saveNameSize,{ fileName : "hxlr/file/AMF0Reader.hx", lineNumber : 47, className : "hxlr.file.AMF0Reader", methodName : "new", customParams : [saveNameField1]});
+		haxe_Log.trace("Unable to locate savedLines!",{ fileName : "hxlr/file/AMF0Reader.hx", lineNumber : 48, className : "hxlr.file.AMF0Reader", methodName : "new"});
+		return;
+	}
+	this.pos += saveNameSize + 4;
+	var pos = this;
+	var trackListNameSize = this.data.b[this.pos] << 8 | this.data.b[pos.pos += 1];
+	var trackListField = this;
+	var trackListField1 = this.data.getString(trackListField.pos += 1,trackListNameSize);
+	if(trackListField1 != "trackList") {
+		haxe_Log.trace(trackListNameSize,{ fileName : "hxlr/file/AMF0Reader.hx", lineNumber : 57, className : "hxlr.file.AMF0Reader", methodName : "new", customParams : [trackListField1]});
+		haxe_Log.trace("Unable to locate trackList!",{ fileName : "hxlr/file/AMF0Reader.hx", lineNumber : 58, className : "hxlr.file.AMF0Reader", methodName : "new"});
+		return;
+	}
+	this.loadedSOL = { trackList : []};
+	var pos = this;
+	this.recursiveRead(this.data.b[pos.pos += trackListNameSize]);
 };
-$hxClasses["hxlr.engine.Grid"] = hxlr_engine_Grid;
-hxlr_engine_Grid.__name__ = "hxlr.engine.Grid";
-hxlr_engine_Grid.prototype = {
-	register: function(_line) {
-		this.addLine(_line);
-		var start = hxlr_engine_Cell.getInfo(_line.start.x,_line.start.y);
-		var end = hxlr_engine_Cell.getInfo(_line.end.x,_line.end.y);
-		var right = _line.dx > 0 ? end.x : start.x;
-		var left = _line.dx > 0 ? start.x : end.x;
-		var bottom = _line.dy > 0 ? end.y : start.y;
-		var top = _line.dy > 0 ? start.y : end.y;
-		this.storeLine(_line,start);
-		if(_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) {
-			return;
-		}
-		var x = _line.start.x;
-		var y = _line.start.y;
-		var invDx = 1 / _line.dx;
-		var invDy = 1 / _line.dy;
-		var difX;
-		var difY;
-		while(true) {
-			if(start.x < 0) {
-				difX = _line.dx > 0 ? 14 + start.gx : -14 - start.gx;
-			} else {
-				difX = _line.dx > 0 ? 14 - start.gx : -(start.gx + 1);
-			}
-			if(start.y < 0) {
-				difY = _line.dy > 0 ? 14 + start.gy : -14 - start.gy;
-			} else {
-				difY = _line.dy > 0 ? 14 - start.gy : -(start.gy + 1);
-			}
-			if(_line.dx == 0) {
-				y += difY;
-			} else if(_line.dy == 0) {
-				x += difX;
-			} else {
-				var step = y + _line.dy * difX * invDx;
-				if(Math.abs(step - y) < Math.abs(difY)) {
-					x += difX;
-					y = step;
-				} else if(Math.abs(step - y) == Math.abs(difY)) {
-					x += difX;
-					y += difY;
-				} else {
-					x += _line.dx * difY * invDy;
-					y += difY;
-				}
-			}
-			start = hxlr_engine_Cell.getInfo(x,y);
-			if(start.x >= left && start.x <= right && start.y >= top && start.y <= bottom) {
-				this.storeLine(_line,start);
-				continue;
-			}
-			return;
-		}
+$hxClasses["hxlr.file.AMF0Reader"] = hxlr_file_AMF0Reader;
+hxlr_file_AMF0Reader.__name__ = "hxlr.file.AMF0Reader";
+hxlr_file_AMF0Reader.prototype = {
+	recursiveRead: function(_code) {
+		var tmp = _code == 8;
 	}
-	,addLine: function(_line) {
-		if(_line.id == null) {
-			_line.id = this.lineIDCount;
-		}
-		this.lines[_line.id] = _line;
-		++this.lineCount;
-		++this.lineIDCount;
-		++this.subTypeCount[_line.type];
-	}
-	,storeLine: function(_line,_info) {
-		if(this.registry.h[_info.key] == null) {
-			var this1 = this.registry;
-			var k = _info.key;
-			var v = new hxlr_engine_Cell(_info);
-			this1.h[k] = v;
-		}
-		this.registry.h[_info.key].addLine(_line);
-		_line.keyList.push(_info.key);
-	}
-	,deleteTrack: function() {
-		var _g = 0;
-		var _g1 = this.lines;
-		while(_g < _g1.length) {
-			var line = _g1[_g];
-			++_g;
-			this.unregister(line);
-		}
-	}
-	,unregister: function(_line) {
-		if(_line == null) {
-			return;
-		}
-		var _g = 0;
-		var _g1 = _line.keyList;
-		while(_g < _g1.length) {
-			var key = _g1[_g];
-			++_g;
-			this.registry.h[key].removeLine(_line);
-		}
-		--this.lineCount;
-		--this.subTypeCount[_line.type];
-		this.lines[_line.id] = null;
-	}
-	,__class__: hxlr_engine_Grid
+	,__class__: hxlr_file_AMF0Reader
+};
+var hxlr_math_geom_Line = function(_start,_end) {
+	this.start = _start;
+	this.end = _end;
+};
+$hxClasses["hxlr.math.geom.Line"] = hxlr_math_geom_Line;
+hxlr_math_geom_Line.__name__ = "hxlr.math.geom.Line";
+hxlr_math_geom_Line.prototype = {
+	__class__: hxlr_math_geom_Line
 };
 var hxlr_lines_LineBase = function(_start,_end,_shift,_lim) {
 	if(_lim == null) {
@@ -37080,8 +37141,7 @@ var hxlr_lines_LineBase = function(_start,_end,_shift,_lim) {
 	this.limType = 0;
 	this.zone = 10;
 	this.tangible = false;
-	this.start = _start;
-	this.end = _end;
+	hxlr_math_geom_Line.call(this,_start,_end);
 	this.gfxEnd = new h2d_col_Point(this.end.x - this.start.x,this.end.y - this.start.y);
 	this.shifted = _shift;
 	this.keyList = [];
@@ -37090,7 +37150,8 @@ var hxlr_lines_LineBase = function(_start,_end,_shift,_lim) {
 };
 $hxClasses["hxlr.lines.LineBase"] = hxlr_lines_LineBase;
 hxlr_lines_LineBase.__name__ = "hxlr.lines.LineBase";
-hxlr_lines_LineBase.prototype = {
+hxlr_lines_LineBase.__super__ = hxlr_math_geom_Line;
+hxlr_lines_LineBase.prototype = $extend(hxlr_math_geom_Line.prototype,{
 	calculateConstants: function() {
 		this.dx = this.end.x - this.start.x;
 		this.dy = this.end.y - this.start.y;
@@ -37153,7 +37214,7 @@ hxlr_lines_LineBase.prototype = {
 		return save2;
 	}
 	,__class__: hxlr_lines_LineBase
-};
+});
 var hxlr_lines_Accel = function(_start,_end,_shift) {
 	this.accConst = 0.1;
 	hxlr_lines_LineBase.call(this,_start,_end,_shift);
@@ -47201,12 +47262,12 @@ network_WebRTC.prototype = {
 		}
 		var lineIndex = 0;
 		var lineCount = 0;
-		while(lineCount < Main.grid.lineCount) {
-			if(Main.grid.lines[lineIndex] == null) {
+		while(lineCount < hxlr_engine_Grid.lineCount) {
+			if(hxlr_engine_Grid.lines[lineIndex] == null) {
 				++lineIndex;
 				continue;
 			}
-			var packet = { action : "lineDownload", peername : Main.authorName, data : [Main.grid.lines[lineIndex].type,Main.grid.lines[lineIndex].start.x,Main.grid.lines[lineIndex].start.y,Main.grid.lines[lineIndex].end.x,Main.grid.lines[lineIndex].end.y,Main.grid.lines[lineIndex].shifted,Main.grid.lines[lineIndex].limType], localecho : true, globalecho : false, echoinfo : ["Downloaded line " + lineCount + " of " + Main.grid.lineCount + " from " + Main.authorName]};
+			var packet = { action : "lineDownload", peername : Main.authorName, data : [hxlr_engine_Grid.lines[lineIndex].type,hxlr_engine_Grid.lines[lineIndex].start.x,hxlr_engine_Grid.lines[lineIndex].start.y,hxlr_engine_Grid.lines[lineIndex].end.x,hxlr_engine_Grid.lines[lineIndex].end.y,hxlr_engine_Grid.lines[lineIndex].shifted,hxlr_engine_Grid.lines[lineIndex].limType], localecho : true, globalecho : false, echoinfo : ["Downloaded line " + lineCount + " of " + hxlr_engine_Grid.lineCount + " from " + Main.authorName]};
 			var data = JSON.stringify(packet);
 			client.send(data);
 			++lineCount;
@@ -47441,6 +47502,9 @@ components_sledder_Bosh.WHITE = new h3d_Vector(1,1,1,1);
 components_sledder_Bosh.RED = new h3d_Vector(1,0,0,1);
 h2d_Console.HIDE_LOG_TIMEOUT = 3.;
 hxlr_engine_Cell.cellList = [];
+hxlr_engine_Grid.lineCount = 0;
+hxlr_engine_Grid.lineIDCount = 0;
+hxlr_engine_Grid.subTypeCount = [];
 format_mp3_MPEG.Reserved = 1;
 format_mp3_MPEG.V1_Bitrates = [[format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad],[format_mp3_Bitrate.BR_Free,format_mp3_Bitrate.BR_32,format_mp3_Bitrate.BR_40,format_mp3_Bitrate.BR_48,format_mp3_Bitrate.BR_56,format_mp3_Bitrate.BR_64,format_mp3_Bitrate.BR_80,format_mp3_Bitrate.BR_96,format_mp3_Bitrate.BR_112,format_mp3_Bitrate.BR_128,format_mp3_Bitrate.BR_160,format_mp3_Bitrate.BR_192,format_mp3_Bitrate.BR_224,format_mp3_Bitrate.BR_256,format_mp3_Bitrate.BR_320,format_mp3_Bitrate.BR_Bad],[format_mp3_Bitrate.BR_Free,format_mp3_Bitrate.BR_32,format_mp3_Bitrate.BR_48,format_mp3_Bitrate.BR_56,format_mp3_Bitrate.BR_64,format_mp3_Bitrate.BR_80,format_mp3_Bitrate.BR_96,format_mp3_Bitrate.BR_112,format_mp3_Bitrate.BR_128,format_mp3_Bitrate.BR_160,format_mp3_Bitrate.BR_192,format_mp3_Bitrate.BR_224,format_mp3_Bitrate.BR_256,format_mp3_Bitrate.BR_320,format_mp3_Bitrate.BR_384,format_mp3_Bitrate.BR_Bad],[format_mp3_Bitrate.BR_Free,format_mp3_Bitrate.BR_32,format_mp3_Bitrate.BR_64,format_mp3_Bitrate.BR_96,format_mp3_Bitrate.BR_128,format_mp3_Bitrate.BR_160,format_mp3_Bitrate.BR_192,format_mp3_Bitrate.BR_224,format_mp3_Bitrate.BR_256,format_mp3_Bitrate.BR_288,format_mp3_Bitrate.BR_320,format_mp3_Bitrate.BR_352,format_mp3_Bitrate.BR_384,format_mp3_Bitrate.BR_416,format_mp3_Bitrate.BR_448,format_mp3_Bitrate.BR_Bad]];
 format_mp3_MPEG.V2_Bitrates = [[format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad,format_mp3_Bitrate.BR_Bad],[format_mp3_Bitrate.BR_Free,format_mp3_Bitrate.BR_8,format_mp3_Bitrate.BR_16,format_mp3_Bitrate.BR_24,format_mp3_Bitrate.BR_32,format_mp3_Bitrate.BR_40,format_mp3_Bitrate.BR_48,format_mp3_Bitrate.BR_56,format_mp3_Bitrate.BR_64,format_mp3_Bitrate.BR_80,format_mp3_Bitrate.BR_96,format_mp3_Bitrate.BR_112,format_mp3_Bitrate.BR_128,format_mp3_Bitrate.BR_144,format_mp3_Bitrate.BR_160,format_mp3_Bitrate.BR_Bad],[format_mp3_Bitrate.BR_Free,format_mp3_Bitrate.BR_8,format_mp3_Bitrate.BR_16,format_mp3_Bitrate.BR_24,format_mp3_Bitrate.BR_32,format_mp3_Bitrate.BR_40,format_mp3_Bitrate.BR_48,format_mp3_Bitrate.BR_56,format_mp3_Bitrate.BR_64,format_mp3_Bitrate.BR_80,format_mp3_Bitrate.BR_96,format_mp3_Bitrate.BR_112,format_mp3_Bitrate.BR_128,format_mp3_Bitrate.BR_144,format_mp3_Bitrate.BR_160,format_mp3_Bitrate.BR_Bad],[format_mp3_Bitrate.BR_Free,format_mp3_Bitrate.BR_32,format_mp3_Bitrate.BR_48,format_mp3_Bitrate.BR_56,format_mp3_Bitrate.BR_64,format_mp3_Bitrate.BR_80,format_mp3_Bitrate.BR_96,format_mp3_Bitrate.BR_112,format_mp3_Bitrate.BR_128,format_mp3_Bitrate.BR_144,format_mp3_Bitrate.BR_160,format_mp3_Bitrate.BR_176,format_mp3_Bitrate.BR_192,format_mp3_Bitrate.BR_224,format_mp3_Bitrate.BR_256,format_mp3_Bitrate.BR_Bad]];

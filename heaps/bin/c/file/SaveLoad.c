@@ -17,6 +17,7 @@ extern hl_type t$hl_types_ArrayObj;
 void hl_types_ArrayObj_new(hl__types__ArrayObj);
 extern $Main g$_Main;
 extern hl_type t$String;
+extern hxlr__engine__$Grid g$_hxlr_engine_Grid;
 vvirtual* hxlr_lines_LineBase_toSaveObject(hxlr__lines__LineBase);
 int hl_types_ArrayObj_push(hl__types__ArrayObj,vdynamic*);
 vvirtual* haxe_ds_StringMap_iterator(haxe__ds__StringMap);
@@ -115,7 +116,7 @@ void hxlr_lines_Accel_new(hxlr__lines__Accel,h2d__col__Point,h2d__col__Point,boo
 extern hl_type t$hxlr_lines_Scenery;
 void hxlr_lines_Scenery_new(hxlr__lines__Scenery,h2d__col__Point,h2d__col__Point,bool);
 void hxlr_lines_LineBase_setLim(hxlr__lines__LineBase,int);
-void hxlr_engine_Grid_register(hxlr__engine__Grid,hxlr__lines__LineBase);
+void hxlr_engine_Grid_register(hxlr__lines__LineBase);
 void components_stage_Canvas_drawLineGraphic(components__stage__Canvas,hxlr__lines__LineBase);
 extern hl_type t$vrt_45af8a6;
 extern String s$playerdata;
@@ -130,12 +131,12 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	String r5, r28, r29;
 	Date r27;
 	haxe__ds__StringMap r17;
+	hxlr__engine__$Grid r8;
 	hl__types__ArrayObj r3, r11;
 	vvirtual *r2, *r15, *r16, *r19, *r23;
 	hl_type *r26;
 	bool r20;
 	components__sledder__Bosh r22;
-	hxlr__engine__Grid r8;
 	hxlr__rider__RiderBase r21;
 	$Main r6;
 	h2d__col__Point r24;
@@ -162,35 +163,33 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	r5 = r6->songName;
 	if( hl_vfields(r2)[4] ) *(String*)(hl_vfields(r2)[4]) = (String)r5; else hl_dyn_setp(r2->value,207103199/*song*/,&t$String,r5);
 	r7 = 0;
-	r6 = ($Main)g$_Main;
-	r8 = r6->grid;
-	if( r8 == NULL ) hl_null_access();
+	r8 = (hxlr__engine__$Grid)g$_hxlr_engine_Grid;
 	r3 = r8->lines;
-	label$eb91429_2_21:
+	label$eb91429_2_19:
 	if( r3 == NULL ) hl_null_access();
 	r10 = r3->length;
-	if( r7 >= r10 ) goto label$eb91429_2_42;
+	if( r7 >= r10 ) goto label$eb91429_2_40;
 	r10 = r3->length;
-	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_29;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_27;
 	r12 = NULL;
-	goto label$eb91429_2_32;
-	label$eb91429_2_29:
+	goto label$eb91429_2_30;
+	label$eb91429_2_27:
 	r14 = r3->array;
 	r13 = ((vdynamic**)(r14 + 1))[r7];
 	r12 = (hxlr__lines__LineBase)r13;
-	label$eb91429_2_32:
+	label$eb91429_2_30:
 	++r7;
-	if( r12 ) goto label$eb91429_2_35;
-	goto label$eb91429_2_21;
-	label$eb91429_2_35:
+	if( r12 ) goto label$eb91429_2_33;
+	goto label$eb91429_2_19;
+	label$eb91429_2_33:
 	if( r2 == NULL ) hl_null_access();
 	r11 = hl_vfields(r2)[1] ? (*(hl__types__ArrayObj*)(hl_vfields(r2)[1])) : (hl__types__ArrayObj)hl_dyn_getp(r2->value,352444302/*lines*/,&t$hl_types_ArrayObj);
 	if( r11 == NULL ) hl_null_access();
 	if( r12 == NULL ) hl_null_access();
 	r15 = hxlr_lines_LineBase_toSaveObject(r12);
 	r9 = hl_types_ArrayObj_push(r11,((vdynamic*)r15));
-	goto label$eb91429_2_21;
-	label$eb91429_2_42:
+	goto label$eb91429_2_19;
+	label$eb91429_2_40:
 	r6 = ($Main)g$_Main;
 	r18 = r6->riders;
 	if( r18 == NULL ) hl_null_access();
@@ -198,14 +197,14 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	if( r17 == NULL ) hl_null_access();
 	r16 = haxe_ds_StringMap_iterator(r17);
 	r19 = hl_to_virtual(&t$vrt_6dd9082,(vdynamic*)r16);
-	label$eb91429_2_49:
+	label$eb91429_2_47:
 	if( r19 == NULL ) hl_null_access();
 	if( hl_vfields(r19)[0] ) r20 = ((bool (*)(vdynamic*))hl_vfields(r19)[0])(r19->value); else {
 		vdynamic ret;
 		hl_dyn_call_obj(r19->value,&t$fun_bf7849e,407283053/*hasNext*/,NULL,&ret);
 		r20 = (bool)ret.v.i;
 	}
-	if( !r20 ) goto label$eb91429_2_74;
+	if( !r20 ) goto label$eb91429_2_72;
 	if( hl_vfields(r19)[1] ) r21 = ((hxlr__rider__RiderBase (*)(vdynamic*))hl_vfields(r19)[1])(r19->value); else {
 		r21 = (hxlr__rider__RiderBase)hl_dyn_call_obj(r19->value,&t$fun_8ae12a9,151160317/*next*/,NULL,NULL);
 	}
@@ -228,8 +227,8 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	r3 = hl_vfields(r2)[3] ? (*(hl__types__ArrayObj*)(hl_vfields(r2)[3])) : (hl__types__ArrayObj)hl_dyn_getp(r2->value,203975107/*riders*/,&t$hl_types_ArrayObj);
 	if( r3 == NULL ) hl_null_access();
 	r7 = hl_types_ArrayObj_push(r3,((vdynamic*)r23));
-	goto label$eb91429_2_49;
-	label$eb91429_2_74:
+	goto label$eb91429_2_47;
+	label$eb91429_2_72:
 	r26 = &t$String;
 	r7 = 12;
 	r14 = hl_alloc_array(r26,r7);
@@ -275,36 +274,36 @@ void file_SaveLoad_saveTrack(file__SaveLoad r0,String r1) {
 	r7 = Date_getMonth(r27);
 	if( r3 == NULL ) hl_null_access();
 	r10 = r3->length;
-	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_122;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_120;
 	r5 = NULL;
-	goto label$eb91429_2_125;
-	label$eb91429_2_122:
+	goto label$eb91429_2_123;
+	label$eb91429_2_120:
 	r14 = r3->array;
 	r13 = ((vdynamic**)(r14 + 1))[r7];
 	r5 = (String)r13;
-	label$eb91429_2_125:
-	if( !r5 ) goto label$eb91429_2_134;
+	label$eb91429_2_123:
+	if( !r5 ) goto label$eb91429_2_132;
 	r10 = r3->length;
-	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_130;
+	if( ((unsigned)r7) < ((unsigned)r10) ) goto label$eb91429_2_128;
 	r5 = NULL;
-	goto label$eb91429_2_133;
-	label$eb91429_2_130:
+	goto label$eb91429_2_131;
+	label$eb91429_2_128:
 	r14 = r3->array;
 	r13 = ((vdynamic**)(r14 + 1))[r7];
 	r5 = (String)r13;
-	label$eb91429_2_133:
-	goto label$eb91429_2_135;
-	label$eb91429_2_134:
+	label$eb91429_2_131:
+	goto label$eb91429_2_133;
+	label$eb91429_2_132:
 	r5 = (String)s$Lousy_Smarch_Weather;
-	label$eb91429_2_135:
+	label$eb91429_2_133:
 	r28 = (String)s$_saves_;
 	r28 = String___add__(r28,r1);
 	r20 = sys_FileSystem_isDirectory(r28);
-	if( r20 ) goto label$eb91429_2_142;
+	if( r20 ) goto label$eb91429_2_140;
 	r28 = (String)s$_saves_;
 	r28 = String___add__(r28,r1);
 	sys_FileSystem_createDirectory(r28);
-	label$eb91429_2_142:
+	label$eb91429_2_140:
 	r28 = (String)s$_saves_;
 	r28 = String___add__(r28,r1);
 	r29 = (String)s$6666cd7;
@@ -716,12 +715,11 @@ void file_SaveLoad_loadJSONObject(file__SaveLoad r0,vdynamic* r1) {
 	hxlr__lines__Scenery r22;
 	bool r17;
 	hxlr__lines__Floor r19;
-	hxlr__engine__Grid r23;
 	hxlr__lines__Accel r21;
 	$Main r4;
 	h2d__col__Point r7, r20;
 	hxlr__lines__LineBase r18;
-	components__stage__Canvas r24;
+	components__stage__Canvas r23;
 	hl__types__ArrayDyn r12;
 	double *r8, *r9;
 	vdynamic *r2, *r10, *r11, *r16;
@@ -760,7 +758,7 @@ void file_SaveLoad_loadJSONObject(file__SaveLoad r0,vdynamic* r1) {
 	label$eb91429_6_31:
 	if( r12 == NULL ) hl_null_access();
 	r15 = hl_types_ArrayDyn_get_length(r12);
-	if( r13 >= r15 ) goto label$eb91429_6_142;
+	if( r13 >= r15 ) goto label$eb91429_6_139;
 	r2 = ((vdynamic* (*)(hl__types__ArrayDyn,int))r12->$type->vobj_proto[0])(r12,r13);
 	++r13;
 	r14 = 0;
@@ -869,16 +867,13 @@ void file_SaveLoad_loadJSONObject(file__SaveLoad r0,vdynamic* r1) {
 	}
 	label$eb91429_6_132:
 	hxlr_lines_LineBase_setLim(r18,r14);
+	hxlr_engine_Grid_register(r18);
 	r4 = ($Main)g$_Main;
-	r23 = r4->grid;
+	r23 = r4->canvas;
 	if( r23 == NULL ) hl_null_access();
-	hxlr_engine_Grid_register(r23,r18);
-	r4 = ($Main)g$_Main;
-	r24 = r4->canvas;
-	if( r24 == NULL ) hl_null_access();
-	components_stage_Canvas_drawLineGraphic(r24,r18);
+	components_stage_Canvas_drawLineGraphic(r23,r18);
 	goto label$eb91429_6_31;
-	label$eb91429_6_142:
+	label$eb91429_6_139:
 	return;
 }
 

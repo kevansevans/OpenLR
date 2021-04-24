@@ -187,6 +187,7 @@
 #include <file/SaveLoad.h>
 #include <components/managers/Simulation.h>
 #include <components/managers/Riders.h>
+#include <hxlr/math/geom/Line.h>
 #include <hxlr/lines/LineBase.h>
 #include <hxlr/engine/Grid.h>
 #include <h2d/Bitmap.h>
@@ -212,6 +213,7 @@
 #include <_std/Main.h>
 #include <hxd/res/Loader.h>
 #include <hxd/fs/EmbedFileSystem.h>
+#include <hxlr/file/AMF0Reader.h>
 #include <h2d/ConsoleArg.h>
 #include <_std/Math.h>
 #include <haxe/SysTools.h>
@@ -767,6 +769,7 @@ components__stage__$TextInfo g$_components_stage_TextInfo = 0;
 file__$SaveLoad g$_file_SaveLoad = 0;
 components__managers__$Simulation g$_components_managers_Simulation = 0;
 components__managers__$Riders g$_components_managers_Riders = 0;
+hxlr__math__geom__$Line g$_hxlr_math_geom_Line = 0;
 hxlr__lines__$LineBase g$_hxlr_lines_LineBase = 0;
 hxlr__engine__$Grid g$_hxlr_engine_Grid = 0;
 h2d__$Bitmap g$_h2d_Bitmap = 0;
@@ -801,6 +804,8 @@ String s$6c51ece = 0;
 String s$Press_X_to_stop_ = 0;
 String s$3f659a9 = 0;
 String s$OpenLR_ = 0;
+hxlr__file__$AMF0Reader g$_hxlr_file_AMF0Reader = 0;
+String s$_saves_testA_sol = 0;
 h2d__$ConsoleArg g$h2d_ConsoleArg = 0;
 String s$github = 0;
 String s$Link_to_github_page = 0;
@@ -2118,6 +2123,16 @@ String s$too_many_auxiliary_sends = 0;
 hxlr__$Constants g$_hxlr_Constants = 0;
 String s$STANDARD = 0;
 String s$REPELL = 0;
+String s$6fdf3a8 = 0;
+String s$hxlr_file_AMF0Reader_hx = 0;
+String s$hxlr_file_AMF0Reader = 0;
+String s$new = 0;
+String s$TCSO = 0;
+String s$Not_a_valid_sol_AMF0_file_ = 0;
+String s$savedLines = 0;
+String s$Unable_to_locate_savedLines_ = 0;
+String s$trackList = 0;
+String s$Unable_to_locate_trackList_ = 0;
 String s$ATTRACT = 0;
 hxsl__$Error g$_hxsl_Error = 0;
 String s$Error_ = 0;
@@ -2823,6 +2838,7 @@ static struct _String const_s$6c51ece = {&t$String,(vbyte*)USTR("Press S to play
 static struct _String const_s$Press_X_to_stop_ = {&t$String,(vbyte*)USTR("Press X to stop."),16};
 static struct _String const_s$3f659a9 = {&t$String,(vbyte*)USTR("Press 123 and QWE to cycle tools."),33};
 static struct _String const_s$OpenLR_ = {&t$String,(vbyte*)USTR("OpenLR - "),9};
+static struct _String const_s$_saves_testA_sol = {&t$String,(vbyte*)USTR("./saves/testA.sol"),17};
 static struct _String const_s$github = {&t$String,(vbyte*)USTR("github"),6};
 static struct _String const_s$Link_to_github_page = {&t$String,(vbyte*)USTR("Link to github page"),19};
 static struct _String const_s$x_value = {&t$String,(vbyte*)USTR("x value"),7};
@@ -3721,6 +3737,16 @@ static struct _String const_s$ae8b669 = {&t$String,(vbyte*)USTR("could not creat
 static struct _String const_s$too_many_auxiliary_sends = {&t$String,(vbyte*)USTR("too many auxiliary sends"),24};
 static struct _String const_s$STANDARD = {&t$String,(vbyte*)USTR("STANDARD"),8};
 static struct _String const_s$REPELL = {&t$String,(vbyte*)USTR("REPELL"),6};
+static struct _String const_s$6fdf3a8 = {&t$String,(vbyte*)USTR("Internal size value greater than file size!"),43};
+static struct _String const_s$hxlr_file_AMF0Reader_hx = {&t$String,(vbyte*)USTR("hxlr/file/AMF0Reader.hx"),23};
+static struct _String const_s$hxlr_file_AMF0Reader = {&t$String,(vbyte*)USTR("hxlr.file.AMF0Reader"),20};
+static struct _String const_s$new = {&t$String,(vbyte*)USTR("new"),3};
+static struct _String const_s$TCSO = {&t$String,(vbyte*)USTR("TCSO"),4};
+static struct _String const_s$Not_a_valid_sol_AMF0_file_ = {&t$String,(vbyte*)USTR("Not a valid .sol/AMF0 file!"),27};
+static struct _String const_s$savedLines = {&t$String,(vbyte*)USTR("savedLines"),10};
+static struct _String const_s$Unable_to_locate_savedLines_ = {&t$String,(vbyte*)USTR("Unable to locate savedLines!"),28};
+static struct _String const_s$trackList = {&t$String,(vbyte*)USTR("trackList"),9};
+static struct _String const_s$Unable_to_locate_trackList_ = {&t$String,(vbyte*)USTR("Unable to locate trackList!"),27};
 static struct _String const_s$ATTRACT = {&t$String,(vbyte*)USTR("ATTRACT"),7};
 static struct _String const_s$Error_ = {&t$String,(vbyte*)USTR("Error("),6};
 static struct _String const_s$0e1c8cd = {&t$String,(vbyte*)USTR(")@"),2};
@@ -4078,6 +4104,7 @@ void hl_init_roots() {
 	s$Press_X_to_stop_ = &const_s$Press_X_to_stop_;
 	s$3f659a9 = &const_s$3f659a9;
 	s$OpenLR_ = &const_s$OpenLR_;
+	s$_saves_testA_sol = &const_s$_saves_testA_sol;
 	s$github = &const_s$github;
 	s$Link_to_github_page = &const_s$Link_to_github_page;
 	s$x_value = &const_s$x_value;
@@ -4976,6 +5003,16 @@ void hl_init_roots() {
 	s$too_many_auxiliary_sends = &const_s$too_many_auxiliary_sends;
 	s$STANDARD = &const_s$STANDARD;
 	s$REPELL = &const_s$REPELL;
+	s$6fdf3a8 = &const_s$6fdf3a8;
+	s$hxlr_file_AMF0Reader_hx = &const_s$hxlr_file_AMF0Reader_hx;
+	s$hxlr_file_AMF0Reader = &const_s$hxlr_file_AMF0Reader;
+	s$new = &const_s$new;
+	s$TCSO = &const_s$TCSO;
+	s$Not_a_valid_sol_AMF0_file_ = &const_s$Not_a_valid_sol_AMF0_file_;
+	s$savedLines = &const_s$savedLines;
+	s$Unable_to_locate_savedLines_ = &const_s$Unable_to_locate_savedLines_;
+	s$trackList = &const_s$trackList;
+	s$Unable_to_locate_trackList_ = &const_s$Unable_to_locate_trackList_;
 	s$ATTRACT = &const_s$ATTRACT;
 	s$Error_ = &const_s$Error_;
 	s$0e1c8cd = &const_s$0e1c8cd;
@@ -5505,6 +5542,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_file_SaveLoad);
 	hl_add_root((void**)&g$_components_managers_Simulation);
 	hl_add_root((void**)&g$_components_managers_Riders);
+	hl_add_root((void**)&g$_hxlr_math_geom_Line);
 	hl_add_root((void**)&g$_hxlr_lines_LineBase);
 	hl_add_root((void**)&g$_hxlr_engine_Grid);
 	hl_add_root((void**)&g$_h2d_Bitmap);
@@ -5530,6 +5568,7 @@ void hl_init_roots() {
 	hl_add_root((void**)&g$_Main);
 	hl_add_root((void**)&g$_hxd_res_Loader);
 	hl_add_root((void**)&g$_hxd_fs_EmbedFileSystem);
+	hl_add_root((void**)&g$_hxlr_file_AMF0Reader);
 	hl_add_root((void**)&g$h2d_ConsoleArg);
 	hl_add_root((void**)&g$h2d_ConsoleArg_AFloat);
 	hl_add_root((void**)&g$h2d_ConsoleArg_AInt);

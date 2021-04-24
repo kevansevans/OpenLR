@@ -161,6 +161,7 @@ void fun$init(void);
 #  include <file/SaveLoad.c>
 #  include <components/managers/Simulation.c>
 #  include <components/managers/Riders.c>
+#  include <hxlr/math/geom/Line.c>
 #  include <hxlr/lines/LineBase.c>
 #  include <hxlr/engine/Grid.c>
 #  include <h2d/Bitmap.c>
@@ -182,6 +183,7 @@ void fun$init(void);
 #  include <_std/Main.c>
 #  include <hxd/res/Loader.c>
 #  include <hxd/fs/EmbedFileSystem.c>
+#  include <hxlr/file/AMF0Reader.c>
 #  include <_std/Math.c>
 #  include <haxe/SysTools.c>
 #  include <_std/SysError.c>
