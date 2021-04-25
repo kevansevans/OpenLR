@@ -44,8 +44,8 @@ class Grid
 		
 		var x = _line.start.x;
 		var y = _line.start.y;
-		var invDx = 1 / _line.dx;
-		var invDy = 1 / _line.dy;
+		var invDx = _line.dx == 0 ? 1 : 1 / _line.dx;
+		var invDy = _line.dy == 0 ? 1 : 1 / _line.dy;
 		
 		var difX:Float;
 		var difY:Float;
