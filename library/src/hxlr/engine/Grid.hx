@@ -13,7 +13,7 @@ class Grid
 
 	public static var lineCount:Int = 0;
 	public static var lineIDCount:Int = 0;
-	public static var subTypeCount:Array<Int> = new Array();
+	public static var subTypeCount:Array<Null<Int>> = new Array();
 	
 	public static var registry:Map<String, Cell>;
 	public static var lines:Array<LineObject>;
@@ -96,6 +96,7 @@ class Grid
 		lines[_line.id] = _line;
 		++lineCount;
 		++lineIDCount;
+		if (subTypeCount[_line.type] == null) subTypeCount[_line.type] = 0;
 		++subTypeCount[_line.type];
 	}
 	
