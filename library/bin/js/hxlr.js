@@ -214,111 +214,109 @@ hxlr_engine_Cell.prototype = {
 	}
 };
 var hxlr_engine_Grid = function() {
-	this.subTypeCount = [];
-	this.lineIDCount = 0;
-	this.lineCount = 0;
 	hxlr_engine_Grid.registry = new haxe_ds_StringMap();
 	hxlr_engine_Grid.lines = [];
 };
 hxlr_engine_Grid.__name__ = true;
-hxlr_engine_Grid.prototype = {
-	register: function(_line) {
-		this.addLine(_line);
-		var start = hxlr_engine_Cell.getInfo(_line.start.x,_line.start.y);
-		var end = hxlr_engine_Cell.getInfo(_line.end.x,_line.end.y);
-		var right = _line.dx > 0 ? end.x : start.x;
-		var left = _line.dx > 0 ? start.x : end.x;
-		var bottom = _line.dy > 0 ? end.y : start.y;
-		var top = _line.dy > 0 ? start.y : end.y;
-		this.storeLine(_line,start);
-		if(_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) {
-			return;
+hxlr_engine_Grid.register = function(_line) {
+	hxlr_engine_Grid.addLine(_line);
+	var start = hxlr_engine_Cell.getInfo(_line.start.x,_line.start.y);
+	var end = hxlr_engine_Cell.getInfo(_line.end.x,_line.end.y);
+	var right = _line.dx > 0 ? end.x : start.x;
+	var left = _line.dx > 0 ? start.x : end.x;
+	var bottom = _line.dy > 0 ? end.y : start.y;
+	var top = _line.dy > 0 ? start.y : end.y;
+	hxlr_engine_Grid.storeLine(_line,start);
+	if(_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) {
+		return;
+	}
+	var x = _line.start.x;
+	var y = _line.start.y;
+	var invDx = _line.dx == 0 ? 1 : 1 / _line.dx;
+	var invDy = _line.dy == 0 ? 1 : 1 / _line.dy;
+	var difX;
+	var difY;
+	while(true) {
+		if(start.x < 0) {
+			difX = _line.dx > 0 ? 14 + start.gx : -14 - start.gx;
+		} else {
+			difX = _line.dx > 0 ? 14 - start.gx : -(start.gx + 1);
 		}
-		var x = _line.start.x;
-		var y = _line.start.y;
-		var invDx = 1 / _line.dx;
-		var invDy = 1 / _line.dy;
-		var difX;
-		var difY;
-		while(true) {
-			if(start.x < 0) {
-				difX = _line.dx > 0 ? 14 + start.gx : -14 - start.gx;
-			} else {
-				difX = _line.dx > 0 ? 14 - start.gx : -(start.gx + 1);
-			}
-			if(start.y < 0) {
-				difY = _line.dy > 0 ? 14 + start.gy : -14 - start.gy;
-			} else {
-				difY = _line.dy > 0 ? 14 - start.gy : -(start.gy + 1);
-			}
-			if(_line.dx == 0) {
-				y += difY;
-			} else if(_line.dy == 0) {
+		if(start.y < 0) {
+			difY = _line.dy > 0 ? 14 + start.gy : -14 - start.gy;
+		} else {
+			difY = _line.dy > 0 ? 14 - start.gy : -(start.gy + 1);
+		}
+		if(_line.dx == 0) {
+			y += difY;
+		} else if(_line.dy == 0) {
+			x += difX;
+		} else {
+			var step = y + _line.dy * difX * invDx;
+			if(Math.abs(step - y) < Math.abs(difY)) {
 				x += difX;
+				y = step;
+			} else if(Math.abs(step - y) == Math.abs(difY)) {
+				x += difX;
+				y += difY;
 			} else {
-				var step = y + _line.dy * difX * invDx;
-				if(Math.abs(step - y) < Math.abs(difY)) {
-					x += difX;
-					y = step;
-				} else if(Math.abs(step - y) == Math.abs(difY)) {
-					x += difX;
-					y += difY;
-				} else {
-					x += _line.dx * difY * invDy;
-					y += difY;
-				}
+				x += _line.dx * difY * invDy;
+				y += difY;
 			}
-			start = hxlr_engine_Cell.getInfo(x,y);
-			if(start.x >= left && start.x <= right && start.y >= top && start.y <= bottom) {
-				this.storeLine(_line,start);
-				continue;
-			}
-			return;
 		}
+		start = hxlr_engine_Cell.getInfo(x,y);
+		if(start.x >= left && start.x <= right && start.y >= top && start.y <= bottom) {
+			hxlr_engine_Grid.storeLine(_line,start);
+			continue;
+		}
+		return;
 	}
-	,addLine: function(_line) {
-		if(_line.id == null) {
-			_line.id = this.lineIDCount;
-		}
-		hxlr_engine_Grid.lines[_line.id] = _line;
-		++this.lineCount;
-		++this.lineIDCount;
-		++this.subTypeCount[_line.type];
+};
+hxlr_engine_Grid.addLine = function(_line) {
+	if(_line.id == null) {
+		_line.id = hxlr_engine_Grid.lineIDCount;
 	}
-	,storeLine: function(_line,_info) {
-		if(hxlr_engine_Grid.registry.h[_info.key] == null) {
-			var this1 = hxlr_engine_Grid.registry;
-			var k = _info.key;
-			var v = new hxlr_engine_Cell(_info);
-			this1.h[k] = v;
-		}
-		hxlr_engine_Grid.registry.h[_info.key].addLine(_line);
-		_line.keyList.push(_info.key);
+	hxlr_engine_Grid.lines[_line.id] = _line;
+	++hxlr_engine_Grid.lineCount;
+	++hxlr_engine_Grid.lineIDCount;
+	if(hxlr_engine_Grid.subTypeCount[_line.type] == null) {
+		hxlr_engine_Grid.subTypeCount[_line.type] = 0;
 	}
-	,deleteTrack: function() {
-		var _g = 0;
-		var _g1 = hxlr_engine_Grid.lines;
-		while(_g < _g1.length) {
-			var line = _g1[_g];
-			++_g;
-			this.unregister(line);
-		}
+	++hxlr_engine_Grid.subTypeCount[_line.type];
+};
+hxlr_engine_Grid.storeLine = function(_line,_info) {
+	if(hxlr_engine_Grid.registry.h[_info.key] == null) {
+		var this1 = hxlr_engine_Grid.registry;
+		var k = _info.key;
+		var v = new hxlr_engine_Cell(_info);
+		this1.h[k] = v;
 	}
-	,unregister: function(_line) {
-		if(_line == null) {
-			return;
-		}
-		var _g = 0;
-		var _g1 = _line.keyList;
-		while(_g < _g1.length) {
-			var key = _g1[_g];
-			++_g;
-			hxlr_engine_Grid.registry.h[key].removeLine(_line);
-		}
-		--this.lineCount;
-		--this.subTypeCount[_line.type];
-		hxlr_engine_Grid.lines[_line.id] = null;
+	hxlr_engine_Grid.registry.h[_info.key].addLine(_line);
+	_line.keyList.push(_info.key);
+};
+hxlr_engine_Grid.deleteTrack = function() {
+	var _g = 0;
+	var _g1 = hxlr_engine_Grid.lines;
+	while(_g < _g1.length) {
+		var line = _g1[_g];
+		++_g;
+		hxlr_engine_Grid.unregister(line);
 	}
+};
+hxlr_engine_Grid.unregister = function(_line) {
+	if(_line == null) {
+		return;
+	}
+	var _g = 0;
+	var _g1 = _line.keyList;
+	while(_g < _g1.length) {
+		var key = _g1[_g];
+		++_g;
+		hxlr_engine_Grid.registry.h[key].removeLine(_line);
+	}
+	--hxlr_engine_Grid.lineCount;
+	--hxlr_engine_Grid.subTypeCount[_line.type];
+	hxlr_engine_Grid.lines[_line.id] = null;
 };
 var hxlr_export_JSONFile = function() { };
 hxlr_export_JSONFile.__name__ = true;
@@ -381,7 +379,34 @@ hxlr_file_AMF0Reader.prototype = {
 		return { };
 	}
 };
-var hxlr_lines_LineBase = function(_start,_end,_shift,_lim) {
+var hxlr_math_geom_Line = function(_start,_end) {
+	this.start = _start;
+	this.end = _end;
+};
+hxlr_math_geom_Line.__name__ = true;
+hxlr_math_geom_Line.prototype = {
+	intersects: function(_line) {
+		return false;
+	}
+	,get_length: function() {
+		return Math.sqrt(Math.pow(this.end.x - this.start.x,2) + Math.pow(this.end.y - this.start.y,2));
+	}
+	,set_length: function(value) {
+		this.end.x += value * Math.cos(this.get_angle());
+		this.end.y += value * Math.sin(this.get_angle());
+		return this.get_length();
+	}
+	,get_angle: function() {
+		var dx = this.end.x - this.start.x;
+		var dy = this.end.y - this.start.y;
+		var theta = Math.atan(dy / dx);
+		return theta;
+	}
+	,set_angle: function(value) {
+		return this.get_angle();
+	}
+};
+var hxlr_lines_LineObject = function(_start,_end,_shift,_lim) {
 	if(_lim == null) {
 		_lim = 0;
 	}
@@ -391,17 +416,22 @@ var hxlr_lines_LineBase = function(_start,_end,_shift,_lim) {
 	this.limType = 0;
 	this.zone = 10;
 	this.tangible = false;
-	this.start = _start;
-	this.end = _end;
+	hxlr_math_geom_Line.call(this,_start,_end);
 	this.gfxEnd = new hxlr_math_geom_Point(this.end.x - this.start.x,this.end.y - this.start.y);
 	this.shifted = _shift;
 	this.keyList = [];
 	this.calculateConstants();
 	this.setLim(_lim);
 };
-hxlr_lines_LineBase.__name__ = true;
-hxlr_lines_LineBase.prototype = {
-	calculateConstants: function() {
+hxlr_lines_LineObject.__name__ = true;
+hxlr_lines_LineObject.__super__ = hxlr_math_geom_Line;
+hxlr_lines_LineObject.prototype = $extend(hxlr_math_geom_Line.prototype,{
+	set_length: function(value) {
+		hxlr_math_geom_Line.prototype.set_length.call(this,value);
+		this.calculateConstants();
+		return value;
+	}
+	,calculateConstants: function() {
 		this.dx = this.end.x - this.start.x;
 		this.dy = this.end.y - this.start.y;
 		this.C = this.dy * this.start.x - this.dx * this.start.y;
@@ -462,18 +492,18 @@ hxlr_lines_LineBase.prototype = {
 		var save2 = { id : this.id, type : this.type, x1 : this.start.x, y1 : this.start.y, x2 : this.end.x, y2 : this.end.y, flipped : this.shifted, leftExtended : save, rightExtended : save1};
 		return save2;
 	}
-};
+});
 var hxlr_lines_Accel = function(_start,_end,_shift) {
 	this.accConst = 0.1;
-	hxlr_lines_LineBase.call(this,_start,_end,_shift);
+	hxlr_lines_LineObject.call(this,_start,_end,_shift);
 	this.type = 1;
 	this.tangible = true;
 };
 hxlr_lines_Accel.__name__ = true;
-hxlr_lines_Accel.__super__ = hxlr_lines_LineBase;
-hxlr_lines_Accel.prototype = $extend(hxlr_lines_LineBase.prototype,{
+hxlr_lines_Accel.__super__ = hxlr_lines_LineObject;
+hxlr_lines_Accel.prototype = $extend(hxlr_lines_LineObject.prototype,{
 	calculateConstants: function() {
-		hxlr_lines_LineBase.prototype.calculateConstants.call(this);
+		hxlr_lines_LineObject.prototype.calculateConstants.call(this);
 		this.accx = this.ny * this.accConst * (this.shifted ? 1 : -1);
 		this.accy = this.nx * this.accConst * (this.shifted ? -1 : 1);
 	}
@@ -493,13 +523,13 @@ hxlr_lines_Accel.prototype = $extend(hxlr_lines_LineBase.prototype,{
 	}
 });
 var hxlr_lines_Floor = function(_start,_end,_shift) {
-	hxlr_lines_LineBase.call(this,_start,_end,_shift);
+	hxlr_lines_LineObject.call(this,_start,_end,_shift);
 	this.type = 0;
 	this.tangible = true;
 };
 hxlr_lines_Floor.__name__ = true;
-hxlr_lines_Floor.__super__ = hxlr_lines_LineBase;
-hxlr_lines_Floor.prototype = $extend(hxlr_lines_LineBase.prototype,{
+hxlr_lines_Floor.__super__ = hxlr_lines_LineObject;
+hxlr_lines_Floor.prototype = $extend(hxlr_lines_LineObject.prototype,{
 	collide: function(_point) {
 		var _loc5 = _point.pos.x - this.start.x;
 		var _loc6 = _point.pos.y - this.start.y;
@@ -516,26 +546,23 @@ hxlr_lines_Floor.prototype = $extend(hxlr_lines_LineBase.prototype,{
 	}
 });
 var hxlr_lines_Scenery = function(_start,_end,_shift) {
-	hxlr_lines_LineBase.call(this,_start,_end,_shift);
+	hxlr_lines_LineObject.call(this,_start,_end,_shift);
 	this.type = 2;
 };
 hxlr_lines_Scenery.__name__ = true;
-hxlr_lines_Scenery.__super__ = hxlr_lines_LineBase;
-hxlr_lines_Scenery.prototype = $extend(hxlr_lines_LineBase.prototype,{
+hxlr_lines_Scenery.__super__ = hxlr_lines_LineObject;
+hxlr_lines_Scenery.prototype = $extend(hxlr_lines_LineObject.prototype,{
 });
 var hxlr_lines_Undefined = function(_start,_end,_shift,_lim) {
 	if(_lim == null) {
 		_lim = 0;
 	}
-	hxlr_lines_LineBase.call(this,_start,_end,_shift,_lim);
+	hxlr_lines_LineObject.call(this,_start,_end,_shift,_lim);
 };
 hxlr_lines_Undefined.__name__ = true;
-hxlr_lines_Undefined.__super__ = hxlr_lines_LineBase;
-hxlr_lines_Undefined.prototype = $extend(hxlr_lines_LineBase.prototype,{
+hxlr_lines_Undefined.__super__ = hxlr_lines_LineObject;
+hxlr_lines_Undefined.prototype = $extend(hxlr_lines_LineObject.prototype,{
 });
-var hxlr_math_geom_Line = function(_start,_end) {
-};
-hxlr_math_geom_Line.__name__ = true;
 var hxlr_math_geom_Point = function(_x,_y) {
 	if(_y == null) {
 		_y = 0.0;
@@ -998,4 +1025,7 @@ hxlr_Constants.x_velocity = 0.4;
 hxlr_Constants.y_velocity = 0;
 hxlr_engine_Cell.size = 14;
 hxlr_engine_Cell.cellList = [];
+hxlr_engine_Grid.lineCount = 0;
+hxlr_engine_Grid.lineIDCount = 0;
+hxlr_engine_Grid.subTypeCount = [];
 })(typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : this);

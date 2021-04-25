@@ -221,12 +221,12 @@ __hxlr_engine_Cell = _hx_e()
 __hxlr_engine_Grid = _hx_e()
 __hxlr_export_JSONFile = _hx_e()
 __hxlr_file_AMF0Reader = _hx_e()
-__hxlr_lines_LineBase = _hx_e()
+__hxlr_math_geom_Line = _hx_e()
+__hxlr_lines_LineObject = _hx_e()
 __hxlr_lines_Accel = _hx_e()
 __hxlr_lines_Floor = _hx_e()
 __hxlr_lines_Scenery = _hx_e()
 __hxlr_lines_Undefined = _hx_e()
-__hxlr_math_geom_Line = _hx_e()
 __hxlr_math_geom_Point = _hx_e()
 __hxlr_rider_ContactPoint = _hx_e()
 __hxlr_rider_AirPoint = _hx_e()
@@ -1688,19 +1688,12 @@ __hxlr_engine_Grid.new = function()
   return self
 end
 __hxlr_engine_Grid.super = function(self) 
-  self.subTypeCount = Array.new();
-  self.lineIDCount = 0;
-  self.lineCount = 0;
   __hxlr_engine_Grid.registry = __haxe_ds_StringMap.new();
   __hxlr_engine_Grid.lines = Array.new();
 end
 __hxlr_engine_Grid.__name__ = true
-__hxlr_engine_Grid.prototype = _hx_e();
-__hxlr_engine_Grid.prototype.lineCount= nil;
-__hxlr_engine_Grid.prototype.lineIDCount= nil;
-__hxlr_engine_Grid.prototype.subTypeCount= nil;
-__hxlr_engine_Grid.prototype.register = function(self,_line) 
-  self:addLine(_line);
+__hxlr_engine_Grid.register = function(_line) 
+  __hxlr_engine_Grid.addLine(_line);
   local start = __hxlr_engine_Cell.getInfo(_line.start.x, _line.start.y);
   local _end = __hxlr_engine_Cell.getInfo(_line["end"].x, _line["end"].y);
   local right = (function() 
@@ -1731,50 +1724,62 @@ __hxlr_engine_Grid.prototype.register = function(self,_line)
     _hx_4 = _end.y; end
     return _hx_4
   end )();
-  self:storeLine(_line, start);
+  __hxlr_engine_Grid.storeLine(_line, start);
   if (((_line.dx == 0) and (_line.dy == 0)) or ((left == right) and (top == bottom))) then 
     do return end;
   end;
   local x = _line.start.x;
   local y = _line.start.y;
-  local invDx = 1 / _line.dx;
-  local invDy = 1 / _line.dy;
+  local invDx = (function() 
+    local _hx_5
+    if (_line.dx == 0) then 
+    _hx_5 = 1; else 
+    _hx_5 = 1 / _line.dx; end
+    return _hx_5
+  end )();
+  local invDy = (function() 
+    local _hx_6
+    if (_line.dy == 0) then 
+    _hx_6 = 1; else 
+    _hx_6 = 1 / _line.dy; end
+    return _hx_6
+  end )();
   local difX;
   local difY;
   local _hx_continue_1 = false;
   while (true) do repeat 
     if (start.x < 0) then 
       difX = (function() 
-        local _hx_5
+        local _hx_7
         if (_line.dx > 0) then 
-        _hx_5 = 14 + start.gx; else 
-        _hx_5 = -14 - start.gx; end
-        return _hx_5
+        _hx_7 = 14 + start.gx; else 
+        _hx_7 = -14 - start.gx; end
+        return _hx_7
       end )();
     else
       difX = (function() 
-        local _hx_6
+        local _hx_8
         if (_line.dx > 0) then 
-        _hx_6 = 14 - start.gx; else 
-        _hx_6 = -(start.gx + 1); end
-        return _hx_6
+        _hx_8 = 14 - start.gx; else 
+        _hx_8 = -(start.gx + 1); end
+        return _hx_8
       end )();
     end;
     if (start.y < 0) then 
       difY = (function() 
-        local _hx_7
+        local _hx_9
         if (_line.dy > 0) then 
-        _hx_7 = 14 + start.gy; else 
-        _hx_7 = -14 - start.gy; end
-        return _hx_7
+        _hx_9 = 14 + start.gy; else 
+        _hx_9 = -14 - start.gy; end
+        return _hx_9
       end )();
     else
       difY = (function() 
-        local _hx_8
+        local _hx_10
         if (_line.dy > 0) then 
-        _hx_8 = 14 - start.gy; else 
-        _hx_8 = -(start.gy + 1); end
-        return _hx_8
+        _hx_10 = 14 - start.gy; else 
+        _hx_10 = -(start.gy + 1); end
+        return _hx_10
       end )();
     end;
     if (_line.dx == 0) then 
@@ -1800,7 +1805,7 @@ __hxlr_engine_Grid.prototype.register = function(self,_line)
     end;
     start = __hxlr_engine_Cell.getInfo(x, y);
     if ((((start.x >= left) and (start.x <= right)) and (start.y >= top)) and (start.y <= bottom)) then 
-      self:storeLine(_line, start);
+      __hxlr_engine_Grid.storeLine(_line, start);
       break;
     end;
     do return end;until true
@@ -1811,16 +1816,19 @@ __hxlr_engine_Grid.prototype.register = function(self,_line)
     
   end;
 end
-__hxlr_engine_Grid.prototype.addLine = function(self,_line) 
+__hxlr_engine_Grid.addLine = function(_line) 
   if (_line.id == nil) then 
-    _line.id = self.lineIDCount;
+    _line.id = _hx_funcToField(__hxlr_engine_Grid.lineIDCount);
   end;
   __hxlr_engine_Grid.lines[_line.id] = _line;
-  self.lineCount = self.lineCount + 1;
-  self.lineIDCount = self.lineIDCount + 1;
-  self.subTypeCount[_line.type] = self.subTypeCount[_line.type] + 1;
+  __hxlr_engine_Grid.lineCount = __hxlr_engine_Grid.lineCount + 1;
+  __hxlr_engine_Grid.lineIDCount = __hxlr_engine_Grid.lineIDCount + 1;
+  if (__hxlr_engine_Grid.subTypeCount[_line.type] == nil) then 
+    __hxlr_engine_Grid.subTypeCount[_line.type] = 0;
+  end;
+  __hxlr_engine_Grid.subTypeCount[_line.type] = __hxlr_engine_Grid.subTypeCount[_line.type] + 1;
 end
-__hxlr_engine_Grid.prototype.storeLine = function(self,_line,_info) 
+__hxlr_engine_Grid.storeLine = function(_line,_info) 
   local ret = __hxlr_engine_Grid.registry.h[_info.key];
   if (ret == __haxe_ds_StringMap.tnull) then 
     ret = nil;
@@ -1843,16 +1851,16 @@ __hxlr_engine_Grid.prototype.storeLine = function(self,_line,_info)
   ret:addLine(_line);
   _line.keyList:push(_info.key);
 end
-__hxlr_engine_Grid.prototype.deleteTrack = function(self) 
+__hxlr_engine_Grid.deleteTrack = function() 
   local _g = 0;
   local _g1 = __hxlr_engine_Grid.lines;
   while (_g < _g1.length) do 
     local line = _g1[_g];
     _g = _g + 1;
-    self:unregister(line);
+    __hxlr_engine_Grid.unregister(line);
   end;
 end
-__hxlr_engine_Grid.prototype.unregister = function(self,_line) 
+__hxlr_engine_Grid.unregister = function(_line) 
   if (_line == nil) then 
     do return end;
   end;
@@ -1867,10 +1875,11 @@ __hxlr_engine_Grid.prototype.unregister = function(self,_line)
     end;
     ret:removeLine(_line);
   end;
-  self.lineCount = self.lineCount - 1;
-  self.subTypeCount[_line.type] = self.subTypeCount[_line.type] - 1;
+  __hxlr_engine_Grid.lineCount = __hxlr_engine_Grid.lineCount - 1;
+  __hxlr_engine_Grid.subTypeCount[_line.type] = __hxlr_engine_Grid.subTypeCount[_line.type] - 1;
   __hxlr_engine_Grid.lines[_line.id] = nil;
 end
+__hxlr_engine_Grid.prototype = _hx_e();
 
 __hxlr_engine_Grid.prototype.__class__ =  __hxlr_engine_Grid
 
@@ -1966,12 +1975,50 @@ end
 
 __hxlr_file_AMF0Reader.prototype.__class__ =  __hxlr_file_AMF0Reader
 
-__hxlr_lines_LineBase.new = function(_start,_end,_shift,_lim) 
-  local self = _hx_new(__hxlr_lines_LineBase.prototype)
-  __hxlr_lines_LineBase.super(self,_start,_end,_shift,_lim)
+__hxlr_math_geom_Line.new = function(_start,_end) 
+  local self = _hx_new(__hxlr_math_geom_Line.prototype)
+  __hxlr_math_geom_Line.super(self,_start,_end)
   return self
 end
-__hxlr_lines_LineBase.super = function(self,_start,_end,_shift,_lim) 
+__hxlr_math_geom_Line.super = function(self,_start,_end) 
+  self.start = _start;
+  self["end"] = _end;
+end
+__hxlr_math_geom_Line.__name__ = true
+__hxlr_math_geom_Line.prototype = _hx_e();
+__hxlr_math_geom_Line.prototype.start= nil;
+__hxlr_math_geom_Line.prototype["end"]= nil;
+__hxlr_math_geom_Line.prototype.intersects = function(self,_line) 
+  do return false end
+end
+__hxlr_math_geom_Line.prototype.get_length = function(self) 
+  do return _G.math.sqrt(_G.math.pow(self["end"].x - self.start.x, 2) + _G.math.pow(self["end"].y - self.start.y, 2)) end
+end
+__hxlr_math_geom_Line.prototype.set_length = function(self,value) 
+  local tmp = self["end"];
+  tmp.x = tmp.x + (value * _G.math.cos(self:get_angle()));
+  local tmp = self["end"];
+  tmp.y = tmp.y + (value * _G.math.sin(self:get_angle()));
+  do return self:get_length() end
+end
+__hxlr_math_geom_Line.prototype.get_angle = function(self) 
+  local dx = self["end"].x - self.start.x;
+  local dy = self["end"].y - self.start.y;
+  local theta = _G.math.atan(dy / dx);
+  do return theta end
+end
+__hxlr_math_geom_Line.prototype.set_angle = function(self,value) 
+  do return self:get_angle() end
+end
+
+__hxlr_math_geom_Line.prototype.__class__ =  __hxlr_math_geom_Line
+
+__hxlr_lines_LineObject.new = function(_start,_end,_shift,_lim) 
+  local self = _hx_new(__hxlr_lines_LineObject.prototype)
+  __hxlr_lines_LineObject.super(self,_start,_end,_shift,_lim)
+  return self
+end
+__hxlr_lines_LineObject.super = function(self,_start,_end,_shift,_lim) 
   if (_lim == nil) then 
     _lim = 0;
   end;
@@ -1981,40 +2028,42 @@ __hxlr_lines_LineBase.super = function(self,_start,_end,_shift,_lim)
   self.limType = 0;
   self.zone = 10;
   self.tangible = false;
-  self.start = _start;
-  self["end"] = _end;
+  __hxlr_math_geom_Line.super(self,_start,_end);
   self.gfxEnd = __hxlr_math_geom_Point.new(self["end"].x - self.start.x, self["end"].y - self.start.y);
   self.shifted = _shift;
   self.keyList = Array.new();
   self:calculateConstants();
   self:setLim(_lim);
 end
-__hxlr_lines_LineBase.__name__ = true
-__hxlr_lines_LineBase.prototype = _hx_e();
-__hxlr_lines_LineBase.prototype.id= nil;
-__hxlr_lines_LineBase.prototype.start= nil;
-__hxlr_lines_LineBase.prototype["end"]= nil;
-__hxlr_lines_LineBase.prototype.type= nil;
-__hxlr_lines_LineBase.prototype.tangible= nil;
-__hxlr_lines_LineBase.prototype.keyList= nil;
-__hxlr_lines_LineBase.prototype.gfxEnd= nil;
-__hxlr_lines_LineBase.prototype.shifted= nil;
-__hxlr_lines_LineBase.prototype.dx= nil;
-__hxlr_lines_LineBase.prototype.dy= nil;
-__hxlr_lines_LineBase.prototype.C= nil;
-__hxlr_lines_LineBase.prototype.distance= nil;
-__hxlr_lines_LineBase.prototype.invSqrDistance= nil;
-__hxlr_lines_LineBase.prototype.invDistance= nil;
-__hxlr_lines_LineBase.prototype.nx= nil;
-__hxlr_lines_LineBase.prototype.ny= nil;
-__hxlr_lines_LineBase.prototype.zone= nil;
-__hxlr_lines_LineBase.prototype.limType= nil;
-__hxlr_lines_LineBase.prototype.limStart= nil;
-__hxlr_lines_LineBase.prototype.limEnd= nil;
-__hxlr_lines_LineBase.prototype.limValue= nil;
-__hxlr_lines_LineBase.prototype.prevLine= nil;
-__hxlr_lines_LineBase.prototype.nextLine= nil;
-__hxlr_lines_LineBase.prototype.calculateConstants = function(self) 
+__hxlr_lines_LineObject.__name__ = true
+__hxlr_lines_LineObject.prototype = _hx_e();
+__hxlr_lines_LineObject.prototype.id= nil;
+__hxlr_lines_LineObject.prototype.type= nil;
+__hxlr_lines_LineObject.prototype.tangible= nil;
+__hxlr_lines_LineObject.prototype.keyList= nil;
+__hxlr_lines_LineObject.prototype.gfxEnd= nil;
+__hxlr_lines_LineObject.prototype.shifted= nil;
+__hxlr_lines_LineObject.prototype.dx= nil;
+__hxlr_lines_LineObject.prototype.dy= nil;
+__hxlr_lines_LineObject.prototype.C= nil;
+__hxlr_lines_LineObject.prototype.distance= nil;
+__hxlr_lines_LineObject.prototype.invSqrDistance= nil;
+__hxlr_lines_LineObject.prototype.invDistance= nil;
+__hxlr_lines_LineObject.prototype.nx= nil;
+__hxlr_lines_LineObject.prototype.ny= nil;
+__hxlr_lines_LineObject.prototype.zone= nil;
+__hxlr_lines_LineObject.prototype.limType= nil;
+__hxlr_lines_LineObject.prototype.limStart= nil;
+__hxlr_lines_LineObject.prototype.limEnd= nil;
+__hxlr_lines_LineObject.prototype.limValue= nil;
+__hxlr_lines_LineObject.prototype.prevLine= nil;
+__hxlr_lines_LineObject.prototype.nextLine= nil;
+__hxlr_lines_LineObject.prototype.set_length = function(self,value) 
+  __hxlr_math_geom_Line.prototype.set_length(self,value);
+  self:calculateConstants();
+  do return value end
+end
+__hxlr_lines_LineObject.prototype.calculateConstants = function(self) 
   self.dx = self["end"].x - self.start.x;
   self.dy = self["end"].y - self.start.y;
   self.C = (self.dy * self.start.x) - (self.dx * self.start.y);
@@ -2038,7 +2087,7 @@ __hxlr_lines_LineBase.prototype.calculateConstants = function(self)
   end )();
   self.limValue = Math.min(0.25, self.zone / self.distance);
 end
-__hxlr_lines_LineBase.prototype.setLim = function(self,_limMode) 
+__hxlr_lines_LineObject.prototype.setLim = function(self,_limMode) 
   local _limMode1 = _limMode;
   if (_limMode1) == 0 then 
     self.limStart = 0;
@@ -2054,9 +2103,9 @@ __hxlr_lines_LineBase.prototype.setLim = function(self,_limMode)
     self.limEnd = 1 + self.limValue; end;
   self.limType = _limMode;
 end
-__hxlr_lines_LineBase.prototype.collide = function(self,_point) 
+__hxlr_lines_LineObject.prototype.collide = function(self,_point) 
 end
-__hxlr_lines_LineBase.prototype.toSaveObject = function(self) 
+__hxlr_lines_LineObject.prototype.toSaveObject = function(self) 
   local save;
   local _g = self.limType;
   if (_g) == 1 or (_g) == 3 then 
@@ -2075,7 +2124,9 @@ __hxlr_lines_LineBase.prototype.toSaveObject = function(self)
   do return save end
 end
 
-__hxlr_lines_LineBase.prototype.__class__ =  __hxlr_lines_LineBase
+__hxlr_lines_LineObject.prototype.__class__ =  __hxlr_lines_LineObject
+__hxlr_lines_LineObject.__super__ = __hxlr_math_geom_Line
+setmetatable(__hxlr_lines_LineObject.prototype,{__index=__hxlr_math_geom_Line.prototype})
 
 __hxlr_lines_Accel.new = function(_start,_end,_shift) 
   local self = _hx_new(__hxlr_lines_Accel.prototype)
@@ -2084,7 +2135,7 @@ __hxlr_lines_Accel.new = function(_start,_end,_shift)
 end
 __hxlr_lines_Accel.super = function(self,_start,_end,_shift) 
   self.accConst = 0.1;
-  __hxlr_lines_LineBase.super(self,_start,_end,_shift);
+  __hxlr_lines_LineObject.super(self,_start,_end,_shift);
   self.type = 1;
   self.tangible = true;
 end
@@ -2094,7 +2145,7 @@ __hxlr_lines_Accel.prototype.accConst= nil;
 __hxlr_lines_Accel.prototype.accx= nil;
 __hxlr_lines_Accel.prototype.accy= nil;
 __hxlr_lines_Accel.prototype.calculateConstants = function(self) 
-  __hxlr_lines_LineBase.prototype.calculateConstants(self);
+  __hxlr_lines_LineObject.prototype.calculateConstants(self);
   self.accx = (self.ny * self.accConst) * (function() 
     local _hx_1
     if (self.shifted) then 
@@ -2138,8 +2189,8 @@ __hxlr_lines_Accel.prototype.collide = function(self,_point)
 end
 
 __hxlr_lines_Accel.prototype.__class__ =  __hxlr_lines_Accel
-__hxlr_lines_Accel.__super__ = __hxlr_lines_LineBase
-setmetatable(__hxlr_lines_Accel.prototype,{__index=__hxlr_lines_LineBase.prototype})
+__hxlr_lines_Accel.__super__ = __hxlr_lines_LineObject
+setmetatable(__hxlr_lines_Accel.prototype,{__index=__hxlr_lines_LineObject.prototype})
 
 __hxlr_lines_Floor.new = function(_start,_end,_shift) 
   local self = _hx_new(__hxlr_lines_Floor.prototype)
@@ -2147,7 +2198,7 @@ __hxlr_lines_Floor.new = function(_start,_end,_shift)
   return self
 end
 __hxlr_lines_Floor.super = function(self,_start,_end,_shift) 
-  __hxlr_lines_LineBase.super(self,_start,_end,_shift);
+  __hxlr_lines_LineObject.super(self,_start,_end,_shift);
   self.type = 0;
   self.tangible = true;
 end
@@ -2181,8 +2232,8 @@ __hxlr_lines_Floor.prototype.collide = function(self,_point)
 end
 
 __hxlr_lines_Floor.prototype.__class__ =  __hxlr_lines_Floor
-__hxlr_lines_Floor.__super__ = __hxlr_lines_LineBase
-setmetatable(__hxlr_lines_Floor.prototype,{__index=__hxlr_lines_LineBase.prototype})
+__hxlr_lines_Floor.__super__ = __hxlr_lines_LineObject
+setmetatable(__hxlr_lines_Floor.prototype,{__index=__hxlr_lines_LineObject.prototype})
 
 __hxlr_lines_Scenery.new = function(_start,_end,_shift) 
   local self = _hx_new(__hxlr_lines_Scenery.prototype)
@@ -2190,15 +2241,15 @@ __hxlr_lines_Scenery.new = function(_start,_end,_shift)
   return self
 end
 __hxlr_lines_Scenery.super = function(self,_start,_end,_shift) 
-  __hxlr_lines_LineBase.super(self,_start,_end,_shift);
+  __hxlr_lines_LineObject.super(self,_start,_end,_shift);
   self.type = 2;
 end
 __hxlr_lines_Scenery.__name__ = true
 __hxlr_lines_Scenery.prototype = _hx_e();
 
 __hxlr_lines_Scenery.prototype.__class__ =  __hxlr_lines_Scenery
-__hxlr_lines_Scenery.__super__ = __hxlr_lines_LineBase
-setmetatable(__hxlr_lines_Scenery.prototype,{__index=__hxlr_lines_LineBase.prototype})
+__hxlr_lines_Scenery.__super__ = __hxlr_lines_LineObject
+setmetatable(__hxlr_lines_Scenery.prototype,{__index=__hxlr_lines_LineObject.prototype})
 
 __hxlr_lines_Undefined.new = function(_start,_end,_shift,_lim) 
   local self = _hx_new(__hxlr_lines_Undefined.prototype)
@@ -2209,27 +2260,14 @@ __hxlr_lines_Undefined.super = function(self,_start,_end,_shift,_lim)
   if (_lim == nil) then 
     _lim = 0;
   end;
-  __hxlr_lines_LineBase.super(self,_start,_end,_shift,_lim);
+  __hxlr_lines_LineObject.super(self,_start,_end,_shift,_lim);
 end
 __hxlr_lines_Undefined.__name__ = true
 __hxlr_lines_Undefined.prototype = _hx_e();
 
 __hxlr_lines_Undefined.prototype.__class__ =  __hxlr_lines_Undefined
-__hxlr_lines_Undefined.__super__ = __hxlr_lines_LineBase
-setmetatable(__hxlr_lines_Undefined.prototype,{__index=__hxlr_lines_LineBase.prototype})
-
-__hxlr_math_geom_Line.new = function(_start,_end) 
-  local self = _hx_new(__hxlr_math_geom_Line.prototype)
-  __hxlr_math_geom_Line.super(self,_start,_end)
-  return self
-end
-__hxlr_math_geom_Line.super = function(self,_start,_end) 
-end
-__hxlr_math_geom_Line.__name__ = true
-__hxlr_math_geom_Line.prototype = _hx_e();
-__hxlr_math_geom_Line.prototype.start= nil;
-
-__hxlr_math_geom_Line.prototype.__class__ =  __hxlr_math_geom_Line
+__hxlr_lines_Undefined.__super__ = __hxlr_lines_LineObject
+setmetatable(__hxlr_lines_Undefined.prototype,{__index=__hxlr_lines_LineObject.prototype})
 
 __hxlr_math_geom_Point.new = function(_x,_y) 
   local self = _hx_new(__hxlr_math_geom_Point.prototype)
@@ -2912,6 +2950,12 @@ local _hx_static_init = function()
   __hxlr_engine_Cell.size = 14;
   
   __hxlr_engine_Cell.cellList = Array.new();
+  
+  __hxlr_engine_Grid.lineCount = 0;
+  
+  __hxlr_engine_Grid.lineIDCount = 0;
+  
+  __hxlr_engine_Grid.subTypeCount = Array.new();
   
   __lua_Boot.MAXSTACKSIZE = 1000;
   

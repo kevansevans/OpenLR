@@ -13,8 +13,11 @@
 #ifndef INCLUDED_hxlr_engine_Grid
 #include <hxlr/engine/Grid.h>
 #endif
-#ifndef INCLUDED_hxlr_lines_LineBase
-#include <hxlr/lines/LineBase.h>
+#ifndef INCLUDED_hxlr_lines_LineObject
+#include <hxlr/lines/LineObject.h>
+#endif
+#ifndef INCLUDED_hxlr_math_geom_Line
+#include <hxlr/math/geom/Line.h>
 #endif
 #ifndef INCLUDED_hxlr_math_geom_Point
 #include <hxlr/math/geom/Point.h>
@@ -241,7 +244,7 @@ HXLINE( 134)								{
 HXLINE( 134)									int _g = 0;
 HXDLIN( 134)									::Array< ::Dynamic> _g1 = _hx_register->collidable;
 HXDLIN( 134)									while((_g < _g1->length)){
-HXLINE( 134)										 ::hxlr::lines::LineBase line = _g1->__get(_g).StaticCast<  ::hxlr::lines::LineBase >();
+HXLINE( 134)										 ::hxlr::lines::LineObject line = _g1->__get(_g).StaticCast<  ::hxlr::lines::LineObject >();
 HXDLIN( 134)										_g = (_g + 1);
 HXLINE( 136)										if (::hx::IsNull( line )) {
 HXLINE( 136)											continue;

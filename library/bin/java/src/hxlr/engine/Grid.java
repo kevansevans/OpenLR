@@ -6,6 +6,16 @@ import haxe.root.*;
 @SuppressWarnings(value={"rawtypes", "unchecked"})
 public class Grid extends haxe.lang.HxObject
 {
+	static
+	{
+		//line 14 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		hxlr.engine.Grid.lineCount = 0;
+		//line 15 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		hxlr.engine.Grid.lineIDCount = 0;
+		//line 16 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		hxlr.engine.Grid.subTypeCount = new haxe.root.Array<java.lang.Object>();
+	}
+	
 	public Grid(haxe.lang.EmptyObject empty)
 	{
 	}
@@ -20,37 +30,27 @@ public class Grid extends haxe.lang.HxObject
 	
 	protected static void __hx_ctor_hxlr_engine_Grid(hxlr.engine.Grid __hx_this)
 	{
-		//line 16 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		__hx_this.subTypeCount = new haxe.root.Array<java.lang.Object>();
-		//line 15 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		__hx_this.lineIDCount = 0;
-		//line 14 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		__hx_this.lineCount = 0;
-		//line 22 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		{
-			//line 23 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			hxlr.engine.Grid.registry = new haxe.ds.StringMap<hxlr.engine.Cell>();
-			//line 24 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			hxlr.engine.Grid.lines = new haxe.root.Array<hxlr.lines.LineBase>();
-		}
-		
+		//line 23 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		hxlr.engine.Grid.registry = new haxe.ds.StringMap<hxlr.engine.Cell>();
+		//line 24 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		hxlr.engine.Grid.lines = new haxe.root.Array<hxlr.lines.LineObject>();
 	}
 	
 	
+	public static int lineCount;
+	
+	public static int lineIDCount;
+	
+	public static haxe.root.Array<java.lang.Object> subTypeCount;
+	
 	public static haxe.ds.StringMap<hxlr.engine.Cell> registry;
 	
-	public static haxe.root.Array<hxlr.lines.LineBase> lines;
+	public static haxe.root.Array<hxlr.lines.LineObject> lines;
 	
-	public int lineCount;
-	
-	public int lineIDCount;
-	
-	public haxe.root.Array<java.lang.Object> subTypeCount;
-	
-	public void register(hxlr.lines.LineBase _line)
+	public static void register(hxlr.lines.LineObject _line)
 	{
 		//line 29 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		this.addLine(_line);
+		hxlr.engine.Grid.addLine(_line);
 		//line 31 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		java.lang.Object start = hxlr.engine.Cell.getInfo(_line.start.x, _line.start.y);
 		//line 32 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
@@ -64,7 +64,7 @@ public class Grid extends haxe.lang.HxObject
 		//line 37 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		int top = ( (( _line.dy > 0 )) ? (((int) (haxe.lang.Runtime.getField_f(start, "y", true)) )) : (((int) (haxe.lang.Runtime.getField_f(end, "y", true)) )) );
 		//line 39 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		this.storeLine(_line, start);
+		hxlr.engine.Grid.storeLine(_line, start);
 		//line 41 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		if (( ( ( _line.dx == 0 ) && ( _line.dy == 0 ) ) || ( ( left == right ) && ( top == bottom ) ) )) 
 		{
@@ -77,9 +77,9 @@ public class Grid extends haxe.lang.HxObject
 		//line 46 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		double y = _line.start.y;
 		//line 47 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		double invDx = ( 1 / _line.dx );
+		double invDx = ( (( _line.dx == 0 )) ? (((double) (1) )) : (( 1 / _line.dx )) );
 		//line 48 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		double invDy = ( 1 / _line.dy );
+		double invDy = ( (( _line.dy == 0 )) ? (((double) (1) )) : (( 1 / _line.dy )) );
 		//line 50 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		double difX = 0.0;
 		//line 51 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
@@ -167,7 +167,7 @@ public class Grid extends haxe.lang.HxObject
 			if (( ( ( ( ((int) (haxe.lang.Runtime.getField_f(start, "x", true)) ) >= left ) && ( ((int) (haxe.lang.Runtime.getField_f(start, "x", true)) ) <= right ) ) && ( ((int) (haxe.lang.Runtime.getField_f(start, "y", true)) ) >= top ) ) && ( ((int) (haxe.lang.Runtime.getField_f(start, "y", true)) ) <= bottom ) )) 
 			{
 				//line 86 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				this.storeLine(_line, start);
+				hxlr.engine.Grid.storeLine(_line, start);
 				//line 87 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 				continue;
 			}
@@ -179,635 +179,137 @@ public class Grid extends haxe.lang.HxObject
 	}
 	
 	
-	public void addLine(hxlr.lines.LineBase _line)
+	public static void addLine(hxlr.lines.LineObject _line)
 	{
 		//line 95 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		if (haxe.lang.Runtime.eq(_line.id, null)) 
 		{
 			//line 95 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			_line.id = this.lineIDCount;
+			_line.id = hxlr.engine.Grid.lineIDCount;
 		}
 		
 		//line 96 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		hxlr.engine.Grid.lines.__set(((int) (haxe.lang.Runtime.toInt(_line.id)) ), _line);
 		//line 97 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		 ++ this.lineCount;
+		 ++ hxlr.engine.Grid.lineCount;
 		//line 98 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		 ++ this.lineIDCount;
+		 ++ hxlr.engine.Grid.lineIDCount;
 		//line 99 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		if (haxe.lang.Runtime.eq(hxlr.engine.Grid.subTypeCount.__get(_line.type), null)) 
 		{
 			//line 99 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			haxe.root.Array<java.lang.Object> __temp_arr3 = this.subTypeCount;
-			//line 99 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			hxlr.engine.Grid.subTypeCount.__set(_line.type, 0);
+		}
+		
+		//line 100 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		{
+			//line 100 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			haxe.root.Array<java.lang.Object> __temp_arr3 = hxlr.engine.Grid.subTypeCount;
+			//line 100 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			int __temp_arrIndex4 = _line.type;
-			//line 99 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			int __temp_arrVal1 = ((int) (haxe.lang.Runtime.toInt(__temp_arr3.__get(__temp_arrIndex4))) );
-			//line 99 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			int __temp_arrRet2 =  ++ __temp_arrVal1;
-			//line 99 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 100 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			java.lang.Object __temp_arrVal1 = __temp_arr3.__get(__temp_arrIndex4);
+			//line 100 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			java.lang.Object __temp_arrRet2 = ((int) (haxe.lang.Runtime.toInt(__temp_arrVal1 = ( ((int) (haxe.lang.Runtime.toInt(__temp_arrVal1)) ) + 1 ))) );
+			//line 100 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			int __temp_expr1 = ((int) (haxe.lang.Runtime.toInt(__temp_arr3.__set(__temp_arrIndex4, __temp_arrVal1))) );
-			//line 99 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			int __temp_expr2 = __temp_arrRet2;
+			//line 100 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			java.lang.Object __temp_expr2 = __temp_arrRet2;
 		}
 		
 	}
 	
 	
-	public void storeLine(hxlr.lines.LineBase _line, java.lang.Object _info)
+	public static void storeLine(hxlr.lines.LineObject _line, java.lang.Object _info)
 	{
-		//line 104 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		//line 105 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		if (( ((hxlr.engine.Cell) (((haxe.ds.StringMap<hxlr.engine.Cell>) (((haxe.IMap<java.lang.String, hxlr.engine.Cell>) (hxlr.engine.Grid.registry) )) ).get(haxe.lang.Runtime.toString(haxe.lang.Runtime.getField(_info, "key", true)))) ) == null )) 
 		{
-			//line 105 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 106 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			haxe.IMap<java.lang.String, hxlr.engine.Cell> this1 = hxlr.engine.Grid.registry;
-			//line 105 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 106 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			java.lang.String k = haxe.lang.Runtime.toString(haxe.lang.Runtime.getField(_info, "key", true));
-			//line 105 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 106 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			hxlr.engine.Cell v = new hxlr.engine.Cell(((java.lang.Object) (_info) ));
-			//line 105 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 106 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			((haxe.ds.StringMap<hxlr.engine.Cell>) (this1) ).set(k, v);
 		}
 		
-		//line 107 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		((hxlr.engine.Cell) (((haxe.ds.StringMap<hxlr.engine.Cell>) (((haxe.IMap<java.lang.String, hxlr.engine.Cell>) (hxlr.engine.Grid.registry) )) ).get(haxe.lang.Runtime.toString(haxe.lang.Runtime.getField(_info, "key", true)))) ).addLine(_line);
 		//line 108 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		((hxlr.engine.Cell) (((haxe.ds.StringMap<hxlr.engine.Cell>) (((haxe.IMap<java.lang.String, hxlr.engine.Cell>) (hxlr.engine.Grid.registry) )) ).get(haxe.lang.Runtime.toString(haxe.lang.Runtime.getField(_info, "key", true)))) ).addLine(_line);
+		//line 109 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		_line.keyList.push(haxe.lang.Runtime.toString(haxe.lang.Runtime.getField(_info, "key", true)));
 	}
 	
 	
-	public void deleteTrack()
+	public static void deleteTrack()
 	{
-		//line 112 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		//line 113 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		int _g = 0;
-		//line 112 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		haxe.root.Array<hxlr.lines.LineBase> _g1 = hxlr.engine.Grid.lines;
-		//line 112 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		//line 113 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		haxe.root.Array<hxlr.lines.LineObject> _g1 = hxlr.engine.Grid.lines;
+		//line 113 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		while (( _g < _g1.length ))
 		{
-			//line 112 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			hxlr.lines.LineBase line = _g1.__get(_g);
-			//line 112 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 113 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			hxlr.lines.LineObject line = _g1.__get(_g);
+			//line 113 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			 ++ _g;
-			//line 112 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			this.unregister(line);
+			//line 113 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			hxlr.engine.Grid.unregister(line);
 		}
 		
 	}
 	
 	
-	public void unregister(hxlr.lines.LineBase _line)
+	public static void unregister(hxlr.lines.LineObject _line)
 	{
-		//line 117 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		//line 118 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		if (( _line == null )) 
 		{
-			//line 117 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 118 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			return ;
 		}
 		
-		//line 119 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		//line 120 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		{
-			//line 119 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 120 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			int _g = 0;
-			//line 119 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 120 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			haxe.root.Array<java.lang.String> _g1 = _line.keyList;
-			//line 119 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 120 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			while (( _g < _g1.length ))
 			{
-				//line 119 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				java.lang.String key = _g1.__get(_g);
-				//line 119 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				 ++ _g;
 				//line 120 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+				java.lang.String key = _g1.__get(_g);
+				//line 120 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+				 ++ _g;
+				//line 121 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 				((hxlr.engine.Cell) (((haxe.ds.StringMap<hxlr.engine.Cell>) (((haxe.IMap<java.lang.String, hxlr.engine.Cell>) (hxlr.engine.Grid.registry) )) ).get(key)) ).removeLine(_line);
 			}
 			
 		}
 		
-		//line 123 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		 -- this.lineCount;
 		//line 124 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		 -- hxlr.engine.Grid.lineCount;
+		//line 125 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		{
-			//line 124 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			haxe.root.Array<java.lang.Object> __temp_arr3 = this.subTypeCount;
-			//line 124 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 125 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			haxe.root.Array<java.lang.Object> __temp_arr3 = hxlr.engine.Grid.subTypeCount;
+			//line 125 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			int __temp_arrIndex4 = _line.type;
-			//line 124 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			int __temp_arrVal1 = ((int) (haxe.lang.Runtime.toInt(__temp_arr3.__get(__temp_arrIndex4))) );
-			//line 124 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			int __temp_arrRet2 =  -- __temp_arrVal1;
-			//line 124 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			//line 125 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			java.lang.Object __temp_arrVal1 = __temp_arr3.__get(__temp_arrIndex4);
+			//line 125 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			java.lang.Object __temp_arrRet2 = ((int) (haxe.lang.Runtime.toInt(__temp_arrVal1 = ( ((int) (haxe.lang.Runtime.toInt(__temp_arrVal1)) ) - 1 ))) );
+			//line 125 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 			int __temp_expr1 = ((int) (haxe.lang.Runtime.toInt(__temp_arr3.__set(__temp_arrIndex4, __temp_arrVal1))) );
-			//line 124 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			int __temp_expr2 = __temp_arrRet2;
+			//line 125 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+			java.lang.Object __temp_expr2 = __temp_arrRet2;
 		}
 		
-		//line 126 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
+		//line 127 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
 		hxlr.engine.Grid.lines.__set(((int) (haxe.lang.Runtime.toInt(_line.id)) ), null);
-	}
-	
-	
-	@Override public double __hx_setField_f(java.lang.String field, double value, boolean handleProperties)
-	{
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		{
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			boolean __temp_executeDef1 = true;
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (( field != null )) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				switch (field.hashCode())
-				{
-					case 1097729600:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineIDCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.lineIDCount = ((int) (value) );
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return value;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1822062213:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.lineCount = ((int) (value) );
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return value;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-				}
-				
-			}
-			
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (__temp_executeDef1) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				return super.__hx_setField_f(field, value, handleProperties);
-			}
-			else
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				throw null;
-			}
-			
-		}
-		
-	}
-	
-	
-	@Override public java.lang.Object __hx_setField(java.lang.String field, java.lang.Object value, boolean handleProperties)
-	{
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		{
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			boolean __temp_executeDef1 = true;
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (( field != null )) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				switch (field.hashCode())
-				{
-					case -1706381419:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("subTypeCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.subTypeCount = ((haxe.root.Array<java.lang.Object>) (value) );
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return value;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1822062213:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.lineCount = ((int) (haxe.lang.Runtime.toInt(value)) );
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return value;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case 1097729600:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineIDCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.lineIDCount = ((int) (haxe.lang.Runtime.toInt(value)) );
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return value;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-				}
-				
-			}
-			
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (__temp_executeDef1) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				return super.__hx_setField(field, value, handleProperties);
-			}
-			else
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				throw null;
-			}
-			
-		}
-		
-	}
-	
-	
-	@Override public java.lang.Object __hx_getField(java.lang.String field, boolean throwErrors, boolean isCheck, boolean handleProperties)
-	{
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		{
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			boolean __temp_executeDef1 = true;
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (( field != null )) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				switch (field.hashCode())
-				{
-					case 836015164:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("unregister")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return ((haxe.lang.Function) (new haxe.lang.Closure(this, "unregister")) );
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1822062213:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return this.lineCount;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1132048800:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("deleteTrack")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return ((haxe.lang.Function) (new haxe.lang.Closure(this, "deleteTrack")) );
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case 1097729600:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineIDCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return this.lineIDCount;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case 1691731061:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("storeLine")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return ((haxe.lang.Function) (new haxe.lang.Closure(this, "storeLine")) );
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1706381419:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("subTypeCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return this.subTypeCount;
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1148820427:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("addLine")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return ((haxe.lang.Function) (new haxe.lang.Closure(this, "addLine")) );
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -690213213:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("register")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return ((haxe.lang.Function) (new haxe.lang.Closure(this, "register")) );
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-				}
-				
-			}
-			
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (__temp_executeDef1) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				return super.__hx_getField(field, throwErrors, isCheck, handleProperties);
-			}
-			else
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				throw null;
-			}
-			
-		}
-		
-	}
-	
-	
-	@Override public double __hx_getField_f(java.lang.String field, boolean throwErrors, boolean handleProperties)
-	{
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		{
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			boolean __temp_executeDef1 = true;
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (( field != null )) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				switch (field.hashCode())
-				{
-					case 1097729600:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineIDCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return ((double) (this.lineIDCount) );
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1822062213:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("lineCount")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							return ((double) (this.lineCount) );
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-				}
-				
-			}
-			
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (__temp_executeDef1) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				return super.__hx_getField_f(field, throwErrors, handleProperties);
-			}
-			else
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				throw null;
-			}
-			
-		}
-		
-	}
-	
-	
-	@Override public java.lang.Object __hx_invokeField(java.lang.String field, java.lang.Object[] dynargs)
-	{
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		{
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			boolean __temp_executeDef1 = true;
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (( field != null )) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				switch (field.hashCode())
-				{
-					case 836015164:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("unregister")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.unregister(((hxlr.lines.LineBase) (dynargs[0]) ));
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -690213213:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("register")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.register(((hxlr.lines.LineBase) (dynargs[0]) ));
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1132048800:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("deleteTrack")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.deleteTrack();
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case -1148820427:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("addLine")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.addLine(((hxlr.lines.LineBase) (dynargs[0]) ));
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-					case 1691731061:
-					{
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						if (field.equals("storeLine")) 
-						{
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							__temp_executeDef1 = false;
-							//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-							this.storeLine(((hxlr.lines.LineBase) (dynargs[0]) ), dynargs[1]);
-						}
-						
-						//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-						break;
-					}
-					
-					
-				}
-				
-			}
-			
-			//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-			if (__temp_executeDef1) 
-			{
-				//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-				return super.__hx_invokeField(field, dynargs);
-			}
-			
-		}
-		
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		return null;
-	}
-	
-	
-	@Override public void __hx_getFields(haxe.root.Array<java.lang.String> baseArr)
-	{
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		baseArr.push("subTypeCount");
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		baseArr.push("lineIDCount");
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		baseArr.push("lineCount");
-		//line 11 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Grid.hx"
-		super.__hx_getFields(baseArr);
 	}
 	
 	

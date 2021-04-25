@@ -4,6 +4,13 @@
 namespace hxlr.engine {
 	public class Grid : global::haxe.lang.HxObject {
 		
+		static Grid() {
+			global::hxlr.engine.Grid.lineCount = 0;
+			global::hxlr.engine.Grid.lineIDCount = 0;
+			global::hxlr.engine.Grid.subTypeCount = new global::Array<object>();
+		}
+		
+		
 		public Grid(global::haxe.lang.EmptyObject empty) {
 		}
 		
@@ -14,45 +21,39 @@ namespace hxlr.engine {
 		
 		
 		protected static void __hx_ctor_hxlr_engine_Grid(global::hxlr.engine.Grid __hx_this) {
-			__hx_this.subTypeCount = new global::Array<int>();
-			__hx_this.lineIDCount = 0;
-			__hx_this.lineCount = 0;
-			{
-				global::hxlr.engine.Grid.registry = new global::haxe.ds.StringMap<object>();
-				global::hxlr.engine.Grid.lines = new global::Array<object>();
-			}
-			
+			global::hxlr.engine.Grid.registry = new global::haxe.ds.StringMap<object>();
+			global::hxlr.engine.Grid.lines = new global::Array<object>();
 		}
 		
+		
+		public static int lineCount;
+		
+		public static int lineIDCount;
+		
+		public static global::Array<object> subTypeCount;
 		
 		public static global::haxe.ds.StringMap<object> registry;
 		
 		public static global::Array<object> lines;
 		
-		public int lineCount;
-		
-		public int lineIDCount;
-		
-		public global::Array<int> subTypeCount;
-		
-		public virtual void register(global::hxlr.lines.LineBase _line) {
+		public static void register(global::hxlr.lines.LineObject _line) {
 			unchecked {
-				this.addLine(_line);
+				global::hxlr.engine.Grid.addLine(_line);
 				object start = global::hxlr.engine.Cell.getInfo(_line.start.x, _line.start.y);
 				object end = global::hxlr.engine.Cell.getInfo(_line.end.x, _line.end.y);
 				int right = ( (( _line.dx > 0 )) ? (((int) (global::haxe.lang.Runtime.getField_f(end, "x", 120, true)) )) : (((int) (global::haxe.lang.Runtime.getField_f(start, "x", 120, true)) )) );
 				int left = ( (( _line.dx > 0 )) ? (((int) (global::haxe.lang.Runtime.getField_f(start, "x", 120, true)) )) : (((int) (global::haxe.lang.Runtime.getField_f(end, "x", 120, true)) )) );
 				int bottom = ( (( _line.dy > 0 )) ? (((int) (global::haxe.lang.Runtime.getField_f(end, "y", 121, true)) )) : (((int) (global::haxe.lang.Runtime.getField_f(start, "y", 121, true)) )) );
 				int top = ( (( _line.dy > 0 )) ? (((int) (global::haxe.lang.Runtime.getField_f(start, "y", 121, true)) )) : (((int) (global::haxe.lang.Runtime.getField_f(end, "y", 121, true)) )) );
-				this.storeLine(_line, start);
+				global::hxlr.engine.Grid.storeLine(_line, start);
 				if (( ( ( _line.dx == 0 ) && ( _line.dy == 0 ) ) || ( ( left == right ) && ( top == bottom ) ) )) {
 					return;
 				}
 				
 				double x = _line.start.x;
 				double y = _line.start.y;
-				double invDx = ( 1 / _line.dx );
-				double invDy = ( 1 / _line.dy );
+				double invDx = ( (( _line.dx == 0 )) ? (((double) (1) )) : (( 1 / _line.dx )) );
+				double invDy = ( (( _line.dy == 0 )) ? (((double) (1) )) : (( 1 / _line.dy )) );
 				double difX = default(double);
 				double difY = default(double);
 				while (true) {
@@ -95,7 +96,7 @@ namespace hxlr.engine {
 					
 					start = global::hxlr.engine.Cell.getInfo(x, y);
 					if (( ( ( ( ((int) (global::haxe.lang.Runtime.getField_f(start, "x", 120, true)) ) >= left ) && ( ((int) (global::haxe.lang.Runtime.getField_f(start, "x", 120, true)) ) <= right ) ) && ( ((int) (global::haxe.lang.Runtime.getField_f(start, "y", 121, true)) ) >= top ) ) && ( ((int) (global::haxe.lang.Runtime.getField_f(start, "y", 121, true)) ) <= bottom ) )) {
-						this.storeLine(_line, start);
+						global::hxlr.engine.Grid.storeLine(_line, start);
 						continue;
 					}
 					
@@ -106,19 +107,25 @@ namespace hxlr.engine {
 		}
 		
 		
-		public virtual void addLine(global::hxlr.lines.LineBase _line) {
-			if ( ! (_line.id.hasValue) ) {
-				_line.id = new global::haxe.lang.Null<int>(this.lineIDCount, true);
+		public static void addLine(global::hxlr.lines.LineObject _line) {
+			unchecked {
+				if ( ! (_line.id.hasValue) ) {
+					_line.id = new global::haxe.lang.Null<int>(global::hxlr.engine.Grid.lineIDCount, true);
+				}
+				
+				global::hxlr.engine.Grid.lines[(_line.id).@value] = _line;
+				 ++ global::hxlr.engine.Grid.lineCount;
+				 ++ global::hxlr.engine.Grid.lineIDCount;
+				if ( ! (global::haxe.lang.Null<object>.ofDynamic<int>(global::hxlr.engine.Grid.subTypeCount[_line.type]).hasValue) ) {
+					global::hxlr.engine.Grid.subTypeCount[_line.type] = ((object) (0) );
+				}
+				
+				int __temp_expr1 = ((int) (global::haxe.lang.Runtime.toInt(global::hxlr.engine.Grid.subTypeCount[_line.type] = ((object) (( ((int) (global::haxe.lang.Runtime.toInt(global::hxlr.engine.Grid.subTypeCount[_line.type])) ) + 1 )) ))) );
 			}
-			
-			global::hxlr.engine.Grid.lines[(_line.id).@value] = _line;
-			 ++ this.lineCount;
-			 ++ this.lineIDCount;
-			 ++ this.subTypeCount[_line.type];
 		}
 		
 		
-		public virtual void storeLine(global::hxlr.lines.LineBase _line, object _info) {
+		public static void storeLine(global::hxlr.lines.LineObject _line, object _info) {
 			if (( ((global::hxlr.engine.Cell) ((((global::haxe.ds.StringMap<object>) (global::haxe.ds.StringMap<object>.__hx_cast<object>(((global::haxe.ds.StringMap) (((global::haxe.IMap<string, object>) (global::hxlr.engine.Grid.registry) )) ))) ).@get(global::haxe.lang.Runtime.toString(global::haxe.lang.Runtime.getField(_info, "key", 5343647, true)))).@value) ) == null )) {
 				global::haxe.IMap<string, object> this1 = global::hxlr.engine.Grid.registry;
 				string k = global::haxe.lang.Runtime.toString(global::haxe.lang.Runtime.getField(_info, "key", 5343647, true));
@@ -131,246 +138,39 @@ namespace hxlr.engine {
 		}
 		
 		
-		public virtual void deleteTrack() {
+		public static void deleteTrack() {
 			int _g = 0;
 			global::Array<object> _g1 = global::hxlr.engine.Grid.lines;
 			while (( _g < _g1.length )) {
-				global::hxlr.lines.LineBase line = ((global::hxlr.lines.LineBase) (_g1[_g]) );
+				global::hxlr.lines.LineObject line = ((global::hxlr.lines.LineObject) (_g1[_g]) );
 				 ++ _g;
-				this.unregister(line);
+				global::hxlr.engine.Grid.unregister(line);
 			}
 			
 		}
 		
 		
-		public virtual void unregister(global::hxlr.lines.LineBase _line) {
-			if (( _line == null )) {
-				return;
-			}
-			
-			{
-				int _g = 0;
-				global::Array<string> _g1 = _line.keyList;
-				while (( _g < _g1.length )) {
-					string key = _g1[_g];
-					 ++ _g;
-					((global::hxlr.engine.Cell) ((((global::haxe.ds.StringMap<object>) (global::haxe.ds.StringMap<object>.__hx_cast<object>(((global::haxe.ds.StringMap) (((global::haxe.IMap<string, object>) (global::hxlr.engine.Grid.registry) )) ))) ).@get(key)).@value) ).removeLine(_line);
-				}
-				
-			}
-			
-			 -- this.lineCount;
-			 -- this.subTypeCount[_line.type];
-			global::hxlr.engine.Grid.lines[(_line.id).@value] = null;
-		}
-		
-		
-		public override double __hx_setField_f(string field, int hash, double @value, bool handleProperties) {
+		public static void unregister(global::hxlr.lines.LineObject _line) {
 			unchecked {
-				switch (hash) {
-					case 1517726080:
-					{
-						this.lineIDCount = ((int) (@value) );
-						return @value;
-					}
-					
-					
-					case 291391547:
-					{
-						this.lineCount = ((int) (@value) );
-						return @value;
-					}
-					
-					
-					default:
-					{
-						return base.__hx_setField_f(field, hash, @value, handleProperties);
+				if (( _line == null )) {
+					return;
+				}
+				
+				{
+					int _g = 0;
+					global::Array<string> _g1 = _line.keyList;
+					while (( _g < _g1.length )) {
+						string key = _g1[_g];
+						 ++ _g;
+						((global::hxlr.engine.Cell) ((((global::haxe.ds.StringMap<object>) (global::haxe.ds.StringMap<object>.__hx_cast<object>(((global::haxe.ds.StringMap) (((global::haxe.IMap<string, object>) (global::hxlr.engine.Grid.registry) )) ))) ).@get(key)).@value) ).removeLine(_line);
 					}
 					
 				}
 				
+				 -- global::hxlr.engine.Grid.lineCount;
+				int __temp_expr1 = ((int) (global::haxe.lang.Runtime.toInt(global::hxlr.engine.Grid.subTypeCount[_line.type] = ((object) (( ((int) (global::haxe.lang.Runtime.toInt(global::hxlr.engine.Grid.subTypeCount[_line.type])) ) - 1 )) ))) );
+				global::hxlr.engine.Grid.lines[(_line.id).@value] = null;
 			}
-		}
-		
-		
-		public override object __hx_setField(string field, int hash, object @value, bool handleProperties) {
-			unchecked {
-				switch (hash) {
-					case 1010148885:
-					{
-						this.subTypeCount = ((global::Array<int>) (global::Array<object>.__hx_cast<int>(((global::Array) (@value) ))) );
-						return @value;
-					}
-					
-					
-					case 1517726080:
-					{
-						this.lineIDCount = ((int) (global::haxe.lang.Runtime.toInt(@value)) );
-						return @value;
-					}
-					
-					
-					case 291391547:
-					{
-						this.lineCount = ((int) (global::haxe.lang.Runtime.toInt(@value)) );
-						return @value;
-					}
-					
-					
-					default:
-					{
-						return base.__hx_setField(field, hash, @value, handleProperties);
-					}
-					
-				}
-				
-			}
-		}
-		
-		
-		public override object __hx_getField(string field, int hash, bool throwErrors, bool isCheck, bool handleProperties) {
-			unchecked {
-				switch (hash) {
-					case 1449364924:
-					{
-						return ((global::haxe.lang.Function) (new global::haxe.lang.Closure(this, "unregister", 1449364924)) );
-					}
-					
-					
-					case 638894688:
-					{
-						return ((global::haxe.lang.Function) (new global::haxe.lang.Closure(this, "deleteTrack", 638894688)) );
-					}
-					
-					
-					case 600857717:
-					{
-						return ((global::haxe.lang.Function) (new global::haxe.lang.Closure(this, "storeLine", 600857717)) );
-					}
-					
-					
-					case 66083509:
-					{
-						return ((global::haxe.lang.Function) (new global::haxe.lang.Closure(this, "addLine", 66083509)) );
-					}
-					
-					
-					case 1352640099:
-					{
-						return ((global::haxe.lang.Function) (new global::haxe.lang.Closure(this, "register", 1352640099)) );
-					}
-					
-					
-					case 1010148885:
-					{
-						return this.subTypeCount;
-					}
-					
-					
-					case 1517726080:
-					{
-						return this.lineIDCount;
-					}
-					
-					
-					case 291391547:
-					{
-						return this.lineCount;
-					}
-					
-					
-					default:
-					{
-						return base.__hx_getField(field, hash, throwErrors, isCheck, handleProperties);
-					}
-					
-				}
-				
-			}
-		}
-		
-		
-		public override double __hx_getField_f(string field, int hash, bool throwErrors, bool handleProperties) {
-			unchecked {
-				switch (hash) {
-					case 1517726080:
-					{
-						return ((double) (this.lineIDCount) );
-					}
-					
-					
-					case 291391547:
-					{
-						return ((double) (this.lineCount) );
-					}
-					
-					
-					default:
-					{
-						return base.__hx_getField_f(field, hash, throwErrors, handleProperties);
-					}
-					
-				}
-				
-			}
-		}
-		
-		
-		public override object __hx_invokeField(string field, int hash, object[] dynargs) {
-			unchecked {
-				switch (hash) {
-					case 1449364924:
-					{
-						this.unregister(((global::hxlr.lines.LineBase) (dynargs[0]) ));
-						break;
-					}
-					
-					
-					case 638894688:
-					{
-						this.deleteTrack();
-						break;
-					}
-					
-					
-					case 600857717:
-					{
-						this.storeLine(((global::hxlr.lines.LineBase) (dynargs[0]) ), dynargs[1]);
-						break;
-					}
-					
-					
-					case 66083509:
-					{
-						this.addLine(((global::hxlr.lines.LineBase) (dynargs[0]) ));
-						break;
-					}
-					
-					
-					case 1352640099:
-					{
-						this.register(((global::hxlr.lines.LineBase) (dynargs[0]) ));
-						break;
-					}
-					
-					
-					default:
-					{
-						return base.__hx_invokeField(field, hash, dynargs);
-					}
-					
-				}
-				
-				return null;
-			}
-		}
-		
-		
-		public override void __hx_getFields(global::Array<string> baseArr) {
-			baseArr.push("subTypeCount");
-			baseArr.push("lineIDCount");
-			baseArr.push("lineCount");
-			base.__hx_getFields(baseArr);
 		}
 		
 		

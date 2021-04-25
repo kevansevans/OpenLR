@@ -943,33 +943,31 @@ hxlr_engine_Cell._hx_class = hxlr_engine_Cell
 
 class hxlr_engine_Grid:
     _hx_class_name = "hxlr.engine.Grid"
-    __slots__ = ("lineCount", "lineIDCount", "subTypeCount")
-    _hx_fields = ["lineCount", "lineIDCount", "subTypeCount"]
-    _hx_methods = ["register", "addLine", "storeLine", "deleteTrack", "unregister"]
-    _hx_statics = ["registry", "lines"]
+    __slots__ = ()
+    _hx_statics = ["lineCount", "lineIDCount", "subTypeCount", "registry", "lines", "register", "addLine", "storeLine", "deleteTrack", "unregister"]
 
     def __init__(self):
-        self.subTypeCount = list()
-        self.lineIDCount = 0
-        self.lineCount = 0
         hxlr_engine_Grid.registry = haxe_ds_StringMap()
         hxlr_engine_Grid.lines = list()
+    registry = None
+    lines = None
 
-    def register(self,_line):
-        self.addLine(_line)
+    @staticmethod
+    def register(_line):
+        hxlr_engine_Grid.addLine(_line)
         start = hxlr_engine_Cell.getInfo(_line.start.x,_line.start.y)
         end = hxlr_engine_Cell.getInfo(_line.end.x,_line.end.y)
         right = (end.x if ((_line.dx > 0)) else start.x)
         left = (start.x if ((_line.dx > 0)) else end.x)
         bottom = (end.y if ((_line.dy > 0)) else start.y)
         top = (start.y if ((_line.dy > 0)) else end.y)
-        self.storeLine(_line,start)
+        hxlr_engine_Grid.storeLine(_line,start)
         if (((_line.dx == 0) and ((_line.dy == 0))) or (((left == right) and ((top == bottom))))):
             return
         x = _line.start.x
         y = _line.start.y
-        invDx = (1 / _line.dx)
-        invDy = (1 / _line.dy)
+        invDx = (1 if ((_line.dx == 0)) else (1 / _line.dx))
+        invDy = (1 if ((_line.dy == 0)) else (1 / _line.dy))
         difX = None
         difY = None
         while True:
@@ -998,29 +996,33 @@ class hxlr_engine_Grid:
                     y = (y + difY)
             start = hxlr_engine_Cell.getInfo(x,y)
             if ((((start.x >= left) and ((start.x <= right))) and ((start.y >= top))) and ((start.y <= bottom))):
-                self.storeLine(_line,start)
+                hxlr_engine_Grid.storeLine(_line,start)
                 continue
             return
 
-    def addLine(self,_line):
+    @staticmethod
+    def addLine(_line):
         if (_line.id is None):
-            _line.id = self.lineIDCount
+            _line.id = hxlr_engine_Grid.lineIDCount
         python_internal_ArrayImpl._set(hxlr_engine_Grid.lines, _line.id, _line)
-        _hx_local_0 = self
+        _hx_local_0 = hxlr_engine_Grid
         _hx_local_1 = _hx_local_0.lineCount
         _hx_local_0.lineCount = (_hx_local_1 + 1)
         _hx_local_0.lineCount
-        _hx_local_2 = self
+        _hx_local_2 = hxlr_engine_Grid
         _hx_local_3 = _hx_local_2.lineIDCount
         _hx_local_2.lineIDCount = (_hx_local_3 + 1)
         _hx_local_2.lineIDCount
-        _hx_local_4 = self.subTypeCount
+        if (python_internal_ArrayImpl._get(hxlr_engine_Grid.subTypeCount, _line.type) is None):
+            python_internal_ArrayImpl._set(hxlr_engine_Grid.subTypeCount, _line.type, 0)
+        _hx_local_4 = hxlr_engine_Grid.subTypeCount
         _hx_local_5 = _line.type
         _hx_local_6 = (_hx_local_4[_hx_local_5] if _hx_local_5 >= 0 and _hx_local_5 < len(_hx_local_4) else None)
         python_internal_ArrayImpl._set(_hx_local_4, _hx_local_5, (_hx_local_6 + 1))
         (_hx_local_4[_hx_local_5] if _hx_local_5 >= 0 and _hx_local_5 < len(_hx_local_4) else None)
 
-    def storeLine(self,_line,_info):
+    @staticmethod
+    def storeLine(_line,_info):
         if (hxlr_engine_Grid.registry.h.get(Reflect.field(_info,"key"),None) is None):
             this1 = hxlr_engine_Grid.registry
             k = Reflect.field(_info,"key")
@@ -1031,15 +1033,17 @@ class hxlr_engine_Grid:
         x = Reflect.field(_info,"key")
         _this.append(x)
 
-    def deleteTrack(self):
+    @staticmethod
+    def deleteTrack():
         _g = 0
         _g1 = hxlr_engine_Grid.lines
         while (_g < len(_g1)):
             line = (_g1[_g] if _g >= 0 and _g < len(_g1) else None)
             _g = (_g + 1)
-            self.unregister(line)
+            hxlr_engine_Grid.unregister(line)
 
-    def unregister(self,_line):
+    @staticmethod
+    def unregister(_line):
         if (_line is None):
             return
         _g = 0
@@ -1048,19 +1052,16 @@ class hxlr_engine_Grid:
             key = (_g1[_g] if _g >= 0 and _g < len(_g1) else None)
             _g = (_g + 1)
             hxlr_engine_Grid.registry.h.get(key,None).removeLine(_line)
-        _hx_local_1 = self
+        _hx_local_1 = hxlr_engine_Grid
         _hx_local_2 = _hx_local_1.lineCount
         _hx_local_1.lineCount = (_hx_local_2 - 1)
         _hx_local_1.lineCount
-        _hx_local_3 = self.subTypeCount
+        _hx_local_3 = hxlr_engine_Grid.subTypeCount
         _hx_local_4 = _line.type
         _hx_local_5 = (_hx_local_3[_hx_local_4] if _hx_local_4 >= 0 and _hx_local_4 < len(_hx_local_3) else None)
         python_internal_ArrayImpl._set(_hx_local_3, _hx_local_4, (_hx_local_5 - 1))
         (_hx_local_3[_hx_local_4] if _hx_local_4 >= 0 and _hx_local_4 < len(_hx_local_3) else None)
         python_internal_ArrayImpl._set(hxlr_engine_Grid.lines, _line.id, None)
-    registry = None
-    lines = None
-
 hxlr_engine_Grid._hx_class = hxlr_engine_Grid
 
 
@@ -1172,11 +1173,58 @@ class hxlr_file_AMF0Reader:
 hxlr_file_AMF0Reader._hx_class = hxlr_file_AMF0Reader
 
 
-class hxlr_lines_LineBase:
-    _hx_class_name = "hxlr.lines.LineBase"
-    __slots__ = ("id", "start", "end", "type", "tangible", "keyList", "gfxEnd", "shifted", "dx", "dy", "C", "distance", "invSqrDistance", "invDistance", "nx", "ny", "zone", "limType", "limStart", "limEnd", "limValue", "prevLine", "nextLine")
-    _hx_fields = ["id", "start", "end", "type", "tangible", "keyList", "gfxEnd", "shifted", "dx", "dy", "C", "distance", "invSqrDistance", "invDistance", "nx", "ny", "zone", "limType", "limStart", "limEnd", "limValue", "prevLine", "nextLine"]
-    _hx_methods = ["calculateConstants", "setLim", "collide", "toSaveObject"]
+class hxlr_math_geom_Line:
+    _hx_class_name = "hxlr.math.geom.Line"
+    __slots__ = ("start", "end")
+    _hx_fields = ["start", "end"]
+    _hx_methods = ["intersects", "get_length", "set_length", "get_angle", "set_angle"]
+
+    def __init__(self,_start,_end):
+        self.start = _start
+        self.end = _end
+
+    def intersects(self,_line):
+        return False
+
+    def get_length(self):
+        v = (Math.pow((self.end.x - self.start.x),2) + Math.pow((self.end.y - self.start.y),2))
+        if (v < 0):
+            return Math.NaN
+        else:
+            return python_lib_Math.sqrt(v)
+
+    def set_length(self,value):
+        tmp = self.end
+        tmp1 = tmp.x
+        v = self.get_angle()
+        tmp.x = (tmp1 + ((value * ((Math.NaN if (((v == Math.POSITIVE_INFINITY) or ((v == Math.NEGATIVE_INFINITY)))) else python_lib_Math.cos(v))))))
+        tmp = self.end
+        tmp1 = tmp.y
+        v = self.get_angle()
+        tmp.y = (tmp1 + ((value * ((Math.NaN if (((v == Math.POSITIVE_INFINITY) or ((v == Math.NEGATIVE_INFINITY)))) else python_lib_Math.sin(v))))))
+        return self.get_length()
+
+    def get_angle(self):
+        dx = (self.end.x - self.start.x)
+        dy = (self.end.y - self.start.y)
+        theta = Math.atan((dy / dx))
+        return theta
+
+    def set_angle(self,value):
+        return self.get_angle()
+
+hxlr_math_geom_Line._hx_class = hxlr_math_geom_Line
+
+
+class hxlr_lines_LineObject(hxlr_math_geom_Line):
+    _hx_class_name = "hxlr.lines.LineObject"
+    __slots__ = ("id", "type", "tangible", "keyList", "gfxEnd", "shifted", "dx", "dy", "C", "distance", "invSqrDistance", "invDistance", "nx", "ny", "zone", "limType", "limStart", "limEnd", "limValue", "prevLine", "nextLine")
+    _hx_fields = ["id", "type", "tangible", "keyList", "gfxEnd", "shifted", "dx", "dy", "C", "distance", "invSqrDistance", "invDistance", "nx", "ny", "zone", "limType", "limStart", "limEnd", "limValue", "prevLine", "nextLine"]
+    _hx_methods = ["set_length", "calculateConstants", "setLim", "collide", "toSaveObject"]
+    _hx_statics = []
+    _hx_interfaces = []
+    _hx_super = hxlr_math_geom_Line
+
 
     def __init__(self,_start,_end,_shift,_lim = None):
         if (_lim is None):
@@ -1202,13 +1250,17 @@ class hxlr_lines_LineBase:
         self.limType = 0
         self.zone = 10
         self.tangible = False
-        self.start = _start
-        self.end = _end
+        super().__init__(_start,_end)
         self.gfxEnd = hxlr_math_geom_Point((self.end.x - self.start.x),(self.end.y - self.start.y))
         self.shifted = _shift
         self.keyList = list()
         self.calculateConstants()
         self.setLim(_lim)
+
+    def set_length(self,value):
+        super().set_length(value)
+        self.calculateConstants()
+        return value
 
     def calculateConstants(self):
         self.dx = (self.end.x - self.start.x)
@@ -1264,17 +1316,17 @@ class hxlr_lines_LineBase:
         save2 = _hx_AnonObject({'id': self.id, 'type': self.type, 'x1': self.start.x, 'y1': self.start.y, 'x2': self.end.x, 'y2': self.end.y, 'flipped': self.shifted, 'leftExtended': save, 'rightExtended': save1})
         return save2
 
-hxlr_lines_LineBase._hx_class = hxlr_lines_LineBase
+hxlr_lines_LineObject._hx_class = hxlr_lines_LineObject
 
 
-class hxlr_lines_Accel(hxlr_lines_LineBase):
+class hxlr_lines_Accel(hxlr_lines_LineObject):
     _hx_class_name = "hxlr.lines.Accel"
     __slots__ = ("accConst", "accx", "accy")
     _hx_fields = ["accConst", "accx", "accy"]
     _hx_methods = ["calculateConstants", "collide"]
     _hx_statics = []
     _hx_interfaces = []
-    _hx_super = hxlr_lines_LineBase
+    _hx_super = hxlr_lines_LineObject
 
 
     def __init__(self,_start,_end,_shift):
@@ -1311,14 +1363,14 @@ class hxlr_lines_Accel(hxlr_lines_LineBase):
 hxlr_lines_Accel._hx_class = hxlr_lines_Accel
 
 
-class hxlr_lines_Floor(hxlr_lines_LineBase):
+class hxlr_lines_Floor(hxlr_lines_LineObject):
     _hx_class_name = "hxlr.lines.Floor"
     __slots__ = ()
     _hx_fields = []
     _hx_methods = ["collide"]
     _hx_statics = []
     _hx_interfaces = []
-    _hx_super = hxlr_lines_LineBase
+    _hx_super = hxlr_lines_LineObject
 
 
     def __init__(self,_start,_end,_shift):
@@ -1353,14 +1405,14 @@ class hxlr_lines_Floor(hxlr_lines_LineBase):
 hxlr_lines_Floor._hx_class = hxlr_lines_Floor
 
 
-class hxlr_lines_Scenery(hxlr_lines_LineBase):
+class hxlr_lines_Scenery(hxlr_lines_LineObject):
     _hx_class_name = "hxlr.lines.Scenery"
     __slots__ = ()
     _hx_fields = []
     _hx_methods = []
     _hx_statics = []
     _hx_interfaces = []
-    _hx_super = hxlr_lines_LineBase
+    _hx_super = hxlr_lines_LineObject
 
 
     def __init__(self,_start,_end,_shift):
@@ -1369,14 +1421,14 @@ class hxlr_lines_Scenery(hxlr_lines_LineBase):
 hxlr_lines_Scenery._hx_class = hxlr_lines_Scenery
 
 
-class hxlr_lines_Undefined(hxlr_lines_LineBase):
+class hxlr_lines_Undefined(hxlr_lines_LineObject):
     _hx_class_name = "hxlr.lines.Undefined"
     __slots__ = ()
     _hx_fields = []
     _hx_methods = []
     _hx_statics = []
     _hx_interfaces = []
-    _hx_super = hxlr_lines_LineBase
+    _hx_super = hxlr_lines_LineObject
 
 
     def __init__(self,_start,_end,_shift,_lim = None):
@@ -1384,17 +1436,6 @@ class hxlr_lines_Undefined(hxlr_lines_LineBase):
             _lim = 0
         super().__init__(_start,_end,_shift,_lim)
 hxlr_lines_Undefined._hx_class = hxlr_lines_Undefined
-
-
-class hxlr_math_geom_Line:
-    _hx_class_name = "hxlr.math.geom.Line"
-    __slots__ = ("start",)
-    _hx_fields = ["start"]
-
-    def __init__(self,_start,_end):
-        self.start = None
-
-hxlr_math_geom_Line._hx_class = hxlr_math_geom_Line
 
 
 class hxlr_math_geom_Point:
@@ -2660,6 +2701,9 @@ hxlr_Constants.x_velocity = 0.4
 hxlr_Constants.y_velocity = 0
 hxlr_engine_Cell.size = 14
 hxlr_engine_Cell.cellList = list()
+hxlr_engine_Grid.lineCount = 0
+hxlr_engine_Grid.lineIDCount = 0
+hxlr_engine_Grid.subTypeCount = list()
 python_Boot.keywords = set(["and", "del", "from", "not", "with", "as", "elif", "global", "or", "yield", "assert", "else", "if", "pass", "None", "break", "except", "import", "raise", "True", "class", "exec", "in", "return", "False", "continue", "finally", "is", "try", "def", "for", "lambda", "while"])
 python_Boot.prefixLength = len("_hx_")
 python_Lib.lineEnd = ("\r\n" if ((Sys.systemName() == "Windows")) else "\n")

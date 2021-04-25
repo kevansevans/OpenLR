@@ -4,7 +4,7 @@ package hxlr.lines;
 import haxe.root.*;
 
 @SuppressWarnings(value={"rawtypes", "unchecked"})
-public class Floor extends hxlr.lines.LineBase
+public class Floor extends hxlr.lines.LineObject
 {
 	public Floor(haxe.lang.EmptyObject empty)
 	{
@@ -25,7 +25,7 @@ public class Floor extends hxlr.lines.LineBase
 	protected static void __hx_ctor_hxlr_lines_Floor(hxlr.lines.Floor __hx_this, hxlr.math.geom.Point _start, hxlr.math.geom.Point _end, boolean _shift)
 	{
 		//line 16 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Floor.hx"
-		hxlr.lines.LineBase.__hx_ctor_hxlr_lines_LineBase(__hx_this, _start, _end, _shift, null);
+		hxlr.lines.LineObject.__hx_ctor_hxlr_lines_LineObject(__hx_this, _start, _end, _shift, null);
 		//line 18 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Floor.hx"
 		__hx_this.type = 0;
 		//line 20 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Floor.hx"

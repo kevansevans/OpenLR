@@ -5,6 +5,7 @@ src/haxe/lang/IEquatable.java
 src/hxlr/lines/Scenery.java
 src/haxe/root/Array.java
 src/hxlr/export/JSONFile.java
+src/hxlr/lines/LineObject.java
 src/haxe/io/Encoding.java
 src/hxlr/lines/Accel.java
 src/haxe/Exception.java
@@ -31,7 +32,6 @@ src/hxlr/math/geom/Point.java
 src/hxlr/rider/AirPoint.java
 src/haxe/IMap.java
 src/hxlr/rider/ContactPoint.java
-src/hxlr/lines/LineBase.java
 src/haxe/iterators/ArrayKeyValueIterator.java
 src/haxe/ds/StringMap.java
 src/haxe/ds/_StringMap/StringMapKeyIterator.java

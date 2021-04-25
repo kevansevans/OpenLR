@@ -345,12 +345,12 @@ public class RiderBase extends haxe.lang.HxObject
 									//line 134 "F:\\OpenLR\\library\\src\\hxlr\\rider\\RiderBase.hx"
 									int _g4 = 0;
 									//line 134 "F:\\OpenLR\\library\\src\\hxlr\\rider\\RiderBase.hx"
-									haxe.root.Array<hxlr.lines.LineBase> _g5 = register.collidable;
+									haxe.root.Array<hxlr.lines.LineObject> _g5 = register.collidable;
 									//line 134 "F:\\OpenLR\\library\\src\\hxlr\\rider\\RiderBase.hx"
 									while (( _g4 < _g5.length ))
 									{
 										//line 134 "F:\\OpenLR\\library\\src\\hxlr\\rider\\RiderBase.hx"
-										hxlr.lines.LineBase line = _g5.__get(_g4);
+										hxlr.lines.LineObject line = _g5.__get(_g4);
 										//line 134 "F:\\OpenLR\\library\\src\\hxlr\\rider\\RiderBase.hx"
 										 ++ _g4;
 										//line 136 "F:\\OpenLR\\library\\src\\hxlr\\rider\\RiderBase.hx"

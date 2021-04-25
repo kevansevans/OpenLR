@@ -4,7 +4,7 @@ package hxlr.lines;
 import haxe.root.*;
 
 @SuppressWarnings(value={"rawtypes", "unchecked"})
-public class Accel extends hxlr.lines.LineBase
+public class Accel extends hxlr.lines.LineObject
 {
 	public Accel(haxe.lang.EmptyObject empty)
 	{
@@ -27,7 +27,7 @@ public class Accel extends hxlr.lines.LineBase
 		//line 12 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Accel.hx"
 		__hx_this.accConst = 0.1;
 		//line 18 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Accel.hx"
-		hxlr.lines.LineBase.__hx_ctor_hxlr_lines_LineBase(__hx_this, _start, _end, _shift, null);
+		hxlr.lines.LineObject.__hx_ctor_hxlr_lines_LineObject(__hx_this, _start, _end, _shift, null);
 		//line 17 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Accel.hx"
 		{
 			//line 20 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Accel.hx"

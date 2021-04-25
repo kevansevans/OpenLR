@@ -222,7 +222,7 @@ namespace hxlr.rider {
 											int _g4 = 0;
 											global::Array<object> _g5 = register.collidable;
 											while (( _g4 < _g5.length )) {
-												global::hxlr.lines.LineBase line = ((global::hxlr.lines.LineBase) (_g5[_g4]) );
+												global::hxlr.lines.LineObject line = ((global::hxlr.lines.LineObject) (_g5[_g4]) );
 												 ++ _g4;
 												if (( line == null )) {
 													continue;

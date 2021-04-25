@@ -58,7 +58,7 @@ namespace hxlr.engine {
 		
 		public global::Array<object> intangible;
 		
-		public virtual void addLine(global::hxlr.lines.LineBase _line) {
+		public virtual void addLine(global::hxlr.lines.LineObject _line) {
 			if (this.allLines.contains(_line)) {
 				return;
 			}
@@ -78,7 +78,7 @@ namespace hxlr.engine {
 		}
 		
 		
-		public virtual void removeLine(global::hxlr.lines.LineBase _line) {
+		public virtual void removeLine(global::hxlr.lines.LineObject _line) {
 			if ( ! (this.allLines.contains(_line)) ) {
 				return;
 			}
@@ -236,14 +236,14 @@ namespace hxlr.engine {
 				switch (hash) {
 					case 1154634328:
 					{
-						this.removeLine(((global::hxlr.lines.LineBase) (dynargs[0]) ));
+						this.removeLine(((global::hxlr.lines.LineObject) (dynargs[0]) ));
 						break;
 					}
 					
 					
 					case 66083509:
 					{
-						this.addLine(((global::hxlr.lines.LineBase) (dynargs[0]) ));
+						this.addLine(((global::hxlr.lines.LineObject) (dynargs[0]) ));
 						break;
 					}
 					

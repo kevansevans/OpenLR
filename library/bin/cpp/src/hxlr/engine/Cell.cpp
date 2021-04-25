@@ -11,8 +11,11 @@
 #ifndef INCLUDED_hxlr_engine_Cell
 #include <hxlr/engine/Cell.h>
 #endif
-#ifndef INCLUDED_hxlr_lines_LineBase
-#include <hxlr/lines/LineBase.h>
+#ifndef INCLUDED_hxlr_lines_LineObject
+#include <hxlr/lines/LineObject.h>
+#endif
+#ifndef INCLUDED_hxlr_math_geom_Line
+#include <hxlr/math/geom/Line.h>
 #endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_3bc40500d28ab2bd_44_new,"hxlr.engine.Cell","new",0x4b2b9308,"hxlr.engine.Cell.new","hxlr/engine/Cell.hx",44,0x2377b748)
@@ -47,7 +50,7 @@ bool Cell_obj::_hx_isInstanceOf(int inClassId) {
 	return inClassId==(int)0x00000001 || inClassId==(int)0x6d25935a;
 }
 
-void Cell_obj::addLine( ::hxlr::lines::LineBase _line){
+void Cell_obj::addLine( ::hxlr::lines::LineObject _line){
             	HX_STACKFRAME(&_hx_pos_3bc40500d28ab2bd_52_addLine)
 HXLINE(  54)		if (this->allLines->contains(_line)) {
 HXLINE(  54)			return;
@@ -67,7 +70,7 @@ HXLINE(  64)			::hxlr::engine::Cell_obj::cellList->push(::hx::ObjectPtr<OBJ_>(th
 
 HX_DEFINE_DYNAMIC_FUNC1(Cell_obj,addLine,(void))
 
-void Cell_obj::removeLine( ::hxlr::lines::LineBase _line){
+void Cell_obj::removeLine( ::hxlr::lines::LineObject _line){
             	HX_STACKFRAME(&_hx_pos_3bc40500d28ab2bd_68_removeLine)
 HXLINE(  70)		if (!(this->allLines->contains(_line))) {
 HXLINE(  70)			return;

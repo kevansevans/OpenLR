@@ -4,7 +4,7 @@ package hxlr.lines;
 import haxe.root.*;
 
 @SuppressWarnings(value={"rawtypes", "unchecked"})
-public class Undefined extends hxlr.lines.LineBase
+public class Undefined extends hxlr.lines.LineObject
 {
 	public Undefined(haxe.lang.EmptyObject empty)
 	{
@@ -27,7 +27,7 @@ public class Undefined extends hxlr.lines.LineBase
 		//line 14 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Undefined.hx"
 		java.lang.Object _lim1 = ( (haxe.lang.Runtime.eq(_lim, null)) ? (((java.lang.Object) (0) )) : (_lim) );
 		//line 14 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Undefined.hx"
-		hxlr.lines.LineBase.__hx_ctor_hxlr_lines_LineBase(__hx_this, _start, _end, _shift, _lim1);
+		hxlr.lines.LineObject.__hx_ctor_hxlr_lines_LineObject(__hx_this, _start, _end, _shift, _lim1);
 	}
 	
 	

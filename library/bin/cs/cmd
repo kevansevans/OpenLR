@@ -13,6 +13,7 @@ src\hxlr\lines\Scenery.cs
 src\Array.cs
 src\cs\internal\Function.cs
 src\hxlr\export\JSONFile.cs
+src\hxlr\lines\LineObject.cs
 src\haxe\io\Encoding.cs
 src\hxlr\lines\Accel.cs
 src\haxe\Exception.cs
@@ -31,7 +32,6 @@ src\hxlr\math\geom\Point.cs
 src\hxlr\rider\AirPoint.cs
 src\haxe\Constraints.cs
 src\hxlr\rider\ContactPoint.cs
-src\hxlr\lines\LineBase.cs
 src\haxe\iterators\ArrayKeyValueIterator.cs
 src\haxe\ds\StringMap.cs
 src\hxlr\Constants.cs

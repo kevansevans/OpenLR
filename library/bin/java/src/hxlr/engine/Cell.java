@@ -31,11 +31,11 @@ public class Cell extends haxe.lang.HxObject
 		//line 45 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 		__hx_this.info = _info;
 		//line 47 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-		__hx_this.allLines = new haxe.root.Array<hxlr.lines.LineBase>();
+		__hx_this.allLines = new haxe.root.Array<hxlr.lines.LineObject>();
 		//line 48 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-		__hx_this.collidable = new haxe.root.Array<hxlr.lines.LineBase>();
+		__hx_this.collidable = new haxe.root.Array<hxlr.lines.LineObject>();
 		//line 49 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-		__hx_this.intangible = new haxe.root.Array<hxlr.lines.LineBase>();
+		__hx_this.intangible = new haxe.root.Array<hxlr.lines.LineObject>();
 	}
 	
 	
@@ -70,13 +70,13 @@ public class Cell extends haxe.lang.HxObject
 	
 	public java.lang.Object info;
 	
-	public haxe.root.Array<hxlr.lines.LineBase> allLines;
+	public haxe.root.Array<hxlr.lines.LineObject> allLines;
 	
-	public haxe.root.Array<hxlr.lines.LineBase> collidable;
+	public haxe.root.Array<hxlr.lines.LineObject> collidable;
 	
-	public haxe.root.Array<hxlr.lines.LineBase> intangible;
+	public haxe.root.Array<hxlr.lines.LineObject> intangible;
 	
-	public void addLine(hxlr.lines.LineBase _line)
+	public void addLine(hxlr.lines.LineObject _line)
 	{
 		//line 54 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 		if (this.allLines.contains(_line)) 
@@ -109,7 +109,7 @@ public class Cell extends haxe.lang.HxObject
 	}
 	
 	
-	public void removeLine(hxlr.lines.LineBase _line)
+	public void removeLine(hxlr.lines.LineObject _line)
 	{
 		//line 70 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 		if ( ! (this.allLines.contains(_line)) ) 
@@ -213,7 +213,7 @@ public class Cell extends haxe.lang.HxObject
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							__temp_executeDef1 = false;
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-							this.intangible = ((haxe.root.Array<hxlr.lines.LineBase>) (value) );
+							this.intangible = ((haxe.root.Array<hxlr.lines.LineObject>) (value) );
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							return value;
 						}
@@ -249,7 +249,7 @@ public class Cell extends haxe.lang.HxObject
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							__temp_executeDef1 = false;
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-							this.collidable = ((haxe.root.Array<hxlr.lines.LineBase>) (value) );
+							this.collidable = ((haxe.root.Array<hxlr.lines.LineObject>) (value) );
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							return value;
 						}
@@ -267,7 +267,7 @@ public class Cell extends haxe.lang.HxObject
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							__temp_executeDef1 = false;
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-							this.allLines = ((haxe.root.Array<hxlr.lines.LineBase>) (value) );
+							this.allLines = ((haxe.root.Array<hxlr.lines.LineObject>) (value) );
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							return value;
 						}
@@ -496,7 +496,7 @@ public class Cell extends haxe.lang.HxObject
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							__temp_executeDef1 = false;
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-							this.removeLine(((hxlr.lines.LineBase) (dynargs[0]) ));
+							this.removeLine(((hxlr.lines.LineObject) (dynargs[0]) ));
 						}
 						
 						//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
@@ -512,7 +512,7 @@ public class Cell extends haxe.lang.HxObject
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
 							__temp_executeDef1 = false;
 							//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"
-							this.addLine(((hxlr.lines.LineBase) (dynargs[0]) ));
+							this.addLine(((hxlr.lines.LineObject) (dynargs[0]) ));
 						}
 						
 						//line 20 "F:\\OpenLR\\library\\src\\hxlr\\engine\\Cell.hx"

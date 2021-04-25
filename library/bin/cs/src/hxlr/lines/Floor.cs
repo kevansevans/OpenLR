@@ -2,7 +2,7 @@
 
 #pragma warning disable 109, 114, 219, 429, 168, 162
 namespace hxlr.lines {
-	public class Floor : global::hxlr.lines.LineBase {
+	public class Floor : global::hxlr.lines.LineObject {
 		
 		public Floor(global::haxe.lang.EmptyObject empty) : base(global::haxe.lang.EmptyObject.EMPTY) {
 		}
@@ -14,7 +14,7 @@ namespace hxlr.lines {
 		
 		
 		protected static void __hx_ctor_hxlr_lines_Floor(global::hxlr.lines.Floor __hx_this, global::hxlr.math.geom.Point _start, global::hxlr.math.geom.Point _end, bool _shift) {
-			global::hxlr.lines.LineBase.__hx_ctor_hxlr_lines_LineBase(__hx_this, _start, _end, _shift, default(global::haxe.lang.Null<int>));
+			global::hxlr.lines.LineObject.__hx_ctor_hxlr_lines_LineObject(__hx_this, _start, _end, _shift, default(global::haxe.lang.Null<int>));
 			__hx_this.type = 0;
 			__hx_this.tangible = true;
 		}

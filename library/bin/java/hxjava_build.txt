@@ -137,6 +137,8 @@ M java.lang.Float
 M java.security.Guard
 M java.lang.NoSuchMethodException
 M java.security.PrivilegedExceptionAction
+M hxlr.lines.LineObject
+C hxlr.lines.LineObject
 M java.lang.ThreadGroup
 M java.time.Duration
 M java.time.temporal.ChronoField
@@ -321,8 +323,6 @@ M java.time.DayOfWeek
 M java.lang.reflect.TypeVariable
 M java.util.function.Supplier
 M java.lang.Boolean
-M hxlr.lines.LineBase
-C hxlr.lines.LineBase
 M java.nio.file.CopyOption
 M java.util.Properties
 M java.lang.reflect.Member

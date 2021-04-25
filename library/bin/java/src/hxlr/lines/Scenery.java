@@ -4,7 +4,7 @@ package hxlr.lines;
 import haxe.root.*;
 
 @SuppressWarnings(value={"rawtypes", "unchecked"})
-public class Scenery extends hxlr.lines.LineBase
+public class Scenery extends hxlr.lines.LineObject
 {
 	public Scenery(haxe.lang.EmptyObject empty)
 	{
@@ -25,7 +25,7 @@ public class Scenery extends hxlr.lines.LineBase
 	protected static void __hx_ctor_hxlr_lines_Scenery(hxlr.lines.Scenery __hx_this, hxlr.math.geom.Point _start, hxlr.math.geom.Point _end, boolean _shift)
 	{
 		//line 14 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Scenery.hx"
-		hxlr.lines.LineBase.__hx_ctor_hxlr_lines_LineBase(__hx_this, _start, _end, _shift, null);
+		hxlr.lines.LineObject.__hx_ctor_hxlr_lines_LineObject(__hx_this, _start, _end, _shift, null);
 		//line 16 "F:\\OpenLR\\library\\src\\hxlr\\lines\\Scenery.hx"
 		__hx_this.type = 2;
 	}

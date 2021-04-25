@@ -4,8 +4,11 @@
 #ifndef INCLUDED_hxlr_lines_Accel
 #include <hxlr/lines/Accel.h>
 #endif
-#ifndef INCLUDED_hxlr_lines_LineBase
-#include <hxlr/lines/LineBase.h>
+#ifndef INCLUDED_hxlr_lines_LineObject
+#include <hxlr/lines/LineObject.h>
+#endif
+#ifndef INCLUDED_hxlr_math_geom_Line
+#include <hxlr/math/geom/Line.h>
 #endif
 #ifndef INCLUDED_hxlr_math_geom_Point
 #include <hxlr/math/geom/Point.h>
@@ -40,8 +43,12 @@ Dynamic Accel_obj::__Create(::hx::DynamicArray inArgs)
 }
 
 bool Accel_obj::_hx_isInstanceOf(int inClassId) {
-	if (inClassId<=(int)0x041acbee) {
-		return inClassId==(int)0x00000001 || inClassId==(int)0x041acbee;
+	if (inClassId<=(int)0x2a2a2bae) {
+		if (inClassId<=(int)0x196fd3dc) {
+			return inClassId==(int)0x00000001 || inClassId==(int)0x196fd3dc;
+		} else {
+			return inClassId==(int)0x2a2a2bae;
+		}
 	} else {
 		return inClassId==(int)0x5115c8e3;
 	}

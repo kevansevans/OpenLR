@@ -69,6 +69,8 @@
 	
     <Compile Include="src\hxlr\export\JSONFile.cs"/>
 	
+    <Compile Include="src\hxlr\lines\LineObject.cs"/>
+	
     <Compile Include="src\haxe\io\Encoding.cs"/>
 	
     <Compile Include="src\hxlr\lines\Accel.cs"/>
@@ -104,8 +106,6 @@
     <Compile Include="src\haxe\Constraints.cs"/>
 	
     <Compile Include="src\hxlr\rider\ContactPoint.cs"/>
-	
-    <Compile Include="src\hxlr\lines\LineBase.cs"/>
 	
     <Compile Include="src\haxe\iterators\ArrayKeyValueIterator.cs"/>
 	

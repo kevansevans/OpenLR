@@ -144,6 +144,8 @@ M System.Reflection.Emit.Label
 M cs.system.security.cryptography.x509certificates.X509ContentType
 M cs.system.threading.ContextCallback
 M System.Runtime.InteropServices._SignatureHelper
+M hxlr.lines.LineObject
+C hxlr.lines.LineObject
 M System.Collections.DictionaryEntry
 M System.Security.AccessControl.FileSecurity
 M System.Threading.HostExecutionContext
@@ -395,8 +397,6 @@ M cs.system.globalization.CompareOptions
 M System.Reflection.Emit.GenericTypeParameterBuilder
 M System.Collections.Generic.IEnumerator`1
 M System.Reflection.Emit.EventBuilder
-M hxlr.lines.LineBase
-C hxlr.lines.LineBase
 M cs.types.UInt8
 M cs.system.UriComponents
 M System.Diagnostics.ProcessModuleCollection

@@ -2,18 +2,18 @@
 
 #pragma warning disable 109, 114, 219, 429, 168, 162
 namespace hxlr.lines {
-	public class LineBase : global::haxe.lang.HxObject {
+	public class LineObject : global::hxlr.math.geom.Line {
 		
-		public LineBase(global::haxe.lang.EmptyObject empty) {
+		public LineObject(global::haxe.lang.EmptyObject empty) : base(global::haxe.lang.EmptyObject.EMPTY) {
 		}
 		
 		
-		public LineBase(global::hxlr.math.geom.Point _start, global::hxlr.math.geom.Point _end, bool _shift, global::haxe.lang.Null<int> _lim) {
-			global::hxlr.lines.LineBase.__hx_ctor_hxlr_lines_LineBase(this, _start, _end, _shift, _lim);
+		public LineObject(global::hxlr.math.geom.Point _start, global::hxlr.math.geom.Point _end, bool _shift, global::haxe.lang.Null<int> _lim) : base(global::haxe.lang.EmptyObject.EMPTY) {
+			global::hxlr.lines.LineObject.__hx_ctor_hxlr_lines_LineObject(this, _start, _end, _shift, _lim);
 		}
 		
 		
-		protected static void __hx_ctor_hxlr_lines_LineBase(global::hxlr.lines.LineBase __hx_this, global::hxlr.math.geom.Point _start, global::hxlr.math.geom.Point _end, bool _shift, global::haxe.lang.Null<int> _lim) {
+		protected static void __hx_ctor_hxlr_lines_LineObject(global::hxlr.lines.LineObject __hx_this, global::hxlr.math.geom.Point _start, global::hxlr.math.geom.Point _end, bool _shift, global::haxe.lang.Null<int> _lim) {
 			unchecked {
 				__hx_this.limValue = 0;
 				__hx_this.limEnd = 0;
@@ -23,8 +23,7 @@ namespace hxlr.lines {
 				__hx_this.tangible = false;
 				{
 					global::haxe.lang.Null<int> _lim1 = ( ( ! (_lim.hasValue) ) ? (new global::haxe.lang.Null<int>(0, true)) : (_lim) );
-					__hx_this.start = _start;
-					__hx_this.end = _end;
+					global::hxlr.math.geom.Line.__hx_ctor_hxlr_math_geom_Line(__hx_this, _start, _end);
 					__hx_this.gfxEnd = new global::hxlr.math.geom.Point(new global::haxe.lang.Null<double>(( __hx_this.end.x - __hx_this.start.x ), true), new global::haxe.lang.Null<double>(( __hx_this.end.y - __hx_this.start.y ), true));
 					__hx_this.shifted = _shift;
 					__hx_this.keyList = new global::Array<string>();
@@ -37,10 +36,6 @@ namespace hxlr.lines {
 		
 		
 		public global::haxe.lang.Null<int> id;
-		
-		public global::hxlr.math.geom.Point start;
-		
-		public global::hxlr.math.geom.Point end;
 		
 		public int type;
 		
@@ -78,9 +73,16 @@ namespace hxlr.lines {
 		
 		public double limValue;
 		
-		public global::hxlr.lines.LineBase prevLine;
+		public global::hxlr.lines.LineObject prevLine;
 		
-		public global::hxlr.lines.LineBase nextLine;
+		public global::hxlr.lines.LineObject nextLine;
+		
+		public override double set_length(double @value) {
+			base.set_length(@value);
+			this.calculateConstants();
+			return @value;
+		}
+		
 		
 		public virtual void calculateConstants() {
 			unchecked {
@@ -321,14 +323,14 @@ namespace hxlr.lines {
 				switch (hash) {
 					case 1937751687:
 					{
-						this.nextLine = ((global::hxlr.lines.LineBase) (@value) );
+						this.nextLine = ((global::hxlr.lines.LineObject) (@value) );
 						return @value;
 					}
 					
 					
 					case 276887687:
 					{
-						this.prevLine = ((global::hxlr.lines.LineBase) (@value) );
+						this.prevLine = ((global::hxlr.lines.LineObject) (@value) );
 						return @value;
 					}
 					
@@ -459,20 +461,6 @@ namespace hxlr.lines {
 					}
 					
 					
-					case 5047259:
-					{
-						this.end = ((global::hxlr.math.geom.Point) (@value) );
-						return @value;
-					}
-					
-					
-					case 67859554:
-					{
-						this.start = ((global::hxlr.math.geom.Point) (@value) );
-						return @value;
-					}
-					
-					
 					case 23515:
 					{
 						this.id = global::haxe.lang.Null<object>.ofDynamic<int>(@value);
@@ -515,6 +503,12 @@ namespace hxlr.lines {
 					case 1493492809:
 					{
 						return ((global::haxe.lang.Function) (new global::haxe.lang.Closure(this, "calculateConstants", 1493492809)) );
+					}
+					
+					
+					case 319595299:
+					{
+						return ((global::haxe.lang.Function) (new global::haxe.lang.Closure(this, "set_length", 319595299)) );
 					}
 					
 					
@@ -638,18 +632,6 @@ namespace hxlr.lines {
 					}
 					
 					
-					case 5047259:
-					{
-						return this.end;
-					}
-					
-					
-					case 67859554:
-					{
-						return this.start;
-					}
-					
-					
 					case 23515:
 					{
 						return (this.id).toDynamic();
@@ -768,6 +750,12 @@ namespace hxlr.lines {
 		public override object __hx_invokeField(string field, int hash, object[] dynargs) {
 			unchecked {
 				switch (hash) {
+					case 319595299:
+					{
+						return global::haxe.lang.Runtime.slowCallField(this, field, dynargs);
+					}
+					
+					
 					case 2144877367:
 					{
 						return this.toSaveObject();
@@ -828,8 +816,6 @@ namespace hxlr.lines {
 			baseArr.push("keyList");
 			baseArr.push("tangible");
 			baseArr.push("type");
-			baseArr.push("end");
-			baseArr.push("start");
 			baseArr.push("id");
 			base.__hx_getFields(baseArr);
 		}
