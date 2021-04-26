@@ -46,7 +46,21 @@ class Line
 	
 	public function intersects(_line:Line):Bool
 	{
+		var o1 = orientation(start, end, _line.start);
+		var o2 = orientation(start, end, _line.end);
+		var o3 = orientation(_line.start, _line.end, start);
+		var o4 = orientation(_line.start, _line.end, end);
+		
+		if (o1 != o2 && o3 != o4) return true;
+		
 		return false;
+	}
+	
+	function orientation(_p:Point, _q:Point, _r:Point):Int
+	{
+		var value = (_q.y - _p.y) * (_r.x - _q.x) - (_q.x - _p.x) * (_r.y - _q.y);
+		if (value == 0) return 0;
+		return value > 0 ? 1 : 2;
 	}
 	
 	function get_length():Float 
