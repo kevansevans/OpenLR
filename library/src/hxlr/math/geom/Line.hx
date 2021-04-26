@@ -6,6 +6,20 @@ import hxlr.math.geom.Point;
  * ...
  * @author Kaelan
  */
+
+enum Slope 
+{
+	VALUE(y:Float, x:Float);
+	INFINITE;
+	NONE;
+}
+
+enum Side 
+{
+	LEFT;
+	RIGHT;
+}
+ 
 class Line 
 {
 	public var start:Point;
@@ -13,11 +27,21 @@ class Line
 	
 	public var length(get, set):Float;
 	public var angle(get, set):Float;
+	public var slope(get, null):Slope;
 	
 	public function new(_start:Point, _end:Point) 
 	{
 		start = _start;
 		end = _end;
+	}
+	
+	public function getSide(_point:Point):Side
+	{
+		var dx:Float = _point.x - start.x;
+		var dy:Float = _point.y - start.y;
+		
+		if ((dx * (end.y - start.y)) - (dy * (end.x - start.x)) < 0) return RIGHT;
+		return LEFT;
 	}
 	
 	public function intersects(_line:Line):Bool
@@ -44,6 +68,15 @@ class Line
 		var dy = end.y - start.y;
 		var theta = Math.atan(dy / dx);
 		return theta * (180 / Math.PI);
+	function get_slope():Slope 
+	{
+		if (start.x == end.x) return INFINITE;
+		if (start.y == end.y) return NONE;
+		
+		var yslope = (end.y - start.y) / (end.x - start.x);
+		var xslope = (end.x - start.x) / (end.y - start.y);
+		
+		return VALUE(yslope, xslope);
 	}
 	
 	function set_angle(value:Float):Float 
