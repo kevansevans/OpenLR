@@ -118,7 +118,7 @@ class ToolBehavior
 			
 			case 0:
 				
-				#if !embeded_track
+				#if embeded_track
 				return;
 				#end
 				
@@ -141,7 +141,7 @@ class ToolBehavior
 				}
 			case 1 :
 				
-				#if !embeded_track
+				#if embeded_track
 				return;
 				#end
 				
@@ -190,7 +190,7 @@ class ToolBehavior
 				
 			case PENCIL :
 				
-				#if !embeded_track
+				#if embeded_track
 				return;
 				#end
 				
@@ -210,7 +210,7 @@ class ToolBehavior
 				
 			case LINE :
 				
-				#if !embeded_track
+				#if embeded_track
 				return;
 				#end
 				
@@ -226,7 +226,7 @@ class ToolBehavior
 				
 			case ERASER :
 				
-				#if !embeded_track
+				#if embeded_track
 				return;
 				#end
 				
@@ -303,7 +303,7 @@ class ToolBehavior
 			
 			case 0 | 1:
 				
-				#if !embeded_track
+				#if embeded_track
 				return;
 				#end
 				
@@ -462,7 +462,7 @@ class ToolBehavior
 				switch (event.keyCode) {
 					case Key.QWERTY_BRACKET_RIGHT :
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
@@ -486,7 +486,7 @@ class ToolBehavior
 						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.QWERTY_BRACKET_LEFT :
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
@@ -508,7 +508,7 @@ class ToolBehavior
 						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.Q:
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
@@ -516,7 +516,7 @@ class ToolBehavior
 						Main.toolbar.externalUpdate(Icon.PENCIL);
 					case Key.W:
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
@@ -524,7 +524,7 @@ class ToolBehavior
 						Main.toolbar.externalUpdate(Icon.LINE);
 					case Key.E:
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
@@ -545,36 +545,33 @@ class ToolBehavior
 						
 					case Key.NUMBER_1 :
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
-						color = FLOOR;
-						updateCursor();
+						setColorMode(FLOOR);
 						Main.console.log("Line type set to Normal", 0x0066FF);
 					case Key.NUMBER_2 :
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
-						color = ACCEL;
-						updateCursor();
+						setColorMode(ACCEL);
 						Main.console.log("Line type set to Accel", 0xCC0000);
 					case Key.NUMBER_3 :
 						
-						#if !embeded_track
+						#if embeded_track
 						return;
 						#end
 						
-						color = SCENE;
-						updateCursor();
+						setColorMode(SCENE);
 						Main.console.log("Line type set to Scenery", 0x00CC00);
 						
 					case Key.CTRL :
 						Main.simulation.rewinding = true;
 						#if hl
-						Main.audio.stopMusic();
+						//Main.audio.stopMusic();
 						#end
 						
 					case Key.SPACE :
@@ -611,7 +608,7 @@ class ToolBehavior
 					case Key.CTRL :
 						Main.simulation.rewinding = false;
 						#if hl
-						Main.audio.playMusic(Main.simulation.frames);
+						//Main.audio.playMusic(Main.simulation.frames);
 						#end
 					#if js
 					case 16 :
@@ -648,6 +645,12 @@ class ToolBehavior
 				}
 			default:
 		}
+	}
+	
+	public function setColorMode(_color:LineType) 
+	{
+		color = _color;
+		updateCursor();
 	}
 	
 	public function setToolEraser():Void 

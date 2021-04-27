@@ -32,6 +32,8 @@ class Simulation
 		recordGlobalSimState();
 		
 		restoreState(0);
+		
+		//var x = (dot.x / 0.175) / 100; return new Point(x, 0);
 	}
 	
 	var timeDelta:Float = 0.0;
@@ -109,7 +111,7 @@ class Simulation
 		else restoreState(0);
 		
 		#if hl
-		Main.audio.stopMusic();
+		//Main.audio.stopMusic();
 		#end
 	}
 	public function playSim(_delta:Float) {

@@ -23,13 +23,19 @@ enum Icon {
 	SWATCH_RED;
 	SWATCH_GREEN;
 }
+
 class Toolbar extends Object 
 {
 	var icons:Array<UIButton>;
+	var swatches:Array<UIButton>;
 	
 	public var pencil:UIButton;
 	public var line:UIButton;
 	public var eraser:UIButton;
+	
+	public var blue:UIButton;
+	public var red:UIButton;
+	public var green:UIButton;
 	
 	var activetool:UIButton;
 	
@@ -40,10 +46,15 @@ class Toolbar extends Object
 		super(parent);
 		
 		icons = new Array();
+		swatches = new Array();
 		
-		icons.push(pencil = new UIButton(PENCIL));
-		icons.push(line = new UIButton(LINE));
-		icons.push(eraser = new UIButton(ERASER));
+		icons.push(pencil = new UIButton(Res.icon.pencil.toTile(), 0.1));
+		icons.push(line = new UIButton(Res.icon.line.toTile(), 0.1));
+		icons.push(eraser = new UIButton(Res.icon.eraser.toTile(), 0.1));
+		
+		swatches.push(blue = new UIButton(Tile.fromColor(0x0066FF, 30, 15)));
+		swatches.push(red = new UIButton(Tile.fromColor(0xCC0000, 30, 15)));
+		swatches.push(green = new UIButton(Tile.fromColor(0x00CC00, 30, 15)));
 		
 		pencil.selected = true;
 		activetool = pencil;
@@ -67,6 +78,18 @@ class Toolbar extends Object
 			eraser.selected = true;
 			activetool = eraser;
 			Main.toolControl.setToolEraser();
+		}
+		
+		blue.onClick = function() {
+			Main.toolControl.setColorMode(FLOOR);
+		}
+		
+		red.onClick = function() {
+			Main.toolControl.setColorMode(ACCEL);
+		}
+		
+		green.onClick = function() {
+			Main.toolControl.setColorMode(SCENE);
 		}
 		
 		sort();
@@ -94,6 +117,13 @@ class Toolbar extends Object
 			addChild(icon);
 			icon.x = (30 * ix) + (3 * ix);
 		}
+		
+		for (ix in 0...swatches.length) {
+			var icon = swatches[ix];
+			addChild(icon);
+			icon.y = 35;
+			icon.x = (30 * ix) + (3 * ix);
+		}
 	}
 	
 	function get_width():Float 
@@ -118,38 +148,28 @@ class UIButton extends Object
 	public var enabled:Bool = true;
 	public var selected(default, set):Bool = false;
 	
-	public function new(_icon:Icon) 
+	public function new(_icon:Tile, _scale:Float = 1.0) 
 	{
 		super();
 		
-		btn_up = new Bitmap(Tile.fromColor(0xFFFFFF, 30, 30), this);
-		btn_over = new Bitmap(Tile.fromColor(0xDDDDDD, 30, 30), this);
-		btn_down = new Bitmap(Tile.fromColor(0xBBBBBB, 30, 30), this);
-		btn_selected = new Bitmap(Tile.fromColor(0x00CCFF, 30, 30), this);
+		btn_icon = new Bitmap(_icon);
+		btn_icon.setScale(_scale);
+		
+		var cal_width = Std.int(_icon.width * _scale);
+		var cal_height = Std.int(_icon.height * _scale);
+		
+		btn_up = new Bitmap(Tile.fromColor(0xFFFFFF, cal_width, cal_height), this);
+		btn_over = new Bitmap(Tile.fromColor(0xDDDDDD, cal_width, cal_height), this);
+		btn_down = new Bitmap(Tile.fromColor(0xBBBBBB, cal_width, cal_height), this);
+		btn_selected = new Bitmap(Tile.fromColor(0x00CCFF, cal_width, cal_height), this);
 		btn_selected.visible = false;
 		
-		switch (_icon) {
-			case PENCIL :
-				
-				btn_icon = new Bitmap(Res.icon.pencil.toTile(), this);
-				
-			case LINE :
-				
-				btn_icon = new Bitmap(Res.icon.line.toTile(), this);
-				
-			case ERASER :
-				
-				btn_icon = new Bitmap(Res.icon.eraser.toTile(), this);
-				
-			default :
-				
-		}
+		addChild(btn_icon);
 		
 		btn_over.visible = btn_down.visible = false;
+	
 		
-		if (btn_icon != null) btn_icon.scale(0.1);
-		
-		clicky = new Interactive(30, 30, this);
+		clicky = new Interactive(cal_width, cal_height, this);
 		clicky.onOver = function(e:Event) {
 			btn_up.visible = false;
 			btn_down.visible = false;

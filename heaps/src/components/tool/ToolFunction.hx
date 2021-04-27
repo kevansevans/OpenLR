@@ -83,5 +83,7 @@ class ToolFunction
 				}
 		}
 		
+		Main.canvas.redrawLines(_line.type);
+		
 	}
 }
