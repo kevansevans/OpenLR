@@ -27,7 +27,7 @@ class TextInfo
 	
 	public function update() {
 		
-		info.text = (Main.trackName == null ? 'Untitled' : Main.trackName + "\n");
+		info.text = (Main.trackName == null ? 'Untitled' : Main.trackName) + "\n";
 		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
 		info.text += 'Lines: ${Grid.lineCount}\n';
 		info.text += 'Floor: ${Grid.subTypeCount[LineType.FLOOR] == null ? 0 : Grid.subTypeCount[LineType.FLOOR]}${getLineVisibility(FLOOR)}\n';
