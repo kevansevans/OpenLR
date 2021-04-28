@@ -1,6 +1,5 @@
 package hxlr.rider;
 
-import haxe.PosInfos;
 import hxlr.enums.StickType;
 import hxlr.math.geom.Point;
 import hxlr.rider.AirPoint;
