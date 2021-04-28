@@ -512,24 +512,21 @@ class ToolBehavior
 						return;
 						#end
 						
-						setToolPencil();
-						Main.toolbar.externalUpdate(Icon.PENCIL);
+						Main.toolbar.pencil.onClick();
 					case Key.W:
 						
 						#if embeded_track
 						return;
 						#end
 						
-						setToolLine();
-						Main.toolbar.externalUpdate(Icon.LINE);
+						Main.toolbar.line.onClick();
 					case Key.E:
 						
 						#if embeded_track
 						return;
 						#end
 						
-						setToolEraser();
-						Main.toolbar.externalUpdate(Icon.ERASER);
+						Main.toolbar.eraser.onClick();
 					case Key.A :
 						Main.simulation.backSim();
 					case Key.D :
