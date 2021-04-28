@@ -1,5 +1,7 @@
 package;
 
+import components.stage.TimeLine;
+import h2d.Scene;
 import haxe.Json;
 import hxd.res.Resource;
 import hxlr.Constants;
@@ -64,6 +66,7 @@ class Main extends App
 	var ruler:Graphics;
 	
 	public static var locengine:Engine;
+	public static var rootScene:Scene;
 	public static var tl(get, null):h2d.col.Point;
 	public static var br(get, null):h2d.col.Point;
 	
@@ -78,6 +81,7 @@ class Main extends App
 	
 	public static var toolControl:ToolBehavior;
 	public static var toolbar:Toolbar;
+	public static var timeline:TimeLine;
 	
 	public static var build:String;
 	
@@ -137,6 +141,7 @@ class Main extends App
 		super.init();
 		
 		Main.locengine = engine;
+		Main.rootScene = s2d;
 		
 		Res.initEmbed();
 		
@@ -200,6 +205,7 @@ class Main extends App
 		#else
 		toolbar = new Toolbar(s2d);
 		#end
+		timeline = new TimeLine(s2d);
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 3;
 		
@@ -222,6 +228,8 @@ class Main extends App
 		
 		canvas.drawMode = DrawMode.PLAYBACK;
 		#end
+		
+		onResize();
 	}
 	
 	//EVERYTHING is a console command if and when possible.
@@ -590,6 +598,8 @@ class Main extends App
 		
 		updateGridLines();
 		
+		timeline.update();
+		
 		if (simulation.playing && !simulation.rewinding) {
 			simulation.playSim(dt);
 		} else if (simulation.rewinding) {
@@ -633,6 +643,10 @@ class Main extends App
 		
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 3;
+		
+		timeline.x = 0;
+		timeline.y = s2d.height - 40;
+		timeline.resize();
 		
 	}
 	
