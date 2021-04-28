@@ -5,6 +5,8 @@ import h2d.Interactive;
 import h2d.Object;
 import h2d.Tile;
 import h2d.col.IPolygon.OffsetKind;
+import h2d.col.Point;
+import hxd.Event;
 import hxsl.Shader;
 import hxd.Res;
 
@@ -37,8 +39,15 @@ class TimeLine extends Object
 		clicky.enableRightButton = true;
 		clicky.onPush = function(info:Event) {
 			dragging = true;
-	}
-	
+			mouseStart = new Point(Main.rootScene.mouseX, Main.rootScene.mouseY);
+			
+			if (info.button == 1) righty = true;
+		}
+		clicky.onRelease = clicky.onReleaseOutside = function(info:Event) {
+			dragging = false;
+			righty = false;
+		}
+		
 		camera = new UIButton(Res.icon.camera.toTile(), 0.1);
 		addChild(camera);
 		camera.onClick = function() {
@@ -48,6 +57,7 @@ class TimeLine extends Object
 	
 	public function resize() {
 		scrubber.tile = Tile.fromColor(0xFF00DD, Main.rootScene.width, 40);
+		clicky.width = Main.rootScene.width;
 		update();
 		
 		camera.y = -35;
@@ -55,11 +65,80 @@ class TimeLine extends Object
 	}
 	
 	public function update() {
+		
 		shader.ratio = 8 / Main.rootScene.width;
 		shader.frame = Main.simulation.frames;
 		shader.minLeftValue = Std.int(Main.rootScene.width / 2 / 8);
 		
-		clicky.width = Main.rootScene.width;
+		var moved:Bool = false;
+		
+		if (toAdjust != 0) {
+			updateSim();
+		}
+		
+		if (dragging) {
+			
+			var distance:Float = mouseStart.x - Main.rootScene.mouseX;
+			var forward:Bool = distance > 0;
+			var distAbs:Float = Math.abs(distance);
+			
+			while (distAbs >= 8) {
+				
+				if (forward) {
+					if (!righty) {
+						++toAdjust;
+					} else {
+						toAdjust += 40;
+					}
+					moved = true;
+				} else {
+					
+					if (!righty) {
+						--toAdjust;
+					} else {
+						toAdjust -= 40;
+					}
+					
+					moved = true;
+				}
+				
+				distAbs -= 8;
+				
+			}
+			
+			if (moved) mouseStart = new Point(Main.rootScene.mouseX, Main.rootScene.mouseY);
+			
+		}
+	}
+	
+	function updateSim():Void 
+	{
+		if (toAdjust > 0) {
+			if (toAdjust <= 40) {
+				Main.simulation.stepSim();
+				--toAdjust;
+			} else {
+				for (a in 0...40) {
+					Main.simulation.stepSim();
+					--toAdjust;
+				}
+			}
+		} else {
+			if (Main.simulation.frames > 0) {
+				if (toAdjust >= -40) {
+					Main.simulation.backSim();
+					++toAdjust;
+				} else {
+					for (a in 0...40) {
+						Main.simulation.backSim();
+						++toAdjust;
+					}
+				}
+			} else if (Main.simulation.frames == 0) {
+				toAdjust = 0;
+			}
+			
+		}
 	}
 	
 }
