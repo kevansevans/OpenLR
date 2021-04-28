@@ -13,9 +13,7 @@ class Camera
 	public var enabled:Bool;
 	public var riderFollow(default, set):Null<String>;
 	
-	public var rider:RiderBase;
-	
-	public var running:Bool = false;
+	var rider:RiderBase;
 	
 	public var cameraScale:Float = 6;
 	
@@ -30,7 +28,7 @@ class Camera
 	
 	public function start() {
 		
-		if (!enabled && riderFollow == null) return;
+		if (!enabled || riderFollow == null) return;
 		
 		lastPosition = new Point(Main.canvas.x, Main.canvas.y);
 		lastScale = Main.canvas.scaleX;
@@ -38,8 +36,6 @@ class Camera
 		Main.canvas.setScale(cameraScale);
 		Main.canvas.x = rider.focusPoint.pos.x + (Main.locengine.width / 2);
 		Main.canvas.y = rider.focusPoint.pos.y + (Main.locengine.height / 2);
-		
-		running = true;
 		
 	}
 	
@@ -72,8 +68,6 @@ class Camera
 	}
 	
 	public function stop() {
-		
-		running = false;
 		
 	}
 	

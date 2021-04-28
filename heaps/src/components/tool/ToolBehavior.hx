@@ -625,7 +625,7 @@ class ToolBehavior
 							
 						} else {
 							
-							var position = Main.canvas.localToGlobal(Main.camera.rider.startPos);
+							var position = Main.canvas.localToGlobal(Main.riders.riders[Main.camera.riderFollow].startPos);
 							
 							Main.canvas.x = position.x + (Main.locengine.width / 2);
 							Main.canvas.y = position.y + (Main.locengine.height / 2);

@@ -1,10 +1,12 @@
 package components.stage;
+import components.ui.Toolbar.UIButton;
 import h2d.Bitmap;
 import h2d.Interactive;
 import h2d.Object;
 import h2d.Tile;
 import h2d.col.IPolygon.OffsetKind;
 import hxsl.Shader;
+import hxd.Res;
 
 /**
  * ...
@@ -17,6 +19,13 @@ class TimeLine extends Object
 	public var shader:ScrubberShader;
 	public var clicky:Interactive;
 	
+	public var dragging:Bool = false;
+	public var righty:Bool = false;
+	public var mouseStart:Point;
+	public var toAdjust:Int = 0;
+	
+	public var camera:UIButton;
+	
 	public function new(?_parent:Object) 
 	{
 		super(_parent);
@@ -25,11 +34,24 @@ class TimeLine extends Object
 		scrubber.addShader(shader = new ScrubberShader());
 		
 		clicky = new Interactive(0, 40, scrubber);
+		clicky.enableRightButton = true;
+		clicky.onPush = function(info:Event) {
+			dragging = true;
+	}
+	
+		camera = new UIButton(Res.icon.camera.toTile(), 0.1);
+		addChild(camera);
+		camera.onClick = function() {
+			camera.selected = Main.camera.enabled = !camera.selected;
+		}
 	}
 	
 	public function resize() {
 		scrubber.tile = Tile.fromColor(0xFF00DD, Main.rootScene.width, 40);
 		update();
+		
+		camera.y = -35;
+		camera.x = (Main.rootScene.width / 2) - 15;
 	}
 	
 	public function update() {
