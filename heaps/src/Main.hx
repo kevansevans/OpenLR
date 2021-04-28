@@ -206,6 +206,7 @@ class Main extends App
 		toolbar.y = 3;
 		
 		camera = new Camera();
+		camera.riderFollow = "Bosh";
 		
 		#if !embeded_track
 		
@@ -621,7 +622,7 @@ class Main extends App
 			
 		textinfo.update();
 			
-		if (camera.running && simulation.playing) camera.follow();
+		if (camera.enabled && simulation.playing) camera.follow();
 	}
 	
 	override function onResize():Void 
