@@ -241,9 +241,9 @@ class Canvas extends Scene
 		if (_limMode != -1) line.setLim(_limMode);
 		if (_lineID != -1) line.id = _lineID;
 		
-		drawLineGraphic(line);
-		
 		Grid.register(line);
+		
+		drawLineGraphic(line);
 		
 		#if (js && !embeded_track)
 		
