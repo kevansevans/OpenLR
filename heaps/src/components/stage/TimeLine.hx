@@ -26,7 +26,12 @@ class TimeLine extends Object
 	public var mouseStart:Point;
 	public var toAdjust:Int = 0;
 	
+	public var buttons:Array<UIButton>;
 	public var camera:UIButton;
+	public var pause:UIButton;
+	public var play:UIButton;
+	public var stop:UIButton;
+	public var flag:UIButton;
 	
 	public function new(?_parent:Object) 
 	{
@@ -48,11 +53,50 @@ class TimeLine extends Object
 			righty = false;
 		}
 		
-		camera = new UIButton(Res.icon.camera.toTile(), 0.1);
+		buttons = new Array();
+		
+		buttons.push(camera = new UIButton(Res.icon.camera.toTile(), 0.1));
 		addChild(camera);
 		camera.onClick = function() {
 			camera.selected = Main.camera.enabled = !camera.selected;
 		}
+		
+		buttons.push(pause = new UIButton(Res.icon.pause.toTile(), 0.1));
+		addChild(pause);
+		pause.onClick = function() 
+		{
+			Main.simulation.pauseSim();
+			updatePlaydeck();
+		}
+		
+		buttons.push(play = new UIButton(Res.icon.play.toTile(), 0.1));
+		addChild(play);
+		play.onClick = function() 
+		{
+			Main.simulation.startSim();
+			updatePlaydeck();
+		}
+		
+		buttons.push(stop = new UIButton(Res.icon.stop.toTile(), 0.1));
+		addChild(stop);
+		stop.onClick = function() 
+		{
+			Main.simulation.endSim();
+			updatePlaydeck();
+		}
+		
+		buttons.push(flag = new UIButton(Res.icon.flag.toTile(), 0.1));
+		addChild(flag);
+		flag.onClick = function() {
+			Main.simulation.setFlagState();
+			updatePlaydeck();
+		}
+	}
+	
+	function updatePlaydeck() {
+		pause.selected = Main.simulation.paused;
+		play.selected = Main.simulation.playing;
+		flag.selected = Main.simulation.flagged;
 	}
 	
 	public function resize() {
@@ -60,14 +104,17 @@ class TimeLine extends Object
 		clicky.width = Main.rootScene.width;
 		update();
 		
-		camera.y = -35;
-		camera.x = (Main.rootScene.width / 2) - 15;
+		for (item in buttons) {
+			item.y = -35;
+			item.x = -((buttons.length / 2) * 33) + (buttons.indexOf(item) * 33) + (Main.rootScene.width / 2) + (buttons.length % 2 == 0 ? 3 / 2 : 0);
+		}
 	}
 	
 	public function update() {
 		
 		shader.ratio = 8 / Main.rootScene.width;
 		shader.frame = Main.simulation.frames;
+		shader.flag = Main.simulation.flagframe;
 		shader.minLeftValue = Std.int(Main.rootScene.width / 2 / 8);
 		
 		var moved:Bool = false;
@@ -150,6 +197,7 @@ class ScrubberShader extends Shader
 		@:import h3d.shader.Texture;
 		
 		@param var frame:Int = 0;
+		@param var flag:Int = -1;
 		@param var minLeftValue:Int = 0;
 		@param var ratio:Float = 0.1;
 		
@@ -168,6 +216,8 @@ class ScrubberShader extends Shader
 				pixelColor = vec4(0.65, 0.35, 0.35, 1);
 			} else if (offset == frame) {
 				pixelColor = vec4(0.15, 0.75, 0.15, 1);
+			} else if (offset == flag) {
+				pixelColor = vec4(0.65, 0.65, 0.35, 1);
 			} else if (offset % 14400 == 0) {
 				pixelColor = vec4(0.6, 0.2, 1, 1);
 			} else if (offset % 2400 == 0) {

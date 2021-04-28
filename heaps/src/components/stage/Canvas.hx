@@ -260,6 +260,13 @@ class Canvas extends Scene
 		#end
 	}
 	
+	public function trashTrack() {
+		rideLayer.clear();
+		colorLayer.clear();
+		sceneColorLayer.clear();
+		scenePlaybackLayer.clear();
+	}
+	
 	function get_drawMode():DrawMode 
 	{
 		return drawMode;

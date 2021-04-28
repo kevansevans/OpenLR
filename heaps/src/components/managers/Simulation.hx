@@ -59,15 +59,16 @@ class Simulation
 	}
 	
 	public function pauseSim() {
-		if (!playing && !paused) {
-			startSim();
-			return;
+		if (!playing && !paused) return;
+		else {
+			if (!paused) {
+				playing = false;
+				paused = true;
+			} else {
+				playing = true;
+				paused = false;
+			}
 		}
-		#if hl
-		//Main.audio.stopMusic();
-		#end
-		playing = false;
-		paused = true;
 	}
 	public function resumeSim() {
 		playing = true;
