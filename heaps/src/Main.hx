@@ -162,11 +162,7 @@ class Main extends App
 		
 		toolControl = new ToolBehavior();
 		
-		#if embeded_track
 		console = new LRConsole(DefaultFont.get());
-		#else
-		console = new LRConsole(DefaultFont.get(), s2d);
-		#end
 		setConsoleActions();
 		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
 		console.log("Press / to toggle console...", 0x333333);
