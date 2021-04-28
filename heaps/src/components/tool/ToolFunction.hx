@@ -32,15 +32,13 @@ class ToolFunction
 				
 				if (line == null) continue;
 				
-				var _loc9 = invScale;
-				var _loc1 = line;
-                var _loc3 = _x - _loc1.start.x;
-                var _loc2 = _y - _loc1.start.y;
+                var _loc3 = _x - line.start.x;
+                var _loc2 = _y - line.start.y;
                 var _loc12 = Math.sqrt(Math.pow(_loc3, 2) + Math.pow(_loc2, 2));
-                var _loc13 = Math.sqrt(Math.pow(_x - _loc1.end.x, 2) + Math.pow(_y - _loc1.end.y, 2));
-                var _loc11 = Math.abs(_loc1.nx * _loc3 + _loc1.ny * _loc2);
-                var _loc4 = (_loc3 * _loc1.dx + _loc2 * _loc1.dy) * _loc1.invSqrDistance;
-                if (_loc12 < eraserSize * _loc9 || _loc13 < eraserSize * _loc9 || _loc11 < eraserSize * _loc9 && _loc4 >= 0 && _loc4 <= 1)
+                var _loc13 = Math.sqrt(Math.pow(_x - line.end.x, 2) + Math.pow(_y - line.end.y, 2));
+                var _loc11 = Math.abs(line.nx * _loc3 + line.ny * _loc2);
+                var _loc4 = (_loc3 * line.dx + _loc2 * line.dy) * line.invSqrDistance;
+                if (_loc12 < eraserSize * invScale || _loc13 < eraserSize * invScale || _loc11 < eraserSize * invScale && _loc4 >= 0 && _loc4 <= 1)
                 {
 					if (Main.toolControl.colorEraser) {
 						
