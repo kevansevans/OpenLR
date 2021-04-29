@@ -1,5 +1,6 @@
 package;
 
+import components.stage.Ruler;
 import components.stage.TimeLine;
 import h2d.Scene;
 import haxe.Json;
@@ -63,8 +64,6 @@ import hl.UI;
  */
 class Main extends App
 {
-	var ruler:Graphics;
-	
 	public static var locengine:Engine;
 	public static var rootScene:Scene;
 	public static var tl(get, null):h2d.col.Point;
@@ -104,6 +103,8 @@ class Main extends App
 	public static var rng:TableRNG;
 	
 	public static var camera:Camera;
+	
+	public var ruler:Ruler;
 	
 	#if (js && !embeded_track)
 	public static var p2p:WebRTC;
@@ -149,8 +150,7 @@ class Main extends App
 		
 		s2d.defaultSmooth = true;
 		
-		ruler = new Graphics();
-		s2d.addChild(ruler);
+		ruler = new Ruler(s2d);
 		
 		mask = new h2d.Mask(engine.width, engine.height, s2d);
 		canvas = new Canvas(mask);
@@ -593,9 +593,9 @@ class Main extends App
 		
 		textinfo.framerate = dt;
 		
-		updateGridLines();
-		
 		timeline.update();
+		
+		ruler.update();
 		
 		if (simulation.playing && !simulation.rewinding) {
 			simulation.playSim(dt);
@@ -629,6 +629,9 @@ class Main extends App
 	{
 		super.onResize();
 		
+		ruler.x = ruler.y = 0;
+		ruler.resize();
+		
 		canvas_interaction.width = engine.width;
 		canvas_interaction.height = engine.height;
 		
@@ -658,56 +661,5 @@ class Main extends App
 	{
 		var point = canvas.globalToLocal(new h2d.col.Point(Main.locengine.width, Main.locengine.height));
 		return point;
-	}
-	
-	function updateGridLines() {
-		
-		var ratio = Math.round(viewGridSize * canvas.scaleX);
-		
-		var x_offset = canvas.x % ratio;
-		var y_offset = canvas.y % ratio;
-		
-		var x_originValue:Null<Float> = null;
-		var y_originValue:Null<Float> = null;
-		
-		ruler.clear();
-		
-		#if embeded_track
-		return;
-		#end
-		
-		for (x in 0...(engine.width * 10)) {
-			ruler.lineStyle(2, 0xBBBBBB);
-			if (x % ratio == 0) {
-				if (x + x_offset - canvas.x == 0) {
-					x_originValue = x;
-					continue;
-				}
-				if (ratio <= 3) continue;
-				ruler.moveTo(x + x_offset, 0);
-				ruler.lineTo(x + x_offset, engine.height);
-			}
-		}
-		for (y in 0...(engine.height * 10)) {
-			ruler.lineStyle(2, 0xBBBBBB);
-			if (y % ratio == 0) {
-				if (y + y_offset - canvas.y == 0) {
-					y_originValue = y; 
-					continue;
-				}
-				if (ratio <= 3) continue;
-				ruler.moveTo(0, y + y_offset);
-				ruler.lineTo(engine.width, y + y_offset);
-			}
-		}
-		ruler.lineStyle(2, 0xFF, 0.25);
-		if (x_originValue != null) {
-			ruler.moveTo(x_originValue + x_offset, 0);
-			ruler.lineTo(x_originValue + x_offset, engine.height);
-		}
-		if (y_originValue != null) {
-			ruler.moveTo(0, y_originValue + y_offset);
-			ruler.lineTo(engine.width, y_originValue + y_offset);
-		}
 	}
 }
