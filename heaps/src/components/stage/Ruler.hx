@@ -97,7 +97,7 @@ class RulerShader extends Shader
 			var copy:Vec4 = pixelColor;
 			
 			var alph:Float = min((size * (1 / scale)) / 3, 0.5);
-				
+			
 			if (((uvOffset.x - 0.5) / ratioX) % (size * (1 / scale)) <= 1) {
 				pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph);
 			}
@@ -106,10 +106,10 @@ class RulerShader extends Shader
 				pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph);
 			}
 			
-			if (floor(uvOffset.x * tol) / tol == 0.5 || ceil(uvOffset.x * tol) / tol == 0.5) {
+			if ((uvOffset.x - 0.5) / ratioX <= 1 && (uvOffset.x - 0.5) / ratioX >= -1) {
 				pixelColor = vec4(0, 0, 0.75, 1);
 			}
-			if (floor(uvOffset.y * tol) / tol == 0.5 || ceil(uvOffset.y * tol) / tol == 0.5) {
+			if ((uvOffset.y - 0.5) / ratioY <= 1 && (uvOffset.y - 0.5) / ratioY >= -1) {
 				pixelColor = vec4(0, 0, 0.75, 1);
 			}
 			

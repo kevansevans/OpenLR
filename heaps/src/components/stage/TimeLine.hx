@@ -217,7 +217,7 @@ class ScrubberShader extends Shader
 			} else if (offset == frame) {
 				pixelColor = vec4(0.15, 0.75, 0.15, 1);
 			} else if (offset == flag) {
-				pixelColor = vec4(0.65, 0.65, 0.35, 1);
+				pixelColor = vec4(0.95, 0.95, 0.35, 1);
 			} else if (offset % 14400 == 0) {
 				pixelColor = vec4(0.6, 0.2, 1, 1);
 			} else if (offset % 2400 == 0) {
