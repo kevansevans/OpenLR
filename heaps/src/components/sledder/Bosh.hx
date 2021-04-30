@@ -75,8 +75,8 @@ class Bosh extends RiderBase
 		Main.canvas.sledderLayer.addChild(body);
 		body.addChild(eye);
 		body.addChild(neckscarf);
-		neckscarf.x = 105;
-		neckscarf.y = -59;
+		neckscarf.x = 101;
+		neckscarf.y = -53;
 		Main.canvas.sledderLayer.addChild(rightArm);
 		Main.canvas.sledderLayer.addChild(rightLeg);
 	}
