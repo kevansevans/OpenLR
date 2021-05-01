@@ -23,6 +23,7 @@ class TimeLine extends Object
 	
 	public var dragging:Bool = false;
 	public var righty:Bool = false;
+	public var speedscrub:Bool = false;
 	public var mouseStart:Point;
 	public var toAdjust:Int = 0;
 	
@@ -93,7 +94,7 @@ class TimeLine extends Object
 		}
 	}
 	
-	function updatePlaydeck() {
+	public function updatePlaydeck() {
 		pause.selected = Main.simulation.paused;
 		play.selected = Main.simulation.playing;
 		flag.selected = Main.simulation.flagged;
@@ -136,6 +137,7 @@ class TimeLine extends Object
 						++toAdjust;
 					} else {
 						toAdjust += 40;
+						speedscrub = true;
 					}
 					moved = true;
 				} else {
@@ -144,6 +146,7 @@ class TimeLine extends Object
 						--toAdjust;
 					} else {
 						toAdjust -= 40;
+						speedscrub = true;
 					}
 					
 					moved = true;
@@ -158,33 +161,39 @@ class TimeLine extends Object
 		}
 	}
 	
-	function updateSim():Void 
+	public function updateSim():Void 
 	{
 		if (toAdjust > 0) {
-			if (toAdjust <= 40) {
+			if (!speedscrub) {
 				Main.simulation.stepSim();
 				--toAdjust;
 			} else {
-				for (a in 0...40) {
+				for (a in 0...41) {
 					Main.simulation.stepSim();
 					--toAdjust;
+					if (toAdjust == 0) break;
 				}
 			}
 		} else {
 			if (Main.simulation.frames > 0) {
-				if (toAdjust >= -40) {
+				if (!speedscrub) {
 					Main.simulation.backSim();
 					++toAdjust;
 				} else {
-					for (a in 0...40) {
+					for (a in 0...41) {
 						Main.simulation.backSim();
 						++toAdjust;
+						if (Main.simulation.frames == 0 || toAdjust == 0) break;
 					}
 				}
 			} else if (Main.simulation.frames == 0) {
 				toAdjust = 0;
 			}
 			
+		}
+		
+		if (toAdjust == 0) {
+			speedscrub = false;
 		}
 	}
 	
