@@ -130,7 +130,7 @@ class Toolbar extends Object
 			var icon = swatches[ix];
 			addChild(icon);
 			icon.y = 35;
-			icon.x = (30 * ix) + (3 * ix);
+			icon.x = pencil.x + (30 * ix) + (3 * ix);
 		}
 	}
 	
