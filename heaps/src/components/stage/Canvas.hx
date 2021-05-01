@@ -12,7 +12,6 @@ import h2d.Object;
 import h2d.Scene;
 import h2d.col.Point;
 import h2d.Bitmap;
-import network.NetAction;
 
 /**
  * ...
@@ -244,20 +243,6 @@ class Canvas extends Scene
 		Grid.register(line);
 		
 		drawLineGraphic(line);
-		
-		#if (js && !embeded_track)
-		
-		if (Main.p2p.connected) Main.p2p.updateLineInfo(NetAction.lineDownload, [
-			line.type,
-			line.start.x,
-			line.start.y,
-			line.end.x,
-			line.end.y,
-			line.shifted,
-			line.limType
-		]);
-		
-		#end
 	}
 	
 	public function trashTrack() {
