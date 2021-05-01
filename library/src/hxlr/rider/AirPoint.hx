@@ -19,10 +19,10 @@ class AirPoint extends ContactPoint
 		
 	}
 	
-	override public function iterate(?_gravity:Point) 
+	override public function iterate(_gravity:Point) 
 	{
 		
-		var g = _gravity == null ? gravity : _gravity;
+		var g = _gravity;
 		
 		dir.x = (pos.x - vel.x) * friction + g.x;
 		dir.y = (pos.y - vel.y) * friction + g.y;

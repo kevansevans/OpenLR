@@ -19,7 +19,7 @@ class RiderBase
 	
 	public var startPos:Point;
 	public var startVel:Point;
-	public var gravity:Point;
+	public var gravity:Void -> Point;
 	
 	public var contactPoints:Array<ContactPoint>;
 	public var airPoints:Array<AirPoint>;
@@ -45,7 +45,9 @@ class RiderBase
 		struct = _struct;
 		startPos = _start;
 		startVel = new Point(struct.x_vel, struct.y_vel);
-		gravity = new Point(struct.x_grav, struct.y_grav);
+		gravity = function():Point {
+			return new Point(struct.x_grav, struct.y_grav);
+		}
 		name = _name;
 		
 		init();

@@ -13,8 +13,6 @@ class ContactPoint
 	public var vel:Point;
 	public var dir:Point;
 	
-	public var gravity:Point;
-	
 	public var friction:Float;
 	
 	public function new(_x:Float = 0.0, _y:Float = 0.0, _friction:Float = 0.0)
@@ -26,9 +24,9 @@ class ContactPoint
 		friction = _friction;
 	}
 	
-	public function iterate(?_gravity:Point) {
+	public function iterate(_gravity:Point) {
 		
-		var g = _gravity == null ? gravity : _gravity;
+		var g = _gravity;
 		
 		dir.x = pos.x - vel.x + g.x;
 		dir.y = pos.y - vel.y + g.y;
