@@ -17,6 +17,7 @@ import components.managers.Simulation;
 import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import components.ui.Toolbar;
+import components.ui.menu.MenuBase;
 import enums.Commands;
 import file.SaveLoad;
 import h2d.Mask;
@@ -36,10 +37,6 @@ import utils.TableRNG;
 import hxd.System;
 
 import haxe.Json;
-
-#if (js && !embeded_track)
-import network.WebRTC;
-#end
 
 #if hl
 import hl.UI;
@@ -104,11 +101,9 @@ class Main extends App
 	
 	public static var camera:Camera;
 	
-	public var ruler:Ruler;
+	public static var menu:MenuBase;
 	
-	#if (js && !embeded_track)
-	public static var p2p:WebRTC;
-	#end
+	public var ruler:Ruler;
 	
 	var mask:Mask;
 	
@@ -160,16 +155,9 @@ class Main extends App
 		
 		canvas_interaction = new Interactive(engine.width, engine.height, s2d);
 		
-		toolControl = new ToolBehavior();
+		menu = new MenuBase(s2d);
 		
-		console = new LRConsole(DefaultFont.get());
-		setConsoleActions();
-		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
-		console.log("Press / to toggle console...", 0x333333);
-		console.log("https://github.com/kevansevans/OpenLR", 0x333333);
-		console.log("Press S to play, Space to toggle pause.", 0x333333);
-		console.log("Press X to stop.", 0x333333);
-		console.log("Press 123 and QWE to cycle tools.", 0x333333);
+		toolControl = new ToolBehavior();
 		
 		grid = new Grid();
 		
@@ -180,10 +168,6 @@ class Main extends App
 		saveload = new SaveLoad();
 		saveload.loadUserInfo();
 		
-		#if hl
-		//audio = new Musicplayer();
-		#end
-		
 		//must load these last!
 		
 		textinfo = new TextInfo();
@@ -191,10 +175,6 @@ class Main extends App
 		textinfo.update();
 		textinfo.info.x = engine.width - textinfo.info.textWidth - 5;
 		textinfo.info.y = 5;
-		
-		#if (js && !embeded_track)
-		p2p = new WebRTC();
-		#end
 		
 		#if embeded_track
 		toolbar = new Toolbar();
@@ -225,6 +205,15 @@ class Main extends App
 		
 		canvas.drawMode = DrawMode.PLAYBACK;
 		#end
+		
+		console = new LRConsole(DefaultFont.get(), s2d);
+		setConsoleActions();
+		console.log("Welcome to OpenLR: " + Main.build, 0x333333);
+		console.log("Press / to toggle console...", 0x333333);
+		console.log("https://github.com/kevansevans/OpenLR", 0x333333);
+		console.log("Press S to play, Space to toggle pause.", 0x333333);
+		console.log("Press X to stop.", 0x333333);
+		console.log("Press 123 and QWE to cycle tools.", 0x333333);
 		
 		onResize();
 	}
@@ -414,16 +403,6 @@ class Main extends App
 			
 		});
 		console.addCommand(Commands.loadTrack, "Load track with specified name", [arg18, arg19], function(_name:String, ?_offset:Int = 0) {
-			
-			#if (js && !embeded_track)
-			if (p2p.connected) {
-				if (!p2p.isHost) {
-					console.log("Only the host is allowed to use this command.", 0xFF0000);
-					return;
-				}
-			}
-			#end
-			
 			if (trackName != null) console.runCommand("saveTrack");
 			Grid.deleteTrack();
 			riders.deleteAllRiders();
@@ -440,16 +419,6 @@ class Main extends App
 			console.log(_toggle == true ? 'Line snapping on!' : 'Line snapping off!');
 		});
 		console.addCommand(Commands.newTrack, "New track. Will save if track name has been set", [], function() {
-			
-			#if (js && !embeded_track)
-			if (p2p.connected) {
-				if (!p2p.isHost) {
-					console.log("Only the host is allowed to use this command.", 0xFF0000);
-					return;
-				}
-			}
-			#end
-			
 			if (trackName != null) console.runCommand("saveTrack");
 			Grid.deleteTrack();
 			riders.deleteAllRiders();
@@ -462,15 +431,6 @@ class Main extends App
 			riders.renameRider(_old, _new);
 		});
 		console.addCommand(Commands.importJSONSave, "Load valid JSON tracks", [arg20], function(_name:String) {
-			
-			#if (js && !embeded_track)
-			if (p2p.connected) {
-				if (!p2p.isHost) {
-					console.log("Only the host is allowed to use this command.", 0xFF0000);
-					return;
-				}
-			}
-			#end
 			
 			if (trackName != null) console.runCommand("saveTrack");
 			
@@ -531,39 +491,6 @@ class Main extends App
 			}
 			audio.offset = _offset;
 		});
-		#if (js && !embeded_track)
-		var argServerName:ConsoleArgDesc = {t: AString, opt: true, name : "ID Name"};
-		console.addCommand('createServer', "Creates P2P server through WebRTC", [argServerName], function(?_name:String) {
-			if (authorName == null) {
-				console.log('Please set author name with /name before creating server', 0xFF0000);
-				return;
-			}
-			p2p.create(_name);
-		});
-		console.addCommand('joinServer', "Joins P2P server through WebRTC", [argServerName], function(_name:String) {
-			if (authorName == null) {
-				console.log('Please set author name with /name before joining server', 0xFF0000);
-				return;
-			}
-			if (Grid.lineCount > 0) {
-				console.runCommand(Commands.saveTrack + ' ${Date.now().getTime()}');
-				console.runCommand(Commands.newTrack);
-			}
-			riders.deleteAllRiders();
-			p2p.join(_name);
-		});
-		console.addCommand(Commands.disconnect, "Disconnects from online session", [], function() {
-			p2p.disconnect();
-		});
-		var argSpectate:ConsoleArgDesc = {t: AString, opt: true, name : "Player to spectate"};
-		console.addCommand(Commands.spectate, "Allows user to watch other player as they see the canvas", [argSpectate], function(_name:Null<String>) {
-			
-			if (_name == null) {
-				//p2p.s
-			}
-			
-		});
-		#end
 		var argCamToggle:ConsoleArgDesc = {t: ABool, opt: false, name : "True/False"};
 		var argCamFollow:ConsoleArgDesc = {t: AString, opt: true, name : "Rider name"};
 		console.addCommand(Commands.enableCamera, "Toggle camera on or off, and set rider to follow", [argCamToggle, argCamFollow], function(_enabled:Bool, ?_name:String ) {
@@ -606,12 +533,6 @@ class Main extends App
 		if (simulation.updating) {
 			simulation.liveUpdateTick();
 		}
-		
-		#if (js && !embeded_track)
-		if (p2p.connected) p2p.updateCursor();
-		#end
-		
-		//polyCanvas.update(dt);
 	}
 	
 	override public function render(e:h3d.Engine):Void 
