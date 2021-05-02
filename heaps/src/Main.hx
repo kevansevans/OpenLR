@@ -141,6 +141,8 @@ class Main extends App
 		
 		Res.initEmbed();
 		
+		new Assets();
+		
 		engine.backgroundColor = 0xFFCCCCCC;
 		
 		s2d.defaultSmooth = true;

@@ -1,5 +1,6 @@
 package components.sledder;
 
+import components.Assets;
 import hxlr.Constants;
 import hxlr.math.geom.Point;
 import hxlr.rider.RiderBase;
@@ -52,10 +53,8 @@ class Bosh extends RiderBase
 		enabledFrame = _enable;
 		disableFrame = _disable;
 		
-		gfx = new Graphics();
-		Main.canvas.sledderLayer.addChild(gfx);
-		nameField = new HtmlText(DefaultFont.get());
-		Main.canvas.sledderLayer.addChild(nameField);
+		nameField = new HtmlText(Assets.f_verdana_16, Main.canvas.sledderLayer);
+		nameField.text = _name;
 		
 		Main.rng.setKeyOffset(_name, Main.rng.getRandom());
 		

@@ -1,4 +1,5 @@
 package components.stage;
+import components.Assets;
 import components.stage.Canvas;
 import hxlr.enums.LineType;
 import h2d.Text;
@@ -20,7 +21,7 @@ class TextInfo
 	
 	public function new() 
 	{
-		info = new Text(DefaultFont.get());
+		info = new Text(Assets.f_verdana_20);
 		info.color = new Vector(0.2, 0.2, 0.2);
 		info.textAlign = Align.MultilineRight;
 	}
@@ -30,47 +31,35 @@ class TextInfo
 		info.text = (Main.trackName == null ? 'Untitled' : Main.trackName) + "\n";
 		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
 		info.text += 'Lines: ${Grid.lineCount}\n';
-		info.text += 'Floor: ${Grid.subTypeCount[LineType.FLOOR] == null ? 0 : Grid.subTypeCount[LineType.FLOOR]}${getLineVisibility(FLOOR)}\n';
-		info.text += 'Accel: ${Grid.subTypeCount[LineType.ACCEL] == null ? 0 : Grid.subTypeCount[LineType.ACCEL]}${getLineVisibility(ACCEL)}\n';
-		info.text += 'Scene: ${Grid.subTypeCount[LineType.SCENE] == null ? 0 : Grid.subTypeCount[LineType.SCENE]}${getLineVisibility(SCENE)}\n';
+		
+		if (getMode(FLOOR)) info.text += 'Floor: ${Grid.subTypeCount[LineType.FLOOR] == null ? 0 : Grid.subTypeCount[LineType.FLOOR]}\n';
+		if (getMode(ACCEL)) info.text += 'Accel: ${Grid.subTypeCount[LineType.ACCEL] == null ? 0 : Grid.subTypeCount[LineType.ACCEL]}\n';
+		if (getMode(SCENE)) info.text += 'Scene: ${Grid.subTypeCount[LineType.SCENE] == null ? 0 : Grid.subTypeCount[LineType.SCENE]}\n';
 		
 	}
 	
-	public function getLineVisibility(_line:LineType):String 
+	public function getMode(_lineType:LineType):Bool
 	{
-		switch (_line) 
-		{
-			case FLOOR :
-				
-				switch (Main.canvas.drawMode) {
-					case FULL_EDIT | PLAYBACK | NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
-						return "";
-					default :
-						return  "(Not visible)";
-				}
-				
-			case ACCEL :
-				
-				switch (Main.canvas.drawMode) {
-					case FULL_EDIT | PLAYBACK | NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
-						return "";
-					default :
-						return  "(Not visible)";
-				}
-				
-			case SCENE :
-				
-				switch (Main.canvas.drawMode) {
-					case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
-						return "(Not visible)";
-					default :
-						return  "";
-				}
-				
-			default :
-		}
+		var mode = Main.canvas.drawMode;
 		
-		return  "";
+		switch (mode) {
+			case FULL_EDIT | PLAYBACK :
+				return true;
+			case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+				if (_lineType == SCENE) {
+					return false;
+				}
+				return  true;
+			case SCENERY_EDIT | SCENERY_PLAYBACK :
+				if (_lineType != SCENE) {
+					return false;
+				}
+				return  true;
+			default :
+				trace("hwat?");
+				return true;
+		}
+		return true;
 	}
 	
 	public function timeStamp(_frames:Int):String
@@ -125,6 +114,14 @@ class TextInfo
 		}
 		
 		return "lousy smarch weather";
+	}
+	
+	public function align() 
+	{
+		update();
+		
+		info.x = Main.locengine.width - info.textWidth - 5;
+		info.y = 5;
 	}
 	
 }
