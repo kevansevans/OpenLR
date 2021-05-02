@@ -1,5 +1,6 @@
 package components.sledder;
 
+import components.Assets;
 import h2d.Object;
 import hxd.Res;
 import h2d.Bitmap;
@@ -20,26 +21,26 @@ class RiderPart extends Object {
 		
 		switch (_part) {
 			case BODY :
-				bitmap = new Bitmap(Res.rider.body.toTile(), this);
+				bitmap = new Bitmap(Assets.b_body, this);
 				bitmap.x = -2;
 				bitmap.y = -62;
 			case ARM :
-				bitmap = new Bitmap(Res.rider.arm.toTile(), this);
+				bitmap = new Bitmap(Assets.b_arm, this);
 				bitmap.x = -15;
 				bitmap.y = -25;
 			case LEG :
-				bitmap = new Bitmap(Res.rider.leg.toTile(), this);
+				bitmap = new Bitmap(Assets.b_leg, this);
 				bitmap.x = -15;
 				bitmap.y = -38;
 			case SLED :
-				bitmap = new Bitmap(Res.rider.sled.toTile(), this);
+				bitmap = new Bitmap(Assets.b_sled, this);
 				bitmap.x = -16;
 				bitmap.y = -45.5;
 			case EYE :
 				anim = new Anim([
-					Res.rider.eye0001.toTile(), //Open
-					Res.rider.eye0002.toTile(), //Blink
-					Res.rider.eye0003.toTile(), //Dead
+					Assets.b_eyeOpen,
+					Assets.b_eyeClosed,
+					Assets.b_eyeDead,
 				], 0, this);
 				anim.loop = false;
 				anim.x = 165;
