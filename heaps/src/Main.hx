@@ -1,5 +1,6 @@
 package;
 
+import components.Assets;
 import components.stage.Ruler;
 import components.stage.TimeLine;
 import h2d.Scene;
@@ -561,8 +562,7 @@ class Main extends App
 		mask.width = engine.width;
 		mask.height = engine.height;
 		
-		textinfo.info.x = engine.width - textinfo.info.textWidth - 5;
-		textinfo.info.y = 5;
+		textinfo.align();
 		
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 3;
@@ -570,6 +570,9 @@ class Main extends App
 		timeline.x = 0;
 		timeline.y = s2d.height - 40;
 		timeline.resize();
+		
+		menu.x = menu.y = 5;
+		menu.resize();
 		
 	}
 	

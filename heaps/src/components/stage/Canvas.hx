@@ -305,6 +305,8 @@ class Canvas extends Scene
 				Main.console.log("Draw mode set to Scenery Playback Only");
 		}
 		
+		Main.textinfo.align();
+		
 		return drawMode = _mode;
 	}
 	
