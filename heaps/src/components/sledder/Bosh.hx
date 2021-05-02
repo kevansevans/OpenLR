@@ -120,10 +120,10 @@ class Bosh extends RiderBase
 	override public function iterate() 
 	{
 		for (point in contactPoints) {
-			point.iterate(gravity);
+			point.iterate(gravity());
 		}
 		for (point in airPoints) {
-			point.iterate(gravity);
+			point.iterate(gravity());
 		}
 	}
 	
