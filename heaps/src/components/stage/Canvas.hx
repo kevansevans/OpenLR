@@ -40,6 +40,7 @@ class Canvas extends Scene
 	@:isVar public var drawMode(get, set):DrawMode = FULL_EDIT;
 	
 	public var sledderLayer:Object;
+	public var sledderGFX:Graphics;
 	
 	public function new(?_parent:Object) 
 	{
@@ -55,11 +56,15 @@ class Canvas extends Scene
 		previewLayer = new Graphics(this);
 		
 		sledderLayer = new Object(this);
+		sledderGFX = new Graphics(sledderLayer);
 		
 		preview = new Object(this);
 	}
 	
 	public function drawRiders() {
+		
+		sledderGFX.clear();
+		
 		for (rider in Main.riders.riders) {
 			rider.renderRider();
 		}

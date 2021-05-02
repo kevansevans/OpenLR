@@ -27,7 +27,6 @@ class Bosh extends RiderBase
 	public var colorB(get, null):Int;
 	public var neckscarf:RiderScarf;
 	
-	public var gfx:Graphics;
 	public var nameField:HtmlText;
 	
 	public var undead:Bool = false;
@@ -164,7 +163,7 @@ class Bosh extends RiderBase
 		leftLeg.rotation = Math.atan2(contactPoints[8].pos.y - contactPoints[4].pos.y, contactPoints[8].pos.x - contactPoints[4].pos.x);
 		rightLeg.rotation = Math.atan2(contactPoints[9].pos.y - contactPoints[4].pos.y, contactPoints[9].pos.x - contactPoints[4].pos.x);
 		
-		gfx.clear();
+		var gfx = Main.canvas.sledderGFX;
 		if (!crashed) {
 			
 			gfx.lineStyle(0.25);
