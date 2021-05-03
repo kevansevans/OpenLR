@@ -118,9 +118,9 @@ class Simulation
 	public function playSim(_delta:Float) {
 		
 		timeDelta += _delta;
-		while (timeDelta >= desiredSimSpeed) {
+		if (timeDelta >= desiredSimSpeed) {
 			stepSim();
-			timeDelta -= desiredSimSpeed;
+			timeDelta = 0;
 		}
 	}
 	public function rewindSim(_delta:Float) {
