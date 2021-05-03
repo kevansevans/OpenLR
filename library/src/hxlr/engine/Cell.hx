@@ -37,16 +37,16 @@ class Cell
 	public var info:CellInfo;
 	
 	public var allLines:Array<LineObject>;
-	public var collidable:List<LineObject>;
-	public var intangible:List<LineObject>;
+	public var collidable:Array<LineObject>;
+	public var intangible:Array<LineObject>;
 	
 	public function new(_info:CellInfo) 
 	{
 		info = _info;
 		
 		allLines = new Array();
-		collidable = new List();
-		intangible = new List();
+		collidable = new Array();
+		intangible = new Array();
 	}
 	
 	public function addLine(_line:LineObject) {
@@ -56,11 +56,13 @@ class Cell
 		allLines.push(_line);
 		
 		if (_line.tangible) {
-			collidable.add(_line);
+			collidable.push(_line);
 		} else {
-			intangible.add(_line);
+			intangible.push(_line);
 		}
+		
 		if (!cellList.contains(this)) cellList.push(this);
+		
 	}
 	
 	public function removeLine(_line:LineObject) {
