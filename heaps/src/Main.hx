@@ -64,6 +64,7 @@ class Main extends App
 {
 	public static var locengine:Engine;
 	public static var rootScene:Scene;
+	public static var rulerScene:Scene;
 	public static var tl(get, null):h2d.col.Point;
 	public static var br(get, null):h2d.col.Point;
 	
@@ -148,7 +149,8 @@ class Main extends App
 		
 		s2d.defaultSmooth = true;
 		
-		ruler = new Ruler(s2d);
+		rulerScene = new Scene();
+		ruler = new Ruler(rulerScene);
 		
 		mask = new h2d.Mask(engine.width, engine.height, s2d);
 		canvas = new Canvas(mask);
@@ -517,15 +519,12 @@ class Main extends App
 	var networkDelta:Float = 0.0;
 	var riderPhysDelta:Float = 0.0;
 	var playing:Bool = false;
+	
 	override function update(dt:Float):Void 
 	{
 		super.update(dt);
 		
 		textinfo.framerate = dt;
-		
-		timeline.update();
-		
-		ruler.update();
 		
 		if (simulation.playing && !simulation.rewinding) {
 			simulation.playSim(dt);
@@ -540,17 +539,24 @@ class Main extends App
 	
 	override public function render(e:h3d.Engine):Void 
 	{
+		ruler.update();
+		rulerScene.render(e);
+		
 		super.render(e);
 		
 		canvas.drawRiders();
-			
+		
 		textinfo.update();
+		
+		timeline.update();
 			
 		if (camera.enabled && simulation.playing) camera.follow();
 	}
 	
 	override function onResize():Void 
 	{
+		rulerScene.checkResize();
+		
 		super.onResize();
 		
 		ruler.x = ruler.y = 0;

@@ -2,7 +2,6 @@ package components.stage;
 import h2d.Bitmap;
 import h2d.Object;
 import h2d.Tile;
-import haxe.macro.Expr.Var;
 import hxsl.Shader;
 
 /**
