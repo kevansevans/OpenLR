@@ -1,6 +1,6 @@
 # OpenLR - An effort to create a standardized Line Rider library! In Haxe!
 
-Line Rider is a toy/game originally released in 2006 that has been played and improved upon since then. HXLR refers to the 'library' part of OpenLR, and is a Haxe port of the core code used to create an deterministic engine that runs in parity with other Line Rider engines. OpenLR refers to any Haxe based Line Rider program that uses HXLR and is in this repository. Currently, the main framework is Heaps, but is subject to change. Older versions used OpenFL as a framework.
+Line Rider is a toy/game originally released in 2006 that has been played and improved upon since then. HXLR refers to the 'library' part of OpenLR, and is a Haxe port of the core code used to create an deterministic engine that runs in parity with other Line Rider engines. OpenLR refers to any Haxe based Line Rider program that uses HXLR and is in this repository. Currently, the main framework is Heaps, but is subject to change. Older versions used OpenFL as a framework and are not recommended for use.
 
 A Playable example can be found here: https://kevansevans.github.io/openlr/
 ## Goals
@@ -13,3 +13,5 @@ A Playable example can be found here: https://kevansevans.github.io/openlr/
 2) Open directory and run command ``haxelib dev hxlr ./path/to/hxlr/src``
 3) Include library in Haxe project.
 4) Have fun!
+***
+"Line Rider" is a registered trademark of Boštjan Čadež. Use in OpenLR is in name only and granted within good faith.
