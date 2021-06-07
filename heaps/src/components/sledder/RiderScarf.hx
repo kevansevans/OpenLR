@@ -26,7 +26,7 @@ class RiderScarf extends Object {
 	
 	public function setColor(?_a:Null<Int>, ?_b:Null<Int>):Void 
 	{
-		if (_a == null && _a == null) {
+		if (_a == null) {
 			var r = Std.int(0xFF * Main.rng.getRandomNormal());
 			var g = Std.int(0xFF * Main.rng.getRandomNormal());
 			var b = Std.int(0xFF * Main.rng.getRandomNormal());
@@ -35,7 +35,7 @@ class RiderScarf extends Object {
 			colorA = _a;
 		}
 		
-		if (_b == null && _b == null) {
+		if (_b == null) {
 			var r = Std.int(0xFF * Main.rng.getRandomNormal());
 			var g = Std.int(0xFF * Main.rng.getRandomNormal());
 			var b = Std.int(0xFF * Main.rng.getRandomNormal());
