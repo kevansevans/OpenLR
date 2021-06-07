@@ -5,8 +5,8 @@ package hxlr.enums;
  */
 enum abstract LineType(Int) from Int to Int 
 {
-	var FLOOR:Int;
-	var ACCEL:Int;
-	var SCENE:Int;
-	var NULL:Int;
+	var NULL:Int = -1;
+	var FLOOR:Int = 0;
+	var ACCEL:Int = 1;
+	var SCENE:Int = 2;
 }
