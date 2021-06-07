@@ -9,7 +9,7 @@ hxlr.export.JSONFile
 hxlr.file.AMF0Reader
 hxlr.lines.Accel
 hxlr.lines.Floor
-hxlr.lines.LineBase
+hxlr.lines.LineObject
 hxlr.lines.Scenery
 hxlr.lines.Undefined
 hxlr.math.geom.Line
