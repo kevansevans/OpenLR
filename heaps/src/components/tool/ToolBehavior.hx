@@ -31,6 +31,9 @@ class ToolBehavior
 	public var tool:ToolMode;
 	public var color:Int;
 	
+	public var bitmapNoWay:BitmapData;
+	public var cursorNoWay:Cursor;
+	
 	public var bitmapPencilBlue:BitmapData;
 	public var bitmapPencilRed:BitmapData;
 	public var bitmapPencilGreen:BitmapData;
@@ -54,6 +57,8 @@ class ToolBehavior
 	public var cursorEraserRed:Cursor;
 	public var cursorEraserGreen:Cursor;
 	
+	public var lineSnapStart:LineObject = null;
+	public var lineSnapEnd:LineObject = null;
 	public var lineSnapping:Bool = true;
 	public var gridSnapping:Bool = false;
 	public var gridSnapDistance(get, null):Float;
@@ -100,6 +105,9 @@ class ToolBehavior
 		bitmapEraserGreen = Res.tool.eraserGreen.toBitmap();
 		cursorEraserGreen = Cursor.Custom(new CustomCursor([bitmapEraserGreen], 0, 5, 5));
 		
+		bitmapNoWay = Res.tool.noWay.toBitmap();
+		cursorNoWay = Cursor.Custom(new CustomCursor([bitmapNoWay], 0, 10, 10));
+		
 		Main.canvas_interaction.cursor = cursorPencilBlue;
 	}
 	
@@ -114,6 +122,19 @@ class ToolBehavior
 	
 	function mouseDown(event:Event):Void 
 	{
+		if (Main.canvas.lineVisLock) {
+			switch (Main.canvas.drawMode) {
+				case FULL_EDIT | PLAYBACK :
+				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+					if (color == SCENE) return;
+					else if (tool == ERASER && color == SCENE && colorEraser) return;
+				case SCENERY_EDIT | SCENERY_PLAYBACK :
+					if (color == FLOOR || color == ACCEL) return;
+					else if (tool == ERASER && (color == FLOOR || color == ACCEL) && colorEraser) return;
+				default :
+			}
+		}
+		
 		switch (event.button) {
 			
 			case 0:
