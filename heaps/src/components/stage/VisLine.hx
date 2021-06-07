@@ -26,6 +26,8 @@ class VisLine extends Object
 	var capShader:CapShader;
 	var bitmap:Bitmap;
 	
+	static var tile:Tile;
+	
 	static var blueShader:ColorShader;
 	static var redShader:ColorShader;
 	static var greenShader:ColorShader;
@@ -38,7 +40,9 @@ class VisLine extends Object
 	{
 		super(_parent);
 		
-		bitmap = new Bitmap(Tile.fromColor(0), this);
+		if (tile == null) tile = Tile.fromColor(0);
+		
+		bitmap = new Bitmap(tile, this);
 		bitmap.height = 2;
 		bitmap.width = _line.length > 1 ? _line.length + 2 : 2;
 		bitmap.x -= 1;
