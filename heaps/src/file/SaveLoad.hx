@@ -167,7 +167,10 @@ class SaveLoad
 					lim = 0;
 			}
 			
-			Main.canvas.addLine(line.type, line.x1, line.y1, line.x2, line.y2, line.flipped, lim, line.id);
+			var _locLine = Grid.createLineObject(line.type, line.x1, line.y1, line.x2, line.y2, line.flipped, lim);
+			_locLine.id = line.id;
+			Grid.register(_locLine);
+			Main.canvas.addVisLine(_locLine);
 		}
 		
 		for (rider in loadObject.riders) {
@@ -199,10 +202,9 @@ class SaveLoad
 		Main.trackName = loadObject.label;
 		Main.authorName = loadObject.creator;
 		
-		Main.riders.addNewRider("Bosh", new Point(loadObject.startPosition.x, loadObject.startPosition.y));
-		
 		var lineArray:Array<Dynamic> = loadObject.lines;
 		lineArray.reverse();
+		
 		for (lineObject in lineArray) {
 			var lim:Int = 0;
 			if (!lineObject.leftExtended && !lineObject.rightExtended) {
@@ -215,22 +217,12 @@ class SaveLoad
 				lim = 3;
 			}
 			
-			var line:LineObject = null;
-			switch (lineObject.type) {
-				case 0:
-					line = new Floor(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
-				case 1 :
-					line = new Accel(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
-				case 2 :
-					line = new Scenery(new Point(lineObject.x1, lineObject.y1), new Point(lineObject.x2, lineObject.y2), lineObject.flipped);
-				default :
-					continue;
-			}
-			line.setLim(lim);
-			//line.id = lineObject.id;
-			Grid.register(line);
-			Main.canvas.drawLineGraphic(line);
+			var _locLine = Grid.createLineObject(lineObject.type, lineObject.x1, lineObject.y1, lineObject.x2, lineObject.y2, lineObject.flipped, lim);
+			Grid.register(_locLine);
+			Main.canvas.addVisLine(_locLine);
 		}
+		
+		//Main.riders.riders["Bosh"].startPos = new Point(loadObject.riders[0].startPosition.x, loadObject.riders[0].startPosition.y);
 	}
 	
 	public function saveUserInfo() {
