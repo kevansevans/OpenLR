@@ -160,7 +160,7 @@ class Main extends App
 		
 		canvas_interaction = new Interactive(engine.width, engine.height, s2d);
 		
-		menu = new MenuBase(s2d);
+		menu = new MenuBase();
 		
 		toolControl = new ToolBehavior();
 		
