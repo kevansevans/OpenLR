@@ -1,6 +1,7 @@
 package components.sledder;
 
 import components.Assets;
+import h2d.filter.Outline;
 import hxlr.Constants;
 import hxlr.math.geom.Point;
 import hxlr.rider.RiderBase;
@@ -75,8 +76,8 @@ class Bosh extends RiderBase
 		body.addChild(neckscarf);
 		neckscarf.x = 101;
 		neckscarf.y = -53;
-		Main.canvas.sledderLayer.addChild(rightArm);
 		Main.canvas.sledderLayer.addChild(rightLeg);
+		Main.canvas.sledderLayer.addChild(rightArm);
 	}
 	
 	override public function step():Void 
