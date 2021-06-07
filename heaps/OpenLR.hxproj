@@ -19,7 +19,7 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="" />
+    <option directives="hscriptPos" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="Main" />
@@ -32,10 +32,8 @@
     <library name="heaps" />
     <library name="hlsdl" />
     <library name="hlopenal" />
-    <library name="format" />
-    <library name="peerhx" />
     <library name="hscript" />
-    <library name="mailsender" />
+    <library name="p2p" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
