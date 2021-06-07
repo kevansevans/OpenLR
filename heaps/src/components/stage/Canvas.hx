@@ -1,12 +1,13 @@
 package components.stage;
 
+import components.stage.LineShader;
+import components.stage.VisLine;
 import hxlr.lines.LineObject;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
 import hxlr.enums.LineType;
 import hxlr.engine.Grid;
-import format.agal.Data.Reg;
 import h2d.Graphics;
 import h2d.Object;
 import h2d.Scene;
@@ -25,41 +26,44 @@ enum DrawMode {
 	SCENERY_EDIT;
 	SCENERY_PLAYBACK;
 }
-class Canvas extends Scene
+class Canvas extends Object
 {
 	public var previewLayer:Graphics;
+	
 	var rideLayer:Graphics;
-	var sceneColorLayer:Graphics;
-	var scenePlaybackLayer:Graphics;
-	var colorLayer:Graphics;
+	var sceneLayer:Graphics;
 	
 	public var preview:Object;
 	
 	var eraserSize:Int = 5;
 	
 	@:isVar public var drawMode(get, set):DrawMode = FULL_EDIT;
+	public var lineVisLock:Bool = false;
 	
 	public var sledderLayer:Object;
 	public var sledderGFX:Graphics;
 	
+	public var mouseX(get, null):Float;
+	public var mouseY(get, null):Float;
+	
 	public function new(?_parent:Object) 
 	{
-		super();
+		super(_parent);
 		
-		_parent.addChild(this);
-		
-		sceneColorLayer = new Graphics(this);
-		scenePlaybackLayer = new Graphics(this);
-		scenePlaybackLayer.visible = false;
-		colorLayer = new Graphics(this);
+		sceneLayer = new Graphics(this);
 		rideLayer = new Graphics(this);
+		
 		previewLayer = new Graphics(this);
 		
 		sledderLayer = new Object(this);
 		sledderGFX = new Graphics(sledderLayer);
+		sledderGFX.smooth = true;
 		
 		preview = new Object(this);
+		
+		@:privateAccess Main.rootScene.renderer.manager.globals.set("render.mode", 0);
 	}
+	
 	
 	public function drawRiders() {
 		
@@ -92,22 +96,8 @@ class Canvas extends Scene
 		y += -(oldMouseY * (newScale - oldScale));
 	}
 	
-	public function redrawLines(_type:LineType) {
+	public function redrawLines(_line:LineObject) {
 		
-		switch (_type) {
-			case LineType.FLOOR | LineType.ACCEL :
-				rideLayer.clear();
-				colorLayer.clear();
-			case LineType.SCENE :
-				sceneColorLayer.clear();
-				scenePlaybackLayer.clear();
-			default :
-		}
-		
-		for (line in Grid.lines) {
-			if (line == null) continue;
-			drawLineGraphic(line);
-		}
 	}
 	
 	public function drawPreviewLine(_line:LineObject) {
@@ -171,7 +161,17 @@ class Canvas extends Scene
 	
 	public function drawLineGraphic(_line:LineObject) {
 		
-		var lineCapRadius:Float = 0.0025;
+		switch (_line.type) {
+			case FLOOR :
+				var visline:VisLine = new VisLine(_line, rideLayer);
+			case ACCEL :
+				var visline:VisLine = new VisLine(_line, rideLayer);
+			case SCENE :
+				var visline:VisLine = new VisLine(_line, sceneLayer);
+			default :
+		}
+		
+		/*var lineCapRadius:Float = 0.0025;
 		var lineCapSegment:Int = 15;
 		
 		switch (_line.type) {
@@ -223,7 +223,7 @@ class Canvas extends Scene
 				rideLayer.moveTo(_line.start.x, _line.start.y);
 				rideLayer.lineTo(_line.end.x, _line.end.y);
 			
-		}
+		}*/
 		
 	}
 	
@@ -247,14 +247,23 @@ class Canvas extends Scene
 		
 		Grid.register(line);
 		
-		drawLineGraphic(line);
+		//drawLineGraphic(line);
+		
+		//Main.lineCanvas.addLine(line);
+		
+		switch (line.type) {
+			case FLOOR :
+				var visline:VisLine = new VisLine(line, rideLayer);
+			case ACCEL :
+				var visline:VisLine = new VisLine(line, rideLayer);
+			case SCENE :
+				var visline:VisLine = new VisLine(line, sceneLayer);
+			default :
+		}
+		
 	}
 	
 	public function trashTrack() {
-		rideLayer.clear();
-		colorLayer.clear();
-		sceneColorLayer.clear();
-		scenePlaybackLayer.clear();
 	}
 	
 	function get_drawMode():DrawMode 
@@ -262,47 +271,53 @@ class Canvas extends Scene
 		return drawMode;
 	}
 	
-	function set_drawMode(_mode:DrawMode):DrawMode 
+	public function set_drawMode(_mode:DrawMode):DrawMode 
 	{
 		
 		switch (_mode) {
 			
 			case FULL_EDIT :
-				colorLayer.visible = true;
-				sceneColorLayer.visible = true;
-				scenePlaybackLayer.visible = false;
+				
+				sceneLayer.visible = true;
 				rideLayer.visible = true;
+				ColorShader.drawMode = 0;
 				Main.console.log("Draw mode set to Edit");
+				
 			case PLAYBACK :
-				colorLayer.visible = false;
-				sceneColorLayer.visible = false;
-				scenePlaybackLayer.visible = true;
+				
+				sceneLayer.visible = true;
 				rideLayer.visible = true;
 				Main.console.log("Draw mode set to Playback");
+				ColorShader.drawMode = 1;
+				
 			case NO_SCENERY_EDIT :
-				colorLayer.visible = true;
-				sceneColorLayer.visible = false;
-				scenePlaybackLayer.visible = false;
+				
+				sceneLayer.visible = false;
 				rideLayer.visible = true;
 				Main.console.log("Draw mode set to No Scenery Edit");
+				ColorShader.drawMode = 0;
+				
 			case NO_SCENERY_PLAYBACK :
-				colorLayer.visible = false;
-				sceneColorLayer.visible = false;
-				scenePlaybackLayer.visible = false;
+				
+				sceneLayer.visible = false;
 				rideLayer.visible = true;
 				Main.console.log("Draw mode set to No Scenery Playback");
+				ColorShader.drawMode = 1;
+				
 			case SCENERY_EDIT :
-				colorLayer.visible = false;
-				sceneColorLayer.visible = true;
-				scenePlaybackLayer.visible = false;
+				
+				sceneLayer.visible = true;
 				rideLayer.visible = false;
 				Main.console.log("Draw mode set to Scenery Edit Only");
+				ColorShader.drawMode = 0;
+				
 			case SCENERY_PLAYBACK :
-				colorLayer.visible = false;
-				sceneColorLayer.visible = false;
-				scenePlaybackLayer.visible = true;
+				
+				sceneLayer.visible = true;
 				rideLayer.visible = false;
 				Main.console.log("Draw mode set to Scenery Playback Only");
+				ColorShader.drawMode = 1;
+				
 		}
 		
 		Main.textinfo.align();
@@ -310,7 +325,18 @@ class Canvas extends Scene
 		return drawMode = _mode;
 	}
 	
+	function get_mouseX():Float 
+	{
+		return (Main.rootScene.mouseX - this.x) * (1 / scaleX);
+	}
+	
+	function get_mouseY():Float 
+	{
+		return (Main.rootScene.mouseY - this.y) * (1 / scaleX);
+	}
+	
 	#if (js && !embeded_track)
+	
 	public function P2PLineAdd(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
 		var line:LineObject = null;
 		switch (_type) {
