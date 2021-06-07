@@ -2,7 +2,12 @@ package hxlr.engine;
 
 import hxlr.engine.Cell;
 import hxlr.enums.LineType;
+import hxlr.lines.Accel;
 import hxlr.lines.LineObject;
+import hxlr.lines.Floor;
+import hxlr.lines.Scenery;
+import hxlr.lines.Undefined;
+import hxlr.math.geom.Point;
 
 /**
  * ...
@@ -22,6 +27,28 @@ class Grid
 	{
 		registry = new Map();
 		lines = new Array();
+	}
+	
+	public static function createLineObject(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, _inv:Bool = false, _limMode:Int = 0):LineObject
+	{
+		var line:LineObject = null;
+		
+		var start:Point = new Point(_x1, _y1);
+		var end:Point = new Point(_x2, _y2);
+		
+		switch (_type) {
+			
+			case FLOOR :
+				line = new Floor(start, end, _inv, _limMode);
+			case ACCEL :
+				line = new Accel(start, end, _inv, _limMode);
+			case SCENE :
+				line = new Scenery(start, end);
+			default :
+				line = new Undefined(start, end);
+		}
+		
+		return line;
 	}
 	
 	public static function register(_line:LineObject)
