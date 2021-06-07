@@ -28,8 +28,9 @@ enum DrawMode {
 }
 class Canvas extends Object
 {
-	public var previewLayer:Graphics;
+	public var lineBitmaps:Map<LineObject, VisLine> = new Map();
 	
+	public var previewLayer:Graphics;
 	var rideLayer:Graphics;
 	var sceneLayer:Graphics;
 	
@@ -159,107 +160,29 @@ class Canvas extends Object
 		
 	}
 	
-	public function drawLineGraphic(_line:LineObject) {
+	public function addVisLine(_line:LineObject) 
+	{
+		
+		var line:VisLine = null;
 		
 		switch (_line.type) {
-			case FLOOR :
-				var visline:VisLine = new VisLine(_line, rideLayer);
-			case ACCEL :
-				var visline:VisLine = new VisLine(_line, rideLayer);
+			case FLOOR | ACCEL :
+				line = new VisLine(_line, rideLayer);
 			case SCENE :
-				var visline:VisLine = new VisLine(_line, sceneLayer);
+				line = new VisLine(_line, sceneLayer);
 			default :
+				return;
 		}
 		
-		/*var lineCapRadius:Float = 0.0025;
-		var lineCapSegment:Int = 15;
-		
-		switch (_line.type) {
-			
-			case LineType.FLOOR :
-				
-				rideLayer.lineStyle(2, 0);
-				rideLayer.moveTo(_line.start.x, _line.start.y);
-				rideLayer.lineTo(_line.end.x, _line.end.y);
-				rideLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				rideLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-				colorLayer.lineStyle(2, 0x0066FF);
-				colorLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
-				colorLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
-				
-			case LineType.ACCEL :
-				
-				rideLayer.lineStyle(2, 0);
-				rideLayer.moveTo(_line.start.x, _line.start.y);
-				rideLayer.lineTo(_line.end.x, _line.end.y);
-				rideLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				rideLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-				colorLayer.lineStyle(2, 0xCC0000);
-				colorLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
-				colorLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
-				colorLayer.lineTo(_line.end.x + (_line.nx * 4 - _line.dx * _line.invDistance * 5), _line.end.y + (_line.ny * 4 - _line.dy * _line.invDistance * 5));
-				colorLayer.lineTo(_line.end.x - _line.dx * _line.invDistance * 5, _line.end.y - _line.dy * _line.invDistance * 5);
-				
-				
-			case LineType.SCENE :
-				
-				sceneColorLayer.lineStyle(2, 0x00CC00);
-				sceneColorLayer.moveTo(_line.start.x, _line.start.y);
-				sceneColorLayer.lineTo(_line.end.x, _line.end.y);
-				sceneColorLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				sceneColorLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-				scenePlaybackLayer.lineStyle(2, 0);
-				scenePlaybackLayer.moveTo(_line.start.x, _line.start.y);
-				scenePlaybackLayer.lineTo(_line.end.x, _line.end.y);
-				scenePlaybackLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				scenePlaybackLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-			default :
-				
-				rideLayer.lineStyle(1, 0xFF0000);
-				rideLayer.moveTo(_line.start.x, _line.start.y);
-				rideLayer.lineTo(_line.end.x, _line.end.y);
-			
-		}*/
+		lineBitmaps[_line] = line;
 		
 	}
 	
-	public function addLine(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1, ?_lineID:Int = -1) {
+	public function removeVisLine(_line:LineObject) {
 		
-		var line:LineObject = null;
-		switch (_type) {
-			
-			case LineType.FLOOR:
-				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-			case LineType.ACCEL :
-				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-			case LineType.SCENE :
-				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-			default :
-			
-		}
-		
-		if (_limMode != -1) line.setLim(_limMode);
-		if (_lineID != -1) line.id = _lineID;
-		
-		Grid.register(line);
-		
-		//drawLineGraphic(line);
-		
-		//Main.lineCanvas.addLine(line);
-		
-		switch (line.type) {
-			case FLOOR :
-				var visline:VisLine = new VisLine(line, rideLayer);
-			case ACCEL :
-				var visline:VisLine = new VisLine(line, rideLayer);
-			case SCENE :
-				var visline:VisLine = new VisLine(line, sceneLayer);
-			default :
-		}
+		var line = lineBitmaps[_line];
+		line.remove();
+		lineBitmaps.remove(_line);
 		
 	}
 	
@@ -334,25 +257,4 @@ class Canvas extends Object
 	{
 		return (Main.rootScene.mouseY - this.y) * (1 / scaleX);
 	}
-	
-	#if (js && !embeded_track)
-	
-	public function P2PLineAdd(_type:Int, _x1:Float, _y1:Float, _x2:Float, _y2:Float, ?_shifted:Bool = false, ?_limMode:Int = -1) {
-		var line:LineObject = null;
-		switch (_type) {
-			case 0:
-				line = new Floor(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-				if (_limMode != -1) line.setLim(_limMode);
-			case 1 :
-				line = new Accel(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-				if (_limMode != -1) line.setLim(_limMode);
-			case 2 :
-				line = new Scenery(new Point(_x1, _y1), new Point(_x2, _y2), _shifted);
-			default :
-			
-		}
-		drawLineGraphic(line);
-		Grid.register(line);
-	}
-	#end
 }

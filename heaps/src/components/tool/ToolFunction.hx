@@ -2,7 +2,6 @@ package components.tool;
 
 import hxlr.lines.LineObject;
 import hxlr.enums.LineType;
-import h2d.col.Point;
 import hxlr.engine.Grid;
 import hxlr.engine.Cell;
 import components.stage.Canvas.DrawMode;
@@ -53,35 +52,18 @@ class ToolFunction
 						}
 						
 						if (line.type == type) {
-							tryDispose(line);
+							Main.canvas.removeVisLine(line);
+							Grid.unregister(line);
 						}
 						
 					} else {
-						tryDispose(line);
+						Main.canvas.removeVisLine(line);
+						Grid.unregister(line);
 					}
 					continue;
 				}
 				
 			}
 		}
-	}
-	
-	public static function tryDispose(_line:LineObject) {
-		
-		switch (Main.canvas.drawMode) {
-			case FULL_EDIT | PLAYBACK :
-				Grid.unregister(_line);
-			case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
-				if (_line.type != LineType.SCENE) {
-					Grid.unregister(_line);
-				}
-			case SCENERY_EDIT | SCENERY_PLAYBACK :
-				if (_line.type == LineType.SCENE) {
-					Grid.unregister(_line);
-				}
-		}
-		
-		Main.canvas.redrawLines(_line.type);
-		
 	}
 }
