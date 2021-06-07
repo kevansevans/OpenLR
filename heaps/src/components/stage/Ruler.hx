@@ -101,15 +101,17 @@ class RulerShader extends Shader
 				pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph);
 			}
 				
-			if (((uvOffset.y - 0.5) / ratioY) % (size * (1 / scale)) <= 1) {
+			else if (((uvOffset.y - 0.5) / ratioY) % (size * (1 / scale)) <= 1) {
 				pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph);
 			}
 			
-			if ((uvOffset.x - 0.5) / ratioX <= 1 && (uvOffset.x - 0.5) / ratioX >= -1) {
+			else if ((uvOffset.x - 0.5) / ratioX <= 1 && (uvOffset.x - 0.5) / ratioX >= -1) {
 				pixelColor = vec4(0, 0, 0.75, 1);
 			}
-			if ((uvOffset.y - 0.5) / ratioY <= 1 && (uvOffset.y - 0.5) / ratioY >= -1) {
+			else if ((uvOffset.y - 0.5) / ratioY <= 1 && (uvOffset.y - 0.5) / ratioY >= -1) {
 				pixelColor = vec4(0, 0, 0.75, 1);
+			} else{
+				discard;
 			}
 			
 		}
