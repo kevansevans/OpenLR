@@ -556,15 +556,16 @@ class ToolBehavior
 						Main.simulation.backSim();
 					case Key.D :
 						Main.simulation.stepSim();
-					case Key.S :
+					case Key.Y :
 						Main.simulation.startSim();
-					case Key.X :
+						Main.timeline.updatePlaydeck();
+					case Key.U :
 						Main.simulation.endSim();
 						Main.riders.resetPositions();
-						
+						Main.timeline.updatePlaydeck();
 					case Key.F :
 						Main.simulation.setFlagState();
-						
+						Main.timeline.updatePlaydeck();
 					case Key.NUMBER_1 :
 						
 						#if embeded_track
@@ -597,9 +598,17 @@ class ToolBehavior
 						#end
 						
 					case Key.SPACE :
-						if (!Main.simulation.paused) Main.simulation.pauseSim();
-						else if (Main.simulation.paused) Main.simulation.resumeSim();
 						
+						if (shifted) {
+							Main.simulation.endSim();
+							Main.timeline.updatePlaydeck();
+							return;
+						}
+						
+						if (!Main.simulation.paused && Main.simulation.playing) Main.simulation.pauseSim();
+						else if (Main.simulation.paused) Main.simulation.resumeSim();
+						else if (!Main.simulation.playing && !Main.simulation.paused) Main.simulation.startSim();
+						Main.timeline.updatePlaydeck();
 					case Key.RSHIFT :
 						Main.simulation.updateSim();
 					#if js
@@ -624,6 +633,7 @@ class ToolBehavior
 							case SCENERY_PLAYBACK :
 								Main.canvas.drawMode = FULL_EDIT;
 						}
+						updateCursor();
 				}
 			case EKeyUp :
 				switch (event.keyCode) {
