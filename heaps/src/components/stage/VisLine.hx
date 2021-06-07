@@ -29,7 +29,9 @@ class VisLine extends Object
 	static var tile:Tile;
 	
 	static var blueShader:ColorShader;
+	static var blueShaderInv:ColorShader;
 	static var redShader:ColorShader;
+	static var redShaderInv:ColorShader;
 	static var greenShader:ColorShader;
 	
 	static var blue:Vec = new Vec(0, 0.4, 1);
@@ -58,13 +60,33 @@ class VisLine extends Object
 			
 			case FLOOR :
 				
-				if (blueShader == null) blueShader = new ColorShader(blue);
-				bitmap.addShader(blueShader);
+				if (_line.shifted) {
+					
+					if (blueShaderInv == null) {
+						blueShaderInv = new ColorShader(blue);
+						blueShaderInv.inv = 1;
+					}
+					bitmap.addShader(blueShaderInv);
+					
+				} else {
+					if (blueShader == null) blueShader = new ColorShader(blue);
+					bitmap.addShader(blueShader);
+				}
 				
 			case ACCEL :
 				
-				if (redShader == null) redShader = new ColorShader(red);
-				bitmap.addShader(redShader);
+				if (_line.shifted) {
+					
+					if (redShaderInv == null) {
+						redShaderInv = new ColorShader(red);
+						redShaderInv.inv = 1;
+					}
+					bitmap.addShader(redShaderInv);
+					
+				} else {
+					if (redShader == null) redShader = new ColorShader(red);
+					bitmap.addShader(redShader);
+				}
 				
 			case SCENE :
 				

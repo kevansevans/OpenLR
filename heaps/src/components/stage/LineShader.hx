@@ -54,6 +54,7 @@ class ColorShader extends Shader
 		@param var editColor:Vec3 = vec3(1, 0, 0);
 		@param var playColor:Vec3 = vec3(0, 0, 0);
 		@param var editMode:Int = 0;
+		@param var inv:Int = 0;
 		
 		function vertex() {
 			calculatedUV = input.uv;
@@ -68,8 +69,18 @@ class ColorShader extends Shader
 				
 				if (editMode == 0) {
 					
-					if (uv.y > 0.5) {
-						pixelColor = vec4(editColor, 1);
+					if (inv == 0) {
+						
+						if (uv.y > 0.5) {
+							pixelColor = vec4(editColor, 1);
+						}
+						
+					} else {
+						
+						if (uv.y < 0.5) {
+							pixelColor = vec4(editColor, 1);
+						}
+						
 					}
 					
 				} else {
