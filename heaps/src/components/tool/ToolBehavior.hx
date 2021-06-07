@@ -694,7 +694,7 @@ class ToolBehavior
 		Main.console.log("Tool set to Line", 0x0000BB);
 	}
 	
-	function updateCursor():Void 
+	public function updateCursor():Void 
 	{
 		switch (tool) {
 			#if !embeded_track
@@ -715,6 +715,22 @@ class ToolBehavior
 		if (!colorEraser) {
 			Main.canvas_interaction.cursor = cursorEraser;
 		} else {
+			if (Main.canvas.lineVisLock) {
+				switch (Main.canvas.drawMode) {
+					case FULL_EDIT | PLAYBACK :
+					case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+						if (color == SCENE) {
+							Main.canvas_interaction.cursor = cursorNoWay;
+							return;
+						}
+					case SCENERY_EDIT | SCENERY_PLAYBACK :
+						if (color == FLOOR || color == ACCEL)  {
+							Main.canvas_interaction.cursor = cursorNoWay;
+							return;
+						}
+					default :
+				}
+			}
 			switch (color) {
 				case FLOOR :
 					Main.canvas_interaction.cursor = cursorEraserBlue;
@@ -730,6 +746,22 @@ class ToolBehavior
 	
 	function updateLineCursor():Void 
 	{
+		if (Main.canvas.lineVisLock) {
+			switch (Main.canvas.drawMode) {
+				case FULL_EDIT | PLAYBACK :
+				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+					if (color == SCENE) {
+						Main.canvas_interaction.cursor = cursorNoWay;
+						return;
+					}
+				case SCENERY_EDIT | SCENERY_PLAYBACK :
+					if (color == FLOOR || color == ACCEL)  {
+						Main.canvas_interaction.cursor = cursorNoWay;
+						return;
+					}
+				default :
+			}
+		}
 		switch (color) {
 			case FLOOR :
 				Main.canvas_interaction.cursor = cursorLineBlue;
@@ -743,6 +775,22 @@ class ToolBehavior
 	}
 	
 	function updatePencilCursor() {
+		if (Main.canvas.lineVisLock) {
+			switch (Main.canvas.drawMode) {
+				case FULL_EDIT | PLAYBACK :
+				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
+					if (color == SCENE) {
+						Main.canvas_interaction.cursor = cursorNoWay;
+						return;
+					}
+				case SCENERY_EDIT | SCENERY_PLAYBACK :
+					if (color == FLOOR || color == ACCEL)  {
+						Main.canvas_interaction.cursor = cursorNoWay;
+						return;
+					}
+				default :
+			}
+		}
 		switch (color) {
 			case FLOOR :
 				Main.canvas_interaction.cursor = cursorPencilBlue;
