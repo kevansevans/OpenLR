@@ -80,8 +80,10 @@ class Line
 	{
 		var dx = end.x - start.x;
 		var dy = end.y - start.y;
-		var theta = Math.atan(dy / dx);
-		return theta * (180 / Math.PI);
+		var theta = Math.atan2(dy, dx);
+		return theta;
+	}
+	
 	function get_slope():Slope 
 	{
 		if (start.x == end.x) return INFINITE;
@@ -93,7 +95,7 @@ class Line
 		return VALUE(yslope, xslope);
 	}
 	
-	function set_angle(value:Float):Float 
+	public function set_angle(value:Float):Float 
 	{
 		return angle;
 	}
