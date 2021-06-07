@@ -15,6 +15,7 @@ import hxd.Cursor;
 import hxd.Event;
 import hxd.Key;
 import hxd.Res;
+import components.stage.Canvas.DrawMode;
 
 /**
  * ...
