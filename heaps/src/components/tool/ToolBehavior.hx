@@ -468,9 +468,13 @@ class ToolBehavior
 		}
 		
 		if (leftIsDown) {
-			Main.canvas.addLine(type, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
+			var line = Grid.createLineObject(type, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
+			Grid.register(line);
+			Main.canvas.addVisLine(line);
 		} else if (rightIsDown) {
-			Main.canvas.addLine(type, mouseEnd.x, mouseEnd.y, mouseStart.x, mouseStart.y, !shifted);
+			var line = Grid.createLineObject(type, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, !shifted);
+			Grid.register(line);
+			Main.canvas.addVisLine(line);
 		}
 	}
 	
