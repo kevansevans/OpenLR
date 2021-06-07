@@ -273,7 +273,10 @@ class Main extends App
 			var y2 = _y2 == null ? y1 : _y2;
 			var shifted:Bool = _invert == null ? false : _invert;
 			var lim = _lim == null ? -1 : _lim;
-			canvas.addLine(type, x1, y1, x2, y2, shifted, lim);
+			
+			var line = Grid.createLineObject(type, x1, y1, x2, y2, shifted, lim);
+			Grid.register(line);
+			canvas.addVisLine(line);
 		});
 		var arg29:ConsoleArgDesc = {t: AInt, opt: false, name : "Line Index"};
 		console.addCommand(Commands.removeLine, "remove specified line", [arg29], function(?_index:Int) {
