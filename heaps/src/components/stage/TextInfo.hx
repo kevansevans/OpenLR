@@ -36,6 +36,8 @@ class TextInfo
 		if (getMode(ACCEL)) info.text += 'Accel: ${Grid.subTypeCount[LineType.ACCEL] == null ? 0 : Grid.subTypeCount[LineType.ACCEL]}\n';
 		if (getMode(SCENE)) info.text += 'Scene: ${Grid.subTypeCount[LineType.SCENE] == null ? 0 : Grid.subTypeCount[LineType.SCENE]}\n';
 		
+		info.text += '${Math.round(Main.locengine.fps)}:FPS';
+		
 	}
 	
 	public function getMode(_lineType:LineType):Bool
