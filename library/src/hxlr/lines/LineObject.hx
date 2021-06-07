@@ -40,7 +40,7 @@ class LineObject extends Line
 	public var prevLine:LineObject;
 	public var nextLine:LineObject;
 	
-	public function new(_start:Point, _end:Point, _shift:Bool, ?_lim:Int = 0)
+	public function new(_start:Point, _end:Point, _shift:Bool = false, ?_lim:Int = 0)
 	{
 		super(_start, _end);
 		

@@ -9,9 +9,9 @@ import hxlr.math.geom.Point;
 class Undefined extends LineObject 
 {
 
-	public function new(_start:Point, _end:Point, _shift:Bool, ?_lim:Int=0) 
+	public function new(_start:Point, _end:Point) 
 	{
-		super(_start, _end, _shift, _lim);
+		super(_start, _end);
 		
 	}
 	

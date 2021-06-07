@@ -11,9 +11,9 @@ import hxlr.math.geom.Point;
 class Floor extends LineObject 
 {
 	
-	public function new(_start:Point, _end:Point, _shift:Bool) 
+	public function new(_start:Point, _end:Point, _shift:Bool = false, _limMode:Int = 0) 
 	{
-		super(_start, _end, _shift);
+		super(_start, _end, _shift, _limMode);
 		
 		type = FLOOR;
 		
