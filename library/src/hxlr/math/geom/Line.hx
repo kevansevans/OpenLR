@@ -68,11 +68,11 @@ class Line
 		return Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
 	}
 	
-	function set_length(value:Float):Float 
+	public function set_length(value:Float):Float 
 	{
 		
-		end.x = start.x + (value * Math.cos(angle));
-		end.y = start.y + (value * Math.sin(angle));
+		end.x += value * Math.cos(angle);
+		end.y += value * Math.sin(angle);
 		return length;
 	}
 	
