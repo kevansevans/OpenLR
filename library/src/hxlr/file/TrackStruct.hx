@@ -3,7 +3,7 @@ package hxlr.file;
 /**
  * @author Kaelan
  */
-typedef Track = {
+typedef TrackStruct = {
 	var label:String;
 	var creator:String;
 	var duration:Int;

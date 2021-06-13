@@ -9,7 +9,7 @@ import haxe.io.Bytes;
  * Code to read the .sol format for line rider tracks
  */
  
-class AMF0Reader 
+class AMF0Track 
 {
 
 	var data:Bytes;
