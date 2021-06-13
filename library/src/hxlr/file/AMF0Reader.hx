@@ -48,23 +48,32 @@ class AMF0Reader
 			trace("Unable to locate savedLines!");
 			return;
 		}
-		pos += 4;
+		pos += saveNameSize + 4;
+			
+		var trackListNameSize = data.get(pos) << 8 | data.get(pos += 1);
+		var trackListField = data.getString(pos += 1, trackListNameSize);
 		
-		while (true) {
-			
-			var itemNameSize = data.get(pos) << 8 | data.get(pos += 1);
-			var itemNameField = data.getString(pos += 1, itemNameSize);
-			
-			switch (itemNameField) {
-				
-				case trackList :
-					trace("Tracklist found!");
-				default :
-			}
-			
-			if (pos >= size) break;
+		if (trackListField != "trackList") {
+			trace(trackListNameSize, trackListField);
+			trace("Unable to locate trackList!");
+			return;
 		}
 		
+		loadedSOL = {
+			trackList : []
+		}
+		
+		recursiveRead(data.get(pos += trackListNameSize));
+		
+	}
+	
+	function recursiveRead(_code:Int) 
+	{
+		switch (_code) {
+			
+			case EMCA_ARRAY :
+				
+		}
 	}
 	
 	public function loadSOLTrack(_index:Int):Beta2Track
