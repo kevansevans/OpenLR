@@ -66,6 +66,7 @@ class VisLine extends Object
 			redFlag.y = 1;
 			redFlag.x = bitmap.width - 5;
 			redFlag.addShader(new EndFlagShader());
+			redFlag.scaleY = _line.shifted ? -1 : 1;
 		}
 		
 		switch (_line.type) {
