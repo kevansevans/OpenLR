@@ -84,8 +84,8 @@ class Toolbar extends Object
 		}
 		
 		trash.onClick = function() {
-			Grid.deleteTrack();
 			Main.canvas.trashTrack();
+			Grid.deleteTrack();
 		}
 		
 		blue.onClick = function() {
