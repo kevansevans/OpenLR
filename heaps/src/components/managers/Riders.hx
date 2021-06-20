@@ -1,7 +1,7 @@
 package components.managers;
 
 import hxlr.rider.RiderBase;
-
+import hxlr.Constants;
 import components.sledder.Bosh;
 import h2d.col.Point;
 
@@ -28,12 +28,16 @@ class Riders
 	}
 	
 	public function deleteAllRiders() {
-		//for (rider in riders) rider.delete();
+		for (rider in riders) {
+			rider.delete();
+			riders.remove(rider.name);
+		}
 	}
 	
-	public function addNewRider(_name:String, _start:Point, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>)
+	public function addNewRider(_start:Point, ?_name:String, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>)
 	{
-		var setName:String = _name;
+		
+		var setName:String = _name == null ? Constants.names[riderCount % Constants.names.length] : _name;
 		if (setName.length > 30) setName = setName.substr(0, 30);
 		if (riders[setName] != null) {
 			var occupiedSpace:Int = 0;

@@ -1,6 +1,7 @@
 package file;
 
 import hxlr.engine.Grid;
+import hxlr.file.TrackStruct;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
@@ -174,7 +175,7 @@ class SaveLoad
 		}
 		
 		for (rider in loadObject.riders) {
-			Main.riders.addNewRider(rider.name, rider.startPoint, rider.startFrame, rider.stopFrame);
+			Main.riders.addNewRider(rider.startPoint, rider.name, rider.startFrame, rider.stopFrame);
 			var bosh = cast(Main.riders.riders[rider.name], Bosh);
 			bosh.setColor(rider.colora, rider.colorb);
 		}
@@ -185,12 +186,12 @@ class SaveLoad
 		#if js
 		//Create when I figure out how to import saves on JS
 		return;
-		#else
+		#elseif sys
 		
 		if (!FileSystem.exists('./saves/${_fileName}.json')) return;
 		else {
 			var str:String = File.getBytes('./saves/${_fileName}.json').toString();
-			var loadObject:Dynamic = Json.parse(str);
+			var loadObject:TrackStruct = Json.parse(str);
 			
 			loadJSONObject(loadObject);
 		}
@@ -198,11 +199,11 @@ class SaveLoad
 		#end
 	}
 	
-	public function loadJSONObject(loadObject:Dynamic) {
-		Main.trackName = loadObject.label;
-		Main.authorName = loadObject.creator;
+	public function loadJSONObject(_track:TrackStruct) {
+		Main.trackName = _track.label;
+		Main.authorName = _track.creator;
 		
-		var lineArray:Array<Dynamic> = loadObject.lines;
+		var lineArray:Array<Line> = _track.lines;
 		lineArray.reverse();
 		
 		for (lineObject in lineArray) {
@@ -222,7 +223,13 @@ class SaveLoad
 			Main.canvas.addVisLine(_locLine);
 		}
 		
-		//Main.riders.riders["Bosh"].startPos = new Point(loadObject.riders[0].startPosition.x, loadObject.riders[0].startPosition.y);
+		var riderKeys = Main.riders.riders.keys();
+		for (rider in riderKeys) {
+			Main.riders.removeRider(rider);
+		}
+		for (rider in _track.riders) {
+			Main.riders.addNewRider(new Point(rider.startPosition.x, rider.startPosition.y));
+		}
 	}
 	
 	public function saveUserInfo() {

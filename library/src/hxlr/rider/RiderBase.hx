@@ -123,6 +123,8 @@ class RiderBase
 	
 	public function constrainScarf() {}
 	
+	public function delete() {}
+	
 	public function collide() {
 		
 		for (point in contactPoints) {

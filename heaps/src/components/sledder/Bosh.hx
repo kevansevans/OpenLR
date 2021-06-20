@@ -80,6 +80,19 @@ class Bosh extends RiderBase
 		Main.canvas.sledderLayer.addChild(rightArm);
 	}
 	
+	override public function delete() {
+		
+		leftArm.remove();
+		rightArm.remove();
+		leftLeg.remove();
+		rightLeg.remove();
+		sled.remove();
+		body.remove();
+		neckscarf.remove();
+		nameField.remove();
+		
+	}
+	
 	override public function step():Void 
 	{
 		

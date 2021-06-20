@@ -104,6 +104,8 @@ class Constants
 		return rider;
 	}
 	
+	public static var names:Array<String> = ["Bosh", "Chaz", "Bailey", "Bish", "Essi", "Fin", "Coco", "Fsk"];
+	
 	public function new() 
 	{
 		

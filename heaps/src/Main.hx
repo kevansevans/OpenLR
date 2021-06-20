@@ -65,8 +65,6 @@ class Main extends App
 	public static var locengine:Engine;
 	public static var rootScene:Scene;
 	public static var rulerScene:Scene;
-	public static var tl(get, null):h2d.col.Point;
-	public static var br(get, null):h2d.col.Point;
 	
 	public static var canvas:Canvas;
 	
@@ -116,6 +114,11 @@ class Main extends App
 		#else
 		build = "Release";
 		#end
+		
+		var month = Date.now().getMonth();
+		var day = Date.now().getDate();
+		
+		if (month == 7 && day == 16) Constants.names.push("Boo");
 		
 		new Main();
 	}
@@ -345,11 +348,11 @@ class Main extends App
 		});
 		var arg27:ConsoleArgDesc = {t: AInt, opt: true, name : "Enable frame"};
 		var arg28:ConsoleArgDesc = {t: AInt, opt: true, name : "End frame"};
-		console.addCommand(Commands.addNewRider, "Add new rider to sim", [arg15, arg16, arg17, arg27, arg28], function(_name:String, ?_x:Float, ?_y:Float, ?_en:Null<Int>, ?_ds:Null<Int>) {
+		console.addCommand(Commands.addNewRider, "Add new rider to sim", [arg16, arg17, arg15, arg27, arg28], function(_name:String, ?_x:Float, ?_y:Float, ?_en:Null<Int>, ?_ds:Null<Int>) {
 			var x = _x == null ? canvas.mouseX : _x;
 			var y = _y == null ? canvas.mouseY : _y;
 			var startFrame = _en == null ? (simulation.frames - 1) : _en;
-			riders.addNewRider(_name, new h2d.col.Point(x, y), startFrame, _ds);
+			riders.addNewRider(new h2d.col.Point(x, y), _name, startFrame, _ds);
 		});
 		console.addCommand(Commands.listRiderInfo, "Print all riders and info into console", [], function() {
 			console.log("===");
@@ -430,7 +433,7 @@ class Main extends App
 			if (trackName != null) console.runCommand("saveTrack");
 			Grid.deleteTrack();
 			riders.deleteAllRiders();
-			riders.addNewRider("Bosh", new h2d.col.Point(0, 0));
+			riders.addNewRider(new h2d.col.Point(0, 0));
 			trackName = null;
 		} );
 		var arg24:ConsoleArgDesc = {t: AString, opt: false, name : "Rider name"};
