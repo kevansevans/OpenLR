@@ -1,5 +1,6 @@
 package components.stage;
 
+import format.abc.Data.Function;
 import h3d.Vector;
 import h3d.col.Point;
 import hxlr.enums.LineType;
@@ -116,4 +117,34 @@ class ColorShader extends Shader
 	
 	public static var drawMode(default, set):Int;
 	
+}
+
+class EndFlagShader extends Shader
+{
+	static var SRC = {
+		
+		@global var render : {
+			var mode:Int;
+		}
+		
+		function vertex() {
+			calculatedUV = input.uv;
+		}
+		
+		@:import h3d.shader.Texture;
+		
+		function fragment() {
+			
+			if (render.mode == 1) discard;
+			
+			else {
+				
+				var uv:Vec2 = calculatedUV;
+				
+				if (uv.x + uv.y > 1) discard;
+				
+			}
+			
+		}
+	}
 }

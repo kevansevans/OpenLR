@@ -2,6 +2,7 @@ package components.stage;
 
 import components.stage.LineShader.CapShader;
 import components.stage.LineShader.ColorShader;
+import components.stage.LineShader.EndFlagShader;
 import hxlr.enums.LineType;
 import h2d.Bitmap;
 import h2d.Object;
@@ -40,6 +41,8 @@ class VisLine extends Object
 	static var redRED:Vec = new Vec(1, 0, 0);
 	static var green:Vec = new Vec(0, 0.8, 0);
 	
+	public var redFlag:Bitmap;
+	
 	public function new(_line:LineObject, ?_parent:Object) 
 	{
 		super(_parent);
@@ -55,8 +58,15 @@ class VisLine extends Object
 		this.y = _line.start.y;
 		this.rotation = _line.angle;
 		bitmap.addShader(capShader = new CapShader());
-		if (_line.type == ACCEL) capShader.dirDependant = 1;
 		capShader.lineLength = _line.length + 2;
+		if (_line.type == ACCEL) {
+			capShader.dirDependant = 1;
+			redFlag = new Bitmap(Tile.fromColor(0xCC0000, 5, 4));
+			bitmap.addChildAt(redFlag, 0);
+			redFlag.y = 1;
+			redFlag.x = bitmap.width - 5;
+			redFlag.addShader(new EndFlagShader());
+		}
 		
 		switch (_line.type) {
 			
