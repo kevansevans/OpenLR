@@ -115,10 +115,10 @@ class Main extends App
 		build = "Release";
 		#end
 		
-		var month = Date.now().getMonth();
-		var day = Date.now().getDate();
+		var month = Date.now().getMonth(); //0 - 11
+		var day = Date.now().getDate(); //1 - 31
 		
-		if (month == 7 && day == 16) Constants.names.push("Boo");
+		if (month == 7 && day == 16) Constants.names.unshift("Boo");
 		
 		new Main();
 	}
@@ -193,8 +193,10 @@ class Main extends App
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 3;
 		
+		var firstRider = riders.addNewRider(new Point(0, 0));
+		
 		camera = new Camera();
-		camera.riderFollow = "Bosh";
+		camera.riderFollow = firstRider.name;
 		
 		#if !embeded_track
 		

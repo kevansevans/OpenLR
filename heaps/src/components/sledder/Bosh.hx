@@ -44,7 +44,7 @@ class Bosh extends RiderBase
 	public var blinkRate:Float = 0.1;
 	var prevFrame:Int = 0;
 	
-	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String = "Bosh", ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
+	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String, ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
 	{
 		super(Constants.defaultRider(), new Point(_x, _y), _name);
 		

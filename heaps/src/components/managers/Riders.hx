@@ -18,13 +18,6 @@ class Riders
 	public function new() 
 	{
 		riders = new Map();
-		
-		#if !embeded_track
-		var defaultRider:RiderBase = new Bosh();
-		riders[defaultRider.name] = defaultRider;
-		
-		++riderCount;
-		#end
 	}
 	
 	public function deleteAllRiders() {
@@ -34,7 +27,7 @@ class Riders
 		}
 	}
 	
-	public function addNewRider(_start:Point, ?_name:String, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>)
+	public function addNewRider(_start:Point, ?_name:String, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>):RiderBase
 	{
 		
 		var setName:String = _name == null ? Constants.names[riderCount % Constants.names.length] : _name;
@@ -47,9 +40,11 @@ class Riders
 			Main.console.log('Rider name ${setName} already occupied, renaming to ${setName + occupiedSpace}');
 			setName += "" + occupiedSpace;
 		}
-		riders[setName] = new Bosh(_start.x, _start.y, setName, _startFrame, _endFrame);
+		var rider = new Bosh(_start.x, _start.y, setName, _startFrame, _endFrame);
+		riders[setName] = rider;
 		++riderCount;
 		Main.simulation.recordGlobalSimState();
+		return rider;
 	}
 	
 	public function renameRider(_old:String, _new:String) {
