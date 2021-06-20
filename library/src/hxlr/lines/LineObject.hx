@@ -31,6 +31,7 @@ class LineObject extends Line
 	public var nx:Float;
 	public var ny:Float;
 	public var zone = 10;
+	@:isVar public var multiplier(get, set):Int = 1;
 	
 	public var limType:Int = 0;
 	public var limStart:Float = 0;
@@ -119,6 +120,16 @@ class LineObject extends Line
 			},
 		}
 		return save;
+	}
+	
+	function get_multiplier():Int 
+	{
+		return 1;
+	}
+	
+	function set_multiplier(value:Int):Int 
+	{
+		return multiplier = value;
 	}
 }
 

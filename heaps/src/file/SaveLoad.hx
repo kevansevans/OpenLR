@@ -218,7 +218,10 @@ class SaveLoad
 				lim = 3;
 			}
 			
-			var _locLine = Grid.createLineObject(lineObject.type, lineObject.x1, lineObject.y1, lineObject.x2, lineObject.y2, lineObject.flipped, lim);
+			var _locLine = Grid.createLineObject(lineObject.type, lineObject.x1, lineObject.y1, lineObject.x2, lineObject.y2, lineObject.flipped == true? true : false, lim);
+			
+			if (lineObject.multiplier != null) _locLine.multiplier = lineObject.multiplier;
+			
 			Grid.register(_locLine);
 			Main.canvas.addVisLine(_locLine);
 		}

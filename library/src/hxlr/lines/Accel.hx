@@ -26,8 +26,8 @@ class Accel extends LineObject
 	{
 		super.calculateConstants();
 		
-		accx = ny * accConst * (shifted ? 1 : -1);
-		accy = nx * accConst * (shifted ? -1 : 1);
+		accx = ny * (accConst * multiplier) * (shifted ? 1 : -1);
+		accy = nx * (accConst * multiplier) * (shifted ? -1 : 1);
 	}
 	
 	override public function collide(_point:ContactPoint):Void 
@@ -46,5 +46,17 @@ class Accel extends LineObject
 				_point.vel.y = _point.vel.y - nx * _point.friction * _loc4 * (_point.vel.y < _point.pos.y ? -1 : 1) + accy;
 			}
 		}
+	}
+	
+	override function get_multiplier():Int 
+	{
+		return multiplier;
+	}
+	
+	override function set_multiplier(value:Int):Int 
+	{
+		multiplier = value;
+		calculateConstants();
+		return value;
 	}
 }
