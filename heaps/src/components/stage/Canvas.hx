@@ -131,6 +131,9 @@ class Canvas extends Object
 	}
 	
 	public function trashTrack() {
+		for (line in Grid.lines) {
+			removeVisLine(line);
+		}
 	}
 	
 	function get_drawMode():DrawMode 
