@@ -35,9 +35,6 @@ class Ruler extends Object
 		shader.ratioX = (1 / Main.rootScene.width);
 		shader.ratioY = (1 / Main.rootScene.height);
 		
-		shader.midFloatX = (1 / Main.rootScene.width) * ((Main.rootScene.width % 2 == 0 ? Main.rootScene.width - 1 : Main.rootScene.width)  / 2); 
-		shader.midFloatY = (1 / Main.rootScene.height) * ((Main.rootScene.height % 2 == 0 ? Main.rootScene.height - 1 : Main.rootScene.height) / 2); 
-		
 		shader.bg_r = (color >> 16) / 255;
 		shader.bg_g = ((color >> 8) & 0xFF) / 255;
 		shader.bg_b = (color & 0xFF) / 255;
@@ -68,9 +65,6 @@ class RulerShader extends Shader
 		
 		@param var scale:Float = 0;
 		@param var size:Int = 0;
-		
-		@param var midFloatX:Float = 0.5;
-		@param var midFloatY:Float = 0.5;
 		
 		@param var ratioX:Float = 1;
 		@param var ratioY:Float = 1;

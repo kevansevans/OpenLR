@@ -33,9 +33,11 @@ class VisLine extends Object
 	static var redShader:ColorShader;
 	static var redShaderInv:ColorShader;
 	static var greenShader:ColorShader;
+	static var invalidShader:ColorShader;
 	
 	static var blue:Vec = new Vec(0, 0.4, 1);
 	static var red:Vec = new Vec(0.8, 0, 0);
+	static var redRED:Vec = new Vec(1, 0, 0);
 	static var green:Vec = new Vec(0, 0.8, 0);
 	
 	public function new(_line:LineObject, ?_parent:Object) 
@@ -53,8 +55,8 @@ class VisLine extends Object
 		this.y = _line.start.y;
 		this.rotation = _line.angle;
 		bitmap.addShader(capShader = new CapShader());
+		if (_line.type == ACCEL) capShader.dirDependant = 1;
 		capShader.lineLength = _line.length + 2;
-		capShader.radius = 1;
 		
 		switch (_line.type) {
 			
@@ -94,6 +96,9 @@ class VisLine extends Object
 				bitmap.addShader(greenShader);
 				
 			default :
+				
+				if (invalidShader == null) invalidShader = new ColorShader(redRED, 1);
+				bitmap.addShader(invalidShader);
 		}
 	}
 	

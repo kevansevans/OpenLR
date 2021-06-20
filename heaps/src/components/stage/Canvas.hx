@@ -30,9 +30,9 @@ class Canvas extends Object
 {
 	public var lineBitmaps:Map<LineObject, VisLine> = new Map();
 	
-	public var previewLayer:Graphics;
-	var rideLayer:Graphics;
-	var sceneLayer:Graphics;
+	public var previewLayer:Object;
+	var rideLayer:Object;
+	var sceneLayer:Object;
 	
 	public var preview:Object;
 	
@@ -51,11 +51,9 @@ class Canvas extends Object
 	{
 		super(_parent);
 		
-		sceneLayer = new Graphics(this);
-		rideLayer = new Graphics(this);
-		
+		sceneLayer = new Object(this);
+		rideLayer = new Object(this);
 		previewLayer = new Graphics(this);
-		
 		sledderLayer = new Object(this);
 		sledderGFX = new Graphics(sledderLayer);
 		sledderGFX.smooth = true;
@@ -97,67 +95,13 @@ class Canvas extends Object
 		y += -(oldMouseY * (newScale - oldScale));
 	}
 	
-	public function redrawLines(_line:LineObject) {
-		
-	}
+	public var previewLine:VisLine;
 	
 	public function drawPreviewLine(_line:LineObject) {
 		
-		previewLayer.clear();
+		if (previewLayer.contains(previewLine)) previewLine.remove();
 		
-		var lineCapRadius:Float = 0.0025;
-		var lineCapSegment:Int = 15;
-		
-		switch (_line.type) {
-			
-			case LineType.FLOOR :
-				
-				previewLayer.lineStyle(2, 0x0066FF);
-				previewLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
-				previewLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
-				
-				previewLayer.lineStyle(2, 0);
-				previewLayer.moveTo(_line.start.x, _line.start.y);
-				previewLayer.lineTo(_line.end.x, _line.end.y);
-				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-			case LineType.ACCEL :
-				
-				previewLayer.lineStyle(2, 0xCC0000);
-				previewLayer.moveTo(_line.start.x + _line.nx, _line.start.y + _line.ny);
-				previewLayer.lineTo(_line.end.x + _line.nx, _line.end.y + _line.ny);
-				previewLayer.lineTo(_line.end.x + (_line.nx * 4 - _line.dx * _line.invDistance * 5), _line.end.y + (_line.ny * 4 - _line.dy * _line.invDistance * 5));
-				previewLayer.lineTo(_line.end.x - _line.dx * _line.invDistance * 5, _line.end.y - _line.dy * _line.invDistance * 5);
-				
-				previewLayer.lineStyle(2, 0);
-				previewLayer.moveTo(_line.start.x, _line.start.y);
-				previewLayer.lineTo(_line.end.x, _line.end.y);
-				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-			case LineType.SCENE :
-				
-				previewLayer.lineStyle(2, 0);
-				previewLayer.moveTo(_line.start.x, _line.start.y);
-				previewLayer.lineTo(_line.end.x, _line.end.y);
-				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-				previewLayer.lineStyle(2, 0x00CC00);
-				previewLayer.moveTo(_line.start.x, _line.start.y);
-				previewLayer.lineTo(_line.end.x, _line.end.y);
-				previewLayer.drawCircle(_line.start.x, _line.start.y, lineCapRadius, lineCapSegment);
-				previewLayer.drawCircle(_line.end.x, _line.end.y, lineCapRadius, lineCapSegment);
-				
-			default :
-				
-				previewLayer.lineStyle(1, 0xFF0000);
-				previewLayer.moveTo(_line.start.x, _line.start.y);
-				previewLayer.lineTo(_line.end.x, _line.end.y);
-			
-		}
-		
+		previewLine = new VisLine(_line, previewLayer);
 	}
 	
 	public function addVisLine(_line:LineObject) 

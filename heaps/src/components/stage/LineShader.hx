@@ -17,8 +17,8 @@ class CapShader extends Shader
 		@:import h3d.shader.Texture;
 		
 		@param var lineLength:Float = 0;
-		@param var radius:Float = 1;
 		@param var cap:Int = 1;
+		@param var dirDependant:Int = 0;
 		
 		function vertex() {
 			calculatedUV = input.uv;
@@ -36,6 +36,11 @@ class CapShader extends Shader
 				if (pos.x > lineLength - 1 && length(pos - vec2(lineLength - 1, 1)) > 1) discard;
 			}
 			
+			if (dirDependant != 0) {
+				
+				
+				
+			}
 		}
 	}
 }
