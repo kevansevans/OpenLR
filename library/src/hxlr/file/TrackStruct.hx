@@ -18,6 +18,8 @@ typedef TrackStruct = {
 typedef RiderInfo = {
 	var startPosition:StartPosition;
 	var startVelocity:StartVelocity;
+	var colorA:Null<Int>;
+	var colorB:Null<Int>;
 }
 
 typedef StartPosition = {
@@ -43,8 +45,8 @@ typedef Line = {
 	var y1:Float;
 	var x2:Float;
 	var y2:Float;
-	@:optional var fliped:Bool;
-	@:optional var leftExtended:Bool;
-	@:optional var rightExtended:Bool;
-	@:optional var multiplier:Int;
+	var flipped:Null<Bool>;
+	var leftExtended:Null<Bool>;
+	var rightExtended:Null<Bool>;
+	var multiplier:Null<Int>;
 }
