@@ -399,10 +399,10 @@ class ToolBehavior
 		
 		if (gridSnapping) {
 			
-			var top:Float = Math.ceil(Main.canvas.mouseY / Main.viewGridSize) * Main.viewGridSize;
-			var left:Float = Math.ceil(Main.canvas.mouseX / Main.viewGridSize) * Main.viewGridSize;
-			var bottom:Float = Math.floor(Main.canvas.mouseY / Main.viewGridSize) * Main.viewGridSize;
-			var right:Float = Math.floor(Main.canvas.mouseX / Main.viewGridSize) * Main.viewGridSize;
+			var top:Float = Math.ceil(Main.canvas.mouseY / Main.ruler.rulerSize) * Main.ruler.rulerSize;
+			var left:Float = Math.ceil(Main.canvas.mouseX / Main.ruler.rulerSize) * Main.ruler.rulerSize;
+			var bottom:Float = Math.floor(Main.canvas.mouseY / Main.ruler.rulerSize) * Main.ruler.rulerSize;
+			var right:Float = Math.floor(Main.canvas.mouseX / Main.ruler.rulerSize) * Main.ruler.rulerSize;
 			
 			var corners:Array<Point> = [
 				new Point(left, top),
@@ -451,7 +451,7 @@ class ToolBehavior
 	
 	function get_gridSnapDistance():Float 
 	{
-		return Main.viewGridSize / 2;
+		return Main.ruler.rulerSize / 2;
 	}
 	
 	function drawLine():Void 
@@ -495,18 +495,18 @@ class ToolBehavior
 						if (shifted) {
 							var zoom:Int = 2;
 							while (true) {
-								if (zoom <= Main.viewGridSize) {
+								if (zoom <= Main.ruler.rulerSize) {
 									zoom = zoom << 1;
 									if (zoom == 0) {
 										break;
 									}
 								} else {
-									Main.viewGridSize = zoom;
+									Main.ruler.rulerSize = zoom;
 									break;
 								}
 							}
 						} else {
-							Main.viewGridSize += 1;
+							Main.ruler.rulerSize += 1;
 						}
 					case Key.QWERTY_BRACKET_LEFT :
 						
@@ -514,20 +514,20 @@ class ToolBehavior
 						return;
 						#end
 						
-						if (Main.viewGridSize == 1) return;
+						if (Main.ruler.rulerSize == 1) return;
 						if (shifted) {
 							var zoom:Int = 2;
 							while (true) {
-								if (zoom >= Main.viewGridSize) {
-									Main.viewGridSize = zoom >> 1;
+								if (zoom >= Main.ruler.rulerSize) {
+									Main.ruler.rulerSize = zoom >> 1;
 									break;
 								} else {
 									zoom = zoom << 1;
 								}
 							}
 						} else {
-							Main.viewGridSize -= 1;
-							Main.viewGridSize = Std.int(Math.max(Main.viewGridSize, 1));
+							Main.ruler.rulerSize -= 1;
+							Main.ruler.rulerSize = Std.int(Math.max(Main.ruler.rulerSize, 1));
 						}
 					case Key.Q:
 						
