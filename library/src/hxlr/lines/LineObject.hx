@@ -4,6 +4,7 @@ import hxlr.enums.LineType;
 import hxlr.math.geom.Line;
 import hxlr.math.geom.Point;
 import hxlr.rider.ContactPoint;
+import hxlr.file.TrackStruct.LineStruct;
 
 /**
  * ...
@@ -94,7 +95,7 @@ class LineObject extends Line
 		
 	}
 	
-	public function toSaveObject():LineStruct {
+	public function toLineStruct():LineStruct {
 		var save:LineStruct = {
 			id : id,
 			type : type,
@@ -102,22 +103,23 @@ class LineObject extends Line
 			y1 : start.y,
 			x2 : end.x,
 			y2 : end.y,
-			flipped : shifted,
+			multiplier : multiplier != 1 ? multiplier : null,
+			flipped : shifted == true ? true : null,
 			leftExtended : switch(limType){
 				case 0 | 2:
-					false;
+					null;
 				case 1 | 3:
 					true;
 				default :
-					false;
+					null;
 			},
 			rightExtended : switch(limType){
 				case 0 | 1:
-					false;
+					null;
 				case 2 | 3:
 					true;
 				default :
-					false;
+					null;
 			},
 		}
 		return save;
@@ -132,16 +134,4 @@ class LineObject extends Line
 	{
 		return multiplier = value;
 	}
-}
-
-typedef LineStruct = {
-	var id:Int;
-	var type:LineType;
-	var x1:Float;
-	var y1:Float;
-	var x2:Float;
-	var y2:Float;
-	var flipped:Bool;
-	var leftExtended:Bool;
-	var rightExtended:Bool;
 }
