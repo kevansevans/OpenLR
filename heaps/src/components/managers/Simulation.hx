@@ -40,7 +40,6 @@ class Simulation
 	public function startSim() {
 		
 		if (Main.riders.riderCount == 0) {
-			Main.console.log("No riders in current track", 0xFF0000);
 			return;
 		}
 		
@@ -153,8 +152,6 @@ class Simulation
 		if (flagged && (playing || paused)) {
 			flagframe = frames;
 		}
-		
-		Main.console.log(flagged == true ? 'Set flag on frame ${frames}' : 'Disabled flag');
 		
 	}
 	

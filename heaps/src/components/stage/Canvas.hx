@@ -75,7 +75,7 @@ class Canvas extends Object
 	
 	public function setCanvasPosition(_x:Float, _y:Float, ?_log:Bool = true) {
 		setCanvasPosition(_x, _y);
-		if (_log) Main.console.log("Set canvas position to: " + _x + " " + _y, 0x0000BB);
+		
 	}
 	
 	public function addCanvasPosition(_x:Float, _y:Float) {
@@ -151,41 +151,35 @@ class Canvas extends Object
 				sceneLayer.visible = true;
 				rideLayer.visible = true;
 				ColorShader.drawMode = 0;
-				Main.console.log("Draw mode set to Edit");
 				
 			case PLAYBACK :
 				
 				sceneLayer.visible = true;
 				rideLayer.visible = true;
-				Main.console.log("Draw mode set to Playback");
 				ColorShader.drawMode = 1;
 				
 			case NO_SCENERY_EDIT :
 				
 				sceneLayer.visible = false;
 				rideLayer.visible = true;
-				Main.console.log("Draw mode set to No Scenery Edit");
 				ColorShader.drawMode = 0;
 				
 			case NO_SCENERY_PLAYBACK :
 				
 				sceneLayer.visible = false;
 				rideLayer.visible = true;
-				Main.console.log("Draw mode set to No Scenery Playback");
 				ColorShader.drawMode = 1;
 				
 			case SCENERY_EDIT :
 				
 				sceneLayer.visible = true;
 				rideLayer.visible = false;
-				Main.console.log("Draw mode set to Scenery Edit Only");
 				ColorShader.drawMode = 0;
 				
 			case SCENERY_PLAYBACK :
 				
 				sceneLayer.visible = true;
 				rideLayer.visible = false;
-				Main.console.log("Draw mode set to Scenery Playback Only");
 				ColorShader.drawMode = 1;
 				
 		}

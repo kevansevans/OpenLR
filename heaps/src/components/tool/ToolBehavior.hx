@@ -498,7 +498,6 @@ class ToolBehavior
 								if (zoom <= Main.viewGridSize) {
 									zoom = zoom << 1;
 									if (zoom == 0) {
-										Main.console.log('Max left bitshift reached', 0xFF0000);
 										break;
 									}
 								} else {
@@ -509,7 +508,6 @@ class ToolBehavior
 						} else {
 							Main.viewGridSize += 1;
 						}
-						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.QWERTY_BRACKET_LEFT :
 						
 						#if embeded_track
@@ -531,7 +529,6 @@ class ToolBehavior
 							Main.viewGridSize -= 1;
 							Main.viewGridSize = Std.int(Math.max(Main.viewGridSize, 1));
 						}
-						Main.console.log('Ruler width set to: ${Main.viewGridSize}', 0x0066FF);
 					case Key.Q:
 						
 						#if embeded_track
@@ -574,7 +571,6 @@ class ToolBehavior
 						#end
 						
 						setColorMode(FLOOR);
-						Main.console.log("Line type set to Normal", 0x0066FF);
 					case Key.NUMBER_2 :
 						
 						#if embeded_track
@@ -582,7 +578,6 @@ class ToolBehavior
 						#end
 						
 						setColorMode(ACCEL);
-						Main.console.log("Line type set to Accel", 0xCC0000);
 					case Key.NUMBER_3 :
 						
 						#if embeded_track
@@ -590,7 +585,6 @@ class ToolBehavior
 						#end
 						
 						setColorMode(SCENE);
-						Main.console.log("Line type set to Scenery", 0x00CC00);
 						
 					case Key.CTRL :
 						Main.simulation.rewinding = true;
@@ -690,23 +684,19 @@ class ToolBehavior
 	{
 		if (tool == ERASER) {
 			colorEraser = !colorEraser;
-			Main.console.log('Color eraser ' + (colorEraser == true ? 'on' : 'off'));
 		}
 		tool = ERASER;
 		updateCursor();
-		Main.console.log("Tool set to Eraser", 0x0000BB);
 	}
 	
 	public function setToolPencil() {
 		tool = PENCIL;
 		updateCursor();
-		Main.console.log("Tool set to Pencil", 0x0000BB);
 	}
 	
 	public function setToolLine() {
 		tool = LINE;
 		updateCursor();
-		Main.console.log("Tool set to Line", 0x0000BB);
 	}
 	
 	public function updateCursor():Void 

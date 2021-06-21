@@ -31,7 +31,6 @@ class Musicplayer
 		
 		#if hl
 		if (!FileSystem.exists('${_name}')) {
-			Main.console.log('${_name} is not present...', 0xFF0000);
 			return;
 		}
 		
@@ -62,7 +61,7 @@ class Musicplayer
 		mixer.addEffect(speedfilter);
 		mixer.position = (_offset / 40) + offset;
 		mixer.onEnd = function() {
-			Main.console.log("Audio has ended...");
+			
 		}
 		playing = true;
 	}

@@ -37,7 +37,6 @@ class Riders
 			while (riders[setName + occupiedSpace] != null) {
 				++occupiedSpace;
 			}
-			Main.console.log('Rider name ${setName} already occupied, renaming to ${setName + occupiedSpace}');
 			setName += "" + occupiedSpace;
 		}
 		var rider = new Bosh(_start.x, _start.y, setName, _startFrame, _endFrame);
@@ -49,7 +48,6 @@ class Riders
 	
 	public function renameRider(_old:String, _new:String) {
 		if (riders[_old] == null) {
-			Main.console.log('Rider ${_old} does not exist', 0xFF0000);
 			return;
 		}
 		
@@ -59,7 +57,6 @@ class Riders
 			while (riders[setName + occupiedSpace] != null) {
 				++occupiedSpace;
 			}
-			Main.console.log('Rider name ${setName} already occupied, renaming to ${setName + occupiedSpace}');
 			setName += "" + occupiedSpace;
 		}
 		var rider = riders[_old];
