@@ -9,20 +9,20 @@ typedef TrackStruct = {
 	var duration:Int;
 	var version:String;
 	var audio:Null<String>;
-	var startPosition:StartPosition;
-	var riders:Array<RiderInfo>;
-	var lines:Array<Line>;
-	@:optional var layers:Array<Layer>;
+	var startPosition:StartStruct;
+	var riders:Array<RiderStruct>;
+	var lines:Array<LineStruct>;
+	@:optional var layers:Array<LayerStruct>;
 }
 
-typedef RiderInfo = {
-	var startPosition:StartPosition;
+typedef RiderStruct = {
+	var startPosition:StartStruct;
 	var startVelocity:StartVelocity;
 	var colorA:Null<Int>;
 	var colorB:Null<Int>;
 }
 
-typedef StartPosition = {
+typedef StartStruct = {
 	var x:Float;
 	var y:Float;
 }
@@ -32,13 +32,13 @@ typedef StartVelocity = {
 	var y:Float;
 }
 
-typedef Layer = {
+typedef LayerStruct = {
 	var id:Int;
 	var name:String;
 	var visible:Bool;
 }
 
-typedef Line = {
+typedef LineStruct = {
 	var id:Int;
 	var type:Int;
 	var x1:Float;
