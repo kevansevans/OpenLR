@@ -25,6 +25,7 @@ class Riders
 			rider.delete();
 			riders.remove(rider.name);
 		}
+		riderCount = 0;
 	}
 	
 	public function addNewRider(_start:Point, ?_name:String, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>):RiderBase
