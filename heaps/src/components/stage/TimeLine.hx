@@ -3,6 +3,7 @@ import components.ui.Toolbar.UIButton;
 import h2d.Bitmap;
 import h2d.Interactive;
 import h2d.Object;
+import h2d.Slider;
 import h2d.Tile;
 import h2d.col.IPolygon.OffsetKind;
 import h2d.col.Point;
@@ -18,6 +19,7 @@ class TimeLine extends Object
 {
 
 	public var scrubber:Bitmap;
+	public var playspeed:Slider;
 	public var shader:ScrubberShader;
 	public var clicky:Interactive;
 	
@@ -92,6 +94,15 @@ class TimeLine extends Object
 			Main.simulation.setFlagState();
 			updatePlaydeck();
 		}
+		
+		playspeed = new Slider(160, 20, this);
+		playspeed.minValue = 0;
+		playspeed.maxValue = 40;
+		playspeed.value = 40;
+		playspeed.cursorTile = Tile.fromColor(0x222222, 10, 20);
+		playspeed.onChange = function() {
+			Main.simulation.desiredSimSpeed = playspeed.value;
+		}
 	}
 	
 	public function updatePlaydeck() {
@@ -109,6 +120,9 @@ class TimeLine extends Object
 			item.y = -35;
 			item.x = -((buttons.length / 2) * 33) + (buttons.indexOf(item) * 33) + (Main.rootScene.width / 2) + (buttons.length % 2 == 0 ? 3 / 2 : 0);
 		}
+		
+		playspeed.x = flag.x + 40;
+		playspeed.y = flag.y + 5;
 	}
 	
 	public function update() {
