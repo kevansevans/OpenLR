@@ -16,6 +16,7 @@ class Ruler extends Object
 	
 	public var color:Int = 0xCCCCCC;
 	public var enabled:Bool = true;
+	public var rulerSize:Int = 14;
 	
 	public function new(?_parent:Object) 
 	{
@@ -43,7 +44,7 @@ class Ruler extends Object
 		shader.offsetY = (Main.canvas.y - (Main.rootScene.height / 2)) * (1 / Main.rootScene.height);
 		
 		shader.scale = 1 / Main.canvas.scaleX;
-		shader.size = Main.viewGridSize;
+		shader.size = rulerSize;
 		
 		shader.enabled = enabled ? 1 : 0;
 	}
