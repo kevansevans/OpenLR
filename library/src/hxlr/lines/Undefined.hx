@@ -13,6 +13,8 @@ class Undefined extends LineObject
 	{
 		super(_start, _end);
 		
+		type = NULL;
+		
 	}
 	
 }
