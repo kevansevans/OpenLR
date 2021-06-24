@@ -79,11 +79,11 @@ class MenuBase extends Object
 		blocker.cursor = Cursor.Default;
 		
 		items.push(file = new MenuItem("File", this));
-		items.push(editor = new MenuItem("Editor", this));
-		items.push(rider = new MenuItem("Rider", this));
-		items.push(playback = new MenuItem("Playback", this));
-		items.push(advanced = new MenuItem("Advanced", this));
-		items.push(about = new MenuItem("About", this));
+		//items.push(editor = new MenuItem("Editor", this));
+		//items.push(rider = new MenuItem("Rider", this));
+		//items.push(playback = new MenuItem("Playback", this));
+		//items.push(advanced = new MenuItem("Advanced", this));
+		//items.push(about = new MenuItem("About", this));
 		
 		var size:Float = 0;
 		
@@ -121,6 +121,7 @@ class MenuBase extends Object
 			update();
 		}
 		
+		/*
 		editor.onClick = function() {
 			switchTab(editor);
 			switchMenu(editorMenu);
@@ -147,6 +148,7 @@ class MenuBase extends Object
 			resize();
 			update();
 		}
+		*/
 	}
 	
 	public function resize() {

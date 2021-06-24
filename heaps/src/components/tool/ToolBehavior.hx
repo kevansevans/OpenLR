@@ -477,6 +477,8 @@ class ToolBehavior
 			Grid.register(line);
 			Main.canvas.addVisLine(line);
 		}
+		
+		Main.CVAR.changes += 1;
 	}
 	
 	var lastViewedPosition:Point;

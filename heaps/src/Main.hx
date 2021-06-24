@@ -81,10 +81,6 @@ class Main extends App
 	
 	public static var simulation:Simulation;
 	
-	public static var trackName:Null<String> = null;
-	public static var authorName:Null<String> = null;
-	public static var songName:Null<String> = null;
-	
 	public static var textinfo:TextInfo;
 	
 	public static var audio:Musicplayer;
@@ -111,7 +107,7 @@ class Main extends App
 		var day = Date.now().getDate(); //1 - 31
 		
 		if (month == 7 && day == 16) Constants.names.unshift("Boo");
-		
+				
 		new Main();
 	}
 	
@@ -201,8 +197,6 @@ class Main extends App
 		onResize();
 	}
 	
-	
-	
 	var networkDelta:Float = 0.0;
 	var riderPhysDelta:Float = 0.0;
 	var playing:Bool = false;
@@ -280,5 +274,11 @@ class Main extends App
 	{
 		var point = canvas.globalToLocal(new h2d.col.Point(Main.locengine.width, Main.locengine.height));
 		return point;
+	}
+	
+	public static var CVAR = {
+		changes : 0,
+		trackName : "Untitled",
+		trackAuthor : "Anonymous"
 	}
 }
