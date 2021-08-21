@@ -9,7 +9,6 @@ import hxlr.math.geom.Point;
  */
 class Accel extends LineObject 
 {
-	public var accConst:Float = 0.1;
 	var accx:Float;
 	var accy:Float;
 	

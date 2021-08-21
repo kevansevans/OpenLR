@@ -1,11 +1,14 @@
 package hxlr.engine;
 
+import haxe.macro.Expr.Case;
 import hxlr.engine.Cell;
 import hxlr.enums.LineType;
+import hxlr.file.TrackStruct.LineStruct;
 import hxlr.lines.Accel;
 import hxlr.lines.LineObject;
 import hxlr.lines.Floor;
 import hxlr.lines.Scenery;
+import hxlr.lines.Slow;
 import hxlr.lines.Undefined;
 import hxlr.math.geom.Point;
 
@@ -29,7 +32,7 @@ class Grid
 		lines = new Array();
 	}
 	
-	public static function createLineObject(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, _inv:Bool = false, _limMode:Int = 0):LineObject
+	public static function createLineObject(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, _inv:Bool = false, _limMode:Int = 0, _multiplier:Int = 1):LineObject
 	{
 		var line:LineObject = null;
 		
@@ -41,12 +44,48 @@ class Grid
 			case FLOOR :
 				line = new Floor(start, end, _inv, _limMode);
 			case ACCEL :
-				line = new Accel(start, end, _inv, _limMode);
+				line = new Slow(start, end, _inv, _limMode);
+				line.multiplier = _multiplier;
 			case SCENE :
 				line = new Scenery(start, end);
+			case SLOW :
+				line = new Slow(start, end, _inv, _limMode);
 			default :
 				line = new Undefined(start, end);
 		}
+		
+		return line;
+	}
+	
+	public static function createLineFromStruct(_line:LineStruct):LineObject
+	{
+		
+		var line:LineObject = null;
+		
+		var start:Point = new Point(_line.x1, _line.y1);
+		var end:Point = new Point(_line.x2, _line.y2);
+		
+		var limMode = 0;
+		if (_line.leftExtended && !_line.rightExtended) limMode = 1;
+		else if (!_line.leftExtended && _line.rightExtended) limMode = 2;
+		else if (_line.leftExtended && _line.rightExtended) limMode = 3;
+		
+		switch (_line.type) {
+			
+			case FLOOR :
+				line = new Floor(start, end, _line.flipped, limMode);
+			case ACCEL :
+				line = new Accel(start, end, _line.flipped, limMode);
+				line.multiplier = _line.multiplier == null ? 1 : _line.multiplier;
+			case SCENE :
+				line = new Scenery(start, end);
+			case SLOW :
+				line = new Slow(start, end, _line.flipped, limMode);
+			default :
+				line = new Undefined(start, end);
+				
+		}
+		
 		
 		return line;
 	}
@@ -138,6 +177,7 @@ class Grid
 	
 	public static function deleteTrack() {
 		for (line in lines) unregister(line);
+		lines = new Array();
 	}
 	
 	public static function unregister(_line:LineObject) {

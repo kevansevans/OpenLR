@@ -17,6 +17,7 @@ class LineObject extends Line
 	public var type:LineType;
 	public var tangible:Bool = false;
 	public var thickness:Float = 2;
+	public var accConst:Float = 0.1;
 	
 	public var keyList:Array<String>;
 	
