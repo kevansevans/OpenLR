@@ -110,7 +110,7 @@ class Canvas extends Object
 		var line:VisLine = null;
 		
 		switch (_line.type) {
-			case FLOOR | ACCEL :
+			case FLOOR | ACCEL | SLOW :
 				line = new VisLine(_line, rideLayer);
 			case SCENE :
 				line = new VisLine(_line, sceneLayer);

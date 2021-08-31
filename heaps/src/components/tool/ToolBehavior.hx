@@ -6,6 +6,7 @@ import hxlr.engine.Grid;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
+import hxlr.lines.Slow;
 import hxlr.lines.LineObject;
 import components.tool.ToolFunction;
 import components.ui.Toolbar.Icon;
@@ -38,25 +39,37 @@ class ToolBehavior
 	public var bitmapPencilBlue:BitmapData;
 	public var bitmapPencilRed:BitmapData;
 	public var bitmapPencilGreen:BitmapData;
+	public var bitmapPencilPink:BitmapData;
+	public var bitmapPencilBrown:BitmapData;
 	public var cursorPencilBlue:Cursor;
 	public var cursorPencilRed:Cursor;
 	public var cursorPencilGreen:Cursor;
+	public var cursorPencilPink:Cursor;
+	public var cursorPencilBrown:Cursor;
 	
 	public var bitmapLineBlue:BitmapData;
 	public var bitmapLineRed:BitmapData;
 	public var bitmapLineGreen:BitmapData;
+	public var bitmapLinePink:BitmapData;
+	public var bitmapLineBrown:BitmapData;
 	public var cursorLineBlue:Cursor;
 	public var cursorLineRed:Cursor;
 	public var cursorLineGreen:Cursor;
+	public var cursorLinePink:Cursor;
+	public var cursorLineBrown:Cursor;
 	
 	public var bitmapEraser:BitmapData;
 	public var bitmapEraserBlue:BitmapData;
 	public var bitmapEraserRed:BitmapData;
 	public var bitmapEraserGreen:BitmapData;
+	public var bitmapEraserPink:BitmapData;
+	public var bitmapEraserBrown:BitmapData;
 	public var cursorEraser:Cursor;
 	public var cursorEraserBlue:Cursor;
 	public var cursorEraserRed:Cursor;
 	public var cursorEraserGreen:Cursor;
+	public var cursorEraserPink:Cursor;
+	public var cursorEraserBrown:Cursor;
 	
 	public var lineSnapStart:LineObject = null;
 	public var lineSnapEnd:LineObject = null;
@@ -89,13 +102,17 @@ class ToolBehavior
 		cursorPencilRed = Cursor.Custom(new CustomCursor([bitmapPencilRed], 0, 1, 25));
 		bitmapPencilGreen = Res.tool.pencilGreen.toBitmap();
 		cursorPencilGreen = Cursor.Custom(new CustomCursor([bitmapPencilGreen], 0, 1, 25));
+		bitmapPencilBrown = Res.tool.pencilBrown.toBitmap();
+		cursorPencilBrown = Cursor.Custom(new CustomCursor([bitmapPencilBrown], 0, 1, 25));
 		
 		bitmapLineBlue = Res.tool.lineBlue.toBitmap();
-		cursorLineBlue = Cursor.Custom(new CustomCursor([bitmapLineBlue], 0, 12, 12));
+		cursorLineBlue = Cursor.Custom(new CustomCursor([bitmapLineBlue], 0, 13, 13));
 		bitmapLineRed = Res.tool.lineRed.toBitmap();
-		cursorLineRed = Cursor.Custom(new CustomCursor([bitmapLineRed], 0, 12, 12));
+		cursorLineRed = Cursor.Custom(new CustomCursor([bitmapLineRed], 0, 13, 13));
 		bitmapLineGreen = Res.tool.lineGreen.toBitmap();
-		cursorLineGreen = Cursor.Custom(new CustomCursor([bitmapLineGreen], 0, 12, 12));
+		cursorLineGreen = Cursor.Custom(new CustomCursor([bitmapLineGreen], 0, 13, 13));
+		bitmapLineBrown = Res.tool.lineBrown.toBitmap();
+		cursorLineBrown = Cursor.Custom(new CustomCursor([bitmapLineBrown], 0, 13, 13));
 		
 		bitmapEraser = Res.tool.eraser.toBitmap();
 		cursorEraser = Cursor.Custom(new CustomCursor([bitmapEraser], 0, 5, 5));
@@ -105,6 +122,8 @@ class ToolBehavior
 		cursorEraserRed = Cursor.Custom(new CustomCursor([bitmapEraserRed], 0, 5, 5));
 		bitmapEraserGreen = Res.tool.eraserGreen.toBitmap();
 		cursorEraserGreen = Cursor.Custom(new CustomCursor([bitmapEraserGreen], 0, 5, 5));
+		bitmapEraserBrown = Res.tool.eraserBrown.toBitmap();
+		cursorEraserBrown = Cursor.Custom(new CustomCursor([bitmapEraserBrown], 0, 5, 5));
 		
 		bitmapNoWay = Res.tool.noWay.toBitmap();
 		cursorNoWay = Cursor.Custom(new CustomCursor([bitmapNoWay], 0, 10, 10));
@@ -156,7 +175,7 @@ class ToolBehavior
 						
 					case PENCIL | LINE :
 						
-						snap(mouseStart);
+						snap(mouseStart, true);
 						
 					default :
 						
@@ -175,7 +194,7 @@ class ToolBehavior
 					
 					case PENCIL | LINE :
 						
-						snap(mouseStart);
+						snap(mouseStart, false);
 						
 					default :
 					
@@ -240,7 +259,7 @@ class ToolBehavior
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 					
-					snap(mouseEnd);
+					snap(mouseEnd, false);
 					
 					updatePreview();
 					
@@ -278,7 +297,7 @@ class ToolBehavior
 	function updatePreview() {
 		
 		if (!leftIsDown && !rightIsDown) {
-			Main.canvas.previewLayer.clear();
+			Main.canvas.previewLine.remove();
 			return;
 		}
 		
@@ -286,9 +305,9 @@ class ToolBehavior
 		
 		var preview = Main.canvas.preview;
 		
-		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10) {
+		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10) {
 			
-			tempLine = new Undefined(mouseStart, mouseEnd, shifted);
+			tempLine = new Undefined(mouseStart, mouseEnd);
 			
 		} else {
 		
@@ -311,7 +330,11 @@ class ToolBehavior
 					
 				case SCENE :
 					
-					tempLine = new Scenery(mouseStart, mouseEnd, shifted);
+					tempLine = new Scenery(mouseStart, mouseEnd);
+					
+				case SLOW :
+					
+					tempLine = new Slow(mouseStart, mouseEnd);
 			}
 		}
 		
@@ -336,7 +359,7 @@ class ToolBehavior
 						
 						if (mouseStart == null || mouseEnd == null) return;
 						
-						if (tool == LINE) snap(mouseEnd);
+						if (tool == LINE) snap(mouseEnd, false);
 						
 						drawLine();
 						
@@ -356,7 +379,7 @@ class ToolBehavior
 		updatePreview();
 	}
 	
-	public function snap(_pos:Point):Void 
+	public function snap(_pos:Point, _start:Bool):Void 
 	{
 		if (color == LineType.NULL || color == LineType.SCENE) return;
 		
@@ -466,6 +489,8 @@ class ToolBehavior
 				type = LineType.ACCEL;
 			case 2:
 				type = LineType.SCENE;
+			case 4:
+				type = LineType.SLOW;
 		}
 		
 		if (leftIsDown) {
@@ -587,6 +612,14 @@ class ToolBehavior
 						#end
 						
 						setColorMode(SCENE);
+						
+					case Key.NUMBER_5 :
+						
+						#if embeded_track
+						return;
+						#end
+						
+						setColorMode(SLOW);
 						
 					case Key.CTRL :
 						Main.simulation.rewinding = true;
@@ -745,6 +778,8 @@ class ToolBehavior
 					Main.canvas_interaction.cursor = cursorEraserRed;
 				case SCENE :
 					Main.canvas_interaction.cursor = cursorEraserGreen;
+				case SLOW :
+					Main.canvas_interaction.cursor = cursorEraserBrown;
 				default :
 					Main.canvas_interaction.cursor = Default;
 			}
@@ -776,6 +811,8 @@ class ToolBehavior
 				Main.canvas_interaction.cursor = cursorLineRed;
 			case SCENE :
 				Main.canvas_interaction.cursor = cursorLineGreen;
+			case SLOW :
+				Main.canvas_interaction.cursor = cursorLineBrown;
 			default :
 				Main.canvas_interaction.cursor = Default;
 		}
@@ -805,6 +842,8 @@ class ToolBehavior
 				Main.canvas_interaction.cursor = cursorPencilRed;
 			case SCENE :
 				Main.canvas_interaction.cursor = cursorPencilGreen;
+			case SLOW :
+				Main.canvas_interaction.cursor = cursorPencilBrown;
 			default :
 				Main.canvas_interaction.cursor = Default;
 		}

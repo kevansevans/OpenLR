@@ -119,7 +119,7 @@ class ColorShader extends Shader
 	
 }
 
-class EndFlagShader extends Shader
+class RedFlagShader extends Shader
 {
 	static var SRC = {
 		

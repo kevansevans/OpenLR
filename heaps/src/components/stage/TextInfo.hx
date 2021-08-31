@@ -28,13 +28,14 @@ class TextInfo
 	
 	public function update() {
 		
-		info.text = (Main.trackName == null ? 'Untitled' : Main.trackName) + "\n";
+		info.text = Main.CVAR.trackName + "\n";
 		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
 		info.text += 'Lines: ${Grid.lineCount}\n';
 		
 		if (getMode(FLOOR)) info.text += 'Floor: ${Grid.subTypeCount[LineType.FLOOR] == null ? 0 : Grid.subTypeCount[LineType.FLOOR]}\n';
 		if (getMode(ACCEL)) info.text += 'Accel: ${Grid.subTypeCount[LineType.ACCEL] == null ? 0 : Grid.subTypeCount[LineType.ACCEL]}\n';
 		if (getMode(SCENE)) info.text += 'Scene: ${Grid.subTypeCount[LineType.SCENE] == null ? 0 : Grid.subTypeCount[LineType.SCENE]}\n';
+		if (getMode(SLOW)) info.text += 'Slow: ${Grid.subTypeCount[LineType.SLOW] == null ? 0 : Grid.subTypeCount[LineType.SLOW]}\n';
 		
 		info.text += '${Math.round(Main.locengine.fps)}:FPS';
 		

@@ -58,6 +58,7 @@ class Toolbar extends Object
 		swatches.push(blue = new UIButton(Tile.fromColor(0x0066FF, 30, 15)));
 		swatches.push(red = new UIButton(Tile.fromColor(0xCC0000, 30, 15)));
 		swatches.push(green = new UIButton(Tile.fromColor(0x00CC00, 30, 15)));
+		swatches.push(brown = new UIButton(Tile.fromColor(0x664229, 30, 15)));
 		
 		pencil.selected = true;
 		activetool = pencil;
@@ -98,6 +99,12 @@ class Toolbar extends Object
 		
 		green.onClick = function() {
 			Main.toolControl.setColorMode(SCENE);
+		}
+		
+		brown.onClick = function() {green.onClick = function() {
+			Main.toolControl.setColorMode(SCENE);
+		}
+			Main.toolControl.setColorMode(SLOW);
 		}
 		
 		sort();

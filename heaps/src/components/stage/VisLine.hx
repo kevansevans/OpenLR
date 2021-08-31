@@ -2,7 +2,7 @@ package components.stage;
 
 import components.stage.LineShader.CapShader;
 import components.stage.LineShader.ColorShader;
-import components.stage.LineShader.EndFlagShader;
+import components.stage.LineShader.RedFlagShader;
 import hxlr.enums.LineType;
 import h2d.Bitmap;
 import h2d.Object;
@@ -34,12 +34,15 @@ class VisLine extends Object
 	static var redShader:ColorShader;
 	static var redShaderInv:ColorShader;
 	static var greenShader:ColorShader;
+	static var brownShader:ColorShader;
+	static var brownShaderInv:ColorShader;
 	static var invalidShader:ColorShader;
 	
 	static var blue:Vec = new Vec(0, 0.4, 1);
 	static var red:Vec = new Vec(0.8, 0, 0);
 	static var redRED:Vec = new Vec(1, 0, 0);
 	static var green:Vec = new Vec(0, 0.8, 0);
+	static var brown:Vec = new Vec(0x66 / 255, 0x42 / 255, 0x29 / 255);
 	
 	public var redFlag:Bitmap;
 	
@@ -58,6 +61,7 @@ class VisLine extends Object
 		this.y = _line.start.y;
 		this.rotation = _line.angle;
 		bitmap.addShader(capShader = new CapShader());
+		bitmap.smooth = false;
 		capShader.lineLength = _line.length + 2;
 		if (_line.type == ACCEL) {
 			capShader.dirDependant = 1;
@@ -65,7 +69,7 @@ class VisLine extends Object
 			bitmap.addChildAt(redFlag, 0);
 			redFlag.y = 1;
 			redFlag.x = bitmap.width - 5;
-			redFlag.addShader(new EndFlagShader());
+			redFlag.addShader(new RedFlagShader());
 			redFlag.scaleY = _line.shifted ? -1 : 1;
 		}
 		
@@ -105,6 +109,23 @@ class VisLine extends Object
 				
 				if (greenShader == null) greenShader = new ColorShader(green, 1);
 				bitmap.addShader(greenShader);
+				
+			case SLOW :
+				
+				if (_line.shifted) {
+					
+					if (brownShaderInv == null) {
+						brownShaderInv = new ColorShader(brown);
+						brownShaderInv.inv = 1;
+					}
+					bitmap.addShader(brownShaderInv);
+					
+				} else {
+					if (brownShader == null) brownShader = new ColorShader(brown);
+					bitmap.addShader(brownShader);
+				}
+				
+				
 				
 			default :
 				
