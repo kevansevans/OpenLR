@@ -44,7 +44,7 @@ class Grid
 			case FLOOR :
 				line = new Floor(start, end, _inv, _limMode);
 			case ACCEL :
-				line = new Slow(start, end, _inv, _limMode);
+				line = new Accel(start, end, _inv, _limMode);
 				line.multiplier = _multiplier;
 			case SCENE :
 				line = new Scenery(start, end);
