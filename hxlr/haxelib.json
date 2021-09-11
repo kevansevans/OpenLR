@@ -1,0 +1,11 @@
+{
+  "name": "hxlr",
+  "url" : "https://github.com/kevansevans/OpenLR",
+  "license": "MIT",
+  "tags": ["cross", "alpha", "game"],
+  "description": "Haxelib adaption of Line Rider",
+  "version": "0.1.0",
+  "classPath": "src/",
+  "releasenote": "Haxelib release",
+  "contributors": ["kevansevans"]
+}
