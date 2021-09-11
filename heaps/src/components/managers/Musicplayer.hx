@@ -39,8 +39,6 @@ class Musicplayer
 		bFileEntry.load( function() {
 			sound = new Sound(bFileEntry);
 		});
-		
-		Main.songName = _name;
 		#end
 	}
 	
@@ -49,8 +47,6 @@ class Musicplayer
 		bFileEntry.load( function() {
 			sound = new Sound(bFileEntry);
 		});
-		
-		Main.songName = _name;
 	}
 	
 	public function playMusic(_offset:Int) {

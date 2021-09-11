@@ -38,6 +38,7 @@ class Toolbar extends Object
 	public var blue:UIButton;
 	public var red:UIButton;
 	public var green:UIButton;
+	public var brown:UIButton;
 	
 	var activetool:UIButton;
 	
