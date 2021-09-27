@@ -160,7 +160,7 @@ class Stick
 		
 		var adjust:Null<Float> = null;
 		if (dist == 0) adjust = 0;
-		else adjust = (dist - restLength) / dist * 0.5;
+		else adjust = (dist - restLength) / dist;
 		
 		var xAdjust = xDist * adjust;
 		var yAdjust = yDist * adjust;
