@@ -36,6 +36,8 @@ class RiderBase
 	public var disableFrame:Null<Int>;
 	public var enabled:Bool = true;
 	
+	public var speed(get, never):Float;
+	
 	public var focusPoint:ContactPoint;
 	
 	public var name:String;
@@ -146,6 +148,22 @@ class RiderBase
 		
 	}
 	public function renderRider() {};
+	
+	function get_speed():Float 
+	{
+		var total:Float = 0;
+		
+		for (dot in contactPoints)
+		{
+			total += Math.sqrt(Math.pow(dot.dir.x - gravity().x, 2) + Math.pow(dot.dir.y - gravity().y, 2));
+		}
+		
+		total /= contactPoints.length;
+		
+		total = Math.round(total * 1000) / 1000;
+		
+		return total;
+	}
 	
 	public function set_crashed(_value:Bool):Bool
 	{
