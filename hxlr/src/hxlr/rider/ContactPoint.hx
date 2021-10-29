@@ -28,8 +28,13 @@ class ContactPoint
 		
 		var g = _gravity;
 		
-		dir.x = pos.x - vel.x + g.x;
-		dir.y = pos.y - vel.y + g.y;
+		dir = pos.clone();
+		
+		dir.x -= vel.x;
+		dir.y -= vel.y;
+		
+		dir.x += g.x;
+		dir.y += g.y;
 		
 		vel = pos.clone();
 		

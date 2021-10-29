@@ -19,7 +19,11 @@ class RiderBase
 	
 	public var startPos:Point;
 	public var startVel:Point;
+	
 	public var gravity:Void -> Point;
+	public var step:Void -> Void;
+	public var iterate:Void -> Void;
+	public var constrain:Void -> Void;
 	
 	public var contactPoints:Array<ContactPoint>;
 	public var airPoints:Array<AirPoint>;
@@ -47,10 +51,43 @@ class RiderBase
 		struct = _struct;
 		startPos = _start;
 		startVel = new Point(struct.x_vel, struct.y_vel);
+		
 		gravity = function():Point {
 			return new Point(struct.x_grav, struct.y_grav);
 		}
 		name = _name;
+		
+		step = function() {
+			if (enabled) {
+				if ((enabledFrame == null || Main.simulation.frames >= enabledFrame) && (disableFrame == null || Main.simulation.frames < disableFrame)) {
+					iterate();
+					for (iteration in 0...6) {
+						constrain();
+						collide();
+					}
+					constrainScarf();
+				}
+			}
+			
+			checkLimits();
+		}
+		
+		iterate = function()
+		{
+			for (point in contactPoints) {
+				point.iterate(gravity());
+			}
+			for (point in airPoints) {
+				point.iterate(gravity());
+			}
+		}
+		
+		constrain = function()
+		{
+			for (edge in constraints) {
+				edge.satisfy(crashed);
+			}
+		}
 		
 		init();
 	}
@@ -115,13 +152,7 @@ class RiderBase
 	}
 	public function reset() {}
 	
-	public function step() {}
-	
-	public function iterate() {}
-	
 	public function checkLimits() {}
-	
-	public function constrain() {}
 	
 	public function constrainScarf() {}
 	
