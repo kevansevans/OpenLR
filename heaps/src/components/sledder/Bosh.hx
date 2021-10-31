@@ -93,24 +93,6 @@ class Bosh extends RiderBase
 		
 	}
 	
-	override public function step():Void 
-	{
-		
-		if (enabled) {
-			if ((enabledFrame == null || Main.simulation.frames >= enabledFrame) && (disableFrame == null || Main.simulation.frames < disableFrame)) {
-				iterate();
-				for (iteration in 0...6) {
-					constrain();
-					collide();
-				}
-				constrainScarf();
-			}
-		}
-		
-		checkLimits();
-		
-	}
-	
 	override public function checkLimits():Void 
 	{
 		for (def in limits) {
@@ -127,23 +109,6 @@ class Bosh extends RiderBase
 					if (x_distA * y_distB - y_distA * x_distB > def.threshold) crashed = true;
 			}
 			
-		}
-	}
-	
-	override public function iterate() 
-	{
-		for (point in contactPoints) {
-			point.iterate(gravity());
-		}
-		for (point in airPoints) {
-			point.iterate(gravity());
-		}
-	}
-	
-	override public function constrain() 
-	{
-		for (edge in constraints) {
-			edge.satisfy(crashed);
 		}
 	}
 	
