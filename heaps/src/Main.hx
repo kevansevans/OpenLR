@@ -67,7 +67,7 @@ class Main extends App
 	
 	public static var canvas:Canvas;
 	
-	public static var canvas_interaction:Interactive;
+	public static var input:Interactive;
 	
 	public static var toolControl:ToolBehavior;
 	public static var toolbar:Toolbar;
@@ -149,7 +149,7 @@ class Main extends App
 		canvas.x = engine.width / 2;
 		canvas.y = engine.height / 2;
 		
-		canvas_interaction = new Interactive(engine.width, engine.height, s2d);
+		input = new Interactive(engine.width, engine.height, s2d);
 		
 		menu = new MenuBase();
 		
@@ -243,8 +243,8 @@ class Main extends App
 		ruler.x = ruler.y = 0;
 		ruler.resize();
 		
-		canvas_interaction.width = engine.width;
-		canvas_interaction.height = engine.height;
+		input.width = engine.width;
+		input.height = engine.height;
 		
 		mask.width = engine.width;
 		mask.height = engine.height;
