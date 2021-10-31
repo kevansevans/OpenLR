@@ -19,6 +19,13 @@ class TextInfo
 	
 	public var framerate:Float;
 	
+	public static var showTrackName:Bool = true;
+	public static var showTimeStamp:Bool = true;
+	public static var showSpeedometer:Bool = true;
+	public static var showTotalLineCounts:Bool = true;
+	public static var showLineCounts:Bool = true;
+	public static var showFrameRate:Bool = true;
+	
 	public function new() 
 	{
 		info = new Text(Assets.f_verdana_20);
@@ -28,16 +35,30 @@ class TextInfo
 	
 	public function update() {
 		
-		info.text = Main.CVAR.trackName + "\n";
-		info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
-		info.text += 'Lines: ${Grid.lineCount}\n';
+		info.text = "";
 		
-		if (getMode(FLOOR)) info.text += 'Floor: ${Grid.subTypeCount[LineType.FLOOR] == null ? 0 : Grid.subTypeCount[LineType.FLOOR]}\n';
-		if (getMode(ACCEL)) info.text += 'Accel: ${Grid.subTypeCount[LineType.ACCEL] == null ? 0 : Grid.subTypeCount[LineType.ACCEL]}\n';
-		if (getMode(SCENE)) info.text += 'Scene: ${Grid.subTypeCount[LineType.SCENE] == null ? 0 : Grid.subTypeCount[LineType.SCENE]}\n';
-		if (getMode(SLOW)) info.text += 'Slow: ${Grid.subTypeCount[LineType.SLOW] == null ? 0 : Grid.subTypeCount[LineType.SLOW]}\n';
+		if (showTrackName) info.text += Main.CVAR.trackName + "\n";
+		if (showTimeStamp) info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
 		
-		info.text += '${Math.round(Main.locengine.fps)}:FPS';
+		if (Main.camera.enabled && showSpeedometer) 
+		{
+			var speed:Float = Main.riders.riders[Main.camera.riderFollow].speed;
+			info.text += '${speed} p/f\n';
+		}
+		
+		if (showTotalLineCounts) info.text += 'Lines: ${Grid.lineCount}\n';
+		
+		if (showLineCounts) {
+			if (getMode(FLOOR)) info.text += 'Floor: ${Grid.subTypeCount[LineType.FLOOR] == null ? 0 : Grid.subTypeCount[LineType.FLOOR]}\n';
+			if (getMode(ACCEL)) info.text += 'Accel: ${Grid.subTypeCount[LineType.ACCEL] == null ? 0 : Grid.subTypeCount[LineType.ACCEL]}\n';
+			if (getMode(SCENE)) info.text += 'Scene: ${Grid.subTypeCount[LineType.SCENE] == null ? 0 : Grid.subTypeCount[LineType.SCENE]}\n';
+			if (getMode(SLOW)) info.text += 'Slow: ${Grid.subTypeCount[LineType.SLOW] == null ? 0 : Grid.subTypeCount[LineType.SLOW]}\n';
+		}
+		
+		if (showFrameRate) info.text += '${Math.round(Main.locengine.fps)}:FPS';
+		
+		info.x = Main.locengine.width - info.textWidth - 5;
+		info.y = 40;
 		
 	}
 	
@@ -122,9 +143,6 @@ class TextInfo
 	public function align() 
 	{
 		update();
-		
-		info.x = Main.locengine.width - info.textWidth - 5;
-		info.y = 5;
 	}
 	
 }
