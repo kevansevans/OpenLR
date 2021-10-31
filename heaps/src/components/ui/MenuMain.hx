@@ -14,7 +14,6 @@ import haxe.ui.core.Screen;
 import haxe.ui.events.Events;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
-
 import haxe.ui.Toolkit;
 
 /**
@@ -37,6 +36,7 @@ class MenuMain extends Object
 				public var trackNameCheck:CheckBox;
 				public var timeStampCheck:CheckBox;
 				public var speedometerCheck:CheckBox;
+				public var lineTotalCountCheck:CheckBox;
 				public var lineCountCheck:CheckBox;
 				public var frameRateCheck:CheckBox;
 			public var gridMenu:Menu;
@@ -44,6 +44,10 @@ class MenuMain extends Object
 				public var gridOriginCheck:CheckBox; 
 				public var gridSizeStepper:NumberStepper;
 			
+	//////////
+		
+		public var blueSwatch:Button;
+	
 	public function toggle()
 	{
 		this.visible = !this.visible;
@@ -100,22 +104,50 @@ class MenuMain extends Object
 		trackNameCheck = new CheckBox();
 		trackNameCheck.text = "Track name";
 		trackNameCheck.value = true;
+		trackNameCheck.onChange = function(e:UIEvent)
+		{
+			TextInfo.showTrackName = trackNameCheck.value;
+		}
 		
 		timeStampCheck = new CheckBox();
 		timeStampCheck.text = "Time stamp";
 		timeStampCheck.value = true;
+		timeStampCheck.onChange = function(e:UIEvent)
+		{
+			TextInfo.showTimeStamp = timeStampCheck.value;
+		}
 		
 		speedometerCheck = new CheckBox();
 		speedometerCheck.text = "Speedometer";
 		speedometerCheck.value = true;
+		speedometerCheck.onChange = function(e:UIEvent)
+		{
+			TextInfo.showSpeedometer = speedometerCheck.value;
+		}
+		
+		lineTotalCountCheck = new CheckBox();
+		lineTotalCountCheck.text = "Total line count";
+		lineTotalCountCheck.value = true;
+		lineTotalCountCheck.onChange = function(e:UIEvent)
+		{
+			TextInfo.showTotalLineCounts = lineTotalCountCheck.value;
+		}
 		
 		lineCountCheck = new CheckBox();
-		lineCountCheck.text = "Line counts";
+		lineCountCheck.text = "Specific line count";
 		lineCountCheck.value = true;
+		lineCountCheck.onChange = function(e:UIEvent)
+		{
+			TextInfo.showLineCounts = lineCountCheck.value;
+		}
 		
 		frameRateCheck = new CheckBox();
 		frameRateCheck.text = "Frame rate";
 		frameRateCheck.value = true;
+		frameRateCheck.onChange = function(e:UIEvent)
+		{
+			TextInfo.showFrameRate = frameRateCheck.value;
+		}
 		
 		gridMenu = new Menu();
 		gridMenu.text = "Ruler";
