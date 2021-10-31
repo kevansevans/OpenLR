@@ -151,8 +151,6 @@ class Main extends App
 		
 		input = new Interactive(engine.width, engine.height, s2d);
 		
-		menu = new MenuBase();
-		
 		toolControl = new ToolBehavior();
 		
 		grid = new Grid();
@@ -165,7 +163,6 @@ class Main extends App
 		
 		textinfo = new TextInfo();
 		s2d.addChild(textinfo.info);
-		textinfo.update();
 		textinfo.info.x = engine.width - textinfo.info.textWidth - 5;
 		textinfo.info.y = 5;
 		
@@ -176,7 +173,7 @@ class Main extends App
 		#end
 		timeline = new TimeLine(s2d);
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
-		toolbar.y = 3;
+		toolbar.y = 30;
 		
 		var firstRider = riders.addNewRider(new Point(0, 0));
 		
@@ -252,13 +249,12 @@ class Main extends App
 		textinfo.align();
 		
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
-		toolbar.y = 3;
+		toolbar.y = 40;
 		
 		timeline.x = 0;
 		timeline.y = s2d.height - 40;
 		timeline.resize();
 		
-		menu.x = menu.y = 5;
 		menu.resize();
 		
 	}

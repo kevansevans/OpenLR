@@ -54,7 +54,6 @@ class Toolbar extends Object
 		icons.push(pencil = new UIButton(Res.icon.pencil.toTile(), 0.1));
 		icons.push(line = new UIButton(Res.icon.line.toTile(), 0.1));
 		icons.push(eraser = new UIButton(Res.icon.eraser.toTile(), 0.1));
-		icons.push(gear = new UIButton(Res.icon.gear.toTile(), 0.1));
 		
 		swatches.push(blue = new UIButton(Tile.fromColor(0x0066FF, 30, 15)));
 		swatches.push(red = new UIButton(Tile.fromColor(0xCC0000, 30, 15)));
@@ -83,11 +82,6 @@ class Toolbar extends Object
 			eraser.selected = true;
 			activetool = eraser;
 			Main.toolControl.setToolEraser();
-		}
-		
-		gear.onClick = function() {
-			if (Main.menu.open) Main.menu.toggleOff();
-			else Main.menu.toggleOn();
 		}
 		
 		blue.onClick = function() {
