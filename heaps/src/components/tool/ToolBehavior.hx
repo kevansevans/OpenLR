@@ -85,15 +85,15 @@ class ToolBehavior
 		tool = PENCIL;
 		color = 0;
 		
-		Main.canvas_interaction.enableRightButton = true;
-		Main.canvas_interaction.onKeyDown = keyInputDown;
-		Main.canvas_interaction.onKeyUp = keyInputDown;
-		Main.canvas_interaction.onPush = mouseDown;
-		Main.canvas_interaction.onRelease = mouseUp;
-		Main.canvas_interaction.onMove = mouseMove;
-		Main.canvas_interaction.onWheel = mouseWheel;
-		Main.canvas_interaction.onOver = function(e:Event) {
-			Main.canvas_interaction.focus();
+		Main.input.enableRightButton = true;
+		Main.input.onKeyDown = keyInputDown;
+		Main.input.onKeyUp = keyInputDown;
+		Main.input.onPush = mouseDown;
+		Main.input.onRelease = mouseUp;
+		Main.input.onMove = mouseMove;
+		Main.input.onWheel = mouseWheel;
+		Main.input.onOver = function(e:Event) {
+			Main.input.focus();
 		}
 		
 		bitmapPencilBlue = Res.tool.pencilBlue.toBitmap();
@@ -128,7 +128,7 @@ class ToolBehavior
 		bitmapNoWay = Res.tool.noWay.toBitmap();
 		cursorNoWay = Cursor.Custom(new CustomCursor([bitmapNoWay], 0, 10, 10));
 		
-		Main.canvas_interaction.cursor = cursorPencilBlue;
+		Main.input.cursor = cursorPencilBlue;
 	}
 	
 	var mouseStart:Point;
@@ -746,26 +746,26 @@ class ToolBehavior
 				updateEraserCursor();
 			#end
 			default :
-				Main.canvas_interaction.cursor = Default;
+				Main.input.cursor = Default;
 		}
 	}
 	
 	function updateEraserCursor():Void 
 	{
 		if (!colorEraser) {
-			Main.canvas_interaction.cursor = cursorEraser;
+			Main.input.cursor = cursorEraser;
 		} else {
 			if (Main.canvas.lineVisLock) {
 				switch (Main.canvas.drawMode) {
 					case FULL_EDIT | PLAYBACK :
 					case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 						if (color == SCENE) {
-							Main.canvas_interaction.cursor = cursorNoWay;
+							Main.input.cursor = cursorNoWay;
 							return;
 						}
 					case SCENERY_EDIT | SCENERY_PLAYBACK :
 						if (color == FLOOR || color == ACCEL)  {
-							Main.canvas_interaction.cursor = cursorNoWay;
+							Main.input.cursor = cursorNoWay;
 							return;
 						}
 					default :
@@ -773,15 +773,15 @@ class ToolBehavior
 			}
 			switch (color) {
 				case FLOOR :
-					Main.canvas_interaction.cursor = cursorEraserBlue;
+					Main.input.cursor = cursorEraserBlue;
 				case ACCEL :
-					Main.canvas_interaction.cursor = cursorEraserRed;
+					Main.input.cursor = cursorEraserRed;
 				case SCENE :
-					Main.canvas_interaction.cursor = cursorEraserGreen;
+					Main.input.cursor = cursorEraserGreen;
 				case SLOW :
-					Main.canvas_interaction.cursor = cursorEraserBrown;
+					Main.input.cursor = cursorEraserBrown;
 				default :
-					Main.canvas_interaction.cursor = Default;
+					Main.input.cursor = Default;
 			}
 		}
 	}
@@ -793,12 +793,12 @@ class ToolBehavior
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 					if (color == SCENE) {
-						Main.canvas_interaction.cursor = cursorNoWay;
+						Main.input.cursor = cursorNoWay;
 						return;
 					}
 				case SCENERY_EDIT | SCENERY_PLAYBACK :
 					if (color == FLOOR || color == ACCEL)  {
-						Main.canvas_interaction.cursor = cursorNoWay;
+						Main.input.cursor = cursorNoWay;
 						return;
 					}
 				default :
@@ -806,15 +806,15 @@ class ToolBehavior
 		}
 		switch (color) {
 			case FLOOR :
-				Main.canvas_interaction.cursor = cursorLineBlue;
+				Main.input.cursor = cursorLineBlue;
 			case ACCEL :
-				Main.canvas_interaction.cursor = cursorLineRed;
+				Main.input.cursor = cursorLineRed;
 			case SCENE :
-				Main.canvas_interaction.cursor = cursorLineGreen;
+				Main.input.cursor = cursorLineGreen;
 			case SLOW :
-				Main.canvas_interaction.cursor = cursorLineBrown;
+				Main.input.cursor = cursorLineBrown;
 			default :
-				Main.canvas_interaction.cursor = Default;
+				Main.input.cursor = Default;
 		}
 	}
 	
@@ -824,12 +824,12 @@ class ToolBehavior
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 					if (color == SCENE) {
-						Main.canvas_interaction.cursor = cursorNoWay;
+						Main.input.cursor = cursorNoWay;
 						return;
 					}
 				case SCENERY_EDIT | SCENERY_PLAYBACK :
 					if (color == FLOOR || color == ACCEL)  {
-						Main.canvas_interaction.cursor = cursorNoWay;
+						Main.input.cursor = cursorNoWay;
 						return;
 					}
 				default :
@@ -837,15 +837,15 @@ class ToolBehavior
 		}
 		switch (color) {
 			case FLOOR :
-				Main.canvas_interaction.cursor = cursorPencilBlue;
+				Main.input.cursor = cursorPencilBlue;
 			case ACCEL :
-				Main.canvas_interaction.cursor = cursorPencilRed;
+				Main.input.cursor = cursorPencilRed;
 			case SCENE :
-				Main.canvas_interaction.cursor = cursorPencilGreen;
+				Main.input.cursor = cursorPencilGreen;
 			case SLOW :
-				Main.canvas_interaction.cursor = cursorPencilBrown;
+				Main.input.cursor = cursorPencilBrown;
 			default :
-				Main.canvas_interaction.cursor = Default;
+				Main.input.cursor = Default;
 		}
 	}
 }
