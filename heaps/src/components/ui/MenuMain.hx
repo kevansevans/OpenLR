@@ -39,8 +39,11 @@ class MenuMain extends Object
 				public var speedometerCheck:CheckBox;
 				public var lineCountCheck:CheckBox;
 				public var frameRateCheck:CheckBox;
-			public var gridSizeStepper:NumberStepper;
-	
+			public var gridMenu:Menu;
+				public var gridDividersCheck:CheckBox; 
+				public var gridOriginCheck:CheckBox; 
+				public var gridSizeStepper:NumberStepper;
+			
 	public function toggle()
 	{
 		this.visible = !this.visible;
@@ -89,7 +92,6 @@ class MenuMain extends Object
 		viewMenu.onClick = function(e:UIEvent)
 		{
 			gridSizeStepper.value = Main.ruler.rulerSize;
-			gridSizeStepper.text = "" + Main.ruler.rulerSize;
 		}
 		
 		textMenu = new Menu();
@@ -115,12 +117,12 @@ class MenuMain extends Object
 		frameRateCheck.text = "Frame rate";
 		frameRateCheck.value = true;
 		
-		var gridlabel:Label = new Label();
-		gridlabel.text = "Grid size";
+		gridMenu = new Menu();
+		gridMenu.text = "Ruler";
 		
 		gridSizeStepper = new NumberStepper();
 		gridSizeStepper.text = "Grid Size";
-		gridSizeStepper.min = 0;
+		gridSizeStepper.min = 1;
 		gridSizeStepper.max = 0x7FFFFFFF;
 		gridSizeStepper.value = 14;
 		gridSizeStepper.step = 1;
@@ -132,6 +134,22 @@ class MenuMain extends Object
 			{
 				Main.ruler.rulerSize = Std.int(value);
 			}
+		}
+		
+		gridOriginCheck = new CheckBox();
+		gridOriginCheck.value = true;
+		gridOriginCheck.text = "Origin mark";
+		gridOriginCheck.onChange = function(event:UIEvent)
+		{
+			Main.ruler.originEnabled = gridOriginCheck.value;
+		}
+		
+		gridDividersCheck = new CheckBox();
+		gridDividersCheck.value = true;
+		gridDividersCheck.text = "Hatch marks";
+		gridDividersCheck.onChange = function(event:UIEvent)
+		{
+			Main.ruler.hatchEnabled = gridDividersCheck.value;
 		}
 		
 		menubar.addComponent(fileMenu);
@@ -150,9 +168,13 @@ class MenuMain extends Object
 				textMenu.addComponent(speedometerCheck);
 				textMenu.addComponent(lineCountCheck);
 				textMenu.addComponent(frameRateCheck);
-			viewMenu.addComponent(new MenuSeparator());
-			viewMenu.addComponent(gridlabel);
-			viewMenu.addComponent(gridSizeStepper);
+			viewMenu.addComponent(gridMenu);
+				gridMenu.addComponent(gridOriginCheck);
+				gridMenu.addComponent(gridDividersCheck);
+				var gridLabel:Label = new Label();
+				gridLabel.text = "Size";
+				gridMenu.addComponent(gridLabel);
+				gridMenu.addComponent(gridSizeStepper);
 			viewMenu.addComponent(new MenuSeparator());
 	}
 	

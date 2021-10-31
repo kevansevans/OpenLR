@@ -18,6 +18,9 @@ class Ruler extends Object
 	public var enabled:Bool = true;
 	public var rulerSize:Int = 14;
 	
+	public var originEnabled:Bool = true;
+	public var hatchEnabled:Bool = true;
+	
 	public function new(?_parent:Object) 
 	{
 		super(_parent);
@@ -46,7 +49,16 @@ class Ruler extends Object
 		shader.scale = 1 / Main.canvas.scaleX;
 		shader.size = rulerSize;
 		
-		shader.enabled = enabled ? 1 : 0;
+		if (!originEnabled && !hatchEnabled)
+		{
+			shader.enabled = 0;
+		} else {
+			shader.enabled = 1;
+			
+			shader.hatch = hatchEnabled == false ? 0 : 1;
+			shader.origin = originEnabled == false ? 0 : 1;
+		}
+		
 	}
 	
 }
@@ -71,42 +83,50 @@ class RulerShader extends Shader
 		@param var ratioY:Float = 1;
 		
 		@param var enabled:Int = 1;
+		@param var hatch:Int = 1;
+		@param var origin:Int = 1;
 		
 		function vertex() {
 			calculatedUV = input.uv;
 		}
 		
 		function fragment() {
+			
+			if (enabled == 0) return;
+			
 			var uvOffset:Vec2 = calculatedUV;
 			
 			uvOffset.x -= offsetX;
 			uvOffset.y -= offsetY;
 			
-			var tol:Int = 1000;
-			
 			pixelColor = vec4(bg_r, bg_g, bg_b, 1);
-			
-			if (enabled == 0) return;
 				
 			var copy:Vec4 = pixelColor;
 			
 			var alph:Float = min((size * (1 / scale)) / 3, 0.5);
 			
-			if (((uvOffset.x - 0.5) / ratioX) % (size * (1 / scale)) <= 1) {
-				pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph);
-			}
+			if (hatch == 1) {
 				
-			else if (((uvOffset.y - 0.5) / ratioY) % (size * (1 / scale)) <= 1) {
-				pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph); 
+				if (((uvOffset.x - 0.5) / ratioX) % (size * (1 / scale)) <= 1) {
+					pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph);
+				}
+				
+				else if (((uvOffset.y - 0.5) / ratioY) % (size * (1 / scale)) <= 1) {
+					pixelColor = vec4(1 - copy.r, 1 - copy.g, 1 - copy.b, alph); 
+				}
 			}
 			
-			var originThickness:Float = 1.25;
-			
-			if ((uvOffset.x - 0.5) / ratioX <= originThickness && (uvOffset.x - 0.5) / ratioX >= -originThickness) {
-				pixelColor = vec4(0, 0, 0.75, 1);
-			}
-			else if ((uvOffset.y - 0.5) / ratioY <= originThickness && (uvOffset.y - 0.5) / ratioY >= -originThickness) {
-				pixelColor = vec4(0, 0, 0.75, 1);
+			if (origin == 1) {
+				
+				var originThickness:Float = 1.25;
+				
+				if ((uvOffset.x - 0.5) / ratioX <= originThickness && (uvOffset.x - 0.5) / ratioX >= -originThickness) {
+					pixelColor = vec4(0, 0, 0.75, 1);
+				}
+				else if ((uvOffset.y - 0.5) / ratioY <= originThickness && (uvOffset.y - 0.5) / ratioY >= -originThickness) {
+					pixelColor = vec4(0, 0, 0.75, 1);
+				}
+				
 			}
 			
 		}
