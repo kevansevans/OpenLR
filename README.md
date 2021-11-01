@@ -9,9 +9,8 @@ A Playable example can be found here: https://kevansevans.github.io/openlr/
 * Ensure that the code provided is flexible enough to offer the ability for more customized/non-standard behaviors
 * Have fun!
 ## How to use
-1) Clone Repository or download library folder
-2) Open directory and run command ``haxelib dev hxlr ./path/to/hxlr/src``
-3) Include library in Haxe project.
-4) Have fun!
+1) ``haxelib install hxlr``
+2) Include library in Haxe project.
+3) Have fun!
 ***
 "Line Rider" is a registered trademark of Boštjan Čadež. Use in OpenLR is in name only and granted within good faith.
