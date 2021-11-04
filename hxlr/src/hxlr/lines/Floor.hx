@@ -2,6 +2,7 @@ package hxlr.lines;
 
 import hxlr.rider.ContactPoint;
 import hxlr.math.geom.Point;
+import hxlr.enums.Anchor;
 
 
 /**
@@ -23,14 +24,16 @@ class Floor extends LineObject
 	override public function collide(_point:ContactPoint):Void 
 	{
 		if (!getGrind(_point)) return;
-		var xDist = _point.pos.x - start.x;
-		var yDist = _point.pos.y - start.y;
-		var vDist = nx * xDist + ny * yDist; 					//How far perpendicularily the point is away from the line
-		var hDist = (xDist * dx + yDist * dy) * invSqrDistance; //How far along parallel the point is along the line
 		
-		//is the point moving "towards" the line?
+		//is the point moving "towards" the line and passing through?
 		if (_point.dir.x * nx + _point.dir.y * ny > 0)
 		{
+			
+			var xDist = _point.pos.x - start.x;
+			var yDist = _point.pos.y - start.y;
+			var vDist = nx * xDist + ny * yDist; 					//How far perpendicularily the point is away from the line
+			var hDist = (xDist * dx + yDist * dy) * invSqrDistance; //How far along parallel the point is along the line
+			
 			//is the point within the line's range?
 			if (vDist > 0 && vDist < zone && hDist >= limStart && hDist <= limEnd) {
 				
