@@ -77,6 +77,8 @@ class ToolBehavior
 	public var lineSnapEnd:LineObject = null;
 	public var lineSnapping:Bool = true;
 	public var gridSnapping:Bool = false;
+	public var angleSnapping:Bool = false;
+	public var angleSnapValue:Int = 90;
 	public var gridSnapDistance(get, null):Float;
 	public var snapDistance:Float = 15;
 	
@@ -241,9 +243,11 @@ class ToolBehavior
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 					
+					if (angleSnapping) snapToAngle();
+					
 					if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2)) > 10 * (1 / Main.canvas.scaleX)) {
 						drawLine();
-						mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+						mouseStart = mouseEnd.clone();
 						mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 					}
 					
@@ -260,6 +264,8 @@ class ToolBehavior
 				if (leftIsDown || rightIsDown) {
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+					
+					if (angleSnapping) snapToAngle();
 					
 					if (lineSnapMouseMove) snap(mouseEnd, false);
 					
@@ -472,6 +478,43 @@ class ToolBehavior
 				_pos.y = gridSnap.y;
 			}
 		}
+	}
+	
+	function snapToAngle()
+	{
+		var values:Array<Float> = [];
+		var steps:Float = 0;
+		
+		while (steps < 360)
+		{
+			values.push(steps);
+			steps += angleSnapValue;
+		}
+		
+		values.push(360);
+		
+		var maxAngle:Float = 0;
+		var minAngle:Float = 0;
+		var curAngle:Float = Math.atan2(mouseEnd.y - mouseStart.y, mouseEnd.x - mouseStart.x) * 180 / Math.PI;
+		if (curAngle < 0) curAngle += 360;
+		for (angle in values)
+		{
+			if (curAngle > angle)
+			{
+				minAngle = angle;
+				continue;
+			} else {
+				maxAngle = angle;
+				break;
+			}
+		}
+		
+		var snapToAngle = curAngle < minAngle + (angleSnapValue / 2) ? minAngle : maxAngle;
+		snapToAngle *= (Math.PI / 180);
+		var dist:Float = mouseStart.distance(mouseEnd);
+		
+		mouseEnd.x = dist * Math.cos(snapToAngle) + mouseStart.x;
+		mouseEnd.y = dist * Math.sin(snapToAngle) + mouseStart.y;
 	}
 	
 	function get_gridSnapDistance():Float 

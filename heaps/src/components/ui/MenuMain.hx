@@ -265,18 +265,37 @@ class MenuMain extends Object
 		angleSnapOff.text = "Off";
 		angleSnapOff.selected = true;
 		angleSnapOff.componentGroup = "angleSnap";
+		angleSnapOff.onClick = function(e:UIEvent)
+		{
+			Main.toolControl.angleSnapping = false;
+		}
 		
 		angleSnap90 = new OptionBox();
 		angleSnap90.text = "90 Degrees (XY)";
 		angleSnap90.componentGroup = "angleSnap";
+		angleSnap90.onClick = function(e:UIEvent) 
+		{
+			Main.toolControl.angleSnapping = true;
+			Main.toolControl.angleSnapValue = 90;
+		}
 		
 		angleSnap45 = new OptionBox();
 		angleSnap45.text = "45 Degrees (XYZ)";
 		angleSnap45.componentGroup = "angleSnap";
+		angleSnap45.onClick = function(e:UIEvent) 
+		{
+			Main.toolControl.angleSnapping = true;
+			Main.toolControl.angleSnapValue = 45;
+		}
 		
 		angleSnap15 = new OptionBox();
 		angleSnap15.text = "15 degrees";
 		angleSnap15.componentGroup = "angleSnap";
+		angleSnap15.onClick = function(e:UIEvent) 
+		{
+			Main.toolControl.angleSnapping = true;
+			Main.toolControl.angleSnapValue = 15;
+		}
 		
 		/*blueSwatch = new Button();
 		blueSwatch.borderColor = 0x0066FF;
@@ -316,7 +335,7 @@ class MenuMain extends Object
 			editingMenu.addComponent(gridSnapCheck);
 			editingMenu.addComponent(snapMouseDown);
 			editingMenu.addComponent(snapMouseMove);
-			//editingMenu.addComponent(xySnapMenu);
+			editingMenu.addComponent(xySnapMenu);
 				xySnapMenu.addComponent(angleSnapOff);
 				xySnapMenu.addComponent(angleSnap90);
 				xySnapMenu.addComponent(angleSnap45);
