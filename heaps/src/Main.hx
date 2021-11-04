@@ -19,7 +19,7 @@ import components.managers.Simulation;
 import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import components.ui.Toolbar;
-import components.ui.menu.MenuBase;
+import components.ui.MenuMain;
 import enums.Commands;
 import h2d.Mask;
 import h2d.col.Point;
@@ -89,7 +89,7 @@ class Main extends App
 	
 	public static var camera:Camera;
 	
-	public static var menu:MenuBase;
+	public static var menu:MenuMain;
 	
 	public static var ruler:Ruler;
 	
@@ -242,6 +242,7 @@ class Main extends App
 		
 		input.width = engine.width;
 		input.height = engine.height;
+		input.y = 35;
 		
 		mask.width = engine.width;
 		mask.height = engine.height;
