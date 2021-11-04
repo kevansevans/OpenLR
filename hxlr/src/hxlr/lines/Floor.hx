@@ -22,6 +22,7 @@ class Floor extends LineObject
 	
 	override public function collide(_point:ContactPoint):Void 
 	{
+		if (!getGrind(_point)) return;
 		var xDist = _point.pos.x - start.x;
 		var yDist = _point.pos.y - start.y;
 		var vDist = nx * xDist + ny * yDist; 					//How far perpendicularily the point is away from the line

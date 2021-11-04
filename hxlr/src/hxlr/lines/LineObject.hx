@@ -1,5 +1,6 @@
 package hxlr.lines;
 
+import hxlr.enums.Anchor;
 import hxlr.enums.LineType;
 import hxlr.math.geom.Line;
 import hxlr.math.geom.Point;
@@ -44,6 +45,9 @@ class LineObject extends Line
 	public var prevLine:LineObject;
 	public var nextLine:LineObject;
 	
+	public var grindable:Bool;
+	public var grindMode:Anchor;
+	
 	public function new(_start:Point, _end:Point, _shift:Bool = false, ?_lim:Int = 0)
 	{
 		super(_start, _end);
@@ -57,7 +61,6 @@ class LineObject extends Line
 		calculateConstants();
 		
 		setLim(_lim);
-		
 	}
 	
 	function calculateConstants() {
@@ -127,6 +130,27 @@ class LineObject extends Line
 			},
 		}
 		return save;
+	}
+	
+	function getGrind(_point:ContactPoint):Bool
+	{
+		if (!grindable) return true;
+		else
+		{
+			switch (grindMode)
+			{
+				case HAND_A | HAND_B :
+					if (_point.id == HAND_A || _point.id == HAND_B) return true;
+					else return false;
+				case FOOT_A | FOOT_B :
+					if (_point.id == FOOT_A || _point.id == FOOT_B) return true;
+					else return false;
+				default :
+					if (_point.id == grindMode) return true;
+					else return false;
+			}
+		}
+		return true; //So Haxe doesn't throw a fit
 	}
 	
 	function get_multiplier():Int 
