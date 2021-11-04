@@ -5,7 +5,7 @@ import components.stage.TextInfo;
 import components.ui.menus.RiderProperties;
 import h2d.Bitmap;
 import h2d.Object;
-import h3d.prim.Grid;
+import hxlr.engine.Grid;
 import haxe.ui.backend.ImageData;
 import haxe.ui.components.OptionBox;
 import haxe.ui.constants.HorizontalAlign;
@@ -109,6 +109,7 @@ class MenuMain extends Object
 		newItem.onClick = function(event:MouseEvent)
 		{
 			Main.canvas.trashTrack();
+			Grid.deleteTrack();
 		}
 		
 		saveItem = new MenuItem();
