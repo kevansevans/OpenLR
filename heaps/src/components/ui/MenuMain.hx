@@ -232,7 +232,7 @@ class MenuMain extends Object
 		riderPropItem.text = "Rider properties";
 		riderPropItem.onClick = function(e:UIEvent)
 		{
-			if (riderProp == null || !riderProp.visible) riderProp = new RiderProperties();
+			if (riderProp == null || riderProp.box == null) riderProp = new RiderProperties();
 		}
 		
 		lineSnapCheck = new CheckBox();
