@@ -15,8 +15,12 @@ class ContactPoint
 	
 	public var friction:Float;
 	
-	public function new(_x:Float = 0.0, _y:Float = 0.0, _friction:Float = 0.0)
+	public var id:Int;
+	
+	public function new(_id:Int, _x:Float = 0.0, _y:Float = 0.0, _friction:Float = 0.0)
 	{
+		id = _id;
+		
 		pos = new Point(_x, _y);
 		dir = new Point();
 		vel = new Point();

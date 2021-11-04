@@ -13,7 +13,7 @@ class AirPoint extends ContactPoint
 	public function new(_x:Float, _y:Float, _af:Float) 
 	{
 		
-		super(_x, _y);
+		super(-1, _x, _y);
 		
 		friction = _af;
 		

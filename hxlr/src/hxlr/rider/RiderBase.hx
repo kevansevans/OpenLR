@@ -96,7 +96,7 @@ class RiderBase
 		
 		contactPoints = new Array();
 		for (dot in struct.contactPoints) {
-			contactPoints.push(new ContactPoint(dot.x, dot.y, dot.fr));
+			contactPoints.push(new ContactPoint(struct.contactPoints.indexOf(dot), dot.x, dot.y, dot.fr));
 		}
 		
 		airPoints = new Array();
