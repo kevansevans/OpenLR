@@ -81,13 +81,13 @@ class MenuMain extends Object
 		this.visible = !this.visible;
 	}
 	
-	public function new(?parent:Object) 
+	public function new(?_parent:Object) 
 	{
 		super(parent);
 		
 		Toolkit.theme = "dark";
 		Toolkit.init({
-			root: Main.rootScene
+			root: _parent
 		});
 		
 		menubar = new MenuBar();
