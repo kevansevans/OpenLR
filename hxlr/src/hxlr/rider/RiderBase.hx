@@ -178,7 +178,10 @@ class RiderBase
 		}
 		
 	}
+	
 	public function renderRider() {};
+	
+	public function refreshRider() {};
 	
 	function get_speed():Float 
 	{
