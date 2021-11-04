@@ -5,6 +5,7 @@ import components.stage.TextInfo;
 import components.ui.menus.RiderProperties;
 import h2d.Bitmap;
 import h2d.Object;
+import haxe.ui.components.TextField;
 import hxlr.engine.Grid;
 import haxe.ui.backend.ImageData;
 import haxe.ui.components.OptionBox;
@@ -65,10 +66,8 @@ class MenuMain extends Object
 			public var snapMouseDown:CheckBox;
 			public var snapMouseMove:CheckBox;
 			public var xySnapMenu:Menu;
-				public var angleSnapOff:OptionBox;
-				public var angleSnap90:OptionBox;
-				public var angleSnap45:OptionBox;
-				public var angleSnap15:OptionBox;
+				public var angleSnapToggle:CheckBox;
+				public var angleSnapValue:TextField;
 				//public var angleSnapArb:OptionBox; angle % value == 0;
 			/////////////////////////////
 			
@@ -95,6 +94,7 @@ class MenuMain extends Object
 		menubar.onMenuOpened = function(e:UIEvent)
 		{
 			Main.input.visible = false;
+			angleSnapValue.text = Main.toolControl.angleSnapValue + '';
 		}
 		menubar.onMenuClosed = function(e:UIEvent)
 		{
@@ -261,41 +261,29 @@ class MenuMain extends Object
 		xySnapMenu = new Menu();
 		xySnapMenu.text = "Angle snap";
 		
-		angleSnapOff = new OptionBox();
-		angleSnapOff.text = "Off";
-		angleSnapOff.selected = true;
-		angleSnapOff.componentGroup = "angleSnap";
-		angleSnapOff.onClick = function(e:UIEvent)
+		angleSnapToggle = new CheckBox();
+		angleSnapToggle.text = "Enabled";
+		angleSnapToggle.value = false;
+		angleSnapToggle.onChange = function(e:UIEvent)
 		{
-			Main.toolControl.angleSnapping = false;
+			Main.toolControl.angleSnapping = angleSnapToggle.value;
 		}
 		
-		angleSnap90 = new OptionBox();
-		angleSnap90.text = "90 Degrees (XY)";
-		angleSnap90.componentGroup = "angleSnap";
-		angleSnap90.onClick = function(e:UIEvent) 
+		angleSnapValue = new TextField();
+		angleSnapValue.text = "90";
+		angleSnapValue.onChange = function(e:UIEvent)
 		{
-			Main.toolControl.angleSnapping = true;
-			Main.toolControl.angleSnapValue = 90;
+			var angle:Null<Float> = Std.parseFloat(angleSnapValue.value);
+			if (Math.isNaN(angle))
+			{
+				angleSnapValue.backgroundColor = 0x7F0000;
+			} else {
+				angleSnapValue.backgroundColor = null;
+				Main.toolControl.angleSnapValue = angle;
+			}
 		}
 		
-		angleSnap45 = new OptionBox();
-		angleSnap45.text = "45 Degrees (XYZ)";
-		angleSnap45.componentGroup = "angleSnap";
-		angleSnap45.onClick = function(e:UIEvent) 
-		{
-			Main.toolControl.angleSnapping = true;
-			Main.toolControl.angleSnapValue = 45;
-		}
-		
-		angleSnap15 = new OptionBox();
-		angleSnap15.text = "15 degrees";
-		angleSnap15.componentGroup = "angleSnap";
-		angleSnap15.onClick = function(e:UIEvent) 
-		{
-			Main.toolControl.angleSnapping = true;
-			Main.toolControl.angleSnapValue = 15;
-		}
+		trace(angleSnapValue.backgroundColor);
 		
 		/*blueSwatch = new Button();
 		blueSwatch.borderColor = 0x0066FF;
@@ -336,10 +324,8 @@ class MenuMain extends Object
 			editingMenu.addComponent(snapMouseDown);
 			editingMenu.addComponent(snapMouseMove);
 			editingMenu.addComponent(xySnapMenu);
-				xySnapMenu.addComponent(angleSnapOff);
-				xySnapMenu.addComponent(angleSnap90);
-				xySnapMenu.addComponent(angleSnap45);
-				xySnapMenu.addComponent(angleSnap15);
+				xySnapMenu.addComponent(angleSnapToggle);
+				xySnapMenu.addComponent(angleSnapValue);
 			
 			
 		//////////

@@ -78,7 +78,7 @@ class ToolBehavior
 	public var lineSnapping:Bool = true;
 	public var gridSnapping:Bool = false;
 	public var angleSnapping:Bool = false;
-	public var angleSnapValue:Int = 90;
+	public var angleSnapValue:Float = 90;
 	public var gridSnapDistance(get, null):Float;
 	public var snapDistance:Float = 15;
 	
