@@ -71,6 +71,8 @@ class ToolBehavior
 	public var cursorEraserPink:Cursor;
 	public var cursorEraserBrown:Cursor;
 	
+	public var lineSnapMouseDown:Bool = true;
+	public var lineSnapMouseMove:Bool = true;
 	public var lineSnapStart:LineObject = null;
 	public var lineSnapEnd:LineObject = null;
 	public var lineSnapping:Bool = true;
@@ -175,7 +177,7 @@ class ToolBehavior
 						
 					case PENCIL | LINE :
 						
-						snap(mouseStart, true);
+						if (lineSnapMouseDown) snap(mouseStart, true);
 						
 					default :
 						
@@ -194,7 +196,7 @@ class ToolBehavior
 					
 					case PENCIL | LINE :
 						
-						snap(mouseStart, false);
+						if (lineSnapMouseDown) snap(mouseStart, false);
 						
 					default :
 					
@@ -259,7 +261,7 @@ class ToolBehavior
 					
 					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
 					
-					snap(mouseEnd, false);
+					if (lineSnapMouseMove) snap(mouseEnd, false);
 					
 					updatePreview();
 					
@@ -381,7 +383,7 @@ class ToolBehavior
 	
 	public function snap(_pos:Point, _start:Bool):Void 
 	{
-		if (color == LineType.NULL || color == LineType.SCENE) return;
+		if (color == LineType.NULL) return;
 		
 		var lineDist:Null<Float> = null;
 		var gridDist:Null<Float> = null;
