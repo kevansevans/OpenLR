@@ -64,7 +64,7 @@ class Constants
 				{a: 5, b: 6, type: StickType.STANDARD, crashable: false},	//Shoulder to Hand A
 				{a: 5, b: 7, type: StickType.STANDARD, crashable: false},	//Shoulder to Hand B
 				{a: 4, b: 8, type: StickType.STANDARD, crashable: false},	//Butt to Foot A
-				{a: 4, b: 9, type: StickType.STANDARD, crashable: false},	//But too Foot B
+				{a: 4, b: 9, type: StickType.STANDARD, crashable: false},	//Butt to Foot B
 				{a: 5, b: 7, type: StickType.STANDARD, crashable: false},	//Shoulder to Hand A duplicate
 				
 				{a: 5, b: 0, type: StickType.STANDARD, crashable: true},	//Shoulder to Second
