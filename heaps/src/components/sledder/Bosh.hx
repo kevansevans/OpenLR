@@ -24,8 +24,7 @@ class Bosh extends RiderBase
 	static public var BLACK:Vector = new Vector(0, 0, 0, 1);
 	static public var RED:Vector = new Vector(1, 0, 0, 1);
 	
-	public var colorA(get, null):Int;
-	public var colorB(get, null):Int;
+	public var colorList:Array<Int> = [];
 	public var neckscarf:RiderScarf;
 	
 	public var nameField:HtmlText;
@@ -63,7 +62,8 @@ class Bosh extends RiderBase
 		sled = new RiderPart(SLED);
 		eye = new RiderPart(EYE);
 		body = new RiderPart(BODY);
-		neckscarf = new RiderScarf();
+		setRandomScarfColors(2);
+		neckscarf = new RiderScarf(colorList);
 		
 		rightArm = new RiderPart(ARM);
 		rightLeg = new RiderPart(LEG);
@@ -78,6 +78,28 @@ class Bosh extends RiderBase
 		neckscarf.y = -53;
 		Main.canvas.sledderLayer.addChild(rightLeg);
 		Main.canvas.sledderLayer.addChild(rightArm);
+	}
+	
+	public function setRandomScarfColors(_length:Int)
+	{
+		colorList = new Array();
+		
+		var length:Int = _length;
+		
+		for (a in 0...length)
+		{
+			var r:Int = Std.int(255 * Main.rng.getRandomNormal());
+			var g:Int = Std.int(255 * Main.rng.getRandomNormal());
+			var b:Int = Std.int(255 * Main.rng.getRandomNormal());
+			
+			colorList.push((r << 16) | (g << 8) | b);
+		}
+	}
+	
+	public function setScarfColors(_list:Array<Int>)
+	{
+		neckscarf.setColors(_list);
+		colorList = _list;
 	}
 	
 	override public function refreshRider():Void 
@@ -166,24 +188,19 @@ class Bosh extends RiderBase
 			
 		}
 		
-		gfx.lineStyle(2, neckscarf.colorB);
+		var scarfIndex:Int = 0;
+		gfx.lineStyle(2, colorList[scarfIndex % colorList.length]);
 		gfx.moveTo(contactPoints[5].pos.x, contactPoints[5].pos.y);
-		gfx.lineTo(airPoints[0].pos.x, airPoints[0].pos.y);
-		gfx.lineStyle(2, neckscarf.colorA);
-		gfx.moveTo(airPoints[0].pos.x, airPoints[0].pos.y);
-		gfx.lineTo(airPoints[1].pos.x, airPoints[1].pos.y);
-		gfx.lineStyle(2, neckscarf.colorB);
-		gfx.moveTo(airPoints[1].pos.x, airPoints[1].pos.y);
-		gfx.lineTo(airPoints[2].pos.x, airPoints[2].pos.y);
-		gfx.lineStyle(2, neckscarf.colorA);
-		gfx.moveTo(airPoints[2].pos.x, airPoints[2].pos.y);
-		gfx.lineTo(airPoints[3].pos.x, airPoints[3].pos.y);
-		gfx.lineStyle(2, neckscarf.colorB);
-		gfx.moveTo(airPoints[3].pos.x, airPoints[3].pos.y);
-		gfx.lineTo(airPoints[4].pos.x, airPoints[4].pos.y);
-		gfx.lineStyle(2, neckscarf.colorA);
-		gfx.moveTo(airPoints[4].pos.x, airPoints[4].pos.y);
-		gfx.lineTo(airPoints[5].pos.x, airPoints[5].pos.y);
+		
+		var prevPoint = contactPoints[5].pos;
+		
+		for (dot in 0...airPoints.length) {
+			gfx.lineStyle(2, colorList[scarfIndex % colorList.length]);
+			gfx.moveTo(airPoints[dot].pos.x, airPoints[dot].pos.y);
+			gfx.lineTo(prevPoint.x, prevPoint.y);
+			prevPoint = airPoints[dot].pos;
+			++scarfIndex;
+		}
 		
 		nameField.scaleX = nameField.scaleY = 1 * (1 / Main.canvas.scaleX);
 		
@@ -219,27 +236,17 @@ class Bosh extends RiderBase
 		}
 	}
 	
-	public function setColor(?_a:Null<Int>, ?_b:Null<Int>) {
+	override public function getCameraPoint():Point 
 		
-		neckscarf.setColor(_a, _b);
+		if (!crashed)
 		
-	};
+		return point;
 	
 	override public function reset() {
 		
 		init(); 
 		
 	};
-	
-	function get_colorA():Int 
-	{
-		return neckscarf.colorA;
-	}
-	
-	function get_colorB():Int 
-	{
-		return neckscarf.colorB;
-	}
 	
 }
 
@@ -248,6 +255,5 @@ typedef RiderSave = {
 	var startPoint:Point;
 	var startFrame:Null<Int>;
 	var stopFrame:Null<Int>;
-	var colora:Int;
-	var colorb:Int;
+	var colorList:Null<Int>;
 }
