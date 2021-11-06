@@ -41,7 +41,7 @@ class Camera
 	
 	public function follow() {
 		
-		var position = Main.canvas.localToGlobal(rider.focusPoint.pos.clone());
+		var position = Main.canvas.localToGlobal(rider.getCameraPoint().clone());
 		
 		var right:Float = Main.locengine.width * 0.6;
 		var left:Float = Main.locengine.width * 0.3;

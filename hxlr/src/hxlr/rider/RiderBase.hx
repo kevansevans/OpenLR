@@ -158,6 +158,11 @@ class RiderBase
 	
 	public function delete() {}
 	
+	public function getCameraPoint():Point
+	{
+		return new Point(0, 0);
+	}
+	
 	public function collide() {
 		
 		for (point in contactPoints) {

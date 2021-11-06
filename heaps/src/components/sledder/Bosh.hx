@@ -1,7 +1,5 @@
 package components.sledder;
 
-import components.Assets;
-import h2d.filter.Outline;
 import hxlr.Constants;
 import hxlr.math.geom.Point;
 import hxlr.rider.RiderBase;
@@ -11,6 +9,7 @@ import h2d.Graphics;
 import h2d.HtmlText;
 import hxd.res.DefaultFont;
 
+import components.Assets;
 import components.sledder.RiderScarf;
 import components.sledder.RiderPart;
 
@@ -39,6 +38,11 @@ class Bosh extends RiderBase
 	public var eye:RiderPart;
 	public var body:RiderPart;
 	public var eyeball:RiderPart;
+	
+	public var cameraMode:Int = 0;
+	public var cameraFocusPoint:Int = 0;
+	public var crashCameraMode:Int = 1;
+	public var crashFocusPoint:Int = 0;
 	
 	public var blinkRate:Float = 0.1;
 	var prevFrame:Int = 0;
@@ -237,10 +241,78 @@ class Bosh extends RiderBase
 	}
 	
 	override public function getCameraPoint():Point 
+	{
+		var point:Point = new Point();
 		
 		if (!crashed)
+		{
+			switch (cameraMode)
+			{
+				case 0:
+					for (dot in contactPoints)
+					{
+						point.x += dot.pos.x;
+						point.y += dot.pos.y;
+					}
+					point.x /= contactPoints.length;
+					point.y /= contactPoints.length;
+				case 1:
+					for (dot in 4...contactPoints.length)
+					{
+						point.x += contactPoints[dot].pos.x;
+						point.y += contactPoints[dot].pos.y;
+					}
+					point.x /= 6;
+					point.y /= 6;
+				case 2:
+					for (dot in 0...3)
+					{
+						point.x += contactPoints[dot].pos.x;
+						point.y += contactPoints[dot].pos.y;
+					}
+					point.x /= 4;
+					point.y /= 4;
+				case 3:
+					point = contactPoints[cameraFocusPoint].pos;
+				default :
+			}
+		}
+		else
+		{
+			switch (crashCameraMode)
+			{
+				case 0:
+					for (dot in contactPoints)
+					{
+						point.x += dot.pos.x;
+						point.y += dot.pos.y;
+					}
+					point.x /= contactPoints.length;
+					point.y /= contactPoints.length;
+				case 1:
+					for (dot in 4...contactPoints.length)
+					{
+						point.x += contactPoints[dot].pos.x;
+						point.y += contactPoints[dot].pos.y;
+					}
+					point.x /= 6;
+					point.y /= 6;
+				case 2:
+					for (dot in 0...4)
+					{
+						point.x += contactPoints[dot].pos.x;
+						point.y += contactPoints[dot].pos.y;
+					}
+					point.x /= 4;
+					point.y /= 4;
+				case 3:
+					point = contactPoints[cameraFocusPoint].pos;
+				default :
+			}
+		}
 		
 		return point;
+	}
 	
 	override public function reset() {
 		
