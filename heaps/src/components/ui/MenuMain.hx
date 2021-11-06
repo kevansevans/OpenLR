@@ -68,7 +68,6 @@ class MenuMain extends Object
 			public var xySnapMenu:Menu;
 				public var angleSnapToggle:CheckBox;
 				public var angleSnapValue:TextField;
-				//public var angleSnapArb:OptionBox; angle % value == 0;
 			/////////////////////////////
 			
 	//////////
@@ -93,12 +92,10 @@ class MenuMain extends Object
 		Screen.instance.addComponent(menubar);
 		menubar.onMenuOpened = function(e:UIEvent)
 		{
-			Main.input.visible = false;
 			angleSnapValue.text = Main.toolControl.angleSnapValue + '';
 		}
 		menubar.onMenuClosed = function(e:UIEvent)
 		{
-			Main.input.visible = true;
 		}
 		
 		fileMenu = new Menu();
@@ -283,8 +280,6 @@ class MenuMain extends Object
 			}
 		}
 		
-		trace(angleSnapValue.backgroundColor);
-		
 		/*blueSwatch = new Button();
 		blueSwatch.borderColor = 0x0066FF;
 		blueSwatch.width = 35;
@@ -295,7 +290,7 @@ class MenuMain extends Object
 			fileMenu.addComponent(newItem);
 			//fileMenu.addComponent(saveItem);
 			fileMenu.addComponent(loadItem);
-			#if js
+			#if debug
 			fileMenu.addComponent(new MenuSeparator());
 			fileMenu.addComponent(connectItem);
 			fileMenu.addComponent(hostItem);
