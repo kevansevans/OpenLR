@@ -3,6 +3,7 @@ package components.io;
 import haxe.io.Bytes;
 import hxd.File;
 import hxlr.file.JSONTrack;
+import hxlr.file.LRPKTrack;
 import hxlr.file.TrackStruct;
 import hxlr.engine.Grid;
 import hxlr.lines.LineObject;
@@ -72,17 +73,17 @@ class SaveLoad
 		
 		#if sys
 		
-		File.saveAs(Bytes.ofString(json), {
-			title : "Save a Line Rider JSON file",
+		File.saveAs(LRPKTrack.encode(), {
+			title : "Save a LRPK File",
 			fileTypes : [
-				{name : "JSON", extensions : ["json"]},
+				{name : "LR Package", extensions : ["lrpk"]},
 			],
 			defaultPath : './' + generateName()
 		});
 		
 		#elseif js
 		
-		downloadJSFile(Bytes.ofString(json), generateName());
+		downloadJSFile(LRPKTrack.encode(), generateName());
 		
 		#end
 		
@@ -122,11 +123,24 @@ class SaveLoad
 			
 			_browse.load(function(_bytes:Bytes) {
 				
+				if (_browse.fileName.indexOf(".json") != -1) {
+				
 				var track:TrackStruct = JSONTrack.fromString(_bytes.toString());
 				
 				if (_onSucess != null) _onSucess();
 				
 				loadTrackFromStruct(track);
+				
+				}
+				
+				if (_browse.fileName.indexOf(".lrpk") != -1)
+				{
+					Main.riders.deleteAllRiders();
+					
+					LRPKTrack.decode(_bytes);
+					
+					Main.camera.riderFollow = "Bosh";
+				}
 				
 			}
 			
@@ -138,6 +152,7 @@ class SaveLoad
 			title : "Load a Line Rider JSON file",
 			fileTypes : [
 				{name : "JSON", extensions : ["json"]},
+				{name : "LR package", extensions : ["LRPK"]},
 			],
 			
 		});

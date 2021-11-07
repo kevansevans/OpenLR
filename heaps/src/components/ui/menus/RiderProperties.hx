@@ -113,6 +113,7 @@ class RiderProperties extends Object
 			activeRider.name = nameField.value;
 			activeRider.refreshRider();
 			Main.riders.riders[riderKeys[riderIndex]] = activeRider;
+			Main.camera.riderFollow = activeRider.name;
 		}
 		
 		cameraBoxA = new HBox();

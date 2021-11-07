@@ -29,6 +29,9 @@ import haxe.ui.events.Events;
 import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
 import haxe.ui.Toolkit;
+import hxd.File;
+import hxlr.file.LRPKTrack;
+import hxlr.math.geom.Point;
 
 /**
  * ...
@@ -107,6 +110,9 @@ class MenuMain extends Object
 		{
 			Main.canvas.trashTrack();
 			Grid.deleteTrack();
+			
+			Main.riders.deleteAllRiders();
+			Main.riders.addNewRider(new Point(0, 0), "Bosh");
 		}
 		
 		saveItem = new MenuItem();
@@ -115,6 +121,16 @@ class MenuMain extends Object
 		#else
 		saveItem.text = "Save Track...";
 		#end
+		
+		saveItem.onClick = function(e:UIEvent)
+		{
+			var test = LRPKTrack.encode();
+			File.saveAs(test, {
+				defaultPath : './${Main.CVAR.trackName}.lrpk',
+				title : "Save OpenLR track",
+				fileTypes : [{name : "LR Package", extensions : ['lrpk']}]
+			});
+		}
 		
 		loadItem = new MenuItem();
 		loadItem.text = "Load Track";
@@ -271,12 +287,12 @@ class MenuMain extends Object
 		angleSnapValue.onChange = function(e:UIEvent)
 		{
 			var angle:Null<Float> = Std.parseFloat(angleSnapValue.value);
-			if (Math.isNaN(angle))
+			if (Math.isNaN(angle) || angle < 1 || angle > 360)
 			{
 				angleSnapValue.backgroundColor = 0x7F0000;
 			} else {
 				angleSnapValue.backgroundColor = null;
-				Main.toolControl.angleSnapValue = angle;
+				Main.toolControl.angleSnapValue = Math.min(Math.max(angle, 0), 360);
 			}
 		}
 		
@@ -288,7 +304,7 @@ class MenuMain extends Object
 		
 		menubar.addComponent(fileMenu);
 			fileMenu.addComponent(newItem);
-			//fileMenu.addComponent(saveItem);
+			fileMenu.addComponent(saveItem);
 			fileMenu.addComponent(loadItem);
 			#if debug
 			fileMenu.addComponent(new MenuSeparator());
