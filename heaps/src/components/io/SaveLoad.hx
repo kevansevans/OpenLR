@@ -3,11 +3,13 @@ package components.io;
 import haxe.io.Bytes;
 import hxd.File;
 import hxlr.file.JSONTrack;
+import hxlr.file.LRFileSystem;
 import hxlr.file.LRPKTrack;
 import hxlr.file.TrackStruct;
 import hxlr.engine.Grid;
 import hxlr.lines.LineObject;
 import hxlr.math.geom.Point;
+import hxlr.enums.Physics;
 
 #if js
 
@@ -26,94 +28,26 @@ import js.lib.ArrayBuffer;
 class SaveLoad 
 {
 
-	static function generateSave():TrackStruct {
-		
-		
-		var save:TrackStruct = {
-			label : Main.CVAR.trackName,
-			creator : Main.CVAR.trackAuthor,
-			duration : 0,
-			version : "6.2",
-			startPosition : {
-				x : 0,
-				y : 0,
-			},
-			riders : [
-				
-			],
-			lines : [],
-			audio : null,
-			layers : null
-		}
-		
-		for (rider in Main.riders.riders) {
-			save.riders.push(
-				{
-					startPosition : {x : rider.startPos.x, y : rider.startPos.y},
-					startVelocity : {x : 0.4, y : 0},
-					colorA : null,
-					colorB : null
-				}
-			);
-		}
-		
-		for (line in Grid.lines) {
-			if (line == null) continue;
-			save.lines.unshift(line.toLineStruct());
-		}
-		
-		return save;
-		
-	}
-	
 	public static function saveToLocation()
 	{
-		var track = generateSave();
-		var json = JSONTrack.toString(track);
+		var track = LRFileSystem.generateTrackStruct();
 		
 		#if sys
 		
-		File.saveAs(LRPKTrack.encode(), {
+		File.saveAs(LRPKTrack.encode(track), {
 			title : "Save a LRPK File",
 			fileTypes : [
-				{name : "LR Package", extensions : ["lrpk"]},
+				{name : "OpenLR Package", extensions : ["lrpk"]},
 			],
 			defaultPath : './' + generateName()
 		});
 		
 		#elseif js
 		
-		downloadJSFile(LRPKTrack.encode(), generateName());
+		downloadJSFile(LRPKTrack.encode(track), generateName());
 		
 		#end
 		
-	}
-	
-	#if js
-	
-	static function downloadJSFile(_bytes:Bytes, _name:String) {
-		
-		var buffer:ArrayBuffer = _bytes.getData();
-		var file:Blob = new Blob([buffer]);
-		var a = Browser.document.createAnchorElement();
-		var url = URL.createObjectURL(file);
-		a.href = url;
-		a.download = _name;
-		Browser.document.body.appendChild(a);
-		a.click();
-		var timer = Timer.delay(function() {
-			Browser.document.body.removeChild(a);
-			URL.revokeObjectURL(url);
-		}, 0);
-		
-	}
-	
-	#end
-	
-	static function generateName():String {
-		var date:String = '${Date.now().getDay()}_${Date.now().getMonth()}_${Date.now().getFullYear()}.${Date.now().getTime()}';
-		var name = '${Main.CVAR.trackName}.${Main.CVAR.trackAuthor}.${date}.json';
-		return name;
 	}
 	
 	public static function browseForSave(?_onSucess:Null<Void -> Void>, ?_onCancel:Null<Void -> Void>)
@@ -149,10 +83,10 @@ class SaveLoad
 		}, 
 		{
 			
-			title : "Load a Line Rider JSON file",
+			title : "Load a Line Rider track",
 			fileTypes : [
+				{name : "OpenLR package", extensions : ["LRPK"]},
 				{name : "JSON", extensions : ["json"]},
-				{name : "LR package", extensions : ["LRPK"]},
 			],
 			
 		});
@@ -163,6 +97,18 @@ class SaveLoad
 		
 		Main.CVAR.trackName = _track.label == null ? "Untitled" : _track.label;
 		Main.CVAR.trackAuthor = _track.creator == null ? "Anonymous" : _track.creator;
+		
+		switch (_track.version)
+		{
+			case "6.2" :
+				Grid.switchPhysicsModel(Physics.VERSION_6_2);
+			case "6.1" :
+				Grid.switchPhysicsModel(Physics.VERSION_6_1);
+			case "6.0" :
+				Grid.switchPhysicsModel(Physics.VERSION_6);
+			default :
+				Grid.switchPhysicsModel(Physics.VERSION_6_2);
+		}
 		
 		var lineArray = _track.lines;
 		lineArray.reverse();

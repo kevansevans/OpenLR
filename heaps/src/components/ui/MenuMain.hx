@@ -1,8 +1,8 @@
 package components.ui;
 
-import components.io.SaveLoad;
 import components.stage.TextInfo;
 import components.ui.menus.RiderProperties;
+import components.ui.menus.SaveMenu;
 import h2d.Bitmap;
 import h2d.Object;
 import haxe.ui.components.TextField;
@@ -40,6 +40,7 @@ import hxlr.math.geom.Point;
 class MenuMain extends Object 
 {
 	public var riderProp:RiderProperties;
+	public var saveWindow:SaveMenu;
 	
 	public var menubar:MenuBar;
 		public var fileMenu:Menu;
@@ -124,19 +125,14 @@ class MenuMain extends Object
 		
 		saveItem.onClick = function(e:UIEvent)
 		{
-			var test = LRPKTrack.encode();
-			File.saveAs(test, {
-				defaultPath : './${Main.CVAR.trackName}.lrpk',
-				title : "Save OpenLR track",
-				fileTypes : [{name : "LR Package", extensions : ['lrpk']}]
-			});
+			if (saveWindow == null || saveWindow.box == null) saveWindow = new SaveMenu();
 		}
 		
 		loadItem = new MenuItem();
 		loadItem.text = "Load Track";
 		loadItem.onClick = function(event:MouseEvent)
 		{
-			loadTrack();
+			//loadTrack();
 		}
 		
 		connectItem = new MenuItem();
@@ -347,10 +343,5 @@ class MenuMain extends Object
 	public function resize() 
 	{
 		menubar.width = Main.locengine.width;
-	}
-	
-	function loadTrack()
-	{
-		SaveLoad.browseForSave();
 	}
 }
