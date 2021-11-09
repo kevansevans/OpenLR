@@ -3,6 +3,7 @@ import haxe.io.Bytes;
 import haxe.io.BytesBuffer;
 import hxlr.Constants;
 import hxlr.engine.Grid;
+import hxlr.file.TrackStruct;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
@@ -131,32 +132,13 @@ class LRPKTrack
 					default :
 				}
 			}
-			
-			var lowest:Float = Math.POSITIVE_INFINITY;
-			
-			for (item in lines)
-			{
-				if (item == null) continue;
-				//Lines are indexed by Line ID, should allow for any order of lines to be saved.
-				//However, this leaves potential gaps, so occasionally a null will return from the iterator.
-				
-				Grid.register(item);
-				
-				if (item.keyList.length == 0) {
-					Main.canvas.addVisLine(item);
-					
-				} else {
-					Grid.unregister(item);
-				}
-				
-			}
 		}
 		
 		
 	}
 	
 	static inline var headerSize:Int = 12;
-	public static function encode():Bytes
+	public static function encode(_track:TrackStruct):Bytes
 	{
 		var directories:Array<Lump>;
 		var header:BytesBuffer = new BytesBuffer();
@@ -165,7 +147,7 @@ class LRPKTrack
 		
 		directories = new Array();
 		
-		for (line in Grid.lines)
+		for (line in _track.lines)
 		{
 			if (line == null) continue;
 			
@@ -198,7 +180,7 @@ class LRPKTrack
 			directories.push(lump);
 			data.addBytes(bytes, 0, bytes.length);
 			
-			if (line.special) 
+			if (Grid.lines[line.id].special) 
 			{
 				var bytes:Bytes = specLineToBytes(line);
 				var lump = {
@@ -211,7 +193,7 @@ class LRPKTrack
 			}
 		}
 		
-		for (rider in Main.riders.riders)
+		for (rider in _track.riders)
 		{
 			
 			directories.push({
@@ -257,7 +239,7 @@ class LRPKTrack
 		
 	}
 	
-	static function riderToBytes(_rider:RiderBase):Bytes
+	static function riderToBytes(_rider:RiderStruct):Bytes
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//!!!WARNING!!!
@@ -266,13 +248,13 @@ class LRPKTrack
 		
 		var data:BytesBuffer = new BytesBuffer();
 		
-		data.addDouble(_rider.startPos.x);
-		data.addDouble(_rider.startPos.y);
+		data.addDouble(_rider.startPosition.x);
+		data.addDouble(_rider.startPosition.y);
 		
 		return data.getBytes();
 	}
 	
-	static function lineToBytes(_line:LineObject):Bytes
+	static function lineToBytes(_line:LineStruct):Bytes
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//!!!WARNING!!!
@@ -282,18 +264,18 @@ class LRPKTrack
 		var data:BytesBuffer = new BytesBuffer();
 		
 		data.addInt32(_line.id);
-		data.addDouble(_line.start.x);
-		data.addDouble(_line.start.y);
-		data.addDouble(_line.end.x);
-		data.addDouble(_line.end.y);
+		data.addDouble(_line.x1);
+		data.addDouble(_line.y1);
+		data.addDouble(_line.x2);
+		data.addDouble(_line.y2);
 		data.addByte(_line.type);
-		data.addByte(_line.shifted == true ? 1 : 0);
-		data.addByte(_line.limType);
+		data.addByte(_line.flipped == true ? 1 : 0);
+		data.addByte(Grid.lines[_line.id].limType);
 		
 		return data.getBytes();
 	}
 	
-	static function decoLineToBytes(_line:LineObject):Bytes
+	static function decoLineToBytes(_line:LineStruct):Bytes
 	{
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//!!!WARNING!!!
@@ -304,17 +286,17 @@ class LRPKTrack
 		
 		if (sceneryCompression) {
 			data.addByte(1);
-			data.addFloat(_line.start.x);
-			data.addFloat(_line.start.y);
-			data.addFloat(_line.end.x);
-			data.addFloat(_line.end.y);
+			data.addFloat(_line.x1);
+			data.addFloat(_line.y1);
+			data.addFloat(_line.x2);
+			data.addFloat(_line.y2);
 			
 		} else {
 			data.addByte(0);
-			data.addDouble(_line.start.x);
-			data.addDouble(_line.start.y);
-			data.addDouble(_line.end.x);
-			data.addDouble(_line.end.y);
+			data.addDouble(_line.x1);
+			data.addDouble(_line.y1);
+			data.addDouble(_line.x2);
+			data.addDouble(_line.y2);
 		}
 		
 		return data.getBytes();
@@ -343,13 +325,14 @@ class LRPKTrack
 		return data.getBytes();
 	}
 	
-	static function specLineToBytes(_line:LineObject):Bytes
+	static function specLineToBytes(_line:LineStruct):Bytes
 	{
 		var data:BytesBuffer = new BytesBuffer();
 		
 		data.addByte(_line.multiplier);
-		data.addDouble(_line.thickness);
-		data.addByte(_line.grindable == true ? 1 : 0);
+		data.addDouble(Grid.lines[_line.id].thickness);
+		data.addByte(Grid.lines[_line.id].grindable == true ? 1 : 0);
+		data.addByte(_line.layer);
 		
 		return data.getBytes();
 	}
