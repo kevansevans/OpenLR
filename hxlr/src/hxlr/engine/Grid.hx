@@ -3,6 +3,7 @@ package hxlr.engine;
 import haxe.macro.Expr.Case;
 import hxlr.engine.Cell;
 import hxlr.enums.LineType;
+import hxlr.enums.Physics;
 import hxlr.file.TrackStruct.LineStruct;
 import hxlr.lines.Accel;
 import hxlr.lines.LineObject;
@@ -23,6 +24,8 @@ class Grid
 	public static var lineIDCount:Int = 0;
 	public static var subTypeCount:Array<Null<Int>> = new Array();
 	
+	public static var register:LineObject -> Void;
+	
 	public static var registry:Map<String, Cell>;
 	public static var lines:Array<LineObject>;
 	
@@ -30,6 +33,21 @@ class Grid
 	{
 		registry = new Map();
 		lines = new Array();
+	public static function switchPhysicsModel(_type:Physics)
+	{
+		switch (_type)
+		{
+			case VERSION_6_2:
+				Grid.register = Grid.register_6_2;
+			case VERSION_6_1:
+				Grid.register = Grid.register_6_1;
+			case VERSION_6:
+				Grid.register = Grid.register_6_0;
+			default :
+				Grid.register = Grid.register_6_2;
+		}
+		
+		Main.CVAR.physics = _type;
 	}
 	
 	public static function createLineObject(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, _inv:Bool = false, _limMode:Int = 0, _multiplier:Int = 1):LineObject
@@ -90,7 +108,7 @@ class Grid
 		return line;
 	}
 	
-	public static function register(_line:LineObject)
+	public static function register_6_2(_line:LineObject)
 	{
 		addLine(_line);
 		
@@ -154,6 +172,61 @@ class Grid
 			}
 			return;
 		}
+	}
+	
+	public static function register_6_1(_line:LineObject)
+	{
+		
+	}
+	
+	public static function register_6_0(_line:LineObject)
+	{
+		addLine(_line);
+		
+		var start = Cell.getInfo(_line.start.x, _line.start.y);
+		var end = Cell.getInfo(_line.end.x, _line.end.y);
+		
+		for (x in Std.int(Math.min(start.x, end.x))...Std.int(Math.max(end.x, start.x)) + 1)
+		{
+			for (y in Std.int(Math.min(start.y, end.y))...Std.int(Math.max(end.y, start.y)) + 1)
+			{
+				var cell:CellInfo_6_0 = {
+					x : x * Cell.size + Cell.size * 0.5,
+					y : y * Cell.size + Cell.size * 0.5,
+					hx : Cell.size / 2,
+					hy : Cell.size / 2
+				}
+				
+				if (lineBoxCheck(_line, cell))
+				{
+					storeLine(_line, Cell.getInfo(x, y, true));
+				}
+			}
+		}
+	}
+	
+	static function lineBoxCheck(_line:LineObject, _cell:CellInfo_6_0):Bool
+	{
+		
+		var xdist:Float = _line.x - _cell.x;
+		var ydist:Float = _line.y - _cell.y;
+		var nxAbs:Float = Math.abs(_line.nx);
+		var nyAbs:Float = Math.abs(_line.ny);
+		
+		var sum_a:Float = (nxAbs * _cell.hx + _cell.hy * nyAbs) * nxAbs + (nxAbs * _cell.hx + nyAbs * _cell.hy) * nyAbs;
+		var sum_b:Float = _line.nx * xdist + _line.ny * ydist;
+		var sum_c:Float = Math.abs(sum_b * _line.nx) + Math.abs(sum_b * _line.ny);
+		
+		if (_line.hx + _cell.hx < Math.abs(sum_a)) {
+			return false;
+		}
+		if (_line.hy + _cell.hy < Math.abs(ydist)) {
+			return false;
+		}
+		if (sum_a < sum_c) return {
+			false;
+		}
+		return true;
 	}
 	
 	public static function addLine(_line:LineObject):Void 

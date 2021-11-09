@@ -16,13 +16,20 @@ typedef CellInfo = {
 	var gy:Float;
 	var ?key:String;
 }
+
+typedef CellInfo_6_0 =  {
+	var x:Float;
+	var y:Float;
+	var hx:Float;
+	var hy:Float;
+}
  
 class Cell 
 {
 	public static inline var size:Int = 14;
 	public static var cellList:Array<Cell> = new Array();
 	
-	public static function getInfo(_x:Float, _y:Float):CellInfo 
+	public static function getInfo(_x:Float, _y:Float, ?_argIsCellCoords:Bool = false):CellInfo 
 	{
 		var info:CellInfo = {
 			x : Std.int(Math.floor(_x / size)),
@@ -30,7 +37,15 @@ class Cell
 			gx : _x - size * Math.floor(_x / size),
 			gy : _y - size * Math.floor(_y / size),
 		};
+		
+		if (_argIsCellCoords)
+		{
+			info.x = Std.int(_x);
+			info.y = Std.int(_y);
+		}
+		
 		info.key = 'x${info.x}y${info.y}';
+		
 		return info;
 	}
 	
