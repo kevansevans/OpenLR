@@ -55,13 +55,13 @@ class ToolFunction
 						if (line.type == type) {
 							Main.canvas.removeVisLine(line);
 							Grid.unregister(line);
-							Main.CVAR.changes += 1;
+							Constants.CVAR.changes += 1;
 						}
 						
 					} else {
 						Main.canvas.removeVisLine(line);
 						Grid.unregister(line);
-						Main.CVAR.changes += 1;
+						Constants.CVAR.changes += 1;
 					}
 					continue;
 				}
