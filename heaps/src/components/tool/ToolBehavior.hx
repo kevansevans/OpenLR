@@ -147,6 +147,7 @@ class ToolBehavior
 	
 	function mouseDown(event:Event):Void 
 	{
+		
 		if (Main.canvas.lineVisLock) {
 			switch (Main.canvas.drawMode) {
 				case FULL_EDIT | PLAYBACK :
@@ -246,7 +247,10 @@ class ToolBehavior
 					
 					if (angleSnapping) snapToAngle();
 					
-					if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2)) > 10 * (1 / Main.canvas.scaleX)) {
+					var dist = Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2));
+					
+					var dist = Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2));
+					if (dist > 10 * (1 / Main.canvas.scaleX) && dist < 1000 * (1 / Main.canvas.scaleX)) {
 						drawLine();
 						mouseStart = mouseEnd.clone();
 						mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
@@ -368,9 +372,19 @@ class ToolBehavior
 						
 						if (mouseStart == null || mouseEnd == null) return;
 						
-						if (tool == LINE) snap(mouseEnd, false);
+						if (tool == LINE) {
+								snap(mouseEnd, false);
+								drawLine();
+						}
 						
-						drawLine();
+						if (tool == PENCIL)
+						{
+							var dist = Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2));
+							if (dist > 10 * (1 / Main.canvas.scaleX) && dist < 1000 * (1 / Main.canvas.scaleX)) {
+								drawLine();
+							}
+						}
+						
 						
 					case ERASER :
 						
