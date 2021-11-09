@@ -272,10 +272,4 @@ class Main extends App
 		var point = canvas.globalToLocal(new h2d.col.Point(Main.locengine.width, Main.locengine.height));
 		return point;
 	}
-	
-	public static var CVAR = {
-		changes : 0,
-		trackName : "Untitled",
-		trackAuthor : "Anonymous"
-	}
 }

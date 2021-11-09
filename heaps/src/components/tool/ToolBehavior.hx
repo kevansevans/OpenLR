@@ -8,6 +8,7 @@ import hxlr.lines.Accel;
 import hxlr.lines.Scenery;
 import hxlr.lines.Slow;
 import hxlr.lines.LineObject;
+import hxlr.Constants;
 import components.tool.ToolFunction;
 import components.ui.Toolbar.Icon;
 import hxd.BitmapData;
@@ -548,7 +549,7 @@ class ToolBehavior
 			Main.canvas.addVisLine(line);
 		}
 		
-		Main.CVAR.changes += 1;
+		Constants.CVAR.changes += 1;
 	}
 	
 	var lastViewedPosition:Point;

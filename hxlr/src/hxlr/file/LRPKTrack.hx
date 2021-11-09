@@ -123,9 +123,9 @@ class LRPKTrack
 						var pos = lump.position;
 						
 						var nameLength = data.get(pos);
-						Main.CVAR.trackName = data.getString(pos += 1, nameLength);
+						Constants.CVAR.trackName = data.getString(pos += 1, nameLength);
 						var authorLength = data.get(pos += nameLength);
-						Main.CVAR.trackAuthor = data.getString(pos += 1, authorLength);
+						Constants.CVAR.authorName = data.getString(pos += 1, authorLength);
 						Grid.switchPhysicsModel(data.get(pos += authorLength));
 						
 					default :
@@ -332,13 +332,13 @@ class LRPKTrack
 		var data:BytesBuffer = new BytesBuffer();
 		
 		var name:BytesBuffer = new BytesBuffer();
-		name.addString(Main.CVAR.trackName);
+		name.addString(Constants.CVAR.trackName);
 		
-		data.addByte(Main.CVAR.trackName.length);
-		data.addString(Main.CVAR.trackName);
-		data.addByte(Main.CVAR.trackAuthor.length);
-		data.addString(Main.CVAR.trackAuthor);
-		data.addByte(Main.CVAR.physics);
+		data.addByte(Constants.CVAR.trackName.length);
+		data.addString(Constants.CVAR.trackName);
+		data.addByte(Constants.CVAR.authorName.length);
+		data.addString(Constants.CVAR.authorName);
+		data.addByte(Constants.CVAR.physics);
 		
 		return data.getBytes();
 	}

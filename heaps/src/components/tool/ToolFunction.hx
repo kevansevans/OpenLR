@@ -4,6 +4,7 @@ import hxlr.lines.LineObject;
 import hxlr.enums.LineType;
 import hxlr.engine.Grid;
 import hxlr.engine.Cell;
+import hxlr.Constants;
 import components.stage.Canvas.DrawMode;
 
 /**

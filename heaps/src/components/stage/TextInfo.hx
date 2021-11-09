@@ -8,6 +8,7 @@ import h3d.Vector;
 import hxd.Res;
 import hxd.res.DefaultFont;
 import hxlr.engine.Grid;
+import hxlr.Constants;
 
 /**
  * ...
@@ -37,7 +38,7 @@ class TextInfo
 		
 		info.text = "";
 		
-		if (showTrackName) info.text += Main.CVAR.trackName + "\n";
+		if (showTrackName) info.text += Constants.CVAR.trackName + "\n";
 		if (showTimeStamp) info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
 		
 		if (Main.camera.enabled && showSpeedometer) 

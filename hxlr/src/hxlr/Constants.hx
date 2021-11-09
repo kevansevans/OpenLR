@@ -1,5 +1,6 @@
 package hxlr;
 
+import hxlr.enums.Physics;
 import hxlr.rider.RiderStruct;
 import hxlr.enums.StickType;
 
@@ -111,4 +112,22 @@ class Constants
 		
 	}
 	
+	public static var CVAR:ClientVar =
+	{
+		changes : 0,
+		trackName : "Untitled",
+		authorName : "Anonymous",
+		physics : Physics.VERSION_6_2,
+		trackDir : "",
+	}
+	
+}
+
+typedef ClientVar =
+{
+	changes:Int,
+	trackName:String,
+	authorName:String,
+	physics:Physics,
+	trackDir:String,
 }

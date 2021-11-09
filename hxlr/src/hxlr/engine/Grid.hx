@@ -1,6 +1,7 @@
 package hxlr.engine;
 
 import haxe.macro.Expr.Case;
+import hxlr.Constants;
 import hxlr.engine.Cell;
 import hxlr.enums.LineType;
 import hxlr.enums.Physics;
@@ -33,6 +34,10 @@ class Grid
 	{
 		registry = new Map();
 		lines = new Array();
+		
+		Grid.register = Grid.register_6_0;
+	}
+	
 	public static function switchPhysicsModel(_type:Physics)
 	{
 		switch (_type)
@@ -47,7 +52,7 @@ class Grid
 				Grid.register = Grid.register_6_2;
 		}
 		
-		Main.CVAR.physics = _type;
+		Constants.CVAR.physics = _type;
 	}
 	
 	public static function createLineObject(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, _inv:Bool = false, _limMode:Int = 0, _multiplier:Int = 1):LineObject
@@ -202,6 +207,13 @@ class Grid
 					storeLine(_line, Cell.getInfo(x, y, true));
 				}
 			}
+		}
+		
+		if (_line.keyList.length == 0)
+		{
+			trace('==========${_line.id}==========');
+			trace(Math.min(start.x, end.x), Math.max(end.x, start.x) + 1);
+			trace(Math.min(start.y, end.y), Math.max(end.y, start.y) + 1);
 		}
 	}
 	
