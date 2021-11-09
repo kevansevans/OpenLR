@@ -35,6 +35,7 @@ class RiderBase
 	
 	public var crashed(default, set):Null<Bool> = false;
 	public var invincible:Bool = false;
+	public var remountable:Bool = false;
 	
 	public var enabledFrame:Null<Int>;
 	public var disableFrame:Null<Int>;

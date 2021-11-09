@@ -44,6 +44,7 @@ class LineObject extends Line
 	public var accConst:Float = 0.1;
 	public var grindable:Bool;
 	public var grindMode:Anchor;
+	public var layer:Int = 0;
 	
 	public var limType:Int = 0;
 	public var limStart:Float = 0;
@@ -132,6 +133,7 @@ class LineObject extends Line
 				default :
 					null;
 			},
+			layer : layer,
 		}
 		return save;
 	}
@@ -162,6 +164,7 @@ class LineObject extends Line
 		if (multiplier != 1) return true;
 		if (thickness != 2) return true;
 		if (grindable) return true;
+		if (layer != 0) return true;
 		
 		return false;
 	}
