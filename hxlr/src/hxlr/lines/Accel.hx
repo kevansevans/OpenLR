@@ -61,11 +61,6 @@ class Accel extends LineObject
 		}
 	}
 	
-	override function get_multiplier():Int 
-	{
-		return multiplier;
-	}
-	
 	override function set_multiplier(value:Int):Int 
 	{
 		multiplier = value;

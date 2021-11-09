@@ -13,19 +13,15 @@ import hxlr.file.TrackStruct.LineStruct;
  */
 class LineObject extends Line
 {
-	public var id:Null<Int>;
-	
-	public var type:LineType;
 	public var tangible:Bool = false;
-	public var thickness:Float = 2;
-	public var accConst:Float = 0.1;
+	
 	
 	public var keyList:Array<String>;
 	
-	var gfxEnd:Point;
-	
+	//Needed info
+	public var id:Null<Int>;
+	public var type:LineType;
 	public var shifted:Bool;
-	
 	public var dx:Float;
 	public var dy:Float;
 	public var C:Float;
@@ -42,6 +38,13 @@ class LineObject extends Line
 	public var hx(get, null):Float;
 	public var hy(get, null):Float;
 	
+	public var special(get, never):Bool;
+	public var multiplier(default, set):Int = 1; 
+	public var thickness:Float = 2;
+	public var accConst:Float = 0.1;
+	public var grindable:Bool;
+	public var grindMode:Anchor;
+	
 	public var limType:Int = 0;
 	public var limStart:Float = 0;
 	public var limEnd:Float = 0;
@@ -50,14 +53,10 @@ class LineObject extends Line
 	public var prevLine:LineObject;
 	public var nextLine:LineObject;
 	
-	public var grindable:Bool;
-	public var grindMode:Anchor;
 	
 	public function new(_start:Point, _end:Point, _shift:Bool = false, ?_lim:Int = 0)
 	{
 		super(_start, _end);
-		
-		gfxEnd = new Point(end.x - start.x, end.y - start.y);
 		
 		shifted = _shift;
 		
@@ -158,7 +157,15 @@ class LineObject extends Line
 		return true; //So Haxe doesn't throw a fit
 	}
 	
-	function get_multiplier():Int 
+	function get_special():Bool 
+	{
+		if (multiplier != 1) return true;
+		if (thickness != 2) return true;
+		if (grindable) return true;
+		
+		return false;
+	}
+	
 	function get_x():Float 
 	{
 		return this.start.x + this.dx * 0.5;
