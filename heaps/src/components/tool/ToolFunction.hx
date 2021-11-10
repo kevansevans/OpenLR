@@ -4,7 +4,7 @@ import hxlr.lines.LineObject;
 import hxlr.enums.LineType;
 import hxlr.engine.Grid;
 import hxlr.engine.Cell;
-import hxlr.Constants;
+import hxlr.Common;
 import components.stage.Canvas.DrawMode;
 
 /**
@@ -55,13 +55,13 @@ class ToolFunction
 						if (line.type == type) {
 							Main.canvas.removeVisLine(line);
 							Grid.unregister(line);
-							Constants.CVAR.changes += 1;
+							Common.CVAR.changes += 1;
 						}
 						
 					} else {
 						Main.canvas.removeVisLine(line);
 						Grid.unregister(line);
-						Constants.CVAR.changes += 1;
+						Common.CVAR.changes += 1;
 					}
 					continue;
 				}

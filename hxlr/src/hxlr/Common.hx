@@ -1,14 +1,16 @@
 package hxlr;
 
 import hxlr.enums.Physics;
+import hxlr.file.TrackStruct;
 import hxlr.rider.RiderStruct;
 import hxlr.enums.StickType;
+import hxlr.engine.Grid;
 
 /**
  * ...
  * @author Kaelan
  */
-class Constants 
+class Common 
 {
 
 	public static var minLineSize:Int = 10;
@@ -107,11 +109,6 @@ class Constants
 	
 	public static var names:Array<String> = ["Bosh", "Chaz", "Bailey", "Bish", "Essi", "Fin", "Coco", "Fsk"];
 	
-	public function new() 
-	{
-		
-	}
-	
 	public static var CVAR:ClientVar =
 	{
 		changes : 0,
@@ -119,6 +116,11 @@ class Constants
 		authorName : "Anonymous",
 		physics : Physics.VERSION_6_2,
 		trackDir : "",
+	}
+	
+	public static function parseTrackStruct(_track:TrackStruct)
+	{
+		Grid.
 	}
 	
 }

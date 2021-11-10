@@ -1,6 +1,6 @@
 package components.sledder;
 
-import hxlr.Constants;
+import hxlr.Common;
 import hxlr.math.geom.Point;
 import hxlr.rider.RiderBase;
 
@@ -49,7 +49,7 @@ class Bosh extends RiderBase
 	
 	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String, ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
 	{
-		super(Constants.defaultRider(), new Point(_x, _y), _name);
+		super(Common.defaultRider(), new Point(_x, _y), _name);
 		
 		startPos = new Point(_x, _y);
 		name = _name;
@@ -82,6 +82,7 @@ class Bosh extends RiderBase
 		neckscarf.y = -53;
 		Main.canvas.sledderLayer.addChild(rightLeg);
 		Main.canvas.sledderLayer.addChild(rightArm);
+		
 	}
 	
 	public function setRandomScarfColors(_length:Int)

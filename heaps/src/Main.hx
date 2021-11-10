@@ -6,7 +6,7 @@ import components.stage.TimeLine;
 import h2d.Scene;
 import haxe.Json;
 import hxd.res.Resource;
-import hxlr.Constants;
+import hxlr.Common;
 import hxlr.enums.LineType;
 import hxlr.file.JSONTrack;
 import hxlr.rider.RiderStruct;

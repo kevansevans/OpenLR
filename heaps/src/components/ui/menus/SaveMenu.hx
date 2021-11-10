@@ -13,7 +13,7 @@ import haxe.ui.events.UIEvent;
 import hxd.File;
 import hxlr.file.LRFileSystem;
 import hxlr.file.TrackStruct;
-import hxlr.Constants;
+import hxlr.Common;
 import haxe.io.Bytes;
 
 #if js
@@ -69,7 +69,7 @@ class SaveMenu
 		
 		trackName = new TextField();
 		left.addComponent(trackName);
-		trackName.text = Constants.CVAR.trackName;
+		trackName.text = Common.CVAR.trackName;
 		
 		var labelAuthorName:Label = new Label();
 		left.addComponent(labelAuthorName);
@@ -77,7 +77,7 @@ class SaveMenu
 		
 		authorName = new TextField();
 		left.addComponent(authorName);
-		authorName.text = Constants.CVAR.authorName;
+		authorName.text = Common.CVAR.authorName;
 		
 		var saveRow:HBox = new HBox();
 		box.addComponent(saveRow);

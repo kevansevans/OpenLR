@@ -1,7 +1,7 @@
 package hxlr.engine;
 
 import haxe.macro.Expr.Case;
-import hxlr.Constants;
+import hxlr.Common;
 import hxlr.engine.Cell;
 import hxlr.enums.LineType;
 import hxlr.enums.Physics;
@@ -52,7 +52,7 @@ class Grid
 				Grid.register = Grid.register_6_2;
 		}
 		
-		Constants.CVAR.physics = _type;
+		Common.CVAR.physics = _type;
 	}
 	
 	public static function createLineObject(_type:LineType, _x1:Float, _y1:Float, _x2:Float, _y2:Float, _inv:Bool = false, _limMode:Int = 0, _multiplier:Int = 1):LineObject

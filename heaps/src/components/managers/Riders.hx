@@ -1,7 +1,7 @@
 package components.managers;
 
 import hxlr.rider.RiderBase;
-import hxlr.Constants;
+import hxlr.Common;
 import components.sledder.Bosh;
 import h2d.col.Point;
 
@@ -31,7 +31,7 @@ class Riders
 	public function addNewRider(_start:Point, ?_name:String, ?_startFrame:Null<Int>, ?_endFrame:Null<Int>):RiderBase
 	{
 		
-		var setName:String = _name == null ? Constants.names[riderCount % Constants.names.length] : _name;
+		var setName:String = _name == null ? Common.names[riderCount % Common.names.length] : _name;
 		if (setName.length > 30) setName = setName.substr(0, 30);
 		if (riders[setName] != null) {
 			var occupiedSpace:Int = 0;

@@ -27,8 +27,8 @@ class LRFileSystem
 		
 		
 		var save:TrackStruct = {
-			label : Constants.CVAR.trackName,
-			creator : Constants.CVAR.authorName,
+			label : Common.CVAR.trackName,
+			creator : Common.CVAR.authorName,
 			duration : 0,
 			version : "6.2",
 			startPosition : {
