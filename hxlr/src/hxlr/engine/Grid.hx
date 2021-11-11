@@ -35,7 +35,7 @@ class Grid
 		registry = new Map();
 		lines = new Array();
 		
-		Grid.register = Grid.register_6_0;
+		Grid.register = Grid.register_6_2;
 	}
 	
 	public static function switchPhysicsModel(_type:Physics)
@@ -82,7 +82,6 @@ class Grid
 	
 	public static function createLineFromStruct(_line:LineStruct):LineObject
 	{
-		
 		var line:LineObject = null;
 		
 		var start:Point = new Point(_line.x1, _line.y1);
@@ -191,9 +190,12 @@ class Grid
 		var start = Cell.getInfo(_line.start.x, _line.start.y);
 		var end = Cell.getInfo(_line.end.x, _line.end.y);
 		
-		for (x in Std.int(Math.min(start.x, end.x))...Std.int(Math.max(end.x, start.x)) + 1)
+		var x:Int = Std.int(Math.min(start.x, end.x));
+		
+		while (x <= Std.int(Math.max(end.x, start.x)))
 		{
-			for (y in Std.int(Math.min(start.y, end.y))...Std.int(Math.max(end.y, start.y)) + 1)
+			var y:Int = Std.int(Math.min(start.y, end.y));
+			while (y <= Std.int(Math.max(end.y, start.y)))
 			{
 				var cell:CellInfo_6_0 = {
 					x : x * Cell.size + Cell.size * 0.5,
@@ -206,14 +208,9 @@ class Grid
 				{
 					storeLine(_line, Cell.getInfo(x, y, true));
 				}
+				++y;
 			}
-		}
-		
-		if (_line.keyList.length == 0)
-		{
-			trace('==========${_line.id}==========');
-			trace(Math.min(start.x, end.x), Math.max(end.x, start.x) + 1);
-			trace(Math.min(start.y, end.y), Math.max(end.y, start.y) + 1);
+			++x;
 		}
 	}
 	
@@ -229,7 +226,7 @@ class Grid
 		var sum_b:Float = _line.nx * xdist + _line.ny * ydist;
 		var sum_c:Float = Math.abs(sum_b * _line.nx) + Math.abs(sum_b * _line.ny);
 		
-		if (_line.hx + _cell.hx < Math.abs(sum_a)) {
+		if (_line.hx + _cell.hx < Math.abs(xdist)) {
 			return false;
 		}
 		if (_line.hy + _cell.hy < Math.abs(ydist)) {
@@ -241,7 +238,7 @@ class Grid
 		return true;
 	}
 	
-	public static function addLine(_line:LineObject):Void 
+	static function addLine(_line:LineObject):Void 
 	{
 		if (_line.id == null) _line.id = lineIDCount;
 		lines[_line.id] = _line;
