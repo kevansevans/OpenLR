@@ -23,8 +23,7 @@ typedef TrackStruct = {
 typedef RiderStruct = {
 	var startPosition:StartStruct;
 	var startVelocity:StartVelocity;
-	var colorA:Null<Int>;
-	var colorB:Null<Int>;
+	var colorList:Array<Int>;
 	var remountable:Null<Int>;
 }
 

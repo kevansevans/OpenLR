@@ -120,7 +120,8 @@ class Common
 	
 	public static function parseTrackStruct(_track:TrackStruct)
 	{
-		Grid.
+		Grid.deleteTrack();
+		
 	}
 	
 }

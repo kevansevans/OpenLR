@@ -1,6 +1,7 @@
 package hxlr.file;
 
 import hxlr.engine.Grid;
+import hxlr.enums.LineType;
 
 #if sys
 import sys.FileSystem;
@@ -23,7 +24,7 @@ class LRFileSystem
         #end
     }
 	
-	public static function generateTrackStruct():TrackStruct {
+	public static function generateTrackStruct(?_ignoreScenery:Bool = false):TrackStruct {
 		
 		
 		var save:TrackStruct = {
@@ -48,8 +49,7 @@ class LRFileSystem
 				{
 					startPosition : {x : rider.startPos.x, y : rider.startPos.y},
 					startVelocity : {x : 0.4, y : 0},
-					colorA : null,
-					colorB : null,
+					colorList : [],
 					remountable : rider.remountable == true ? 1 : null
 				}
 			);
@@ -57,6 +57,7 @@ class LRFileSystem
 		
 		for (line in Grid.lines) {
 			if (line == null) continue;
+			if (_ignoreScenery && line.type == SCENE) continue;
 			save.lines.unshift(line.toLineStruct());
 		}
 		
