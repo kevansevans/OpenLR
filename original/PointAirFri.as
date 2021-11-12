@@ -1,24 +1,24 @@
 ﻿class PointAirFri extends Point
 {
-    var x, y, dx, dy, vx, vy, airFriction;
-    function PointAirFri(__x, __y, __afr)
-    {
-        super();
-        x = __x;
-        y = __y;
-        dx = 0;
-        dy = 0;
-        vx = 0;
-        vy = 0;
-        airFriction = __afr;
-    } // End of the function
-    function verlet(a)
-    {
-        dx = (x - vx) * airFriction + a.x;
-        dy = (y - vy) * airFriction + a.y;
-        vx = x;
-        vy = y;
-        x = x + dx;
-        y = y + dy;
-    } // End of the function
-} // End of Class
+	var airFriction;
+   function PointAirFri(__x, __y, __afr)
+   {
+      super();
+      this.x = __x;
+      this.y = __y;
+      this.dx = 0;
+      this.dy = 0;
+      this.vx = 0;
+      this.vy = 0;
+      this.airFriction = __afr;
+   }
+   function verlet(a)
+   {
+      this.dx = (this.x - this.vx) * this.airFriction + a.x;
+      this.dy = (this.y - this.vy) * this.airFriction + a.y;
+      this.vx = this.x;
+      this.vy = this.y;
+      this.x += this.dx;
+      this.y += this.dy;
+   }
+}

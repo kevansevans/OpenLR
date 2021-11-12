@@ -1,34 +1,36 @@
 ﻿class Stick
 {
-    var a, b, restLength;
-    function Stick(_a, _b)
-    {
-        a = _a;
-        b = _b;
-        this.getRestLength();
-    } // End of the function
-    function satisfyDistance()
-    {
-        var _loc2 = a.x - b.x;
-        var _loc3 = a.y - b.y;
-        var _loc4 = Math.sqrt(_loc2 * _loc2 + _loc3 * _loc3);
-        var _loc5 = (_loc4 - restLength) / _loc4 * 0.500000;
-        var _loc6 = _loc2 * _loc5;
-        var _loc7 = _loc3 * _loc5;
-        a.x = a.x - _loc6;
-        a.y = a.y - _loc7;
-        b.x = b.x + _loc6;
-        b.y = b.y + _loc7;
-    } // End of the function
-    function getRestLength()
-    {
-        var _loc2 = a.x - b.x;
-        var _loc3 = a.y - b.y;
-        restLength = Math.sqrt(_loc2 * _loc2 + _loc3 * _loc3);
-    } // End of the function
-    function render(target)
-    {
-        target.moveTo(a.x, a.y);
-        target.lineTo(b.x, b.y);
-    } // End of the function
-} // End of Class
+	var a;
+	var b;
+	var restLength;
+   function Stick(_a, _b)
+   {
+      this.a = _a;
+      this.b = _b;
+      this.getRestLength();
+   }
+   function satisfyDistance()
+   {
+      var _loc3_ = this.a.x - this.b.x;
+      var _loc2_ = this.a.y - this.b.y;
+      var _loc7_ = Math.sqrt(_loc3_ * _loc3_ + _loc2_ * _loc2_);
+      var _loc6_ = (_loc7_ - this.restLength) / _loc7_ * 0.5;
+      var _loc5_ = _loc3_ * _loc6_;
+      var _loc4_ = _loc2_ * _loc6_;
+      this.a.x -= _loc5_;
+      this.a.y -= _loc4_;
+      this.b.x += _loc5_;
+      this.b.y += _loc4_;
+   }
+   function getRestLength()
+   {
+      var _loc3_ = this.a.x - this.b.x;
+      var _loc2_ = this.a.y - this.b.y;
+      this.restLength = Math.sqrt(_loc3_ * _loc3_ + _loc2_ * _loc2_);
+   }
+   function render(target)
+   {
+      target.moveTo(this.a.x,this.a.y);
+      target.lineTo(this.b.x,this.b.y);
+   }
+}

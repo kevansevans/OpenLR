@@ -1,32 +1,32 @@
 ﻿class BindStick extends BreakableStick
 {
-    var a, b, getRestLength, restLength, endurance;
-    static var crash;
-    function BindStick(_a, _b, _endurance)
-    {
-        super();
-        a = _a;
-        b = _b;
-        this.getRestLength();
-        endurance = _endurance * restLength * 0.500000;
-    } // End of the function
-    function satisfyDistance()
-    {
-        var _loc3 = a.x - b.x;
-        var _loc4 = a.y - b.y;
-        var _loc5 = Math.sqrt(_loc3 * _loc3 + _loc4 * _loc4);
-        var _loc2 = (_loc5 - restLength) / _loc5 * 0.500000;
-        if (_loc2 > endurance || BindStick.crash)
-        {
-            crash = true;
-            return (true);
-        } // end if
-        var _loc6 = _loc3 * _loc2;
-        var _loc7 = _loc4 * _loc2;
-        a.x = a.x - _loc6;
-        a.y = a.y - _loc7;
-        b.x = b.x + _loc6;
-        b.y = b.y + _loc7;
-        return (false);
-    } // End of the function
-} // End of Class
+	var endurance;
+	static var crash;
+   function BindStick(_a, _b, _endurance)
+   {
+      super();
+      this.a = _a;
+      this.b = _b;
+      this.getRestLength();
+      this.endurance = _endurance * this.restLength * 0.5;
+   }
+   function satisfyDistance()
+   {
+      var _loc3_ = this.a.x - this.b.x;
+      var _loc2_ = this.a.y - this.b.y;
+      var _loc7_ = Math.sqrt(_loc3_ * _loc3_ + _loc2_ * _loc2_);
+      var _loc4_ = (_loc7_ - this.restLength) / _loc7_ * 0.5;
+      if(_loc4_ > this.endurance || BindStick.crash)
+      {
+         BindStick.crash = true;
+         return true;
+      }
+      var _loc6_ = _loc3_ * _loc4_;
+      var _loc5_ = _loc2_ * _loc4_;
+      this.a.x -= _loc6_;
+      this.a.y -= _loc5_;
+      this.b.x += _loc6_;
+      this.b.y += _loc5_;
+      return false;
+   }
+}
