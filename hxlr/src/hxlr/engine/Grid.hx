@@ -126,14 +126,14 @@ class Grid
 		
 		storeLine(_line, start);
 		
-		if (_line.dx == 0 && _line.dy == 0 || left == right && top == bottom) {
+		if (left == right && top == bottom) {
 			return;
 		}
 		
 		var x = _line.start.x;
 		var y = _line.start.y;
-		var invDx = _line.dx == 0 ? 1 : 1 / _line.dx;
-		var invDy = _line.dy == 0 ? 1 : 1 / _line.dy;
+		var invDx = _line.dx == 0 ? Math.POSITIVE_INFINITY : 1 / _line.dx;
+		var invDy = _line.dy == 0 ? Math.POSITIVE_INFINITY : 1 / _line.dy;
 		
 		var difX:Float;
 		var difY:Float;
