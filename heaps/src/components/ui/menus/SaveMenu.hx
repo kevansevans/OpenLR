@@ -143,12 +143,18 @@ class SaveMenu
 		track.label = trackName.value;
 		track.creator = authorName.value;
 		
+		#if sys
 		File.saveAs(LRPKTrack.encode(track), {
 			title : "Save Track as",
 			defaultPath : '/${track.label}.lrpk',
 			saveFileName : finalize,
 			fileTypes : [{name : "OpenLR Package", extensions : ['lrpk']}]
 		});
+		#elseif js
+		
+		downloadJSFile(LRPKTrack.encode(track), '/${track.label}.lrpk');
+		
+		#end
 	}
 	
 	function finalize(string:String):Void
