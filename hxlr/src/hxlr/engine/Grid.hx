@@ -180,7 +180,69 @@ class Grid
 	
 	public static function register_6_1(_line:LineObject)
 	{
+		addLine(_line);
 		
+		var start = Cell.getInfo(_line.start.x, _line.start.y);
+		var end = Cell.getInfo(_line.end.x, _line.end.y);
+		
+		var left = _line.dx <= 0 ? start.x : end.x;
+		var right = _line.dx <= 0 ? end.x : start.x;
+		var top = _line.dy <= 0 ? start.y : end.y;
+		var bottom = _line.dy <= 0 ? end.y : start.y;
+		
+		storeLine(_line, start);
+		
+		if (left == right && top == bottom) {
+			return;
+		}
+		
+		var x:Float = _line.start.x;
+		var y:Float = _line.start.y;
+		var ratio:Float = _line.dy / _line.dx;
+		var invRatio:Float = 1 / ratio;
+		var const_loc8:Float = _line.start.y - ratio * _line.start.x;
+		
+		while (true)
+		{
+			var xStep:Float = _line.dx <= 0 ? -start.gx + 1 : Cell.size - start.gx;
+			var yStep:Float = _line.dx <= 0 ? -start.gx + 1 : Cell.size - start.gx;
+			if (_line.dx == 0)
+			{
+				y += yStep;
+			}
+			else if (_line.dy == 0)
+			{
+				x += xStep;
+			}
+			else
+			{
+				var const_loc7 = Math.round(ratio * (x * xStep) + const_loc8);
+				if (Math.abs(const_loc7 - y) < Math.abs(yStep))
+				{
+					x += xStep;
+					y = const_loc7;
+				}
+				else if (Math.abs(const_loc7 - y) == Math.abs(yStep))
+				{
+					x += xStep;
+					y += yStep;
+				}
+				else
+				{
+					x = Math.round((y + yStep - const_loc8) * invRatio);
+					y += yStep;
+				}
+			}
+			
+			start = Cell.getInfo(x, y);
+			
+			if (!(start.x >= right && start.x <= left && start.y >= bottom && start.y <= top))
+			{
+				break;
+			}
+			
+			storeLine(_line, start);
+		}
 	}
 	
 	public static function register_6_0(_line:LineObject)
