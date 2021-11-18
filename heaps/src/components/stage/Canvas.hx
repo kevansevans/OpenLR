@@ -83,7 +83,7 @@ class Canvas extends Object
 		y += _y;
 	}
 	
-	public function zoomCanvas(wheelDelta:Int):Void 
+	public function zoomCanvas(wheelDelta:Int, _ignoreMouse:Bool = false):Void 
 	{
 		var oldScale = scaleX;
 		var oldMouseX = mouseX;
@@ -91,6 +91,13 @@ class Canvas extends Object
 		var delta = Math.min(Math.max((scaleX) * (wheelDelta > 0 ? 0.825 : 1.125), 0.01), 100);
 		setScale(delta);
 		var newScale = scaleX;
+		
+		if (_ignoreMouse)
+		{
+			oldMouseX = (Main.rootScene.width / 2) - this.x;
+			oldMouseY = (Main.rootScene.height / 2) - this.y;
+		}
+		
 		x += -(oldMouseX * (newScale - oldScale));
 		y += -(oldMouseY * (newScale - oldScale));
 	}

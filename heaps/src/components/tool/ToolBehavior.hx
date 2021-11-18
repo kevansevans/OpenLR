@@ -220,9 +220,9 @@ class ToolBehavior
 	function mouseWheel(event:Event):Void 
 	{
 		if (event.wheelDelta > 0) {
-			Main.canvas.zoomCanvas(1);
+			Main.canvas.zoomCanvas(1, shifted);
 		} else if (event.wheelDelta < 0) {
-			Main.canvas.zoomCanvas(-1);
+			Main.canvas.zoomCanvas(-1, shifted);
 		}
 	}
 	
@@ -724,6 +724,11 @@ class ToolBehavior
 								Main.canvas.drawMode = FULL_EDIT;
 						}
 						updateCursor();
+						
+					case Key.QWERTY_EQUALS :
+						Main.canvas.zoomCanvas(-1, true);
+					case Key.QWERTY_MINUS :
+						Main.canvas.zoomCanvas(1, true);
 				}
 			case EKeyUp :
 				switch (event.keyCode) {
