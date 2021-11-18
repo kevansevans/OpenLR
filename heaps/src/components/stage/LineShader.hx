@@ -1,6 +1,5 @@
 package components.stage;
 
-import format.abc.Data.Function;
 import h3d.Vector;
 import h3d.col.Point;
 import hxlr.enums.LineType;

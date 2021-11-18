@@ -61,7 +61,6 @@ class VisLine extends Object
 		this.y = _line.start.y;
 		this.rotation = _line.angle;
 		bitmap.addShader(capShader = new CapShader());
-		bitmap.smooth = false;
 		capShader.lineLength = _line.length + 2;
 		if (_line.type == ACCEL) {
 			capShader.dirDependant = 1;
