@@ -4,14 +4,8 @@ import haxe.io.BytesBuffer;
 import hxlr.Common;
 import hxlr.engine.Grid;
 import hxlr.file.TrackStruct;
-import hxlr.lines.Floor;
-import hxlr.lines.Accel;
-import hxlr.lines.Scenery;
-import hxlr.lines.Slow;
 import hxlr.lines.LineObject;
-import hxlr.rider.RiderBase;
 import hxlr.enums.LineType;
-import hxlr.math.geom.Point;
 import hxlr.enums.Physics;
 
 /**
@@ -20,7 +14,11 @@ import hxlr.enums.Physics;
  */
 enum abstract LumpType(String) to String
 {
-	var LINEBASE; //For lines that need to maintain precision
+	var VERSINFO;
+	
+	var TRACKDEF; //The start of a track and header info
+	
+	var LINEDEF; //For lines that need to maintain precision
 	var LINEDECO; //For scenery lines where data can be culled
 	var LINESPEC; //Data for special line properties
 	
@@ -29,7 +27,7 @@ enum abstract LumpType(String) to String
 	var RIDERDEF; //Minimum rider data needed
 	var RIDERMOD; //Non-Standard info for rider
 	
-	var TRACKDEF;
+	var ENDTRACK; //Defines the end of a track, for multi-save support
 }
 typedef Lump =
 {
@@ -41,7 +39,23 @@ class LRPKTrack
 	static var sceneryCompression:Bool = true;
 	
 	//To be implemented later
-	static inline var saveVersion:Int = 0;
+	static inline var hxlr_version:Int = 1;
+	static inline var save_version:Int = 1;
+	static inline var game_version:Int = -1;
+	
+	static inline function formatString(_value:LumpType):String
+	{
+		var copy:String = _value;
+		while (copy.length < 8) copy += " ";
+		return copy;
+	}
+	
+	static inline function decodeString(_value:String):String
+	{
+		var copy:String = _value;
+		while (copy.lastIndexOf(" ") != -1) copy = copy.substr(0, copy.length - 1);
+		return copy;
+	}
 	
 	public static function decode(_fileBytes:Bytes, ?_skipScenery:Bool = false):Null<TrackStruct>
 	{
@@ -74,88 +88,71 @@ class LRPKTrack
 					position : data.getInt32((item * 12) + dirPosition + 8)
 				}
 				
-				switch (lump.type)
+				var lumpType:String = decodeString(lump.type);
+				
+				switch (lumpType)
 				{
-					case LINEBASE :
+					case 'LINEDEF' :
 						
-						var pos:Int = lump.position;
+						var numLines:Int = _fileBytes.getInt32(lump.position);
+						var position:Int = lump.position + 4;
 						
-						line = {
-							id : data.getInt32(pos),
-							x1 : data.getDouble(pos += 4),
-							y1 : data.getDouble(pos += 8),
-							x2 : data.getDouble(pos += 8),
-							y2 : data.getDouble(pos += 8),
-							type : data.get(pos += 8),
-							flipped : data.get(pos += 1) == 1 ? true : false,
-							leftExtended : null,
-							rightExtended : null,
-							multiplier : null,
-							layer : null,
-						}
-						
-						
-						var limType:Int = data.get(pos += 1);
-						
-						switch (limType)
+						for (a in 0...numLines)
 						{
-							case 0:
-								//nothing
-							case 1:
-								line.leftExtended = true;
-								line.rightExtended = false;
-							case 2:
-								line.leftExtended = false;
-								line.rightExtended = true;
-							case 3:
-								line.leftExtended = true;
-								line.rightExtended = true;
-						}
-						
-						lineStructs[line.id] = line;
-						
-					case LINEDECO :
-						
-						if (_skipScenery) continue;
-						
-						var compressed:Bool = data.get(lump.position) == 1 ? true : false;
-						
-						if (compressed)
-						{
-							line = {
-								id : -1,
-								type : LineType.SCENE,
-								x1 : data.getFloat(lump.position + 1),
-								y1 : data.getFloat(lump.position + 5),
-								x2 : data.getFloat(lump.position + 9),
-								y2 : data.getFloat(lump.position + 13),
-								flipped : null,
+							var lineStruct:LineStruct =
+							{
+								id : _fileBytes.getInt32(position),
+								x1 : _fileBytes.getDouble(position + 4),
+								y1 : _fileBytes.getDouble(position + 12),
+								x2 : _fileBytes.getDouble(position + 20),
+								y2 : _fileBytes.getDouble(position + 28),
+								type : _fileBytes.get(position + 36),
+								flipped : _fileBytes.get(position + 37) == 1 ? true : false,
 								leftExtended : null,
 								rightExtended : null,
 								multiplier : null,
-								layer : null
+								layer : null,
 							}
-						} 
-						else 
+							
+							var line = Grid.createLineFromStruct(lineStruct);
+							line.setLim(_fileBytes.get(position + 38));
+							
+							Grid.register(line);
+							Main.canvas.addVisLine(line);
+							
+							position += 39;
+						}
+						
+					case 'LINEDECO' :
+						
+						var numLines:Int = _fileBytes.getInt32(lump.position);
+						var position:Int = lump.position + 4;
+						
+						for (a in 0...numLines)
 						{
-							line = {
+							var lineStruct:LineStruct =
+							{
 								id : -1,
-								type : LineType.SCENE,
-								x1 : data.getDouble(lump.position + 1),
-								y1 : data.getDouble(lump.position + 5),
-								x2 : data.getDouble(lump.position + 9),
-								y2 : data.getDouble(lump.position + 13),
-								flipped : null,
+								x1 : _fileBytes.getFloat(position),
+								y1 : _fileBytes.getFloat(position + 4),
+								x2 : _fileBytes.getFloat(position + 8),
+								y2 : _fileBytes.getFloat(position + 12),
+								type : 2,
+								flipped : false,
 								leftExtended : null,
 								rightExtended : null,
 								multiplier : null,
-								layer : null
+								layer : null,
 							}
+							
+							var line = Grid.createLineFromStruct(lineStruct);
+							Grid.register(line);
+							Main.canvas.addVisLine(line);
+							
+							position += 16;
 						}
 						
-						lineStructs.unshift(line);
-						
-					case RIDERDEF :
+					case 'RIDERDEF' :
 						
 						var rider:RiderStruct =
 						{
@@ -173,7 +170,7 @@ class LRPKTrack
 						
 						riders.push(rider);
 						
-					case TRACKDEF :
+					case 'TRACKDEF' :
 						
 						var pos = lump.position;
 						
@@ -230,68 +227,106 @@ class LRPKTrack
 		
 		directories = new Array();
 		
-		for (line in _track.lines)
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Lumps made here
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Versinfo
+		//Trackdef
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Lumps made here
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Linedef
+		//Linedeco
+		//linespec
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		directories.push({
+			type : formatString(LINEDEF),
+			position : data.length + headerSize,
+		});
+		
+		var specLines:Array<LineObject> = [];
+		
+		var baseLineData:BytesBuffer = new BytesBuffer();
+		var sceneLineData:BytesBuffer = new BytesBuffer();
+		var specialLineData:BytesBuffer = new BytesBuffer();
+		
+		var lineCount:Int = 0;
+		var sceneCount:Int = 0;
+		var specLineCount:Int = 0;
+		
+		for (line in _track.lines) 
 		{
 			if (line == null) continue;
 			
-			var bytes:Bytes;
-			var lump:Lump;
-			
 			switch (line.type)
 			{
-				case FLOOR | ACCEL | SLOW :
-					
-					lump = {
-						type : LINEBASE,
-						position : data.length + headerSize
-					};
-					
-					bytes = lineToBytes(line);
-					
-				case SCENE :
-					
-					lump = {
-						type : LINEDECO,
-						position : data.length + headerSize
-					};
-					
-					bytes = decoLineToBytes(line);
+				case SCENE:
+					var infoBytes:Bytes = decoLineToBytes(line);
+					sceneLineData.addBytes(infoBytes, 0, infoBytes.length);
+					++sceneCount;
 				default :
-					continue;
+					var infoBytes:Bytes = lineToBytes(line);
+					baseLineData.addBytes(infoBytes, 0, infoBytes.length);
+					++lineCount;
 			}
-			
-			directories.push(lump);
-			data.addBytes(bytes, 0, bytes.length);
 			
 			if (Grid.lines[line.id].special) 
 			{
-				var bytes:Bytes = specLineToBytes(line);
-				var lump = {
-					type : LINESPEC,
-					position : data.length + headerSize
-				}
-				
-				directories.push(lump);
-				data.addBytes(bytes, 0, bytes.length);
+				var infoBytes:Bytes = specLineToBytes(line);
+				specialLineData.addBytes(infoBytes, 0, infoBytes.length);
+				++specLineCount;
 			}
 		}
+		
+		data.addInt32(lineCount);
+		data.addBytes(baseLineData.getBytes(), 0, baseLineData.getBytes().length);
+		
+		directories.push({
+			type : formatString(LINEDECO),
+			position : data.length + headerSize,
+		});
+		
+		data.addInt32(sceneCount);
+		data.addBytes(sceneLineData.getBytes(), 0, sceneLineData.getBytes().length);
+		
+		if (specLineCount > 0) {
+			
+			directories.push({
+				type : formatString(LINESPEC),
+				position : data.length + headerSize,
+			});
+			
+			data.addInt32(specLineCount);
+			data.addBytes(specialLineData.getBytes(), 0, specialLineData.getBytes().length);
+			
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Lumps made here
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Riderdef
+		//Ridermod (to do)
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		for (rider in _track.riders)
 		{
 			
 			directories.push({
-				type : RIDERDEF,
+				type : formatString(RIDERDEF),
 				position : data.length + headerSize
 			});
 			
-			var bytes:Bytes = riderToBytes(rider);
+			var riderBytes:Bytes = riderToBytes(rider);
 			
-			data.addBytes(bytes, 0, bytes.length);
+			data.addBytes(riderBytes, 0, riderBytes.length);
 		}
 		
 		directories.push({
 			
-			type : TRACKDEF,
+			type : formatString(TRACKDEF),
 			position : data.length + headerSize
 			
 		});
@@ -367,20 +402,10 @@ class LRPKTrack
 		
 		var data:BytesBuffer = new BytesBuffer();
 		
-		if (sceneryCompression) {
-			data.addByte(1);
-			data.addFloat(_line.x1);
-			data.addFloat(_line.y1);
-			data.addFloat(_line.x2);
-			data.addFloat(_line.y2);
-			
-		} else {
-			data.addByte(0);
-			data.addDouble(_line.x1);
-			data.addDouble(_line.y1);
-			data.addDouble(_line.x2);
-			data.addDouble(_line.y2);
-		}
+		data.addFloat(_line.x1);
+		data.addFloat(_line.y1);
+		data.addFloat(_line.x2);
+		data.addFloat(_line.y2);
 		
 		return data.getBytes();
 	}
@@ -412,6 +437,7 @@ class LRPKTrack
 	{
 		var data:BytesBuffer = new BytesBuffer();
 		
+		data.addInt32(_line.id);
 		data.addByte(_line.multiplier);
 		data.addDouble(Grid.lines[_line.id].thickness);
 		data.addByte(Grid.lines[_line.id].grindable == true ? 1 : 0);
