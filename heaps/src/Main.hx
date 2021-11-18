@@ -1,42 +1,30 @@
 package;
 
-import components.Assets;
-import components.stage.Ruler;
-import components.stage.TimeLine;
+import h2d.col.Point;
+import h2d.Interactive;
 import h2d.Scene;
-import haxe.Json;
-import hxd.res.Resource;
+import h2d.Mask;
+import h3d.Engine;
+import hxd.App;
+import hxd.Res;
+
 import hxlr.Common;
-import hxlr.enums.LineType;
-import hxlr.file.JSONTrack;
-import hxlr.rider.RiderStruct;
 import hxlr.engine.Grid;
 
-import components.stage.Camera;
+import components.Assets;
 import components.managers.Musicplayer;
 import components.managers.Riders;
 import components.managers.Simulation;
+import components.stage.LineCanvas;
+import components.stage.Ruler;
+import components.stage.TimeLine;
+import components.stage.Canvas;
+import components.stage.Camera;
 import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import components.ui.Toolbar;
 import components.ui.MenuMain;
-import enums.Commands;
-import h2d.Mask;
-import h2d.col.Point;
-import components.stage.Canvas;
-import h3d.Engine;
-import haxe.io.Bytes;
-import hxd.res.DefaultFont;
-import hxd.File;
-import h2d.Console;
-import h2d.Graphics;
-import h2d.Interactive;
-import hxd.App;
-import hxd.Res;
 import utils.TableRNG;
-import hxd.System;
-
-import haxe.Json;
 
 #if hl
 import hl.UI;
@@ -66,6 +54,7 @@ class Main extends App
 	public static var rulerScene:Scene;
 	
 	public static var canvas:Canvas;
+	public static var lineCanvas:LineCanvas;
 	
 	public static var input:Interactive;
 	
@@ -106,7 +95,9 @@ class Main extends App
 		var month = Date.now().getMonth(); //0 - 11
 		var day = Date.now().getDate(); //1 - 31
 		
-		if (month == 7 && day == 16) Constants.names.unshift("Boo");
+		if (month == 7 && day == 16) Common.names.unshift("Boo");
+		
+		Engine.ANTIALIASING = 4;
 				
 		new Main();
 	}
@@ -143,8 +134,9 @@ class Main extends App
 		rulerScene = new Scene();
 		ruler = new Ruler(rulerScene);
 		
-		mask = new h2d.Mask(engine.width, engine.height, s2d);
-		canvas = new Canvas(mask);
+		canvas = new Canvas(s2d);
+		
+		//lineCanvas = new LineCanvas(s3d);
 		
 		canvas.x = engine.width / 2;
 		canvas.y = engine.height / 2;
@@ -191,6 +183,10 @@ class Main extends App
 		canvas.drawMode = DrawMode.PLAYBACK;
 		#end
 		
+		textinfo.update();
+		
+		menu = new MenuMain(s2d);
+		
 		onResize();
 	}
 	
@@ -213,12 +209,15 @@ class Main extends App
 		if (simulation.updating) {
 			simulation.liveUpdateTick();
 		}
+		
 	}
 	
 	override public function render(e:h3d.Engine):Void 
 	{
 		ruler.update();
 		rulerScene.render(e);
+		
+		//lineCanvas.updateScreenScale(engine, 1 / canvas.scaleX);
 		
 		super.render(e);
 		
@@ -242,10 +241,6 @@ class Main extends App
 		
 		input.width = engine.width;
 		input.height = engine.height;
-		input.y = 35;
-		
-		mask.width = engine.width;
-		mask.height = engine.height;
 		
 		textinfo.align();
 		
@@ -258,6 +253,7 @@ class Main extends App
 		
 		menu.resize();
 		
+		trace(canvas.x, canvas.y);
 	}
 	
 	//this function needs to be improved
