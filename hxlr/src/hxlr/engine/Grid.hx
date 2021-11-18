@@ -108,7 +108,6 @@ class Grid
 				
 		}
 		
-		
 		return line;
 	}
 	
@@ -276,7 +275,7 @@ class Grid
 		}
 	}
 	
-	static function lineBoxCheck(_line:LineObject, _cell:CellInfo_6_0):Bool
+	static inline function lineBoxCheck(_line:LineObject, _cell:CellInfo_6_0):Bool
 	{
 		
 		var xdist:Float = _line.x - _cell.x;
