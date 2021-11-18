@@ -54,6 +54,11 @@ class LineObject extends Line
 	public var prevLine:LineObject;
 	public var nextLine:LineObject;
 	
+	public var left(get, null):Float;
+	public var right(get, null):Float;
+	public var top(get, null):Float;
+	public var bottom(get, null):Float;
+	
 	
 	public function new(_start:Point, _end:Point, _shift:Bool = false, ?_lim:Int = 0)
 	{
@@ -187,6 +192,26 @@ class LineObject extends Line
 	function get_hy():Float 
 	{
 		return Math.abs(this.dy) * 0.5;
+	}
+	
+	function get_left():Float 
+	{
+		return Math.min(start.x, end.x);
+	}
+	
+	function get_right():Float 
+	{
+		return Math.max(start.x, end.x);
+	}
+	
+	function get_top():Float 
+	{
+		return Math.min(start.y, end.y);
+	}
+	
+	function get_bottom():Float 
+	{
+		return Math.max(start.y, end.y);
 	}
 	
 	function set_multiplier(value:Int):Int 

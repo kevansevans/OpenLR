@@ -311,8 +311,11 @@ class LoadMenu
 			
 			var line = Grid.createLineFromStruct(lineStruct);
 			Grid.register(line);
+			Main.lineCanvas.addLine(line);
 			Main.canvas.addVisLine(line);
 		}
+		
+		Main.lineCanvas.updateMesh();
 		
 		for (riderStruct in track.riders)
 		{

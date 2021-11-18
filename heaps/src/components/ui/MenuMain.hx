@@ -117,6 +117,14 @@ class MenuMain extends Object
 		newItem.text = "New Track";
 		newItem.onClick = function(event:MouseEvent)
 		{
+			for (line in Grid.lines)
+			{
+				if (line == null) continue;
+				
+				Main.lineCanvas.removeLine(line);
+			}
+			
+			
 			Main.canvas.trashTrack();
 			Grid.deleteTrack();
 			
@@ -124,6 +132,8 @@ class MenuMain extends Object
 			Main.riders.addNewRider(new Point(0, 0), "Bosh");
 			
 			Common.CVAR.changes = 0;
+			
+			Main.lineCanvas.updateMesh();
 		}
 		
 		saveItem = new MenuItem();
