@@ -1,11 +1,15 @@
 package components.ui;
 
 import components.stage.TextInfo;
+import components.ui.menus.AboutMenu;
+import components.ui.menus.LoadMenu;
 import components.ui.menus.RiderProperties;
 import components.ui.menus.SaveMenu;
 import h2d.Bitmap;
 import h2d.Object;
 import haxe.ui.components.TextField;
+import haxe.ui.containers.dialogs.Dialog.DialogButton;
+import hxlr.Common;
 import hxlr.engine.Grid;
 import haxe.ui.backend.ImageData;
 import haxe.ui.components.OptionBox;
@@ -39,8 +43,10 @@ import hxlr.math.geom.Point;
  */
 class MenuMain extends Object 
 {
+	public var about:AboutMenu;
 	public var riderProp:RiderProperties;
 	public var saveWindow:SaveMenu;
+	public var loadWindow:LoadMenu;
 	
 	public var menubar:MenuBar;
 		public var fileMenu:Menu;
@@ -50,6 +56,8 @@ class MenuMain extends Object
 			//=========================
 			public var connectItem:MenuItem;
 			public var hostItem:MenuItem;
+			//=========================
+			public var aboutItem:MenuItem;
 		public var viewMenu:Menu;
 			public var textMenu:Menu;
 				public var trackNameCheck:CheckBox;
@@ -114,25 +122,26 @@ class MenuMain extends Object
 			
 			Main.riders.deleteAllRiders();
 			Main.riders.addNewRider(new Point(0, 0), "Bosh");
+			
+			Common.CVAR.changes = 0;
 		}
 		
 		saveItem = new MenuItem();
-		#if js
-		saveItem.text = "Save Track to file...";
-		#else
 		saveItem.text = "Save Track...";
-		#end
 		
 		saveItem.onClick = function(e:UIEvent)
 		{
-			if (saveWindow == null || saveWindow.box == null) saveWindow = new SaveMenu();
+			if (saveWindow == null) saveWindow = new SaveMenu();
+			Screen.instance.addComponent(saveWindow.box);
 		}
 		
 		loadItem = new MenuItem();
 		loadItem.text = "Load Track";
 		loadItem.onClick = function(event:MouseEvent)
 		{
-			//loadTrack();
+			if (loadWindow == null) loadWindow = new LoadMenu();
+			Screen.instance.addComponent(loadWindow.box);
+			loadWindow.populateList();
 		}
 		
 		connectItem = new MenuItem();
@@ -140,6 +149,14 @@ class MenuMain extends Object
 		
 		hostItem = new MenuItem();
 		hostItem.text = "Host";
+		
+		aboutItem = new MenuItem();
+		aboutItem.text = "About OpenLR";
+		aboutItem.onClick = function(e:UIEvent)
+		{
+			if (about == null) about = new AboutMenu();
+			else Screen.instance.addComponent(about.box);
+		}
 		
 		viewMenu = new Menu();
 		viewMenu.text = "View";
@@ -306,6 +323,8 @@ class MenuMain extends Object
 			fileMenu.addComponent(new MenuSeparator());
 			fileMenu.addComponent(connectItem);
 			fileMenu.addComponent(hostItem);
+			fileMenu.addComponent(new MenuSeparator());
+			fileMenu.addComponent(aboutItem);
 			#end
 		menubar.addComponent(viewMenu);
 			viewMenu.addComponent(textMenu);

@@ -1,6 +1,7 @@
 package components.ui.menus;
 
 import haxe.ui.components.Button;
+import haxe.ui.components.CheckBox;
 import haxe.ui.components.Label;
 import haxe.ui.components.TextField;
 import haxe.ui.containers.HBox;
@@ -11,7 +12,9 @@ import haxe.ui.containers.properties.Property.PropertyBuilder;
 import haxe.ui.core.Screen;
 import haxe.ui.events.UIEvent;
 import hxd.File;
+import hxd.Save;
 import hxlr.file.LRFileSystem;
+import hxlr.file.LRPKTrack;
 import hxlr.file.TrackStruct;
 import hxlr.Common;
 import haxe.io.Bytes;
@@ -31,6 +34,7 @@ import js.lib.ArrayBuffer;
 class SaveMenu 
 {
 	public var box:Dialog;
+	public var warning:Dialog;
 	
 	public var trackName:TextField;
 	public var authorName:TextField;
@@ -40,19 +44,16 @@ class SaveMenu
 	public var saveNoPrompt:Button;
 	public var saveToLocation:Button;
 	
+	public var skipScenery:CheckBox;
+	
 	public function new() 
 	{
 		box = new Dialog();
 		box.title = "Save Track";
-		Screen.instance.addComponent(box);
+		box.destroyOnClose = false;
 		
 		box.width = 400;
 		box.height = 200;
-		
-		box.onDialogClosed = function(event:DialogEvent):Void
-		{
-			box = null;
-		}
 		
 		var hboxRoot:HBox = new HBox();
 		box.addComponent(hboxRoot);
@@ -88,35 +89,80 @@ class SaveMenu
 		saveNoPrompt.onClick = function(e:UIEvent)
 		{
 			promptlessSave();
+			box.hideDialog(DialogButton.OK);
 		}
 		
 		saveToLocation = new Button();
 		saveToLocation.text = "Save as...";
 		saveRow.addComponent(saveToLocation);
+		saveToLocation.onClick = function(e:UIEvent)
+		{
+			saveFileAs();
+		}
+		
+		skipScenery = new CheckBox();
+		right.addComponent(skipScenery);
+		skipScenery.text = "Skip scenery lines";
 	}
 	
 	function promptlessSave():Void 
 	{
-		#if sys
+		var track:TrackStruct = LRFileSystem.generateTrackStruct(skipScenery.value);
+		track.label = Common.CVAR.trackName = trackName.value;
+		track.creator = Common.CVAR.authorName = authorName.value;
 		
-		var track:TrackStruct = LRFileSystem.generateTrackStruct();
+		#if sys
 		var directory:String = getSaveDirectory();
 		
 		if (!File.exists(directory + 'OpenLR/saves/${track.label}/'))
 		{
-			trace("nuh");
-		} else {
-			trace("yuh");
+			File.createDirectory(directory + 'OpenLR/saves/${Common.CVAR.trackName}');
+			Common.CVAR.trackDir = directory + 'OpenLR/saves/${track.label}/';
+		} 
+		else 
+		{
+			warning = new Dialog();
+			Screen.instance.addComponent(warning);
+			box.visible = false;
 		}
 		
+		var trackName = generateName();
+		File.saveBytes(directory + 'OpenLR/saves/${Common.CVAR.trackName}/${trackName}.lrpk', LRPKTrack.encode(track));
+		
 		#elseif js
+		
+		Save.save(LRPKTrack.encode(track), track.label, true);
 		
 		#end
 	}
 	
+	function saveFileAs():Void 
+	{
+		var track:TrackStruct = LRFileSystem.generateTrackStruct(skipScenery.selected);
+		
+		track.label = trackName.value;
+		track.creator = authorName.value;
+		
+		File.saveAs(LRPKTrack.encode(track), {
+			title : "Save Track as",
+			defaultPath : '/${track.label}.lrpk',
+			saveFileName : finalize,
+			fileTypes : [{name : "OpenLR Package", extensions : ['lrpk']}]
+		});
+	}
+	
+	function finalize(string:String):Void
+	{
+		Common.CVAR.trackName = trackName.value;
+		Common.CVAR.authorName = authorName.value;
+		
+		box.visible = false;
+		box = null;
+	}
+	
 	static function generateName():String {
 		var date:String = '${Date.now().getDay()}_${Date.now().getMonth()}_${Date.now().getFullYear()}.${Date.now().getTime()}';
-		var name = '${Constants.CVAR.trackName}.${Constants.CVAR.authorName}.${date}.json';
+		var name = '${Common.CVAR.trackName}.${Common.CVAR.authorName}.${date}';
 		return name;
 	}
 	
