@@ -58,7 +58,7 @@ class LRFileSystem
 		for (line in Grid.lines) {
 			if (line == null) continue;
 			if (_ignoreScenery && line.type == SCENE) continue;
-			save.lines.unshift(line.toLineStruct());
+			save.lines.push(line.toLineStruct());
 		}
 		
 		return save;
