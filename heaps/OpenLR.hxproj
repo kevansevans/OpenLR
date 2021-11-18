@@ -34,7 +34,6 @@
     <library name="hlopenal" />
     <library name="haxeui-core" />
     <library name="haxeui-heaps" />
-    <library name="p2p" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
