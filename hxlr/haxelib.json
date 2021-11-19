@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["cross", "alpha", "game"],
   "description": "Haxelib adaption of Line Rider",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "classPath": "src/",
-  "releasenote": "Haxelib release",
+  "releasenote": "Handful of changes and tweaks",
   "contributors": ["kevansevans"]
 }
