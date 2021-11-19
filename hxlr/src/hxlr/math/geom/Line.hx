@@ -28,6 +28,10 @@ class Line
 	public var length(get, set):Float;
 	public var angle(get, set):Float;
 	public var slope(get, null):Slope;
+	public var left(get, null):Float;
+	public var right(get, null):Float;
+	public var top(get, null):Float;
+	public var bottom(get, null):Float;
 	
 	public function new(_start:Point, _end:Point) 
 	{
@@ -76,6 +80,11 @@ class Line
 		return length;
 	}
 	
+	public function set_angle(value:Float):Float 
+	{
+		return angle;
+	}
+	
 	function get_angle():Float 
 	{
 		var dx = end.x - start.x;
@@ -95,8 +104,23 @@ class Line
 		return VALUE(yslope, xslope);
 	}
 	
-	public function set_angle(value:Float):Float 
+	function get_left():Float 
 	{
-		return angle;
+		return Math.min(start.x, end.x);
+	}
+	
+	function get_right():Float 
+	{
+		return Math.max(start.x, end.x);
+	}
+	
+	function get_top():Float 
+	{
+		return Math.min(start.y, end.y);
+	}
+	
+	function get_bottom():Float 
+	{
+		return Math.max(start.y, end.y);
 	}
 }
