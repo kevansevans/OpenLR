@@ -134,9 +134,9 @@ class Main extends App
 		rulerScene = new Scene();
 		ruler = new Ruler(rulerScene);
 		
-		canvas = new Canvas(s2d);
+		canvas = new Canvas();
 		
-		//lineCanvas = new LineCanvas(s3d);
+		lineCanvas = new LineCanvas(s3d);
 		
 		canvas.x = engine.width / 2;
 		canvas.y = engine.height / 2;
@@ -217,7 +217,7 @@ class Main extends App
 		ruler.update();
 		rulerScene.render(e);
 		
-		//lineCanvas.updateScreenScale(engine, 1 / canvas.scaleX);
+		lineCanvas.updateScreenScale(engine, 1 / canvas.scaleX);
 		
 		super.render(e);
 		

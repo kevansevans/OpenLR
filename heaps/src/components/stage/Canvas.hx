@@ -113,7 +113,6 @@ class Canvas extends Object
 	
 	public function addVisLine(_line:LineObject) 
 	{
-		
 		var line:VisLine = null;
 		
 		switch (_line.type) {

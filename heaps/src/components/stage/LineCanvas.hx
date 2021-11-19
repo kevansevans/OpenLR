@@ -2,7 +2,6 @@ package components.stage;
 
 import h3d.Camera;
 import h3d.Engine;
-import h3d.Matrix;
 import h3d.col.Point;
 import h3d.scene.Scene;
 import hxlr.engine.CanvasBase;
@@ -13,7 +12,6 @@ import h3d.Vector;
 import hxlr.lines.LineObject;
 import hxsl.Shader;
 import h3d.prim.UV;
-import h3d.shader.LineShader;
 import hxsl.Types.Vec;
 
 /**
@@ -32,6 +30,7 @@ class LineCanvas extends CanvasBase
 	
 	public var pointMap:Map<LineObject, Array<Point>>;
 	public var points:Array<Point>;
+	public var normals:Array<Point>;
 	public var uvs:Array<UV>;
 	
 	public function new(_scene:Scene) 
@@ -43,6 +42,7 @@ class LineCanvas extends CanvasBase
 		
 		pointMap = new Map();
 		points = new Array();
+		normals = new Array();
 		uvs = new Array();
 		
 		camera.up = new Vector(0, 1, 0);
@@ -84,6 +84,8 @@ class LineCanvas extends CanvasBase
 		
 		for (point in pointMap[_line])
 		{
+			normals.push(new Point(_line.distance, _line.type, _line.shifted == true ? 0 : 1));
+			
 			var x:Float = point.x * c - point.y * s;
 			var y:Float = point.x * s + point.y * c;
 			
@@ -112,8 +114,8 @@ class LineCanvas extends CanvasBase
 	{
 		if (s3d.contains(mesh)) s3d.removeChild(mesh);
 		
-		quad = new Quads(points, uvs);
-		quad.addNormals();
+		quad = new Quads(points, null, normals);
+		//quad.addNormals();
 		quad.addUVs();
 		
 		mesh = new Mesh(quad);
@@ -128,11 +130,19 @@ class LineCanvas extends CanvasBase
 	{
 		camera.screenRatio = _engine.width / _engine.height;
 		
-		camera.pos = new Vector(-Main.canvas.x + 1, Main.canvas.y + 1, -1000);
-		camera.target = new Vector( -Main.canvas.x + 1, Main.canvas.y + 1, 1);
-		//camera.zoom = -1000;
+		screen.offset = new Vec(Main.canvas.x - (_engine.width / 2), -(Main.canvas.y - (_engine.height / 2)));
 		
-		screen.scale = new Vec(1 / _engine.width / 2, 1 / _engine.height / 2);
+		if (_engine.width >= _engine.height)
+		{
+			screen.scale = new Vec((1 / _engine.height), (1 / _engine.height));
+		}
+		else
+		{
+			screen.scale = new Vec((1 / _engine.width), (1 / _engine.width));
+		}
+		
+		screen.zoom = Main.canvas.scaleX;
+		
 	}
 	
 }
@@ -142,18 +152,64 @@ class CanvasShader extends Shader
 	
 	static  var SRC =
 	{
-		@:import h3d.shader.BaseMesh;
+		@input var input : {
+			var position : Vec3;
+			var uv : Vec2;
+			var normal : Vec3;
+		};
 		
+		var output : {
+			var position : Vec4;
+			var color : Vec4;
+			var depth : Float;
+		};
+		
+		@param var offset:Vec2;
 		@param var scale:Vec2;
+		@param var zoom:Float;
 		
 		function vertex()
 		{
-			//output.position.xy *= scale;
+			output.position.xy += (offset / zoom);
+			output.position.xy *= scale;
+			output.position.xy *= zoom;
 		}
 		
 		function fragment()
 		{
-		
+			output.color = vec4(0, 0, 0, 1);
+			
+			if (int(input.normal.y) == 0)
+			{
+				var G:Float = float(0x66) / float(255);
+				if (input.normal.z == 0 && input.uv.y > 0.5) {
+					output.color = vec4(0, G, 1, 1);
+				} else if (input.normal.z == 1 && input.uv.y < 0.5) {
+					output.color = vec4(0, G, 1, 1);	
+				}
+			}
+			if (input.normal.y == 1)
+			{
+				var R:Float = float(0xCC) / float(255);
+				if (input.normal.z == 0 && input.uv.y > 0.5) {
+					output.color = vec4(R, 0, 0, 1);
+				} else if (input.normal.z == 1 && input.uv.y < 0.5) {
+					output.color = vec4(R, 0, 0, 1);	
+				}
+			}
+			if (int(input.normal.y) == 2)
+			{
+				var G:Float = float(0xCC) / float(255);
+				output.color = vec4(0, G, 0, float(0.5));
+			}
+			
+			var pos = input.uv * vec2(input.normal.x, 2);
+			
+			if (input.normal.x > 2) {
+				if (pos.x < 1 && length(pos - vec2(1, 1)) > 1) discard;
+				else if (pos.x > input.normal.x - 1 && length(pos - vec2(input.normal.x - 1, 1)) > 1) discard;
+			}
+			
 		}
 	}
 	
