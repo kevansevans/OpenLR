@@ -14,7 +14,7 @@ import hxlr.file.TrackStruct.LineStruct;
 class LineObject extends Line
 {
 	public var tangible:Bool = false;
-	
+	public var directional:Bool = false;
 	
 	public var keyList:Array<String>;
 	

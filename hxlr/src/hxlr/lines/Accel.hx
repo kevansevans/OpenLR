@@ -20,6 +20,7 @@ class Accel extends LineObject
 		type = ACCEL;
 		
 		tangible = true;
+		directional = true;
 	}
 	
 	override function calculateConstants():Void 
