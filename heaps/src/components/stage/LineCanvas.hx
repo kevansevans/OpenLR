@@ -16,6 +16,7 @@ import hxsl.Shader;
 import h3d.prim.UV;
 import hxsl.Types.Vec;
 import hxlr.enums.LineType;
+import components.stage.Canvas.DrawMode;
 
 /**
  * ...
@@ -38,9 +39,12 @@ class LineCanvas extends CanvasBase
 	public var screen:CanvasShader;
 	
 	public var pointMap:Map<LineObject, Array<Point>>;
+	public var normalMap:Map<LineObject, Array<Point>>;
 	public var points:Array<Point>;
 	public var normals:Array<Point>;
 	public var uvs:Array<UV>;
+	
+	@:isVar public var drawMode(get, set):DrawMode = FULL_EDIT;
 	
 	public function new(_scene:Scene) 
 	{
@@ -50,6 +54,7 @@ class LineCanvas extends CanvasBase
 		camera = s3d.camera;
 		
 		pointMap = new Map();
+		normalMap = new Map();
 		points = new Array();
 		normals = new Array();
 		uvs = new Array();
@@ -80,18 +85,18 @@ class LineCanvas extends CanvasBase
 	{
 		//Per vertex:
 		//x y = line position
-		//z = RGB color. Relative Z Position is set to 0 in shader.
-		
+		//z = lineDistance
 		
 		pointMap[_line] = new Array();
+		normalMap[_line] = new Array();
 		
 		var s = Math.sin(_line.angle);
 		var c = Math.cos(_line.angle);
 		
-		var tl:Point = new Point( -1, -1, 0);
-		var tr:Point = new Point( _line.distance + 1, -1, 0);
-		var bl:Point = new Point( -1, 1, 0);
-		var br:Point = new Point( _line.distance + 1, 1, 0);
+		var tl:Point = new Point( -1, -1, _line.distance);
+		var tr:Point = new Point( _line.distance + 1, -1, _line.distance);
+		var bl:Point = new Point( -1, 1, _line.distance);
+		var br:Point = new Point( _line.distance + 1, 1, _line.distance);
 		
 		if (_line.directional)
 		{
@@ -125,9 +130,13 @@ class LineCanvas extends CanvasBase
 		{
 			if (count < 4 && _line.type == ACCEL)
 			{
-				normals.push(new Point(_line.distance, _line.type, flags | LineFlag.FLAG));
+				var npoint = new Point(_line.distance, _line.type, flags | LineFlag.FLAG);
+				normals.push(npoint);
+				normalMap[_line].push(npoint);
 			} else {
-				normals.push(new Point(_line.distance, _line.type, flags));
+				var npoint = new Point(_line.distance, _line.type, flags);
+				normals.push(npoint);
+				normalMap[_line].push(npoint);
 			}
 			
 			var x:Float = point.x * c - point.y * s;
@@ -141,7 +150,6 @@ class LineCanvas extends CanvasBase
 			
 			++count;
 		}
-		
 	}
 	
 	public function removeLine(_line:LineObject)
@@ -153,7 +161,13 @@ class LineCanvas extends CanvasBase
 			points.remove(point);
 		}
 		
-		pointMap[_line] = null;
+		for (point in normalMap[_line])
+		{
+			normals.remove(point);
+		}
+		
+		pointMap.remove(_line);
+		normalMap.remove(_line);
 	}
 	
 	public function updateMesh()
@@ -161,7 +175,6 @@ class LineCanvas extends CanvasBase
 		if (s3d.contains(mesh)) s3d.removeChild(mesh);
 		
 		quad = new Quads(points, null, normals);
-		//quad.addNormals();
 		quad.addUVs();
 		
 		mesh = new Mesh(quad);
@@ -169,27 +182,83 @@ class LineCanvas extends CanvasBase
 		
 		mesh.material.mainPass.addShader(screen);
 		mesh.material.blendMode = BlendMode.Alpha;
-		//mesh.material.mainPass.addShader(new LineShader(2));
 		mesh.material.mainPass.culling = Face.None;
 	}
+	
+	//magic number bullshit
+	public var magicRatio:Float = 2.25535;
 	
 	public function updateScreenScale(_engine:Engine, _scale:Float)
 	{
 		camera.screenRatio = _engine.width / _engine.height;
 		
-		screen.offset = new Vec(Main.canvas.x - (_engine.width / 2), -(Main.canvas.y - (_engine.height / 2)));
+		var xOffset:Float = (Main.canvas.x / _scale - (_engine.width / 2 / _scale)) / (_engine.width / 2 / _scale);
+		var yOffset:Float = -(Main.canvas.y / _scale - (_engine.height / 2 / _scale)) / (_engine.height / 2 / _scale);
+		
+		screen.offset = new Vec(xOffset, yOffset);
 		
 		if (_engine.width >= _engine.height)
 		{
-			screen.scale = new Vec((1 / _engine.height), (1 / _engine.height));
+			screen.scale = new Vec(1 / (_engine.height * magicRatio), 1 / (_engine.height * magicRatio));
 		}
 		else
 		{
-			screen.scale = new Vec((1 / _engine.width), (1 / _engine.width));
+			screen.scale = new Vec(1 / (_engine.width * magicRatio), 1 / (_engine.width * magicRatio));
 		}
 		
-		screen.zoom = Main.canvas.scaleX;
+		screen.zoom = _scale;
+	}
+	
+	function get_drawMode():DrawMode 
+	{
+		return drawMode;
+	}
+	
+	public function set_drawMode(_mode:DrawMode):DrawMode 
+	{
+		switch (_mode) {
+			
+			case FULL_EDIT :
+				
+				screen.editMode = true;
+				screen.showTangible = true;
+				screen.showScenery = true;
+				
+			case PLAYBACK :
+				
+				screen.editMode = false;
+				screen.showTangible = true;
+				screen.showScenery = true;
+				
+			case NO_SCENERY_EDIT :
+				
+				screen.editMode = true;
+				screen.showTangible = true;
+				screen.showScenery = false;
+				
+			case NO_SCENERY_PLAYBACK :
+				
+				screen.editMode = false;
+				screen.showTangible = true;
+				screen.showScenery = false;
+				
+			case SCENERY_EDIT :
+				
+				screen.editMode = true;
+				screen.showTangible = false;
+				screen.showScenery = true;
+				
+			case SCENERY_PLAYBACK :
+				
+				screen.editMode = false;
+				screen.showTangible = false;
+				screen.showScenery = true;
+				
+		}
 		
+		Main.textinfo.align();
+		
+		return drawMode = _mode;
 	}
 	
 }
@@ -211,9 +280,13 @@ class CanvasShader extends Shader
 			var depth : Float;
 		};
 		
-			@const var dragMode:Bool = false;
+		@const var editMode:Bool = true;
+		@const var showTangible:Bool = true;
+		@const var showScenery:Bool = true;
 		
-		@param var offset:Vec2;
+		@const var dragMode:Bool = false;
+		
+		@param var offset:Vec2 = vec2(0, 0);
 		@param var scale:Vec2;
 		@param var zoom:Float;
 		
@@ -228,15 +301,24 @@ class CanvasShader extends Shader
 		
 		function vertex()
 		{
-			output.position.xy += (offset / zoom);
 			output.position.xy *= scale;
 			output.position.xy *= zoom;
+			output.position.xy += offset;
+			
+			var tangible:Int = int(input.normal.z) & (1 << 2);
+			if (tangible != (1 << 2))
+			{
+				output.position.z = 0.1;
+			} else {
+				output.position.z = 0.0;
+			}
 		}
 		
 		function fragment()
 		{
 			output.color = vec4(0, 0, 0, 1);
 			
+			var distance:Float = input.position.z;
 			var lineType:Int = int(input.normal.y);
 			var shifted:Int = int(input.normal.z) & 1;
 			var flag:Int = int(input.normal.z) & (1 << 1);
@@ -250,52 +332,62 @@ class CanvasShader extends Shader
 			pbColor.g = float((inColor >> 8) & 0xFF);
 			pbColor.b = float((inColor & 0xFF)) / 255;*/
 			
+			if (!showScenery && tangible == 0) discard;
+			if (!showTangible && tangible == 4) discard;
+			
 			var lineTypeColor:Vec4 = vec4(0, 0, 0, 1);
 			
-			if (lineType == 0)
+			if (!editMode)
 			{
-				var G:Float = float(0x66) / float(255);
-				lineTypeColor = vec4(0, G, 1, 1);
-			}
-			else if (lineType == 1)
-			{
-				var R:Float = float(0xCC) / float(255);
-				lineTypeColor = vec4(R, 0, 0, 1);
-			}
-			else if (lineType == 2)
-			{
-				var G:Float = float(0xCC) / float(255);
-				lineTypeColor = vec4(0, G, 0, 0.5);
+				lineTypeColor = vec4(0, 0, 0, 1);
 			}
 			else {
-				lineTypeColor = vec4(1, 0, 0, 0.5);
+				if (lineType == 0)
+				{
+					var G:Float = float(0x66) / float(255);
+					lineTypeColor = vec4(0, G, 1, 1);
+				}
+				else if (lineType == 1)
+				{
+					var R:Float = float(0xCC) / float(255);
+					lineTypeColor = vec4(R, 0, 0, 1);
+				}
+				else if (lineType == 2)
+				{
+					var G:Float = float(0xCC) / float(255);
+					lineTypeColor = vec4(0, G, 0, 0.5);
+				}
+				else {
+					lineTypeColor = vec4(1, 0, 0, 0.5);
+				}
 			}
 			
 			if (flag == (1 << 1))
 			{
-				if (shifted == 1) { 
-					var loc = accelFlag.get(input.uv);
-					if (loc.a == 0) discard;
-					if (input.uv.y > 0.2) output.color = lineTypeColor;
+				if (editMode) {
+					if (shifted == 1) { 
+						var loc = accelFlag.get(input.uv);
+						if (loc.a == 0) discard;
+						if (input.uv.y > 0.2) output.color = lineTypeColor;
+					} else {
+						var loc = accelFlag.get(vec2(input.uv.x, 1 - input.uv.y));
+						if (loc.a == 0) discard;
+						if (input.uv.y < 0.8) output.color = lineTypeColor;
+					}
 				} else {
-					var loc = accelFlag.get(vec2(input.uv.x, 1 - input.uv.y));
-					if (loc.a == 0) discard;
-					if (input.uv.y < 0.8) output.color = lineTypeColor;
+					discard;
 				}
 			}
 			else 
 			{
-				if (tangible == (1 << 2))
-				{
+				if (tangible == 4) {
 					if (shifted != (1) && input.uv.y < 0.5) output.color = lineTypeColor;
 					else if (shifted == (1) && input.uv.y > 0.5) output.color = lineTypeColor;
-				}
-				else
-				{
+				} else {
 					output.color = lineTypeColor;
 				}
 				
-				var pos = vec2(input.uv.x * (input.normal.x + 2), input.uv.y * 2);
+				var pos = vec2(input.uv.x * (distance + 2), input.uv.y * 2);
 				if (pos.x < 1)
 				{
 					var relativeUV:Vec2 = vec2((pos.x / 2), input.uv.y);
@@ -304,7 +396,7 @@ class CanvasShader extends Shader
 				} 
 				else if (pos.x > input.normal.x + 1)
 				{
-					var relativeUV:Vec2 = vec2((input.normal.x + 2 - pos.x) / 2, input.uv.y);
+					var relativeUV:Vec2 = vec2((distance + 2 - pos.x) / 2, input.uv.y);
 					var loc = lineCap.get(relativeUV);
 					if (loc.a == 0) discard;
 				}

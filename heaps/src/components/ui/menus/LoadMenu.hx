@@ -312,7 +312,6 @@ class LoadMenu
 			var line = Grid.createLineFromStruct(lineStruct);
 			Grid.register(line);
 			Main.lineCanvas.addLine(line);
-			Main.canvas.addVisLine(line);
 		}
 		
 		Main.lineCanvas.updateMesh();
@@ -349,7 +348,7 @@ class LoadMenu
 			
 			var line = Grid.createLineFromStruct(lineStruct);
 			Grid.register(line);
-			Main.canvas.addVisLine(line);
+			Main.lineCanvas.addLine(line);
 		}
 		
 		if (track.riders != null)

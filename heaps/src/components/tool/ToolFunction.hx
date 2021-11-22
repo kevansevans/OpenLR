@@ -21,6 +21,8 @@ class ToolFunction
 		var key:String = "";
 		var invScale = 1 / Main.canvas.scaleX;
 		
+		var erasedCount:Int = 0;
+		
 		for (_xg in -1...2) for (_yg in -1...2) {
 			
 			key = Cell.getInfo(_x + _xg, _y + _yg).key;
@@ -53,20 +55,24 @@ class ToolFunction
 						}
 						
 						if (line.type == type) {
-							Main.canvas.removeVisLine(line);
+							Main.lineCanvas.removeLine(line);
 							Grid.unregister(line);
 							Common.CVAR.changes += 1;
+							++erasedCount;
 						}
 						
 					} else {
-						Main.canvas.removeVisLine(line);
+						Main.lineCanvas.removeLine(line);
 						Grid.unregister(line);
 						Common.CVAR.changes += 1;
+						++erasedCount;
 					}
 					continue;
 				}
 				
 			}
 		}
+		
+		if (erasedCount > 0) Main.lineCanvas.updateMesh();
 	}
 }

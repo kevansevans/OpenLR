@@ -5,7 +5,10 @@ import h2d.Interactive;
 import h2d.Scene;
 import h2d.Mask;
 import h3d.Engine;
+import haxe.ui.components.TextField;
+import haxe.ui.events.UIEvent;
 import hxd.App;
+import hxd.Math;
 import hxd.Res;
 
 import hxlr.Common;
@@ -134,7 +137,7 @@ class Main extends App
 		rulerScene = new Scene();
 		ruler = new Ruler(rulerScene);
 		
-		canvas = new Canvas();
+		canvas = new Canvas(s2d);
 		
 		lineCanvas = new LineCanvas(s3d);
 		
@@ -210,14 +213,14 @@ class Main extends App
 			simulation.liveUpdateTick();
 		}
 		
+		lineCanvas.updateScreenScale(engine, canvas.scaleX);
+		
 	}
 	
 	override public function render(e:h3d.Engine):Void 
 	{
 		ruler.update();
 		rulerScene.render(e);
-		
-		lineCanvas.updateScreenScale(engine, 1 / canvas.scaleX);
 		
 		super.render(e);
 		
@@ -252,8 +255,6 @@ class Main extends App
 		timeline.resize();
 		
 		menu.resize();
-		
-		trace(canvas.x, canvas.y);
 	}
 	
 	//this function needs to be improved

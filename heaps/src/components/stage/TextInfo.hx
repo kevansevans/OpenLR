@@ -65,7 +65,7 @@ class TextInfo
 	
 	public function getMode(_lineType:LineType):Bool
 	{
-		var mode = Main.canvas.drawMode;
+		var mode = Main.lineCanvas.drawMode;
 		
 		switch (mode) {
 			case FULL_EDIT | PLAYBACK :

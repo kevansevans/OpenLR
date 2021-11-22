@@ -38,7 +38,6 @@ class Canvas extends Object
 	
 	var eraserSize:Int = 5;
 	
-	@:isVar public var drawMode(get, set):DrawMode = FULL_EDIT;
 	public var lineVisLock:Bool = false;
 	
 	public var sledderLayer:Object;
@@ -111,88 +110,10 @@ class Canvas extends Object
 		previewLine = new VisLine(_line, previewLayer);
 	}
 	
-	public function addVisLine(_line:LineObject) 
-	{
-		var line:VisLine = null;
-		
-		switch (_line.type) {
-			case FLOOR | ACCEL | SLOW :
-				line = new VisLine(_line, rideLayer);
-			case SCENE :
-				line = new VisLine(_line, sceneLayer);
-			default :
-				return;
-		}
-		
-		lineBitmaps[_line] = line;
-		
-	}
-	
-	public function removeVisLine(_line:LineObject) {
-		
-		var line = lineBitmaps[_line];
-		line.remove();
-		lineBitmaps.remove(_line);
-		
-	}
-	
 	public function trashTrack() {
 		for (line in Grid.lines) {
-			removeVisLine(line);
+			Main.lineCanvas.removeLine(line);
 		}
-	}
-	
-	function get_drawMode():DrawMode 
-	{
-		return drawMode;
-	}
-	
-	public function set_drawMode(_mode:DrawMode):DrawMode 
-	{
-		
-		switch (_mode) {
-			
-			case FULL_EDIT :
-				
-				sceneLayer.visible = true;
-				rideLayer.visible = true;
-				ColorShader.drawMode = 0;
-				
-			case PLAYBACK :
-				
-				sceneLayer.visible = true;
-				rideLayer.visible = true;
-				ColorShader.drawMode = 1;
-				
-			case NO_SCENERY_EDIT :
-				
-				sceneLayer.visible = false;
-				rideLayer.visible = true;
-				ColorShader.drawMode = 0;
-				
-			case NO_SCENERY_PLAYBACK :
-				
-				sceneLayer.visible = false;
-				rideLayer.visible = true;
-				ColorShader.drawMode = 1;
-				
-			case SCENERY_EDIT :
-				
-				sceneLayer.visible = true;
-				rideLayer.visible = false;
-				ColorShader.drawMode = 0;
-				
-			case SCENERY_PLAYBACK :
-				
-				sceneLayer.visible = true;
-				rideLayer.visible = false;
-				ColorShader.drawMode = 1;
-				
-		}
-		
-		Main.textinfo.align();
-		
-		return drawMode = _mode;
 	}
 	
 	function get_mouseX():Float 

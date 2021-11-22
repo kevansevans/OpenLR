@@ -149,7 +149,7 @@ class ToolBehavior
 	{
 		
 		if (Main.canvas.lineVisLock) {
-			switch (Main.canvas.drawMode) {
+			switch (Main.lineCanvas.drawMode) {
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 					if (color == SCENE) return;
@@ -556,12 +556,14 @@ class ToolBehavior
 		if (leftIsDown) {
 			var line = Grid.createLineObject(type, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
 			Grid.register(line);
-			Main.canvas.addVisLine(line);
+			Main.lineCanvas.addLine(line);
 		} else if (rightIsDown) {
 			var line = Grid.createLineObject(type, mouseEnd.x, mouseEnd.y, mouseStart.x, mouseStart.y, !shifted);
 			Grid.register(line);
-			Main.canvas.addVisLine(line);
+			Main.lineCanvas.addLine(line);
 		}
+		
+		Main.lineCanvas.updateMesh();
 		
 		Common.CVAR.changes += 1;
 	}
@@ -709,19 +711,19 @@ class ToolBehavior
 						shifted = true;
 						
 					case Key.TAB :
-						switch (Main.canvas.drawMode) {
+						switch (Main.lineCanvas.drawMode) {
 							case FULL_EDIT :
-								Main.canvas.drawMode = NO_SCENERY_EDIT;
+								Main.lineCanvas.drawMode = NO_SCENERY_EDIT;
 							case NO_SCENERY_EDIT :
-								Main.canvas.drawMode = PLAYBACK;
+								Main.lineCanvas.drawMode = PLAYBACK;
 							case PLAYBACK :
-								Main.canvas.drawMode = NO_SCENERY_PLAYBACK;
+								Main.lineCanvas.drawMode = NO_SCENERY_PLAYBACK;
 							case NO_SCENERY_PLAYBACK :
-								Main.canvas.drawMode = SCENERY_EDIT;
+								Main.lineCanvas.drawMode = SCENERY_EDIT;
 							case SCENERY_EDIT :
-								Main.canvas.drawMode = SCENERY_PLAYBACK;
+								Main.lineCanvas.drawMode = SCENERY_PLAYBACK;
 							case SCENERY_PLAYBACK :
-								Main.canvas.drawMode = FULL_EDIT;
+								Main.lineCanvas.drawMode = FULL_EDIT;
 						}
 						updateCursor();
 						
@@ -729,6 +731,10 @@ class ToolBehavior
 						Main.canvas.zoomCanvas(-1, true);
 					case Key.QWERTY_MINUS :
 						Main.canvas.zoomCanvas(1, true);
+					case Key.LEFT :
+						Main.canvas.x -= 1;
+					case Key.RIGHT :
+						Main.canvas.x += 1;
 				}
 			case EKeyUp :
 				switch (event.keyCode) {
@@ -821,7 +827,7 @@ class ToolBehavior
 			Main.input.cursor = cursorEraser;
 		} else {
 			if (Main.canvas.lineVisLock) {
-				switch (Main.canvas.drawMode) {
+				switch (Main.lineCanvas.drawMode) {
 					case FULL_EDIT | PLAYBACK :
 					case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 						if (color == SCENE) {
@@ -854,7 +860,7 @@ class ToolBehavior
 	function updateLineCursor():Void 
 	{
 		if (Main.canvas.lineVisLock) {
-			switch (Main.canvas.drawMode) {
+			switch (Main.lineCanvas.drawMode) {
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 					if (color == SCENE) {
@@ -885,7 +891,7 @@ class ToolBehavior
 	
 	function updatePencilCursor() {
 		if (Main.canvas.lineVisLock) {
-			switch (Main.canvas.drawMode) {
+			switch (Main.lineCanvas.drawMode) {
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
 					if (color == SCENE) {
