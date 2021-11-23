@@ -91,10 +91,11 @@ class RiderProperties extends Object
 	{
 		riderIndex = _index;
 		
+		activeRider = cast(RiderManager.riderList[0], Bosh);
+		
 		nameField = new TextField();
 		box.addComponent(nameField);
-		nameField.text = riderKeys[riderIndex];
-		activeRider = cast(RiderManager.riderList[0], Bosh);
+		nameField.text = activeRider.name;
 		nameField.onChange = function(e:UIEvent)
 		{
 			activeRider.name = nameField.value;

@@ -171,7 +171,7 @@ class Bosh extends RiderBase
 		leftLeg.rotation = Math.atan2(contactPoints[8].pos.y - contactPoints[4].pos.y, contactPoints[8].pos.x - contactPoints[4].pos.x);
 		rightLeg.rotation = Math.atan2(contactPoints[9].pos.y - contactPoints[4].pos.y, contactPoints[9].pos.x - contactPoints[4].pos.x);
 		
-		var gfx = Main.canvas.sledderGFX;
+		var gfx = Main.riderLayer.sledderGFX;
 		if (!crashed) {
 			
 			gfx.lineStyle(0.25);
@@ -202,7 +202,7 @@ class Bosh extends RiderBase
 			++scarfIndex;
 		}
 		
-		nameField.scaleX = nameField.scaleY = 1 * (1 / Main.canvas.scaleX);
+		nameField.scaleX = nameField.scaleY = 1 * (1 / Main.riderLayer.scaleX);
 		
 		nameField.x = contactPoints[1].pos.x;
 		nameField.y = contactPoints[1].pos.y;

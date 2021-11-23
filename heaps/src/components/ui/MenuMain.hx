@@ -1,5 +1,6 @@
 package components.ui;
 
+import components.sledder.Bosh;
 import components.stage.TextInfo;
 import components.ui.menus.AboutMenu;
 import components.ui.menus.LoadMenu;
@@ -34,6 +35,7 @@ import haxe.ui.events.MouseEvent;
 import haxe.ui.events.UIEvent;
 import haxe.ui.Toolkit;
 import hxd.File;
+import hxlr.engine.RiderManager;
 import hxlr.file.LRPKTrack;
 import hxlr.math.geom.Point;
 
@@ -59,6 +61,13 @@ class MenuMain extends Object
 			//=========================
 			public var aboutItem:MenuItem;
 		public var viewMenu:Menu;
+			public var toolMenu:Menu;
+				public var toolCurve:CheckBox;
+				public var toolZoom:CheckBox;
+				public var toolPan:CheckBox;
+				//divider
+				public var swatchSlow:CheckBox;
+				public var swatchTrapdoor:CheckBox;
 			public var textMenu:Menu;
 				public var trackNameCheck:CheckBox;
 				public var timeStampCheck:CheckBox;
@@ -125,11 +134,11 @@ class MenuMain extends Object
 			}
 			
 			
-			Main.canvas.trashTrack();
+			Main.riderLayer.trashTrack();
 			Grid.deleteTrack();
 			
-			Main.riders.deleteAllRiders();
-			Main.riders.addNewRider(new Point(0, 0), "Bosh");
+			RiderManager.deleteAllRiders();
+			RiderManager.addNewRider(new Point(0, 0), Bosh);
 			
 			Common.CVAR.changes = 0;
 			
@@ -353,7 +362,9 @@ class MenuMain extends Object
 				gridMenu.addComponent(gridSizeStepper);
 			viewMenu.addComponent(new MenuSeparator());
 		menubar.addComponent(editingMenu);
+			#if debug
 			editingMenu.addComponent(riderPropItem);
+			#end
 			editingMenu.addComponent(new MenuSeparator());
 			editingMenu.addComponent(lineSnapCheck);
 			editingMenu.addComponent(gridSnapCheck);

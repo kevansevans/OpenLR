@@ -44,7 +44,7 @@ class TextInfo
 		
 		if (Main.camera.enabled && showSpeedometer) 
 		{
-			var speed:Float = Main.camera.riderFollow.speed;
+			var speed:Float = Main.camera.rider.speed;
 			info.text += '${speed} p/f\n';
 		}
 		

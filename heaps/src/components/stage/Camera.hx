@@ -11,17 +11,15 @@ import h2d.col.Point;
  */
 class Camera 
 {
-	public var enabled:Bool;
-	public var riderFollow:RiderBase;
+	public var enabled:Bool = false;
 	
-	var rider:RiderBase;
+	public var rider:RiderBase;
 	
 	public var cameraScale:Float = 6;
 	
-	public function new(?_name:String) 
+	public function new() 
 	{
-		enabled = false;
-		riderFollow = RiderManager.riderList[0];
+		rider = RiderManager.riderList[0];
 	}
 	
 	var lastPosition:Point;
@@ -29,7 +27,7 @@ class Camera
 	
 	public function start() {
 		
-		if (!enabled || riderFollow == null) return;
+		if (!enabled) return;
 		
 		lastPosition = new Point(Main.riderLayer.x, Main.riderLayer.y);
 		lastScale = Main.riderLayer.scaleX;
@@ -42,6 +40,7 @@ class Camera
 	
 	public function follow() {
 		
+		rider = RiderManager.riderList[0];
 		var position = Main.riderLayer.localToGlobal(rider.getCameraPoint().clone());
 		
 		var right:Float = Main.locengine.width * 0.6;

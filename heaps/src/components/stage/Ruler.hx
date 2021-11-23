@@ -43,10 +43,10 @@ class Ruler extends Object
 		shader.bg_g = ((color >> 8) & 0xFF) / 255;
 		shader.bg_b = (color & 0xFF) / 255;
 		
-		shader.offsetX = (Main.canvas.x - (Main.rootScene.width / 2)) * (1 / Main.rootScene.width);
-		shader.offsetY = (Main.canvas.y - (Main.rootScene.height / 2)) * (1 / Main.rootScene.height);
+		shader.offsetX = (Main.riderLayer.x - (Main.rootScene.width / 2)) * (1 / Main.rootScene.width);
+		shader.offsetY = (Main.riderLayer.y - (Main.rootScene.height / 2)) * (1 / Main.rootScene.height);
 		
-		shader.scale = 1 / Main.canvas.scaleX;
+		shader.scale = 1 / Main.riderLayer.scaleX;
 		shader.size = rulerSize;
 		
 		if (!originEnabled && !hatchEnabled)

@@ -19,7 +19,7 @@ class ToolFunction
 	public static function eraseDefault(_x:Float, _y:Float) {
 		
 		var key:String = "";
-		var invScale = 1 / Main.canvas.scaleX;
+		var invScale = 1 / Main.riderLayer.scaleX;
 		
 		var erasedCount:Int = 0;
 		

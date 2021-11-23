@@ -160,6 +160,7 @@ class Simulation
 		var locframe = Std.int(Math.max(_frame, 0));
 		frames = locframe;
 		for (rider in RiderManager.riderList) {
+			if (frameStates[rider] == null) recordRiderState(rider, _frame);
 			var state = frameStates[rider][locframe];
 			if (state == null) {
 				recordRiderState(rider, frames);

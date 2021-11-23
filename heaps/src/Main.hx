@@ -14,10 +14,10 @@ import hxd.Res;
 
 import hxlr.Common;
 import hxlr.engine.Grid;
+import hxlr.engine.RiderManager;
 
 import components.Assets;
 import components.managers.Musicplayer;
-import components.managers.Riders;
 import components.managers.Simulation;
 import components.stage.LineCanvas;
 import components.stage.Ruler;
@@ -28,6 +28,7 @@ import components.stage.TextInfo;
 import components.tool.ToolBehavior;
 import components.ui.Toolbar;
 import components.ui.MenuMain;
+import components.sledder.Bosh;
 import utils.TableRNG;
 
 #if hl
@@ -57,7 +58,7 @@ class Main extends App
 	public static var rootScene:Scene;
 	public static var rulerScene:Scene;
 	
-	public static var canvas:RiderLayer;
+	public static var riderLayer:RiderLayer;
 	public static var lineCanvas:LineCanvas;
 	public static var scaleShader:ScaleShader;
 	
@@ -70,8 +71,6 @@ class Main extends App
 	public static var build:String;
 	
 	public static var grid:Grid;
-	
-	public static var riders:Riders;
 	
 	public static var simulation:Simulation;
 	
@@ -141,20 +140,20 @@ class Main extends App
 		rulerScene = new Scene();
 		ruler = new Ruler(rulerScene);
 		
-		canvas = new RiderLayer(s2d);
+		riderLayer = new RiderLayer(s2d);
 		
 		lineCanvas = new LineCanvas(s3d);
 		
-		canvas.x = engine.width / 2;
-		canvas.y = engine.height / 2;
+		riderLayer.x = engine.width / 2;
+		riderLayer.y = engine.height / 2;
+		
+		RiderManager.addNewRider(new Point(0, 0), Bosh);
 		
 		input = new Interactive(engine.width, engine.height, s2d);
 		
 		toolControl = new ToolBehavior();
 		
 		grid = new Grid();
-		
-		riders = new Riders();
 		
 		simulation = new Simulation();
 		
@@ -174,10 +173,7 @@ class Main extends App
 		toolbar.x = (engine.width / 2) - (toolbar.width / 2);
 		toolbar.y = 30;
 		
-		var firstRider = riders.addNewRider(new Point(0, 0));
-		
 		camera = new Camera();
-		camera.riderFollow = firstRider.name;
 		
 		#if !embeded_track
 		
@@ -228,7 +224,7 @@ class Main extends App
 		
 		super.render(e);
 		
-		canvas.drawRiders();
+		riderLayer.drawRiders();
 		
 		textinfo.update();
 		
@@ -264,13 +260,13 @@ class Main extends App
 	//this function needs to be improved
 	static function get_tl():h2d.col.Point 
 	{
-		var point = canvas.globalToLocal(new h2d.col.Point());
+		var point = riderLayer.globalToLocal(new h2d.col.Point());
 		return point;
 	}
 	
 	static function get_br():h2d.col.Point 
 	{
-		var point = canvas.globalToLocal(new h2d.col.Point(Main.locengine.width, Main.locengine.height));
+		var point = riderLayer.globalToLocal(new h2d.col.Point(Main.locengine.width, Main.locengine.height));
 		return point;
 	}
 }

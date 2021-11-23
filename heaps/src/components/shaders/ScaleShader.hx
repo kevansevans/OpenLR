@@ -51,8 +51,8 @@ class ScaleShader extends Shader
 		//magic number bullshit
 		var magicRatio:Float = 2.25535;
 		
-		var xOffset:Float = (Main.canvas.x / Main.canvas.scaleX - (_engine.width / 2 / Main.canvas.scaleX)) / (_engine.width / 2 / Main.canvas.scaleX);
-		var yOffset:Float = -(Main.canvas.y / Main.canvas.scaleX - (_engine.height / 2 / Main.canvas.scaleX)) / (_engine.height / 2 / Main.canvas.scaleX);
+		var xOffset:Float = (Main.riderLayer.x / Main.riderLayer.scaleX - (_engine.width / 2 / Main.riderLayer.scaleX)) / (_engine.width / 2 / Main.riderLayer.scaleX);
+		var yOffset:Float = -(Main.riderLayer.y / Main.riderLayer.scaleX - (_engine.height / 2 / Main.riderLayer.scaleX)) / (_engine.height / 2 / Main.riderLayer.scaleX);
 		
 		this.offset = new Vec(xOffset, yOffset);
 		
@@ -65,7 +65,7 @@ class ScaleShader extends Shader
 			this.scale = new Vec(1 / (_engine.width * magicRatio), 1 / (_engine.width * magicRatio));
 		}
 		
-		this.zoom = Main.canvas.scaleX;
+		this.zoom = Main.riderLayer.scaleX;
 	}
 	
 }

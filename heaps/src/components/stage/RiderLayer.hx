@@ -21,12 +21,7 @@ import h2d.Bitmap;
 class RiderLayer extends Object
 {
 	public var previewLayer:Object;
-	var rideLayer:Object;
-	var sceneLayer:Object;
-	
 	public var preview:Object;
-	
-	var eraserSize:Int = 5;
 	
 	public var lineVisLock:Bool = false;
 	
@@ -40,8 +35,6 @@ class RiderLayer extends Object
 	{
 		super(_parent);
 		
-		sceneLayer = new Object(this);
-		rideLayer = new Object(this);
 		previewLayer = new Graphics(this);
 		sledderLayer = new Object(this);
 		sledderGFX = new Graphics(sledderLayer);
@@ -60,11 +53,6 @@ class RiderLayer extends Object
 		for (rider in RiderManager.riderList) {
 			rider.renderRider();
 		}
-	}
-	
-	public function setCanvasPosition(_x:Float, _y:Float, ?_log:Bool = true) {
-		setCanvasPosition(_x, _y);
-		
 	}
 	
 	public function addCanvasPosition(_x:Float, _y:Float) {

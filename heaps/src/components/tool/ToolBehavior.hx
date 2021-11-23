@@ -1,5 +1,6 @@
 package components.tool;
 import hxlr.engine.Cell;
+import hxlr.engine.RiderManager;
 import hxlr.enums.LineType;
 import hxlr.lines.Undefined;
 import hxlr.engine.Grid;
@@ -148,7 +149,7 @@ class ToolBehavior
 	function mouseDown(event:Event):Void 
 	{
 		
-		if (Main.canvas.lineVisLock) {
+		if (Main.riderLayer.lineVisLock) {
 			switch (Main.lineCanvas.drawMode) {
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
@@ -170,14 +171,14 @@ class ToolBehavior
 				#end
 				
 				leftIsDown = true;
-				mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
-				mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+				mouseStart = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
+				mouseEnd = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 				
 				switch (tool) {
 					
 					case ERASER :
 						
-						ToolFunction.erase(Main.canvas.mouseX, Main.canvas.mouseY);
+						ToolFunction.erase(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 						
 					case PENCIL | LINE :
 						
@@ -193,8 +194,8 @@ class ToolBehavior
 				#end
 				
 				rightIsDown = true;
-				mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
-				mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+				mouseStart = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
+				mouseEnd = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 				
 				switch (tool) {
 					
@@ -207,7 +208,7 @@ class ToolBehavior
 				}
 			case 2 :
 				middleIsDown = true;
-				mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+				mouseStart = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 			case 3 :
 				Main.simulation.backSim();
 			case 4 :
@@ -220,16 +221,16 @@ class ToolBehavior
 	function mouseWheel(event:Event):Void 
 	{
 		if (event.wheelDelta > 0) {
-			Main.canvas.zoomCanvas(1, shifted);
+			Main.riderLayer.zoomCanvas(1, shifted);
 		} else if (event.wheelDelta < 0) {
-			Main.canvas.zoomCanvas(-1, shifted);
+			Main.riderLayer.zoomCanvas(-1, shifted);
 		}
 	}
 	
 	function mouseMove(event:Event):Void 
 	{
 		
-		Main.canvas.preview.removeChildren();
+		Main.riderLayer.preview.removeChildren();
 		
 		switch (tool) {
 			
@@ -243,17 +244,17 @@ class ToolBehavior
 				
 				if (leftIsDown || rightIsDown) {
 					
-					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+					mouseEnd = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 					
 					if (angleSnapping) snapToAngle();
 					
 					var dist = Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2));
 					
 					var dist = Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2));
-					if (dist > 10 * (1 / Main.canvas.scaleX) && dist < 1000 * (1 / Main.canvas.scaleX)) {
+					if (dist > 10 * (1 / Main.riderLayer.scaleX) && dist < 1000 * (1 / Main.riderLayer.scaleX)) {
 						drawLine();
 						mouseStart = mouseEnd.clone();
-						mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+						mouseEnd = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 					}
 					
 					updatePreview();
@@ -268,7 +269,7 @@ class ToolBehavior
 				
 				if (leftIsDown || rightIsDown) {
 					
-					mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+					mouseEnd = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 					
 					if (angleSnapping) snapToAngle();
 					
@@ -286,7 +287,7 @@ class ToolBehavior
 				
 				if (leftIsDown) {
 					
-					ToolFunction.erase(Main.canvas.mouseX, Main.canvas.mouseY);
+					ToolFunction.erase(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 					
 				}
 				
@@ -295,13 +296,13 @@ class ToolBehavior
 		
 		if (middleIsDown) {
 			
-			mouseEnd = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+			mouseEnd = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 			
-			var x:Float = -(mouseStart.x - mouseEnd.x) * Main.canvas.scaleX;
-			var y:Float = -(mouseStart.y - mouseEnd.y) * Main.canvas.scaleX;
+			var x:Float = -(mouseStart.x - mouseEnd.x) * Main.riderLayer.scaleX;
+			var y:Float = -(mouseStart.y - mouseEnd.y) * Main.riderLayer.scaleX;
 			
-			Main.canvas.addCanvasPosition(x, y);
-			mouseStart = new Point(Main.canvas.mouseX, Main.canvas.mouseY);
+			Main.riderLayer.addCanvasPosition(x, y);
+			mouseStart = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 		}
 	}
 	
@@ -310,15 +311,15 @@ class ToolBehavior
 	function updatePreview() {
 		
 		if (!leftIsDown && !rightIsDown) {
-			Main.canvas.previewLine.remove();
+			Main.riderLayer.previewLine.remove();
 			return;
 		}
 		
 		if (tool == ERASER) return;
 		
-		var preview = Main.canvas.preview;
+		var preview = Main.riderLayer.preview;
 		
-		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10) {
+		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.riderLayer.scaleX < 10) {
 			
 			tempLine = new Undefined(mouseStart, mouseEnd);
 			
@@ -351,7 +352,7 @@ class ToolBehavior
 			}
 		}
 		
-		Main.canvas.drawPreviewLine(tempLine);
+		Main.riderLayer.drawPreviewLine(tempLine);
 	}
 	
 	function mouseUp(event:Event):Void 
@@ -380,7 +381,7 @@ class ToolBehavior
 						if (tool == PENCIL)
 						{
 							var dist = Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) + Math.pow(mouseEnd.y - mouseStart.y, 2));
-							if (dist > 10 * (1 / Main.canvas.scaleX) && dist < 1000 * (1 / Main.canvas.scaleX)) {
+							if (dist > 10 * (1 / Main.riderLayer.scaleX) && dist < 1000 * (1 / Main.riderLayer.scaleX)) {
 								drawLine();
 							}
 						}
@@ -398,7 +399,7 @@ class ToolBehavior
 		leftIsDown = false;
 		rightIsDown = false;
 		
-		Main.canvas.preview.removeChildren();
+		Main.riderLayer.preview.removeChildren();
 		updatePreview();
 	}
 	
@@ -413,7 +414,7 @@ class ToolBehavior
 		var gridSnap:Point = _pos.clone();
 		
 		if (lineSnapping) {
-			var radius:Float = snapDistance / Main.canvas.scaleX;
+			var radius:Float = snapDistance / Main.riderLayer.scaleX;
 			
 			for (_x in -1...2) for (_y in -1...2) {
 				
@@ -445,10 +446,10 @@ class ToolBehavior
 		
 		if (gridSnapping) {
 			
-			var top:Float = Math.ceil(Main.canvas.mouseY / Main.ruler.rulerSize) * Main.ruler.rulerSize;
-			var left:Float = Math.ceil(Main.canvas.mouseX / Main.ruler.rulerSize) * Main.ruler.rulerSize;
-			var bottom:Float = Math.floor(Main.canvas.mouseY / Main.ruler.rulerSize) * Main.ruler.rulerSize;
-			var right:Float = Math.floor(Main.canvas.mouseX / Main.ruler.rulerSize) * Main.ruler.rulerSize;
+			var top:Float = Math.ceil(Main.riderLayer.mouseY / Main.ruler.rulerSize) * Main.ruler.rulerSize;
+			var left:Float = Math.ceil(Main.riderLayer.mouseX / Main.ruler.rulerSize) * Main.ruler.rulerSize;
+			var bottom:Float = Math.floor(Main.riderLayer.mouseY / Main.ruler.rulerSize) * Main.ruler.rulerSize;
+			var right:Float = Math.floor(Main.riderLayer.mouseX / Main.ruler.rulerSize) * Main.ruler.rulerSize;
 			
 			var corners:Array<Point> = [
 				new Point(left, top),
@@ -539,7 +540,7 @@ class ToolBehavior
 	
 	function drawLine():Void 
 	{
-		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.canvas.scaleX < 10 && color != LineType.SCENE) return;
+		if (Math.sqrt(Math.pow(mouseEnd.x - mouseStart.x, 2) +Math.pow(mouseEnd.y - mouseStart.y, 2)) * Main.riderLayer.scaleX < 10 && color != LineType.SCENE) return;
 		
 		var type:LineType = LineType.NULL;
 		switch (color) {
@@ -648,7 +649,7 @@ class ToolBehavior
 						Main.timeline.updatePlaydeck();
 					case Key.U :
 						Main.simulation.endSim();
-						Main.riders.resetPositions();
+						RiderManager.resetRiders();
 						Main.timeline.updatePlaydeck();
 					case Key.F :
 						Main.simulation.setFlagState();
@@ -728,13 +729,13 @@ class ToolBehavior
 						updateCursor();
 						
 					case Key.QWERTY_EQUALS :
-						Main.canvas.zoomCanvas(-1, true);
+						Main.riderLayer.zoomCanvas(-1, true);
 					case Key.QWERTY_MINUS :
-						Main.canvas.zoomCanvas(1, true);
+						Main.riderLayer.zoomCanvas(1, true);
 					case Key.LEFT :
-						Main.canvas.x -= 1;
+						Main.riderLayer.x -= 1;
 					case Key.RIGHT :
-						Main.canvas.x += 1;
+						Main.riderLayer.x += 1;
 				}
 			case EKeyUp :
 				switch (event.keyCode) {
@@ -752,27 +753,27 @@ class ToolBehavior
 						
 					case Key.HOME :
 						
-						lastViewedPosition = new Point(Main.canvas.x, Main.canvas.y);
+						lastViewedPosition = new Point(Main.riderLayer.x, Main.riderLayer.y);
 						
-						if (Main.camera.riderFollow == null) {
+						if (Main.camera.rider == null) {
 							
-							Main.canvas.x = Main.locengine.width / 2;
-							Main.canvas.y = Main.locengine.height / 2;
+							Main.riderLayer.x = Main.locengine.width / 2;
+							Main.riderLayer.y = Main.locengine.height / 2;
 							
 						} else {
 							
-							var position = Main.canvas.localToGlobal(Main.riders.riders[Main.camera.riderFollow].startPos);
+							var position = Main.camera.rider.startPos;
 							
-							Main.canvas.x = position.x + (Main.locengine.width / 2);
-							Main.canvas.y = position.y + (Main.locengine.height / 2);
+							Main.riderLayer.x = position.x + (Main.locengine.width / 2);
+							Main.riderLayer.y = position.y + (Main.locengine.height / 2);
 							
 						}
 					case Key.END :
 						
 						if (lastViewedPosition != null) {
 							
-							Main.canvas.x = lastViewedPosition.x;
-							Main.canvas.y = lastViewedPosition.y;
+							Main.riderLayer.x = lastViewedPosition.x;
+							Main.riderLayer.y = lastViewedPosition.y;
 							
 						}
 				}
@@ -826,7 +827,7 @@ class ToolBehavior
 		if (!colorEraser) {
 			Main.input.cursor = cursorEraser;
 		} else {
-			if (Main.canvas.lineVisLock) {
+			if (Main.riderLayer.lineVisLock) {
 				switch (Main.lineCanvas.drawMode) {
 					case FULL_EDIT | PLAYBACK :
 					case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
@@ -859,7 +860,7 @@ class ToolBehavior
 	
 	function updateLineCursor():Void 
 	{
-		if (Main.canvas.lineVisLock) {
+		if (Main.riderLayer.lineVisLock) {
 			switch (Main.lineCanvas.drawMode) {
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :
@@ -890,7 +891,7 @@ class ToolBehavior
 	}
 	
 	function updatePencilCursor() {
-		if (Main.canvas.lineVisLock) {
+		if (Main.riderLayer.lineVisLock) {
 			switch (Main.lineCanvas.drawMode) {
 				case FULL_EDIT | PLAYBACK :
 				case NO_SCENERY_EDIT | NO_SCENERY_PLAYBACK :

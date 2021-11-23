@@ -158,9 +158,12 @@ class LoadMenu
 		
 		for (track in foundTracks)
 		{
+			var fileIcon:String = solveFileTypeByExtension(track);
+			fileIcon = fileIcon.substr(0, fileIcon.length - 1);
+			
 			trackList.dataSource.add({
 				text : track,
-				icon : 'ui/lrpk.png',
+				icon : 'ui/${fileIcon}.png',
 				
 			});
 		}
