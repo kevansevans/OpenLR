@@ -1,6 +1,6 @@
 package components.stage;
 import components.Assets;
-import components.stage.Canvas;
+import components.stage.RiderLayer;
 import hxlr.enums.LineType;
 import h2d.Text;
 import h3d.Engine;

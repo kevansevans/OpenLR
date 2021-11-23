@@ -22,7 +22,7 @@ import components.managers.Simulation;
 import components.stage.LineCanvas;
 import components.stage.Ruler;
 import components.stage.TimeLine;
-import components.stage.Canvas;
+import components.stage.RiderLayer;
 import components.stage.Camera;
 import components.stage.TextInfo;
 import components.tool.ToolBehavior;
@@ -57,7 +57,7 @@ class Main extends App
 	public static var rootScene:Scene;
 	public static var rulerScene:Scene;
 	
-	public static var canvas:Canvas;
+	public static var canvas:RiderLayer;
 	public static var lineCanvas:LineCanvas;
 	public static var scaleShader:ScaleShader;
 	
@@ -141,7 +141,7 @@ class Main extends App
 		rulerScene = new Scene();
 		ruler = new Ruler(rulerScene);
 		
-		canvas = new Canvas(s2d);
+		canvas = new RiderLayer(s2d);
 		
 		lineCanvas = new LineCanvas(s3d);
 		

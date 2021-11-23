@@ -18,7 +18,7 @@ import hxsl.Shader;
 import h3d.prim.UV;
 import hxsl.Types.Vec;
 import hxlr.enums.LineType;
-import components.stage.Canvas.DrawMode;
+import components.stage.RiderLayer.DrawMode;
 
 /**
  * ...

@@ -24,7 +24,7 @@ enum DrawMode {
 	SCENERY_EDIT;
 	SCENERY_PLAYBACK;
 }
-class Canvas extends Object
+class RiderLayer extends Object
 {
 	public var previewLayer:Object;
 	var rideLayer:Object;
