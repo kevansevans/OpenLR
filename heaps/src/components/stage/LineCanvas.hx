@@ -1,13 +1,10 @@
 package components.stage;
 
 import components.shaders.LineMeshShader;
-import components.shaders.ScaleShader;
 import h3d.Camera;
-import h3d.Engine;
 import h3d.col.Point;
 import h3d.mat.BlendMode;
 import h3d.scene.Scene;
-import hxd.Res;
 import hxlr.engine.CanvasBase;
 import h3d.prim.Quads;
 import h3d.scene.Mesh;
@@ -16,14 +13,19 @@ import h3d.Vector;
 import hxlr.lines.LineObject;
 import hxsl.Shader;
 import h3d.prim.UV;
-import hxsl.Types.Vec;
-import hxlr.enums.LineType;
-import components.stage.RiderLayer.DrawMode;
 
 /**
  * ...
  * @author Kaelan
  */
+ enum DrawMode {
+	FULL_EDIT;
+	PLAYBACK;
+	NO_SCENERY_EDIT;
+	NO_SCENERY_PLAYBACK;
+	SCENERY_EDIT;
+	SCENERY_PLAYBACK;
+}
 enum abstract LineFlag(Int) from Int to Int
 {
 	var SHIFTED:Int = 1; 					//is the line flipped?

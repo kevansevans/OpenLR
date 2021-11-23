@@ -16,14 +16,7 @@ import h2d.Bitmap;
  * ...
  * @author Kaelan
  */
-enum DrawMode {
-	FULL_EDIT;
-	PLAYBACK;
-	NO_SCENERY_EDIT;
-	NO_SCENERY_PLAYBACK;
-	SCENERY_EDIT;
-	SCENERY_PLAYBACK;
-}
+
 class RiderLayer extends Object
 {
 	public var previewLayer:Object;
