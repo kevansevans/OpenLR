@@ -133,11 +133,11 @@ class LineCanvas extends CanvasBase
 			if (count < 4 && _line.type == ACCEL)
 			{
 				var npoint = new Point(_line.distance, _line.type, flags | LineFlag.FLAG);
-				normals.push(npoint);
+				normals.insert(count, npoint);
 				normalMap[_line].push(npoint);
 			} else {
 				var npoint = new Point(_line.distance, _line.type, flags);
-				normals.push(npoint);
+				normals.insert(count, npoint);
 				normalMap[_line].push(npoint);
 			}
 			
@@ -148,7 +148,7 @@ class LineCanvas extends CanvasBase
 			point.y = y + _line.start.y;
 			point.y *= -1;
 			
-			points.push(point);
+			points.insert(count, point);
 			
 			++count;
 		}
