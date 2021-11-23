@@ -19,6 +19,7 @@ import haxe.ui.core.Screen;
 import haxe.ui.data.DataSource;
 import haxe.ui.events.UIEvent;
 import haxe.ui.components.Column;
+import hxlr.engine.RiderManager;
 
 /**
  * ...
@@ -73,21 +74,10 @@ class RiderProperties extends Object
 			box = null;
 		}
 		
-		getRiderKeys();
-		
 		//zeroRiderMode();
 		//if (riderKeys.length > 0) riderEditMode(_index);
 		
 		riderEditMode(_index);
-	}
-	
-	function getRiderKeys():Void 
-	{
-		riderKeys = new Array();
-		for (key in Main.riders.riders.keys())
-		{
-			riderKeys.push(key);
-		}
 	}
 	
 	function zeroRiderMode()
@@ -104,16 +94,11 @@ class RiderProperties extends Object
 		nameField = new TextField();
 		box.addComponent(nameField);
 		nameField.text = riderKeys[riderIndex];
-		activeRider = cast(Main.riders.riders[riderKeys[riderIndex]], Bosh);
+		activeRider = cast(RiderManager.riderList[0], Bosh);
 		nameField.onChange = function(e:UIEvent)
 		{
-			activeRider = cast(Main.riders.riders[riderKeys[riderIndex]], Bosh);
-			Main.riders.riders.remove(riderKeys[riderIndex]);
-			riderKeys[riderIndex] = nameField.value;
 			activeRider.name = nameField.value;
 			activeRider.refreshRider();
-			Main.riders.riders[riderKeys[riderIndex]] = activeRider;
-			Main.camera.riderFollow = activeRider.name;
 		}
 		
 		cameraBoxA = new HBox();

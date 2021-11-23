@@ -1,5 +1,6 @@
 package components.managers;
 
+import hxlr.engine.RiderManager;
 import hxlr.rider.RiderBase;
 import hxlr.rider.ContactPoint;
 import haxe.PosInfos;
@@ -39,7 +40,7 @@ class Simulation
 	var timeDelta:Float = 0.0;
 	public function startSim() {
 		
-		if (Main.riders.riderCount == 0) {
+		if (RiderManager.riderCount == 0) {
 			return;
 		}
 		
@@ -132,7 +133,7 @@ class Simulation
 	
 	public function stepSim() {
 		++frames;
-		Main.riders.stepRiders();
+		RiderManager.stepRiders();
 		recordGlobalSimState();
 	}
 	
@@ -158,7 +159,7 @@ class Simulation
 	public function restoreState(_frame:Int) {
 		var locframe = Std.int(Math.max(_frame, 0));
 		frames = locframe;
-		for (rider in Main.riders.riders) {
+		for (rider in RiderManager.riderList) {
 			var state = frameStates[rider][locframe];
 			if (state == null) {
 				recordRiderState(rider, frames);
@@ -175,7 +176,7 @@ class Simulation
 	}
 	
 	public function recordGlobalSimState() {
-		for (rider in Main.riders.riders) {
+		for (rider in RiderManager.riderList) {
 			recordRiderState(rider, frames);
 		}
 	}

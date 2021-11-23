@@ -1,5 +1,6 @@
 package components.stage;
 
+import hxlr.engine.RiderManager;
 import hxlr.lines.LineObject;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
@@ -56,7 +57,7 @@ class RiderLayer extends Object
 		
 		sledderGFX.clear();
 		
-		for (rider in Main.riders.riders) {
+		for (rider in RiderManager.riderList) {
 			rider.renderRider();
 		}
 	}

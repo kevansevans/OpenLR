@@ -3,6 +3,7 @@ package components.sledder;
 import hxlr.Common;
 import hxlr.math.geom.Point;
 import hxlr.rider.RiderBase;
+import hxlr.rider.RiderStruct;
 
 import h3d.Vector;
 import h2d.Graphics;
@@ -47,19 +48,13 @@ class Bosh extends RiderBase
 	public var blinkRate:Float = 0.1;
 	var prevFrame:Int = 0;
 	
-	public function new(?_x:Float = 0.0, ?_y:Float = 0.0, ?_name:String, ?_enable:Null<Int> = null, ?_disable:Null<Int> = null) 
+	public function new(_body:RiderStruct, _start:Point) 
 	{
-		super(Common.defaultRider(), new Point(_x, _y), _name);
+		super(Common.defaultRider(), _start);
 		
-		startPos = new Point(_x, _y);
-		name = _name;
-		enabledFrame = _enable;
-		disableFrame = _disable;
+		startPos = _start;
 		
-		nameField = new HtmlText(Assets.f_verdana_16, Main.canvas.sledderLayer);
-		nameField.text = _name;
-		
-		Main.rng.setKeyOffset(_name, Main.rng.getRandom());
+		nameField = new HtmlText(Assets.f_verdana_16, Main.riderLayer.sledderLayer);
 		
 		leftArm = new RiderPart(ARM);
 		leftLeg = new RiderPart(LEG);
@@ -72,16 +67,16 @@ class Bosh extends RiderBase
 		rightArm = new RiderPart(ARM);
 		rightLeg = new RiderPart(LEG);
 		
-		Main.canvas.sledderLayer.addChild(leftArm);
-		Main.canvas.sledderLayer.addChild(leftLeg);
-		Main.canvas.sledderLayer.addChild(sled);
-		Main.canvas.sledderLayer.addChild(body);
+		Main.riderLayer.sledderLayer.addChild(leftArm);
+		Main.riderLayer.sledderLayer.addChild(leftLeg);
+		Main.riderLayer.sledderLayer.addChild(sled);
+		Main.riderLayer.sledderLayer.addChild(body);
 		body.addChild(eye);
 		body.addChild(neckscarf);
 		neckscarf.x = 101;
 		neckscarf.y = -53;
-		Main.canvas.sledderLayer.addChild(rightLeg);
-		Main.canvas.sledderLayer.addChild(rightArm);
+		Main.riderLayer.sledderLayer.addChild(rightLeg);
+		Main.riderLayer.sledderLayer.addChild(rightArm);
 		
 	}
 	

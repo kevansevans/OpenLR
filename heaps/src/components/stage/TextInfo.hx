@@ -1,6 +1,7 @@
 package components.stage;
 import components.Assets;
 import components.stage.RiderLayer;
+import hxlr.engine.RiderManager;
 import hxlr.enums.LineType;
 import h2d.Text;
 import h3d.Engine;
@@ -43,7 +44,7 @@ class TextInfo
 		
 		if (Main.camera.enabled && showSpeedometer) 
 		{
-			var speed:Float = Main.riders.riders[Main.camera.riderFollow].speed;
+			var speed:Float = Main.camera.riderFollow.speed;
 			info.text += '${speed} p/f\n';
 		}
 		

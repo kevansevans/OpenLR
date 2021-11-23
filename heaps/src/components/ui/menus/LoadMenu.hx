@@ -1,5 +1,6 @@
 package components.ui.menus;
 
+import components.sledder.Bosh;
 import haxe.Json;
 import haxe.io.Bytes;
 import haxe.ui.backend.ImageData;
@@ -16,6 +17,7 @@ import hxd.Res;
 import hxd.Save;
 import hxlr.Common;
 import hxlr.engine.Grid;
+import hxlr.engine.RiderManager;
 import hxlr.enums.LineType;
 import hxlr.enums.Physics;
 import hxlr.file.AMF0Track;
@@ -73,8 +75,8 @@ class LoadMenu
 		{
 			if (trackList.selectedIndex == -1) return;
 			else {
-				Main.canvas.trashTrack();
-				Main.riders.deleteAllRiders();
+				Main.riderLayer.trashTrack();
+				RiderManager.deleteAllRiders();
 				Grid.deleteTrack();
 				loadTrackFromList();
 			}
@@ -93,8 +95,8 @@ class LoadMenu
 			{
 				item.load(function(_data:Bytes) {
 					box.hideDialog(DialogButton.OK);
-					Main.canvas.trashTrack();
-					Main.riders.deleteAllRiders();
+					Main.riderLayer.trashTrack();
+					RiderManager.deleteAllRiders();
 					Grid.deleteTrack();
 					
 					switch (solveFileTypeByExtension(item.fileName))
@@ -318,10 +320,8 @@ class LoadMenu
 		
 		for (riderStruct in track.riders)
 		{
-			Main.riders.addNewRider(new Point(riderStruct.startPosition.x, riderStruct.startPosition.y));
+			RiderManager.addNewRider(new Point(riderStruct.startPosition.x, riderStruct.startPosition.y), Bosh);
 		}
-		
-		Main.camera.riderFollow = "Bosh";
 	}
 	
 	function decodeJSON(_data:String)
@@ -355,13 +355,11 @@ class LoadMenu
 		{
 			for (riderStruct in track.riders)
 			{
-				Main.riders.addNewRider(new Point(riderStruct.startPosition.x, riderStruct.startPosition.y));
+				RiderManager.addNewRider(new Point(riderStruct.startPosition.x, riderStruct.startPosition.y), Bosh);
 			}
 		} else {
-			Main.riders.addNewRider(new Point(track.startPosition.x, track.startPosition.y));
+			RiderManager.addNewRider(new Point(track.startPosition.x, track.startPosition.y), Bosh);
 		}
-		
-		Main.camera.riderFollow = "Bosh";
 	}
 	
 }

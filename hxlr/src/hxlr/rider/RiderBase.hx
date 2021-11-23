@@ -46,8 +46,9 @@ class RiderBase
 	public var focusPoint:ContactPoint;
 	
 	public var name:String;
+	public var id:Int;
 	
-	public function new(_struct:RiderStruct, _start:Point, _name:String) {
+	public function new(_struct:RiderStruct, _start:Point) {
 		
 		struct = _struct;
 		startPos = _start;
@@ -56,7 +57,6 @@ class RiderBase
 		gravity = function():Point {
 			return new Point(struct.x_grav, struct.y_grav);
 		}
-		name = _name;
 		
 		step = function() {
 			if (enabled) {

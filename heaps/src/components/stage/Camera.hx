@@ -1,5 +1,6 @@
 package components.stage;
 
+import hxlr.engine.RiderManager;
 import hxlr.rider.RiderBase;
 
 import h2d.col.Point;
@@ -11,7 +12,7 @@ import h2d.col.Point;
 class Camera 
 {
 	public var enabled:Bool;
-	public var riderFollow(default, set):Null<String>;
+	public var riderFollow:RiderBase;
 	
 	var rider:RiderBase;
 	
@@ -20,7 +21,7 @@ class Camera
 	public function new(?_name:String) 
 	{
 		enabled = false;
-		riderFollow = _name;
+		riderFollow = RiderManager.riderList[0];
 	}
 	
 	var lastPosition:Point;
@@ -30,18 +31,18 @@ class Camera
 		
 		if (!enabled || riderFollow == null) return;
 		
-		lastPosition = new Point(Main.canvas.x, Main.canvas.y);
-		lastScale = Main.canvas.scaleX;
+		lastPosition = new Point(Main.riderLayer.x, Main.riderLayer.y);
+		lastScale = Main.riderLayer.scaleX;
 		
-		Main.canvas.setScale(cameraScale);
-		Main.canvas.x = rider.focusPoint.pos.x + (Main.locengine.width / 2);
-		Main.canvas.y = rider.focusPoint.pos.y + (Main.locengine.height / 2);
+		Main.riderLayer.setScale(cameraScale);
+		Main.riderLayer.x = rider.focusPoint.pos.x + (Main.locengine.width / 2);
+		Main.riderLayer.y = rider.focusPoint.pos.y + (Main.locengine.height / 2);
 		
 	}
 	
 	public function follow() {
 		
-		var position = Main.canvas.localToGlobal(rider.getCameraPoint().clone());
+		var position = Main.riderLayer.localToGlobal(rider.getCameraPoint().clone());
 		
 		var right:Float = Main.locengine.width * 0.6;
 		var left:Float = Main.locengine.width * 0.3;
@@ -63,18 +64,11 @@ class Camera
 			yAdjust = top - position.y;
 		}
 		
-		Main.canvas.x += xAdjust;
-		Main.canvas.y += yAdjust;
+		Main.riderLayer.x += xAdjust;
+		Main.riderLayer.y += yAdjust;
 	}
 	
 	public function stop() {
 		
 	}
-	
-	function set_riderFollow(value:Null<String>):Null<String> 
-	{
-		rider = Main.riders.riders[value];
-		return riderFollow = value;
-	}
-	
 }
