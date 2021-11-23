@@ -1,0 +1,29 @@
+-cp src
+-dce full
+-main Main
+-D hscriptPos
+
+--each
+-lib hxlr
+-lib heaps
+-lib haxeui-core
+-lib haxeui-heaps
+-js bin/js/openlr.js
+
+--next
+-lib hxlr
+-lib heaps
+-lib hlsdl
+-lib hlopenal
+-lib haxeui-core
+-lib haxeui-heaps
+-hl bin/hl/hlboot.dat
+
+--next
+-lib hxlr
+-lib heaps
+-lib hlsdl
+-lib hlopenal
+-lib haxeui-core
+-lib haxeui-heaps
+-hl bin/c/Main.c
