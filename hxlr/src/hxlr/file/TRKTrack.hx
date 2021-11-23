@@ -69,7 +69,7 @@ class TRKTrack
 		{
 			var type:Int = line.type;
 			if (line.type == FLOOR || line.type == ACCEL) {
-				if (line.fliped) type |= 1 << 7;
+				if (line.flipped) type |= 1 << 7;
 				
 				var ext:Int = 0;
 				if (line.leftExtended && !line.rightExtended) ext = 1;
