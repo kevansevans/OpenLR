@@ -24,6 +24,8 @@ enum abstract LumpType(String) to String
 	
 	var LAYERDEF; //Layer info
 	
+	var FLAGDEF; //Checkpoint save
+	
 	var RIDERDEF; //Minimum rider data needed
 	var RIDERMOD; //Non-Standard info for rider
 	
@@ -101,24 +103,37 @@ class LRPKTrack
 						{
 							var lineStruct:LineStruct =
 							{
-								id : _fileBytes.getInt32(position),
-								x1 : _fileBytes.getDouble(position + 4),
-								y1 : _fileBytes.getDouble(position + 12),
-								x2 : _fileBytes.getDouble(position + 20),
-								y2 : _fileBytes.getDouble(position + 28),
-								type : _fileBytes.get(position + 36),
-								flipped : _fileBytes.get(position + 37) == 1 ? true : false,
+								id : data.getInt32(position),
+								x1 : data.getDouble(position + 4),
+								y1 : data.getDouble(position + 12),
+								x2 : data.getDouble(position + 20),
+								y2 : data.getDouble(position + 28),
+								type : data.get(position + 36),
+								flipped : data.get(position + 37) == 1 ? true : false,
 								leftExtended : null,
 								rightExtended : null,
 								multiplier : null,
 								layer : null,
 							}
 							
-							var line = Grid.createLineFromStruct(lineStruct);
-							line.setLim(_fileBytes.get(position + 38));
+							var limType:Int = data.get(position + 38);
 							
-							Grid.register(line);
-							Main.canvas.addVisLine(line);
+							switch (limType)
+							{
+							case 0:
+								//nothing
+							case 1:
+								lineStruct.leftExtended = true;
+								lineStruct.rightExtended = false;
+							case 2:
+								lineStruct.leftExtended = false;
+								lineStruct.rightExtended = true;
+							case 3:
+								lineStruct.leftExtended = true;
+								lineStruct.rightExtended = true;
+							}
+							
+							lineStructs.push(lineStruct);
 							
 							position += 39;
 						}
@@ -133,10 +148,10 @@ class LRPKTrack
 							var lineStruct:LineStruct =
 							{
 								id : -1,
-								x1 : _fileBytes.getFloat(position),
-								y1 : _fileBytes.getFloat(position + 4),
-								x2 : _fileBytes.getFloat(position + 8),
-								y2 : _fileBytes.getFloat(position + 12),
+								x1 : data.getFloat(position),
+								y1 : data.getFloat(position + 4),
+								x2 : data.getFloat(position + 8),
+								y2 : data.getFloat(position + 12),
 								type : 2,
 								flipped : false,
 								leftExtended : null,
@@ -145,9 +160,7 @@ class LRPKTrack
 								layer : null,
 							}
 							
-							var line = Grid.createLineFromStruct(lineStruct);
-							Grid.register(line);
-							Main.canvas.addVisLine(line);
+							lineStructs.push(lineStruct);
 							
 							position += 16;
 						}
@@ -192,6 +205,10 @@ class LRPKTrack
 							default:
 								physics = "6.2";
 						}
+						
+						Common.CVAR.authorName = creator;
+						Common.CVAR.trackName = label;
+						
 					default :
 				}
 			}
