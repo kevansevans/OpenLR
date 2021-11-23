@@ -17,7 +17,7 @@ import hxd.Cursor;
 import hxd.Event;
 import hxd.Key;
 import hxd.Res;
-import components.stage.RiderLayer.DrawMode;
+import components.stage.LineCanvas.DrawMode;
 
 /**
  * ...

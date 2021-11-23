@@ -5,7 +5,7 @@ import hxlr.enums.LineType;
 import hxlr.engine.Grid;
 import hxlr.engine.Cell;
 import hxlr.Common;
-import components.stage.RiderLayer.DrawMode;
+import components.stage.LineCanvas.DrawMode;
 
 /**
  * ...
