@@ -1,7 +1,5 @@
 package components.stage;
 
-import components.stage.LineShader;
-import components.stage.VisLine;
 import hxlr.lines.LineObject;
 import hxlr.lines.Floor;
 import hxlr.lines.Accel;
@@ -28,8 +26,6 @@ enum DrawMode {
 }
 class Canvas extends Object
 {
-	public var lineBitmaps:Map<LineObject, VisLine> = new Map();
-	
 	public var previewLayer:Object;
 	var rideLayer:Object;
 	var sceneLayer:Object;
@@ -101,13 +97,13 @@ class Canvas extends Object
 		y += -(oldMouseY * (newScale - oldScale));
 	}
 	
-	public var previewLine:VisLine;
+	public var previewLine:BitmapLine;
 	
 	public function drawPreviewLine(_line:LineObject) {
 		
 		if (previewLayer.contains(previewLine)) previewLine.remove();
 		
-		previewLine = new VisLine(_line, previewLayer);
+		previewLine = new BitmapLine(_line, previewLayer);
 	}
 	
 	public function trashTrack() {

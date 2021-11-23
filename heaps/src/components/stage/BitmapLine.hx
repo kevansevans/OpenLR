@@ -1,8 +1,8 @@
 package components.stage;
 
-import components.stage.LineShader.CapShader;
-import components.stage.LineShader.ColorShader;
-import components.stage.LineShader.RedFlagShader;
+import components.shaders.linebitmap.CapShader;
+import components.shaders.linebitmap.ColorShader;
+import components.shaders.linebitmap.RedFlagShader;
 import hxlr.enums.LineType;
 import h2d.Bitmap;
 import h2d.Object;
@@ -22,7 +22,7 @@ import hxsl.Types.Vec;
  * @author Kaelan
  */
  
-class VisLine extends Object
+class BitmapLine extends Object
 {
 	var capShader:CapShader;
 	var bitmap:Bitmap;

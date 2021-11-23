@@ -1,5 +1,7 @@
 package components.stage;
 
+import components.shaders.LineMeshShader;
+import components.shaders.ScaleShader;
 import h3d.Camera;
 import h3d.Engine;
 import h3d.col.Point;
@@ -36,7 +38,7 @@ class LineCanvas extends CanvasBase
 	var mesh:Mesh;
 	var camera:Camera;
 	
-	public var screen:CanvasShader;
+	public var lineShader:LineMeshShader;
 	
 	public var pointMap:Map<LineObject, Array<Point>>;
 	public var normalMap:Map<LineObject, Array<Point>>;
@@ -78,7 +80,7 @@ class LineCanvas extends CanvasBase
 		
 		s3d.addChild(mesh);
 		
-		screen = new CanvasShader();
+		lineShader = new LineMeshShader();
 	}
 	
 	public function addLine(_line:LineObject)
@@ -180,33 +182,10 @@ class LineCanvas extends CanvasBase
 		mesh = new Mesh(quad);
 		s3d.addChild(mesh);
 		
-		mesh.material.mainPass.addShader(screen);
+		mesh.material.mainPass.addShader(Main.scaleShader);
+		mesh.material.mainPass.addShader(lineShader);
 		mesh.material.blendMode = BlendMode.Alpha;
 		mesh.material.mainPass.culling = Face.None;
-	}
-	
-	//magic number bullshit
-	public var magicRatio:Float = 2.25535;
-	
-	public function updateScreenScale(_engine:Engine, _scale:Float)
-	{
-		camera.screenRatio = _engine.width / _engine.height;
-		
-		var xOffset:Float = (Main.canvas.x / _scale - (_engine.width / 2 / _scale)) / (_engine.width / 2 / _scale);
-		var yOffset:Float = -(Main.canvas.y / _scale - (_engine.height / 2 / _scale)) / (_engine.height / 2 / _scale);
-		
-		screen.offset = new Vec(xOffset, yOffset);
-		
-		if (_engine.width >= _engine.height)
-		{
-			screen.scale = new Vec(1 / (_engine.height * magicRatio), 1 / (_engine.height * magicRatio));
-		}
-		else
-		{
-			screen.scale = new Vec(1 / (_engine.width * magicRatio), 1 / (_engine.width * magicRatio));
-		}
-		
-		screen.zoom = _scale;
 	}
 	
 	function get_drawMode():DrawMode 
@@ -220,39 +199,39 @@ class LineCanvas extends CanvasBase
 			
 			case FULL_EDIT :
 				
-				screen.editMode = true;
-				screen.showTangible = true;
-				screen.showScenery = true;
+				lineShader.editMode = true;
+				lineShader.showTangible = true;
+				lineShader.showScenery = true;
 				
 			case PLAYBACK :
 				
-				screen.editMode = false;
-				screen.showTangible = true;
-				screen.showScenery = true;
+				lineShader.editMode = false;
+				lineShader.showTangible = true;
+				lineShader.showScenery = true;
 				
 			case NO_SCENERY_EDIT :
 				
-				screen.editMode = true;
-				screen.showTangible = true;
-				screen.showScenery = false;
+				lineShader.editMode = true;
+				lineShader.showTangible = true;
+				lineShader.showScenery = false;
 				
 			case NO_SCENERY_PLAYBACK :
 				
-				screen.editMode = false;
-				screen.showTangible = true;
-				screen.showScenery = false;
+				lineShader.editMode = false;
+				lineShader.showTangible = true;
+				lineShader.showScenery = false;
 				
 			case SCENERY_EDIT :
 				
-				screen.editMode = true;
-				screen.showTangible = false;
-				screen.showScenery = true;
+				lineShader.editMode = true;
+				lineShader.showTangible = false;
+				lineShader.showScenery = true;
 				
 			case SCENERY_PLAYBACK :
 				
-				screen.editMode = false;
-				screen.showTangible = false;
-				screen.showScenery = true;
+				lineShader.editMode = false;
+				lineShader.showTangible = false;
+				lineShader.showScenery = true;
 				
 		}
 		
@@ -266,165 +245,5 @@ class LineCanvas extends CanvasBase
 class CanvasShader extends Shader
 {
 	
-	static  var SRC =
-	{
-		@input var input : {
-			var position : Vec3;
-			var uv : Vec2;
-			var normal : Vec3;
-		};
-		
-		var output : {
-			var position : Vec4;
-			var color : Vec4;
-			var depth : Float;
-		};
-		
-		@const var editMode:Bool = true;
-		@const var showTangible:Bool = true;
-		@const var showScenery:Bool = true;
-		
-		@const var dragMode:Bool = false;
-		
-		@param var offset:Vec2 = vec2(0, 0);
-		@param var scale:Vec2;
-		@param var zoom:Float;
-		
-		@param var lineCap:Sampler2D;
-		@param var accelFlag:Sampler2D;
-		
-		var relativePosition:Vec3;
-		
-		function __init__() {
-			relativePosition = vec3(input.position.xy, 0);
-		}
-		
-		function vertex()
-		{
-			output.position.xy *= scale;
-			output.position.xy *= zoom;
-			output.position.xy += offset;
-			
-			var tangible:Int = int(input.normal.z) & (1 << 2);
-			if (tangible != (1 << 2))
-			{
-				output.position.z = 0.1;
-			} else {
-				output.position.z = 0.0;
-			}
-		}
-		
-		function fragment()
-		{
-			output.color = vec4(0, 0, 0, 1);
-			
-			var distance:Float = input.position.z;
-			var lineType:Int = int(input.normal.y);
-			var shifted:Int = int(input.normal.z) & 1;
-			var flag:Int = int(input.normal.z) & (1 << 1);
-			var tangible:Int = int(input.normal.z) & (1 << 2);
-			
-			//For encoding color data when layers and layer colors are implemented.
-			/*var pbColor:Vec4 = vec4(0, 0, 0, 1);
-			var inColor = int(input.position.z);
-			
-			pbColor.r = float((inColor >> 16) & 0xFF) / 255;
-			pbColor.g = float((inColor >> 8) & 0xFF);
-			pbColor.b = float((inColor & 0xFF)) / 255;*/
-			
-			if (!showScenery && tangible == 0) discard;
-			if (!showTangible && tangible == 4) discard;
-			
-			var lineTypeColor:Vec4 = vec4(0, 0, 0, 1);
-			
-			if (!editMode)
-			{
-				lineTypeColor = vec4(0, 0, 0, 1);
-			}
-			else {
-				if (lineType == 0)
-				{
-					var G:Float = float(0x66) / float(255);
-					lineTypeColor = vec4(0, G, 1, 1);
-				}
-				else if (lineType == 1)
-				{
-					var R:Float = float(0xCC) / float(255);
-					lineTypeColor = vec4(R, 0, 0, 1);
-				}
-				else if (lineType == 2)
-				{
-					var G:Float = float(0xCC) / float(255);
-					lineTypeColor = vec4(0, G, 0, 0.5);
-				}
-				else {
-					lineTypeColor = vec4(1, 0, 0, 0.5);
-				}
-			}
-			
-			if (flag == (1 << 1))
-			{
-				if (editMode) {
-					if (shifted == 1) { 
-						var loc = accelFlag.get(input.uv);
-						if (loc.a == 0) discard;
-						if (input.uv.y > 0.2) output.color = lineTypeColor;
-					} else {
-						var loc = accelFlag.get(vec2(input.uv.x, 1 - input.uv.y));
-						if (loc.a == 0) discard;
-						if (input.uv.y < 0.8) output.color = lineTypeColor;
-					}
-				} else {
-					discard;
-				}
-			}
-			else 
-			{
-				if (tangible == 4) {
-					if (shifted != (1) && input.uv.y < 0.5) output.color = lineTypeColor;
-					else if (shifted == (1) && input.uv.y > 0.5) output.color = lineTypeColor;
-				} else {
-					output.color = lineTypeColor;
-				}
-				
-				var pos = vec2(input.uv.x * (distance + 2), input.uv.y * 2);
-				if (pos.x < 1)
-				{
-					var relativeUV:Vec2 = vec2((pos.x / 2), input.uv.y);
-					var loc = lineCap.get(relativeUV);
-					if (loc.a == 0) discard;
-				} 
-				else if (pos.x > input.normal.x + 1)
-				{
-					var relativeUV:Vec2 = vec2((distance + 2 - pos.x) / 2, input.uv.y);
-					var loc = lineCap.get(relativeUV);
-					if (loc.a == 0) discard;
-				}
-				
-				if (dragMode)
-				{
-					if (pos.x < 2) 
-					{
-						var relativeUV:Vec2 = vec2((pos.x / 2), input.uv.y);
-						var loc = lineCap.get(relativeUV);
-						if (loc.r == 1) output.color = vec4(1, 1, 1, 1);
-					}
-					else if (pos.x > input.normal.x)
-					{
-						var relativeUV:Vec2 = vec2((input.normal.x + 2 - pos.x) / 2, input.uv.y);
-						var loc = lineCap.get(relativeUV);
-						if (loc.r == 1) output.color = vec4(1, 1, 1, 1);
-					}
-				}
-			}
-		}
-	}
 	
-	public function new()
-	{
-		super();
-		
-		this.lineCap = Res.lineCap.toTexture();
-		this.accelFlag = Res.accelFlag.toTexture();
-	}
 }

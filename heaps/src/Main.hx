@@ -1,5 +1,6 @@
 package;
 
+import components.shaders.ScaleShader;
 import h2d.col.Point;
 import h2d.Interactive;
 import h2d.Scene;
@@ -58,6 +59,7 @@ class Main extends App
 	
 	public static var canvas:Canvas;
 	public static var lineCanvas:LineCanvas;
+	public static var scaleShader:ScaleShader;
 	
 	public static var input:Interactive;
 	
@@ -122,6 +124,8 @@ class Main extends App
 	override function init():Void 
 	{
 		super.init();
+		
+		scaleShader = new ScaleShader();
 		
 		Main.locengine = engine;
 		Main.rootScene = s2d;
@@ -213,8 +217,8 @@ class Main extends App
 			simulation.liveUpdateTick();
 		}
 		
-		lineCanvas.updateScreenScale(engine, canvas.scaleX);
-		
+		s3d.camera.screenRatio = engine.width / engine.height;
+		scaleShader.update(engine);
 	}
 	
 	override public function render(e:h3d.Engine):Void 
