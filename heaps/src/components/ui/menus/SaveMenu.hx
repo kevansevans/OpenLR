@@ -143,6 +143,9 @@ class SaveMenu
 		track.label = trackName.value;
 		track.creator = authorName.value;
 		
+		Common.CVAR.trackName = trackName.value;
+		Common.CVAR.authorName = authorName.value;
+		
 		#if sys
 		File.saveAs(LRPKTrack.encode(track), {
 			title : "Save Track as",
@@ -159,11 +162,7 @@ class SaveMenu
 	
 	function finalize(string:String):Void
 	{
-		Common.CVAR.trackName = trackName.value;
-		Common.CVAR.authorName = authorName.value;
-		
 		box.visible = false;
-		box = null;
 	}
 	
 	static function generateName():String {
