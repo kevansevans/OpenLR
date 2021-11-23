@@ -15,10 +15,10 @@ import hxd.Res;
 import hxlr.Common;
 import hxlr.engine.Grid;
 import hxlr.engine.RiderManager;
+import hxlr.engine.Simulation;
 
 import components.Assets;
 import components.managers.Musicplayer;
-import components.managers.Simulation;
 import components.stage.LineCanvas;
 import components.stage.Ruler;
 import components.stage.TimeLine;

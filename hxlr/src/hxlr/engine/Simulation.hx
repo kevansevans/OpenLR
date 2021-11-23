@@ -1,9 +1,8 @@
-package components.managers;
+package hxlr.engine;
 
 import hxlr.engine.RiderManager;
 import hxlr.rider.RiderBase;
 import hxlr.rider.ContactPoint;
-import haxe.PosInfos;
 
 /**
  * ...
@@ -33,8 +32,6 @@ class Simulation
 		recordGlobalSimState();
 		
 		restoreState(0);
-		
-		//var x = (dot.x / 0.175) / 100; return new Point(x, 0);
 	}
 	
 	var timeDelta:Float = 0.0;
