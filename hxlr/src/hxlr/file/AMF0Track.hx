@@ -53,22 +53,15 @@ class AMF0Track
 		var trackListNameSize = data.get(pos) << 8 | data.get(pos += 1);
 		var trackListField = data.getString(pos += 1, trackListNameSize);
 		
-		if (trackListField != "trackList") {
-			trace(trackListNameSize, trackListField);
-			trace("Unable to locate trackList!");
-			return;
-		}
+		object.set("trackList", new Array<Dynamic>());
 		
-		loadedSOL = {
-			trackList : []
-		}
 		
-		recursiveRead(data.get(pos += trackListNameSize));
 		
 	}
 	
 	function recursiveRead(_code:Int) 
 	{
+		trace(_code);
 		switch (_code) {
 			
 			case EMCA_ARRAY :

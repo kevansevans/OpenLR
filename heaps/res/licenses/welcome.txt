@@ -1,0 +1,13 @@
+Welcome to OpenLR!\n\n
+
+OpenLR is a free and open source port of Line Rider powered by Haxe, Heaps, and HXLR.\n\n
+
+"Line Rider" is a registered trademark of Boštjan Čadež.\n
+Use in OpenLR is in name only and granted within good faith.\n\n
+
+To get started, draw some lines on the canvas, then press play at the bottom.\n\n
+Make tracks to your hearts content!\n\n
+
+Have fun!\n\n
+
+Click on the tabs to view open source license obligations.

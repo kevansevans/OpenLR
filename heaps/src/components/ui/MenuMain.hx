@@ -10,6 +10,7 @@ import h2d.Bitmap;
 import h2d.Object;
 import haxe.ui.components.TextField;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
+import hxd.System;
 import hxlr.Common;
 import hxlr.engine.Grid;
 import haxe.ui.backend.ImageData;
@@ -170,11 +171,10 @@ class MenuMain extends Object
 		hostItem.text = "Host";
 		
 		aboutItem = new MenuItem();
-		aboutItem.text = "About OpenLR";
+		aboutItem.text = "Visit repository";
 		aboutItem.onClick = function(e:UIEvent)
 		{
-			if (about == null) about = new AboutMenu();
-			else Screen.instance.addComponent(about.box);
+			System.openURL("https://github.com/kevansevans/OpenLR");
 		}
 		
 		viewMenu = new Menu();

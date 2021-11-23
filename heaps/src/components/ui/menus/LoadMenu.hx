@@ -114,7 +114,7 @@ class LoadMenu
 			}, {
 				title : "Load a Line Rider track",
 				fileTypes : [	{name : 'OpenLR Package', extensions : ['lrpk']},
-								{name : 'AMF0/Beta 2', extensions : ['sol']},
+								//{name : 'AMF0/Beta 2', extensions : ['sol']},
 								{name : 'JSON', extensions : ['json']}
 				]
 			});

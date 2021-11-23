@@ -1,6 +1,7 @@
 package hxlr.file;
 
 import hxlr.engine.Grid;
+import hxlr.engine.RiderManager;
 import hxlr.enums.LineType;
 
 #if sys
@@ -44,7 +45,7 @@ class LRFileSystem
 			layers : null
 		}
 		
-		for (rider in Main.riders.riders) {
+		for (rider in RiderManager.riderList) {
 			save.riders.push(
 				{
 					startPosition : {x : rider.startPos.x, y : rider.startPos.y},
