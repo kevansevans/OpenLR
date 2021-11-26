@@ -1,0 +1,10 @@
+-cp src
+-dce full
+-main Main
+-D hscriptPos
+
+-lib hxlr
+-lib heaps
+-lib haxeui-core
+-lib haxeui-heaps
+-js bin/js/openlr.js
