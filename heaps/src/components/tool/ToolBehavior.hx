@@ -651,7 +651,12 @@ class ToolBehavior
 							Main.simulation.backSim();
 						}
 					case Key.D :
-						Main.simulation.stepSim();
+						if (Main.simulation.playing)
+						{
+							Main.simulation.fastForward = true;
+						} else {
+							Main.simulation.stepSim();
+						}
 					case Key.Y :
 						Main.simulation.startSim();
 						Main.timeline.updatePlaydeck();
@@ -771,10 +776,10 @@ class ToolBehavior
 							Main.riderLayer.y = lastViewedPosition.y;
 							
 						}
-					if (Main.simulation.playing)
-					{
+					case Key.A :
 						Main.simulation.rewinding = false;
-					} 
+					case Key.D :
+						Main.simulation.fastForward = false;
 				}
 			default:
 		}
