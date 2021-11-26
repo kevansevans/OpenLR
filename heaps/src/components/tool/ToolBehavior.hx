@@ -644,7 +644,12 @@ class ToolBehavior
 						
 						Main.toolbar.eraser.onClick();
 					case Key.A :
-						Main.simulation.backSim();
+						if (Main.simulation.playing)
+						{
+							Main.simulation.rewinding = true;
+						} else {
+							Main.simulation.backSim();
+						}
 					case Key.D :
 						Main.simulation.stepSim();
 					case Key.Y :
@@ -687,12 +692,6 @@ class ToolBehavior
 						
 						setColorMode(SLOW);
 						
-					case Key.CTRL :
-						Main.simulation.rewinding = true;
-						#if hl
-						//Main.audio.stopMusic();
-						#end
-						
 					case Key.SPACE :
 						
 						if (shifted) {
@@ -705,12 +704,10 @@ class ToolBehavior
 						else if (Main.simulation.paused) Main.simulation.resumeSim();
 						else if (!Main.simulation.playing && !Main.simulation.paused) Main.simulation.startSim();
 						Main.timeline.updatePlaydeck();
-					case Key.RSHIFT :
-						Main.simulation.updateSim();
 					#if js
 					case 16 :
 					#else
-					case Key.LSHIFT :
+					case Key.LSHIFT | Key.RSHIFT:
 					#end
 						shifted = true;
 						
@@ -742,11 +739,6 @@ class ToolBehavior
 				}
 			case EKeyUp :
 				switch (event.keyCode) {
-					case Key.CTRL :
-						Main.simulation.rewinding = false;
-						#if hl
-						//Main.audio.playMusic(Main.simulation.frames);
-						#end
 					#if js
 					case 16 :
 					#else
@@ -779,6 +771,10 @@ class ToolBehavior
 							Main.riderLayer.y = lastViewedPosition.y;
 							
 						}
+					if (Main.simulation.playing)
+					{
+						Main.simulation.rewinding = false;
+					} 
 				}
 			default:
 		}
