@@ -30,6 +30,8 @@ class Grid
 	public static var registry:Map<String, Cell>;
 	public static var lines:Array<LineObject>;
 	
+	public static var trackedLineList:Array<LineObject> = [];
+	
 	public function new() 
 	{
 		registry = new Map();

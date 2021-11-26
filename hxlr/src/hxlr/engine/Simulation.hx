@@ -1,5 +1,6 @@
 package hxlr.engine;
 
+import hxlr.Common;
 import hxlr.engine.RiderManager;
 import hxlr.lines.LineObject;
 import hxlr.rider.RiderBase;
@@ -71,6 +72,8 @@ class Simulation
 		
 		if (playing) Main.camera.stop();
 		
+		if (Common.CVAR.hitTest && !Common.CVAR.hitTestLive) Common.clearLitLines();
+		
 		playing = false;
 		paused = false;
 		timeDelta = 0;
@@ -80,6 +83,8 @@ class Simulation
 	
 	public static function playSim(_delta:Float) {
 		
+		Grid.trackedLineList = [];
+		
 		timeDelta += _delta;
 		if (timeDelta >= desiredSimSpeed) {
 			if (!fastForward) stepSim();
@@ -87,6 +92,8 @@ class Simulation
 				for (a in 0...4) stepSim();
 			}
 			timeDelta = 0;
+			
+			if (Common.CVAR.hitTest) Common.lightLinesUp(Grid.trackedLineList);
 		}
 	}
 	
@@ -143,6 +150,9 @@ class Simulation
 	}
 	
 	public static function stepSim() {
+		
+		if (Common.CVAR.hitTest && Common.CVAR.hitTestLive) Common.clearLitLines();
+		
 		++frames;
 		RiderManager.stepRiders();
 		recordGlobalSimState();

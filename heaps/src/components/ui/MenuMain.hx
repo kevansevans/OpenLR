@@ -91,7 +91,11 @@ class MenuMain extends Object
 				public var angleSnapToggle:CheckBox;
 				public var angleSnapValue:TextField;
 			/////////////////////////////
-			
+		public var playbackMenu:Menu;
+			public var hittestMenu:Menu;
+				public var hittestOff:OptionBox;
+				public var hittestOn:OptionBox;
+				public var hittestLive:OptionBox;
 	//////////
 		
 		public var blueSwatch:Button;
@@ -328,6 +332,40 @@ class MenuMain extends Object
 			}
 		}
 		
+		playbackMenu = new Menu();
+		playbackMenu.text = "Playback";
+		
+		hittestMenu = new Menu();
+		hittestMenu.text = "Hit test";
+		
+		hittestOff = new OptionBox();
+		hittestOff.text = "Off";
+		hittestOff.selected = true;
+		hittestOff.componentGroup = "hittest";
+		hittestOff.onClick = function(e:UIEvent)
+		{
+			Common.CVAR.hitTest = false;
+			Common.CVAR.hitTestLive = false;
+		}
+		
+		hittestOn = new OptionBox();
+		hittestOn.text = "On";
+		hittestOn.componentGroup = "hittest";
+		hittestOn.onClick = function(e:UIEvent)
+		{
+			Common.CVAR.hitTest = true;
+			Common.CVAR.hitTestLive = false;
+		}
+		
+		hittestLive = new OptionBox();
+		hittestLive.text = "Live";
+		hittestLive.componentGroup = "hittest";
+		hittestLive.onClick = function(e:UIEvent)
+		{
+			Common.CVAR.hitTest = true;
+			Common.CVAR.hitTestLive = true;
+		}
+		
 		/*blueSwatch = new Button();
 		blueSwatch.borderColor = 0x0066FF;
 		blueSwatch.width = 35;
@@ -373,6 +411,11 @@ class MenuMain extends Object
 			editingMenu.addComponent(xySnapMenu);
 				xySnapMenu.addComponent(angleSnapToggle);
 				xySnapMenu.addComponent(angleSnapValue);
+		menubar.addComponent(playbackMenu);
+			playbackMenu.addComponent(hittestMenu);
+				hittestMenu.addComponent(hittestOff);
+				hittestMenu.addComponent(hittestOn);
+				hittestMenu.addComponent(hittestLive);
 			
 			
 		//////////

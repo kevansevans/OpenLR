@@ -99,11 +99,13 @@ class LineObject extends Line
 		limType = _limMode;
 	}
 	
-	public function collide(_point:ContactPoint) 
+	public function collide(_point:ContactPoint):Bool 
 	{
 		#if debug
 			trace("Undefined line collision behavior!");
 		#end
+		
+		return false;
 	}
 	
 	public function toLineStruct():LineStruct {

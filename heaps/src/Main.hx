@@ -143,6 +143,8 @@ class Main extends App
 		riderLayer = new RiderLayer(s2d);
 		
 		lineCanvas = new LineCanvas(s3d);
+		Common.lightLinesUp = lineCanvas.lightUpLines;
+		Common.clearLitLines = lineCanvas.resetLines;
 		
 		riderLayer.x = engine.width / 2;
 		riderLayer.y = engine.height / 2;

@@ -20,7 +20,7 @@ class Slow extends LineObject
 		tangible = true;
 	}
 	
-	override public function collide(_point:ContactPoint):Void 
+	override public function collide(_point:ContactPoint):Bool
 	{
 		var xDist = _point.pos.x - start.x;
 		var yDist = _point.pos.y - start.y;
@@ -40,8 +40,12 @@ class Slow extends LineObject
 				//Change it's speed to reflect it "colliding" and decelerate
 				_point.vel.x = _point.vel.x - slowby * ny * accConst * (_point.vel.x > _point.pos.x ? 1 : -1);
 				_point.vel.y = _point.vel.y + slowby * nx * accConst * (_point.vel.y > _point.pos.y ? -1 : 1);
+				
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
 }

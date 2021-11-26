@@ -31,9 +31,9 @@ class Accel extends LineObject
 		accy = nx * (accConst * multiplier) * (shifted ? -1 : 1);
 	}
 	
-	override public function collide(_point:ContactPoint):Void 
+	override public function collide(_point:ContactPoint):Bool
 	{
-		if (!getGrind(_point)) return;
+		if (!getGrind(_point)) return false;
 		
 		//is the point moving "towards" the line?
 		if (_point.dir.x * nx + _point.dir.y * ny > 0)
@@ -58,8 +58,12 @@ class Accel extends LineObject
 				//"accelerate" the point
 				_point.vel.x += accx;
 				_point.vel.y += accy;
+				
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
 	override function set_multiplier(value:Int):Int 

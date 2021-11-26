@@ -1,7 +1,9 @@
 package hxlr.rider;
 
+import hxlr.Common;
 import hxlr.engine.Simulation;
 import hxlr.enums.StickType;
+import hxlr.lines.LineObject;
 import hxlr.math.geom.Point;
 import hxlr.rider.AirPoint;
 import hxlr.rider.ContactPoint;
@@ -60,6 +62,7 @@ class RiderBase
 		}
 		
 		step = function() {
+			
 			if (enabled) {
 				if ((enabledFrame == null || Simulation.frames >= enabledFrame) && (disableFrame == null || Simulation.frames < disableFrame)) {
 					iterate();
@@ -184,12 +187,14 @@ class RiderBase
 						
 						if (line == null) continue;
 						
-						line.collide(point);
+						if (line.collide(point))
+						{
+							if (!Grid.trackedLineList.contains(line)) Grid.trackedLineList.push(line);
+						}
 					}
 				}
 			}
 		}
-		
 	}
 	
 	public function renderRider() {};

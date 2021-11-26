@@ -5,6 +5,7 @@ import hxlr.file.TrackStruct;
 import hxlr.rider.RiderStruct;
 import hxlr.enums.StickType;
 import hxlr.engine.Grid;
+import hxlr.lines.LineObject;
 
 /**
  * ...
@@ -116,6 +117,8 @@ class Common
 		authorName : "Anonymous",
 		physics : Physics.VERSION_6_2,
 		trackDir : "",
+		hitTest : false,
+		hitTestLive : false,
 	}
 	
 	public static function parseTrackStruct(_track:TrackStruct)
@@ -124,6 +127,8 @@ class Common
 		
 	}
 	
+	public static var lightLinesUp:Array<LineObject> -> Void = function(_lines:Array<LineObject>) { return; };
+	public static var clearLitLines:Void -> Void = function() { return; };
 }
 
 typedef ClientVar =
@@ -133,4 +138,6 @@ typedef ClientVar =
 	authorName:String,
 	physics:Physics,
 	trackDir:String,
+	hitTest:Bool,
+	hitTestLive:Bool,
 }

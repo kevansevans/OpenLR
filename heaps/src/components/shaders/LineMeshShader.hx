@@ -58,6 +58,7 @@ class LineMeshShader extends Shader
 			var shifted:Int = int(input.normal.z) & 1;
 			var flag:Int = int(input.normal.z) & (1 << 1);
 			var tangible:Int = int(input.normal.z) & (1 << 2);
+			var collided:Int = int(input.normal.z) & (1 << 3);
 			
 			//For encoding color data when layers and layer colors are implemented.
 			/*var pbColor:Vec4 = vec4(0, 0, 0, 1);
@@ -92,8 +93,34 @@ class LineMeshShader extends Shader
 					var G:Float = float(0xCC) / float(255);
 					lineTypeColor = vec4(0, G, 0, 0.5);
 				}
+				else if (lineType == 4)
+				{
+					var R:Float = float(0x66) / float(255);
+					var G:Float = float(0x42) / float(255);
+					var B:Float = float(0x29) / float(255);
+					lineTypeColor = vec4(R, G, B, 1);
+				}
 				else {
 					lineTypeColor = vec4(1, 0, 0, 0.5);
+				}
+			}
+			
+			if (collided == 1 << 3)
+			{
+				if (lineType == 0)
+				{
+					output.color = vec4(0, 0, 1, 1);
+				}
+				else if (lineType == 1)
+				{
+					output.color = vec4(1, 0, 0, 1);
+				}
+				else if (lineType == 4)
+				{
+					var R:Float = float(0x66) / float(255);
+					var G:Float = float(0x42) / float(255);
+					var B:Float = float(0x29) / float(255);
+					output.color = vec4(R, G, B, 1);
 				}
 			}
 			
@@ -129,7 +156,7 @@ class LineMeshShader extends Shader
 					var loc = lineCap.get(relativeUV);
 					if (loc.a == 0) discard;
 				} 
-				else if (pos.x > input.normal.x + 1)
+				else if (pos.x > distance + 1)
 				{
 					var relativeUV:Vec2 = vec2((distance + 2 - pos.x) / 2, input.uv.y);
 					var loc = lineCap.get(relativeUV);
@@ -144,9 +171,9 @@ class LineMeshShader extends Shader
 						var loc = lineCap.get(relativeUV);
 						if (loc.r == 1) output.color = vec4(1, 1, 1, 1);
 					}
-					else if (pos.x > input.normal.x)
+					else if (pos.x > distance)
 					{
-						var relativeUV:Vec2 = vec2((input.normal.x + 2 - pos.x) / 2, input.uv.y);
+						var relativeUV:Vec2 = vec2((distance + 2 - pos.x) / 2, input.uv.y);
 						var loc = lineCap.get(relativeUV);
 						if (loc.r == 1) output.color = vec4(1, 1, 1, 1);
 					}

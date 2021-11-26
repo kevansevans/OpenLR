@@ -31,6 +31,7 @@ enum abstract LineFlag(Int) from Int to Int
 	var SHIFTED:Int = 1; 					//is the line flipped?
 	var FLAG:Int = 1 << 1;					//is the quad part of a directional dependant line?
 	var TANGIBLE:Int = 1 << 2;				//Can this line be ridden?
+	var COLLIDED:Int = 1 << 3;				//Hit test flag?
 }
 class LineCanvas extends CanvasBase 
 {
@@ -39,6 +40,8 @@ class LineCanvas extends CanvasBase
 	var quad:Quads;
 	var mesh:Mesh;
 	var camera:Camera;
+	
+	var litLines:Array<LineObject> = [];
 	
 	public var lineShader:LineMeshShader;
 	
@@ -134,11 +137,11 @@ class LineCanvas extends CanvasBase
 		{
 			if (count < 4 && _line.type == ACCEL)
 			{
-				var npoint = new Point(_line.distance, _line.type, flags | LineFlag.FLAG);
+				var npoint = new Point(0, _line.type, flags | LineFlag.FLAG);
 				normals.insert(count, npoint);
 				normalMap[_line].push(npoint);
 			} else {
-				var npoint = new Point(_line.distance, _line.type, flags);
+				var npoint = new Point(0, _line.type, flags);
 				normals.insert(count, npoint);
 				normalMap[_line].push(npoint);
 			}
@@ -154,6 +157,38 @@ class LineCanvas extends CanvasBase
 			
 			++count;
 		}
+	}
+	
+	public function resetLines()
+	{
+		for (line in litLines)
+		{
+			for (normal in normalMap[line]) 
+			{
+				var flag = Std.int(normal.z);
+				flag &= ~(LineFlag.COLLIDED);
+				normal.z = flag;
+			}
+		}
+		
+		updateMesh();
+		litLines = [];
+	}
+	
+	public function lightUpLines(_lines:Array<LineObject>)
+	{
+		for (line in _lines) {
+			if (!litLines.contains(line)) {
+				litLines.push(line);
+				for (normal in normalMap[line]) 
+				{
+					var flag = Std.int(normal.z) | LineFlag.COLLIDED;
+					normal.z = flag;
+				}
+			}
+		}
+		
+		updateMesh();
 	}
 	
 	public function removeLine(_line:LineObject)
@@ -241,11 +276,5 @@ class LineCanvas extends CanvasBase
 		
 		return drawMode = _mode;
 	}
-	
-}
-
-class CanvasShader extends Shader
-{
-	
 	
 }

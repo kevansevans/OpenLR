@@ -21,9 +21,9 @@ class Floor extends LineObject
 		tangible = true;
 	}
 	
-	override public function collide(_point:ContactPoint):Void 
+	override public function collide(_point:ContactPoint):Bool
 	{
-		if (!getGrind(_point)) return;
+		if (!getGrind(_point)) return false;
 		
 		//is the point moving "towards" the line and passing through?
 		if (_point.dir.x * nx + _point.dir.y * ny > 0)
@@ -44,9 +44,12 @@ class Floor extends LineObject
 				//Change it's speed to reflect it "colliding"
 				_point.vel.x = _point.vel.x + ny * _point.friction * vDist * (_point.vel.x < _point.pos.x ? 1 : -1);
 				_point.vel.y = _point.vel.y - nx * _point.friction * vDist * (_point.vel.y < _point.pos.y ? -1 : 1);
+				
+				return true;
 			}
 		}
 		
+		return false;
 	}
 	
 }
