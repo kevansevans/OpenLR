@@ -1,5 +1,6 @@
 package hxlr.rider;
 
+import hxlr.engine.Simulation;
 import hxlr.enums.StickType;
 import hxlr.math.geom.Point;
 import hxlr.rider.AirPoint;
@@ -173,6 +174,12 @@ class RiderBase
 				if (Grid.registry[key] == null) continue;
 				else {
 					var register = Grid.registry[key];
+					
+					if (register.lowestFrame > Simulation.self.frames)
+					{
+						register.lowestFrame = Simulation.self.frames - 1;
+					}
+					
 					for (line in register.collidable) {
 						
 						if (line == null) continue;

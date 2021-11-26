@@ -1,6 +1,7 @@
 package hxlr.engine;
 
 import hxlr.engine.RiderManager;
+import hxlr.lines.LineObject;
 import hxlr.rider.RiderBase;
 import hxlr.rider.ContactPoint;
 
@@ -10,6 +11,8 @@ import hxlr.rider.ContactPoint;
  */
 class Simulation 
 {
+	public static var self:Simulation;
+	
 	public var frameStates:Map<RiderBase, Array<RiderState>>;
 	public var frames:Int = 0;
 	
@@ -32,6 +35,8 @@ class Simulation
 		recordGlobalSimState();
 		
 		restoreState(0);
+		
+		self = this;
 	}
 	
 	var timeDelta:Float = 0.0;
@@ -75,29 +80,6 @@ class Simulation
 		#end
 	}
 	
-	public var returnframe:Int = 0;
-	public var updating:Bool = false;
-	public function updateSim() {
-		
-		return;
-		
-		if (updating) return;
-		
-		updating = true;
-		returnframe = frames;
-		restoreState(0);
-	}
-	
-	public function liveUpdateTick() {
-		for (tic in 0...40) {
-			if (frames == returnframe) {
-				updating = false;
-				break;
-			}
-			else stepSim();
-		}
-	}
-	
 	public function endSim() {
 		
 		if (playing) Main.camera.stop();
@@ -107,10 +89,6 @@ class Simulation
 		timeDelta = 0;
 		if (flagged) restoreState(flagframe);
 		else restoreState(0);
-		
-		#if hl
-		//Main.audio.stopMusic();
-		#end
 	}
 	public function playSim(_delta:Float) {
 		
@@ -125,6 +103,51 @@ class Simulation
 		while (timeDelta >= desiredSimSpeed) {
 			restoreState(frames -= 1);
 			timeDelta -= desiredSimSpeed;
+		}
+	}
+	
+	public function updateSim(_line:LineObject)
+	{
+		var anchor:Float = Math.POSITIVE_INFINITY;
+		
+		for (key in _line.keyList)
+		{
+			var cell = Grid.registry[key];
+			if (cell.lowestFrame == Math.POSITIVE_INFINITY) continue;
+			else if (cell.lowestFrame < anchor) anchor = cell.lowestFrame;
+			trace(cell.lowestFrame);
+		}
+		
+		if (anchor != Math.POSITIVE_INFINITY)
+		{
+			var returnPos:Int = frames;
+			var endUpdate:Int = returnPos > flagframe ? returnPos : flagframe;
+			++endUpdate;
+			var rewind:Int = Std.int(Math.max(anchor - 1, 0));
+			
+			if (rewind == 0) {
+				RiderManager.resetRiders();
+			}
+			else restoreState(rewind);
+			
+			frames = rewind;
+			
+			for (key in _line.keyList)
+			{
+				Grid.registry[key].lowestFrame = Math.POSITIVE_INFINITY;
+			}
+			
+			for (step in rewind...endUpdate)
+			{
+				stepSim();
+			}
+			
+			restoreState(returnPos);
+			
+			for (rider in RiderManager.riderList) {
+				rider.refreshRider();
+				rider.renderRider();
+			}
 		}
 	}
 	
@@ -173,9 +196,9 @@ class Simulation
 		}
 	}
 	
-	public function recordGlobalSimState() {
+	public function recordGlobalSimState(?_frame:Int = null) {
 		for (rider in RiderManager.riderList) {
-			recordRiderState(rider, frames);
+			recordRiderState(rider, _frame == null ? frames : _frame);
 		}
 	}
 	
@@ -197,12 +220,6 @@ class Simulation
 		}
 		frameStates[_rider][_frame].points = _points;
 		frameStates[_rider][_frame].scarves = _scarves;
-	}
-	
-	var localRiderFrame:Int = 0;
-	public function catchRiderUp(_rider:RiderBase) 
-	{
-		localRiderFrame = 0;
 	}
 	
 	function get_desiredSimSpeed():Float 

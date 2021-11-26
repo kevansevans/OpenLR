@@ -55,6 +55,8 @@ class Cell
 	public var collidable:Array<LineObject>;
 	public var intangible:Array<LineObject>;
 	
+	public var lowestFrame:Float = Math.POSITIVE_INFINITY;
+	
 	public function new(_info:CellInfo) 
 	{
 		info = _info;

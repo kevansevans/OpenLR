@@ -1,6 +1,7 @@
 package components.tool;
 import hxlr.engine.Cell;
 import hxlr.engine.RiderManager;
+import hxlr.engine.Simulation;
 import hxlr.enums.LineType;
 import hxlr.lines.Undefined;
 import hxlr.engine.Grid;
@@ -558,10 +559,12 @@ class ToolBehavior
 			var line = Grid.createLineObject(type, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
 			Grid.register(line);
 			Main.lineCanvas.addLine(line);
+			Simulation.self.updateSim(line);
 		} else if (rightIsDown) {
 			var line = Grid.createLineObject(type, mouseEnd.x, mouseEnd.y, mouseStart.x, mouseStart.y, !shifted);
 			Grid.register(line);
 			Main.lineCanvas.addLine(line);
+			Simulation.self.updateSim(line);
 		}
 		
 		Main.lineCanvas.updateMesh();
