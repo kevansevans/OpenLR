@@ -11,36 +11,30 @@ import hxlr.rider.ContactPoint;
  */
 class Simulation 
 {
-	public static var self:Simulation;
+	public static var frameStates:Map<RiderBase, Array<RiderState>> = new Map();
+	public static var frames:Int = 0;
 	
-	public var frameStates:Map<RiderBase, Array<RiderState>>;
-	public var frames:Int = 0;
+	public static var playing:Bool = false;
+	public static var paused:Bool = false;
+	public static var rewinding:Bool = false;
+	public static var fastForward:Bool = false;
 	
-	public var playing:Bool = false;
-	public var paused:Bool = false;
-	public var rewinding:Bool = false;
+	public static var flagged:Bool = false;
+	public static var flagframe:Int = 0;
 	
-	public var flagged:Bool = false;
-	public var flagframe:Int = 0;
+	public static var desiredSimSpeed:Float;
 	
-	@:isVar public var desiredSimSpeed(get, set):Float;
-	public var fastForward:Int = 1;
-	
-	public function new() 
+	public static function init()
 	{
-		frameStates = new Map();
-		
 		desiredSimSpeed = 40;
 		
 		recordGlobalSimState();
 		
 		restoreState(0);
-		
-		self = this;
 	}
 	
-	var timeDelta:Float = 0.0;
-	public function startSim() {
+	static var timeDelta:Float = 0.0;
+	public static function startSim() {
 		
 		if (RiderManager.riderCount == 0) {
 			return;
@@ -49,18 +43,14 @@ class Simulation
 		playing = true;
 		paused = false;
 		timeDelta = 0;
+		
 		if (flagged) restoreState(flagframe);
 		else restoreState(0);
-		
-		#if hl
-		//Main.audio.stopMusic();
-		//Main.audio.playMusic(frames);
-		#end
 		
 		Main.camera.start();
 	}
 	
-	public function pauseSim() {
+	public static function pauseSim() {
 		if (!playing && !paused) return;
 		else {
 			if (!paused) {
@@ -72,15 +62,12 @@ class Simulation
 			}
 		}
 	}
-	public function resumeSim() {
+	public static function resumeSim() {
 		playing = true;
 		paused = false;
-		#if hl
-		//Main.audio.playMusic(frames);
-		#end
 	}
 	
-	public function endSim() {
+	public static function endSim() {
 		
 		if (playing) Main.camera.stop();
 		
@@ -90,15 +77,20 @@ class Simulation
 		if (flagged) restoreState(flagframe);
 		else restoreState(0);
 	}
-	public function playSim(_delta:Float) {
+	
+	public static function playSim(_delta:Float) {
 		
 		timeDelta += _delta;
 		if (timeDelta >= desiredSimSpeed) {
-			stepSim();
+			if (!fastForward) stepSim();
+			else {
+				for (a in 0...4) stepSim();
+			}
 			timeDelta = 0;
 		}
 	}
-	public function rewindSim(_delta:Float) {
+	
+	public static function rewindSim(_delta:Float) {
 		timeDelta += _delta;
 		while (timeDelta >= desiredSimSpeed) {
 			restoreState(frames -= 1);
@@ -106,7 +98,7 @@ class Simulation
 		}
 	}
 	
-	public function updateSim(_line:LineObject)
+	public static function updateSim(_line:LineObject)
 	{
 		var anchor:Float = Math.POSITIVE_INFINITY;
 		
@@ -151,22 +143,22 @@ class Simulation
 		}
 	}
 	
-	public function stepSim() {
+	public static function stepSim() {
 		++frames;
 		RiderManager.stepRiders();
 		recordGlobalSimState();
 	}
 	
-	public function backSim() {
+	public static function backSim() {
 		restoreState(frames -= 1);
 	}
 	
-	public function quickUpdate() {
+	public static function quickUpdate() {
 		backSim();
 		stepSim();
 	}
 	
-	public function setFlagState() {
+	public static function setFlagState() {
 		
 		flagged = (playing == true || paused == true) ? true : !flagged;
 		
@@ -176,7 +168,7 @@ class Simulation
 		
 	}
 	
-	public function restoreState(_frame:Int) {
+	public static function restoreState(_frame:Int) {
 		var locframe = Std.int(Math.max(_frame, 0));
 		frames = locframe;
 		for (rider in RiderManager.riderList) {
@@ -196,13 +188,13 @@ class Simulation
 		}
 	}
 	
-	public function recordGlobalSimState(?_frame:Int = null) {
+	public static function recordGlobalSimState(?_frame:Int = null) {
 		for (rider in RiderManager.riderList) {
 			recordRiderState(rider, _frame == null ? frames : _frame);
 		}
 	}
 	
-	public function recordRiderState(_rider:RiderBase, _frame:Int) {
+	public static function recordRiderState(_rider:RiderBase, _frame:Int) {
 		if (frameStates[_rider] == null) frameStates[_rider] = new Array();
 		var stat:RiderState = {
 			crashed : _rider.crashed,
@@ -220,16 +212,6 @@ class Simulation
 		}
 		frameStates[_rider][_frame].points = _points;
 		frameStates[_rider][_frame].scarves = _scarves;
-	}
-	
-	function get_desiredSimSpeed():Float 
-	{
-		return desiredSimSpeed;
-	}
-	
-	function set_desiredSimSpeed(value:Float):Float 
-	{
-		return desiredSimSpeed = 1 / value;
 	}
 	
 }
