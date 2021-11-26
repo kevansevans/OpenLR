@@ -1,6 +1,7 @@
 package components.sledder;
 
 import hxlr.Common;
+import hxlr.engine.Simulation;
 import hxlr.math.geom.Point;
 import hxlr.rider.RiderBase;
 import hxlr.rider.RiderStruct;
@@ -150,7 +151,7 @@ class Bosh extends RiderBase
 	
 	override public function renderRider():Void 
 	{
-		updateEyeball(Main.simulation.frames);
+		updateEyeball(Simulation.frames);
 		
 		body.x = contactPoints[4].pos.x;
 		body.y = contactPoints[4].pos.y;

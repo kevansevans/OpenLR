@@ -58,7 +58,7 @@ class ToolFunction
 						if (line.type == type) {
 							Main.lineCanvas.removeLine(line);
 							Grid.unregister(line);
-							Simulation.self.updateSim(line);
+							Simulation.updateSim(line);
 							Common.CVAR.changes += 1;
 							++erasedCount;
 						}
@@ -66,7 +66,7 @@ class ToolFunction
 					} else {
 						Main.lineCanvas.removeLine(line);
 						Grid.unregister(line);
-						Simulation.self.updateSim(line);
+						Simulation.updateSim(line);
 						Common.CVAR.changes += 1;
 						++erasedCount;
 					}

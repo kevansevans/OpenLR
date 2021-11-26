@@ -5,7 +5,7 @@ import h2d.Interactive;
 import h2d.Object;
 import h2d.Slider;
 import h2d.Tile;
-import h2d.col.IPolygon.OffsetKind;
+import hxlr.engine.Simulation;
 import h2d.col.Point;
 import hxd.Event;
 import hxsl.Shader;
@@ -68,7 +68,7 @@ class TimeLine extends Object
 		addChild(pause);
 		pause.onClick = function() 
 		{
-			Main.simulation.pauseSim();
+			Simulation.pauseSim();
 			updatePlaydeck();
 		}
 		
@@ -76,7 +76,7 @@ class TimeLine extends Object
 		addChild(play);
 		play.onClick = function() 
 		{
-			Main.simulation.startSim();
+			Simulation.startSim();
 			updatePlaydeck();
 		}
 		
@@ -84,14 +84,14 @@ class TimeLine extends Object
 		addChild(stop);
 		stop.onClick = function() 
 		{
-			Main.simulation.endSim();
+			Simulation.endSim();
 			updatePlaydeck();
 		}
 		
 		buttons.push(flag = new UIButton(Res.icon.flag.toTile(), 0.1));
 		addChild(flag);
 		flag.onClick = function() {
-			Main.simulation.setFlagState();
+			Simulation.setFlagState();
 			updatePlaydeck();
 		}
 		
@@ -101,14 +101,14 @@ class TimeLine extends Object
 		playspeed.value = 40;
 		playspeed.cursorTile = Tile.fromColor(0x222222, 10, 20);
 		playspeed.onChange = function() {
-			Main.simulation.desiredSimSpeed = playspeed.value;
+			Simulation.desiredSimSpeed = playspeed.value;
 		}
 	}
 	
 	public function updatePlaydeck() {
-		pause.selected = Main.simulation.paused;
-		play.selected = Main.simulation.playing;
-		flag.selected = Main.simulation.flagged;
+		pause.selected = Simulation.paused;
+		play.selected = Simulation.playing;
+		flag.selected = Simulation.flagged;
 	}
 	
 	public function resize() {
@@ -128,8 +128,8 @@ class TimeLine extends Object
 	public function update() {
 		
 		shader.ratio = 8 / Main.rootScene.width;
-		shader.frame = Main.simulation.frames;
-		shader.flag = Main.simulation.flagframe;
+		shader.frame = Simulation.frames;
+		shader.flag = Simulation.flagframe;
 		shader.minLeftValue = Std.int(Main.rootScene.width / 2 / 8);
 		
 		var moved:Bool = false;
@@ -179,28 +179,28 @@ class TimeLine extends Object
 	{
 		if (toAdjust > 0) {
 			if (!speedscrub) {
-				Main.simulation.stepSim();
+				Simulation.stepSim();
 				--toAdjust;
 			} else {
 				for (a in 0...41) {
-					Main.simulation.stepSim();
+					Simulation.stepSim();
 					--toAdjust;
 					if (toAdjust == 0) break;
 				}
 			}
 		} else {
-			if (Main.simulation.frames > 0) {
+			if (Simulation.frames > 0) {
 				if (!speedscrub) {
-					Main.simulation.backSim();
+					Simulation.backSim();
 					++toAdjust;
 				} else {
 					for (a in 0...41) {
-						Main.simulation.backSim();
+						Simulation.backSim();
 						++toAdjust;
-						if (Main.simulation.frames == 0 || toAdjust == 0) break;
+						if (Simulation.frames == 0 || toAdjust == 0) break;
 					}
 				}
-			} else if (Main.simulation.frames == 0) {
+			} else if (Simulation.frames == 0) {
 				toAdjust = 0;
 			}
 			

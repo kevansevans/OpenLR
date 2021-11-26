@@ -61,7 +61,7 @@ class RiderBase
 		
 		step = function() {
 			if (enabled) {
-				if ((enabledFrame == null || Main.simulation.frames >= enabledFrame) && (disableFrame == null || Main.simulation.frames < disableFrame)) {
+				if ((enabledFrame == null || Simulation.frames >= enabledFrame) && (disableFrame == null || Simulation.frames < disableFrame)) {
 					iterate();
 					for (iteration in 0...6) {
 						constrain();
@@ -175,9 +175,9 @@ class RiderBase
 				else {
 					var register = Grid.registry[key];
 					
-					if (register.lowestFrame > Simulation.self.frames)
+					if (register.lowestFrame > Simulation.frames)
 					{
-						register.lowestFrame = Simulation.self.frames - 1;
+						register.lowestFrame = Simulation.frames - 1;
 					}
 					
 					for (line in register.collidable) {

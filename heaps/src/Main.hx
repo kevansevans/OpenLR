@@ -155,7 +155,7 @@ class Main extends App
 		
 		grid = new Grid();
 		
-		simulation = new Simulation();
+		Simulation.init();
 		
 		//must load these last!
 		
@@ -203,14 +203,10 @@ class Main extends App
 		
 		textinfo.framerate = dt;
 		
-		if (simulation.playing && !simulation.rewinding) {
-			simulation.playSim(dt);
-		} else if (simulation.rewinding) {
-			simulation.rewindSim(dt);
-		}
-		
-		if (simulation.updating) {
-			simulation.liveUpdateTick();
+		if (Simulation.playing && !Simulation.rewinding) {
+			Simulation.playSim(dt);
+		} else if (Simulation.rewinding) {
+			Simulation.rewindSim(dt);
 		}
 		
 		s3d.camera.screenRatio = engine.width / engine.height;
@@ -230,7 +226,7 @@ class Main extends App
 		
 		timeline.update();
 			
-		if (camera.enabled && simulation.playing) camera.follow();
+		if (camera.enabled && Simulation.playing) camera.follow();
 	}
 	
 	override function onResize():Void 

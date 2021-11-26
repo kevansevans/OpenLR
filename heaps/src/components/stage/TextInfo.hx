@@ -8,6 +8,7 @@ import h3d.Engine;
 import h3d.Vector;
 import hxd.Res;
 import hxd.res.DefaultFont;
+import hxlr.engine.Simulation;
 import hxlr.engine.Grid;
 import hxlr.Common;
 
@@ -40,7 +41,7 @@ class TextInfo
 		info.text = "";
 		
 		if (showTrackName) info.text += Common.CVAR.trackName + "\n";
-		if (showTimeStamp) info.text += '${timeStamp(Main.simulation.frames)} : ${getSimState()}\n';
+		if (showTimeStamp) info.text += '${timeStamp(Simulation.frames)} : ${getSimState()}\n';
 		
 		if (Main.camera.enabled && showSpeedometer) 
 		{
@@ -125,18 +126,20 @@ class TextInfo
 	
 	public function getSimState():String
 	{
-		var sim = Main.simulation;
-		if (sim.rewinding) {
-			return  "Rewinding";
+		if (Simulation.rewinding) {
+			return "Rewinding";
 		}
-		if (!sim.playing && !sim.paused && !sim.rewinding) {
+		if (!Simulation.playing && !Simulation.paused && !Simulation.rewinding) {
 			return "Stopped";
 		}
-		if (sim.playing && !sim.paused && !sim.rewinding) {
+		if (Simulation.playing && !Simulation.paused && !Simulation.rewinding) {
 			return  "Playing";
 		}
-		if (sim.paused && !sim.rewinding) {
+		if (Simulation.paused && !Simulation.rewinding) {
 			return "Paused";
+		}
+		if (Simulation.fastForward) {
+			return ">> x4";
 		}
 		
 		return "lousy smarch weather";

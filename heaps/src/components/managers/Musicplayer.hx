@@ -6,6 +6,7 @@ import hxd.File;
 import hxd.res.Sound;
 import hxd.snd.Channel;
 import hxd.snd.effect.Pitch;
+import hxlr.engine.Simulation;
 
 #if hl
 import sys.FileSystem;
@@ -51,7 +52,7 @@ class Musicplayer
 	
 	public function playMusic(_offset:Int) {
 		if (sound == null) return;
-		if (!Main.simulation.playing) return;
+		if (!Simulation.playing) return;
 		mixer = sound.play();
 		mixer.volume = 0.25;
 		mixer.addEffect(speedfilter);

@@ -22,11 +22,11 @@ class Simulation
 	public static var flagged:Bool = false;
 	public static var flagframe:Int = 0;
 	
-	public static var desiredSimSpeed:Float;
+	public static var desiredSimSpeed:Float = 1 / 40;
 	
 	public static function init()
 	{
-		desiredSimSpeed = 40;
+		desiredSimSpeed = 1 / 40;
 		
 		recordGlobalSimState();
 		
@@ -107,7 +107,6 @@ class Simulation
 			var cell = Grid.registry[key];
 			if (cell.lowestFrame == Math.POSITIVE_INFINITY) continue;
 			else if (cell.lowestFrame < anchor) anchor = cell.lowestFrame;
-			trace(cell.lowestFrame);
 		}
 		
 		if (anchor != Math.POSITIVE_INFINITY)

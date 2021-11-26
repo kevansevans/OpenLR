@@ -211,9 +211,9 @@ class ToolBehavior
 				middleIsDown = true;
 				mouseStart = new Point(Main.riderLayer.mouseX, Main.riderLayer.mouseY);
 			case 3 :
-				Main.simulation.backSim();
+				Simulation.backSim();
 			case 4 :
-				Main.simulation.stepSim();
+				Simulation.stepSim();
 			default:
 				
 		}
@@ -559,12 +559,12 @@ class ToolBehavior
 			var line = Grid.createLineObject(type, mouseStart.x, mouseStart.y, mouseEnd.x, mouseEnd.y, shifted);
 			Grid.register(line);
 			Main.lineCanvas.addLine(line);
-			Simulation.self.updateSim(line);
+			Simulation.updateSim(line);
 		} else if (rightIsDown) {
 			var line = Grid.createLineObject(type, mouseEnd.x, mouseEnd.y, mouseStart.x, mouseStart.y, !shifted);
 			Grid.register(line);
 			Main.lineCanvas.addLine(line);
-			Simulation.self.updateSim(line);
+			Simulation.updateSim(line);
 		}
 		
 		Main.lineCanvas.updateMesh();
@@ -644,28 +644,28 @@ class ToolBehavior
 						
 						Main.toolbar.eraser.onClick();
 					case Key.A :
-						if (Main.simulation.playing)
+						if (Simulation.playing)
 						{
-							Main.simulation.rewinding = true;
+							Simulation.rewinding = true;
 						} else {
-							Main.simulation.backSim();
+							Simulation.backSim();
 						}
 					case Key.D :
-						if (Main.simulation.playing)
+						if (Simulation.playing)
 						{
-							Main.simulation.fastForward = true;
+							Simulation.fastForward = true;
 						} else {
-							Main.simulation.stepSim();
+							Simulation.stepSim();
 						}
 					case Key.Y :
-						Main.simulation.startSim();
+						Simulation.startSim();
 						Main.timeline.updatePlaydeck();
 					case Key.U :
-						Main.simulation.endSim();
+						Simulation.endSim();
 						RiderManager.resetRiders();
 						Main.timeline.updatePlaydeck();
 					case Key.F :
-						Main.simulation.setFlagState();
+						Simulation.setFlagState();
 						Main.timeline.updatePlaydeck();
 					case Key.NUMBER_1 :
 						
@@ -700,14 +700,14 @@ class ToolBehavior
 					case Key.SPACE :
 						
 						if (shifted) {
-							Main.simulation.endSim();
+							Simulation.endSim();
 							Main.timeline.updatePlaydeck();
 							return;
 						}
 						
-						if (!Main.simulation.paused && Main.simulation.playing) Main.simulation.pauseSim();
-						else if (Main.simulation.paused) Main.simulation.resumeSim();
-						else if (!Main.simulation.playing && !Main.simulation.paused) Main.simulation.startSim();
+						if (!Simulation.paused && Simulation.playing) Simulation.pauseSim();
+						else if (Simulation.paused) Simulation.resumeSim();
+						else if (!Simulation.playing && !Simulation.paused) Simulation.startSim();
 						Main.timeline.updatePlaydeck();
 					#if js
 					case 16 :
@@ -777,9 +777,9 @@ class ToolBehavior
 							
 						}
 					case Key.A :
-						Main.simulation.rewinding = false;
+						Simulation.rewinding = false;
 					case Key.D :
-						Main.simulation.fastForward = false;
+						Simulation.fastForward = false;
 				}
 			default:
 		}
