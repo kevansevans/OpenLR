@@ -30,6 +30,8 @@ class Grid
 	public static var registry:Map<String, Cell>;
 	public static var lines:Array<LineObject>;
 	
+	public static var redoLineList:Array<LineObject> = [];
+	
 	public static var trackedLineList:Array<LineObject> = [];
 	
 	public function new() 
@@ -340,6 +342,7 @@ class Grid
 		--lineCount;
 		--subTypeCount[_line.type];
 		
-		lines[_line.id] = null;
+		if (lines.contains(_line)) lines.remove(_line);
+		redoLineList.unshift(_line);
 	}
 }

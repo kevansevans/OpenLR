@@ -751,6 +751,25 @@ class ToolBehavior
 					#end
 						shifted = false;
 						
+					case Key.BACKSPACE :
+						if (shifted)
+						{
+							var line = Grid.redoLineList.shift();
+							if (line == null) return;
+							Grid.register(line);
+							Main.lineCanvas.addLine(line);
+							Main.lineCanvas.updateMesh();
+							Simulation.updateSim(line);
+						}
+						else
+						{
+							var line = Grid.lines.pop();
+							Grid.unregister(line);
+							Main.lineCanvas.removeLine(line);
+							Main.lineCanvas.updateMesh();
+							Simulation.updateSim(line);
+						}
+						
 					case Key.HOME :
 						
 						lastViewedPosition = new Point(Main.riderLayer.x, Main.riderLayer.y);
