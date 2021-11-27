@@ -94,46 +94,20 @@ class Cell
 		
 	}
 	
-	public function injectLine(_line:LineObject) {
-		
-		allLines.push(_line);
-		
-		if (_line.tangible) {
-			collidable.push(_line);
-		} else {
-			intangible.push(_line);
-		}
-		
-		if (!cellList.contains(this)) cellList.push(this);
-		
-	}
-	
 	public function removeLine(_line:LineObject) {
 		
 		if (!allLines.contains(_line)) return;
 		
 		allLines.remove(_line);
-		allLines = compress(allLines);
 		
 		switch (_line.tangible) {
 			case true :
 				collidable.remove(_line);
-				collidable = compress(collidable);
 			case false :
 				intangible.remove(_line);
-				intangible = compress(intangible);
 		}
 		
 		if (allLines.length == 0) cellList.remove(this);
 		
-	}
-	
-	function compress(_array:Array<LineObject>):Array<LineObject>
-	{
-		var temp:Array<LineObject> = new Array();
-		for (item in _array) {
-			temp.push(item);
-		}
-		return temp;
 	}
 }
