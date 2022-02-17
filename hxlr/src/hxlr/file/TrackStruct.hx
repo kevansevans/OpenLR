@@ -18,6 +18,7 @@ typedef TrackStruct = {
 	var riders:Array<RiderStruct>;
 	var lines:Array<LineStruct>;
 	var layers:Array<LayerStruct>;
+	var ?meta:Map<String, Any>;
 }
 
 typedef RiderStruct = {

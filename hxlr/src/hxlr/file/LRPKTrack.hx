@@ -3,6 +3,7 @@ import haxe.io.Bytes;
 import haxe.io.BytesBuffer;
 import hxlr.Common;
 import hxlr.engine.Grid;
+import hxlr.engine.Simulation;
 import hxlr.file.TrackStruct;
 import hxlr.lines.LineObject;
 import hxlr.enums.LineType;
@@ -29,21 +30,54 @@ enum abstract LumpType(String) to String
 	var RIDERDEF; //Minimum rider data needed
 	var RIDERMOD; //Non-Standard info for rider
 	
+	var STRTRACK; //Defines the start of a track, for multi-save support
 	var ENDTRACK; //Defines the end of a track, for multi-save support
 }
+
+enum abstract EngineType(Int) to Int
+{
+	var OpenLR;
+	var LineRiderAdvanced;
+	var DotCom;
+	var Other;
+}
+
+typedef VersionInfo =
+{
+	indev:Bool,
+	engine:Int,
+	library:Int,
+	saveRevision:Int,
+	portVersion:Int
+}
+
+enum abstract HXLR_VER(Int) to Int
+{
+	var PreRelease; //0
+}
+
+enum abstract SaveRevision(Int) to Int
+{
+	var PreRelease;
+}
+
 typedef Lump =
 {
 	type:String,
 	position:Int,
 }
+
 class LRPKTrack 
 {
-	static var sceneryCompression:Bool = true;
-	
-	//To be implemented later
-	static inline var hxlr_version:Int = 1;
-	static inline var save_version:Int = 1;
-	static inline var game_version:Int = -1;
+	static inline var engi_version:Int = EngineType.OpenLR; 		//What source port was the save made in?
+	static inline var hxlr_version:Int = HXLR_VER.PreRelease; 		//What supported features are we expecting?
+	static inline var save_version:Int = SaveRevision.PreRelease;	//What save revision are we expecting?
+	static inline var game_version:Int = 1;							//If we're using the same source port, is the port up to date? Devs of their respective source ports are to use their own definitions and define behavior.
+	#if debug														//Was this save generated with an indev version?
+	static inline var indev_save = true;
+	#else
+	static inline var indev_save = false;
+	#end
 	
 	static inline function formatString(_value:LumpType):String
 	{
@@ -64,7 +98,12 @@ class LRPKTrack
 		var data = _fileBytes;
 		var header = data.getString(0, 4);
 		
+		var version:VersionInfo;
+		
 		var track:TrackStruct;
+		
+		var metadata:Map<String, Any> = new Map();
+		metadata['NonStandard'] = false;
 		
 		var label:String = "";
 		var creator:String = "";
@@ -76,7 +115,6 @@ class LRPKTrack
 		
 		var lineStructs:Array<LineStruct> = [];
 		var line:LineStruct;
-		
 		
 		if (header == "LRPK") //warning or something
 		{
@@ -94,6 +132,21 @@ class LRPKTrack
 				
 				switch (lumpType)
 				{
+					case 'VERSINFO' :
+						
+						var position:Int = lump.position + 4;
+						
+						version = 
+						{
+							indev : data.get(position) > 0 ? true : false,
+							engine : data.get(position + 1),
+							library : data.get(position + 2),
+							saveRevision : data.get(position + 3),
+							portVersion : data.get(position + 4),
+						}
+						
+						metadata['VERSIONINFO'] = version;
+						
 					case 'LINEDEF' :
 						
 						var numLines:Int = _fileBytes.getInt32(lump.position);
@@ -120,17 +173,17 @@ class LRPKTrack
 							
 							switch (limType)
 							{
-							case 0:
-								//nothing
-							case 1:
-								lineStruct.leftExtended = true;
-								lineStruct.rightExtended = false;
-							case 2:
-								lineStruct.leftExtended = false;
-								lineStruct.rightExtended = true;
-							case 3:
-								lineStruct.leftExtended = true;
-								lineStruct.rightExtended = true;
+								case 0:
+									//nothing
+								case 1:
+									lineStruct.leftExtended = true;
+									lineStruct.rightExtended = false;
+								case 2:
+									lineStruct.leftExtended = false;
+									lineStruct.rightExtended = true;
+								case 3:
+									lineStruct.leftExtended = true;
+									lineStruct.rightExtended = true;
 							}
 							
 							lineStructs.push(lineStruct);
@@ -209,6 +262,7 @@ class LRPKTrack
 						Common.CVAR.trackName = label;
 						
 					default :
+						metadata['NonStandard'] = true;
 				}
 			}
 			
@@ -221,7 +275,8 @@ class LRPKTrack
 				startPosition : { x : 0, y : 0},
 				riders : riders,
 				lines : lineStructs,
-				layers : []
+				layers : [],
+				meta : metadata
 			}
 		} 
 		else 
@@ -250,6 +305,16 @@ class LRPKTrack
 		//Trackdef
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
+		directories.push({
+			type : formatString(VERSINFO),
+			position : data.length + headerSize
+		});
+		
+		var versionBytes = new BytesBuffer();
+		var versionData = versionInfoToBytes();
+		
+		data.addBytes(versionData, 0, versionData.length); 
+		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Lumps made here
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,7 +325,7 @@ class LRPKTrack
 		
 		directories.push({
 			type : formatString(LINEDEF),
-			position : data.length + headerSize,
+			position : data.length + headerSize
 		});
 		
 		var specLines:Array<LineObject> = [];
@@ -289,12 +354,13 @@ class LRPKTrack
 					++lineCount;
 			}
 			
-			if (Grid.lines[line.id].special) 
+			//Reformat this into a thing that stores json data
+			/*(if (Grid.lines[line.id].special) 
 			{
 				var infoBytes:Bytes = specLineToBytes(line);
 				specialLineData.addBytes(infoBytes, 0, infoBytes.length);
 				++specLineCount;
-			}
+			}*/
 		}
 		
 		data.addInt32(lineCount);
@@ -325,6 +391,7 @@ class LRPKTrack
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Riderdef
 		//Ridermod (to do)
+		//Flagdef (to do)
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		for (rider in _track.riders)
@@ -346,6 +413,22 @@ class LRPKTrack
 			position : data.length + headerSize
 			
 		});
+		
+		/*if (Simulation.flagged)
+		{
+			directories.push({
+				type : formatString(FLAGDEF),
+				position : data.length + headerSize;
+			});
+			
+			var flagBytes:Bytes = flagDataToBytes();
+			
+			data.addBytes(flagBytes, 0, flagBytes.length);
+		}*/
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Data finalization
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		var trackData = trackDataToByes();
 		data.addBytes(trackData, 0, trackData.length);
@@ -373,13 +456,31 @@ class LRPKTrack
 		
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
+	//!!!WARNING!!!
+	//
+	//The following lumps are STANDARD data. It is within your best interests to ignore these lumpdefs,
+	//and instead create special lumps akin to the LINESPEC lump. Modifying these lump types can and
+	//will break compatibility, as reading them is hard coded.
+	//
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	static function versionInfoToBytes():Bytes
+	{
+		var data:BytesBuffer = new BytesBuffer();
+		
+		data.addByte(indev_save == true ? 1 : 0);
+		data.addByte(engi_version);
+		data.addByte(hxlr_version);
+		data.addByte(save_version);
+		data.addByte(game_version);
+		
+		return data.getBytes();
+	}
+	
 	static function riderToBytes(_rider:RiderStruct):Bytes
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//!!!WARNING!!!
-		//Do not change! This lump does not need it's format changed!
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		
 		var data:BytesBuffer = new BytesBuffer();
 		
 		data.addDouble(_rider.startPosition.x);
@@ -390,10 +491,6 @@ class LRPKTrack
 	
 	static function lineToBytes(_line:LineStruct):Bytes
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//!!!WARNING!!!
-		//Do not change! This lump does not need it's format changed!
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		var data:BytesBuffer = new BytesBuffer();
 		
@@ -423,10 +520,13 @@ class LRPKTrack
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//
 	//!!!WARNING!!!
+	//
 	//What lies ahead is NON-STANDARD data.
 	//Be very VERY careful about modifying these functions!
 	//The safest option is to add new info to parts AFTER what's already defined.
+	//
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	static function trackDataToByes():Bytes
@@ -452,7 +552,6 @@ class LRPKTrack
 		data.addInt32(_line.id);
 		data.addByte(_line.multiplier);
 		data.addDouble(Grid.lines[_line.id].thickness);
-		data.addByte(Grid.lines[_line.id].grindable == true ? 1 : 0);
 		data.addByte(_line.layer);
 		
 		return data.getBytes();
@@ -470,4 +569,9 @@ class LRPKTrack
 		
 		return data.getBytes();
 	}
+	
+	//static function flagDataToBytes():Bytes
+	//{
+		
+	//}
 }
