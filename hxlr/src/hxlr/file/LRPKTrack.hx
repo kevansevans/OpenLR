@@ -147,11 +147,11 @@ class LRPKTrack
 						{
 							var lineStruct:LineStruct =
 							{
-								id : -1,
-								x1 : data.getFloat(position),
-								y1 : data.getFloat(position + 4),
-								x2 : data.getFloat(position + 8),
-								y2 : data.getFloat(position + 12),
+								id : data.getInt32(position),
+								x1 : data.getFloat(position + 4),
+								y1 : data.getFloat(position + 8),
+								x2 : data.getFloat(position + 12),
+								y2 : data.getFloat(position + 16),
 								type : 2,
 								flipped : false,
 								leftExtended : null,
@@ -159,10 +159,9 @@ class LRPKTrack
 								multiplier : null,
 								layer : null,
 							}
-							
 							lineStructs.push(lineStruct);
-							
-							position += 16;
+								
+							position += 20;
 						}
 						
 					case 'RIDERDEF' :
@@ -412,13 +411,9 @@ class LRPKTrack
 	
 	static function decoLineToBytes(_line:LineStruct):Bytes
 	{
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//!!!WARNING!!!
-		//Do not change! This lump does not need it's format changed!
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		
 		var data:BytesBuffer = new BytesBuffer();
 		
+		data.addInt32(_line.id);
 		data.addFloat(_line.x1);
 		data.addFloat(_line.y1);
 		data.addFloat(_line.x2);
