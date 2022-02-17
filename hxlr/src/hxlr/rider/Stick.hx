@@ -79,9 +79,11 @@ class Stick
 			}
 		}
 		
+		//calculate the amount we need to move
 		var xAdjust = xDist * adjust;
 		var yAdjust = yDist * adjust;
 		
+		//apply those calculations to both points
 		a.pos.x = a.pos.x - xAdjust;
 		a.pos.y = a.pos.y - yAdjust;
 		b.pos.x = b.pos.x + xAdjust;
