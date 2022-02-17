@@ -305,13 +305,11 @@ class Grid
 	
 	static function addLine(_line:LineObject):Void 
 	{
-		if (_line.id == null || _line.id == -1) {
-			_line.id = lineIDCount;
-			++lineIDCount;
-		} else {
-			if (_line.id > lineIDCount) lineIDCount = _line.id + 1;
-		}
-		lines[_line.id] = _line;
+		_line.id = lineIDCount;
+		++lineIDCount;
+		if (loading) lines[_line.id] = _line;
+		else lines.push(_line);
+		
 		++lineCount;
 		if (subTypeCount[_line.type] == null) subTypeCount[_line.type] = 0;
 		++subTypeCount[_line.type];

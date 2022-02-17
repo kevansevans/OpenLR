@@ -68,26 +68,12 @@ class Cell
 	
 	public function addLine(_line:LineObject) {
 		
-		if (allLines.contains(_line)) return;
-		
 		allLines.push(_line);
-		allLines.sort(function(_a:LineObject, _b:LineObject):Int {
-			if (_a.id < _b.id) return -1;
-			else return 1;
-		});
 		
 		if (_line.tangible) {
 			collidable.push(_line);
-			collidable.sort(function(_a:LineObject, _b:LineObject):Int {
-				if (_a.id < _b.id) return -1;
-				else return 1;
-			});
 		} else {
 			intangible.push(_line);
-			intangible.sort(function(_a:LineObject, _b:LineObject):Int {
-				if (_a.id < _b.id) return -1;
-				else return 1;
-			});
 		}
 		
 		if (!cellList.contains(this)) cellList.push(this);
@@ -95,8 +81,6 @@ class Cell
 	}
 	
 	public function removeLine(_line:LineObject) {
-		
-		if (!allLines.contains(_line)) return;
 		
 		allLines.remove(_line);
 		
