@@ -6,7 +6,7 @@ Required libraries:
 1) heaps (git)
 2) hlsdl
 3) hlopenal
-4) hxlr
+4) hxlr (git)
 5) haxeui-core (git)
 6) haxeui-heaps (git)
 
