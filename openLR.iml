@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="HAXE_MODULE" version="4">
+  <component name="HaxeModuleSettingsStorage">
+    <option name="buildConfig" value="1" />
+    <option name="haxeTarget" value="Interpretation" />
+    <option name="hxmlPath" value="$MODULE_DIR$/build.hxml" />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Haxe toolkit" jdkType="Haxe toolkit" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Haxelib: hxlr:0.2.0 [dev]">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../hxlr/src" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../hxlr/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Haxelib: heaps:2.1.0 [git]">
+        <CLASSES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/heaps/git" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/heaps/git" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Haxelib: hlsdl:1.15.0">
+        <CLASSES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/hlsdl/1,15,0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/hlsdl/1,15,0" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Haxelib: hlopenal:1.5.0">
+        <CLASSES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/hlopenal/1,5,0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/hlopenal/1,5,0" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Haxelib: haxeui-core:1.7.0">
+        <CLASSES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/haxeui-core/1,7,0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/haxeui-core/1,7,0" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Haxelib: haxeui-heaps:1.7.0">
+        <CLASSES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/haxeui-heaps/1,7,0" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/haxeui-heaps/1,7,0" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="PROVIDED">
+      <library name="Haxelib: format:3.8.0 [git]">
+        <CLASSES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/format/git" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://C:/HaxeToolkit/haxe/lib/format/git" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>

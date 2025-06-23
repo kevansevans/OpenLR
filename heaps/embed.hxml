@@ -1,7 +1,0 @@
--cp src
--dce full
--main Main
--D embeded_track
--lib hxlr
--lib heaps
--js bin/js_embed/openlr.js
