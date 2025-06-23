@@ -1,9 +1,5 @@
 
-bin/saves/
-
-bin/music/
-
-bin/OpenLR.hl
+bin/
 
 heaps/bin/music/
 
@@ -14,3 +10,5 @@ heaps/bin/js_embed/
 heaps/bin/
 
 build/
+
+out/
