@@ -13,17 +13,6 @@
     <orderEntry type="jdk" jdkName="Haxe toolkit" jdkType="Haxe toolkit" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" scope="PROVIDED">
-      <library name="Haxelib: hxlr:0.2.0 [dev]">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/../hxlr/src" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/../hxlr/src" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
       <library name="Haxelib: heaps:2.1.0 [git]">
         <CLASSES>
           <root url="file://C:/HaxeToolkit/haxe/lib/heaps/git" />
